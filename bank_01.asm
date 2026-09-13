@@ -2973,7 +2973,7 @@ CODE_0194AC:
 	RTS					;$0194B3	|
 
 CODE_0194B4:
-	LDY $0F
+	LDY $0F  				;$0194B4	| Scratch address is uninitialized sometimes
 	LDA.b #$00				;$0194B6	|
 	STA.w $1693				;$0194B8	|
 	STA.w $1694				;$0194BB	|
@@ -3037,7 +3037,7 @@ CODE_019523:
 	INC $07					;$01952F	|
 	LDA [$05]				;$019531	|
 	JSL conditional_map16			;$019533	|
-	LDY $0F					;$019537	|
+	LDY $0F					;$019537	| Scratch address is uninitialized sometimes
 	CMP.b #$00				;$019539	|
 	RTS					;$01953B	|
 

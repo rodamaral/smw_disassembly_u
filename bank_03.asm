@@ -3191,7 +3191,7 @@ CODE_0397F9:
 	PHY					;$0397FC	|
 	JSR SubVertPosBnk3			;$0397FD	|
 	STY $02					;$039800	|
-	LDA $0E					;$039802	|
+	LDA $0E					;$039802	| Scratch address is possibly uninitialized
 	BPL CODE_03980B				;$039804	|
 	EOR.b #$FF				;$039806	|
 	CLC					;$039808	|
