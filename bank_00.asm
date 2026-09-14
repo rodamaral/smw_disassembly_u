@@ -4100,35 +4100,35 @@ CODE_00A200:
 	ORA.w $1493				;$00A202	|
 	BEQ CODE_00A211				;$00A205	|
 	LDA.b #$04				;$00A207	|
-	TRB $15					;$00A209	|
+	TRB $15					;$00A209	| clear hold down
 	LDA.b #$40				;$00A20B	|
-	TRB $16					;$00A20D	|
+	TRB $16					;$00A20D	| clear X/Y press
 	TRB $18					;$00A20F	|
 CODE_00A211:
 	LDA.w $13D3
 	BEQ CODE_00A21B				;$00A214	|
-	DEC.w $13D3				;$00A216	|
+	DEC.w $13D3				;$00A216	| if unable to (un)pause
 	BRA CODE_00A242				;$00A219	|
 
 CODE_00A21B:
-	LDA $16
+	LDA $16					;$00A21B	| able to pause
 	AND.b #$10				;$00A21D	|
 	BEQ CODE_00A242				;$00A21F	|
-	LDA.w $1493				;$00A221	|
-	BNE CODE_00A242				;$00A224	|
+	LDA.w $1493				;$00A221	| if pressed Start
+	BNE CODE_00A242				;$00A224	| and not ending the level
 	LDA $71					;$00A226	|
 	CMP.b #$09				;$00A228	|
-	BCS CODE_00A242				;$00A22A	|
+	BCS CODE_00A242				;$00A22A	| and with pausable animation < 9
 	LDA.b #$3C				;$00A22C	|
-	STA.w $13D3				;$00A22E	|
+	STA.w $13D3				;$00A22E	| then set the pause timer
 	LDY.b #$12				;$00A231	|
-	LDA.w $13D4				;$00A233	|
+	LDA.w $13D4				;$00A233	| toggle pause flag
 	EOR.b #$01				;$00A236	|
 	STA.w $13D4				;$00A238	|
 	BEQ CODE_00A23F				;$00A23B	|
 	LDY.b #$11				;$00A23D	|
 CODE_00A23F:
-	STY.w $1DF9
+	STY.w $1DF9 				;$00A23F	| play the (un)pause sound effect
 CODE_00A242:
 	LDA.w $13D4
 	BEQ CODE_00A28A				;$00A245	|
@@ -4147,18 +4147,18 @@ ADDR_00A259:
 CODE_00A25B:
 	LDA $15
 	AND.b #$20				;$00A25D	|
-	BEQ Return00A289			;$00A25F	|
-	LDY.w $13BF				;$00A261	|
+	BEQ Return00A289			;$00A25F	| if not holding select, return to main loop
+	LDY.w $13BF				;$00A261	| if holding select, try to exit the level if beaten
 	LDA.w $1EA2,Y				;$00A264	|
 	BPL Return00A289			;$00A267	|
 	LDA.w $0DD5				;$00A269	|
 	BEQ CODE_00A270				;$00A26C	|
-	BPL Return00A289			;$00A26E	|
+	BPL Return00A289			;$00A26E	| if level was just beaten and activated an OW event, do nothing
 CODE_00A270:
 	LDA.b #$80
 	BRA CODE_00A27E				;$00A272	|
 
-	LDA.b #$01				;$00A274	|
+	LDA.b #$01				;$00A274	| unreachable cheat code
 	BIT $15					;$00A276	|
 	BPL ADDR_00A27B				;$00A278	|
 	INC A					;$00A27A	|
@@ -4175,25 +4175,25 @@ Return00A289:
 CODE_00A28A:
 	LDA.w $0D9B
 	BPL CODE_00A295				;$00A28D	|
-	JSR CODE_00987D				;$00A28F	|
+	JSR CODE_00987D				;$00A28F	| if in a boss room
 	JMP CODE_00A2A9				;$00A292	|
 
 CODE_00A295:
-	JSL $7F8000
+	JSL $7F8000				;CODE_00A295	| unrolled loop - OAMResetRoutine
 	JSL UpdateScreenPosition_00F6DB		;$00A299	| updates camera -> hardware registers of layers
-	JSL CODE_05BC00				;$00A29D	|
-	JSL CODE_0586F1				;$00A2A1	|
-	JSL CODE_05BB39				;$00A2A5	|
+	JSL CODE_05BC00				;$00A29D	| updates camera according to camera command
+	JSL CODE_0586F1				;$00A2A1	| unknown camera stuff
+	JSL CODE_05BB39				;$00A2A5	| tile animation stuff
 CODE_00A2A9:
 	LDA $1C
-	PHA					;$00A2AB	|
+	PHA					;$00A2AB	| push layer 1 positions
 	LDA $1D					;$00A2AC	|
 	PHA					;$00A2AE	|
 	STZ.w $1888				;$00A2AF	|
 	STZ.w $1889				;$00A2B2	|
 	LDA.w $1887				;$00A2B5	|
 	BEQ CODE_00A2D5				;$00A2B8	|
-	DEC.w $1887				;$00A2BA	|
+	DEC.w $1887				;$00A2BA	| process ground pound camera shake
 	AND.b #$03				;$00A2BD	|
 	TAY					;$00A2BF	|
 	LDA.w GrndShakeDispYLo,Y		;$00A2C0	|
@@ -4206,17 +4206,17 @@ CODE_00A2A9:
 	ADC $1D					;$00A2D1	|
 	STA $1D					;$00A2D3	|
 CODE_00A2D5:
-	JSR CODE_008E1A
-	JSL CODE_00E2BD				;$00A2D8	|
-	JSR CODE_00A2F3				;$00A2DC	|
-	JSR CODE_00C47E				;$00A2DF	|
-	JSL CODE_01808C				;$00A2E2	|
-	JSL CODE_028AB1				;$00A2E6	|
-	PLA					;$00A2EA	|
+	JSR CODE_008E1A				;$00A2D5	| draw status tileset
+	JSL CODE_00E2BD				;$00A2D8	| draw Mario
+	JSR CODE_00A2F3				;$00A2DC	| mirror Mario position
+	JSR CODE_00C47E				;$00A2DF	| process timers and increase $14
+	JSL CODE_01808C				;$00A2E2	| main sprites
+	JSL CODE_028AB1				;$00A2E6	| secondary sprites / loading sprites / cape / etc
+	PLA					;$00A2EA	| pull layer 1 positions
 	STA $1D					;$00A2EB	|
 	PLA					;$00A2ED	|
 	STA $1C					;$00A2EE	|
-	JMP CODE_008494				;$00A2F0	|
+	JMP CODE_008494				;$00A2F0	| update OAM table
 
 CODE_00A2F3:
 	REP #$20
@@ -7398,7 +7398,7 @@ CODE_00C510:
 	LDA $14					;$00C513	|
 	AND.b #$03				;$00C515	|
 	BNE CODE_00C569				;$00C517	|
-	LDA.w $1425				;$00C519	|
+	LDA.w $1425				;$00C519	| Process various timers only when $14 is multiple of 4
 	BEQ CODE_00C533				;$00C51C	|
 	LDA.w $14AB				;$00C51E	|
 	CMP.b #$44				;$00C521	|
@@ -11842,7 +11842,7 @@ CODE_00EF68:
 	BNE CODE_00EF99				;$00EF7C	|
 	LDA.w $187A				;$00EF7E	|
 	BEQ CODE_00EF95				;$00EF81	|
-	LDA $8F					;$00EF83	|
+	LDA $8F					;$00EF83	| uninit?
 	BEQ CODE_00EF95				;$00EF85	|
 	LDA.w $18E7				;$00EF87	|
 	BEQ CODE_00EF95				;$00EF8A	|
@@ -12599,7 +12599,7 @@ collision:
 	LDA.b #$7E				;$00F4CF	 | |
 	STA $02					;$00F4D1	 |/
 	LDA [$00]				;$00F4D3	 |\ set $1693 to low byte of map16 tile,
-	STA.w $1693				;$00F4D5	 |/
+	STA.w $1693				;$00F4D5	 |/ NOTE: X,Y no level, para Mario (pontos de interacao)
 	INC $02					;$00F4D8	 | and set pointer to map16 high byte table.
 	PLX					;$00F4DA	 | Restore collision point index.
 	LDA [$00]				;$00F4DB	 |
@@ -12671,7 +12671,7 @@ conditional_map16:
 	LDY.w $14AD				;$00F54F	 | and the blue P-switch is active,
 	BEQ .return				;$00F552	 |
 	LDA.b #$24				;$00F554	 |
-	STA.w $1693				;$00F556	 | act like a real ? block.
+	STA.w $1693				;$00F556	 | act like a real ? block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = 129 e p-switch ativo, para Mario (pontos de interacao)
 	RTL					;$00F559	/
 
 .not_029
@@ -12691,11 +12691,11 @@ conditional_map16:
 	BEQ .return				;$00F56F	 |
 .act_like_used_block				;		 |
 	LDA.b #$32				;$00F571	 |
-	STA.w $1693				;$00F573	 | act like a used block.
+	STA.w $1693				;$00F573	 | act like a used block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = Switch Palace, para Mario (pontos de interacao)
 	RTL					;$00F576	/
 
 .map16_page_01
-	LDY.w $1693				;$00F577	\
+	LDY.w $1693				;$00F577	\  ! $1693 does not get uninitialized value :(
 	CPY.b #$32				;$00F57A	 | If it's a used block
 	BNE .not_132				;$00F57C	 |
 	LDY.w $14AD				;$00F57E	 | and the blue P-switch is active,
@@ -12709,7 +12709,7 @@ conditional_map16:
 	BEQ .return				;$00F58B	 |
 .act_like_coin					;		 |
 	LDY.b #$2B				;$00F58D	 |
-	STY.w $1693				;$00F58F	 | act like a coin.
+	STY.w $1693				;$00F58F	 | act like a coin. X: 0 a fim do level | Y: 0 a 1FF, se map16 = used block ou muncher com P-Switch, para Mario (pontos de interacao)
 .not_switch					;		 |
 	LDA.b #$00				;$00F592	 | Set map16 page 0.
 .return						;		 |
@@ -12811,7 +12811,7 @@ disable_controls:
 CODE_00F636:
 	REP #$20
 	LDX.b #$00				;$00F638	|
-	LDA $09					;$00F63A	|
+	LDA $09					;$00F63A	| possibly uninit
 	ORA.w #$0800				;$00F63C	|
 	CMP $09					;$00F63F	|
 	BEQ CODE_00F644				;$00F641	|
@@ -12826,7 +12826,7 @@ CODE_00F644:
 	ADC.w #$0200				;$00F650	|
 	STA.w $0D8F				;$00F653	|
 	LDX.b #$00				;$00F656	|
-	LDA $0A					;$00F658	|
+	LDA $0A					;$00F658	| possibly uninit
 	ORA.w #$0800				;$00F65A	|
 	CMP $0A					;$00F65D	|
 	BEQ CODE_00F662				;$00F65F	|
@@ -12840,7 +12840,7 @@ CODE_00F662:
 	CLC					;$00F66D	|
 	ADC.w #$0200				;$00F66E	|
 	STA.w $0D91				;$00F671	|
-	LDA $0B					;$00F674	|
+	LDA $0B					;$00F674	| uninit (C)
 	AND.w #$FF00				;$00F676	|
 	LSR					;$00F679	|
 	LSR					;$00F67A	|
@@ -12850,8 +12850,8 @@ CODE_00F662:
 	CLC					;$00F682	|
 	ADC.w #$0200				;$00F683	|
 	STA.w $0D93				;$00F686	|
-	LDA $0C					;$00F689	|
-	AND.w #$FF00				;$00F68B	|
+	LDA $0C					;$00F689	| this is loaded without initialization on the top of a brown platform (C)
+	AND.w #$FF00				;$00F68B	| or gray platform (D)
 	LSR					;$00F68E	|
 	LSR					;$00F68F	|
 	LSR					;$00F690	|
@@ -13715,7 +13715,7 @@ CODE_00FCF5:
 CODE_00FD08:
 	LDY.b #$3F
 	LDA $15					;$00FD0A	|
-	AND.b #$83				;$00FD0C	|
+	AND.b #$83				;$00FD0C	| release Water Bubble twice as often when holding B, A, left or right
 	BNE CODE_00FD12				;$00FD0E	|
 	LDY.b #$7F				;$00FD10	|
 CODE_00FD12:
