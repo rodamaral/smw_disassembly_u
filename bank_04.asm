@@ -223,10 +223,10 @@ GameMode_0E_Prim:
 	LDX.b #$01				;$048244	|
 CODE_048246:
 	LDA.w $0DA6,X
-	AND.b #$20				;$048249	|
-	BRA CODE_048261				;$04824B	|
+	AND.b #$20				;$048249	| check whether select was pressed by both joypads
+	BRA CODE_048261				;$04824B	| and do nothing with this info
 
-	LDA.w $0DBA,X				;$04824D	|
+	LDA.w $0DBA,X				;$04824D	| possibly unreachable debug code
 	INC A					;$048250	|
 	INC A					;$048251	|
 	CMP.b #$04				;$048252	|

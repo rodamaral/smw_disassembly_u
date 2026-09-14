@@ -2975,7 +2975,7 @@ CODE_0194AC:
 CODE_0194B4:
 	LDY $0F  				;$0194B4	| Scratch address is uninitialized sometimes
 	LDA.b #$00				;$0194B6	|
-	STA.w $1693				;$0194B8	|
+	STA.w $1693				;$0194B8	| For sprites, X/Y outside the level, vertical or horizontal = $00
 	STA.w $1694				;$0194BB	|
 	RTS					;$0194BE	|
 
@@ -3033,7 +3033,7 @@ CODE_019523:
 	STA $07					;$019525	|
 	LDX.w $15E9				;$019527	|
 	LDA [$05]				;$01952A	|
-	STA.w $1693				;$01952C	|
+	STA.w $1693				;$01952C	| For sprites, X/Y outside the level, vertical or horizontal
 	INC $07					;$01952F	|
 	LDA [$05]				;$019531	|
 	JSL conditional_map16			;$019533	|
@@ -3122,7 +3122,7 @@ CODE_019598:
 	ASL					;$0195C6	|
 	ROL					;$0195C7	|
 	AND.b #$01				;$0195C8	|
-	STA.w $1933				;$0195CA	|
+	STA.w $1933				;$0195CA	| set layer 2 if hitting the side of a layer 2 block
 	LDY.b #$00				;$0195CD	|
 	LDA.w $1868				;$0195CF	|
 	JSL CODE_00F160				;$0195D2	|
@@ -3188,27 +3188,27 @@ Return01965B:
 	RTS
 
 CODE_01965C:
-	LDA.w $1540,X
+	LDA.w $1540,X				;$01965C	|  try to normalize (Status 08) or unstun the sprite
 	ORA.w $1558,X				;$01965F	|
 	STA $C2,X				;$019662	|
 	LDA.w $1558,X				;$019664	|
 	BEQ CODE_01969C				;$019667	|
 	CMP.b #$01				;$019669	|
-	BNE CODE_01969C				;$01966B	|
-	LDY.w $1594,X				;$01966D	|
-	LDA.w $15D0,Y				;$019670	|
-	BNE CODE_01969C				;$019673	|
-	JSL LoadSpriteTables			;$019675	|
+	BNE CODE_01969C				;$01966B	| if $1558 != 1, branch
+	LDY.w $1594,X				;$01966D	| get the ID of the Koopa that hopped into the sprite
+	LDA.w $15D0,Y				;$019670	| check whether the Koopa is being licked by Yoshi
+	BNE CODE_01969C				;$019673	| if being licked by Yoshi, branch
+	JSL LoadSpriteTables			;$019675	| otherwise, normalize the sprite (convert to Status 08)
 	JSR FaceMario				;$019679	|
 	ASL.w $15F6,X				;$01967C	|
-	LSR.w $15F6,X				;$01967F	|
-	LDY.w $160E,X				;$019682	|
-	LDA.b #$08				;$019685	|
+	LSR.w $15F6,X				;$01967F	| clear bit 0
+	LDY.w $160E,X				;$019682	| get the ID of the Koopa that hopped into the sprite
+	LDA.b #$08				;$019685	| default Status
 	CPY.b #$03				;$019687	|
-	BNE CODE_019698				;$019689	|
-	INC.w $187B,X				;$01968B	|
+	BNE CODE_019698				;$019689	| not Yellow Koopa: skip Disco Shell conversion
+	INC.w $187B,X				;$01968B	| Yellow Koopa: transform into a Disco Shell
 	LDA.w $166E,X				;$01968E	|
-	ORA.b #$30				;$019691	|
+	ORA.b #$30				;$019691	| disable cape/fireball killing tweakers
 	STA.w $166E,X				;$019693	|
 	LDA.b #$0A				;$019696	|
 CODE_019698:
@@ -3643,7 +3643,7 @@ CODE_01999E:
 	ASL					;$0199BD	|
 	ROL					;$0199BE	|
 	AND.b #$01				;$0199BF	|
-	STA.w $1933				;$0199C1	|
+	STA.w $1933				;$0199C1	| set layer 2 if hitting the bottom of a layer 2 block
 	LDY.b #$00				;$0199C4	|
 	LDA.w $18A7				;$0199C6	|
 	JSL CODE_00F160				;$0199C9	|
@@ -5422,7 +5422,7 @@ CODE_01A702:
 	BNE Return01A72D			;$01A70E	|
 	LDA $9E,X				;$01A710	|
 	CMP.b #$02				;$01A712	|
-	BNE HopIntoShell			;$01A714	|
+	BNE TryHopIntoShell			;$01A714	|
 	LDA.b #$20				;$01A716	|
 	STA.w $163E,X				;$01A718	|
 	STA.w $1558,X				;$01A71B	|
@@ -5438,7 +5438,7 @@ PlayKickSfx:
 Return01A72D:
 	RTS
 
-HopIntoShell:
+TryHopIntoShell:
 	LDA.w $1540,Y
 	BNE Return01A777			;$01A731	|
 	LDA.w $009E,y				;$01A733	|
@@ -5707,7 +5707,7 @@ CODE_01A91C:
 	BEQ CODE_01A947				;$01A922	|
 CODE_01A924:
 	JSL DisplayContactGfx
-	LDA.b #$F8				;$01A928	|
+	LDA.b #$F8				;$01A928	| Hurt sprite with spinjump or Yoshi stomp
 	STA $7D					;$01A92A	|
 	LDA.w $187A				;$01A92C	|
 	BEQ CODE_01A935				;$01A92F	|
@@ -5741,7 +5741,7 @@ CODE_01A95D:
 	BEQ CODE_01A9BE				;$01A967	|
 	CPY.b #$72				;$01A969	|
 	BCC CODE_01A979				;$01A96B	|
-	PHX					;$01A96D	|
+	PHX					;$01A96D	| if ID >= 0x72, turn into a Blue Koopa and spawn a Feather
 	PHY					;$01A96E	|
 	JSL CODE_02EAF2				;$01A96F	|
 	PLY					;$01A973	|
@@ -5752,8 +5752,8 @@ CODE_01A95D:
 CODE_01A979:
 	CPY.b #$6E
 	BNE CODE_01A98A				;$01A97B	|
-	LDA.b #$02				;$01A97D	|
-	STA $C2,X				;$01A97F	|
+	LDA.b #$02				;$01A97D	| if ID = 6E (Dino Rhino)
+	STA $C2,X				;$01A97F	| then spawn a Dino Torch
 	LDA.b #$FF				;$01A981	|
 	STA.w $1540,X				;$01A983	|
 	LDA.b #$6F				;$01A986	|
@@ -5762,9 +5762,9 @@ CODE_01A979:
 CODE_01A98A:
 	CPY.b #$3F
 	BCC CODE_01A998				;$01A98C	|
-	LDA.b #$80				;$01A98E	|
-	STA.w $1540,X				;$01A990	|
-	LDA.w $A79B,Y				;$01A993	|
+	LDA.b #$80				;$01A98E	| if 3F < ID < 72 and ID != 6E
+	STA.w $1540,X				;$01A990	| then turn into a strange object
+	LDA.w $A79B,Y				;$01A993	| this was only meant to occur for the Para-Bomb (40)
 	BRA CODE_01A99B				;$01A996	|
 
 CODE_01A998:
@@ -5810,9 +5810,9 @@ CODE_01A9D3:
 
 CODE_01A9E2:
 	LDA.w $1662,X
-	AND.b #$80				;$01A9E5	|
+	AND.b #$80				;$01A9E5	| Hurt sprite from player jumping on it
 	BEQ CODE_01AA01				;$01A9E7	|
-	LDA.b #$02				;$01A9E9	|
+	LDA.b #$02				;$01A9E9	| fall off screen
 	STA.w $14C8,X				;$01A9EB	|
 	STZ $B6,X				;$01A9EE	|
 	STZ $AA,X				;$01A9F0	|
@@ -5820,7 +5820,7 @@ CODE_01A9F2:
 	LDA $9E,X
 	CMP.b #$1E				;$01A9F4	|
 	BNE Return01AA00			;$01A9F6	|
-	LDY.w $18E1				;$01A9F8	|
+	LDY.w $18E1				;$01A9F8	| TEST: stun Lakitu cloud
 	LDA.b #$1F				;$01A9FB	|
 	STA.w $1540,Y				;$01A9FD	|
 Return01AA00:
@@ -6217,7 +6217,7 @@ CODE_01AC8E:
 	LDY.w $161A,X				;$01AC95	|
 	CPY.b #$FF				;$01AC98	|
 	BEQ OffScrKillSprite			;$01AC9A	|
-	LDA.b #$00				;$01AC9C	|
+	LDA.b #$00				;$01AC9C	| make sprite able to respawn
 	STA.w $1938,Y				;$01AC9E	|
 OffScrKillSprite:
 	STZ.w $14C8,X
@@ -12537,7 +12537,7 @@ CODE_01D989:
 	STA $07					;$01D98B	|
 	LDX.w $15E9				;$01D98D	|
 	LDA [$05]				;$01D990	|
-	STA.w $1693				;$01D992	|
+	STA.w $1693				;$01D992	| Line Platform Sprites, X,Y quaisquer!
 	INC $07					;$01D995	|
 	LDA [$05]				;$01D997	|
 	PLY					;$01D999	|
@@ -15966,8 +15966,8 @@ CODE_01F344:
 	BMI CODE_01F370				;$01F34D	|
 	LDA.w $1686,Y				;$01F34F	|
 	AND.b #$02				;$01F352	|
-	BEQ CODE_01F373				;$01F354	|
-	LDA.b #$07				;$01F356	|
+	BEQ CODE_01F373				;$01F354	| swallow sprite immediately
+	LDA.b #$07				;$01F356	| hold sprite on mouth
 	STA.w $14C8,Y				;$01F358	|
 	LDA.b #$FF				;$01F35B	|
 	STA.w $18AC				;$01F35D	|
@@ -15976,7 +15976,7 @@ CODE_01F344:
 	BCS CODE_01F370				;$01F365	|
 	PHX					;$01F367	|
 	TAX					;$01F368	|
-	LDA.w SpriteToSpawn,X			;$01F369	|
+	LDA.w SpriteToSpawn,X			;$01F369	| transform sprite ID for 00-0C
 	STA.w $009E,y				;$01F36C	|
 	PLX					;$01F36F	|
 CODE_01F370:

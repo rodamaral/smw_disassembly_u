@@ -1081,9 +1081,9 @@ CODE_028885:
 	LDA $05
 	CMP.b #$08				;$028887	|
 	BCS CODE_0288DC				;$028889	|
-	CMP.b #$06				;$02888B	|
+	CMP.b #$06				;$02888B	| 06: generate a single coin
 	BCC CODE_0288DC				;$02888D	|
-	CMP.b #$07				;$02888F	|
+	CMP.b #$07				;$02888F	| 07: generate a multi-coin
 	BNE CODE_02889D				;$028891	|
 	LDA.w $186B				;$028893	|
 	BNE CODE_02889D				;$028896	|
@@ -1122,23 +1122,23 @@ CODE_0288DC:
 	LDY $05
 	CPY.b #$0B				;$0288DE	|
 	BNE CODE_0288EA				;$0288E0	|
-	LDA $9A					;$0288E2	|
-	AND.b #$30				;$0288E4	|
+	LDA $9A					;$0288E2	| 0B: generate Key/P-Balloon/Wings/Green Shell
+	AND.b #$30				;$0288E4	| if low X position is 20, 60, A0, E0 ()
 	CMP.b #$20				;$0288E6	|
 	BEQ GenSpriteFromBlk			;$0288E8	|
 CODE_0288EA:
 	CPY.b #$10
-	BEQ CODE_0288FD				;$0288EC	|
+	BEQ CODE_0288FD				;$0288EC	| 10: generate stunned Key !!! unused?
 	CPY.b #$08				;$0288EE	|
 	BNE CODE_0288F9				;$0288F0	|
-	LDA.w $1692				;$0288F2	|
-	BEQ GenSpriteFromBlk			;$0288F5	|
+	LDA.w $1692				;$0288F2	| 08: generate Growing vine
+	BEQ GenSpriteFromBlk			;$0288F5	| based on Sprite memory setting from header
 	BNE CODE_0288FD				;$0288F7	|
 CODE_0288F9:
 	CPY.b #$0C
-	BNE GenSpriteFromBlk			;$0288FB	|
+	BNE GenSpriteFromBlk			;$0288FB	| 0C: if not Yoshi egg
 CODE_0288FD:
-	JSL FindFreeSprSlot
+	JSL FindFreeSprSlot			;$0288FD	| Find a free sprite slot for Yoshi Egg OR stunned Key OR Vine with non-zero sprite header
 	TYX					;$028901	|
 	BPL CODE_028922				;$028902	|
 	RTL					;$028904	|
@@ -1208,7 +1208,7 @@ CODE_028972:
 	STA $D8,X				;$02897D	|
 	LDA $99					;$02897F	|
 	STA.w $14D4,X				;$028981	|
-	LDA.w $1933				;$028984	|
+	LDA.w $1933				;$028984	| unint $1933 for Angel Blocks, possibly shifting the item according to layer 2 positions
 	BEQ CODE_0289A5				;$028987	|
 	LDA $9A					;$028989	|
 	SEC					;$02898B	|
@@ -1430,16 +1430,16 @@ CODE_028AF5:
 	LDA $80					;$028AFB	|
 	CMP.b #$D0				;$028AFD	|
 	BCS CODE_028B05				;$028AFF	|
-	JSL CODE_02858F				;$028B01	|
+	JSL CODE_02858F				;$028B01	| unused sparkles around the player, like from the stars
 CODE_028B05:
-	JSR CODE_028B67
-	JSR CODE_02902D				;$028B08	|
+	JSR CODE_028B67				;$028B05	| Minor extended sprites
+	JSR CODE_02902D				;$028B08	| Multiple coin block
 	JSR ScoreSprGfx				;$028B0B	|
-	JSR CODE_029B0A				;$028B0E	|
-	JSR CODE_0299D2				;$028B11	|
-	JSR CODE_02B387				;$028B14	|
+	JSR CODE_029B0A				;$028B0E	| Extended sprites
+	JSR CODE_0299D2				;$028B11	| Spinning coin sprite
+	JSR CODE_02B387				;$028B14	| Shooter sprite
 	JSR CallGenerator			;$028B17	|
-	JSR CODE_0294F5				;$028B1A	|
+	JSR CODE_0294F5				;$028B1A	| Cape
 	JSR LoadSprFromLevel			;$028B1D	|
 	LDA.w $18C0				;$028B20	|
 	BEQ CODE_028B65				;$028B23	|
@@ -2531,7 +2531,7 @@ CODE_02931A:
 	STA $07					;$02931C	|
 	LDX.w $1698				;$02931E	|
 	LDA [$05]				;$029321	|
-	STA.w $1693				;$029323	|
+	STA.w $1693				;$029323	| Bounce Sprites, exceto turn block, X: 0, fim do level, Y: 0, 1FF. Pega finalzinho da parte debaixo de horizontal
 	INC $07					;$029326	|
 	LDA [$05]				;$029328	|
 	BNE Return029355			;$02932A	|
@@ -2928,7 +2928,7 @@ CODE_02960D:
 	LDA.b #$7E
 	STA $07					;$02960F	|
 	LDA [$05]				;$029611	|
-	STA.w $1693				;$029613	|
+	STA.w $1693				;$029613	| Cape spin, X: 0, fim do level, Y: 0, 1FF. Pega finalzinho da parte debaixo de horizontal
 	INC $07					;$029616	|
 	LDA [$05]				;$029618	|
 	JSL conditional_map16			;$02961A	|
@@ -3896,7 +3896,7 @@ ADDR_029CE3:
 	STA.w $173D,X				;$029CEF	|
 	INC.w $1765,X				;$029CF2	|
 ADDR_029CF5:
-	JSR CODE_02A3F6
+	JSR CODE_02A3F6				;$029CF5	| check for contact with Player
 CODE_029CF8:
 	LDA.w $1715,X
 	SEC					;$029CFB	|
@@ -4181,28 +4181,28 @@ CODE_029F08:
 	TXA
 	EOR $13					;$029F09	|
 	LSR					;$029F0B	|
-	BCS CODE_029F2A				;$029F0C	|
-	JSR CODE_02A56E				;$029F0E	|
-	BCS CODE_029F27				;$029F11	|
+	BCS CODE_029F2A				;$029F0C	| presumably, draw gfx???
+	JSR CODE_02A56E				;$029F0E	| process mechanics
+	BCS CODE_029F27				;$029F11	| erase Bubble if it is on a non-zero  map16 bank
 	LDA $85					;$029F13	|
-	BNE CODE_029F2A				;$029F15	|
+	BNE CODE_029F2A				;$029F15	| if it is a water level, continue
 	LDA $0C					;$029F17	|
 	CMP.b #$06				;$029F19	|
-	BCC CODE_029F2A				;$029F1B	|
+	BCC CODE_029F2A				;$029F1B	| if it is a water/lava tile, continue
 	LDA $0F					;$029F1D	|
 	BEQ CODE_029F27				;$029F1F	|
 	LDA $0D					;$029F21	|
 	CMP.b #$06				;$029F23	|
 	BCC CODE_029F2A				;$029F25	|
 CODE_029F27:
-	JMP CODE_02A211
+	JMP CODE_02A211 			; TODO: erase Water Bubble
 
 CODE_029F2A:
 	LDA.w $1715,X
 	CMP $1C					;$029F2D	|
 	LDA.w $1729,X				;$029F2F	|
 	SBC $1D					;$029F32	|
-	BNE CODE_029F27				;$029F34	|
+	BNE CODE_029F27				;$029F34	| erase Water Bubble
 	JSR CODE_02A1A4				;$029F36	|
 	LDA.w $1765,X				;$029F39	|
 	AND.b #$0C				;$029F3C	|
@@ -4277,8 +4277,8 @@ MarioFireball:
 	CMP $1C					;$029FB6	|
 	LDA.w $1729,X				;$029FB8	|
 	SBC $1D					;$029FBB	|
-	BEQ CODE_029FC2				;$029FBD	|
-	JMP CODE_02A211				;$029FBF	|
+	BEQ CODE_029FC2				;$029FBD	| process fireball
+	JMP CODE_02A211				;$029FBF	| erase fireball
 
 CODE_029FC2:
 	INC.w $1765,X
@@ -4335,7 +4335,7 @@ CODE_02A01B:
 	STA.w $1733,X				;$02A026	|
 	JSR CODE_02B560				;$02A029	|
 CODE_02A02C:
-	LDA $A5
+	LDA $A5					;$02A02C	| WARNING: gets sprite id for slot 7 directly from sprite table, not from $9E
 	CMP.b #$A9				;$02A02E	|
 	BEQ CODE_02A03B				;$02A030	|
 	LDA.w $0D9B				;$02A032	|
@@ -5031,13 +5031,13 @@ CODE_02A56E:
 	STZ $0F
 	STZ $0E					;$02A570	|
 	STZ $0B					;$02A572	|
-	STZ.w $1694				;$02A574	|
+	STZ.w $1694				;$02A574	| reset scratch memory
 	LDA.w $140F				;$02A577	|
 	BNE CODE_02A5BC				;$02A57A	|
 	LDA.w $0D9B				;$02A57C	|
 	BPL CODE_02A5BC				;$02A57F	|
 	AND.b #$40				;$02A581	|
-	BEQ CODE_02A592				;$02A583	|
+	BEQ CODE_02A592				;$02A583	| normal case
 	LDA.w $0D9B				;$02A585	|
 	CMP.b #$C1				;$02A588	|
 	BEQ CODE_02A5BC				;$02A58A	|
@@ -5046,20 +5046,20 @@ CODE_02A56E:
 	RTS					;$02A591	|
 
 CODE_02A592:
-	LDA.w $171F,X
+	LDA.w $171F,X				;$02A592	| calculate interaction point for sprites
 	CLC					;$02A595	|
-	ADC.b #$04				;$02A596	|
+	ADC.b #$04				;$02A596	| interaction point 4px to the right of the sprite position
 	STA.w $14B4				;$02A598	|
 	LDA.w $1733,X				;$02A59B	|
 	ADC.b #$00				;$02A59E	|
-	STA.w $14B5				;$02A5A0	|
+	STA.w $14B5				;$02A5A0	| x high byte
 	LDA.w $1715,X				;$02A5A3	|
 	CLC					;$02A5A6	|
-	ADC.b #$08				;$02A5A7	|
+	ADC.b #$08				;$02A5A7	| interaction point 8px down from the sprite position
 	STA.w $14B6				;$02A5A9	|
 	LDA.w $1729,X				;$02A5AC	|
 	ADC.b #$00				;$02A5AF	|
-	STA.w $14B7				;$02A5B1	|
+	STA.w $14B7				;$02A5B1	| y high byte
 	JSL CODE_01CC9D				;$02A5B4	|
 	LDX.w $15E9				;$02A5B8	|
 	RTS					;$02A5BB	|
@@ -5067,7 +5067,7 @@ CODE_02A592:
 CODE_02A5BC:
 	JSR CODE_02A611
 	ROL $0E					;$02A5BF	|
-	LDA.w $1693				;$02A5C1	|
+	LDA.w $1693				;$02A5C1	| possibly reads uninit $1693
 	STA $0C					;$02A5C4	|
 	LDA $5B					;$02A5C6	|
 	BPL CODE_02A60C				;$02A5C8	|
@@ -5111,7 +5111,7 @@ CODE_02A611:
 	LDA $0F
 	INC A					;$02A613	|
 	AND $5B					;$02A614	|
-	BEQ CODE_02A679				;$02A616	|
+	BEQ CODE_02A679				;$02A616	| actually process point collision
 	LDA.w $1715,X				;$02A618	|
 	CLC					;$02A61B	|
 	ADC.b #$08				;$02A61C	|
@@ -5164,7 +5164,7 @@ CODE_02A677:
 	CLC
 	RTS					;$02A678	|
 
-CODE_02A679:
+CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision 
 	LDA.w $1715,X
 	CLC					;$02A67C	|
 	ADC.b #$08				;$02A67D	|
@@ -5219,7 +5219,7 @@ CODE_02A6DB:
 	STA $07					;$02A6DD	|
 	LDX.w $15E9				;$02A6DF	|
 	LDA [$05]				;$02A6E2	|
-	STA.w $1693				;$02A6E4	|
+	STA.w $1693				;$02A6E4	| Extended Sprites (CloudCoin, WaterBubble, MarioFireball), vertical: dentro do level | horizontal: X: 0 até final, y_low - cameraY < 0xF0, mas MarioFireball morre antes de ter a chance
 	INC $07					;$02A6E7	|
 	LDA [$05]				;$02A6E9	|
 	JSL conditional_map16			;$02A6EB	|
@@ -5966,7 +5966,7 @@ CODE_02AC48:
 	REP #$10
 	LDX.w #$027A				;$02AC4A	|
 CODE_02AC4D:
-	STZ.w $1693,X
+	STZ.w $1693,X 				;$02AC4D	| level initialization
 	DEX					;$02AC50	|
 	BPL CODE_02AC4D				;$02AC51	|
 	SEP #$10				;$02AC53	|
@@ -7957,7 +7957,7 @@ CODE_02BA92:
 	LDA.b #$7E				;$02BA95	|
 	STA $07					;$02BA97	|
 	LDA [$05]				;$02BA99	|
-	STA.w $1693				;$02BA9B	|
+	STA.w $1693				;$02BA9B	| Baby Yoshi and Yoshi released tongue trying to eat a berry: treats as horizontal level, regardless, respecting level size and  2 Y screens
 	INC $07					;$02BA9E	|
 	LDA [$05]				;$02BAA0	|
 	BNE Return02BABF			;$02BAA2	|
@@ -11069,7 +11069,7 @@ CODE_02D1AD:
 	STA $07					;$02D1AF	|
 	LDX.w $15E9				;$02D1B1	|
 	LDA [$05]				;$02D1B4	|
-	STA.w $1693				;$02D1B6	|
+	STA.w $1693				;$02D1B6	| Yoshi Head tring to swallow berry when mounted: treats as horizontal regardless, X: 0 - level, Y < 2
 	INC $07					;$02D1B9	|
 	LDA [$05]				;$02D1BB	|
 	BNE Return02D1F0			;$02D1BD	|
