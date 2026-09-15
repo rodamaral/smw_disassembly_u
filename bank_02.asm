@@ -3,38 +3,36 @@ ORG $028000
 DATA_028000:
     db $80,$40,$20,$10,$08,$04,$02,$01
 
-CODE_028008:
+ReleaseItembox028008:
     PHX
     LDA.w $0DC2                             ;$028009 |
-    BEQ CODE_028070                         ;$02800C |
+    BEQ .NoItem028070                       ;$02800C |
     STZ.w $0DC2                             ;$02800E |
     PHA                                     ;$028011 |
     LDA.b #$0C                              ;$028012 |
     STA.w $1DFC                             ;$028014 |
     LDX.b #$0B                              ;$028017 |
-CODE_028019:
-    LDA.w $14C8,X
-    BEQ CODE_028042                         ;$02801C |
+-   LDA.w $14C8,X                           ;$028019 |
+    BEQ .SpawnSprite028042                  ;$02801C |
     DEX                                     ;$02801E |
-    BPL CODE_028019                         ;$02801F |
+    BPL -                                   ;$02801F |
     DEC.w $1861                             ;$028021 |
-    BPL ADDR_02802B                         ;$028024 |
+    BPL +                                   ;$028024 |
     LDA.b #$01                              ;$028026 |
     STA.w $1861                             ;$028028 |
-ADDR_02802B:
-    LDA.w $1861
++   LDA.w $1861                             ;$02802B |
     CLC                                     ;$02802E |
     ADC.b #$0A                              ;$02802F |
     TAX                                     ;$028031 |
     LDA $9E,X                               ;$028032 |
     CMP.b #$7D                              ;$028034 |
-    BNE CODE_028042                         ;$028036 |
+    BNE .SpawnSprite028042                  ;$028036 |
     LDA.w $14C8,X                           ;$028038 |
     CMP.b #$0B                              ;$02803B |
-    BNE CODE_028042                         ;$02803D |
+    BNE .SpawnSprite028042                  ;$02803D |
     STZ.w $13F3                             ;$02803F |
-CODE_028042:
-    LDA.b #$08
+.SpawnSprite028042:
+    LDA.b #$08                              ;$028042 |
     STA.w $14C8,X                           ;$028044 |
     PLA                                     ;$028047 |
     CLC                                     ;$028048 |
@@ -56,8 +54,8 @@ CODE_028042:
     ADC.b #$00                              ;$028068 |
     STA.w $14D4,X                           ;$02806A |
     INC.w $1534,X                           ;$02806D |
-CODE_028070:
-    PLX
+.NoItem028070:
+    PLX                                     ;$028070 |
     RTL                                     ;$028071 |
 
 BombExplosionX:
@@ -674,7 +672,7 @@ CODE_02853F:
     BPL CODE_028536                         ;$02858C |
     RTL                                     ;$02858E |
 
-CODE_02858F:
+SpawnStarSparkles:
     LDY.b #$1F
     LDX.b #$00                              ;$028591 |
     LDA $19                                 ;$028593 |
@@ -1388,26 +1386,25 @@ CODE_028AB1:
     PHK                                     ;$028AB2 |
     PLB                                     ;$028AB3 |
     LDA.w $18E4                             ;$028AB4 |
-    BEQ CODE_028AD5                         ;$028AB7 |
+    BEQ .ProcessStarman028AD5               ;$028AB7 |
     LDA.w $18E5                             ;$028AB9 |
-    BEQ CODE_028AC3                         ;$028ABC |
+    BEQ .CODE_028AC3                        ;$028ABC |
     DEC.w $18E5                             ;$028ABE |
-    BRA CODE_028AD5                         ;$028AC1 |
-
-CODE_028AC3:
+    BRA .ProcessStarman028AD5               ;$028AC1 |
+.CODE_028AC3:
     DEC.w $18E4
-    BEQ CODE_028ACD                         ;$028AC6 |
+    BEQ .IncrementLives028ACD               ;$028AC6 |
     LDA.b #$23                              ;$028AC8 |
     STA.w $18E5                             ;$028ACA |
-CODE_028ACD:
+.IncrementLives028ACD:
     LDA.b #$05
     STA.w $1DFC                             ;$028ACF |
     INC.w $0DBE                             ;$028AD2 |
-CODE_028AD5:
+.ProcessStarman028AD5:
     LDA.w $1490
-    BEQ CODE_028AEB                         ;$028AD8 |
+    BEQ .ProcessStarSparkles028AEB          ;$028AD8 |
     CMP.b #$08                              ;$028ADA |
-    BCC CODE_028AEB                         ;$028ADC |
+    BCC .ProcessStarSparkles028AEB          ;$028ADC |
     LSR                                     ;$028ADE |
     LSR                                     ;$028ADF |
     LSR                                     ;$028AE0 |
@@ -1416,30 +1413,29 @@ CODE_028AD5:
     TAY                                     ;$028AE3 |
     LDA $13                                 ;$028AE4 |
     AND.w DATA_028AA9,Y                     ;$028AE6 |
-    BRA CODE_028AF5                         ;$028AE9 |
+    BRA .TrySpawnStarSparkles               ;$028AE9 |
 
-CODE_028AEB:
+.ProcessStarSparkles028AEB:
     LDA.w $18D3
-    BEQ CODE_028B05                         ;$028AEE |
+    BEQ +                                   ;$028AEE |
     DEC.w $18D3                             ;$028AF0 |
     AND.b #$01                              ;$028AF3 |
-CODE_028AF5:
+.TrySpawnStarSparkles:
     ORA $7F
     ORA $81                                 ;$028AF7 |
-    BNE CODE_028B05                         ;$028AF9 |
+    BNE +                                   ;$028AF9 |
     LDA $80                                 ;$028AFB |
     CMP.b #$D0                              ;$028AFD |
-    BCS CODE_028B05                         ;$028AFF |
-    JSL CODE_02858F                         ;$028B01 | unused sparkles around the player, like from the stars
-CODE_028B05:
-    JSR CODE_028B67                         ;$028B05 | Minor extended sprites
-    JSR CODE_02902D                         ;$028B08 | Multiple coin block
+    BCS +                                   ;$028AFF |
+    JSL SpawnStarSparkles                   ;$028B01 | unused sparkles around the player, like from the stars
++   JSR MinorExtendedSprites028B67          ;$028B05 |
+    JSR MultipleCoinBlock02902D             ;$028B08 |
     JSR ScoreSprGfx                         ;$028B0B |
-    JSR CODE_029B0A                         ;$028B0E | Extended sprites
-    JSR CODE_0299D2                         ;$028B11 | Spinning coin sprite
-    JSR CODE_02B387                         ;$028B14 | Shooter sprite
+    JSR ExtendedSprites029B0A               ;$028B0E |
+    JSR SpinningCoinSprites0299D2           ;$028B11 |
+    JSR ShooterSprites02B387                ;$028B14 |
     JSR CallGenerator                       ;$028B17 |
-    JSR CODE_0294F5                         ;$028B1A | Cape
+    JSR CapeInteractions0294F5              ;$028B1A |
     JSR LoadSprFromLevel                    ;$028B1D |
     LDA.w $18C0                             ;$028B20 |
     BEQ CODE_028B65                         ;$028B23 |
@@ -1474,7 +1470,7 @@ CODE_028B65:
     PLB
     RTL                                     ;$028B66 |
 
-CODE_028B67:
+MinorExtendedSprites028B67:
     LDX.b #$0B
 CODE_028B69:
     LDA.w $17F0,X
@@ -2135,7 +2131,7 @@ CODE_029018:
 Return02902C:
     RTS
 
-CODE_02902D:
+MultipleCoinBlock02902D:
     LDA.w $186B
     CMP.b #$02                              ;$029030 |
     BCC CODE_02903B                         ;$029032 |
@@ -2774,26 +2770,25 @@ GroundPoundNextSpr:
     PLB                                     ;$0294F3 |
     RTL                                     ;$0294F4 |
 
-CODE_0294F5:
+CapeInteractions0294F5:
     LDA.w $13E8
     BEQ Return02950A                        ;$0294F8 |
     STA $0E                                 ;$0294FA |
     LDA $13                                 ;$0294FC |
     LSR                                     ;$0294FE |
-    BCC CODE_029507                         ;$0294FF |
+    BCC +                                   ;$0294FF |
     JSR CODE_0293AE                         ;$029501 |
-    JSR CODE_029631                         ;$029504 |
-CODE_029507:
-    JSR CODE_02950B
+    JSR CapeExtSpriteInteract029631         ;$029504 |
++   JSR CODE_02950B
 Return02950A:
     RTS
 
 CODE_02950B:
     STZ $0F
-    JSR CODE_029540                         ;$02950D |
+    JSR CapeLayerInteraction029540          ;$02950D |
     LDA $5B                                 ;$029510 |
-    BPL Return02953B                        ;$029512 |
-    INC $0F                                 ;$029514 |
+    BPL Return02953B                        ;$029512 | if there is collision with either Layer 2 or 3
+    INC $0F                                 ;$029514 | calculate shifted cape position
     LDA.w $13E9                             ;$029516 |
     CLC                                     ;$029519 |
     ADC $26                                 ;$02951A |
@@ -2808,7 +2803,7 @@ CODE_02950B:
     LDA.w $13EC                             ;$029530 |
     ADC $29                                 ;$029533 |
     STA.w $13EC                             ;$029535 |
-    JSR CODE_029540                         ;$029538 |
+    JSR CapeLayerInteraction029540          ;$029538 |
 Return02953B:
     RTS
 
@@ -2818,15 +2813,15 @@ DATA_02953C:
 DATA_02953E:
     db $02,$0E
 
-CODE_029540:
+CapeLayerInteraction029540:
     LDA $13
     AND.b #$01                              ;$029542 |
     TAY                                     ;$029544 |
     LDA $0F                                 ;$029545 |
     INC A                                   ;$029547 |
     AND $5B                                 ;$029548 |
-    BEQ CODE_0295AE                         ;$02954A |
-    LDA.w $13EB                             ;$02954C |
+    BEQ CapeHorizontalLayer0295AE           ;$02954A |
+    LDA.w $13EB                             ;$02954C | if vertical layer
     CLC                                     ;$02954F |
     ADC.w DATA_02953C,Y                     ;$029550 |
     AND.b #$F0                              ;$029553 |
@@ -2859,25 +2854,23 @@ CODE_029540:
     LDX $03                                 ;$029588 |
     LDA.l DATA_00BA80,X                     ;$02958A |
     LDY $0F                                 ;$02958E |
-    BEQ CODE_029596                         ;$029590 |
+    BEQ +                                   ;$029590 |
     LDA.l DATA_00BA8E,X                     ;$029592 |
-CODE_029596:
-    CLC
++   CLC                                     ;$029596 |
     ADC $00                                 ;$029597 |
     STA $05                                 ;$029599 |
     LDA.l DATA_00BABC,X                     ;$02959B |
     LDY $0F                                 ;$02959F |
-    BEQ CODE_0295A7                         ;$0295A1 |
+    BEQ +                                   ;$0295A1 |
     LDA.l DATA_00BACA,X                     ;$0295A3 |
-CODE_0295A7:
-    ADC $02
++   ADC $02                                 ;$0295A7 |
     STA $06                                 ;$0295A9 |
-    BRA CODE_02960D                         ;$0295AB |
+    BRA Map16Cape02960D                     ;$0295AB |
 
 Return0295AD:
     RTS
 
-CODE_0295AE:
+CapeHorizontalLayer0295AE:
     LDA.w $13EB
     CLC                                     ;$0295B1 |
     ADC.w DATA_02953C,Y                     ;$0295B2 |
@@ -2911,20 +2904,18 @@ CODE_0295AE:
     LDX $03                                 ;$0295EA |
     LDA.l DATA_00BA60,X                     ;$0295EC |
     LDY $0F                                 ;$0295F0 |
-    BEQ CODE_0295F8                         ;$0295F2 |
+    BEQ +                                   ;$0295F2 |
     LDA.l DATA_00BA70,X                     ;$0295F4 |
-CODE_0295F8:
-    CLC
++   CLC                                     ;$0295F8 |
     ADC $00                                 ;$0295F9 |
     STA $05                                 ;$0295FB |
     LDA.l DATA_00BA9C,X                     ;$0295FD |
     LDY $0F                                 ;$029601 |
-    BEQ CODE_029609                         ;$029603 |
+    BEQ +                                   ;$029603 |
     LDA.l DATA_00BAAC,X                     ;$029605 |
-CODE_029609:
-    ADC $02
++   ADC $02                                 ;$029609 |
     STA $06                                 ;$02960B |
-CODE_02960D:
+Map16Cape02960D:
     LDA.b #$7E
     STA $07                                 ;$02960F |
     LDA [$05]                               ;$029611 |
@@ -2942,24 +2933,23 @@ CODE_02960D:
 Return029630:
     RTS
 
-CODE_029631:
+CapeExtSpriteInteract029631:
     LDX.b #$07
-CODE_029633:
-    STX.w $15E9
+-   STX.w $15E9                             ;$029633 |
     LDA.w $170B,X                           ;$029636 |
     CMP.b #$02                              ;$029639 |
-    BCC CODE_029653                         ;$02963B |
+    BCC .NextExtendedSprite029653           ;$02963B |
     JSR CODE_02A519                         ;$02963D |
     JSR CODE_029696                         ;$029640 |
     JSL CheckForContact                     ;$029643 |
-    BCC CODE_029653                         ;$029647 |
+    BCC .NextExtendedSprite029653           ;$029647 |
     LDA.w $170B,X                           ;$029649 |
     CMP.b #$12                              ;$02964C |
-    BEQ CODE_029653                         ;$02964E |
+    BEQ .NextExtendedSprite029653           ;$02964E |
     JSR CODE_02A4DE                         ;$029650 |
-CODE_029653:
+.NextExtendedSprite029653:
     DEX
-    BPL CODE_029633                         ;$029654 |
+    BPL -                                   ;$029654 |
 Return029656:
     RTS
 
@@ -3452,7 +3442,7 @@ CODE_02999F:
     STA.w $0460,Y                           ;$0299CE |
     RTS                                     ;$0299D1 |
 
-CODE_0299D2:
+SpinningCoinSprites0299D2:
     LDX.b #$03
 CODE_0299D4:
     STX.w $15E9
@@ -3619,7 +3609,7 @@ CODE_029B01:
     STA.w $17CC,Y                           ;$029B06 |
     RTS                                     ;$029B09 |
 
-CODE_029B0A:
+ExtendedSprites029B0A:
     LDX.b #$09
 CODE_029B0C:
     STX.w $15E9
@@ -4988,7 +4978,7 @@ CODE_02A519:
     LDY.w $170B,X
     LDA.w $171F,X                           ;$02A51C |
     CLC                                     ;$02A51F |
-    ADC.w $A4E7,Y                   ;$02A520 |
+    ADC.w $A4E7,Y                           ;$02A520 |
     STA $04                                 ;$02A523 |
     LDA.w $1733,X                           ;$02A525 |
     ADC.b #$00                              ;$02A528 |
@@ -6956,7 +6946,7 @@ CODE_02B348:
 Return02B386:
     RTS
 
-CODE_02B387:
+ShooterSprites02B387:
     LDA $9D
     BNE Return02B3AA                        ;$02B389 |
     LDX.b #$07                              ;$02B38B |

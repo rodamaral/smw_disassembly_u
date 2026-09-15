@@ -7462,7 +7462,7 @@ CODE_00C585:
     LDA.b #$02                              ;$00C586 |
     PHA                                     ;$00C588 |
     PLB                                     ;$00C589 |
-    JSL CODE_028008                         ;$00C58A |
+    JSL ReleaseItembox028008                ;$00C58A |
     PLB                                     ;$00C58E |
 CODE_00C58F:
     STZ.w $1402
@@ -12771,7 +12771,7 @@ CancelSoaring:
 PowerDown:
     LDY.b #$04
     STY.w $1DF9                             ;$00F5F5 |
-    JSL CODE_028008                         ;$00F5F8 |
+    JSL ReleaseItembox028008                ;$00F5F8 |
     LDA.b #$01                              ;$00F5FC |
     STA $71                                 ;$00F5FE |
     STZ $19                                 ;$00F600 |
