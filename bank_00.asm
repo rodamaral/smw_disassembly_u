@@ -7320,35 +7320,33 @@ DATA_00C478:
 CODE_00C47E:
     STZ $78
     LDA.w $13CB                             ;$00C480 |
-    BPL CODE_00C48C                         ;$00C483 |
-    JSL CODE_01C580                         ;$00C485 |
+    BPL +                                   ;$00C483 |
+    JSL CODE_01C580                         ;$00C485 | as $13CB was left off, this is normally unreachable
     STZ.w $13CB                             ;$00C489 |
-CODE_00C48C:
-    LDY.w $1434
-    BEQ CODE_00C4BA                         ;$00C48F |
++   LDY.w $1434                             ;$00C48C |
+    BEQ .CODE_00C4BA                        ;$00C48F | if keyhole timer is set
     STY.w $13FB                             ;$00C491 |
     STY $9D                                 ;$00C494 |
     LDX.w $1435                             ;$00C496 |
     LDA.w $1433                             ;$00C499 |
     CMP.w DATA_00C470,X                     ;$00C49C |
-    BNE CODE_00C4BC                         ;$00C49F |
+    BNE .CODE_00C4BC                         ;$00C49F |
     DEY                                     ;$00C4A1 |
-    BNE CODE_00C4B7                         ;$00C4A2 |
+    BNE +                                   ;$00C4A2 |
     INC.w $1435                             ;$00C4A4 |
     TXA                                     ;$00C4A7 |
     LSR                                     ;$00C4A8 |
-    BCC CODE_00C4F8                         ;$00C4A9 |
+    BCC .CODE_00C4F8                         ;$00C4A9 |
     JSR CODE_00FCEC                         ;$00C4AB |
     LDA.b #$02                              ;$00C4AE |
     LDY.b #$0B                              ;$00C4B0 |
     JSR CODE_00C9FE                         ;$00C4B2 |
     LDY.b #$00                              ;$00C4B5 |
-CODE_00C4B7:
-    STY.w $1434
-CODE_00C4BA:
-    BRA CODE_00C4F8
++   STY.w $1434                             ;$00C4B7 |
+.CODE_00C4BA:
+    BRA .CODE_00C4F8
 
-CODE_00C4BC:
+.CODE_00C4BC:
     CLC
     ADC.w DATA_00C474,X                     ;$00C4BD |
     STA.w $1433                             ;$00C4C0 |
@@ -7378,93 +7376,89 @@ CODE_00C4BC:
     ADC.b #$10                              ;$00C4F1 |
     STA $01                                 ;$00C4F3 |
     JSR CODE_00CA88                         ;$00C4F5 |
-CODE_00C4F8:
+.CODE_00C4F8:
     LDA.w $13FB
-    BEQ CODE_00C500                         ;$00C4FB |
-    JMP CODE_00C58F                         ;$00C4FD |
+    BEQ .CODE_00C500                        ;$00C4FB |
+    JMP .CODE_00C58F                        ;$00C4FD |
 
-CODE_00C500:
+.CODE_00C500:
     LDA $9D
-    BNE CODE_00C569                         ;$00C502 |
+    BNE .CODE_00C569                        ;$00C502 |
     INC $14                                 ;$00C504 |
     LDX.b #$13                              ;$00C506 |
-CODE_00C508:
-    LDA.w $1495,X
-    BEQ CODE_00C510                         ;$00C50B |
+-   LDA.w $1495,X                           ;$00C508 |
+    BEQ +                                   ;$00C50B |
     DEC.w $1495,X                           ;$00C50D |
-CODE_00C510:
-    DEX
-    BNE CODE_00C508                         ;$00C511 |
++   DEX                                     ;$00C510 |
+    BNE -                                   ;$00C511 |
     LDA $14                                 ;$00C513 |
     AND.b #$03                              ;$00C515 |
-    BNE CODE_00C569                         ;$00C517 |
+    BNE .CODE_00C569                        ;$00C517 |
     LDA.w $1425                             ;$00C519 | Process various timers only when $14 is multiple of 4
-    BEQ CODE_00C533                         ;$00C51C |
+    BEQ .CODE_00C533                        ;$00C51C |
     LDA.w $14AB                             ;$00C51E |
     CMP.b #$44                              ;$00C521 |
-    BNE CODE_00C52A                         ;$00C523 |
+    BNE .CODE_00C52A                        ;$00C523 |
     LDY.b #$14                              ;$00C525 |
     STY.w $1DFB                             ;$00C527 |
-CODE_00C52A:
+.CODE_00C52A:
     CMP.b #$01
-    BNE CODE_00C533                         ;$00C52C |
+    BNE .CODE_00C533                        ;$00C52C |
     LDY.b #$0B                              ;$00C52E |
     STY.w $0100                             ;$00C530 |
-CODE_00C533:
+.CODE_00C533:
     LDY.w $14AD
     CPY.w $14AE                             ;$00C536 |
-    BCS CODE_00C53E                         ;$00C539 |
+    BCS .CODE_00C53E                        ;$00C539 |
     LDY.w $14AE                             ;$00C53B |
-CODE_00C53E:
+.CODE_00C53E:
     LDA.w $0DDA
-    BMI CODE_00C54F                         ;$00C541 |
+    BMI .CODE_00C54F                        ;$00C541 |
     CPY.b #$01                              ;$00C543 |
-    BNE CODE_00C54F                         ;$00C545 |
+    BNE .CODE_00C54F                        ;$00C545 |
     LDY.w $190C                             ;$00C547 |
-    BNE CODE_00C54F                         ;$00C54A |
+    BNE .CODE_00C54F                        ;$00C54A |
     STA.w $1DFB                             ;$00C54C |
-CODE_00C54F:
+.CODE_00C54F:
     CMP.b #$FF
-    BEQ CODE_00C55C                         ;$00C551 |
+    BEQ .CODE_00C55C                        ;$00C551 |
     CPY.b #$1E                              ;$00C553 |
-    BNE CODE_00C55C                         ;$00C555 |
+    BNE .CODE_00C55C                        ;$00C555 |
     LDA.b #$24                              ;$00C557 |
     STA.w $1DFC                             ;$00C559 |
-CODE_00C55C:
+.CODE_00C55C:
     LDX.b #$06
-CODE_00C55E:
-    LDA.w $14A8,X
-    BEQ CODE_00C566                         ;$00C561 |
+-   LDA.w $14A8,X                           ;$00C55E |
+    BEQ +                                   ;$00C561 |
     DEC.w $14A8,X                           ;$00C563 |
-CODE_00C566:
-    DEX
-    BNE CODE_00C55E                         ;$00C567 |
-CODE_00C569:
++   DEX                                     ;$00C566 |
+    BNE -                                   ;$00C567 |
+.CODE_00C569:
     JSR CODE_00C593
     LDA $16                                 ;$00C56C |
     AND.b #$20                              ;$00C56E |
-    BEQ CODE_00C58F                         ;$00C570 |
+    BEQ .CODE_00C58F                        ;$00C570 |
     LDA $15                                 ;$00C572 |
     AND.b #$08                              ;$00C574 |
-    BRA CODE_00C585                         ;$00C576 |
+    BRA .TryReleaseItembox00C585            ;$00C576 |
 
     LDA $19                                 ;$00C578 |
     INC A                                   ;$00C57A |
     CMP.b #$04                              ;$00C57B |
-    BCC ADDR_00C581                         ;$00C57D |
+    BCC .ADDR_00C581                        ;$00C57D |
     LDA.b #$00                              ;$00C57F |
-ADDR_00C581:
+.ADDR_00C581:
     STA $19
-    BRA CODE_00C58F                         ;$00C583 |
+    BRA .CODE_00C58F                        ;$00C583 |
 
-CODE_00C585:
+.TryReleaseItembox00C585:
     PHB
     LDA.b #$02                              ;$00C586 |
     PHA                                     ;$00C588 |
     PLB                                     ;$00C589 |
     JSL ReleaseItembox028008                ;$00C58A |
     PLB                                     ;$00C58E |
-CODE_00C58F:
+.CODE_00C58F:
     STZ.w $1402
 Return00C592:
     RTS
