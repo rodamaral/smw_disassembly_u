@@ -2214,12 +2214,12 @@ Ptrs009329:
     dw CODE_009A8B
     dw CODE_009F6F
     dw CODE_00941B
-    dw GAMEMODE_07
+    dw title_main_mode07_009C64
     dw CODE_009CD1
     dw CODE_009B1A
     dw CODE_009DFA
     dw CODE_009F6F
-    dw CODE_00A087
+    dw overworld_load_mode0C_00A087
     dw CODE_009F6F
     dw CODE_00A1BE
     dw TmpFade
@@ -2227,7 +2227,7 @@ Ptrs009329:
     dw CODE_0096D5
     dw GM04Load
     dw TmpFade
-    dw CODE_00A1DA
+    dw main_level_mode14_00A1DA
     dw CODE_009F6F
     dw CODE_009750
     dw CODE_009759
@@ -2859,7 +2859,7 @@ CODE_009860:
 DATA_009875:
     db $01,$00,$FF,$FF,$40,$00,$C0,$01
 
-CODE_00987D:
+boss_room_00987D:
     JSR CODE_008ACD
     BIT.w $0D9B                             ;$009880 |
     BVC CODE_009888                         ;$009883 |
@@ -3361,20 +3361,20 @@ ItrCntrlrSqnc:
     db $30,$60,$01,$00,$30,$41,$1A,$C1
     db $30,$00,$30,$FF
 
-GAMEMODE_07:
+title_main_mode07_009C64:
     JSR SetUp0DA0GM4
     JSR CODE_009CBE                         ;$009C67 |
     BNE CODE_009C9F                         ;$009C6A |
     JSR disable_controls                    ;$009C6C |
     LDX.w $1DF4                             ;$009C6F |
     DEC.w $1DF5                             ;$009C72 |
-    BNE CODE_009C82                         ;$009C75 |
+    BNE .CODE_009C82                        ;$009C75 |
     LDA.w ItrCntrlrSqnc,X                   ;$009C77 |
     STA.w $1DF5                             ;$009C7A |
     INX                                     ;$009C7D |
     INX                                     ;$009C7E |
     STX.w $1DF4                             ;$009C7F |
-CODE_009C82:
+.CODE_009C82:
     LDA.w $9C1D,X
     CMP.b #$FF                              ;$009C85 |
     BNE CODE_009C8F                         ;$009C87 |
@@ -3388,11 +3388,10 @@ CODE_009C8F:
     AND.b #$DF
     STA $15                                 ;$009C91 |
     CMP.w $9C1D,X                           ;$009C93 |
-    BNE CODE_009C9A                         ;$009C96 |
+    BNE +                                   ;$009C96 |
     AND.b #$9F                              ;$009C98 |
-CODE_009C9A:
-    STA $16
-    JMP CODE_00A1DA                         ;$009C9C |
++   STA $16                                 ;$CODE_009C9A |
+    JMP main_level_mode14_00A1DA            ;$009C9C |
 
 CODE_009C9F:
     JSL $7F8000
@@ -3919,15 +3918,15 @@ DATA_00A079:
     db $00,$00,$D8,$FF,$80,$00,$28,$01
     db $D8,$FF,$80,$00,$28,$01
 
-CODE_00A087:
+overworld_load_mode0C_00A087:
     JSR TurnOffIO
     LDA.w $1B9C                             ;$00A08A |
-    BEQ CODE_00A093                         ;$00A08D |
+    BEQ .CODE_00A093                        ;$00A08D |
     JSL CODE_04853B                         ;$00A08F |
-CODE_00A093:
+.CODE_00A093:
     JSR Clear_1A_13D3
     LDA.w $0109                             ;$00A096 |
-    BEQ CODE_00A0B0                         ;$00A099 |
+    BEQ .CODE_00A0B0                        ;$00A099 |
     LDA.b #$B0                              ;$00A09B |
     STA.w $1DF5                             ;$00A09D |
     STZ.w $1F11                             ;$00A0A0 |
@@ -3937,25 +3936,25 @@ CODE_00A093:
     STA.w $0100                             ;$00A0AA |
     JMP Mode04Finish                        ;$00A0AD |
 
-CODE_00A0B0:
+.CODE_00A0B0:
     JSR CODE_0085FA
     JSR upload_music_bank_1                 ;$00A0B3 |
     JSR SetUpScreen                         ;$00A0B6 |
     STZ.w $0DDA                             ;$00A0B9 |
     LDX.w $0DB3                             ;$00A0BC |
     LDA.w $0DBE                             ;$00A0BF |
-    BPL CODE_00A0C7                         ;$00A0C2 |
+    BPL .CODE_00A0C7                        ;$00A0C2 |
     INC.w $1B87                             ;$00A0C4 |
-CODE_00A0C7:
+.CODE_00A0C7:
     STA.w $0DB4,X
     LDA $19                                 ;$00A0CA |
     STA.w $0DB8,X                           ;$00A0CC |
     LDA.w $0DBF                             ;$00A0CF |
     STA.w $0DB6,X                           ;$00A0D2 |
     LDA.w $0DC1                             ;$00A0D5 |
-    BEQ CODE_00A0DD                         ;$00A0D8 |
+    BEQ .CODE_00A0DD                        ;$00A0D8 |
     LDA.w $13C7                             ;$00A0DA |
-CODE_00A0DD:
+.CODE_00A0DD:
     STA.w $0DBA,X
     LDA.w $0DC2                             ;$00A0E0 |
     STA.w $0DBC,X                           ;$00A0E3 |
@@ -4076,115 +4075,111 @@ GrndShakeDispYHi:
 DATA_00A1D6:
     db $12,$22,$12,$02
 
-CODE_00A1DA:
+main_level_mode14_00A1DA:
     LDA.w $1426
-    BEQ CODE_00A1E4                         ;$00A1DD |
+    BEQ .message_box_not_triggered          ;$00A1DD |
     JSL CODE_05B10C                         ;$00A1DF |
     RTS                                     ;$00A1E3 |
 
-CODE_00A1E4:
+.message_box_not_triggered:
     LDA.w $1425
-    BEQ CODE_00A200                         ;$00A1E7 |
-    LDA.w $14AB                             ;$00A1E9 |
-    BEQ CODE_00A200                         ;$00A1EC |
-    CMP.b #$40                              ;$00A1EE |
-    BCS CODE_00A200                         ;$00A1F0 |
-    JSR disable_controls                    ;$00A1F2 |
-    CMP.b #$1C                              ;$00A1F5 |
-    BCS CODE_00A200                         ;$00A1F7 |
-    JSR SetMarioPeaceImg                    ;$00A1F9 |
-    LDA.b #$0D                              ;$00A1FC |
-    STA $71                                 ;$00A1FE |
-CODE_00A200:
-    ORA $71
+    BEQ +                                   ;$00A1E7 |\
+    LDA.w $14AB                             ;$00A1E9 || Disable control and set Mario Peace pose
+    BEQ +                                   ;$00A1EC || if in a bonus level and timer is ending
+    CMP.b #$40                              ;$00A1EE ||
+    BCS +                                   ;$00A1F0 ||
+    JSR disable_controls                    ;$00A1F2 ||
+    CMP.b #$1C                              ;$00A1F5 ||
+    BCS +                                   ;$00A1F7 ||
+    JSR SetMarioPeaceImg                    ;$00A1F9 ||
+    LDA.b #$0D                              ;$00A1FC ||
+    STA $71                                 ;$00A1FE |/
++   ORA $71                                 ;$00A200 |
     ORA.w $1493                             ;$00A202 |
-    BEQ CODE_00A211                         ;$00A205 |
-    LDA.b #$04                              ;$00A207 |
-    TRB $15                                 ;$00A209 | clear hold down
-    LDA.b #$40                              ;$00A20B |
-    TRB $16                                 ;$00A20D | clear X/Y press
-    TRB $18                                 ;$00A20F |
-CODE_00A211:
-    LDA.w $13D3
-    BEQ CODE_00A21B                         ;$00A214 |
+    BEQ +                                   ;$00A205 |\
+    LDA.b #$04                              ;$00A207 || if not able to move free:
+    TRB $15                                 ;$00A209 || clear hold down
+    LDA.b #$40                              ;$00A20B ||
+    TRB $16                                 ;$00A20D || clear X/Y press
+    TRB $18                                 ;$00A20F |/
++   LDA.w $13D3                             ;$00A211 |
+    BEQ .able_to_toggle_pause_00A21B        ;$00A214 |
     DEC.w $13D3                             ;$00A216 | if unable to (un)pause
-    BRA CODE_00A242                         ;$00A219 |
+    BRA .handle_paused_status_00A242        ;$00A219 |
 
-CODE_00A21B:
+.able_to_toggle_pause_00A21B:
     LDA $16                                 ;$00A21B | able to pause
     AND.b #$10                              ;$00A21D |
-    BEQ CODE_00A242                         ;$00A21F |
+    BEQ .handle_paused_status_00A242        ;$00A21F |
     LDA.w $1493                             ;$00A221 | if pressed Start
-    BNE CODE_00A242                         ;$00A224 | and not ending the level
+    BNE .handle_paused_status_00A242        ;$00A224 | and not ending the level
     LDA $71                                 ;$00A226 |
     CMP.b #$09                              ;$00A228 |
-    BCS CODE_00A242                         ;$00A22A | and with pausable animation < 9
+    BCS .handle_paused_status_00A242        ;$00A22A | and with pausable animation < 9
     LDA.b #$3C                              ;$00A22C |
     STA.w $13D3                             ;$00A22E | then set the pause timer
     LDY.b #$12                              ;$00A231 |
     LDA.w $13D4                             ;$00A233 | toggle pause flag
     EOR.b #$01                              ;$00A236 |
     STA.w $13D4                             ;$00A238 |
-    BEQ CODE_00A23F                         ;$00A23B |
+    BEQ +                                   ;$00A23B |
     LDY.b #$11                              ;$00A23D |
-CODE_00A23F:
-    STY.w $1DF9                             ;$00A23F | play the (un)pause sound effect
-CODE_00A242:
++   STY.w $1DF9                             ;$00A23F | play the (un)pause sound effect
+.handle_paused_status_00A242:
     LDA.w $13D4
-    BEQ CODE_00A28A                         ;$00A245 |
-    BRA CODE_00A25B                         ;$00A247 |
+    BEQ .level_unpaused_00A28A              ;$00A245 |
+    BRA .level_paused_00A25B                ;$00A247 |
 
+.unreachable:
     BIT.w $0DA7                             ;$00A249 |
-    BVS ADDR_00A259                         ;$00A24C |
+    BVS +                                   ;$00A24C |
     LDA.w $0DA3                             ;$00A24E |
-    BPL CODE_00A25B                         ;$00A251 |
+    BPL .level_paused_00A25B                ;$00A251 |
     LDA $13                                 ;$00A253 |
     AND.b #$0F                              ;$00A255 |
-    BNE CODE_00A25B                         ;$00A257 |
-ADDR_00A259:
-    BRA CODE_00A28A
+    BNE .level_paused_00A25B                ;$00A257 |
++   BRA .level_unpaused_00A28A               ;$00A259 |
 
-CODE_00A25B:
+.level_paused_00A25B:
     LDA $15
     AND.b #$20                              ;$00A25D |
-    BEQ Return00A289                        ;$00A25F | if not holding select, return to main loop
+    BEQ .Return00A289                       ;$00A25F | if not holding select, return to main loop
     LDY.w $13BF                             ;$00A261 | if holding select, try to exit the level if beaten
     LDA.w $1EA2,Y                           ;$00A264 |
-    BPL Return00A289                        ;$00A267 |
+    BPL .Return00A289                       ;$00A267 |
     LDA.w $0DD5                             ;$00A269 |
-    BEQ CODE_00A270                         ;$00A26C |
-    BPL Return00A289                        ;$00A26E | if level was just beaten and activated an OW event, do nothing
-CODE_00A270:
-    LDA.b #$80
-    BRA CODE_00A27E                         ;$00A272 |
+    BEQ +                                   ;$00A26C |
+    BPL .Return00A289                       ;$00A26E | if level was just beaten and activated an OW event, do nothing
++   LDA.b #$80                              ;$00A270 |
+    BRA .skip_cheat_00A27E                  ;$00A272 |
 
-    LDA.b #$01                              ;$00A274 | unreachable cheat code
+.unreachable_cheat:
+    LDA.b #$01                              ;$00A274 |
     BIT $15                                 ;$00A276 |
-    BPL ADDR_00A27B                         ;$00A278 |
+    BPL +                                   ;$00A278 |
     INC A                                   ;$00A27A |
-ADDR_00A27B:
-    STA.w $13CE
-CODE_00A27E:
++   STA.w $13CE                             ;$00A27B |
+.skip_cheat_00A27E:
     STA.w $0DD5
     INC.w $1DE9                             ;$00A281 |
     LDA.b #$0B                              ;$00A284 |
-    STA.w $0100                             ;$00A286 |
-Return00A289:
+    STA.w $0100                             ;$00A286 | Fade out to Overworld
+.Return00A289:
     RTS
 
-CODE_00A28A:
+.level_unpaused_00A28A:
     LDA.w $0D9B
-    BPL CODE_00A295                         ;$00A28D |
-    JSR CODE_00987D                         ;$00A28F | if in a boss room
-    JMP CODE_00A2A9                         ;$00A292 |
+    BPL .normal_level                       ;$00A28D |
+    JSR boss_room_00987D                    ;$00A28F |
+    JMP .common_level_logic                 ;$00A292 |
 
-CODE_00A295:
-    JSL $7F8000                             ;00A295  | unrolled loop - OAMResetRoutine
+.normal_level:
+    JSL $7F8000                             ;$00A295 | unrolled loop - OAMResetRoutine
     JSL UpdateScreenPosition_00F6DB         ;$00A299 | updates camera -> hardware registers of layers
     JSL CODE_05BC00                         ;$00A29D | updates camera according to camera command
     JSL CODE_0586F1                         ;$00A2A1 | unknown camera stuff
     JSL CODE_05BB39                         ;$00A2A5 | tile animation stuff
-CODE_00A2A9:
+.common_level_logic:
     LDA $1C
     PHA                                     ;$00A2AB | push layer 1 positions
     LDA $1D                                 ;$00A2AC |
