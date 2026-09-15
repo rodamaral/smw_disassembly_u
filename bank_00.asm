@@ -579,7 +579,7 @@ DATA_008475:
     db $40,$00,$48,$00,$50,$00,$58,$00
     db $60,$00,$68,$00,$70,$00,$78
 
-CODE_008494:
+consolidate_OAM_008494:
     LDY.b #$1E
 CODE_008496:
     LDX.w DATA_008475,Y
@@ -1589,7 +1589,7 @@ DATA_008E07:
     db $BD,$BE,$BF,$C0,$C3,$C1,$B9,$C2
     db $C4,$B7,$C5
 
-CODE_008E1A:
+update_status_tileset_008E1A:
     LDA.w $1493
     ORA $9D                                 ;$008E1D |
     BNE CODE_008E6F                         ;$008E1F |
@@ -1990,7 +1990,7 @@ CODE_00919B:
     LDA $71
     CMP.b #$0A                              ;$00919D |
     BNE CODE_0091A6                         ;$00919F |
-    JSR CODE_00C593                         ;$0091A1 |
+    JSR execute_player_animation_00C593     ;$0091A1 |
     BRA Return0091B0                        ;$0091A4 |
 
 CODE_0091A6:
@@ -2030,7 +2030,7 @@ CODE_0091DF:
     SBC.b #$08                              ;$0091E1 |
     TAY                                     ;$0091E3 |
     BNE CODE_0091D0                         ;$0091E4 |
-    JMP CODE_008494                         ;$0091E6 |
+    JMP consolidate_OAM_008494              ;$0091E6 |
 
 CODE_0091E9:
     LDA.w DATA_009139,X
@@ -2468,7 +2468,7 @@ CODE_009529:
     LDA $20                                 ;$009539 |
     STA $1C                                 ;$00953B |
     SEP #$20                                ;$00953D |
-    JSL CODE_00E2BD                         ;$00953F |
+    JSL draw_mario_and_yoshi_00E2BD                         ;$00953F |
     REP #$20                                ;$009543 |
     PLA                                     ;$009545 |
     STA $1C                                 ;$009546 |
@@ -2477,12 +2477,12 @@ CODE_009529:
     SEP #$20                                ;$00954B |
     LDA.b #$0C                              ;$00954D |
     STA $71                                 ;$00954F |
-    JSR CODE_00C47E                         ;$009551 |
-    JMP CODE_008494                         ;$009554 |
+    JSR timers_and_animation_00C47E         ;$009551 |
+    JMP consolidate_OAM_008494              ;$009554 |
 
 CODE_009557:
     JSL CODE_0C938D
-    JMP CODE_008494                         ;$00955B |
+    JMP consolidate_OAM_008494              ;$00955B |
 
 CODE_00955E:
     LDY.b #$2F
@@ -2523,7 +2523,7 @@ CODE_0095AB:
     JSL CODE_0C939A                         ;$0095AF |
     INC $14                                 ;$0095B3 |
     JSL CODE_05BB39                         ;$0095B5 |
-    JMP CODE_008494                         ;$0095B9 |
+    JMP consolidate_OAM_008494              ;$0095B9 |
 
 CODE_0095BC:
     JSL CODE_0C93AD
@@ -2583,7 +2583,7 @@ CODE_00962C:
     JSR CODE_0092ED                         ;$00962F |
     JSL $7F8000                             ;$009632 |
     JSL CODE_0C93A5                         ;$009636 |
-    JMP CODE_008494                         ;$00963A |
+    JMP consolidate_OAM_008494              ;$00963A |
 
 CODE_00963D:
     JSR CODE_0085FA
@@ -2613,7 +2613,7 @@ CODE_009660:
     STA $12                                 ;$00967A |
     JSR _load_stripe_image_                 ;$00967C |
     JSL CODE_0CAADF                         ;$00967F |
-    JSR CODE_008494                         ;$009683 |
+    JSR consolidate_OAM_008494              ;$009683 |
     LDX.b #$14                              ;$009686 |
     LDY.b #$00                              ;$009688 |
     JMP CODE_009622                         ;$00968A |
@@ -2771,7 +2771,7 @@ CODE_0097AE:
     SBC.b #$08                              ;$0097B4 |
     TAY                                     ;$0097B6 |
     BNE CODE_00979D                         ;$0097B7 |
-    JMP CODE_008494                         ;$0097B9 |
+    JMP consolidate_OAM_008494              ;$0097B9 |
 
 CODE_0097BC:
     LDA.b #$0F
@@ -2848,11 +2848,11 @@ CODE_00983D:
     JSR GM04DoDMA                           ;$00985A |
     JSR CODE_008ACD                         ;$00985D |
 CODE_009860:
-    JSL CODE_00E2BD
-    JSR CODE_00A2F3                         ;$009864 |
-    JSR CODE_00C593                         ;$009867 |
+    JSL draw_mario_and_yoshi_00E2BD
+    JSR mirror_player_position_00A2F3       ;$009864 |
+    JSR execute_player_animation_00C593     ;$009867 |
     STZ $7D                                 ;$00986A |
-    JSL CODE_01808C                         ;$00986C |
+    JSL standard_and_cluster_sprites_01808C ;$00986C |
     JSL $7F8000                             ;$009870 |
     RTS                                     ;$009874 |
 
@@ -2949,7 +2949,7 @@ CODE_009925:
     STA $2C                                 ;$009940 |
     SEP #$20                                ;$009942 |
     JSR CODE_00AE15                         ;$009944 |
-    JSL CODE_01808C                         ;$009947 |
+    JSL standard_and_cluster_sprites_01808C ;$009947 |
     LDA.w $0D9B                             ;$00994B |
     LSR                                     ;$00994E |
     LDX.b #$C0                              ;$00994F |
@@ -4015,7 +4015,7 @@ CODE_00A11B:
     JSL CODE_04D6E9                         ;$00A165 |
     LDA.b #$F0                              ;$00A169 |
     STA $3F                                 ;$00A16B |
-    JSR CODE_008494                         ;$00A16D |
+    JSR consolidate_OAM_008494              ;$00A16D |
     JSR _load_stripe_image_                 ;$00A170 |
     STZ.w $13D9                             ;$00A173 |
     JSR KeepModeActive                      ;$00A176 |
@@ -4065,7 +4065,7 @@ CODE_00A1BE:
     INC $14                                 ;$00A1C1 |
     JSL $7F8000                             ;$00A1C3 |
     JSL GameMode_0E_Prim                    ;$00A1C7 |
-    JMP CODE_008494                         ;$00A1CB |
+    JMP consolidate_OAM_008494              ;$00A1CB |
 
 GrndShakeDispYLo:
     db $FE,$00,$02,$00
@@ -4192,33 +4192,32 @@ CODE_00A2A9:
     STZ.w $1888                             ;$00A2AF |
     STZ.w $1889                             ;$00A2B2 |
     LDA.w $1887                             ;$00A2B5 |
-    BEQ CODE_00A2D5                         ;$00A2B8 |
-    DEC.w $1887                             ;$00A2BA | process ground pound camera shake
-    AND.b #$03                              ;$00A2BD |
-    TAY                                     ;$00A2BF |
-    LDA.w GrndShakeDispYLo,Y                ;$00A2C0 |
-    STA.w $1888                             ;$00A2C3 |
-    CLC                                     ;$00A2C6 |
-    ADC $1C                                 ;$00A2C7 |
-    STA $1C                                 ;$00A2C9 |
-    LDA.w GrndShakeDispYHi,Y                ;$00A2CB |
-    STA.w $1889                             ;$00A2CE |
-    ADC $1D                                 ;$00A2D1 |
-    STA $1D                                 ;$00A2D3 |
-CODE_00A2D5:
-    JSR CODE_008E1A                         ;$00A2D5 | draw status tileset
-    JSL CODE_00E2BD                         ;$00A2D8 | draw Mario
-    JSR CODE_00A2F3                         ;$00A2DC | mirror Mario position
-    JSR CODE_00C47E                         ;$00A2DF | process timers and increase $14
-    JSL CODE_01808C                         ;$00A2E2 | main sprites
-    JSL CODE_028AB1                         ;$00A2E6 | secondary sprites / loading sprites / cape / etc
+    BEQ +                                   ;$00A2B8 |\
+    DEC.w $1887                             ;$00A2BA || If there is time for shaking layer 1
+    AND.b #$03                              ;$00A2BD || slightly shift the camera vertically
+    TAY                                     ;$00A2BF ||
+    LDA.w GrndShakeDispYLo,Y                ;$00A2C0 ||
+    STA.w $1888                             ;$00A2C3 ||
+    CLC                                     ;$00A2C6 ||
+    ADC $1C                                 ;$00A2C7 ||
+    STA $1C                                 ;$00A2C9 ||
+    LDA.w GrndShakeDispYHi,Y                ;$00A2CB ||
+    STA.w $1889                             ;$00A2CE ||
+    ADC $1D                                 ;$00A2D1 ||
+    STA $1D                                 ;$00A2D3 |/
++   JSR update_status_tileset_008E1A        ;$00A2D5 |
+    JSL draw_mario_and_yoshi_00E2BD         ;$00A2D8 |
+    JSR mirror_player_position_00A2F3       ;$00A2DC |
+    JSR timers_and_animation_00C47E         ;$00A2DF | Increase $14
+    JSL standard_and_cluster_sprites_01808C ;$00A2E2 |
+    JSL minor_sprites_and_loading_028AB1    ;$00A2E6 |
     PLA                                     ;$00A2EA | pull layer 1 positions
     STA $1D                                 ;$00A2EB |
     PLA                                     ;$00A2ED |
     STA $1C                                 ;$00A2EE |
-    JMP CODE_008494                         ;$00A2F0 | update OAM table
+    JMP consolidate_OAM_008494              ;$00A2F0 |
 
-CODE_00A2F3:
+mirror_player_position_00A2F3:
     REP #$20
     LDA $94                                 ;$00A2F5 |
     STA $D1                                 ;$00A2F7 |
@@ -4555,7 +4554,7 @@ CODE_00A5B9:
 CODE_00A5CF:
     JSR CODE_00922F
     JSR KeepModeActive                      ;$00A5D2 |
-    JSR CODE_008E1A                         ;$00A5D5 |
+    JSR update_status_tileset_008E1A        ;$00A5D5 |
     REP #$30                                ;$00A5D8 |
     PHB                                     ;$00A5DA |
     LDX.w #$0703                            ;$00A5DB |
@@ -4567,7 +4566,7 @@ CODE_00A5CF:
     STX.w $0903                             ;$00A5EB |
     SEP #$30                                ;$00A5EE |
     JSR CODE_00919B                         ;$00A5F0 |
-    JSR CODE_008494                         ;$00A5F3 |
+    JSR consolidate_OAM_008494              ;$00A5F3 |
     JMP CODE_0093F4                         ;$00A5F6 |
 
 CODE_00A5F9:
@@ -7317,7 +7316,7 @@ DATA_00C474:
 DATA_00C478:
     db $30,$33,$33,$30,$01,$00
 
-CODE_00C47E:
+timers_and_animation_00C47E:
     STZ $78
     LDA.w $13CB                             ;$00C480 |
     BPL +                                   ;$00C483 |
@@ -7330,13 +7329,13 @@ CODE_00C47E:
     LDX.w $1435                             ;$00C496 |
     LDA.w $1433                             ;$00C499 |
     CMP.w DATA_00C470,X                     ;$00C49C |
-    BNE .CODE_00C4BC                         ;$00C49F |
+    BNE .CODE_00C4BC                        ;$00C49F |
     DEY                                     ;$00C4A1 |
     BNE +                                   ;$00C4A2 |
     INC.w $1435                             ;$00C4A4 |
     TXA                                     ;$00C4A7 |
     LSR                                     ;$00C4A8 |
-    BCC .CODE_00C4F8                         ;$00C4A9 |
+    BCC .CODE_00C4F8                        ;$00C4A9 |
     JSR CODE_00FCEC                         ;$00C4AB |
     LDA.b #$02                              ;$00C4AE |
     LDY.b #$0B                              ;$00C4B0 |
@@ -7379,93 +7378,89 @@ CODE_00C47E:
 .CODE_00C4F8:
     LDA.w $13FB
     BEQ .CODE_00C500                        ;$00C4FB |
-    JMP .CODE_00C58F                        ;$00C4FD |
+    JMP .restore_noteblock_down_00C58F      ;$00C4FD |
 
 .CODE_00C500:
     LDA $9D
-    BNE .CODE_00C569                        ;$00C502 |
+    BNE .skip_timers_00C569                 ;$00C502 |
     INC $14                                 ;$00C504 |
     LDX.b #$13                              ;$00C506 |
--   LDA.w $1495,X                           ;$00C508 |
+-   LDA.w $1495,X                           ;$00C508 | decrement $1495-$14A8 every frame
     BEQ +                                   ;$00C50B |
     DEC.w $1495,X                           ;$00C50D |
 +   DEX                                     ;$00C510 |
     BNE -                                   ;$00C511 |
     LDA $14                                 ;$00C513 |
     AND.b #$03                              ;$00C515 |
-    BNE .CODE_00C569                        ;$00C517 |
+    BNE .skip_timers_00C569                 ;$00C517 |
     LDA.w $1425                             ;$00C519 | Process various timers only when $14 is multiple of 4
-    BEQ .CODE_00C533                        ;$00C51C |
+    BEQ .skip_bonus_timer                   ;$00C51C |
     LDA.w $14AB                             ;$00C51E |
     CMP.b #$44                              ;$00C521 |
-    BNE .CODE_00C52A                        ;$00C523 |
+    BNE +                                   ;$00C523 |
     LDY.b #$14                              ;$00C525 |
     STY.w $1DFB                             ;$00C527 |
-.CODE_00C52A:
-    CMP.b #$01
-    BNE .CODE_00C533                        ;$00C52C |
++   CMP.b #$01                              ;$00C52A |
+    BNE .skip_bonus_timer                   ;$00C52C |
     LDY.b #$0B                              ;$00C52E |
     STY.w $0100                             ;$00C530 |
-.CODE_00C533:
-    LDY.w $14AD
+.skip_bonus_timer:
+    LDY.w $14AD                             ;$00C533 |
     CPY.w $14AE                             ;$00C536 |
-    BCS .CODE_00C53E                        ;$00C539 |
+    BCS +                                   ;$00C539 | get the max between the Blue and Silver P-Switch timers
     LDY.w $14AE                             ;$00C53B |
-.CODE_00C53E:
-    LDA.w $0DDA
-    BMI .CODE_00C54F                        ;$00C541 |
++   LDA.w $0DDA                             ;$00C53E |
+    BMI +                                   ;$00C541 |
     CPY.b #$01                              ;$00C543 |
-    BNE .CODE_00C54F                        ;$00C545 |
+    BNE +                                   ;$00C545 |
     LDY.w $190C                             ;$00C547 |
-    BNE .CODE_00C54F                        ;$00C54A |
+    BNE +                                   ;$00C54A |
     STA.w $1DFB                             ;$00C54C |
-.CODE_00C54F:
-    CMP.b #$FF
-    BEQ .CODE_00C55C                        ;$00C551 |
++   CMP.b #$FF                              ;$00C54F |
+    BEQ +                                   ;$00C551 |
     CPY.b #$1E                              ;$00C553 |
-    BNE .CODE_00C55C                        ;$00C555 |
+    BNE +                                   ;$00C555 |
     LDA.b #$24                              ;$00C557 |
-    STA.w $1DFC                             ;$00C559 |
-.CODE_00C55C:
-    LDX.b #$06
+    STA.w $1DFC                             ;$00C559 | P-Switch time running out
++   LDX.b #$06                              ;$00C55C |
 -   LDA.w $14A8,X                           ;$00C55E |
     BEQ +                                   ;$00C561 |
-    DEC.w $14A8,X                           ;$00C563 |
+    DEC.w $14A8,X                           ;$00C563 | decrement $14A8-$14AE every 4th frame
 +   DEX                                     ;$00C566 |
     BNE -                                   ;$00C567 |
-.CODE_00C569:
-    JSR CODE_00C593
+.skip_timers_00C569:
+    JSR execute_player_animation_00C593     ;$00C569 |
     LDA $16                                 ;$00C56C |
     AND.b #$20                              ;$00C56E |
-    BEQ .CODE_00C58F                        ;$00C570 |
+    BEQ .restore_noteblock_down_00C58F      ;$00C570 |
     LDA $15                                 ;$00C572 |
     AND.b #$08                              ;$00C574 |
-    BRA .TryReleaseItembox00C585            ;$00C576 |
+    BRA .try_release_itembox_00C585         ;$00C576 |
 
+.unreachable:
     LDA $19                                 ;$00C578 |
     INC A                                   ;$00C57A |
     CMP.b #$04                              ;$00C57B |
-    BCC .ADDR_00C581                        ;$00C57D |
+    BCC +                                   ;$00C57D |
     LDA.b #$00                              ;$00C57F |
-.ADDR_00C581:
-    STA $19
-    BRA .CODE_00C58F                        ;$00C583 |
++   STA $19                                 ;$00C581 |
+    BRA .restore_noteblock_down_00C58F      ;$00C583 |
 
-.TryReleaseItembox00C585:
+.try_release_itembox_00C585:
     PHB
     LDA.b #$02                              ;$00C586 |
     PHA                                     ;$00C588 |
     PLB                                     ;$00C589 |
     JSL ReleaseItembox028008                ;$00C58A |
     PLB                                     ;$00C58E |
-.CODE_00C58F:
-    STZ.w $1402
+.restore_noteblock_down_00C58F:
+    STZ.w $1402                             ;$00C58F |
 Return00C592:
     RTS
 
-CODE_00C593:
+execute_player_animation_00C593:
     LDA $71                                 ;$00C593 \ Execute animation code.
-    JSL execute_pointer                     ;$00C595        /
+    JSL execute_pointer                     ;$00C595 /
 
 animation_pointers:
     dw no_animation
@@ -8217,8 +8212,8 @@ CODE_00CC14:
 free_roaming_speeds:
     dw $0000,$0000,$0002,$0006
     dw $FFFE,$FFFA
-    
-no_animation:                               ;               \
+
+no_animation:                               ;        \
     LDA $17                                 ;$00CC68 |\ If L isn't held, don't cycle the debug action.
     AND.b #$20                              ;$00CC6A | |
     BEQ .no_cycle                           ;$00CC6C |/
@@ -8230,10 +8225,10 @@ no_animation:                               ;               \
     CMP.b #$03                              ;$00CC7A | |
     BCC .no_cycle                           ;$00CC7C | | reset it to $00.
     STZ.w $1E01                             ;$00CC7E |/
-.no_cycle                                   ;                |
+.no_cycle                                   ;        |
     LDA.w $1E01                             ;$00CC81 |
-    BRA .skip_debug                         ;$00CC84        / Skip the debugging code.
-                                            ;               \
+    BRA .skip_debug                         ;$00CC84 / Skip the debugging code.
+                                            ;        \
     LSR                                     ;$00CC86 |\ If the debug action is $01,
     BEQ .instant_run                        ;$00CC87 |/ do instant running.
     LDA.b #$FF                              ;$00CC89 |\ Make the player invincible.
@@ -8247,11 +8242,11 @@ no_animation:                               ;               \
     LDA $15                                 ;$00CC99 |\ Isolate the up and down controller flags,
     AND.b #$0C                              ;$00CC9B | |
     LDX.b #$02                              ;$00CC9D |/ and run free roaming with the Y position.
-.free_roam                                  ;                |
+.free_roam                                  ;        |
     BIT $15                                 ;$00CC9F |\ If X or Y is pressed,
     BVC .not_fast                           ;$00CCA1 | | increase the speed.
     ORA.b #$02                              ;$00CCA3 | |
-.not_fast                                   ;                | |
+.not_fast                                   ;        | |
     TAY                                     ;$00CCA5 |/
     REP #$20                                ;$00CCA6 |\
     LDA $94,X                               ;$00CCA8 | | Move the player's X or Y position by
@@ -8259,16 +8254,16 @@ no_animation:                               ;               \
     ADC.w free_roaming_speeds,Y             ;$00CCAB | | the free roaming speed.
     STA $94,X                               ;$00CCAE | |
     SEP #$20                                ;$00CCB0 |/
-    RTS                                     ;$00CCB2        /
+    RTS                                     ;$00CCB2 /
 
-.instant_run                                ;               \
+.instant_run                                ;        \
     LDA.b #$70                              ;$00CCB3 |\
     STA.w $13E4                             ;$00CCB5 | | Set the maximum dash time
     STA.w $149F                             ;$00CCB8 |/ and flying time.
-.skip_debug                                 ;                |
+.skip_debug                                 ;        |
     LDA.w $1493                             ;$00CCBB | If $1493 is non-zero,
     BEQ .not_ending_level                   ;$00CCBE |
-    JMP ending_level                        ;$00CCC0        / run level ending code.
+    JMP ending_level                        ;$00CCC0 / run level ending code.
 
 .not_ending_level
     JSR screen_scrolling                    ;$00CCC3 \ Process screen scrolling.
@@ -8282,10 +8277,10 @@ no_animation:                               ;               \
     STZ $7B                                 ;$00CCD8 | Freeze the player's X position.
     LDA.b #$0F                              ;$00CCDA |\ Make the player face the screen.
     STA.w $13E0                             ;$00CCDC |/
-.return                                     ;                |
-    RTS                                     ;$00CCDF        /
+.return                                     ;        |
+    RTS                                     ;$00CCDF /
 
-not_frozen_physics:                         ;               \
+not_frozen_physics:                         ;        \
     LDA.w $0D9B                             ;$00CCE0 |\ If fighting the mode 7 koopalings,
     BPL no_special_collision                ;$00CCE3 | | use special collision.
     LSR                                     ;$00CCE5 | |
@@ -8310,13 +8305,13 @@ not_frozen_physics:                         ;               \
     STA.w $1438                             ;$00CD11 | |
     STA.w $14B6                             ;$00CD14 |/
     JSR boss_platform_collision             ;$00CD17 | Apply the platform collision.
-    BRA .apply_boss_room_collision          ;$00CD1A        /
+    BRA .apply_boss_room_collision          ;$00CD1A /
 
-.not_platform                               ;               \
+.not_platform                               ;        \
     JSR apply_player_speeds                 ;$00CD1C | Apply the player's speeds.
-.apply_boss_room_collision                  ;                |
+.apply_boss_room_collision                  ;        |
     JSR boss_room_collision                 ;$00CD1F | Apply boss room collision.
-    BRA skip_standard_collision             ;$00CD22        / 
+    BRA skip_standard_collision             ;$00CD22 / 
 
 no_special_collision:                       ;               \
     LDA $7D                                 ;$00CD24 |\ If the player is rising
@@ -8325,12 +8320,12 @@ no_special_collision:                       ;               \
     AND.b #$08                              ;$00CD2A | | and hit the ceiling,
     BEQ .no_hit_ceiling                     ;$00CD2C | |
     STZ $7D                                 ;$00CD2E |/ clear his Y speed.
-.no_hit_ceiling                             ;                |
+.no_hit_ceiling                             ;        |
     JSR apply_player_speeds                 ;$00CD30 | Apply the player's speeds.
     JSR level_collision                     ;$00CD33 | Apply standard level collision.
-skip_standard_collision:                    ;                |
+skip_standard_collision:                    ;        |
     JSR check_y_position                    ;$00CD36 | Check the player's Y position.
-CODE_00CD39:                                ;                |
+CODE_00CD39:                                ;        |
     STZ.w $13DD                             ;$00CD39 | Clear the turning around pose.
     LDY.w $13F3                             ;$00CD3C |\ If the player is still getting a P-balloon,
     BNE p_balloon                           ;$00CD3F |/ run the inflation code.
@@ -8338,7 +8333,7 @@ CODE_00CD39:                                ;                |
     BEQ .no_climb_on_air                    ;$00CD44 | |
     LDA.b #$1F                              ;$00CD46 | | set the climbing flag.
     STA $8B                                 ;$00CD48 |/
-.no_climb_on_air                            ;                |
+.no_climb_on_air                            ;        |
     LDA $74                                 ;$00CD4A |
     BNE CODE_00CD72                         ;$00CD4C |
     LDA.w $148F                             ;$00CD4E |
@@ -10477,7 +10472,7 @@ DATA_00E2B6:
 DATA_00E2B9:
     db $E0,$10,$10,$30
 
-CODE_00E2BD:
+draw_mario_and_yoshi_00E2BD:
     PHB
     PHK                                     ;$00E2BE |
     PLB                                     ;$00E2BF |

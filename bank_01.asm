@@ -107,35 +107,32 @@ CODE_018073:
     STA.w $17CC,Y                           ;$018088 |
     RTS                                     ;$01808B |
 
-CODE_01808C:
+standard_and_cluster_sprites_01808C:
     PHB
     PHK                                     ;$01808D |
     PLB                                     ;$01808E |
-    LDA.w $148F                             ;$01808F |
-    STA.w $1470                             ;$018092 |
-    STZ.w $148F                             ;$018095 |
-    STZ.w $1471                             ;$018098 |
-    STZ.w $18C2                             ;$01809B |
-    LDA.w $18DF                             ;$01809E |
-    STA.w $18E2                             ;$0180A1 |
-    STZ.w $18DF                             ;$0180A4 |
+    LDA.w $148F                             ;$01808F |\
+    STA.w $1470                             ;$018092 || Refresh/mirror some addresses:
+    STZ.w $148F                             ;$018095 || - Carrying something flag
+    STZ.w $1471                             ;$018098 || - Standing on top of a sprite flag
+    STZ.w $18C2                             ;$01809B || - Riding cloud flag
+    LDA.w $18DF                             ;$01809E || - Yoshi's sprite slot
+    STA.w $18E2                             ;$0180A1 ||
+    STZ.w $18DF                             ;$0180A4 |/
     LDX.b #$0B                              ;$0180A7 |
-CODE_0180A9:
-    STX.w $15E9
-    JSR CODE_0180D2                         ;$0180AC |
-    JSR HandleSprite                        ;$0180AF |
+-   STX.w $15E9                             ;$0180A9 |
+    JSR process_OAM_index_and_timers_0180D2 ;$0180AC |
+    JSR handle_sprite_018126                ;$0180AF |
     DEX                                     ;$0180B2 |
-    BPL CODE_0180A9                         ;$0180B3 |
-    LDA.w $18B8                             ;$0180B5 |
-    BEQ CODE_0180BE                         ;$0180B8 |
-    JSL CODE_02F808                         ;$0180BA |
-CODE_0180BE:
-    LDA.w $18DF
-    BNE CODE_0180C9                         ;$0180C1 |
-    STZ.w $187A                             ;$0180C3 |
-    STZ.w $188B                             ;$0180C6 |
-CODE_0180C9:
-    PLB
+    BPL -                                   ;$0180B3 |
+    LDA.w $18B8                             ;$0180B5 |\
+    BEQ +                                   ;$0180B8 || flag for running Cluster Sprites
+    JSL cluster_sprites_02F808              ;$0180BA |/
++   LDA.w $18DF                             ;$0180BE |\
+    BNE +                                   ;$0180C1 || Reset some Yoshi-related flags if no Yoshi exists anymore
+    STZ.w $187A                             ;$0180C3 ||
+    STZ.w $188B                             ;$0180C6 |/
++   PLB                                     ;$0180C9 |
     RTL                                     ;$0180CA |
 
 IsSprOffScreen:
@@ -143,7 +140,7 @@ IsSprOffScreen:
     ORA.w $186C,X                           ;$0180CE |
     RTS                                     ;$0180D1 |
 
-CODE_0180D2:
+process_OAM_index_and_timers_0180D2:
     PHX
     TXA                                     ;$0180D3 |
     LDX.w $1692                             ;$0180D4 |
@@ -155,39 +152,33 @@ CODE_0180D2:
     STA.w $15EA,X                           ;$0180E2 |
     LDA.w $14C8,X                           ;$0180E5 |
     BEQ Return018126                        ;$0180E8 |
-    LDA $9D                                 ;$0180EA |
-    BNE Return018126                        ;$0180EC |
-    LDA.w $1540,X                           ;$0180EE |
-    BEQ CODE_0180F6                         ;$0180F1 |
-    DEC.w $1540,X                           ;$0180F3 |
-CODE_0180F6:
-    LDA.w $154C,X
-    BEQ CODE_0180FE                         ;$0180F9 |
-    DEC.w $154C,X                           ;$0180FB |
-CODE_0180FE:
-    LDA.w $1558,X
-    BEQ CODE_018106                         ;$018101 |
-    DEC.w $1558,X                           ;$018103 |
-CODE_018106:
-    LDA.w $1564,X
-    BEQ CODE_01810E                         ;$018109 |
-    DEC.w $1564,X                           ;$01810B |
-CODE_01810E:
-    LDA.w $1FE2,X
-    BEQ CODE_018116                         ;$018111 |
-    DEC.w $1FE2,X                           ;$018113 |
-CODE_018116:
-    LDA.w $15AC,X
-    BEQ CODE_01811E                         ;$018119 |
-    DEC.w $15AC,X                           ;$01811B |
-CODE_01811E:
-    LDA.w $163E,X
-    BEQ Return018126                        ;$018121 |
-    DEC.w $163E,X                           ;$018123 |
+    LDA $9D                                 ;$0180EA |\
+    BNE Return018126                        ;$0180EC || Decrement timers if:
+    LDA.w $1540,X                           ;$0180EE || - animation/sprites not locked
+    BEQ +                                   ;$0180F1 || - sprite status not zero
+    DEC.w $1540,X                           ;$0180F3 || - timer not zero
++   LDA.w $154C,X                           ;$0180F6 ||
+    BEQ +                                   ;$0180F9 ||
+    DEC.w $154C,X                           ;$0180FB ||
++   LDA.w $1558,X                           ;$0180FE ||
+    BEQ +                                   ;$018101 ||
+    DEC.w $1558,X                           ;$018103 ||
++   LDA.w $1564,X                           ;$018106 ||
+    BEQ +                                   ;$018109 ||
+    DEC.w $1564,X                           ;$01810B ||
++   LDA.w $1FE2,X                           ;$01810E ||
+    BEQ +                                   ;$018111 ||
+    DEC.w $1FE2,X                           ;$018113 ||
++   LDA.w $15AC,X                           ;$018116 ||
+    BEQ +                                   ;$018119 ||
+    DEC.w $15AC,X                           ;$01811B ||
++   LDA.w $163E,X                           ;$01811E ||
+    BEQ Return018126                        ;$018121 ||
+    DEC.w $163E,X                           ;$018123 |/
 Return018126:
     RTS
 
-HandleSprite:
+handle_sprite_018126:
     LDA.w $14C8,X
     BEQ EraseSprite                         ;$01812A |
     CMP.b #$08                              ;$01812C |
@@ -10358,7 +10349,7 @@ CODE_01C9DA:
     STZ.w $160E,X                           ;$01C9DF |
 CODE_01C9E2:
     PHX
-    JSL CODE_00E2BD                         ;$01C9E3 |
+    JSL draw_mario_and_yoshi_00E2BD         ;$01C9E3 |
     PLX                                     ;$01C9E7 |
     STX.w $15E9                             ;$01C9E8 |
 Return01C9EB:

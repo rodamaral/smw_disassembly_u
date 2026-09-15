@@ -1381,30 +1381,30 @@ CODE_028A7D:
 DATA_028AA9:
     db $07,$03,$03,$01,$01,$01,$01,$01
 
-CODE_028AB1:
+minor_sprites_and_loading_028AB1:
     PHB
     PHK                                     ;$028AB2 |
     PLB                                     ;$028AB3 |
     LDA.w $18E4                             ;$028AB4 |
-    BEQ .ProcessStarman028AD5               ;$028AB7 |
+    BEQ .process_starman_028AD5             ;$028AB7 |
     LDA.w $18E5                             ;$028AB9 |
     BEQ .CODE_028AC3                        ;$028ABC |
     DEC.w $18E5                             ;$028ABE |
-    BRA .ProcessStarman028AD5               ;$028AC1 |
+    BRA .process_starman_028AD5             ;$028AC1 |
 .CODE_028AC3:
     DEC.w $18E4
-    BEQ .IncrementLives028ACD               ;$028AC6 |
+    BEQ .increment_lives_028ACD             ;$028AC6 |
     LDA.b #$23                              ;$028AC8 |
     STA.w $18E5                             ;$028ACA |
-.IncrementLives028ACD:
+.increment_lives_028ACD:
     LDA.b #$05
     STA.w $1DFC                             ;$028ACF |
     INC.w $0DBE                             ;$028AD2 |
-.ProcessStarman028AD5:
+.process_starman_028AD5:
     LDA.w $1490
-    BEQ .ProcessStarSparkles028AEB          ;$028AD8 |
+    BEQ .process_star_sparkles_028AEB       ;$028AD8 |
     CMP.b #$08                              ;$028ADA |
-    BCC .ProcessStarSparkles028AEB          ;$028ADC |
+    BCC .process_star_sparkles_028AEB       ;$028ADC |
     LSR                                     ;$028ADE |
     LSR                                     ;$028ADF |
     LSR                                     ;$028AE0 |
@@ -1413,14 +1413,14 @@ CODE_028AB1:
     TAY                                     ;$028AE3 |
     LDA $13                                 ;$028AE4 |
     AND.w DATA_028AA9,Y                     ;$028AE6 |
-    BRA .TrySpawnStarSparkles               ;$028AE9 |
+    BRA .try_spawn_star_sparkles            ;$028AE9 |
 
-.ProcessStarSparkles028AEB:
+.process_star_sparkles_028AEB:
     LDA.w $18D3
     BEQ +                                   ;$028AEE |
     DEC.w $18D3                             ;$028AF0 |
     AND.b #$01                              ;$028AF3 |
-.TrySpawnStarSparkles:
+.try_spawn_star_sparkles:
     ORA $7F
     ORA $81                                 ;$028AF7 |
     BNE +                                   ;$028AF9 |
@@ -1435,39 +1435,38 @@ CODE_028AB1:
     JSR SpinningCoinSprites0299D2           ;$028B11 |
     JSR ShooterSprites02B387                ;$028B14 |
     JSR CallGenerator                       ;$028B17 |
-    JSR CapeInteractions0294F5              ;$028B1A |
-    JSR LoadSprFromLevel                    ;$028B1D |
-    LDA.w $18C0                             ;$028B20 |
-    BEQ CODE_028B65                         ;$028B23 |
-    LDA $13                                 ;$028B25 |
-    AND.b #$01                              ;$028B27 |
-    ORA $9D                                 ;$028B29 |
-    ORA.w $18BF                             ;$028B2B |
-    BNE CODE_028B65                         ;$028B2E |
-    DEC.w $18C0                             ;$028B30 |
-    BNE CODE_028B65                         ;$028B33 |
-    JSL FindFreeSprSlot                     ;$028B35 |
-    BMI CODE_028B65                         ;$028B39 |
-    TYX                                     ;$028B3B |
-    LDA.b #$01                              ;$028B3C |
-    STA.w $14C8,X                           ;$028B3E |
-    LDA.w $18C1                             ;$028B41 |
-    STA $9E,X                               ;$028B44 |
-    LDA $1A                                 ;$028B46 |
-    SEC                                     ;$028B48 |
-    SBC.b #$20                              ;$028B49 |
-    AND.b #$EF                              ;$028B4B |
-    STA $E4,X                               ;$028B4D |
-    LDA $1B                                 ;$028B4F |
-    SBC.b #$00                              ;$028B51 |
-    STA.w $14E0,X                           ;$028B53 |
-    LDA.w $18C3                             ;$028B56 |
-    STA $D8,X                               ;$028B59 |
-    LDA.w $18C4                             ;$028B5B |
-    STA.w $14D4,X                           ;$028B5E |
-    JSL InitSpriteTables                    ;$028B61 |
-CODE_028B65:
-    PLB
+    JSR cape_spin_interactions_0294F5       ;$028B1A |
+    JSR load_sprites_from_level_02A7FC      ;$028B1D |
+    LDA.w $18C0                             ;$028B20 |\ 
+    BEQ +                                   ;$028B23 || Handle sprites that respawn (e.g. Lakitu)
+    LDA $13                                 ;$028B25 ||\ 
+    AND.b #$01                              ;$028B27 |||
+    ORA $9D                                 ;$028B29 ||| Only respawn the sprite if:
+    ORA.w $18BF                             ;$028B2B ||| - On an even frame
+    BNE +                                   ;$028B2E ||| - Game isn't frozen
+    DEC.w $18C0                             ;$028B30 ||| - Actually time to respawn
+    BNE +                                   ;$028B33 ||| - There is an empty sprite slot
+    JSL FindFreeSprSlot                     ;$028B35 |||
+    BMI +                                   ;$028B39 |/
+    TYX                                     ;$028B3B ||
+    LDA.b #$01                              ;$028B3C ||
+    STA.w $14C8,X                           ;$028B3E ||
+    LDA.w $18C1                             ;$028B41 ||
+    STA $9E,X                               ;$028B44 ||
+    LDA $1A                                 ;$028B46 ||
+    SEC                                     ;$028B48 ||
+    SBC.b #$20                              ;$028B49 ||
+    AND.b #$EF                              ;$028B4B ||
+    STA $E4,X                               ;$028B4D ||
+    LDA $1B                                 ;$028B4F ||
+    SBC.b #$00                              ;$028B51 ||
+    STA.w $14E0,X                           ;$028B53 ||
+    LDA.w $18C3                             ;$028B56 ||
+    STA $D8,X                               ;$028B59 ||
+    LDA.w $18C4                             ;$028B5B ||
+    STA.w $14D4,X                           ;$028B5E ||
+    JSL InitSpriteTables                    ;$028B61 |/
++   PLB                                     ;$028B65 ||
     RTL                                     ;$028B66 |
 
 MinorExtendedSprites028B67:
@@ -2770,7 +2769,7 @@ GroundPoundNextSpr:
     PLB                                     ;$0294F3 |
     RTL                                     ;$0294F4 |
 
-CapeInteractions0294F5:
+cape_spin_interactions_0294F5:
     LDA.w $13E8
     BEQ Return02950A                        ;$0294F8 |
     STA $0E                                 ;$0294FA |
@@ -5278,7 +5277,7 @@ CODE_02A751:
     JSR CODE_02AC5C                         ;$02A757 |
     LDA.w $0D9B                             ;$02A75A |
     BMI CODE_02A763                         ;$02A75D |
-    JSL CODE_01808C                         ;$02A75F |
+    JSL standard_and_cluster_sprites_01808C ;$02A75F |
 CODE_02A763:
     LDA.w $0DC1
     BEQ CODE_02A771                         ;$02A766 |
@@ -5330,7 +5329,7 @@ DATA_02A7F6:
 DATA_02A7F9:
     db $FF,$00,$01
 
-LoadSprFromLevel:
+load_sprites_from_level_02A7FC:
     LDA $13
     AND.b #$01                              ;$02A7FE |
     BNE Return02A84B                        ;$02A800 |
@@ -11819,7 +11818,7 @@ CODE_02D70B:
     LDA.w $187A                             ;$02D72C |
     BNE CODE_02D74B                         ;$02D72F |
     PHX                                     ;$02D731 |
-    JSL CODE_00E2BD                         ;$02D732 |
+    JSL draw_mario_and_yoshi_00E2BD         ;$02D732 |
     PLX                                     ;$02D736 |
     LDA.b #$FF                              ;$02D737 |
     STA $78                                 ;$02D739 |
@@ -11830,7 +11829,7 @@ CODE_02D73D:
     BEQ CODE_02D74B                         ;$02D740 |
     STZ.w $160E,X                           ;$02D742 |
     PHX                                     ;$02D745 |
-    JSL CODE_00E2BD                         ;$02D746 |
+    JSL draw_mario_and_yoshi_00E2BD         ;$02D746 |
     PLX                                     ;$02D74A |
 CODE_02D74B:
     JSR CODE_02D848
@@ -16365,31 +16364,29 @@ CODE_02F801:
 Return02F807:
     RTS
 
-CODE_02F808:
+cluster_sprites_02F808:
     PHB
     PHK                                     ;$02F809 |
     PLB                                     ;$02F80A |
-    JSR CODE_02F810                         ;$02F80B |
+    JSR .cluster_sprites_loop_02F810        ;$02F80B |
     PLB                                     ;$02F80E |
     RTL                                     ;$02F80F |
 
-CODE_02F810:
+.cluster_sprites_loop_02F810:
     LDX.b #$13
-CODE_02F812:
-    STX.w $15E9
+-   STX.w $15E9                             ;$02F812 |
     LDA.w $1892,X                           ;$02F815 |
-    BEQ CODE_02F81D                         ;$02F818 |
-    JSR CODE_02F821                         ;$02F81A |
-CODE_02F81D:
-    DEX
-    BPL CODE_02F812                         ;$02F81E |
+    BEQ +                                   ;$02F818 |
+    JSR run_cluster_sprite_02F821           ;$02F81A |
++   DEX                                     ;$02F81D |
+    BPL -                                   ;$02F81E |
 Return02F820:
     RTS
 
-CODE_02F821:
+run_cluster_sprite_02F821:
     JSL execute_pointer
 
-Ptrs02F825:
+.Ptrs02F825:
     dw Return02F820
     dw CODE_02FDBC
     dw $0000

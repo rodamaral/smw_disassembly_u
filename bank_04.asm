@@ -648,7 +648,7 @@ CODE_0485A7:
     PLB                                     ;$0485C9 |
     LDA.b #$03                              ;$0485CA |
     STA.w $13F9                             ;$0485CC |
-    JSL CODE_00E2BD                         ;$0485CF |
+    JSL draw_mario_and_yoshi_00E2BD         ;$0485CF |
     LDA.b #$06                              ;$0485D3 |
     STA.w $0D84                             ;$0485D5 |
     LDA.w $1496                             ;$0485D8 |

@@ -2379,7 +2379,7 @@ CODE_0CA7AF:
     LDA.b #$01
     STA.w $18E2                             ;$0CA7B1 |
 CODE_0CA7B4:
-    JSL CODE_00E2BD
+    JSL draw_mario_and_yoshi_00E2BD
     RTS                                     ;$0CA7B8 |
 
 DATA_0CA7B9:
