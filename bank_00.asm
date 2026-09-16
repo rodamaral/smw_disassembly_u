@@ -2204,48 +2204,48 @@ run_game_mode:
     JSL execute_pointer                     ;$009325 |
 
 Ptrs009329:
-    dw CODE_009391                          ;00 Nintendo Presents: Load
-    dw CODE_00940F                          ;01 Nintendo Presents: Main
-    dw CODE_009F6F                          ;02 Fade out to Title Screen
-    dw CODE_0096AE                          ;03 Title Screen: Load (part 1)
-    dw title_load_2_mode04_009A8B           ;04 Title Screen: Load (part 2)
-    dw CODE_009F6F                          ;05 Title Screen: Fade in
-    dw CODE_00941B                          ;06 Title Screen: Circle effect
-    dw title_main_mode07_009C64             ;07 Title Screen: Main
-    dw CODE_009CD1                          ;08 Title Screen: File select
-    dw CODE_009B1A                          ;09 Title Screen: File erase
-    dw CODE_009DFA                          ;0A Title Screen: Player select
-    dw CODE_009F6F                          ;0B Fade out to Overworld
-    dw overworld_load_mode0C_00A087         ;0C Overworld: Load
-    dw CODE_009F6F                          ;0D Overworld: Fade In
-    dw CODE_00A1BE                          ;0E Overworld: Main
-    dw TmpFade                              ;0F Fade out to Level
-    dw CODE_00968E                          ;10 Level: Mario Start!
-    dw CODE_0096D5                          ;11 Level: Load (part 1)
-    dw level_load_2_mode12_00A59C           ;12 Level: Load (part 2)
-    dw TmpFade                              ;13 Level: Fade in
-    dw main_level_mode14_00A1DA             ;14 Level: Main
-    dw CODE_009F6F                          ;15	Fade out to Game Over / Time Up
-    dw CODE_009750                          ;16 Game Over / Time Up: Load
-    dw CODE_009759                          ;17 Game Over / Time Up: Main
-    dw CODE_009F6F                          ;18 Fade out to Credits / Castle Cutscene
-    dw CODE_009468                          ;19 Credits / Castle Cutscene: Load
-    dw CODE_009F6F                          ;1A Credits / Castle Cutscene: Fade in
-    dw CODE_0094FD                          ;1B Credits / Castle Cutscene: Main
-    dw CODE_009F6F                          ;1C Fade out to Ending: Yoshi's House
-    dw ending_yoshi_load_mode1D_009583      ;1D Ending, Yoshi's House: Load
-    dw CODE_009F6F                          ;1E Ending, Yoshi's House: Fade in
-    dw CODE_0095AB                          ;1F Ending, Yoshi's House: Main
-    dw CODE_009F6F                          ;20 Fade out to Enemy Credits
-    dw CODE_0095BC                          ;21 Ending, Enemy Credits: Load
-    dw CODE_009F6F                          ;22 Ending, Enemy Credits: Fade out scene
-    dw CODE_0095C1                          ;23 Ending, Enemy Credits: Load scene
-    dw CODE_009F6F                          ;24 Ending, Enemy Credits: Fade in scene
-    dw CODE_00962C                          ;25 Ending, Enemy Credits: Main
-    dw CODE_009F6F                          ;26 Fade out to The End
-    dw CODE_00963D                          ;27 Ending, The End: Load
-    dw CODE_009F7C                          ;28 Ending, The End: Fade in
-    dw Return00968D                         ;29 Ending, The End: Main
+    dw GM00_nintendo_load_009391            ;00 Nintendo Presents: Load
+    dw GM01_nintendo_main_00940F            ;01 Nintendo Presents: Main
+    dw GM_transition_fade_009F6F            ;02 Fade out to Title Screen
+    dw GM03_title_load_1_0096AE             ;03 Title Screen: Load (part 1)
+    dw GM04_title_load_2_009A8B             ;04 Title Screen: Load (part 2)
+    dw GM_transition_fade_009F6F            ;05 Title Screen: Fade in
+    dw GM06_title_circle_00941B             ;06 Title Screen: Circle effect
+    dw GM07_title_main_009C64               ;07 Title Screen: Main
+    dw GM08_title_file_select_009CD1        ;08 Title Screen: File select
+    dw GM09_title_file_erase_009B1A         ;09 Title Screen: File erase
+    dw GM0A_title_player_select_009DFA      ;0A Title Screen: Player select
+    dw GM_transition_fade_009F6F            ;0B Fade out to Overworld
+    dw GM0C_overworld_load_00A087           ;0C Overworld: Load
+    dw GM_transition_fade_009F6F            ;0D Overworld: Fade In
+    dw GM0E_overworld_main_00A1BE           ;0E Overworld: Main
+    dw GM_transition_mosaic_009F37          ;0F Fade out to Level
+    dw GM10_level_start_00968E              ;10 Level: Mario Start!
+    dw GM11_level_load_1_0096D5             ;11 Level: Load (part 1)
+    dw GM12_level_load_2_00A59C             ;12 Level: Load (part 2)
+    dw GM_transition_mosaic_009F37          ;13 Level: Fade in
+    dw GM14_main_level_00A1DA               ;14 Level: Main
+    dw GM_transition_fade_009F6F            ;15	Fade out to Game Over / Time Up
+    dw GM16_game_over_load_009750           ;16 Game Over / Time Up: Load
+    dw GM17_game_over_main_009759           ;17 Game Over / Time Up: Main
+    dw GM_transition_fade_009F6F            ;18 Fade out to Credits / Castle Cutscene
+    dw GM19_credits_castle_load_009468      ;19 Credits / Castle Cutscene: Load
+    dw GM_transition_fade_009F6F            ;1A Credits / Castle Cutscene: Fade in
+    dw GM1B_credits_castle_main_0094FD      ;1B Credits / Castle Cutscene: Main
+    dw GM_transition_fade_009F6F            ;1C Fade out to Ending: Yoshi's House
+    dw GM1D_ending_yoshi_load_009583        ;1D Ending, Yoshi's House: Load
+    dw GM_transition_fade_009F6F            ;1E Ending, Yoshi's House: Fade in
+    dw GM1F_ending_yoshi_main_0095AB        ;1F Ending, Yoshi's House: Main
+    dw GM_transition_fade_009F6F            ;20 Fade out to Enemy Credits
+    dw GM21_ending_enemy_load_0095BC        ;21 Ending, Enemy Credits: Load
+    dw GM_transition_fade_009F6F            ;22 Ending, Enemy Credits: Fade out scene
+    dw GM23_ending_enemy_scene_0095C1       ;23 Ending, Enemy Credits: Load scene
+    dw GM_transition_fade_009F6F            ;24 Ending, Enemy Credits: Fade in scene
+    dw GM25_ending_enemy_main_00962C        ;25 Ending, Enemy Credits: Main
+    dw GM_transition_fade_009F6F            ;26 Fade out to The End
+    dw GM27_the_end_load_00963D             ;27 Ending, The End: Load
+    dw GM28_the_end_fade_009F7C             ;28 Ending, The End: Fade in
+    dw GM29_the_end_main_00968D             ;29 Ending, The End: Main
 
 TurnOffIO:
     STZ.w $4200
@@ -2260,7 +2260,7 @@ nintendo_positions:
 nintendo_tiles:
     db $02,$04,$06,$08
 
-CODE_009391:
+GM00_nintendo_load_009391:
     JSR CODE_0085FA
     JSR SetUpScreen                         ;$009394 |
     JSR CODE_00A993                         ;$009397 |
@@ -2321,7 +2321,7 @@ ScreenSettings:
     STZ.w $212F                             ;$00940B |
     RTS                                     ;$00940E |
 
-CODE_00940F:
+GM01_nintendo_main_00940F:
     DEC.w $1DF5
     BNE Return00941A                        ;$009412 |
     JSR CODE_00B888                         ;$009414 |
@@ -2330,7 +2330,7 @@ CODE_009417:
 Return00941A:
     RTS
 
-CODE_00941B:
+GM06_title_circle_00941B:
     JSR SetUp0DA0GM4
     JSR CODE_009CBE                         ;$00941E |
     BEQ CODE_00942E                         ;$009421 |
@@ -2366,7 +2366,7 @@ CutsceneCastlePal:
 DATA_009460:
     db $03,$FF,$FF,$C9,$0F,$FF,$CC,$C9
 
-CODE_009468:
+GM19_credits_castle_load_009468:
     JSR CODE_0085FA
     JSR Clear_1A_13D3                       ;$00946B |
     JSR SetUpScreen                         ;$00946E |
@@ -2429,7 +2429,7 @@ CODE_0094E2:
     LDX.b #$17                              ;$0094F6 |
     LDY.b #$00                              ;$0094F8 |
     JSR CODE_009622                         ;$0094FA |
-CODE_0094FD:
+GM1B_credits_castle_main_0094FD:
     JSL $7F8000
     LDA.w $13C6                             ;$009501 |
     CMP.b #$08                              ;$009504 |
@@ -2500,7 +2500,7 @@ CODE_009574:
     SEP #$30                                ;$009580 |
     RTS                                     ;$009582 |
 
-ending_yoshi_load_mode1D_009583:
+GM1D_ending_yoshi_load_009583:
     INC.w $13C6
     LDA.b #$28                              ;$009586 |
     LDY.b #$01                              ;$009588 |
@@ -2508,25 +2508,25 @@ ending_yoshi_load_mode1D_009583:
     DEC.w $0100                             ;$00958D |
     LDA.b #$16                              ;$009590 |
     STA.w $192B                             ;$009592 |
-    JSR level_load_2_mode12_00A59C          ;$009595 |
+    JSR GM12_level_load_2_00A59C            ;$009595 |
     DEC.w $0100                             ;$009598 |
     JSR TurnOffIO                           ;$00959B |
     JSR CODE_0085FA                         ;$00959E |
     JSR CODE_00A993                         ;$0095A1 |
     JSL CODE_0CA3C9                         ;$0095A4 |
     JSR CODE_00961E                         ;$0095A8 |
-CODE_0095AB:
+GM1F_ending_yoshi_main_0095AB:
     JSL $7F8000
     JSL CODE_0C939A                         ;$0095AF |
     INC $14                                 ;$0095B3 |
     JSL CODE_05BB39                         ;$0095B5 |
     JMP consolidate_OAM_008494              ;$0095B9 |
 
-CODE_0095BC:
+GM21_ending_enemy_load_0095BC:
     JSL CODE_0C93AD
     RTS                                     ;$0095C0 |
 
-CODE_0095C1:
+GM23_ending_enemy_scene_0095C1:
     JSR CODE_0085FA
     JSR Clear_1A_13D3                       ;$0095C4 |
     JSR SetUpScreen                         ;$0095C7 |
@@ -2565,7 +2565,7 @@ CODE_009612:
     JSR CODE_00922F
     JSR CODE_0092B2                         ;$009615 |
     JSR _load_stripe_image_                 ;$009618 |
-    JSR CODE_00962C                         ;$00961B |
+    JSR GM25_ending_enemy_main_00962C       ;$00961B |
 CODE_00961E:
     LDX.b #$15
     LDY.b #$02                              ;$009620 |
@@ -2575,14 +2575,14 @@ CODE_009622:
     STA $3E                                 ;$009627 |
     JMP CODE_0093EA                         ;$009629 |
 
-CODE_00962C:
+GM25_ending_enemy_main_00962C:
     STZ.w $0D84
     JSR CODE_0092ED                         ;$00962F |
     JSL $7F8000                             ;$009632 |
     JSL CODE_0C93A5                         ;$009636 |
     JMP consolidate_OAM_008494              ;$00963A |
 
-CODE_00963D:
+GM27_the_end_load_00963D:
     JSR CODE_0085FA
     JSR Clear_1A_13D3                       ;$009640 |
     JSR SetUpScreen                         ;$009643 |
@@ -2615,10 +2615,10 @@ CODE_009660:
     LDY.b #$00                              ;$009688 |
     JMP CODE_009622                         ;$00968A |
 
-Return00968D:
+GM29_the_end_main_00968D:
     RTS
 
-CODE_00968E:
+GM10_level_start_00968E:
     JSR CODE_0085FA
     LDA.w $1425                             ;$009691 |
     BNE CODE_0096A8                         ;$009694 |
@@ -2634,7 +2634,7 @@ CODE_0096A8:
 CODE_0096AB:
     JMP CODE_0093CA
 
-CODE_0096AE:
+GM03_title_load_1_0096AE:
     STZ.w $4200
     JSR clear_non_stack                     ;$0096B1 |
     LDX.b #$07                              ;$0096B4 |
@@ -2654,7 +2654,7 @@ CODE_0096CB:
 CODE_0096CF:
     STA.w $0109
     STY.w $1F11                             ;$0096D2 |
-CODE_0096D5:
+GM11_level_load_1_0096D5:
     STZ.w $4200
     JSR disable_controls                    ;$0096D8 |
     LDA.w $141A                             ;$0096DB |
@@ -2711,12 +2711,12 @@ CODE_00974C:
     JSR hex_to_dec_009045
     RTL                                     ;$00974F |
 
-CODE_009750:
+GM16_game_over_load_009750:
     JSR CODE_0085FA
     JSR CODE_00A82D                         ;$009753 |
     JMP CODE_0093CA                         ;$009756 |
 
-CODE_009759:
+GM17_game_over_main_009759:
     JSL $7F8000
     LDA.w $143C                             ;$00975D |
     BNE CODE_00978B                         ;$009760 |
@@ -3104,9 +3104,9 @@ CODE_009A87:
     STA.w $0DA0
     RTS                                     ;$009A8A |
 
-title_load_2_mode04_009A8B:
+GM04_title_load_2_009A8B:
     JSR SetUp0DA0GM4
-    JSR level_load_2_mode12_00A59C          ;$009A8E |
+    JSR GM12_level_load_2_00A59C            ;$009A8E |
     STZ.w $0F31                             ;$009A91 |
     JSR CODE_0085FA                         ;$009A94 |
     LDA.b #$03                              ;$009A97 |
@@ -3186,7 +3186,7 @@ Return009B16:
 DATA_009B17:
     db $04,$02,$01
 
-CODE_009B1A:
+GM09_title_file_erase_009B1A:
     REP #$20
     LDA.w #$39C9                            ;$009B1C |
     LDY.b #$60                              ;$009B1F |
@@ -3358,7 +3358,7 @@ ItrCntrlrSqnc:
     db $30,$60,$01,$00,$30,$41,$1A,$C1
     db $30,$00,$30,$FF
 
-title_main_mode07_009C64:
+GM07_title_main_009C64:
     JSR SetUp0DA0GM4
     JSR CODE_009CBE                         ;$009C67 |
     BNE CODE_009C9F                         ;$009C6A |
@@ -3387,8 +3387,8 @@ CODE_009C8F:
     CMP.w $9C1D,X                           ;$009C93 |
     BNE +                                   ;$009C96 |
     AND.b #$9F                              ;$009C98 |
-+   STA $16                                 ;$CODE_009C9A |
-    JMP main_level_mode14_00A1DA            ;$009C9C |
++   STA $16                                 ;$009C9A |
+    JMP GM14_main_level_00A1DA              ;$009C9C |
 
 CODE_009C9F:
     JSL $7F8000
@@ -3420,7 +3420,7 @@ DATA_009CCB:
 DATA_009CCE:
     db $00,$8F,$1E
 
-CODE_009CD1:
+GM08_title_file_select_009CD1:
     REP #$20
     LDA.w #$7393                            ;$009CD3 |
     LDY.b #$20                              ;$009CD6 |
@@ -3591,7 +3591,7 @@ CODE_009DF7:
     SEP #$20
     RTS                                     ;$009DF9 |
 
-CODE_009DFA:
+GM0A_title_player_select_009DFA:
     LDA $16
     ORA $18                                 ;$009DFC |
     AND.b #$40                              ;$009DFE |
@@ -3750,7 +3750,7 @@ DATA_009F31:
 DATA_009F33:
     db $0F,$00,$00,$F0
 
-TmpFade:
+GM_transition_mosaic_009F37:
     DEC.w $0DB1
     BPL Return009F6E                        ;$009F3A |
     JSR KeepModeActive                      ;$009F3C |
@@ -3778,7 +3778,7 @@ CODE_009F66:
 Return009F6E:
     RTS
 
-CODE_009F6F:
+GM_transition_fade_009F6F:
     DEC.w $0DB1
     BPL Return009F6E                        ;$009F72 |
     JSR KeepModeActive                      ;$009F74 |
@@ -3786,7 +3786,7 @@ CODE_009F77:
     LDY.w $0DAF
     BRA CODE_009F4C                         ;$009F7A |
 
-CODE_009F7C:
+GM28_the_end_fade_009F7C:
     DEC.w $0DB1
     BPL Return009F6E                        ;$009F7F |
     LDA.b #$08                              ;$009F81 |
@@ -3915,7 +3915,7 @@ DATA_00A079:
     db $00,$00,$D8,$FF,$80,$00,$28,$01
     db $D8,$FF,$80,$00,$28,$01
 
-overworld_load_mode0C_00A087:
+GM0C_overworld_load_00A087:
     JSR TurnOffIO
     LDA.w $1B9C                             ;$00A08A |
     BEQ .CODE_00A093                        ;$00A08D |
@@ -4056,7 +4056,7 @@ CODE_00A1B5:
     SEP #$10                                ;$00A1BB |
     RTS                                     ;$00A1BD |
 
-CODE_00A1BE:
+GM0E_overworld_main_00A1BE:
     JSR SetUp0DA0GM4
     INC $14                                 ;$00A1C1 |
     JSL $7F8000                             ;$00A1C3 |
@@ -4072,7 +4072,7 @@ GrndShakeDispYHi:
 DATA_00A1D6:
     db $12,$22,$12,$02
 
-main_level_mode14_00A1DA:
+GM14_main_level_00A1DA:
     LDA.w $1426
     BEQ .message_box_not_triggered          ;$00A1DD |
     JSL CODE_05B10C                         ;$00A1DF |
@@ -4523,7 +4523,7 @@ CODE_00A594:
     PLB                                     ;$00A59A |
     RTL                                     ;$00A59B |
 
-level_load_2_mode12_00A59C:
+GM12_level_load_2_00A59C:
     JSR CODE_0085FA
     JSR disable_controls                    ;$00A59F |
     STZ.w $143A                             ;$00A5A2 |
