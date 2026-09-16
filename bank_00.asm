@@ -1714,28 +1714,28 @@ update_status_tileset_008E1A:
     BNE -                                   ;$008F1B |
 
 .handle_coins_008F1D:
-    LDA.w $13CC
+    LDA.w $13CC                             ;$008F1D | handle coin incrementation and overflow
     BEQ .handle_lives_008F3B                ;$008F20 |
     DEC.w $13CC                             ;$008F22 |
     INC.w $0DBF                             ;$008F25 |
     LDA.w $0DBF                             ;$008F28 |
     CMP.b #$64                              ;$008F2B |
-    BCC .handle_lives_008F3B                ;$008F2D |
-    INC.w $18E4                             ;$008F2F |
-    LDA.w $0DBF                             ;$008F32 |
-    SEC                                     ;$008F35 |
-    SBC.b #$64                              ;$008F36 |
-    STA.w $0DBF                             ;$008F38 |
+    BCC .handle_lives_008F3B                ;$008F2D |\
+    INC.w $18E4                             ;$008F2F || if coins >= 100
+    LDA.w $0DBF                             ;$008F32 || increase life incrementer
+    SEC                                     ;$008F35 || and subtract 100 coins
+    SBC.b #$64                              ;$008F36 ||
+    STA.w $0DBF                             ;$008F38 |/
 
 .handle_lives_008F3B:
     LDA.w $0DBE
     BMI +                                   ;$008F3E |
     CMP.b #$62                              ;$008F40 |
     BCC +                                   ;$008F42 |
-    LDA.b #$62                              ;$008F44 |
-    STA.w $0DBE                             ;$008F46 |
+    LDA.b #$62                              ;$008F44 | if lives >= 98
+    STA.w $0DBE                             ;$008F46 | set it to 98
 +   LDA.w $0DBE                             ;$008F49 |
-    INC A                                   ;$008F4C |
+    INC A                                   ;$008F4C | display in tileset one more life than we actually have
     JSR hex_to_dec_009045                   ;$008F4D |
     TXY                                     ;$008F50 |
     BNE +                                   ;$008F51 |
@@ -1811,20 +1811,20 @@ update_status_tileset_008E1A:
     LDA.w $1422                             ;$008FD8 |
     CMP.b #$05                              ;$008FDB |
     BCC +                                   ;$008FDD |
-    LDA.b #$00                              ;$008FDF |
+    LDA.b #$00                              ;$008FDF | if more than 4 coins, draw zero
 +   DEC A                                   ;$008FE1 |
-    STA $00                                 ;$008FE2 |
-    LDX.b #$00                              ;$008FE4 |
--   LDY.b #$FC                              ;$008FE6 |
-    LDA $00                                 ;$008FE8 |
-    BMI +                                   ;$008FEA |
-    LDY.b #$2E                              ;$008FEC |
-+   TYA                                     ;$008FEE |
-    STA.w $0EFF,X                           ;$008FEF |
-    DEC $00                                 ;$008FF2 |
-    INX                                     ;$008FF4 |
-    CPX.b #$04                              ;$008FF5 |
-    BNE -                                   ;$008FF7 |
+    STA $00                                 ;$008FE2 | $00: current coin
+    LDX.b #$00                              ;$008FE4 |\
+-   LDY.b #$FC                              ;$008FE6 || Empty tile
+    LDA $00                                 ;$008FE8 ||
+    BMI +                                   ;$008FEA ||
+    LDY.b #$2E                              ;$008FEC || Dragon Coin tile
++   TYA                                     ;$008FEE ||
+    STA.w $0EFF,X                           ;$008FEF || Tilemap entry
+    DEC $00                                 ;$008FF2 ||
+    INX                                     ;$008FF4 ||
+    CPX.b #$04                              ;$008FF5 ||
+    BNE -                                   ;$008FF7 |/
     RTS                                     ;$008FF9 |
 
 DATA_008FFA:
@@ -2204,48 +2204,48 @@ run_game_mode:
     JSL execute_pointer                     ;$009325 |
 
 Ptrs009329:
-    dw CODE_009391
-    dw CODE_00940F
-    dw CODE_009F6F
-    dw CODE_0096AE
-    dw CODE_009A8B
-    dw CODE_009F6F
-    dw CODE_00941B
-    dw title_main_mode07_009C64
-    dw CODE_009CD1
-    dw CODE_009B1A
-    dw CODE_009DFA
-    dw CODE_009F6F
-    dw overworld_load_mode0C_00A087
-    dw CODE_009F6F
-    dw CODE_00A1BE
-    dw TmpFade
-    dw CODE_00968E
-    dw CODE_0096D5
-    dw GM04Load
-    dw TmpFade
-    dw main_level_mode14_00A1DA
-    dw CODE_009F6F
-    dw CODE_009750
-    dw CODE_009759
-    dw CODE_009F6F
-    dw CODE_009468
-    dw CODE_009F6F
-    dw CODE_0094FD
-    dw CODE_009F6F
-    dw CODE_009583
-    dw CODE_009F6F
-    dw CODE_0095AB
-    dw CODE_009F6F
-    dw CODE_0095BC
-    dw CODE_009F6F
-    dw CODE_0095C1
-    dw CODE_009F6F
-    dw CODE_00962C
-    dw CODE_009F6F
-    dw CODE_00963D
-    dw CODE_009F7C
-    dw Return00968D
+    dw CODE_009391                          ;00 Nintendo Presents: Load
+    dw CODE_00940F                          ;01 Nintendo Presents: Main
+    dw CODE_009F6F                          ;02 Fade out to Title Screen
+    dw CODE_0096AE                          ;03 Title Screen: Load (part 1)
+    dw title_load_2_mode04_009A8B           ;04 Title Screen: Load (part 2)
+    dw CODE_009F6F                          ;05 Title Screen: Fade in
+    dw CODE_00941B                          ;06 Title Screen: Circle effect
+    dw title_main_mode07_009C64             ;07 Title Screen: Main
+    dw CODE_009CD1                          ;08 Title Screen: File select
+    dw CODE_009B1A                          ;09 Title Screen: File erase
+    dw CODE_009DFA                          ;0A Title Screen: Player select
+    dw CODE_009F6F                          ;0B Fade out to Overworld
+    dw overworld_load_mode0C_00A087         ;0C Overworld: Load
+    dw CODE_009F6F                          ;0D Overworld: Fade In
+    dw CODE_00A1BE                          ;0E Overworld: Main
+    dw TmpFade                              ;0F Fade out to Level
+    dw CODE_00968E                          ;10 Level: Mario Start!
+    dw CODE_0096D5                          ;11 Level: Load (part 1)
+    dw level_load_2_mode12_00A59C           ;12 Level: Load (part 2)
+    dw TmpFade                              ;13 Level: Fade in
+    dw main_level_mode14_00A1DA             ;14 Level: Main
+    dw CODE_009F6F                          ;15	Fade out to Game Over / Time Up
+    dw CODE_009750                          ;16 Game Over / Time Up: Load
+    dw CODE_009759                          ;17 Game Over / Time Up: Main
+    dw CODE_009F6F                          ;18 Fade out to Credits / Castle Cutscene
+    dw CODE_009468                          ;19 Credits / Castle Cutscene: Load
+    dw CODE_009F6F                          ;1A Credits / Castle Cutscene: Fade in
+    dw CODE_0094FD                          ;1B Credits / Castle Cutscene: Main
+    dw CODE_009F6F                          ;1C Fade out to Ending: Yoshi's House
+    dw ending_yoshi_load_mode1D_009583      ;1D Ending, Yoshi's House: Load
+    dw CODE_009F6F                          ;1E Ending, Yoshi's House: Fade in
+    dw CODE_0095AB                          ;1F Ending, Yoshi's House: Main
+    dw CODE_009F6F                          ;20 Fade out to Enemy Credits
+    dw CODE_0095BC                          ;21 Ending, Enemy Credits: Load
+    dw CODE_009F6F                          ;22 Ending, Enemy Credits: Fade out scene
+    dw CODE_0095C1                          ;23 Ending, Enemy Credits: Load scene
+    dw CODE_009F6F                          ;24 Ending, Enemy Credits: Fade in scene
+    dw CODE_00962C                          ;25 Ending, Enemy Credits: Main
+    dw CODE_009F6F                          ;26 Fade out to The End
+    dw CODE_00963D                          ;27 Ending, The End: Load
+    dw CODE_009F7C                          ;28 Ending, The End: Fade in
+    dw Return00968D                         ;29 Ending, The End: Main
 
 TurnOffIO:
     STZ.w $4200
@@ -2500,7 +2500,7 @@ CODE_009574:
     SEP #$30                                ;$009580 |
     RTS                                     ;$009582 |
 
-CODE_009583:
+ending_yoshi_load_mode1D_009583:
     INC.w $13C6
     LDA.b #$28                              ;$009586 |
     LDY.b #$01                              ;$009588 |
@@ -2508,7 +2508,7 @@ CODE_009583:
     DEC.w $0100                             ;$00958D |
     LDA.b #$16                              ;$009590 |
     STA.w $192B                             ;$009592 |
-    JSR GM04Load                            ;$009595 |
+    JSR level_load_2_mode12_00A59C          ;$009595 |
     DEC.w $0100                             ;$009598 |
     JSR TurnOffIO                           ;$00959B |
     JSR CODE_0085FA                         ;$00959E |
@@ -3104,9 +3104,9 @@ CODE_009A87:
     STA.w $0DA0
     RTS                                     ;$009A8A |
 
-CODE_009A8B:
+title_load_2_mode04_009A8B:
     JSR SetUp0DA0GM4
-    JSR GM04Load                            ;$009A8E |
+    JSR level_load_2_mode12_00A59C          ;$009A8E |
     STZ.w $0F31                             ;$009A91 |
     JSR CODE_0085FA                         ;$009A94 |
     LDA.b #$03                              ;$009A97 |
@@ -4463,7 +4463,7 @@ OW_VRAM_DMA_offset:
 OW_layer_2_DMA_offsets:
     db $00,$08,$10,$18
 
-DMA_OW_tilemap:                             ;               \ 
+DMA_OW_tilemap:                             ;        \ 
     LDA.b #$80                              ;$00A529 |\ Set VRAM mode increment after $2119 writes
     STA.w $2115                             ;$00A52B |/
     STZ.w $2116                             ;$00A52E |\ Set the VRAM address to $3000 plus the block
@@ -4472,7 +4472,7 @@ DMA_OW_tilemap:                             ;               \
     ADC.w OW_VRAM_DMA_offset,Y              ;$00A534 | |
     STA.w $2117                             ;$00A537 |/
     LDX.b #$06                              ;$00A53A | Number of settings to load
-.layer_2_DMA_copy_loop                      ;                |\ DMA copy loop
+.layer_2_DMA_copy_loop                      ;        |\ DMA copy loop
     LDA.w .OW_layer_2_DMA_settings,X        ;$00A53C | | DMA mode 1, destination $2118
     STA.w $4310,X                           ;$00A53F | | Source $7F4000, size $0800 byte
     DEX                                     ;$00A542 | |
@@ -4485,7 +4485,7 @@ DMA_OW_tilemap:                             ;               \
     BEQ .main_OW_DMA                        ;$00A54E |/ And branch if they are not going to a submap
     LDA.b #$60                              ;$00A550 |\ Set the DMA source high byte to submap tile data
     STA.w $4313                             ;$00A552 |/
-.main_OW_DMA                                ;                |
+.main_OW_DMA                                ;        |
     LDA.w $4313                             ;$00A555 |\ Offset the DMA source high byte to the current 
     CLC                                     ;$00A558 | | Block of layer 2 data
     ADC.w OW_layer_2_DMA_offsets,Y          ;$00A559 | |
@@ -4500,14 +4500,14 @@ DMA_OW_tilemap:                             ;               \
     ADC.w OW_VRAM_DMA_offset,Y              ;$00A56F | |
     STA.w $2117                             ;$00A572 |/
     LDX.b #$06                              ;$00A575 | Number of settings to load
-.layer_1_DMA_copy_loop                      ;                |\ DMA copy loop
+.layer_1_DMA_copy_loop                      ;        |\ DMA copy loop
     LDA.w .OW_layer_1_DMA_settings,X        ;$00A577 | | DMA mode 1, destination $2118
     STA.w $4310,X                           ;$00A57A | | Source $7EE400, size $0800 bytes
     DEX                                     ;$00A57D | |
     BPL .layer_1_DMA_copy_loop              ;$00A57E |/
     LDA.b #$02                              ;$00A580 |\ Run DMA on channel 1
     STA.w $420B                             ;$00A582 |/
-    RTS                                     ;$00A585         / Finished with OW DMA
+    RTS                                     ;$00A585 / Finished with OW DMA
 
 .OW_layer_2_DMA_settings
     db $01,$18,$00,$40,$7F,$00,$08
@@ -4523,7 +4523,7 @@ CODE_00A594:
     PLB                                     ;$00A59A |
     RTL                                     ;$00A59B |
 
-GM04Load:
+level_load_2_mode12_00A59C:
     JSR CODE_0085FA
     JSR disable_controls                    ;$00A59F |
     STZ.w $143A                             ;$00A5A2 |
@@ -4531,11 +4531,11 @@ GM04Load:
     JSR GM04DoDMA                           ;$00A5A8 |
     JSL CODE_05809E                         ;$00A5AB |
     LDA.w $0D9B                             ;$00A5AF |
-    BPL CODE_00A5B9                         ;$00A5B2 |
+    BPL .CODE_00A5B9                        ;$00A5B2 |
     JSR CODE_0097BC                         ;$00A5B4 |
-    BRA CODE_00A5CF                         ;$00A5B7 |
+    BRA .CODE_00A5CF                        ;$00A5B7 |
 
-CODE_00A5B9:
+.CODE_00A5B9:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$00A5BC |
     JSL CODE_05BE8A                         ;$00A5BF |
@@ -4543,7 +4543,7 @@ CODE_00A5B9:
     JSR CODE_00A5F9                         ;$00A5C6 |
     JSR DisableHDMA                         ;$00A5C9 |
     JSR CODE_009860                         ;$00A5CC |
-CODE_00A5CF:
+.CODE_00A5CF:
     JSR CODE_00922F
     JSR KeepModeActive                      ;$00A5D2 |
     JSR update_status_tileset_008E1A        ;$00A5D5 |
