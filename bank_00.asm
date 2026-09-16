@@ -1590,111 +1590,111 @@ DATA_008E07:
     db $C4,$B7,$C5
 
 update_status_tileset_008E1A:
-    LDA.w $1493
-    ORA $9D                                 ;$008E1D |
-    BNE CODE_008E6F                         ;$008E1F |
-    LDA.w $0D9B                             ;$008E21 |
-    CMP.b #$C1                              ;$008E24 |
-    BEQ CODE_008E6F                         ;$008E26 |
-    DEC.w $0F30                             ;$008E28 |
-    BPL CODE_008E6F                         ;$008E2B |
-    LDA.b #$28                              ;$008E2D |
-    STA.w $0F30                             ;$008E2F |
+    LDA.w $1493                             ;$008E1A |\
+    ORA $9D                                 ;$008E1D || Don't update the clock if:
+    BNE .update_time_tilemap                ;$008E1F ||  - Ending a level
+    LDA.w $0D9B                             ;$008E21 ||  - Game is frozen
+    CMP.b #$C1                              ;$008E24 ||  - In Bowser's battle mode
+    BEQ .update_time_tilemap                ;$008E26 ||
+    DEC.w $0F30                             ;$008E28 || Decrement subsecond timer
+    BPL .update_time_tilemap                ;$008E2B |/
+    LDA.b #$28                              ;$008E2D | if subsecond timer becomes negative
+    STA.w $0F30                             ;$008E2F | reset it and update the clock digits
     LDA.w $0F31                             ;$008E32 |
     ORA.w $0F32                             ;$008E35 |
     ORA.w $0F33                             ;$008E38 |
-    BEQ CODE_008E6F                         ;$008E3B |
-    LDX.b #$02                              ;$008E3D |
-CODE_008E3F:
-    DEC.w $0F31,X
-    BPL CODE_008E4C                         ;$008E42 |
-    LDA.b #$09                              ;$008E44 |
-    STA.w $0F31,X                           ;$008E46 |
-    DEX                                     ;$008E49 |
-    BPL CODE_008E3F                         ;$008E4A |
-CODE_008E4C:
-    LDA.w $0F31
-    BNE CODE_008E60                         ;$008E4F |
-    LDA.w $0F32                             ;$008E51 |
-    AND.w $0F33                             ;$008E54 |
-    CMP.b #$09                              ;$008E57 |
-    BNE CODE_008E60                         ;$008E59 |
-    LDA.b #$FF                              ;$008E5B |
-    STA.w $1DF9                             ;$008E5D |
-CODE_008E60:
-    LDA.w $0F31
-    ORA.w $0F32                             ;$008E63 |
-    ORA.w $0F33                             ;$008E66 |
-    BNE CODE_008E6F                         ;$008E69 |
-    JSL kill_player                         ;$008E6B |
-CODE_008E6F:
-    LDA.w $0F31
-    STA.w $0F25                             ;$008E72 |
+    BEQ .update_time_tilemap                ;$008E3B | do not update when clock is 000
+
+    LDX.b #$02                              ;$008E3D |\
+-   DEC.w $0F31,X                           ;$008E3F || Clock digits decrementing algorithm
+    BPL +                                   ;$008E42 ||
+    LDA.b #$09                              ;$008E44 ||
+    STA.w $0F31,X                           ;$008E46 ||
+    DEX                                     ;$008E49 ||
+    BPL -                                   ;$008E4A |/
+
++   LDA.w $0F31                             ;$008E4C |\
+    BNE +                                   ;$008E4F || Check if clock is 099
+    LDA.w $0F32                             ;$008E51 || to play time is running out theme
+    AND.w $0F33                             ;$008E54 ||
+    CMP.b #$09                              ;$008E57 ||
+    BNE +                                   ;$008E59 ||
+    LDA.b #$FF                              ;$008E5B ||
+    STA.w $1DF9                             ;$008E5D |/
+
++   LDA.w $0F31                             ;$008E60 |\
+    ORA.w $0F32                             ;$008E63 || Check if clock is 000
+    ORA.w $0F33                             ;$008E66 || to kill the player
+    BNE .update_time_tilemap                ;$008E69 ||
+    JSL kill_player                         ;$008E6B |/
+
+.update_time_tilemap:
+    LDA.w $0F31                             ;$008E6F | copy digits to corresponding
+    STA.w $0F25                             ;$008E72 | statusbar tilemap values
     LDA.w $0F32                             ;$008E75 |
     STA.w $0F26                             ;$008E78 |
     LDA.w $0F33                             ;$008E7B |
     STA.w $0F27                             ;$008E7E |
     LDX.b #$10                              ;$008E81 |
     LDY.b #$00                              ;$008E83 |
-CODE_008E85:
-    LDA.w $0F31,Y
-    BNE CODE_008E95                         ;$008E88 |
-    LDA.b #$FC                              ;$008E8A |
-    STA.w $0F15,X                           ;$008E8C |
+
+-   LDA.w $0F31,Y                           ;$008E85 |
+    BNE +                                   ;$008E88 | Replace leadings 0s in timer with spaces
+    LDA.b #$FC                              ;$008E8A | 099 -> _99
+    STA.w $0F15,X                           ;$008E8C | 008 -> __8
     INY                                     ;$008E8F |
     INX                                     ;$008E90 |
     CPY.b #$02                              ;$008E91 |
-    BNE CODE_008E85                         ;$008E93 |
-CODE_008E95:
-    LDX.b #$03
-CODE_008E97:
-    LDA.w $0F36,X
+    BNE -                                   ;$008E93 |
+
++   LDX.b #$03                              ;$008E95 | limit scores to 999999
+-   LDA.w $0F36,X                           ;$008E97 |
     STA $00                                 ;$008E9A |
     STZ $01                                 ;$008E9C |
-    REP #$20                                ;$008E9E |
+    REP #$20                                ;$008E9E | A->16
     LDA.w $0F34,X                           ;$008EA0 |
     SEC                                     ;$008EA3 |
     SBC.w #$423F                            ;$008EA4 |
     LDA $00                                 ;$008EA7 |
     SBC.w #$000F                            ;$008EA9 |
-    BCC CODE_008EBF                         ;$008EAC |
-    SEP #$20                                ;$008EAE |
-    LDA.b #$0F                              ;$008EB0 |
-    STA.w $0F36,X                           ;$008EB2 |
-    LDA.b #$42                              ;$008EB5 |
-    STA.w $0F35,X                           ;$008EB7 |
-    LDA.b #$3F                              ;$008EBA |
-    STA.w $0F34,X                           ;$008EBC |
-CODE_008EBF:
-    SEP #$20
-    DEX                                     ;$008EC1 |
+    BCC +                                   ;$008EAC |
+    SEP #$20                                ;$008EAE |\ A->8
+    LDA.b #$0F                              ;$008EB0 || if score exceeds 999999
+    STA.w $0F36,X                           ;$008EB2 || set it to 999999 (in hex)
+    LDA.b #$42                              ;$008EB5 ||
+    STA.w $0F35,X                           ;$008EB7 ||
+    LDA.b #$3F                              ;$008EBA ||
+    STA.w $0F34,X                           ;$008EBC |/
++   SEP #$20                                ;$008EBF | A->8
+    DEX                                     ;$008EC1 | 
     DEX                                     ;$008EC2 |
     DEX                                     ;$008EC3 |
-    BPL CODE_008E97                         ;$008EC4 |
-    LDA.w $0F36                             ;$008EC6 |
-    STA $00                                 ;$008EC9 |
-    STZ $01                                 ;$008ECB |
+    BPL -                                   ;$008EC4 | repeat for Luigi
+
+    LDA.w $0F36                             ;$008EC6 | copy Mario score to scratch RAM
+    STA $00                                 ;$008EC9 | that are parameters to $009012
+    STZ $01                                 ;$008ECB | notice that this happens regardless of character in play
     LDA.w $0F35                             ;$008ECD |
     STA $03                                 ;$008ED0 |
     LDA.w $0F34                             ;$008ED2 |
     STA $02                                 ;$008ED5 |
     LDX.b #$14                              ;$008ED7 |
     LDY.b #$00                              ;$008ED9 |
-    JSR CODE_009012                         ;$008EDB |
+    JSR draw_score_009012                   ;$008EDB | PERF: Mario's statusbar score is calculated while playing as Luigi
+
     LDX.b #$00                              ;$008EDE |
-CODE_008EE0:
-    LDA.w $0F29,X
-    BNE CODE_008EEF                         ;$008EE3 |
+-   LDA.w $0F29,X                           ;$008EE0 | Replace leadings 0s in score with spaces
+    BNE +                                   ;$008EE3 |
     LDA.b #$FC                              ;$008EE5 |
     STA.w $0F29,X                           ;$008EE7 |
     INX                                     ;$008EEA |
     CPX.b #$06                              ;$008EEB |
-    BNE CODE_008EE0                         ;$008EED |
-CODE_008EEF:
-    LDA.w $0DB3
-    BEQ CODE_008F1D                         ;$008EF2 |
-    LDA.w $0F39                             ;$008EF4 |
-    STA $00                                 ;$008EF7 |
+    BNE -                                   ;$008EED |
+
++   LDA.w $0DB3                             ;$008EEF |
+    BEQ .handle_coins_008F1D                ;$008EF2 |
+    LDA.w $0F39                             ;$008EF4 | copy Luigi score to scratch RAM
+    STA $00                                 ;$008EF7 | that are parameters to $009012
     STZ $01                                 ;$008EF9 |
     LDA.w $0F38                             ;$008EFB |
     STA $03                                 ;$008EFE |
@@ -1702,67 +1702,71 @@ CODE_008EEF:
     STA $02                                 ;$008F03 |
     LDX.b #$14                              ;$008F05 |
     LDY.b #$00                              ;$008F07 |
-    JSR CODE_009012                         ;$008F09 |
+    JSR draw_score_009012                   ;$008F09 |
+
     LDX.b #$00                              ;$008F0C |
-CODE_008F0E:
-    LDA.w $0F29,X
-    BNE CODE_008F1D                         ;$008F11 |
+-   LDA.w $0F29,X                           ;$008F0E | Replace leadings 0s in score with spaces
+    BNE .handle_coins_008F1D                ;$008F11 |
     LDA.b #$FC                              ;$008F13 |
     STA.w $0F29,X                           ;$008F15 |
     INX                                     ;$008F18 |
     CPX.b #$06                              ;$008F19 |
-    BNE CODE_008F0E                         ;$008F1B |
-CODE_008F1D:
+    BNE -                                   ;$008F1B |
+
+.handle_coins_008F1D:
     LDA.w $13CC
-    BEQ CODE_008F3B                         ;$008F20 |
+    BEQ .handle_lives_008F3B                ;$008F20 |
     DEC.w $13CC                             ;$008F22 |
     INC.w $0DBF                             ;$008F25 |
     LDA.w $0DBF                             ;$008F28 |
     CMP.b #$64                              ;$008F2B |
-    BCC CODE_008F3B                         ;$008F2D |
+    BCC .handle_lives_008F3B                ;$008F2D |
     INC.w $18E4                             ;$008F2F |
     LDA.w $0DBF                             ;$008F32 |
     SEC                                     ;$008F35 |
     SBC.b #$64                              ;$008F36 |
     STA.w $0DBF                             ;$008F38 |
-CODE_008F3B:
+
+.handle_lives_008F3B:
     LDA.w $0DBE
-    BMI CODE_008F49                         ;$008F3E |
+    BMI +                                   ;$008F3E |
     CMP.b #$62                              ;$008F40 |
-    BCC CODE_008F49                         ;$008F42 |
+    BCC +                                   ;$008F42 |
     LDA.b #$62                              ;$008F44 |
     STA.w $0DBE                             ;$008F46 |
-CODE_008F49:
-    LDA.w $0DBE
++   LDA.w $0DBE                             ;$008F49 |
     INC A                                   ;$008F4C |
-    JSR HexToDec                            ;$008F4D |
+    JSR hex_to_dec_009045                   ;$008F4D |
     TXY                                     ;$008F50 |
-    BNE CODE_008F55                         ;$008F51 |
-    LDX.b #$FC                              ;$008F53 |
-CODE_008F55:
-    STX.w $0F16
+    BNE +                                   ;$008F51 |
+    LDX.b #$FC                              ;$008F53 | Replace leading 0 in lives with space
++   STX.w $0F16                             ;$008F55 |
     STA.w $0F17                             ;$008F58 |
+
+; Handle Bonus Stars overflow
     LDX.w $0DB3                             ;$008F5B |
     LDA.w $0F48,X                           ;$008F5E |
     CMP.b #$64                              ;$008F61 |
-    BCC CODE_008F73                         ;$008F63 |
-    LDA.b #$FF                              ;$008F65 |
-    STA.w $1425                             ;$008F67 |
-    LDA.w $0F48,X                           ;$008F6A |
-    SEC                                     ;$008F6D |
-    SBC.b #$64                              ;$008F6E |
-    STA.w $0F48,X                           ;$008F70 |
-CODE_008F73:
-    LDA.w $0DBF
-    JSR HexToDec                            ;$008F76 |
+    BCC .draw_coin_count_008F73             ;$008F63 |
+    LDA.b #$FF                              ;$008F65 |\
+    STA.w $1425                             ;$008F67 || set Bonus flag
+    LDA.w $0F48,X                           ;$008F6A || and subtract 100 from stars
+    SEC                                     ;$008F6D ||
+    SBC.b #$64                              ;$008F6E ||
+    STA.w $0F48,X                           ;$008F70 |/
+
+.draw_coin_count_008F73:
+    LDA.w $0DBF                             ;$008F73 |
+    JSR hex_to_dec_009045                   ;$008F76 |
     TXY                                     ;$008F79 |
-    BNE CODE_008F7E                         ;$008F7A |
-    LDX.b #$FC                              ;$008F7C |
-CODE_008F7E:
-    STA.w $0F14
+    BNE +                                   ;$008F7A |
+    LDX.b #$FC                              ;$008F7C | Replace leading 0 in coins with space
++   STA.w $0F14                             ;$008F7E |
     STX.w $0F13                             ;$008F81 |
-    SEP #$20                                ;$008F84 |
-    LDX.w $0DB3                             ;$008F86 |
+
+; Calculate Bonus Stars digits
+    SEP #$20                                ;$008F84 | A->8
+    LDX.w $0DB3                             ;$008F86 | use current character as index
     STZ $00                                 ;$008F89 |
     STZ $01                                 ;$008F8B |
     STZ $03                                 ;$008F8D |
@@ -1770,58 +1774,57 @@ CODE_008F7E:
     STA $02                                 ;$008F92 |
     LDX.b #$09                              ;$008F94 |
     LDY.b #$10                              ;$008F96 |
-    JSR CODE_009051                         ;$008F98 |
-    LDX.b #$00                              ;$008F9B |
-CODE_008F9D:
-    LDA.w $0F1E,X
-    BNE CODE_008FAF                         ;$008FA0 |
-    LDA.b #$FC                              ;$008FA2 |
-    STA.w $0F1E,X                           ;$008FA4 |
-    STA.w $0F03,X                           ;$008FA7 |
-    INX                                     ;$008FAA |
-    CPX.b #$01                              ;$008FAB |
-    BNE CODE_008F9D                         ;$008FAD |
-CODE_008FAF:
-    LDA.w $0F1E,X
+    JSR calculate_decimal_digits_009051     ;$008F98 |
+    LDX.b #$00                              ;$008F9B | X represents a digit, starting from tens
+-   LDA.w $0F1E,X                           ;$008F9D |\ get returned digit
+    BNE .draw_bonus_stars_008FAF            ;$008FA0 ||
+    LDA.b #$FC                              ;$008FA2 ||\
+    STA.w $0F1E,X                           ;$008FA4 ||| Replace leading 0 in Bonus Star with space
+    STA.w $0F03,X                           ;$008FA7 |||
+    INX                                     ;$008FAA |||
+    CPX.b #$01                              ;$008FAB ||/
+    BNE -                                   ;$008FAD |/ WARN: as X is always 1, this never branches
+
+.draw_bonus_stars_008FAF:
+    LDA.w $0F1E,X                           ;$008FAF | start from tens if non-empty, or ones otherwise
     ASL                                     ;$008FB2 |
     TAY                                     ;$008FB3 |
-    LDA.w DATA_008E06,Y                     ;$008FB4 |
-    STA.w $0F03,X                           ;$008FB7 |
-    LDA.w DATA_008E07,Y                     ;$008FBA |
-    STA.w $0F1E,X                           ;$008FBD |
+    LDA.w DATA_008E06,Y                     ;$008FB4 | get the tileset values
+    STA.w $0F03,X                           ;$008FB7 | for the upper part of the digit
+    LDA.w DATA_008E07,Y                     ;$008FBA | and the bottom part of the digit
+    STA.w $0F1E,X                           ;$008FBD | overwriting the actual decimal value used previously
     INX                                     ;$008FC0 |
     CPX.b #$02                              ;$008FC1 |
-    BNE CODE_008FAF                         ;$008FC3 |
-    JSR CODE_009079                         ;$008FC5 |
+    BNE .draw_bonus_stars_008FAF            ;$008FC3 | redo for ones, if started from tens
+
+    JSR draw_reserve_item_009079            ;$008FC5 |
+; Draw Luigi Name
     LDA.w $0DB3                             ;$008FC8 |
-    BEQ CODE_008FD8                         ;$008FCB |
-    LDX.b #$04                              ;$008FCD |
-CODE_008FCF:
-    LDA.w DATA_008DF5,X
-    STA.w $0EF9,X                           ;$008FD2 |
-    DEX                                     ;$008FD5 |
-    BPL CODE_008FCF                         ;$008FD6 |
-CODE_008FD8:
-    LDA.w $1422
+    BEQ .draw_dragon_coins_008FD8           ;$008FCB |
+    LDX.b #$04                              ;$008FCD |\
+-   LDA.w DATA_008DF5,X                     ;$008FCF ||
+    STA.w $0EF9,X                           ;$008FD2 || overwrite Mario's name in statusbar
+    DEX                                     ;$008FD5 ||
+    BPL -                                   ;$008FD6 |/
+
+.draw_dragon_coins_008FD8:
+    LDA.w $1422                             ;$008FD8 |
     CMP.b #$05                              ;$008FDB |
-    BCC CODE_008FE1                         ;$008FDD |
+    BCC +                                   ;$008FDD |
     LDA.b #$00                              ;$008FDF |
-CODE_008FE1:
-    DEC A
++   DEC A                                   ;$008FE1 |
     STA $00                                 ;$008FE2 |
     LDX.b #$00                              ;$008FE4 |
-CODE_008FE6:
-    LDY.b #$FC
+-   LDY.b #$FC                              ;$008FE6 |
     LDA $00                                 ;$008FE8 |
-    BMI CODE_008FEE                         ;$008FEA |
+    BMI +                                   ;$008FEA |
     LDY.b #$2E                              ;$008FEC |
-CODE_008FEE:
-    TYA
++   TYA                                     ;$008FEE |
     STA.w $0EFF,X                           ;$008FEF |
     DEC $00                                 ;$008FF2 |
     INX                                     ;$008FF4 |
     CPX.b #$04                              ;$008FF5 |
-    BNE CODE_008FE6                         ;$008FF7 |
+    BNE -                                   ;$008FF7 |
     RTS                                     ;$008FF9 |
 
 DATA_008FFA:
@@ -1832,7 +1835,7 @@ DATA_008FFC:
     db $E8,$03,$00,$00,$64,$00,$00,$00
     db $0A,$00,$00,$00,$01,$00
 
-CODE_009012:
+draw_score_009012:
     SEP #$20
     STZ.w $0F15,X                           ;$009014 |
 CODE_009017:
@@ -1860,50 +1863,44 @@ CODE_009039:
     INY                                     ;$00903C |
     INY                                     ;$00903D |
     CPY.b #$18                              ;$00903E |
-    BNE CODE_009012                         ;$009040 |
+    BNE draw_score_009012                   ;$009040 |
     SEP #$20                                ;$009042 |
     RTS                                     ;$009044 |
 
-HexToDec:
-    LDX.b #$00
-CODE_009047:
-    CMP.b #$0A
-    BCC Return009050                        ;$009049 |
+hex_to_dec_009045:
+    LDX.b #$00                              ;$009045 |
+-   CMP.b #$0A                              ;$009047 | Returns ones digit in A, and tens in X.
+    BCC +                                   ;$009049 |
     SBC.b #$0A                              ;$00904B |
     INX                                     ;$00904D |
-    BRA CODE_009047                         ;$00904E |
+    BRA -                                   ;$00904E |
++   RTS                                     ;$009051 |
 
-Return009050:
-    RTS
-
-CODE_009051:
-    SEP #$20
+calculate_decimal_digits_009051:
+    SEP #$20                                ;$009051 | A->8
     STZ.w $0F15,X                           ;$009053 |
-CODE_009056:
-    REP #$20
+-   REP #$20                                ;$009056 | A->16
     LDA $02                                 ;$009058 |
     SEC                                     ;$00905A |
     SBC.w DATA_008FFC,Y                     ;$00905B |
     STA $06                                 ;$00905E |
-    BCC CODE_00906D                         ;$009060 |
+    BCC +                                   ;$009060 |
     LDA $06                                 ;$009062 |
     STA $02                                 ;$009064 |
-    SEP #$20                                ;$009066 |
+    SEP #$20                                ;$009066 | A->8
     INC.w $0F15,X                           ;$009068 |
-    BRA CODE_009056                         ;$00906B |
-
-CODE_00906D:
-    INX
+    BRA -                                   ;$00906B |
++   INX                                     ;$00906D |
     INY                                     ;$00906E |
     INY                                     ;$00906F |
     INY                                     ;$009070 |
     INY                                     ;$009071 |
     CPY.b #$18                              ;$009072 |
-    BNE CODE_009051                         ;$009074 |
-    SEP #$20                                ;$009076 |
-    RTS                                     ;$009078 |
+    BNE calculate_decimal_digits_009051     ;$009074 |
+    SEP #$20                                ;$009076 | A->8
+    RTS                                     ;$009078 | Returns each byte starting from $0F15,X as decimal digits
 
-CODE_009079:
+draw_reserve_item_009079:
     LDY.b #$E0
     BIT.w $0D9B                             ;$00907B |
     BVC CODE_00908E                         ;$00907E |
@@ -2711,7 +2708,7 @@ CODE_009740:
     JMP Mode04Finish                        ;$009749 |
 
 CODE_00974C:
-    JSR HexToDec
+    JSR hex_to_dec_009045
     RTL                                     ;$00974F |
 
 CODE_009750:
@@ -3515,7 +3512,7 @@ CODE_009D5B:
     BRA CODE_009D7A                         ;$009D74 |
 
 CODE_009D76:
-    JSR HexToDec
+    JSR hex_to_dec_009045
     TXY                                     ;$009D79 |
 CODE_009D7A:
     LDX $00
