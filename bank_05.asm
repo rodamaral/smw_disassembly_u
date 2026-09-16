@@ -3542,27 +3542,26 @@ CODE_05BB39:
     LDA.w DATA_05B93F,X                     ;$05BB5F |
     STA.w $0D7C                             ;$05BB62 |
     LDX.b #$04                              ;$05BB65 |
-CODE_05BB67:
-    PHY
+.loop:
+    PHY                                     ;$05BB67 |
     PHX                                     ;$05BB68 |
     SEP #$20                                ;$05BB69 |
     TYA                                     ;$05BB6B |
     LDX.w DATA_05B96B,Y                     ;$05BB6C |
-    BEQ CODE_05BB88                         ;$05BB6F |
+    BEQ .CODE_05BB88                        ;$05BB6F |
     DEX                                     ;$05BB71 |
-    BNE CODE_05BB81                         ;$05BB72 |
+    BNE .CODE_05BB81                        ;$05BB72 |
     LDX.w DATA_05B97D,Y                     ;$05BB74 |
     LDY.w $14AD,X                           ;$05BB77 |
-    BEQ CODE_05BB88                         ;$05BB7A |
+    BEQ .CODE_05BB88                        ;$05BB7A |
     CLC                                     ;$05BB7C |
     ADC.b #$26                              ;$05BB7D |
-    BRA CODE_05BB88                         ;$05BB7F |
-
-CODE_05BB81:
+    BRA .CODE_05BB88                        ;$05BB7F |
+.CODE_05BB81:
     LDY.w $1931
     CLC                                     ;$05BB84 |
     ADC.w DATA_05B98B,Y                     ;$05BB85 |
-CODE_05BB88:
+.CODE_05BB88:
     REP #$30
     AND.w #$00FF                            ;$05BB8A |
     ASL                                     ;$05BB8D |
@@ -3578,7 +3577,7 @@ CODE_05BB88:
     INY                                     ;$05BB9D |
     DEX                                     ;$05BB9E |
     DEX                                     ;$05BB9F |
-    BPL CODE_05BB67                         ;$05BBA0 |
+    BPL .loop                               ;$05BBA0 |
     SEP #$20                                ;$05BBA2 |
     PLB                                     ;$05BBA4 |
     RTL                                     ;$05BBA5 |
@@ -3944,7 +3943,7 @@ ADDR_05BE7B:
     SEP #$20                                ;$05BE87 |
     RTS                                     ;$05BE89 |
 
-CODE_05BE8A:
+reset_layer3_05BE8A:
     PHB
     PHK                                     ;$05BE8B |
     PLB                                     ;$05BE8C |

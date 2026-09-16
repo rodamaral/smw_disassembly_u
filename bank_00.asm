@@ -1983,20 +1983,18 @@ DATA_00916A:
     db $34,$34,$34,$34,$F4,$B4,$F4,$B4
     db $B4
 
-CODE_00919B:
+try_castle_entrance_00919B:
     LDA $71
-    CMP.b #$0A                              ;$00919D |
-    BNE CODE_0091A6                         ;$00919F |
-    JSR execute_player_animation_00C593     ;$0091A1 |
-    BRA Return0091B0                        ;$0091A4 |
+    CMP.b #$0A                              ;$00919D |\
+    BNE +                                   ;$00919F || If performing a No Yoshi entrance, execute the player animation
+    JSR execute_player_animation_00C593     ;$0091A1 ||
+    BRA ++                                  ;$0091A4 |/
 
-CODE_0091A6:
-    LDA.w $141A
-    BNE Return0091B0                        ;$0091A9 |
-    LDA.b #$1E                              ;$0091AB |
-    STA.w $0DC0                             ;$0091AD |
-Return0091B0:
-    RTS
++   LDA.w $141A                             ;$0091A6 |\
+    BNE ++                                  ;$0091A9 || if entering from overworld (main level)
+    LDA.b #$1E                              ;$0091AB || set the Green star block coin counter
+    STA.w $0DC0                             ;$0091AD |/
+++  RTS                                     ;$0091B0 |
 
 CODE_0091B1:
     JSR CODE_00A82D
@@ -2305,7 +2303,7 @@ CODE_0093EA:
     STA.w $0D9B                             ;$0093EC |
     LDA.b #$20                              ;$0093EF |
     JSR ScreenSettings                      ;$0093F1 |
-CODE_0093F4:
+increment_game_mode_0093F4:
     INC.w $0100
 Mode04Finish:
     LDA.b #$81
@@ -2465,7 +2463,7 @@ CODE_009529:
     LDA $20                                 ;$009539 |
     STA $1C                                 ;$00953B |
     SEP #$20                                ;$00953D |
-    JSL draw_mario_and_yoshi_00E2BD                         ;$00953F |
+    JSL draw_mario_and_yoshi_00E2BD         ;$00953F |
     REP #$20                                ;$009543 |
     PLA                                     ;$009545 |
     STA $1C                                 ;$009546 |
@@ -2770,7 +2768,7 @@ CODE_0097AE:
     BNE CODE_00979D                         ;$0097B7 |
     JMP consolidate_OAM_008494              ;$0097B9 |
 
-CODE_0097BC:
+load_boss_room_0097BC:
     LDA.b #$0F
     STA.w $0DAE                             ;$0097BE |
     STZ.w $0DB0                             ;$0097C1 |
@@ -2784,27 +2782,26 @@ CODE_0097BC:
     STA.w $1931                             ;$0097D5 |
     JSL CODE_03D958                         ;$0097D8 |
     BIT.w $0D9B                             ;$0097DC |
-    BVC CODE_009801                         ;$0097DF |
+    BVC .Iggy_Larry_009801                  ;$0097DF |
     JSR CODE_009925                         ;$0097E1 |
     LDY.w $13FC                             ;$0097E4 |
     CPY.b #$03                              ;$0097E7 |
-    BCC CODE_0097F1                         ;$0097E9 |
-    BNE CODE_00983B                         ;$0097EB |
+    BCC .Roy_Morton_Ludwig_0097F1           ;$0097E9 |
+    BNE .Reznor_00983B                      ;$0097EB |
     LDA.b #$18                              ;$0097ED |
-    BRA CODE_0097FC                         ;$0097EF |
+    BRA +                                   ;$0097EF |
 
-CODE_0097F1:
+.Roy_Morton_Ludwig_0097F1:
     LDA.b #$03
     STA.w $13F9                             ;$0097F3 |
     LDA.b #$C8                              ;$0097F6 |
     STA $3F                                 ;$0097F8 |
     LDA.b #$12                              ;$0097FA |
-CODE_0097FC:
-    DEC.w $1931
-    BRA CODE_00983D                         ;$0097FF |
++   DEC.w $1931                             ;$0097FC |
+    BRA +                                   ;$0097FF |
 
-CODE_009801:
-    JSR CODE_00ADD9
+.Iggy_Larry_009801:
+    JSR CODE_00ADD9                         ;$009801 |
     JSR CODE_0092A8                         ;$009804 |
     LDX.b #$50                              ;$009807 |
     JSR CODE_009A3D                         ;$009809 |
@@ -2827,10 +2824,9 @@ CODE_009801:
     LDA.w #$0010                            ;$009834 |
     STA $3C                                 ;$009837 |
     SEP #$20                                ;$009839 |
-CODE_00983B:
+.Reznor_00983B:
     LDA.b #$13
-CODE_00983D:
-    STA.w $192B
++   STA.w $192B                             ;$00983D |
     JSR UploadSpriteGFX                     ;$009840 |
     LDA.b #$11                              ;$009843 |
     STA.w $212E                             ;$009845 |
@@ -2844,7 +2840,7 @@ CODE_00983D:
     STA $44                                 ;$009858 |
     JSR GM04DoDMA                           ;$00985A |
     JSR CODE_008ACD                         ;$00985D |
-CODE_009860:
+run_level_physics_009860:
     JSL draw_mario_and_yoshi_00E2BD
     JSR mirror_player_position_00A2F3       ;$009864 |
     JSR execute_player_animation_00C593     ;$009867 |
@@ -3801,7 +3797,7 @@ DATA_009F88:
     db $80,$01,$02,$80,$01,$02,$80,$01
     db $02,$81,$01,$02,$81,$01,$02,$80
 
-CODE_009FB8:
+load_layer3_009FB8:
     LDA.w $1931
     ASL                                     ;$009FBB |
     CLC                                     ;$009FBC |
@@ -3821,10 +3817,9 @@ CODE_009FB8:
     JSR CODE_00A045                         ;$009FD6 |
     LDA.b #$70                              ;$009FD9 |
     PLP                                     ;$009FDB |
-    BEQ CODE_009FE0                         ;$009FDC |
+    BEQ +                                   ;$009FDC |
     LDA.b #$40                              ;$009FDE |
-CODE_009FE0:
-    STA $24
++   STA $24                                 ;$009FE0 |
     STZ $25                                 ;$009FE2 |
     JSL CODE_05BC72                         ;$009FE4 |
     BRA CODE_00A01B                         ;$009FE8 |
@@ -3965,7 +3960,7 @@ GM0C_overworld_load_00A087:
     LDA.w $1F2E                             ;$00A0F6 |
     BNE CODE_00A101                         ;$00A0F9 |
     JSR CODE_009C89                         ;$00A0FB |
-    JMP CODE_0093F4                         ;$00A0FE |
+    JMP increment_game_mode_0093F4          ;$00A0FE |
 
 CODE_00A101:
     JSL CODE_04DAAD
@@ -4027,7 +4022,7 @@ CODE_00A185:
     DEX                                     ;$00A18C |
     BPL CODE_00A185                         ;$00A18D |
     JSR CODE_0092A0                         ;$00A18F |
-    JMP CODE_0093F4                         ;$00A192 |
+    JMP increment_game_mode_0093F4          ;$00A192 |
 
 CODE_00A195:
     REP #$10
@@ -4531,19 +4526,19 @@ GM12_level_load_2_00A59C:
     JSR GM04DoDMA                           ;$00A5A8 |
     JSL CODE_05809E                         ;$00A5AB |
     LDA.w $0D9B                             ;$00A5AF |
-    BPL .CODE_00A5B9                        ;$00A5B2 |
-    JSR CODE_0097BC                         ;$00A5B4 |
-    BRA .CODE_00A5CF                        ;$00A5B7 |
+    BPL .load_regular_level_00A5B9          ;$00A5B2 |
+    JSR load_boss_room_0097BC               ;$00A5B4 |
+    BRA .common_level_00A5CF                ;$00A5B7 |
 
-.CODE_00A5B9:
+.load_regular_level_00A5B9:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$00A5BC |
-    JSL CODE_05BE8A                         ;$00A5BF |
-    JSR CODE_009FB8                         ;$00A5C3 |
+    JSL reset_layer3_05BE8A                 ;$00A5BF |
+    JSR load_layer3_009FB8                  ;$00A5C3 |
     JSR CODE_00A5F9                         ;$00A5C6 |
     JSR DisableHDMA                         ;$00A5C9 |
-    JSR CODE_009860                         ;$00A5CC |
-.CODE_00A5CF:
+    JSR run_level_physics_009860            ;$00A5CC |
+.common_level_00A5CF:
     JSR CODE_00922F
     JSR KeepModeActive                      ;$00A5D2 |
     JSR update_status_tileset_008E1A        ;$00A5D5 |
@@ -4557,20 +4552,19 @@ GM12_level_load_2_00A59C:
     LDX.w $0701                             ;$00A5E8 |
     STX.w $0903                             ;$00A5EB |
     SEP #$30                                ;$00A5EE |
-    JSR CODE_00919B                         ;$00A5F0 |
+    JSR try_castle_entrance_00919B          ;$00A5F0 |
     JSR consolidate_OAM_008494              ;$00A5F3 |
-    JMP CODE_0093F4                         ;$00A5F6 |
+    JMP increment_game_mode_0093F4          ;$00A5F6 |
 
 CODE_00A5F9:
     LDA.b #$E7
     TRB $14                                 ;$00A5FB |
-CODE_00A5FD:
-    JSL CODE_05BB39
+-   JSL CODE_05BB39                         ;$00A6Fd |
     JSR DMA_animated_level_tiles            ;$00A601 |
     INC $14                                 ;$00A604 |
     LDA $14                                 ;$00A606 |
     AND.b #$07                              ;$00A608 |
-    BNE CODE_00A5FD                         ;$00A60A |
+    BNE -                                   ;$00A60A |
     RTS                                     ;$00A60C |
 
 DATA_00A60D:
