@@ -3596,7 +3596,7 @@ DATA_05BBA6:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF
 
-CODE_05BC00:
+process_scroll_commands_05BC00:
     PHB
     PHK                                     ;$05BC01 |
     PLB                                     ;$05BC02 |
@@ -3620,19 +3620,17 @@ CODE_05BC00:
     SBC $1E                                 ;$05BC2A |
     LDY.w $143F                             ;$05BC2C |
     DEY                                     ;$05BC2F |
-    BNE CODE_05BC33                         ;$05BC30 |
+    BNE +                                   ;$05BC30 |
     TYA                                     ;$05BC32 |
-CODE_05BC33:
-    STA.w $17BF
++   STA.w $17BF                             ;$05BC33 |
     LDA.w $1468                             ;$05BC36 |
     SEC                                     ;$05BC39 |
     SBC $20                                 ;$05BC3A |
     STA.w $17BE                             ;$05BC3C |
     LDA.w $13D5                             ;$05BC3F |
-    BNE CODE_05BC47                         ;$05BC42 |
+    BNE +                                   ;$05BC42 |
     JSR CODE_05C40C                         ;$05BC44 |
-CODE_05BC47:
-    PLB
++   PLB                                     ;$05BC47 |
     RTL                                     ;$05BC48 |
 
 Return05BC49:

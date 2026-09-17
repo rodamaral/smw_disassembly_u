@@ -2677,7 +2677,7 @@ CODE_0096FA:
     STA $5E                                 ;$00970A |
     JSR CODE_00A796                         ;$00970C |
     INC.w $1404                             ;$00970F |
-    JSL UpdateScreenPosition_00F6DB         ;$009712 |
+    JSL update_screen_position_00F6DB       ;$009712 |
     JSL CODE_05801E                         ;$009716 |
     LDA.w $0109                             ;$00971A |
     BEQ CODE_009728                         ;$00971D |
@@ -3070,8 +3070,8 @@ CODE_009A52:
     LDA.w $0D9B
     LSR                                     ;$009A55 |
     BCS CODE_009A6F                         ;$009A56 |
-    JSL UpdateScreenPosition_00F6DB         ;$009A58 |
-    JSL CODE_05BC00                         ;$009A5C |
+    JSL update_screen_position_00F6DB       ;$009A58 |
+    JSL process_scroll_commands_05BC00      ;$009A5C |
     LDA.w $13FC                             ;$009A60 |
     CMP.b #$04                              ;$009A63 |
     BEQ CODE_009A6F                         ;$009A65 |
@@ -4166,8 +4166,8 @@ GM14_main_level_00A1DA:
 
 .normal_level:
     JSL $7F8000                             ;$00A295 | unrolled loop - OAMResetRoutine
-    JSL UpdateScreenPosition_00F6DB         ;$00A299 | updates camera -> hardware registers of layers
-    JSL CODE_05BC00                         ;$00A29D | updates camera according to camera command
+    JSL update_screen_position_00F6DB       ;$00A299 | updates camera -> hardware registers of layers
+    JSL process_scroll_commands_05BC00      ;$00A29D |
     JSL CODE_0586F1                         ;$00A2A1 | unknown camera stuff
     JSL CODE_05BB39                         ;$00A2A5 | tile animation stuff
 .common_level_logic:
@@ -12863,7 +12863,7 @@ DATA_00F6CF:
     db $D0,$00,$00,$00,$20,$00,$D0,$00
     db $01,$00,$FF,$FF
 
-UpdateScreenPosition_00F6DB:
+update_screen_position_00F6DB:
     PHB
     PHK                                     ;$00F6DC |
     PLB                                     ;$00F6DD |
