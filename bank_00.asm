@@ -1827,44 +1827,43 @@ update_status_tileset_008E1A:
     BNE -                                   ;$008FF7 |/
     RTS                                     ;$008FF9 |
 
-DATA_008FFA:
-    db $01,$00
-
-DATA_008FFC:
-    db $A0,$86,$00,$00,$10,$27,$00,$00
-    db $E8,$03,$00,$00,$64,$00,$00,$00
-    db $0A,$00,$00,$00,$01,$00
+powers_of_ten_008FFA:                       ; Values used for converting score and bonus stars to decimal
+    dw $0001,$86A0                          ; "100000"
+    dw $0000,$2710                          ; "10000"
+    dw $0000,$03E8                          ; "1000"
+    dw $0000,$0064                          ; "100"
+    dw $0000,$000A                          ; "10"
+    dw $0000,$0001                          ; "1"
 
 draw_score_009012:
-    SEP #$20
+--  SEP #$20                                ;$009012 | A->8
     STZ.w $0F15,X                           ;$009014 |
-CODE_009017:
-    REP #$20
-    LDA $02                                 ;$009019 |
+-   REP #$20                                ;$009017 | A->16
+    LDA $02                                 ;$009019 | current score remainder, low word
     SEC                                     ;$00901B |
-    SBC.w DATA_008FFC,Y                     ;$00901C |
+    SBC.w powers_of_ten_008FFA+2,Y          ;$00901C |
     STA $06                                 ;$00901F |
-    LDA $00                                 ;$009021 |
-    SBC.w DATA_008FFA,Y                     ;$009023 |
+    LDA $00                                 ;$009021 | current score remainder, high word
+    SBC.w powers_of_ten_008FFA,Y            ;$009023 |
     STA $04                                 ;$009026 |
-    BCC CODE_009039                         ;$009028 |
-    LDA $06                                 ;$00902A |
-    STA $02                                 ;$00902C |
+    BCC .next_decimal_place                 ;$009028 |
+    LDA $06                                 ;$00902A | if subtraction did not underflow
+    STA $02                                 ;$00902C | persist the subtraction for the next iteration
     LDA $04                                 ;$00902E |
     STA $00                                 ;$009030 |
     SEP #$20                                ;$009032 |
-    INC.w $0F15,X                           ;$009034 |
-    BRA CODE_009017                         ;$009037 |
+    INC.w $0F15,X                           ;$009034 | increment current digit
+    BRA -                                   ;$009037 | repeat until subtraction underflows
 
-CODE_009039:
-    INX
-    INY                                     ;$00903A |
+.next_decimal_place:
+    INX                                     ;$009039 | move to the next smaller decimal place
+    INY                                     ;$00903A | advance to the next power of ten
     INY                                     ;$00903B |
     INY                                     ;$00903C |
     INY                                     ;$00903D |
     CPY.b #$18                              ;$00903E |
-    BNE draw_score_009012                   ;$009040 |
-    SEP #$20                                ;$009042 |
+    BNE --                                  ;$009040 | if all decimal places have been processed, return
+    SEP #$20                                ;$009042 | A->8
     RTS                                     ;$009044 |
 
 hex_to_dec_009045:
@@ -1882,7 +1881,7 @@ calculate_decimal_digits_009051:
 -   REP #$20                                ;$009056 | A->16
     LDA $02                                 ;$009058 |
     SEC                                     ;$00905A |
-    SBC.w DATA_008FFC,Y                     ;$00905B |
+    SBC.w powers_of_ten_008FFA+2,Y          ;$00905B |
     STA $06                                 ;$00905E |
     BCC +                                   ;$009060 |
     LDA $06                                 ;$009062 |
