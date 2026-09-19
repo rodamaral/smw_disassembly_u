@@ -15297,7 +15297,7 @@ HandleOffYoshi:
     BNE +                                   ;$01EE84 |
     INC A                                   ;$01EE86 |
     STA.w $1602,X                           ;$01EE87 |
-+   JSR CODE_01EF18                         ;$01EE8A |
++   JSR process_yoshi_head_01EF18           ;$01EE8A |
     LDY $0E                                 ;$01EE8D |
     LDA.w $0302,Y                           ;$01EE8F |
     STA $00                                 ;$01EE92 |
@@ -15374,7 +15374,7 @@ HandleOffYoshi:
 .Return01EF17:
     RTS
 
-CODE_01EF18:
+process_yoshi_head_01EF18:
     LDY.w $1602,X
     STY.w $185E                             ;$01EF1B |
     LDA.w YoshiHeadTiles,Y                  ;$01EF1E |
@@ -15391,11 +15391,10 @@ CODE_01EF18:
     STA.w $14D4,X                           ;$01EF35 |
     TYA                                     ;$01EF38 |
     LDY.w $157C,X                           ;$01EF39 |
-    BEQ CODE_01EF41                         ;$01EF3C |
+    BEQ +                                   ;$01EF3C |
     CLC                                     ;$01EF3E |
     ADC.b #$0D                              ;$01EF3F |
-CODE_01EF41:
-    TAY
++   TAY                                     ;$01EF41 |
     LDA $E4,X                               ;$01EF42 |
     PHA                                     ;$01EF44 |
     CLC                                     ;$01EF45 |
@@ -15409,11 +15408,10 @@ CODE_01EF41:
     PHA                                     ;$01EF58 |
     LDA.w $15AC,X                           ;$01EF59 |
     ORA.w $1419                             ;$01EF5C |
-    BEQ CODE_01EF66                         ;$01EF5F |
+    BEQ +                                   ;$01EF5F |
     LDA.b #$04                              ;$01EF61 |
     STA.w $15EA,X                           ;$01EF63 |
-CODE_01EF66:
-    LDA.w $15EA,X
++   LDA.w $15EA,X                           ;$01EF66 |
     STA $0E                                 ;$01EF69 |
     JSR SubSprGfx2Entry1                    ;$01EF6B |
     PHX                                     ;$01EF6E |
@@ -15439,120 +15437,116 @@ CODE_01EF66:
     CLC                                     ;$01EF99 |
     ADC.b #$10                              ;$01EF9A |
     STA $D8,X                               ;$01EF9C |
-    BCC CODE_01EFA3                         ;$01EF9E |
+    BCC +                                   ;$01EF9E |
     INC.w $14D4,X                           ;$01EFA0 |
-CODE_01EFA3:
-    JSR SubSprGfx2Entry1
++   JSR SubSprGfx2Entry1                    ;$01EFA3 |
     PLA                                     ;$01EFA6 |
     STA.w $14D4,X                           ;$01EFA7 |
     PLA                                     ;$01EFAA |
     STA $D8,X                               ;$01EFAB |
     LDY $0E                                 ;$01EFAD |
     LDA $0F                                 ;$01EFAF |
-    BPL CODE_01EFB8                         ;$01EFB1 |
+    BPL +                                   ;$01EFB1 |
     LDA.b #$F0                              ;$01EFB3 |
     STA.w $0301,Y                           ;$01EFB5 |
-CODE_01EFB8:
-    LDA $C2,X
-    BNE CODE_01EFC6                         ;$01EFBA |
-    LDA $14                                 ;$01EFBC |
-    AND.b #$30                              ;$01EFBE |
-    BNE CODE_01EFDB                         ;$01EFC0 |
-    LDA.b #$2A                              ;$01EFC2 |
-    BRA CODE_01EFFA                         ;$01EFC4 |
++   LDA $C2,X                               ;$01EFB8 |
+    BNE .mounted_or_running_01EFC6          ;$01EFBA |
+    LDA $14                                 ;$01EFBC | when hopping,
+    AND.b #$30                              ;$01EFBE | open mouth during some frames
+    BNE .treat_as_mounted_01EFDB            ;$01EFC0 |
+    LDA.b #$2A                              ;$01EFC2 | 2A: open mouth
+    BRA .treat_as_not_mounted_01EFFA        ;$01EFC4 |
 
-CODE_01EFC6:
+.mounted_or_running_01EFC6:
     CMP.b #$02
-    BNE CODE_01EFDB                         ;$01EFC8 |
-    LDA.w $151C,X                           ;$01EFCA |
-    ORA.w $13C6                             ;$01EFCD |
-    BNE CODE_01EFDB                         ;$01EFD0 |
-    LDA $14                                 ;$01EFD2 |
-    AND.b #$10                              ;$01EFD4 |
-    BEQ CODE_01EFFD                         ;$01EFD6 |
-    BRA CODE_01EFF8                         ;$01EFD8 |
+    BNE .treat_as_mounted_01EFDB            ;$01EFC8 |\
+    LDA.w $151C,X                           ;$01EFCA ||
+    ORA.w $13C6                             ;$01EFCD ||
+    BNE .treat_as_mounted_01EFDB            ;$01EFD0 || when yoshi is able to release the tongue just before being hurt
+    LDA $14                                 ;$01EFD2 ||
+    AND.b #$10                              ;$01EFD4 ||
+    BEQ .not_releasing_tongue_01EFFD        ;$01EFD6 ||
+    BRA .close_eyes_01EFF8                  ;$01EFD8 |/
 
-Return01EFDA:
+.return_01EFDA:
     RTS
 
-CODE_01EFDB:
+.treat_as_mounted_01EFDB: ;; TODO check
     LDA.w $1594,X
     CMP.b #$03                              ;$01EFDE |
-    BEQ CODE_01EFEE                         ;$01EFE0 |
+    BEQ .spitting_01EFEE                    ;$01EFE0 |
     LDA.w $151C,X                           ;$01EFE2 |
-    BEQ CODE_01EFF3                         ;$01EFE5 |
+    BEQ .tongue_in_01EFF3                   ;$01EFE5 |
     LDA.w $0302,Y                           ;$01EFE7 |
-    CMP.b #$24                              ;$01EFEA |
-    BEQ CODE_01EFF3                         ;$01EFEC |
-CODE_01EFEE:
-    LDA.b #$2A
+    CMP.b #$24                              ;$01EFEA | 24: open mouth, ducking
+    BEQ .tongue_in_01EFF3                   ;$01EFEC |
+.spitting_01EFEE:
+    LDA.b #$2A                              ;$01EFEE | 2A: open mouth
     STA.w $0302,Y                           ;$01EFF0 |
-CODE_01EFF3:
+.tongue_in_01EFF3:
     LDA.w $18AE
-    BEQ CODE_01EFFD                         ;$01EFF6 |
-CODE_01EFF8:
-    LDA.b #$0C
-CODE_01EFFA:
+    BEQ .not_releasing_tongue_01EFFD        ;$01EFF6 |
+.close_eyes_01EFF8:
+    LDA.b #$0C                              ;$01EFF8 | 0C: closed eyes, about to open mouth
+.treat_as_not_mounted_01EFFA:
     STA.w $0302,Y
-CODE_01EFFD:
+.not_releasing_tongue_01EFFD:
     LDA.w $1564,X
-    LDY.w $18AC                             ;$01F000 |
-    BEQ CODE_01F00F                         ;$01F003 |
+    LDY.w $18AC                             ;$01F000 | Timer on when Yoshi will swallow the sprite in his mouth
+    BEQ .no_sprite_in_mouth_01F00F          ;$01F003 |
     CPY.b #$26                              ;$01F005 |
-    BCS CODE_01F038                         ;$01F007 |
-    LDA $14                                 ;$01F009 |
+    BCS .swallow_sprite_OAM_01F038          ;$01F007 |
+    LDA $14                                 ;$01F009 | about to swallow a sprite
     AND.b #$18                              ;$01F00B |
-    BNE CODE_01F038                         ;$01F00D |
-CODE_01F00F:
+    BNE .swallow_sprite_OAM_01F038          ;$01F00D | show normal mouth during some frames
+.no_sprite_in_mouth_01F00F:
     LDA.w $1564,X
     CMP.b #$00                              ;$01F012 |
-    BEQ Return01EFDA                        ;$01F014 |
-    LDY.b #$00                              ;$01F016 |
+    BEQ .return_01EFDA                      ;$01F014 |
+    LDY.b #$00                              ;$01F016 | 00: default mouth
     CMP.b #$0F                              ;$01F018 |
-    BCC CODE_01F03A                         ;$01F01A |
+    BCC .set_OAM_01F03A                     ;$01F01A |
     CMP.b #$1C                              ;$01F01C |
-    BCC CODE_01F038                         ;$01F01E |
-    BNE CODE_01F02F                         ;$01F020 |
-    LDA $0E                                 ;$01F022 |
-    PHA                                     ;$01F024 |
-    JSL SetTreeTile                         ;$01F025 |
-    JSR CODE_01F0D3                         ;$01F029 |
-    PLA                                     ;$01F02C |
-    STA $0E                                 ;$01F02D |
-CODE_01F02F:
+    BCC .swallow_sprite_OAM_01F038          ;$01F01E | if timer is more than #$1C, freeze
+    BNE .frozen_swallowing_berry_01F02F     ;$01F020 |\
+    LDA $0E                                 ;$01F022 || when timer reaches #$1C
+    PHA                                     ;$01F024 || swallow berry tile
+    JSL generate_tree_tile_02D1F3           ;$01F025 ||
+    JSR process_eaten_berry_01F0D3          ;$01F029 ||
+    PLA                                     ;$01F02C ||
+    STA $0E                                 ;$01F02D |/
+.frozen_swallowing_berry_01F02F:
     INC.w $13FB
     LDA.b #$00                              ;$01F032 |
-    LDY.b #$2A                              ;$01F034 |
-    BRA CODE_01F03A                         ;$01F036 |
+    LDY.b #$2A                              ;$01F034 | 2A: eating berry
+    BRA .set_OAM_01F03A                     ;$01F036 |
 
-CODE_01F038:
-    LDY.b #$04
-CODE_01F03A:
-    PHA
+.swallow_sprite_OAM_01F038:
+    LDY.b #$04                              ;$01F038 | 04: sprite in mouth or swallowing sprite
+.set_OAM_01F03A:
+    PHA                                     ;$01F03A |
     TYA                                     ;$01F03B |
     LDY $0E                                 ;$01F03C |
     STA.w $0302,Y                           ;$01F03E |
     PLA                                     ;$01F041 |
     CMP.b #$0F                              ;$01F042 |
-    BCS Return01F0A0                        ;$01F044 |
+    BCS .return_01F0A0                      ;$01F044 |
     CMP.b #$05                              ;$01F046 |
-    BCC Return01F0A0                        ;$01F048 |
+    BCC .return_01F0A0                      ;$01F048 |
     SBC.b #$05                              ;$01F04A |
     LDY.w $157C,X                           ;$01F04C |
-    BEQ CODE_01F054                         ;$01F04F |
+    BEQ +                                   ;$01F04F |
     CLC                                     ;$01F051 |
     ADC.b #$0A                              ;$01F052 |
-CODE_01F054:
-    LDY.w $1602,X
++   LDY.w $1602,X                           ;$01F054 |
     CPY.b #$0A                              ;$01F057 |
-    BNE CODE_01F05E                         ;$01F059 |
+    BNE +                                   ;$01F059 |
     CLC                                     ;$01F05B |
     ADC.b #$14                              ;$01F05C |
-CODE_01F05E:
-    STA $02
++   STA $02                                 ;$01F05E |
     JSR IsSprOffScreen                      ;$01F060 |
-    BNE Return01F0A0                        ;$01F063 |
-    LDA $E4,X                               ;$01F065 |
+    BNE .return_01F0A0                      ;$01F063 |
+    LDA $E4,X                               ;$01F065 | set remaining OAM
     SEC                                     ;$01F067 |
     SBC $1A                                 ;$01F068 |
     STA $00                                 ;$01F06A |
@@ -15579,7 +15573,7 @@ CODE_01F05E:
     STA.w $0303                             ;$01F098 |
     LDA.b #$00                              ;$01F09B |
     STA.w $0460                             ;$01F09D |
-Return01F0A0:
+.return_01F0A0:
     RTS
 
 Return01F0A1:
@@ -15611,51 +15605,50 @@ Ptrs01F0CB:
     dw CODE_01F332
     dw CODE_01F12E
 
-CODE_01F0D3:
+process_eaten_berry_01F0D3:
     LDA.b #$06
-    STA.w $1DF9                             ;$01F0D5 |
+    STA.w $1DF9                             ;$01F0D5 | play Yoshi gulp sound
     JSL CODE_05B34A                         ;$01F0D8 |
     LDA.w $18D6                             ;$01F0DC |
-    BEQ Return01F12D                        ;$01F0DF |
+    BEQ .return_01F12D                      ;$01F0DF | if swallowing a Coin Berry, return
     STZ.w $18D6                             ;$01F0E1 |
     CMP.b #$01                              ;$01F0E4 |
-    BNE CODE_01F0F9                         ;$01F0E6 |
-    INC.w $18D4                             ;$01F0E8 |
-    LDA.w $18D4                             ;$01F0EB |
-    CMP.b #$0A                              ;$01F0EE |
-    BNE Return01F12D                        ;$01F0F0 |
-    STZ.w $18D4                             ;$01F0F2 |
-    LDA.b #$74                              ;$01F0F5 |
-    BRA CODE_01F125                         ;$01F0F7 |
+    BNE .green_pink_berry_01F0F9            ;$01F0E6 |\
+    INC.w $18D4                             ;$01F0E8 || Red Berry:
+    LDA.w $18D4                             ;$01F0EB ||
+    CMP.b #$0A                              ;$01F0EE ||
+    BNE .return_01F12D                      ;$01F0F0 ||
+    STZ.w $18D4                             ;$01F0F2 || if ate 10 berries
+    LDA.b #$74                              ;$01F0F5 || prepare to lay a Mushroom egg
+    BRA .prepare_egg_type_01F125            ;$01F0F7 |/
 
-CODE_01F0F9:
+.green_pink_berry_01F0F9:
     CMP.b #$03
-    BNE CODE_01F116                         ;$01F0FB |
-    LDA.b #$29                              ;$01F0FD |
-    STA.w $1DFC                             ;$01F0FF |
-    LDA.w $0F32                             ;$01F102 |
+    BNE .pink_berry_01F116                  ;$01F0FB |
+    LDA.b #$29                              ;$01F0FD | Green Berry:
+    STA.w $1DFC                             ;$01F0FF | - play Correct sound
+    LDA.w $0F32                             ;$01F102 | - increase clock
     CLC                                     ;$01F105 |
     ADC.b #$02                              ;$01F106 |
     CMP.b #$0A                              ;$01F108 |
-    BCC CODE_01F111                         ;$01F10A |
+    BCC +                                   ;$01F10A |
     SBC.b #$0A                              ;$01F10C |
     INC.w $0F31                             ;$01F10E |
-CODE_01F111:
-    STA.w $0F32
-    BRA Return01F12D                        ;$01F114 |
++   STA.w $0F32                             ;$01F114 |
+    BRA .return_01F12D                      ;$01F114 |
 
-CODE_01F116:
+.pink_berry_01F116:
     INC.w $18D5
     LDA.w $18D5                             ;$01F119 |
     CMP.b #$02                              ;$01F11C |
-    BNE Return01F12D                        ;$01F11E |
-    STZ.w $18D5                             ;$01F120 |
-    LDA.b #$6A                              ;$01F123 |
-CODE_01F125:
+    BNE .return_01F12D                      ;$01F11E |
+    STZ.w $18D5                             ;$01F120 | if ate 2 berries
+    LDA.b #$6A                              ;$01F123 | prepare to lay a Coin Game Cloud egg
+.prepare_egg_type_01F125:
     STA.w $18DA
     LDY.b #$20                              ;$01F128 |
     STY.w $18DE                             ;$01F12A |
-Return01F12D:
+.return_01F12D:
     RTS
 
 CODE_01F12E:
@@ -15734,7 +15727,7 @@ CODE_01F1A2:
     STA.w $160E,X                           ;$01F1BB |
     LDA.b #$1B                              ;$01F1BE |
     STA.w $1564,X                           ;$01F1C0 |
-    JMP CODE_01F0D3                         ;$01F1C3 |
+    JMP process_eaten_berry_01F0D3          ;$01F1C3 |
 
 CODE_01F1C6:
     LDA.w $18AE
@@ -16034,7 +16027,7 @@ ADDR_01F3F1:
     JMP CODE_01F321                         ;$01F3F4 |
 
 CODE_01F3F7:
-    JSR CODE_01F0D3
+    JSR process_eaten_berry_01F0D3
 CODE_01F3FA:
     JMP CODE_01F321
 

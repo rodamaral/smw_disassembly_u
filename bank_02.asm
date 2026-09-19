@@ -11090,7 +11090,7 @@ Return02D1F0:
 DATA_02D1F1:
     db $00,$04
 
-SetTreeTile:
+generate_tree_tile_02D1F3:
     LDA.w $18B0
     STA $9A                                 ;$02D1F6 |
     LDA.w $18B1                             ;$02D1F8 |
