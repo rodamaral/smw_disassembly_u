@@ -8019,10 +8019,10 @@ YoshiWingsGfxProp:
 YoshiWingsSize:
     db $00,$02,$00,$02
 
-CODE_02BB23:
+draw_yoshi_wings_02BB23:
     STA $02
     JSR IsSprOffScreenBnk2                  ;$02BB25 |
-    BNE Return02BB87                        ;$02BB28 |
+    BNE .return_02BB87                      ;$02BB28 |
     LDA $E4,X                               ;$02BB2A |
     STA $00                                 ;$02BB2C |
     LDA.w $14E0,X                           ;$02BB2E |
@@ -8048,7 +8048,7 @@ CODE_02BB23:
     STA.w $0200,Y                           ;$02BB56 |
     PLA                                     ;$02BB59 |
     SBC $1B                                 ;$02BB5A |
-    BNE CODE_02BB86                         ;$02BB5C |
+    BNE +                                   ;$02BB5C |
     LDA $01                                 ;$02BB5E |
     SEC                                     ;$02BB60 |
     SBC $1C                                 ;$02BB61 |
@@ -8066,9 +8066,8 @@ CODE_02BB23:
     TAY                                     ;$02BB7E |
     LDA.l YoshiWingsSize,X                  ;$02BB7F |
     STA.w $0420,Y                           ;$02BB83 |
-CODE_02BB86:
-    PLX
-Return02BB87:
++   PLX                                     ;$02BB86 |
+.return_02BB87:
     RTL
 
 DATA_02BB88:
@@ -10938,23 +10937,23 @@ DATA_02D0D0:
 DATA_02D0D2:
     db $00,$FF
 
-CODE_02D0D4:
+try_auto_eat_berry_02D0D4:
     LDA.w $1564,X
-    BNE Return02D0E5                        ;$02D0D7 |
-    LDA.w $160E,X                           ;$02D0D9 |
-    BPL Return02D0E5                        ;$02D0DC |
+    BNE +                                   ;$02D0D7 | if Yoshi has a swallowing animation timer
+    LDA.w $160E,X                           ;$02D0D9 | or no sprite / null sprite in tongue, return
+    BPL +                                   ;$02D0DC |
     PHB                                     ;$02D0DE |
     PHK                                     ;$02D0DF |
     PLB                                     ;$02D0E0 |
-    JSR CODE_02D0E6                         ;$02D0E1 |
+    JSR try_eat_berry_tile_02D0E6           ;$02D0E1 |
     PLB                                     ;$02D0E4 |
-Return02D0E5:
-    RTL
++   RTL                                     ;$02D0E5 |
 
-CODE_02D0E6:
+try_eat_berry_tile_02D0E6:
     STZ $0F
-    BRA CODE_02D149                         ;$02D0E8 |
+    BRA .set_mouth_positions_02D149         ;$02D0E8 |
 
+.unreachable
     LDA $D8,X                               ;$02D0EA |
     CLC                                     ;$02D0EC |
     ADC.b #$08                              ;$02D0ED |
@@ -10963,7 +10962,7 @@ CODE_02D0E6:
     LDA.w $14D4,X                           ;$02D0F3 |
     ADC.b #$00                              ;$02D0F6 |
     CMP $5D                                 ;$02D0F8 |
-    BCS Return02D148                        ;$02D0FA |
+    BCS .return_02D148                      ;$02D0FA |
     STA $03                                 ;$02D0FC |
     AND.b #$10                              ;$02D0FE |
     STA $08                                 ;$02D100 |
@@ -10975,7 +10974,7 @@ CODE_02D0E6:
     LDA.w $14E0,X                           ;$02D10D |
     ADC.w DATA_02D0D2,Y                     ;$02D110 |
     CMP.b #$02                              ;$02D113 |
-    BCS Return02D148                        ;$02D115 |
+    BCS .return_02D148                      ;$02D115 |
     STA $02                                 ;$02D117 |
     LDA $01                                 ;$02D119 |
     LSR                                     ;$02D11B |
@@ -10987,48 +10986,46 @@ CODE_02D0E6:
     LDX $03                                 ;$02D123 |
     LDA.l DATA_00BA80,X                     ;$02D125 |
     LDY $0F                                 ;$02D129 |
-    BEQ ADDR_02D131                         ;$02D12B |
+    BEQ +                                   ;$02D12B |
     LDA.l DATA_00BA8E,X                     ;$02D12D |
-ADDR_02D131:
-    CLC
++   CLC                                     ;$02D131 |
     ADC $00                                 ;$02D132 |
     STA $05                                 ;$02D134 |
     LDA.l DATA_00BABC,X                     ;$02D136 |
     LDY $0F                                 ;$02D13A |
-    BEQ ADDR_02D142                         ;$02D13C |
+    BEQ +                                   ;$02D13C |
     LDA.l DATA_00BACA,X                     ;$02D13E |
-ADDR_02D142:
-    ADC $02
++   ADC $02                                 ;$02D142 |
     STA $06                                 ;$02D144 |
-    BRA CODE_02D1AD                         ;$02D146 |
+    BRA .try_eat_berry_tile_02D1AD          ;$02D146 |
 
-Return02D148:
+.return_02D148:
     RTS
 
-CODE_02D149:
+.set_mouth_positions_02D149:
     LDA $D8,X
     CLC                                     ;$02D14B |
     ADC.b #$08                              ;$02D14C |
-    STA.w $18B2                             ;$02D14E |
+    STA.w $18B2                             ;$02D14E | Mouth Y position, low
     AND.b #$F0                              ;$02D151 |
     STA $00                                 ;$02D153 |
     LDA.w $14D4,X                           ;$02D155 |
     ADC.b #$00                              ;$02D158 |
     CMP.b #$02                              ;$02D15A |
-    BCS Return02D148                        ;$02D15C |
+    BCS .return_02D148                      ;$02D15C | if Yoshi's Y >= 512px, return
     STA $02                                 ;$02D15E |
-    STA.w $18B3                             ;$02D160 |
+    STA.w $18B3                             ;$02D160 | Mouth Y position, high
     LDY.w $157C,X                           ;$02D163 |
     LDA $E4,X                               ;$02D166 |
     CLC                                     ;$02D168 |
     ADC.w DATA_02D0D0,Y                     ;$02D169 |
     STA $01                                 ;$02D16C |
-    STA.w $18B0                             ;$02D16E |
+    STA.w $18B0                             ;$02D16E | Mouth X position, low
     LDA.w $14E0,X                           ;$02D171 |
     ADC.w DATA_02D0D2,Y                     ;$02D174 |
     CMP $5D                                 ;$02D177 |
-    BCS Return02D148                        ;$02D179 |
-    STA.w $18B1                             ;$02D17B |
+    BCS .return_02D148                      ;$02D179 | if Yoshi's X is beyond the number of screens, return
+    STA.w $18B1                             ;$02D17B | Mouth X position, high
     STA $03                                 ;$02D17E |
     LDA $01                                 ;$02D180 |
     LSR                                     ;$02D182 |
@@ -11040,43 +11037,41 @@ CODE_02D149:
     LDX $03                                 ;$02D18A |
     LDA.l DATA_00BA60,X                     ;$02D18C |
     LDY $0F                                 ;$02D190 |
-    BEQ CODE_02D198                         ;$02D192 |
+    BEQ +                                   ;$02D192 |
     LDA.l DATA_00BA70,X                     ;$02D194 |
-CODE_02D198:
-    CLC
++   CLC                                     ;$02D198 |
     ADC $00                                 ;$02D199 |
     STA $05                                 ;$02D19B |
     LDA.l DATA_00BA9C,X                     ;$02D19D |
     LDY $0F                                 ;$02D1A1 |
-    BEQ CODE_02D1A9                         ;$02D1A3 |
+    BEQ +                                   ;$02D1A3 |
     LDA.l DATA_00BAAC,X                     ;$02D1A5 |
-CODE_02D1A9:
-    ADC $02
++   ADC $02                                 ;$02D1A9 |
     STA $06                                 ;$02D1AB |
-CODE_02D1AD:
+.try_eat_berry_tile_02D1AD:
     LDA.b #$7E
     STA $07                                 ;$02D1AF |
     LDX.w $15E9                             ;$02D1B1 |
     LDA [$05]                               ;$02D1B4 |
-    STA.w $1693                             ;$02D1B6 | Yoshi Head tring to swallow berry when mounted: treats as horizontal regardless, X: 0 - level, Y < 2
-    INC $07                                 ;$02D1B9 |
+    STA.w $1693                             ;$02D1B6 | $1693: Yoshi Head trying to swallow a berry when mounted
+    INC $07                                 ;$02D1B9 | always treats as horizontal level, X: 0 - level, Y < 2
     LDA [$05]                               ;$02D1BB |
-    BNE Return02D1F0                        ;$02D1BD |
+    BNE +                                   ;$02D1BD |
     LDA.w $1693                             ;$02D1BF |
     CMP.b #$45                              ;$02D1C2 |
-    BCC Return02D1F0                        ;$02D1C4 |
+    BCC +                                   ;$02D1C4 |
     CMP.b #$48                              ;$02D1C6 |
-    BCS Return02D1F0                        ;$02D1C8 |
+    BCS +                                   ;$02D1C8 | if not a Berry tile, return
     SEC                                     ;$02D1CA |
     SBC.b #$44                              ;$02D1CB |
-    STA.w $18D6                             ;$02D1CD |
-    STZ.w $14A3                             ;$02D1D0 |
+    STA.w $18D6                             ;$02D1CD | set berry type
+    STZ.w $14A3                             ;$02D1D0 | reset tongue stretching out
     LDY.w $18DC                             ;$02D1D3 |
     LDA.w DATA_02D1F1,Y                     ;$02D1D6 |
     STA.w $1602,X                           ;$02D1D9 |
     LDA.b #$22                              ;$02D1DC |
-    STA.w $1564,X                           ;$02D1DE |
-    LDA $96                                 ;$02D1E1 |
+    STA.w $1564,X                           ;$02D1DE | set animation timer
+    LDA $96                                 ;$02D1E1 | slightly adjust player's Y position
     CLC                                     ;$02D1E3 |
     ADC.b #$08                              ;$02D1E4 |
     AND.b #$F0                              ;$02D1E6 |
@@ -11084,8 +11079,7 @@ CODE_02D1AD:
     LDA $97                                 ;$02D1EA |
     ADC.b #$00                              ;$02D1EC |
     STA $97                                 ;$02D1EE |
-Return02D1F0:
-    RTS
++   RTS                                     ;$02D1F0 |
 
 DATA_02D1F1:
     db $00,$04

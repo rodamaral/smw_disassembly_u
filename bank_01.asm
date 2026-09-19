@@ -15336,40 +15336,39 @@ HandleOffYoshi:
     SEP #$20                                ;$01EED6 |
     PLA                                     ;$01EED8 |
     STA.w $1602,X                           ;$01EED9 |
-    JSR CODE_01F0A2                         ;$01EEDC |
+    JSR process_yoshi_tongue_01F0A2         ;$01EEDC |
     LDA.w $1410                             ;$01EEDF |
     CMP.b #$02                              ;$01EEE2 |
-    BCC .Return01EF17                       ;$01EEE4 |
+    BCC .return_01EF17                      ;$01EEE4 | if Yoshi does not have wings, return
     LDA.w $187A                             ;$01EEE6 |
-    BEQ .CODE_01EF13                        ;$01EEE9 |
+    BEQ .not_flying_01EF13                  ;$01EEE9 |
     LDA $72                                 ;$01EEEB |
-    BNE .player_air_01EF00                  ;$01EEED |
-    LDA $7B                                 ;$01EEEF |
-    BPL +                                   ;$01EEF1 |
-    EOR.b #$FF                              ;$01EEF3 |
-    INC A                                   ;$01EEF5 |
-+   CMP.b #$28                              ;$01EEF6 |
-    LDA.b #$01                              ;$01EEF8 |
-    BCS .CODE_01EF13                        ;$01EEFA |
-    LDA.b #$00                              ;$01EEFC |
-    BRA .CODE_01EF13                        ;$01EEFE |
+    BNE .wings_flying_01EF00                ;$01EEED |\
+    LDA $7B                                 ;$01EEEF ||
+    BPL +                                   ;$01EEF1 ||
+    EOR.b #$FF                              ;$01EEF3 ||
+    INC A                                   ;$01EEF5 ||
++   CMP.b #$28                              ;$01EEF6 ||
+    LDA.b #$01                              ;$01EEF8 || if player's X speed is high
+    BCS .not_flying_01EF13                  ;$01EEFA ||
+    LDA.b #$00                              ;$01EEFC || if player's X speed is slow
+    BRA .not_flying_01EF13                  ;$01EEFE |/
 
-.player_air_01EF00:
+.wings_flying_01EF00:
     LDA $14
     LSR                                     ;$01EF02 |
     LSR                                     ;$01EF03 |
-    LDY $7D                                 ;$01EF04 |
-    BMI .CODE_01EF0A                        ;$01EF06 |
+    LDY $7D                                 ;$01EF04 | A = $14/4 Y = player Y speed
+    BMI +                                   ;$01EF06 |
     LSR                                     ;$01EF08 |
     LSR                                     ;$01EF09 |
-.CODE_01EF0A:
-    AND.b #$01
-    BNE .CODE_01EF13                        ;$01EF0C |
-    LDY.b #$21                              ;$01EF0E |
-    STY.w $1DFC                             ;$01EF10 |
-.CODE_01EF13:
-    JSL CODE_02BB23
-.Return01EF17:
++   AND.b #$01                              ;$01EF0A |
+    BNE .not_flying_01EF13                  ;$01EF0C |\
+    LDY.b #$21                              ;$01EF0E || play Yoshi's flying sound
+    STY.w $1DFC                             ;$01EF10 |/
+.not_flying_01EF13:
+    JSL draw_yoshi_wings_02BB23
+.return_01EF17:
     RTS
 
 ; Calculate OAM values for Yoshi's head
@@ -15582,31 +15581,29 @@ process_yoshi_head_01EF18:
 Return01F0A1:
     RTS
 
-CODE_01F0A2:
+process_yoshi_tongue_01F0A2: ;; FIXME: confirm description
     LDA $C2,X
     CMP.b #$01                              ;$01F0A4 |
-    BNE CODE_01F0AC                         ;$01F0A6 |
-    JSL CODE_02D0D4                         ;$01F0A8 |
-CODE_01F0AC:
-    LDA.w $1410
-    CMP.b #$01                              ;$01F0AF |
-    BEQ Return01F0A1                        ;$01F0B1 |
-    LDA.w $14A3                             ;$01F0B3 |
+    BNE +                                   ;$01F0A6 |\
+    JSL try_auto_eat_berry_02D0D4           ;$01F0A8 |/
++   LDA.w $1410                             ;$01F0AC |
+    CMP.b #$01                              ;$01F0AF | would mean that the player with a fire flower powerup can shoot fireballs while on Yoshi
+    BEQ Return01F0A1                        ;$01F0B1 | (never occurs in the game)
+    LDA.w $14A3                             ;$01F0B3 | A timer for Yoshi's tongue stretching out
     CMP.b #$10                              ;$01F0B6 |
-    BNE CODE_01F0C4                         ;$01F0B8 |
-    LDA.w $18AE                             ;$01F0BA |
-    BNE CODE_01F0C4                         ;$01F0BD |
-    LDA.b #$06                              ;$01F0BF |
-    STA.w $18AE                             ;$01F0C1 |
-CODE_01F0C4:
-    LDA.w $1594,X
+    BNE +                                   ;$01F0B8 |\
+    LDA.w $18AE                             ;$01F0BA ||
+    BNE +                                   ;$01F0BD || if not set yet
+    LDA.b #$06                              ;$01F0BF || prepare Yoshi's tongue to come out after the player hits him
+    STA.w $18AE                             ;$01F0C1 |/
++   LDA.w $1594,X                           ;$01F0C4 |
     JSL execute_pointer                     ;$01F0C7 |
 
-Ptrs01F0CB:
-    dw CODE_01F14B
-    dw CODE_01F314
-    dw CODE_01F332
-    dw CODE_01F12E
+.mouth_routine_pointers_01F0CB:
+    dw normal_mouth_01F14B
+    dw extending_tongue_01F314
+    dw retracting_tongue_01F332
+    dw spitting_01F12E
 
 process_eaten_berry_01F0D3:
     LDA.b #$06
@@ -15654,7 +15651,7 @@ process_eaten_berry_01F0D3:
 .return_01F12D:
     RTS
 
-CODE_01F12E:
+spitting_01F12E:
     LDA.w $1558,X
     BNE Return01F136                        ;$01F131 |
     STZ.w $1594,X                           ;$01F133 |
@@ -15668,7 +15665,7 @@ YoshiShellAbility:
 YoshiAbilityIndex:
     db $03,$02,$02,$03,$01,$00
 
-CODE_01F14B:
+normal_mouth_01F14B:
     LDA.w $1B95
     BEQ CODE_01F155                         ;$01F14E |
     LDA.b #$02                              ;$01F150 |
@@ -15907,7 +15904,7 @@ CODE_01F309:
     STA.w $1DFC                             ;$01F310 |
     RTS                                     ;$01F313 |
 
-CODE_01F314:
+extending_tongue_01F314:
     LDA.w $151C,X
     CLC                                     ;$01F317 |
     ADC.b #$03                              ;$01F318 |
@@ -15925,7 +15922,7 @@ CODE_01F328:
     INC.w $1594,X                           ;$01F32D |
     BRA CODE_01F321                         ;$01F330 |
 
-CODE_01F332:
+retracting_tongue_01F332:
     LDA.w $1558,X
     BNE CODE_01F321                         ;$01F335 |
     LDA.w $151C,X                           ;$01F337 |
