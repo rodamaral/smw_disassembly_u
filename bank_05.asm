@@ -75,7 +75,7 @@ CODE_05809E:
     LDA.w #$FFFF                            ;$0580A6 |
     STA $4D                                 ;$0580A9 |
     STA $4F                                 ;$0580AB |
-    JSR CODE_05877E                         ;$0580AD |
+    JSR set_map16_for_VRAM_upload_05877E    ;$0580AD |
     LDA $45                                 ;$0580B0 |
     STA $47                                 ;$0580B2 |
     LDA $49                                 ;$0580B4 |
@@ -791,25 +791,25 @@ LevLoadNrmObj:
     JSL CODE_0DA40F                         ;$0586EC |
     RTS                                     ;$0586F0 |
 
-CODE_0586F1:
+process_level_mode_setting_0586F1:
     PHP
     REP #$30                                ;$0586F2 |
-    JSR CODE_05877E                         ;$0586F4 |
+    JSR set_map16_for_VRAM_upload_05877E    ;$0586F4 |
     SEP #$20                                ;$0586F7 |
     LDA $5B                                 ;$0586F9 |
     AND.b #$01                              ;$0586FB |
-    BNE CODE_058713                         ;$0586FD |
-    REP #$20                                ;$0586FF |
+    BNE .vertical_layer_1_058713            ;$0586FD |
+    REP #$20                                ;$0586FF | Horizontal Layer 1
     LDA $55                                 ;$058701 |
     AND.w #$00FF                            ;$058703 |
     TAX                                     ;$058706 |
     LDA $1A                                 ;$058707 |
     AND.w #$FFF0                            ;$058709 |
     CMP $4D,X                               ;$05870C |
-    BEQ CODE_058737                         ;$05870E |
-    JMP CODE_058724                         ;$058710 |
+    BEQ .CODE_058737                        ;$05870E |
+    JMP .common_058724                      ;$058710 |
 
-CODE_058713:
+.vertical_layer_1_058713:
     REP #$20
     LDA $55                                 ;$058715 |
     AND.w #$00FF                            ;$058717 |
@@ -817,22 +817,22 @@ CODE_058713:
     LDA $1C                                 ;$05871B |
     AND.w #$FFF0                            ;$05871D |
     CMP $4D,X                               ;$058720 |
-    BEQ CODE_058737                         ;$058722 |
-CODE_058724:
+    BEQ .CODE_058737                        ;$058722 |
+.common_058724:
     STA $4D,X
     TXA                                     ;$058726 |
     EOR.w #$0002                            ;$058727 |
     TAX                                     ;$05872A |
     LDA.w #$FFFF                            ;$05872B |
     STA $4D,X                               ;$05872E |
-    JSL CODE_05881A                         ;$058730 |
-    JMP CODE_058774                         ;$058734 |
+    JSL execute_level_mode_setting_05881A   ;$058730 |
+    JMP .return_058774                      ;$058734 |
 
-CODE_058737:
+.CODE_058737:
     SEP #$20
     LDA $5B                                 ;$058739 |
     AND.b #$02                              ;$05873B |
-    BNE CODE_058753                         ;$05873D |
+    BNE .CODE_058753                        ;$05873D |
     REP #$20                                ;$05873F |
     LDA $56                                 ;$058741 |
     AND.w #$00FF                            ;$058743 |
@@ -840,10 +840,9 @@ CODE_058737:
     LDA $1E                                 ;$058747 |
     AND.w #$FFF0                            ;$058749 |
     CMP $51,X                               ;$05874C |
-    BEQ CODE_058774                         ;$05874E |
-    JMP CODE_058764                         ;$058750 |
-
-CODE_058753:
+    BEQ .return_058774                      ;$05874E |
+    JMP .CODE_058764                        ;$058750 |
+.CODE_058753:
     REP #$20
     LDA $56                                 ;$058755 |
     AND.w #$00FF                            ;$058757 |
@@ -851,29 +850,29 @@ CODE_058753:
     LDA $20                                 ;$05875B |
     AND.w #$FFF0                            ;$05875D |
     CMP $51,X                               ;$058760 |
-    BEQ CODE_058774                         ;$058762 |
-CODE_058764:
+    BEQ .return_058774                      ;$058762 |
+.CODE_058764:
     STA $51,X
     TXA                                     ;$058766 |
     EOR.w #$0002                            ;$058767 |
     TAX                                     ;$05876A |
     LDA.w #$FFFF                            ;$05876B |
     STA $51,X                               ;$05876E |
-    JSL CODE_058883                         ;$058770 |
-CODE_058774:
+    JSL execute_level_mode_setting_058883   ;$058770 |
+.return_058774:
     PLP
     RTL                                     ;$058775 |
 
 MAP16AppTable:
     db $B0,$8A,$E0,$84,$F0,$8A,$30,$8B
 
-CODE_05877E:
+set_map16_for_VRAM_upload_05877E:
     PHP
     SEP #$20                                ;$05877F |
     LDA $5B                                 ;$058781 |
     AND.b #$01                              ;$058783 |
-    BNE CODE_0587CB                         ;$058785 |
-    REP #$20                                ;$058787 |
+    BNE .horizontal_layer_1_0587CB          ;$058785 |
+    REP #$20                                ;$058787 | Vertical Layer 1
     LDA $1A                                 ;$058789 |
     LSR                                     ;$05878B |
     LSR                                     ;$05878C |
@@ -903,17 +902,16 @@ CODE_05877E:
     LDA.w #$0007                            ;$0587B2 |
     STA $00                                 ;$0587B5 |
     LDA.l MAP16AppTable,X                   ;$0587B7 |
-CODE_0587BB:
-    STA.w $0FBE,Y
+-   STA.w $0FBE,Y                           ;$0587BB |
     INY                                     ;$0587BE |
     INY                                     ;$0587BF |
     CLC                                     ;$0587C0 |
     ADC.w #$0008                            ;$0587C1 |
     DEC $00                                 ;$0587C4 |
-    BPL CODE_0587BB                         ;$0587C6 |
-    JMP CODE_0587E1                         ;$0587C8 |
+    BPL -                                   ;$0587C6 |
+    JMP .common_0587E1                      ;$0587C8 |
 
-CODE_0587CB:
+.horizontal_layer_1_0587CB:
     REP #$20
     LDA $1C                                 ;$0587CD |
     LSR                                     ;$0587CF |
@@ -928,12 +926,12 @@ CODE_0587CB:
     CLC                                     ;$0587DB |
     ADC.w #$0017                            ;$0587DC |
     STA $47                                 ;$0587DF |
-CODE_0587E1:
+.common_0587E1:
     SEP #$20
     LDA $5B                                 ;$0587E3 |
     AND.b #$02                              ;$0587E5 |
-    BNE CODE_058802                         ;$0587E7 |
-    REP #$20                                ;$0587E9 |
+    BNE .horizontal_layer_2_058802          ;$0587E7 |
+    REP #$20                                ;$0587E9 | Vertical layer 2
     LDA $1E                                 ;$0587EB |
     LSR                                     ;$0587ED |
     LSR                                     ;$0587EE |
@@ -947,9 +945,9 @@ CODE_0587E1:
     CLC                                     ;$0587F9 |
     ADC.w #$0017                            ;$0587FA |
     STA $4B                                 ;$0587FD |
-    JMP CODE_058818                         ;$0587FF |
+    JMP .return_058818                      ;$0587FF |
 
-CODE_058802:
+.horizontal_layer_2_058802:
     REP #$20
     LDA $20                                 ;$058804 |
     LSR                                     ;$058806 |
@@ -964,11 +962,11 @@ CODE_058802:
     CLC                                     ;$058812 |
     ADC.w #$0017                            ;$058813 |
     STA $4B                                 ;$058816 |
-CODE_058818:
+.return_058818:
     PLP
     RTS                                     ;$058819 |
 
-CODE_05881A:
+execute_level_mode_setting_05881A:
     SEP #$30
     LDA.w $1925                             ;$05881C |
     JSL execute_pointer_long                ;$05881F |
@@ -1007,7 +1005,7 @@ PtrsLong058823:
     dl CODE_0589CE
     dl CODE_0589CE
 
-CODE_058883:
+execute_level_mode_setting_058883:
     SEP #$30
     LDA.w $1925                             ;$058885 |
     JSL execute_pointer_long                ;$058888 |
@@ -3517,8 +3515,11 @@ mode_7_lava_tile_pointers:
     db $00,$93,$00,$93,$00,$93,$00,$93
     db $80,$93,$80,$93,$80,$93,$80,$93
 
-CODE_05BB39:
-    PHB
+; Update the VRAM graphics of animated tiles
+; every 8 effective frames
+; TODO: palettes upload elsewhere
+update_animated_tile_gfx_05BB39:
+    PHB                                     ;$05BB39 | AXY->8
     PHK                                     ;$05BB3A |
     PLB                                     ;$05BB3B |
     LDA $14                                 ;$05BB3C |
@@ -3541,11 +3542,11 @@ CODE_05BB39:
     STA.w $0D7E                             ;$05BB5C |
     LDA.w DATA_05B93F,X                     ;$05BB5F |
     STA.w $0D7C                             ;$05BB62 |
-    LDX.b #$04                              ;$05BB65 |
+    LDX.b #$04                              ;$05BB65 | loop counter
 .loop:
     PHY                                     ;$05BB67 |
-    PHX                                     ;$05BB68 |
-    SEP #$20                                ;$05BB69 |
+    PHX                                     ;$05BB68 | preserve the loop counter until the end
+    SEP #$20                                ;$05BB69 | A->8
     TYA                                     ;$05BB6B |
     LDX.w DATA_05B96B,Y                     ;$05BB6C |
     BEQ .CODE_05BB88                        ;$05BB6F |
@@ -3556,13 +3557,14 @@ CODE_05BB39:
     BEQ .CODE_05BB88                        ;$05BB7A |
     CLC                                     ;$05BB7C |
     ADC.b #$26                              ;$05BB7D |
-    BRA .CODE_05BB88                        ;$05BB7F |
+    BRA .CODE_05BB88                        ;$05BB7F | Handle the look of the tile
+
 .CODE_05BB81:
     LDY.w $1931
     CLC                                     ;$05BB84 |
     ADC.w DATA_05B98B,Y                     ;$05BB85 |
 .CODE_05BB88:
-    REP #$30
+    REP #$30                                ;$05BB88 | AXY->16
     AND.w #$00FF                            ;$05BB8A |
     ASL                                     ;$05BB8D |
     ASL                                     ;$05BB8E |
@@ -3578,7 +3580,7 @@ CODE_05BB39:
     DEX                                     ;$05BB9E |
     DEX                                     ;$05BB9F |
     BPL .loop                               ;$05BBA0 |
-    SEP #$20                                ;$05BBA2 |
+    SEP #$20                                ;$05BBA2 | A->8
     PLB                                     ;$05BBA4 |
     RTL                                     ;$05BBA5 |
 
@@ -3596,14 +3598,14 @@ DATA_05BBA6:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF
 
-process_scroll_commands_05BC00:
+scroll_commands_and_layer_3_05BC00:
     PHB
     PHK                                     ;$05BC01 |
     PLB                                     ;$05BC02 |
-    JSR CODE_05BC76                         ;$05BC03 |
-    JSR CODE_05BCA5                         ;$05BC06 |
-    JSR CODE_05BC4A                         ;$05BC09 |
-    LDA.w $1462                             ;$05BC0C |
+    JSR execute_scroll_layer_1_05BC76       ;$05BC03 |
+    JSR execute_scroll_layer_2_05BCA5       ;$05BC06 |
+    JSR set_current_tide_offsets_05BC4A     ;$05BC09 |
+    LDA.w $1462                             ;$05BC0C | calculate how much layers have moved this frame
     SEC                                     ;$05BC0F |
     SBC $1A                                 ;$05BC10 |
     CLC                                     ;$05BC12 |
@@ -3629,31 +3631,31 @@ process_scroll_commands_05BC00:
     STA.w $17BE                             ;$05BC3C |
     LDA.w $13D5                             ;$05BC3F |
     BNE +                                   ;$05BC42 |
-    JSR CODE_05C40C                         ;$05BC44 |
+    JSR process_layer_3_05C40C              ;$05BC44 |
 +   PLB                                     ;$05BC47 |
     RTL                                     ;$05BC48 |
 
 Return05BC49:
     RTS
 
-CODE_05BC4A:
+set_current_tide_offsets_05BC4A:
     REP #$20
     LDY.w $1403                             ;$05BC4C |
-    BNE CODE_05BC5F                         ;$05BC4F |
+    BNE .CODE_05BC5F                        ;$05BC4F |
     LDA.w $1466                             ;$05BC51 |
     SEC                                     ;$05BC54 |
     SBC.w $1462                             ;$05BC55 |
     STA $26                                 ;$05BC58 |
     LDA.w $1468                             ;$05BC5A |
-    BRA CODE_05BC69                         ;$05BC5D |
+    BRA .CODE_05BC69                        ;$05BC5D |
 
-CODE_05BC5F:
+.CODE_05BC5F:
     LDA $22
     SEC                                     ;$05BC61 |
     SBC.w $1462                             ;$05BC62 |
     STA $26                                 ;$05BC65 |
     LDA $24                                 ;$05BC67 |
-CODE_05BC69:
+.CODE_05BC69:
     SEC
     SBC.w $1464                             ;$05BC6A |
     STA $28                                 ;$05BC6D |
@@ -3661,10 +3663,10 @@ CODE_05BC69:
     RTS                                     ;$05BC71 |
 
 CODE_05BC72:
-    JSR CODE_05BC4A
+    JSR set_current_tide_offsets_05BC4A
     RTL                                     ;$05BC75 |
 
-CODE_05BC76:
+execute_scroll_layer_1_05BC76:
     STZ.w $1456
     LDA.w $9D                               ;$05BC79 |
     BNE Return05BC49                        ;$05BC7C |
@@ -3689,7 +3691,7 @@ Ptrs05BC87:
     dw Return05BC49
     dw Return05BC49
 
-CODE_05BCA5:
+execute_scroll_layer_2_05BCA5:
     LDA.b #$04
     STA.w $1456                             ;$05BCA7 |
     LDA.w $143F                             ;$05BCAA |
@@ -4690,27 +4692,22 @@ DATA_05C408:
 DATA_05C40A:
     db $30,$A0
 
-CODE_05C40C:
+process_layer_3_05C40C:
     LDA.w $1403
-    BEQ CODE_05C414                         ;$05C40F |
-    JMP CODE_05C494                         ;$05C411 |
-
-CODE_05C414:
-    REP #$20
+    BEQ +                                   ;$05C40F |
+    JMP .not_a_tide_05C494                  ;$05C411 |
++   REP #$20                                ;$05C414 |
     LDY.w $1931                             ;$05C416 |
     CPY.b #$01                              ;$05C419 |
-    BEQ CODE_05C421                         ;$05C41B |
+    BEQ +                                   ;$05C41B |
     CPY.b #$03                              ;$05C41D |
-    BNE CODE_05C428                         ;$05C41F |
-CODE_05C421:
-    LDA $1A
+    BNE ++                                  ;$05C41F |
++   LDA $1A                                 ;$05C421 |
     LSR                                     ;$05C423 |
     STA $22                                 ;$05C424 |
-    BRA CODE_05C491                         ;$05C426 |
-
-CODE_05C428:
-    LDY.w $9D
-    BNE CODE_05C48D                         ;$05C42B |
+    BRA .CODE_05C491                        ;$05C426 |
+++  LDY.w $9D                               ;$05C428 |
+    BNE .CODE_05C48D                        ;$05C42B |
     LDA.w $1460                             ;$05C42D |
     AND.w #$00FF                            ;$05C430 |
     TAY                                     ;$05C433 |
@@ -4721,83 +4718,75 @@ CODE_05C428:
     ASL                                     ;$05C43C |
     ASL                                     ;$05C43D |
     CPY.b #$01                              ;$05C43E |
-    BEQ CODE_05C446                         ;$05C440 |
+    BEQ +                                   ;$05C440 |
     EOR.w #$FFFF                            ;$05C442 |
     INC A                                   ;$05C445 |
-CODE_05C446:
-    LDY.b #$00
++   LDY.b #$00                              ;$05C446 |
     CMP.w $1458                             ;$05C448 |
-    BEQ CODE_05C45B                         ;$05C44B |
-    BPL CODE_05C451                         ;$05C44D |
+    BEQ ++                                  ;$05C44B |
+    BPL +                                   ;$05C44D |
     LDY.b #$02                              ;$05C44F |
-CODE_05C451:
-    LDA.w $1458
++   LDA.w $1458                             ;$05C451 |
     CLC                                     ;$05C454 |
     ADC.w DATA_05CBBB,Y                     ;$05C455 |
     STA.w $1458                             ;$05C458 |
-CODE_05C45B:
-    LDA.w $145C
+++  LDA.w $145C                             ;$05C45B |
     AND.w #$00FF                            ;$05C45E |
     CLC                                     ;$05C461 |
     ADC.w $1458                             ;$05C462 |
     STA.w $145C                             ;$05C465 |
     AND.w #$FF00                            ;$05C468 |
-    BPL CODE_05C470                         ;$05C46B |
+    BPL +                                   ;$05C46B |
     ORA.w #$00FF                            ;$05C46D |
-CODE_05C470:
-    XBA
++   XBA                                     ;$05C470 |
     CLC                                     ;$05C471 |
     ADC $22                                 ;$05C472 |
     STA $22                                 ;$05C474 |
     LDA.w $17BD                             ;$05C476 |
     AND.w #$00FF                            ;$05C479 |
     CMP.w #$0080                            ;$05C47C |
-    BCC CODE_05C484                         ;$05C47F |
+    BCC +                                   ;$05C47F |
     ORA.w #$FF00                            ;$05C481 |
-CODE_05C484:
-    STA $00
++   STA $00                                 ;$05C484 |
     LDA $22                                 ;$05C486 |
     CLC                                     ;$05C488 |
     ADC $00                                 ;$05C489 |
     STA $22                                 ;$05C48B |
-CODE_05C48D:
-    LDA $1C
+.CODE_05C48D:
+    LDA $1C                                 ;$05C48D |
     STA $24                                 ;$05C48F |
-CODE_05C491:
-    SEP #$20
+.CODE_05C491:
+    SEP #$20                                ;$05C491 |
     RTS                                     ;$05C493 |
 
-CODE_05C494:
+.not_a_tide_05C494:
     DEC A
-    BNE CODE_05C4EC                         ;$05C495 |
+    BNE .CODE_05C4EC                        ;$05C495 |
     LDA.w $9D                               ;$05C497 |
-    BNE CODE_05C4EC                         ;$05C49A |
+    BNE .CODE_05C4EC                        ;$05C49A |
     LDY.w $1460                             ;$05C49C |
     LDA $14                                 ;$05C49F |
     AND.b #$03                              ;$05C4A1 |
-    BNE CODE_05C4C0                         ;$05C4A3 |
+    BNE .CODE_05C4C0                        ;$05C4A3 |
     LDA.w $145A                             ;$05C4A5 |
-    BNE CODE_05C4AF                         ;$05C4A8 |
+    BNE +                                   ;$05C4A8 |
     DEC.w $1B9D                             ;$05C4AA |
-    BNE CODE_05C4EC                         ;$05C4AD |
-CODE_05C4AF:
-    CMP.w DATA_05C408,Y
-    BEQ CODE_05C4BB                         ;$05C4B2 |
+    BNE .CODE_05C4EC                        ;$05C4AD |
++   CMP.w DATA_05C408,Y                     ;$05C4AF |
+    BEQ +                                   ;$05C4B2 |
     CLC                                     ;$05C4B4 |
     ADC.w DATA_05C406,Y                     ;$05C4B5 |
     STA.w $145A                             ;$05C4B8 |
-CODE_05C4BB:
-    LDA.b #$4B
++   LDA.b #$4B                              ;$05C4BB |
     STA.w $1B9D                             ;$05C4BD |
-CODE_05C4C0:
+.CODE_05C4C0:
     LDA $24
     CMP.w DATA_05C40A,Y                     ;$05C4C2 |
-    BNE CODE_05C4CD                         ;$05C4C5 |
+    BNE +                                   ;$05C4C5 |
     TYA                                     ;$05C4C7 |
     EOR.b #$01                              ;$05C4C8 |
     STA.w $1460                             ;$05C4CA |
-CODE_05C4CD:
-    LDA.w $145A
++   LDA.w $145A                             ;$05C4CD |
     ASL                                     ;$05C4D0 |
     ASL                                     ;$05C4D1 |
     ASL                                     ;$05C4D2 |
@@ -4812,12 +4801,11 @@ CODE_05C4CD:
     LSR                                     ;$05C4E1 |
     LSR                                     ;$05C4E2 |
     PLP                                     ;$05C4E3 |
-    BPL CODE_05C4E8                         ;$05C4E4 |
+    BPL +                                   ;$05C4E4 |
     ORA.b #$F0                              ;$05C4E6 |
-CODE_05C4E8:
-    ADC $24
++   ADC $24                                 ;$05C4E8 |
     STA $24                                 ;$05C4EA |
-CODE_05C4EC:
+.CODE_05C4EC:
     LDA $22
     SEC                                     ;$05C4EE |
     ADC.w $17BD                             ;$05C4EF |

@@ -18,14 +18,14 @@ reset_start:
     LDA.w #$01FF                            ;$008023 |\ Set up the stack
     TCS                                     ;$008026 |/
     LDA.w #$F0A9                            ;$008027 |\ Upload OAM clear routine
-    STA.l $7F8000                           ;$00802A | | LDA #$F0
+    STA.l OAM_reset_7F8000                  ;$00802A | | LDA #$F0
     LDX.w #$017D                            ;$00802E | | Loop counter
     LDY.w #$03FD                            ;$008031 | | Current address
 .RAM_routine_upload:                        ;        | |
     LDA.w #$008D                            ;$008034 | | STA $XXXX
-    STA.l $7F8002,X                         ;$008037 | |
+    STA.l OAM_reset_7F8000+2,X              ;$008037 | |
     TYA                                     ;$00803B | | Set the address to store to
-    STA.l $7F8003,X                         ;$00803C | |
+    STA.l OAM_reset_7F8000+3,X              ;$00803C | |
     SEC                                     ;$008040 | | Decrement by four for new address
     SBC.w #$0004                            ;$008041 | |
     TAY                                     ;$008044 | |
@@ -758,7 +758,7 @@ CODE_00862F:
     STA.w $4311                             ;$00863A |
     STY.w $420B                             ;$00863D |
     STZ $3F                                 ;$008640 |
-    JSL $7F8000                             ;$008642 |
+    JSL OAM_reset_7F8000                    ;$008642 |
     JMP DMA_OAM                             ;$008646 |
 
 DATA_008649:
@@ -2427,7 +2427,7 @@ CODE_0094E2:
     LDY.b #$00                              ;$0094F8 |
     JSR CODE_009622                         ;$0094FA |
 GM1B_credits_castle_main_0094FD:
-    JSL $7F8000
+    JSL OAM_reset_7F8000
     LDA.w $13C6                             ;$009501 |
     CMP.b #$08                              ;$009504 |
     BEQ CODE_009557                         ;$009506 |
@@ -2513,10 +2513,10 @@ GM1D_ending_yoshi_load_009583:
     JSL CODE_0CA3C9                         ;$0095A4 |
     JSR CODE_00961E                         ;$0095A8 |
 GM1F_ending_yoshi_main_0095AB:
-    JSL $7F8000
+    JSL OAM_reset_7F8000
     JSL CODE_0C939A                         ;$0095AF |
     INC $14                                 ;$0095B3 |
-    JSL CODE_05BB39                         ;$0095B5 |
+    JSL update_animated_tile_gfx_05BB39     ;$0095B5 |
     JMP consolidate_OAM_008494              ;$0095B9 |
 
 GM21_ending_enemy_load_0095BC:
@@ -2575,7 +2575,7 @@ CODE_009622:
 GM25_ending_enemy_main_00962C:
     STZ.w $0D84
     JSR CODE_0092ED                         ;$00962F |
-    JSL $7F8000                             ;$009632 |
+    JSL OAM_reset_7F8000                    ;$009632 |
     JSL CODE_0C93A5                         ;$009636 |
     JMP consolidate_OAM_008494              ;$00963A |
 
@@ -2714,7 +2714,7 @@ GM16_game_over_load_009750:
     JMP CODE_0093CA                         ;$009756 |
 
 GM17_game_over_main_009759:
-    JSL $7F8000
+    JSL OAM_reset_7F8000
     LDA.w $143C                             ;$00975D |
     BNE CODE_00978B                         ;$009760 |
     DEC.w $143D                             ;$009762 |
@@ -2845,7 +2845,7 @@ run_level_physics_009860:
     JSR execute_player_animation_00C593     ;$009867 |
     STZ $7D                                 ;$00986A |
     JSL standard_and_cluster_sprites_01808C ;$00986C |
-    JSL $7F8000                             ;$009870 |
+    JSL OAM_reset_7F8000                    ;$009870 |
     RTS                                     ;$009874 |
 
 DATA_009875:
@@ -2858,7 +2858,7 @@ boss_room_00987D:
     JMP CODE_009A52                         ;$009885 |
 
 CODE_009888:
-    JSL $7F8000
+    JSL OAM_reset_7F8000
     JSL CODE_03C0C6                         ;$00988C |
     RTS                                     ;$009890 |
 
@@ -3071,7 +3071,7 @@ CODE_009A52:
     LSR                                     ;$009A55 |
     BCS CODE_009A6F                         ;$009A56 |
     JSL update_screen_position_00F6DB       ;$009A58 |
-    JSL process_scroll_commands_05BC00      ;$009A5C |
+    JSL scroll_commands_and_layer_3_05BC00  ;$009A5C |
     LDA.w $13FC                             ;$009A60 |
     CMP.b #$04                              ;$009A63 |
     BEQ CODE_009A6F                         ;$009A65 |
@@ -3080,7 +3080,7 @@ CODE_009A52:
     RTS                                     ;$009A6E |
 
 CODE_009A6F:
-    JSL $7F8000
+    JSL OAM_reset_7F8000
     RTS                                     ;$009A73 |
 
 SetUp0DA0GM4:
@@ -3386,7 +3386,7 @@ CODE_009C8F:
     JMP GM14_main_level_00A1DA              ;$009C9C |
 
 CODE_009C9F:
-    JSL $7F8000
+    JSL OAM_reset_7F8000
     LDA.b #$04                              ;$009CA3 |
     STA.w $212C                             ;$009CA5 |
     LDA.b #$13                              ;$009CA8 |
@@ -3614,7 +3614,7 @@ CODE_009E26:
     STA.w $0DBE                             ;$009E2C |
     STZ.w $0DBF                             ;$009E2F |
     STZ.w $0DC1                             ;$009E32 |
-    STZ $19                                 ;$009E35 |
+    STZ.b Powerup_19                        ;$009E35 |
     STZ.w $0DC2                             ;$009E37 |
     STZ.w $13C9                             ;$009E3A |
     REP #$20                                ;$009E3D |
@@ -3938,7 +3938,7 @@ GM0C_overworld_load_00A087:
     INC.w $1B87                             ;$00A0C4 |
 .CODE_00A0C7:
     STA.w $0DB4,X
-    LDA $19                                 ;$00A0CA |
+    LDA.b Powerup_19                        ;$00A0CA |
     STA.w $0DB8,X                           ;$00A0CC |
     LDA.w $0DBF                             ;$00A0CF |
     STA.w $0DB6,X                           ;$00A0D2 |
@@ -4053,7 +4053,7 @@ CODE_00A1B5:
 GM0E_overworld_main_00A1BE:
     JSR SetUp0DA0GM4
     INC $14                                 ;$00A1C1 |
-    JSL $7F8000                             ;$00A1C3 |
+    JSL OAM_reset_7F8000                    ;$00A1C3 |
     JSL GameMode_0E_Prim                    ;$00A1C7 |
     JMP consolidate_OAM_008494              ;$00A1CB |
 
@@ -4165,11 +4165,11 @@ GM14_main_level_00A1DA:
     JMP .common_level_logic                 ;$00A292 |
 
 .normal_level:
-    JSL $7F8000                             ;$00A295 | unrolled loop - OAMResetRoutine
-    JSL update_screen_position_00F6DB       ;$00A299 | updates camera -> hardware registers of layers
-    JSL process_scroll_commands_05BC00      ;$00A29D |
-    JSL CODE_0586F1                         ;$00A2A1 | unknown camera stuff
-    JSL CODE_05BB39                         ;$00A2A5 | tile animation stuff
+    JSL OAM_reset_7F8000                    ;$00A295 |
+    JSL update_screen_position_00F6DB       ;$00A299 |
+    JSL scroll_commands_and_layer_3_05BC00  ;$00A29D |
+    JSL process_level_mode_setting_0586F1   ;$00A2A1 |
+    JSL update_animated_tile_gfx_05BB39     ;$00A2A5 |
 .common_level_logic:
     LDA $1C
     PHA                                     ;$00A2AB | push layer 1 positions
@@ -4558,7 +4558,7 @@ GM12_level_load_2_00A59C:
 CODE_00A5F9:
     LDA.b #$E7
     TRB $14                                 ;$00A5FB |
--   JSL CODE_05BB39                         ;$00A6Fd |
+-   JSL update_animated_tile_gfx_05BB39     ;$00A6Fd |
     JSR DMA_animated_level_tiles            ;$00A601 |
     INC $14                                 ;$00A604 |
     LDA $14                                 ;$00A606 |
@@ -4734,7 +4734,7 @@ CODE_00A740:
     LDY.b #$1E                              ;$00A75E |
     BCC CODE_00A76A                         ;$00A760 |
     LDY.b #$0F                              ;$00A762 |
-    LDA $19                                 ;$00A764 |
+    LDA.b Powerup_19                        ;$00A764 |
     BEQ CODE_00A76A                         ;$00A766 |
 CODE_00A768:
     LDY.b #$1C
@@ -7423,12 +7423,12 @@ timers_and_animation_00C47E:
     BRA .try_release_itembox_00C585         ;$00C576 |
 
 .unreachable:
-    LDA $19                                 ;$00C578 |
+    LDA.b Powerup_19                        ;$00C578 |
     INC A                                   ;$00C57A |
     CMP.b #$04                              ;$00C57B |
     BCC +                                   ;$00C57D |
     LDA.b #$00                              ;$00C57F |
-+   STA $19                                 ;$00C581 |
++   STA.b Powerup_19                        ;$00C581 |
     BRA .restore_noteblock_down_00C58F      ;$00C583 |
 
 .try_release_itembox_00C585:
@@ -8027,7 +8027,7 @@ CODE_00CA6D:
     ADC.b #$08                              ;$00CA77 |
     STA $00                                 ;$00CA79 |
     LDA.b #$18                              ;$00CA7B |
-    LDY $19                                 ;$00CA7D |
+    LDY.b Powerup_19                        ;$00CA7D |
     BEQ CODE_00CA83                         ;$00CA7F |
     LDA.b #$10                              ;$00CA81 |
 CODE_00CA83:
@@ -8362,7 +8362,7 @@ CODE_00CD8F:
 
 p_balloon:
     LDA.b #$42                              ;$00CD95 |
-    LDX $19                                 ;$00CD97 |
+    LDX.b Powerup_19                        ;$00CD97 |
     BEQ CODE_00CD9D                         ;$00CD99 |
     LDA.b #$43                              ;$00CD9B |
 CODE_00CD9D:
@@ -8590,13 +8590,13 @@ lbl14A2Not0:
 CODE_00CF2F:
     LDA.w DATA_00CEA9,Y
     STA.w $13DF                             ;$00CF32 |
-    LDA $19                                 ;$00CF35 |
+    LDA.b Powerup_19                        ;$00CF35 |
     BEQ CODE_00CF3A                         ;$00CF37 |
     INX                                     ;$00CF39 |
 CODE_00CF3A:
     LDA.w DATA_00CEA1,X
     STA $76                                 ;$00CF3D |
-    LDY $19                                 ;$00CF3F |
+    LDY.b Powerup_19                        ;$00CF3F |
     CPY.b #$02                              ;$00CF41 |
     BNE CODE_00CF48                         ;$00CF43 |
     JSR CODE_00D044                         ;$00CF45 |
@@ -8695,7 +8695,7 @@ CODE_00CFE3:
     BNE CODE_00D003                         ;$00CFE9 |
     DEC A                                   ;$00CFEB |
     BPL CODE_00CFF3                         ;$00CFEC |
-    LDY $19                                 ;$00CFEE |
+    LDY.b Powerup_19                        ;$00CFEE |
     LDA.w NumWalkingFrames,Y                ;$00CFF0 |
 CODE_00CFF3:
     XBA
@@ -8762,7 +8762,7 @@ CODE_00D044:
     RTS                                     ;$00D061 |
 
 powerup_physics:                            ;        \
-    LDA $19                                 ;$00D062 |\ If the player is caped,
+    LDA.b Powerup_19                        ;$00D062 |\ If the player is caped,
     CMP.b #$02                              ;$00D064 |/
     BNE .not_caped                          ;$00D066 |
     BIT $16                                 ;$00D068 |\ and X or Y are tapped,
@@ -8807,7 +8807,7 @@ DATA_00D0AE:
     db $7C,$00,$80,$00,$00,$06,$00,$01
 
 death_animation:
-    STZ $19                                 ;$00D0B6 \ Clear the player's powerup.
+    STZ.b Powerup_19                        ;$00D0B6 \ Clear the player's powerup.
     LDA.b #$3E                              ;$00D0B8 |\ Set the death pose.
     STA.w $13E0                             ;$00D0BA |/
     LDA $13                                 ;$00D0BD |\
@@ -8899,7 +8899,7 @@ mushroom_animation:
     BRA set_growing_poses                   ;$00D154 / and the reversed sequence of hurt poses.
 
 .set_powerup
-    INC $19                                 ;$00D156 \ Set the player as big.
+    INC.b Powerup_19                        ;$00D156 \ Set the player as big.
 reset_animation:                            ;        |
     LDA.b #$00                              ;$00D158 |\ Reset the player animation,
     STA $71                                 ;$00D15A | |
@@ -8912,7 +8912,7 @@ cape_animation:
     STA $78                                 ;$00D161 |
     DEC.w $1496                             ;$00D163 |\ Decrement the animation timer.
     BNE return_00D15E                       ;$00D166 |/ If it's not zero, return.
-    LDA $19                                 ;$00D168 |\ If the player is small or big,
+    LDA.b Powerup_19                        ;$00D168 |\ If the player is small or big,
     LSR                                     ;$00D16A | |
     BEQ set_invincibility                   ;$00D16B |/ set invincibility.
     BNE reset_animation                     ;$00D16D / Reset the animation.
@@ -9534,7 +9534,7 @@ aerial_physics:
     BNE CODE_00D811                         ;$00D7FD |
 CODE_00D7FF:
     STZ.w $13ED
-    LDX $19                                 ;$00D802 |
+    LDX.b Powerup_19                        ;$00D802 |
     CPX.b #$02                              ;$00D804 |
     BNE CODE_00D811                         ;$00D806 |
     LDA $7D                                 ;$00D808 |
@@ -9661,7 +9661,7 @@ CODE_00D8CD:
     LSR                                     ;$00D8DB |
     BEQ CODE_00D8E7                         ;$00D8DC |
     LDY.b #$02                              ;$00D8DE |
-    CPY $19                                 ;$00D8E0 |
+    CPY.b Powerup_19                        ;$00D8E0 |
     BEQ CODE_00D8E5                         ;$00D8E2 |
     INX                                     ;$00D8E4 |
 CODE_00D8E5:
@@ -10463,56 +10463,53 @@ draw_mario_and_yoshi_00E2BD:
     PLB                                     ;$00E2BF |
     LDA $78                                 ;$00E2C0 |
     CMP.b #$FF                              ;$00E2C2 |
-    BEQ CODE_00E2CA                         ;$00E2C4 |
+    BEQ +                                   ;$00E2C4 |
     JSL CODE_01EA70                         ;$00E2C6 |
-CODE_00E2CA:
-    LDY.w $149B
-    BNE CODE_00E308                         ;$00E2CD |
++   LDY.w $149B                             ;$00E2CA |
+    BNE .CODE_00E308                        ;$00E2CD |
     LDY.w $1490                             ;$00E2CF |
-    BEQ CODE_00E314                         ;$00E2D2 |
+    BEQ .CODE_00E314                        ;$00E2D2 |
     LDA $78                                 ;$00E2D4 |
     CMP.b #$FF                              ;$00E2D6 |
-    BEQ CODE_00E2E3                         ;$00E2D8 |
+    BEQ +                                   ;$00E2D8 |
     LDA $14                                 ;$00E2DA |
     AND.b #$03                              ;$00E2DC |
-    BNE CODE_00E2E3                         ;$00E2DE |
+    BNE +                                   ;$00E2DE |
     DEC.w $1490                             ;$00E2E0 |
-CODE_00E2E3:
-    LDA $13
++   LDA $13                                 ;$00E2E3 |
     CPY.b #$1E                              ;$00E2E5 |
-    BCC CODE_00E30A                         ;$00E2E7 |
-    BNE CODE_00E30C                         ;$00E2E9 |
+    BCC .CODE_00E30A                        ;$00E2E7 |
+    BNE .CODE_00E30C                        ;$00E2E9 |
     LDA.w $0DDA                             ;$00E2EB |
     CMP.b #$FF                              ;$00E2EE |
-    BEQ CODE_00E308                         ;$00E2F0 |
+    BEQ .CODE_00E308                        ;$00E2F0 |
     AND.b #$7F                              ;$00E2F2 |
     STA.w $0DDA                             ;$00E2F4 |
     TAX                                     ;$00E2F7 |
     LDA.w $14AD                             ;$00E2F8 |
     ORA.w $14AE                             ;$00E2FB |
     ORA.w $190C                             ;$00E2FE |
-    BEQ CODE_00E305                         ;$00E301 |
+    BEQ +                                   ;$00E301 |
     LDX.b #$0E                              ;$00E303 |
-CODE_00E305:
-    STX.w $1DFB
-CODE_00E308:
-    LDA $13
-CODE_00E30A:
-    LSR
++   STX.w $1DFB                             ;$00E305 |
+.CODE_00E308:
+    LDA $13                                 ;$00E308 |
+.CODE_00E30A:
+    LSR                                     ;$00E30A |
     LSR                                     ;$00E30B |
-CODE_00E30C:
-    AND.b #$03
+.CODE_00E30C:
+    AND.b #$03                              ;$00E30C |
     INC A                                   ;$00E30E |
     INC A                                   ;$00E30F |
     INC A                                   ;$00E310 |
     INC A                                   ;$00E311 |
-    BRA CODE_00E31A                         ;$00E312 |
+    BRA .CODE_00E31A                        ;$00E312 |
 
-CODE_00E314:
+.CODE_00E314:
     LDA $19
     ASL                                     ;$00E316 |
     ORA.w $0DB3                             ;$00E317 |
-CODE_00E31A:
+.CODE_00E31A:
     ASL
     TAY                                     ;$00E31B |
     REP #$20                                ;$00E31C |
@@ -10522,17 +10519,17 @@ CODE_00E31A:
     LDX.w $13E0                             ;$00E326 |
     LDA.b #$05                              ;$00E329 |
     CMP.w $13E3                             ;$00E32B |
-    BCS CODE_00E33E                         ;$00E32E |
+    BCS .CODE_00E33E                        ;$00E32E |
     LDA.w $13E3                             ;$00E330 |
-    LDY $19                                 ;$00E333 |
-    BEQ CODE_00E33B                         ;$00E335 |
+    LDY.b Powerup_19                        ;$00E333 |
+    BEQ .CODE_00E33B                        ;$00E335 |
     CPX.b #$13                              ;$00E337 |
-    BNE CODE_00E33D                         ;$00E339 |
-CODE_00E33B:
+    BNE .CODE_00E33D                        ;$00E339 |
+.CODE_00E33B:
     EOR.b #$01
-CODE_00E33D:
+.CODE_00E33D:
     LSR
-CODE_00E33E:
+.CODE_00E33E:
     REP #$20
     LDA $94                                 ;$00E340 |
     SBC $1A                                 ;$00E342 |
@@ -10541,26 +10538,24 @@ CODE_00E33E:
     AND.w #$00FF                            ;$00E349 |
     CLC                                     ;$00E34C |
     ADC $96                                 ;$00E34D |
-    LDY $19                                 ;$00E34F |
+    LDY.b Powerup_19                        ;$00E34F |
     CPY.b #$01                              ;$00E351 |
     LDY.b #$01                              ;$00E353 |
-    BCS CODE_00E359                         ;$00E355 |
+    BCS .CODE_00E359                        ;$00E355 |
     DEC A                                   ;$00E357 |
     DEY                                     ;$00E358 |
-CODE_00E359:
+.CODE_00E359:
     CPX.b #$0A
-    BCS CODE_00E360                         ;$00E35B |
+    BCS +                                   ;$00E35B |
     CPY.w $13DB                             ;$00E35D |
-CODE_00E360:
-    SBC $1C
++   SBC $1C                                 ;$00E360 |
     CPX.b #$1C                              ;$00E362 |
-    BNE CODE_00E369                         ;$00E364 |
+    BNE +                                   ;$00E364 |
     ADC.w #$0001                            ;$00E366 |
-CODE_00E369:
-    STA $80
++   STA $80                                 ;$00E369 |
     SEP #$20                                ;$00E36B |
     LDA.w $1497                             ;$00E36D |
-    BEQ CODE_00E385                         ;$00E370 |
+    BEQ .CODE_00E385                        ;$00E370 |
     LSR                                     ;$00E372 |
     LSR                                     ;$00E373 |
     LSR                                     ;$00E374 |
@@ -10569,35 +10564,32 @@ CODE_00E369:
     AND.w $1497                             ;$00E379 |
     ORA $9D                                 ;$00E37C |
     ORA.w $13FB                             ;$00E37E |
-    BNE CODE_00E385                         ;$00E381 |
+    BNE .CODE_00E385                        ;$00E381 |
     PLB                                     ;$00E383 |
     RTL                                     ;$00E384 |
 
-CODE_00E385:
+.CODE_00E385:
     LDA.b #$C8
     CPX.b #$43                              ;$00E387 |
-    BNE CODE_00E38D                         ;$00E389 |
+    BNE +                                   ;$00E389 |
     LDA.b #$E8                              ;$00E38B |
-CODE_00E38D:
-    STA $04
++   STA $04                                 ;$00E38D |
     CPX.b #$29                              ;$00E38F |
-    BNE CODE_00E399                         ;$00E391 |
-    LDA $19                                 ;$00E393 |
-    BNE CODE_00E399                         ;$00E395 |
+    BNE +                                   ;$00E391 |
+    LDA.b Powerup_19                        ;$00E393 |
+    BNE +                                   ;$00E395 |
     LDX.b #$20                              ;$00E397 |
-CODE_00E399:
-    LDA.w DATA_00DCEC,X
++   LDA.w DATA_00DCEC,X                     ;$00E399 |
     ORA $76                                 ;$00E39C |
     TAY                                     ;$00E39E |
     LDA.w DATA_00DD32,Y                     ;$00E39F |
     STA $05                                 ;$00E3A2 |
-    LDY $19                                 ;$00E3A4 |
+    LDY.b Powerup_19                        ;$00E3A4 |
     LDA.w $13E0                             ;$00E3A6 |
     CMP.b #$3D                              ;$00E3A9 |
-    BCS CODE_00E3B0                         ;$00E3AB |
+    BCS +                                   ;$00E3AB |
     ADC.w TilesetIndex,Y                    ;$00E3AD |
-CODE_00E3B0:
-    TAY
++   TAY                                     ;$00E3B0 |
     LDA.w TileExpansion,Y                   ;$00E3B1 |
     STA $06                                 ;$00E3B4 |
     LDA.w DATA_00E00C,Y                     ;$00E3B6 |
@@ -10606,10 +10598,9 @@ CODE_00E3B0:
     STA $0B                                 ;$00E3BE |
     LDA $64                                 ;$00E3C0 |
     LDX.w $13F9                             ;$00E3C2 |
-    BEQ CODE_00E3CA                         ;$00E3C5 |
+    BEQ +                                   ;$00E3C5 |
     LDA.w DATA_00E2B9,X                     ;$00E3C7 |
-CODE_00E3CA:
-    LDY.w DATA_00E2B2,X
++   LDY.w DATA_00E2B2,X                     ;$00E3CA |
     LDX $76                                 ;$00E3CD |
     ORA.w mario_properties,X                ;$00E3CF |
     STA.w $0303,Y                           ;$00E3D2 |
@@ -10620,17 +10611,16 @@ CODE_00E3CA:
     STA.w $02FF,Y                           ;$00E3E1 |
     LDX $04                                 ;$00E3E4 |
     CPX.b #$E8                              ;$00E3E6 |
-    BNE CODE_00E3EC                         ;$00E3E8 |
+    BNE +                                   ;$00E3E8 |
     EOR.b #$40                              ;$00E3EA |
-CODE_00E3EC:
-    STA.w $030B,Y
++   STA.w $030B,Y                           ;$00E3EC |
     JSR CODE_00E45D                         ;$00E3EF |
     JSR CODE_00E45D                         ;$00E3F2 |
     JSR CODE_00E45D                         ;$00E3F5 |
     JSR CODE_00E45D                         ;$00E3F8 |
-    LDA $19                                 ;$00E3FB |
+    LDA.b Powerup_19                        ;$00E3FB |
     CMP.b #$02                              ;$00E3FD |
-    BNE CODE_00E458                         ;$00E3FF |
+    BNE .CODE_00E458                        ;$00E3FF |
     PHY                                     ;$00E401 |
     LDA.b #$2C                              ;$00E402 |
     STA $06                                 ;$00E404 |
@@ -10644,7 +10634,7 @@ CODE_00E3EC:
     LDA.w DATA_00E1D5,X                     ;$00E417 |
     STA $0C                                 ;$00E41A |
     CMP.b #$04                              ;$00E41C |
-    BCS CODE_00E432                         ;$00E41E |
+    BCS .CODE_00E432                        ;$00E41E |
     LDA.w $13DF                             ;$00E420 |
     ASL                                     ;$00E423 |
     ASL                                     ;$00E424 |
@@ -10653,11 +10643,11 @@ CODE_00E3EC:
     LDA.w DATA_00E23A,Y                     ;$00E428 |
     STA $0C                                 ;$00E42B |
     LDA.w DATA_00E266,Y                     ;$00E42D |
-    BRA CODE_00E435                         ;$00E430 |
+    BRA .CODE_00E435                        ;$00E430 |
 
-CODE_00E432:
+.CODE_00E432:
     LDA.w DATA_00E1D6,X
-CODE_00E435:
+.CODE_00E435:
     ORA $76
     TAY                                     ;$00E437 |
     LDA.w DATA_00E21A,Y                     ;$00E438 |
@@ -10665,16 +10655,15 @@ CODE_00E435:
     PLY                                     ;$00E43D |
     LDA.w DATA_00E1D4,X                     ;$00E43E |
     TSB $78                                 ;$00E441 |
-    BMI CODE_00E448                         ;$00E443 |
+    BMI +                                   ;$00E443 |
     JSR CODE_00E45D                         ;$00E445 |
-CODE_00E448:
-    LDX.w $13F9
++   LDX.w $13F9                             ;$00E448 |
     LDY.w DATA_00E2B6,X                     ;$00E44B |
     JSR CODE_00E45D                         ;$00E44E |
     LDA $0E                                 ;$00E451 |
     STA $06                                 ;$00E453 |
     JSR CODE_00E45D                         ;$00E455 |
-CODE_00E458:
+.CODE_00E458:
     JSR CODE_00F636
     PLB                                     ;$00E45B |
     RTL                                     ;$00E45C |
@@ -11177,7 +11166,7 @@ layer_collision:
     LDX.b #$66                              ;$00EB27 |
 .on_left_wall                               ;               |
     JSR CODE_00EFE8                         ;$00EB29 |
-    LDA $19                                 ;$00EB2C |
+    LDA.b Powerup_19                        ;$00EB2C |
     BNE .process_big                        ;$00EB2E |
     INX                                     ;$00EB30 |
     INX                                     ;$00EB31 |
@@ -11208,7 +11197,7 @@ walk_off_wall:                              ;               |
     ADC.w DATA_00EABD,Y                     ;$00EB55 |
     STA $94                                 ;$00EB58 |
     LDA.w #$0008                            ;$00EB5A |
-    LDY $19                                 ;$00EB5D |
+    LDY.b Powerup_19                        ;$00EB5D |
     BEQ .not_big                            ;$00EB5F |
     LDA.w #$0010                            ;$00EB61 |
 .not_big                                    ;               |
@@ -11227,7 +11216,7 @@ stop_wall_running:
 
 normal_collision:
     LDX.b #$00                              ;$00EB77 \ Initialize collision point index
-    LDA $19                                 ;$00EB79 |\
+    LDA.b Powerup_19                        ;$00EB79 |\
     BEQ .not_big                            ;$00EB7B | | If the player is big
     LDA $73                                 ;$00EB7D | |
     BNE .not_big                            ;$00EB7F | | and not ducking,
@@ -11306,7 +11295,7 @@ normal_collision:
     CPY.b #$27                              ;$00EBF9 | | if applicable, process upper half of P-switch door.
     BNE .process_center                     ;$00EBFB |/
 .upper_door                                 ;        |
-    LDA $19                                 ;$00EBFD |\ If the player is big,
+    LDA.b Powerup_19                        ;$00EBFD |\ If the player is big,
     BNE .skip_center                        ;$00EBFF |/ don't let him use the upper half of the door.
 .lower_door                                 ;        |
     JSR can_use_door                        ;$00EC01 |\ If the player isn't positioned correctly,
@@ -11664,7 +11653,7 @@ CODE_00EE57:
     BNE CODE_00EE78                         ;$00EE61 |
     LDX $8F                                 ;$00EE63 |
     BEQ CODE_00EE83                         ;$00EE65 |
-    LDX $19                                 ;$00EE67 |
+    LDX.b Powerup_19                        ;$00EE67 |
     BEQ CODE_00EE83                         ;$00EE69 |
     LDX.w $140D                             ;$00EE6B |
     BEQ CODE_00EE83                         ;$00EE6E |
@@ -11832,7 +11821,7 @@ CODE_00EF99:
     STZ.w $1407                             ;$00EF9C |
     CPY.b #$05                              ;$00EF9F |
     BCS CallGroundPound                     ;$00EFA1 |
-    LDA $19                                 ;$00EFA3 |
+    LDA.b Powerup_19                        ;$00EFA3 |
     CMP.b #$02                              ;$00EFA5 |
     BNE Return00EFAD                        ;$00EFA7 |
     SEC                                     ;$00EFA9 |
@@ -12092,7 +12081,7 @@ CODE_00F1BA:
     BCC CODE_00F1D0                         ;$00F1BB |
     CMP.b #$03                              ;$00F1BD |
     BEQ CODE_00F1C9                         ;$00F1BF |
-    LDY $19                                 ;$00F1C1 |
+    LDY.b Powerup_19                        ;$00F1C1 |
     BNE CODE_00F1D0                         ;$00F1C3 |
     LDA.b #$01                              ;$00F1C5 |
     BRA CODE_00F1D0                         ;$00F1C7 |
@@ -12268,10 +12257,10 @@ process_page_0_tiles_no_swim:
     BEQ .no_trigger                         ;$00F2DB |
     JSR CODE_00CA2B                         ;$00F2DD | trigger the midway point,
 .no_trigger                                 ;        |
-    LDA $19                                 ;$00F2E0 |\
+    LDA.b Powerup_19                        ;$00F2E0 |\
     BNE .already_big                        ;$00F2E2 | |
     LDA.b #$01                              ;$00F2E4 | |
-    STA $19                                 ;$00F2E6 | | make the player big if he isn't already,
+    STA.b Powerup_19                        ;$00F2E6 | | make the player big if he isn't already,
 .already_big                                ;        |/
     LDA.b #$05                              ;$00F2E8 |\
     STA.w $1DF9                             ;$00F2EA |/ and play the midway point sound.
@@ -12748,7 +12737,7 @@ PowerDown:
     JSL ReleaseItembox028008                ;$00F5F8 |
     LDA.b #$01                              ;$00F5FC |
     STA $71                                 ;$00F5FE |
-    STZ $19                                 ;$00F600 |
+    STZ.b Powerup_19                        ;$00F600 |
     LDA.b #$2F                              ;$00F602 |
     BRA CODE_00F61D                         ;$00F604 |
 
@@ -13720,7 +13709,7 @@ CODE_00FD26:
     LDA $95                                 ;$00FD36 |
     ADC.b #$00                              ;$00FD38 |
     STA.w $1733,X                           ;$00FD3A |
-    LDA $19                                 ;$00FD3D |
+    LDA.b Powerup_19                        ;$00FD3D |
     BEQ CODE_00FD47                         ;$00FD3F |
     LDA.b #$04                              ;$00FD41 |
     LDY $73                                 ;$00FD43 |
@@ -13796,7 +13785,7 @@ CODE_00FDB3:
 CODE_00FDB4:
     PHX
     LDX.b #$00                              ;$00FDB5 |
-    LDA $19                                 ;$00FDB7 |
+    LDA.b Powerup_19                        ;$00FDB7 |
     BEQ CODE_00FDBC                         ;$00FDB9 |
     INX                                     ;$00FDBB |
 CODE_00FDBC:
@@ -13835,7 +13824,7 @@ CODE_00FDC3:
     STZ $7B                                 ;$00FDFC |
 CODE_00FDFE:
     LDY.b #$03
-    LDA $19                                 ;$00FE00 |
+    LDA.b Powerup_19                        ;$00FE00 |
     BNE CODE_00FE05                         ;$00FE02 |
     DEY                                     ;$00FE04 |
 CODE_00FE05:

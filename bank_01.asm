@@ -4545,7 +4545,7 @@ CODE_01A0E2:
     LDA.b #$0D                              ;$01A107 |
     LDY $73                                 ;$01A109 |
     BNE CODE_01A111                         ;$01A10B |
-    LDY $19                                 ;$01A10D |
+    LDY.b Powerup_19                        ;$01A10D |
     BNE CODE_01A113                         ;$01A10F |
 CODE_01A111:
     LDA.b #$0F
@@ -6432,7 +6432,7 @@ CODE_01ADF8:
     LDA.b #$FF                              ;$01AE28 |
     STA.w $161A,X                           ;$01AE2A |
     LDY.w $151C,X                           ;$01AE2D |
-    LDA $19                                 ;$01AE30 |
+    LDA.b Powerup_19                        ;$01AE30 |
     BNE CODE_01AE38                         ;$01AE32 |
     INY                                     ;$01AE34 |
     INY                                     ;$01AE35 |
@@ -7364,7 +7364,7 @@ CODE_01B4B4:
     LDA.b #$00                              ;$01B4BA |
     LDY $73                                 ;$01B4BC |
     BNE CODE_01B4C4                         ;$01B4BE |
-    LDY $19                                 ;$01B4C0 |
+    LDY.b Powerup_19                        ;$01B4C0 |
     BNE CODE_01B4C6                         ;$01B4C2 |
 CODE_01B4C4:
     LDA.b #$08
@@ -7520,7 +7520,7 @@ CODE_01B5B8:
     CMP.b #$5D                              ;$01B5C2 |
     BCC CODE_01B5DA                         ;$01B5C4 |
     LDY.b #$03                              ;$01B5C6 |
-    LDA $19                                 ;$01B5C8 |
+    LDA.b Powerup_19                        ;$01B5C8 |
     BNE CODE_01B5CD                         ;$01B5CA |
     DEY                                     ;$01B5CC |
 CODE_01B5CD:
@@ -7549,7 +7549,7 @@ CODE_01B5E7:
     LDA $7D                                 ;$01B5F7 |
     BPL CODE_01B610                         ;$01B5F9 |
     LDY.b #$08                              ;$01B5FB |
-    LDA $19                                 ;$01B5FD |
+    LDA.b Powerup_19                        ;$01B5FD |
     BNE CODE_01B603                         ;$01B5FF |
     LDY.b #$06                              ;$01B601 |
 CODE_01B603:
@@ -7577,7 +7577,7 @@ CODE_01B624:
     LDY.w $185E
     BEQ CODE_01B631                         ;$01B627 |
     LDY.b #$05                              ;$01B629 |
-    LDA $19                                 ;$01B62B |
+    LDA.b Powerup_19                        ;$01B62B |
     BNE CODE_01B631                         ;$01B62D |
     LDY.b #$02                              ;$01B62F |
 CODE_01B631:
@@ -7965,7 +7965,7 @@ ADDR_01B8B2:
     LDA.b #$FF                              ;$01B8B9 |
     LDY $73                                 ;$01B8BB |
     BNE ADDR_01B8C3                         ;$01B8BD |
-    LDY $19                                 ;$01B8BF |
+    LDY.b Powerup_19                        ;$01B8BF |
     BNE ADDR_01B8C5                         ;$01B8C1 |
 ADDR_01B8C3:
     LDA.b #$08
@@ -9697,7 +9697,7 @@ TouchedPowerUp:
     SBC.b #$74                              ;$01C539 |
     ASL                                     ;$01C53B |
     ASL                                     ;$01C53C |
-    ORA $19                                 ;$01C53D |
+    ORA.b Powerup_19                        ;$01C53D |
     TAY                                     ;$01C53F |
     LDA.w ItemBoxSprite,Y                   ;$01C540 |
     BEQ NoItem                              ;$01C543 |
@@ -9752,7 +9752,7 @@ GiveMarioStar:
 
 GiveMarioCape:
     LDA.b #$02
-    STA $19                                 ;$01C59A |
+    STA.b Powerup_19                        ;$01C59A |
     LDA.b #$0D                              ;$01C59C |
     STA.w $1DF9                             ;$01C59E |
     LDA.b #$04                              ;$01C5A1 |
@@ -9802,7 +9802,7 @@ GiveMarioFire:
     LDA.b #$04                              ;$01C5F3 |
     STA $71                                 ;$01C5F5 |
     LDA.b #$03                              ;$01C5F7 |
-    STA $19                                 ;$01C5F9 |
+    STA.b Powerup_19                        ;$01C5F9 |
     JMP CODE_01C56F                         ;$01C5FB |
 
 GiveMario1Up:
@@ -13145,7 +13145,7 @@ CODE_01DE58:
     LDA $7D                                 ;$01DE5D |
     BPL CODE_01DE8C                         ;$01DE5F |
     LDA.b #$F4                              ;$01DE61 |
-    LDY $19                                 ;$01DE63 |
+    LDY.b Powerup_19                        ;$01DE63 |
     BEQ CODE_01DE69                         ;$01DE65 |
     LDA.b #$00                              ;$01DE67 |
 CODE_01DE69:

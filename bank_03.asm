@@ -5952,7 +5952,7 @@ CODE_03ACCB:
     BEQ CODE_03AD18                         ;$03ACE1 |
     PHX                                     ;$03ACE3 |
     LDX.b #$00                              ;$03ACE4 |
-    LDA $19                                 ;$03ACE6 |
+    LDA.b Powerup_19                        ;$03ACE6 |
     BNE CODE_03ACEB                         ;$03ACE8 |
     INX                                     ;$03ACEA |
 CODE_03ACEB:
@@ -7141,7 +7141,7 @@ GetMarioClipping:
     LDX.b #$00                              ;$03B676 |
     LDA $73                                 ;$03B678 |
     BNE CODE_03B680                         ;$03B67A |
-    LDA $19                                 ;$03B67C |
+    LDA.b Powerup_19                        ;$03B67C |
     BNE CODE_03B681                         ;$03B67E |
 CODE_03B680:
     INX

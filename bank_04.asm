@@ -1746,7 +1746,7 @@ CODE_0491B1:
     LDA.w $0DB4,X                           ;$0491BE |
     STA.w $0DBE                             ;$0491C1 |
     LDA.w $0DB8,X                           ;$0491C4 |
-    STA $19                                 ;$0491C7 |
+    STA.b Powerup_19                        ;$0491C7 |
     LDA.w $0DBA,X                           ;$0491C9 |
     STA.w $0DC1                             ;$0491CC |
     STA.w $13C7                             ;$0491CF |
@@ -3089,7 +3089,7 @@ CODE_049DD1:
     LDA.w $0DB4,X                           ;$049DE0 |
     STA.w $0DBE                             ;$049DE3 |
     LDA.w $0DB8,X                           ;$049DE6 |
-    STA $19                                 ;$049DE9 |
+    STA.b Powerup_19                        ;$049DE9 |
     LDA.w $0DBA,X                           ;$049DEB |
     STA.w $0DC1                             ;$049DEE |
     STA.w $13C7                             ;$049DF1 |
@@ -5025,13 +5025,13 @@ CODE_04D6E9:
     TAX                                     ;$04D701 |
     LDA.w $1F11,X                           ;$04D702 |
     AND.w #$000F                            ;$04D705 |
-    BEQ CODE_04D714                         ;$04D708 |
+    BEQ .CODE_04D714                        ;$04D708 |
     LDA.w #$0020                            ;$04D70A |
     STA $47                                 ;$04D70D |
     LDA.w #$0200                            ;$04D70F |
     STA $1C                                 ;$04D712 |
-CODE_04D714:
-    JSL CODE_05881A
+.CODE_04D714:
+    JSL execute_level_mode_setting_05881A   ;$04D714 |
     JSL generic_layer_1_and_2_upload        ;$04D718 |
     REP #$30                                ;$04D71C |
     INC $47                                 ;$04D71E |
@@ -5040,7 +5040,7 @@ CODE_04D714:
     ADC.w #$0010                            ;$04D723 |
     STA $1C                                 ;$04D726 |
     AND.w #$01FF                            ;$04D728 |
-    BNE CODE_04D714                         ;$04D72B |
+    BNE .CODE_04D714                        ;$04D72B |
     LDA $20                                 ;$04D72D |
     STA $1C                                 ;$04D72F |
     STZ $47                                 ;$04D731 |

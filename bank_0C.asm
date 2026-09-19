@@ -1387,7 +1387,7 @@ CODE_0C9FEA:
     STA $96                                 ;$0C9FF4 |
     SEP #$20                                ;$0C9FF6 |
     LDA.b #$01                              ;$0C9FF8 |
-    STA $19                                 ;$0C9FFA |
+    STA.b Powerup_19                        ;$0C9FFA |
     LDA.b #$08                              ;$0C9FFC |
     STA.w $7B                               ;$0C9FFE |
     JSR CODE_0CA75A                         ;$0CA001 |
@@ -1681,7 +1681,7 @@ CODE_0CA24F:
     LDA.w $0B6E,X                           ;$0CA25C |
     STA $95                                 ;$0CA25F |
     LDA.b #$01                              ;$0CA261 |
-    STA $19                                 ;$0CA263 |
+    STA.b Powerup_19                        ;$0CA263 |
     LDA.b #$08                              ;$0CA265 |
     STA.w $7B                               ;$0CA267 |
     JSR CODE_0CA75A                         ;$0CA26A |
@@ -5731,7 +5731,7 @@ CODE_0CD4A4:
     PHK                                     ;$0CD4A5 |
     PLB                                     ;$0CD4A6 |
     LDX.b #$00                              ;$0CD4A7 |
-    LDA $19                                 ;$0CD4A9 |
+    LDA.b Powerup_19                        ;$0CD4A9 |
     BNE CODE_0CD4AF                         ;$0CD4AB |
     LDX.b #$08                              ;$0CD4AD |
 CODE_0CD4AF:
@@ -5802,7 +5802,7 @@ CODE_0CD502:
 
 CODE_0CD51B:
     LDX.b #$00
-    LDA $19                                 ;$0CD51D |
+    LDA.b Powerup_19                        ;$0CD51D |
     BNE CODE_0CD523                         ;$0CD51F |
     LDX.b #$08                              ;$0CD521 |
 CODE_0CD523:
@@ -5861,7 +5861,7 @@ CODE_0CD564:
 CODE_0CD585:
     LDX.b #$0F
     LDY.b #$0C                              ;$0CD587 |
-    LDA $19                                 ;$0CD589 |
+    LDA.b Powerup_19                        ;$0CD589 |
     BNE CODE_0CD58F                         ;$0CD58B |
     LDX.b #$13                              ;$0CD58D |
 CODE_0CD58F:
@@ -5973,7 +5973,7 @@ CODE_0CD68A:
     TXA                                     ;$0CD699 |
     ASL                                     ;$0CD69A |
     TAX                                     ;$0CD69B |
-    LDA $19                                 ;$0CD69C |
+    LDA.b Powerup_19                        ;$0CD69C |
     BEQ CODE_0CD6A1                         ;$0CD69E |
     INX                                     ;$0CD6A0 |
 CODE_0CD6A1:
@@ -6037,7 +6037,7 @@ CODE_0CD6F6:
     BNE CODE_0CD752                         ;$0CD6FF |
     LDA.w $13DB                             ;$0CD701 |
     ASL                                     ;$0CD704 |
-    LDY $19                                 ;$0CD705 |
+    LDY.b Powerup_19                        ;$0CD705 |
     BEQ CODE_0CD70A                         ;$0CD707 |
     INC A                                   ;$0CD709 |
 CODE_0CD70A:

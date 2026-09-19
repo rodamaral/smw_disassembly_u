@@ -675,7 +675,7 @@ CODE_02853F:
 SpawnStarSparkles:
     LDY.b #$1F
     LDX.b #$00                              ;$028591 |
-    LDA $19                                 ;$028593 |
+    LDA.b Powerup_19                        ;$028593 |
     BNE CODE_02859B                         ;$028595 |
     LDY.b #$0F                              ;$028597 |
     LDX.b #$10                              ;$028599 |
@@ -10744,7 +10744,7 @@ CODE_02CF76:
     ADC.b #$08                              ;$02CF82 |
     CMP.b #$14                              ;$02CF84 |
     BCS Return02CFFD                        ;$02CF86 |
-    LDA $19                                 ;$02CF88 |
+    LDA.b Powerup_19                        ;$02CF88 |
     CMP.b #$01                              ;$02CF8A |
     LDA.b #$1A                              ;$02CF8C |
     BCS CODE_02CF92                         ;$02CF8E |
@@ -11515,7 +11515,7 @@ Return02D49B:
 
 CODE_02D49C:
     LDA.b #$00
-    LDY $19                                 ;$02D49E |
+    LDY.b Powerup_19                        ;$02D49E |
     BEQ CODE_02D4A8                         ;$02D4A0 |
     LDY $73                                 ;$02D4A2 |
     BNE CODE_02D4A8                         ;$02D4A4 |
@@ -17188,7 +17188,7 @@ CODE_02FE10:
     LDA.b #$20                              ;$02FE1D |
     LDY $73                                 ;$02FE1F |
     BNE CODE_02FE29                         ;$02FE21 |
-    LDY $19                                 ;$02FE23 |
+    LDY.b Powerup_19                        ;$02FE23 |
     BEQ CODE_02FE29                         ;$02FE25 |
     LDA.b #$30                              ;$02FE27 |
 CODE_02FE29:
@@ -17257,7 +17257,7 @@ CODE_02FE77:
     STA $03                                 ;$02FEA2 |
     REP #$20                                ;$02FEA4 |
     LDA.w #$0014                            ;$02FEA6 |
-    LDY $19                                 ;$02FEA9 |
+    LDY.b Powerup_19                        ;$02FEA9 |
     BEQ CODE_02FEB0                         ;$02FEAB |
     LDA.w #$0020                            ;$02FEAD |
 CODE_02FEB0:
