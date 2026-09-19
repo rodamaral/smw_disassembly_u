@@ -2071,7 +2071,7 @@ GoombaWingTileSize:
     db $02,$02,$00,$00
 
 GoombaWingGfxRt:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $1570,X                           ;$018DEC |
     LSR                                     ;$018DEF |
     LSR                                     ;$018DF0 |
@@ -3965,7 +3965,7 @@ SubSprGfx0Entry0:
 SubSprGfx0Entry1:
     STA $05
     STY $0F                                 ;$019CF7 |
-    JSR GetDrawInfoBnk1                     ;$019CF9 |
+    JSR get_draw_info_bnk1_01A365           ;$019CF9 |
     LDY $0F                                 ;$019CFC |
     TYA                                     ;$019CFE |
     CLC                                     ;$019CFF |
@@ -4035,7 +4035,7 @@ SubSprGfx1:
     RTS                                     ;$019D6F |
 
 SubSprGfx1Hlpr0:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $157C,X                           ;$019D73 |
     STA $02                                 ;$019D76 |
     TYA                                     ;$019D78 |
@@ -4089,7 +4089,7 @@ CODE_019DBE:
     RTS                                     ;$019DD8 |
 
 SubSprGfx1Hlpr1:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $157C,X                           ;$019DDC |
     STA $02                                 ;$019DDF |
     TYA                                     ;$019DE1 |
@@ -4259,21 +4259,22 @@ SubSprGfx2Entry0:
     STA $04
     BRA CODE_019F0F                         ;$019F0B |
 
+; Just writes some OAM tables and sets offscreen properties
 SubSprGfx2Entry1:
     STZ $04
 CODE_019F0F:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $157C,X                           ;$019F12 |
     STA $02                                 ;$019F15 |
     LDY $9E,X                               ;$019F17 |
     LDA.w $1602,X                           ;$019F19 |
     CLC                                     ;$019F1C |
     ADC.w SprTilemapOffset,Y                ;$019F1D |
-    LDY.w $15EA,X                           ;$019F20 |
+    LDY.w $15EA,X                           ;$019F20 | Y = Index into sprite OAM
     TAX                                     ;$019F23 |
     LDA.w SprTilemap,X                      ;$019F24 |
     STA.w $0302,Y                           ;$019F27 |
-    LDX.w $15E9                             ;$019F2A |
+    LDX.w $15E9                             ;$019F2A | X = Sprite index
     LDA $00                                 ;$019F2D |
     STA.w $0300,Y                           ;$019F2F |
     LDA $01                                 ;$019F32 |
@@ -4282,10 +4283,9 @@ CODE_019F0F:
     LSR                                     ;$019F3A |
     LDA.b #$00                              ;$019F3B |
     ORA.w $15F6,X                           ;$019F3D |
-    BCS CODE_019F44                         ;$019F40 |
+    BCS +                                   ;$019F40 |
     EOR.b #$40                              ;$019F42 |
-CODE_019F44:
-    ORA $04
++   ORA $04                                 ;$019F44 |
     ORA $64                                 ;$019F46 |
     STA.w $0303,Y                           ;$019F48 |
     TYA                                     ;$019F4B |
@@ -4875,17 +4875,17 @@ DATA_01A361:
 DATA_01A363:
     db $01,$02
 
-GetDrawInfoBnk1:
+; sets offscreen flags and more than 4 tiles horizontally offscreen flag
+get_draw_info_bnk1_01A365:
     STZ.w $186C,X
-    STZ.w $15A0,X                           ;$01A368 |
+    STZ.w $15A0,X                           ;$01A368 | reset offscreen flags
     LDA $E4,X                               ;$01A36B |
     CMP $1A                                 ;$01A36D |
     LDA.w $14E0,X                           ;$01A36F |
     SBC $1B                                 ;$01A372 |
-    BEQ CODE_01A379                         ;$01A374 |
+    BEQ +                                   ;$01A374 |
     INC.w $15A0,X                           ;$01A376 |
-CODE_01A379:
-    LDA.w $14E0,X
++   LDA.w $14E0,X                           ;$01A379 |
     XBA                                     ;$01A37C |
     LDA $E4,X                               ;$01A37D |
     REP #$20                                ;$01A37F |
@@ -4898,16 +4898,16 @@ CODE_01A379:
     ROL                                     ;$01A38D |
     AND.b #$01                              ;$01A38E |
     STA.w $15C4,X                           ;$01A390 |
-    BNE CODE_01A3CB                         ;$01A393 |
-    LDY.b #$00                              ;$01A395 |
+    BNE .CODE_01A3CB                        ;$01A393 |
+    LDY.b #$00                              ;$01A395 | loop controller (0 or 1)
     LDA.w $14C8,X                           ;$01A397 |
     CMP.b #$09                              ;$01A39A |
-    BEQ CODE_01A3A6                         ;$01A39C |
+    BEQ .loop_01A3A6                        ;$01A39C |
     LDA.w $190F,X                           ;$01A39E |
     AND.b #$20                              ;$01A3A1 |
-    BEQ CODE_01A3A6                         ;$01A3A3 |
-    INY                                     ;$01A3A5 |
-CODE_01A3A6:
+    BEQ .loop_01A3A6                        ;$01A3A3 |
+    INY                                     ;$01A3A5 | loop once if not carriable and not death frame 2 tiles high
+.loop_01A3A6:
     LDA $D8,X
     CLC                                     ;$01A3A8 |
     ADC.w DATA_01A361,Y                     ;$01A3A9 |
@@ -4919,19 +4919,18 @@ CODE_01A3A6:
     ADC.b #$00                              ;$01A3B5 |
     LSR $00                                 ;$01A3B7 |
     SBC $1D                                 ;$01A3B9 |
-    BEQ CODE_01A3C6                         ;$01A3BB |
-    LDA.w $186C,X                           ;$01A3BD |
-    ORA.w DATA_01A363,Y                     ;$01A3C0 |
-    STA.w $186C,X                           ;$01A3C3 |
-CODE_01A3C6:
-    DEY
-    BPL CODE_01A3A6                         ;$01A3C7 |
-    BRA CODE_01A3CD                         ;$01A3C9 |
+    BEQ +                                   ;$01A3BB |\
+    LDA.w $186C,X                           ;$01A3BD ||
+    ORA.w DATA_01A363,Y                     ;$01A3C0 || set vertical offscreen flag
+    STA.w $186C,X                           ;$01A3C3 |/
++   DEY                                     ;$01A3C7 |
+    BPL .loop_01A3A6                        ;$01A3C7 |
+    BRA .CODE_01A3CD                        ;$01A3C9 |
 
-CODE_01A3CB:
+.CODE_01A3CB:
     PLA
     PLA                                     ;$01A3CC |
-CODE_01A3CD:
+.CODE_01A3CD:
     LDY.w $15EA,X
     LDA $E4,X                               ;$01A3D0 |
     SEC                                     ;$01A3D2 |
@@ -4943,12 +4942,13 @@ CODE_01A3CD:
     STA $01                                 ;$01A3DC |
     RTS                                     ;$01A3DE |
 
+; Just writes some OAM tables
 CODE_01A3DF:
     LDA.w $186C,X
-    BEQ Return01A40A                        ;$01A3E2 |
+    BEQ Return01A40A                        ;$01A3E2 | if vertically offscreen, return
     PHX                                     ;$01A3E4 |
     LSR                                     ;$01A3E5 |
-    BCC CODE_01A3F8                         ;$01A3E6 |
+    BCC +                                   ;$01A3E6 |
     PHA                                     ;$01A3E8 |
     LDA.b #$01                              ;$01A3E9 |
     STA.w $0460,Y                           ;$01A3EB |
@@ -4959,9 +4959,8 @@ CODE_01A3DF:
     LDA.b #$80                              ;$01A3F2 |
     STA.w $0300,X                           ;$01A3F4 |
     PLA                                     ;$01A3F7 |
-CODE_01A3F8:
-    LSR
-    BCC CODE_01A409                         ;$01A3F9 |
++   LSR                                     ;$01A3F8 |
+    BCC +                                   ;$01A3F9 |
     LDA.b #$01                              ;$01A3FB |
     STA.w $0461,Y                           ;$01A3FD |
     TYA                                     ;$01A400 |
@@ -4970,8 +4969,7 @@ CODE_01A3F8:
     TAX                                     ;$01A403 |
     LDA.b #$80                              ;$01A404 |
     STA.w $0304,X                           ;$01A406 |
-CODE_01A409:
-    PLX
++   PLX                                     ;$01A409 |
 Return01A40A:
     RTS
 
@@ -6603,7 +6601,7 @@ ThwompGfxProp:
     db $03,$43,$03,$43,$03
 
 ThwompGfx:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $1528,X                           ;$01AF57 |
     STA $02                                 ;$01AF5A |
     PHX                                     ;$01AF5C |
@@ -7104,7 +7102,7 @@ CODE_01B2D1:
     JMP CODE_01B395                         ;$01B2DC |
 
 CODE_01B2DF:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $1602,X                           ;$01B2E2 |
     STA $01                                 ;$01B2E5 |
     LDA $D8,X                               ;$01B2E7 |
@@ -7190,7 +7188,7 @@ FlyRockPlatTiles:
     db $85
 
 CODE_01B395:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     PHY                                     ;$01B398 |
     LDY.b #$00                              ;$01B399 |
     LDA $9E,X                               ;$01B39B |
@@ -7613,7 +7611,7 @@ FloatMineGfxProp:
     db $31,$71,$A1,$F1
 
 CODE_01B666:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     PHX                                     ;$01B669 |
     LDX.b #$03                              ;$01B66A |
 CODE_01B66C:
@@ -7715,7 +7713,7 @@ CODE_01B703:
     RTS                                     ;$01B70F |
 
 CODE_01B710:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     STZ $00                                 ;$01B713 |
     STZ $01                                 ;$01B715 |
     STZ $02                                 ;$01B717 |
@@ -8536,7 +8534,7 @@ MagiKoopasMagicDisp:
     db $10,$0F,$0E,$0B,$08,$05,$02,$01
 
 MagiKoopasMagicGfx:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA $14                                 ;$01BCF3 |
     LSR                                     ;$01BCF5 |
     AND.b #$0F                              ;$01BCF6 |
@@ -9133,7 +9131,7 @@ Return01C12C:
 CODE_01C12D:
     LDA.w $160E,X
     BNE CODE_01C175                         ;$01C130 |
-    JSR GetDrawInfoBnk1                     ;$01C132 |
+    JSR get_draw_info_bnk1_01A365           ;$01C132 |
     LDA $00                                 ;$01C135 |
     SEC                                     ;$01C137 |
     SBC.b #$08                              ;$01C138 |
@@ -9316,7 +9314,7 @@ CODE_01C27C:
 CODE_01C27F:
     LDA $C2,X
     BEQ CODE_01C287                         ;$01C281 |
-    JSR GetDrawInfoBnk1                     ;$01C283 |
+    JSR get_draw_info_bnk1_01A365           ;$01C283 |
     RTS                                     ;$01C286 |
 
 CODE_01C287:
@@ -9820,7 +9818,7 @@ StarPalValues:
     db $00,$04,$08,$04
 
 CODE_01C61A:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     STZ $0A                                 ;$01C61D |
     LDA.w $140F                             ;$01C61F |
     BNE CODE_01C636                         ;$01C622 |
@@ -9844,7 +9842,7 @@ CoinSprGfx:
     RTL                                     ;$01C644 |
 
 CoinSprGfxSub:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA $00                                 ;$01C648 |
     STA.w $0300,Y                           ;$01C64A |
     LDA $01                                 ;$01C64D |
@@ -10858,7 +10856,7 @@ DATA_01CDA5:
     db $00,$80
 
 CODE_01CDA7:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     RTS                                     ;$01CDAA |
 
 WallKoopaKids:
@@ -11831,7 +11829,7 @@ CODE_01D468:
     BCC CODE_01D487                         ;$01D482 |
     STZ.w $14C8,X                           ;$01D484 |
 CODE_01D487:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $1602,X                           ;$01D48A |
     ASL                                     ;$01D48D |
     STA $03                                 ;$01D48E |
@@ -12831,7 +12829,7 @@ DATA_01DB9E:
     db $03,$43,$83,$C3
 
 CODE_01DBA2:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     PHX                                     ;$01DBA5 |
     LDX.b #$03                              ;$01DBA6 |
 CODE_01DBA8:
@@ -12892,7 +12890,7 @@ DATA_01DC09:
     db $05,$45
 
 CODE_01DC0B:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     PHX                                     ;$01DC0E |
     LDX.b #$03                              ;$01DC0F |
 CODE_01DC11:
@@ -12935,7 +12933,7 @@ LineGuideRopeTiles:
     db $CE
 
 CODE_01DC54:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA $00                                 ;$01DC57 |
     SEC                                     ;$01DC59 |
     SBC.b #$08                              ;$01DC5A |
@@ -13655,7 +13653,7 @@ CODE_01E201:
     LDA.b #$30                              ;$01E235 |
     STA.w $154C,X                           ;$01E237 |
 CODE_01E23A:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA $00                                 ;$01E23D |
     STA.w $0300,Y                           ;$01E23F |
     STA.w $0304,Y                           ;$01E242 |
@@ -13752,7 +13750,7 @@ CODE_01E2E0:
 CODE_01E302:
     STA.w $1540,X
 CODE_01E305:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     RTS                                     ;$01E308 |
 
 CODE_01E309:
@@ -14309,7 +14307,7 @@ DATA_01E6FD:
     db $00,$02,$00
 
 SmushedGfxRt:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     JSR IsSprOffScreen                      ;$01E703 |
     BNE Return01E75A                        ;$01E706 |
     LDA $00                                 ;$01E708 |
@@ -14539,7 +14537,7 @@ CODE_01E898:
     LDA.b #$10                              ;$01E8C5 |
     STA.w $154C,X                           ;$01E8C7 |
 LakituCloudGfx:
-    JSR GetDrawInfoBnk1
+    JSR get_draw_info_bnk1_01A365
     LDA.w $186C,X                           ;$01E8CD |
     BNE Return01E897                        ;$01E8D0 |
     LDA.b #$F8                              ;$01E8D2 |
@@ -15319,10 +15317,10 @@ HandleOffYoshi:
     ASL                                     ;$01EEB2 |
     CLC                                     ;$01EEB3 |
     ADC.w #$8500                            ;$01EEB4 |
-    STA.w $0D8B                             ;$01EEB7 |
+    STA.w $0D8B                             ;$01EEB7 | set Yoshi tiles
     CLC                                     ;$01EEBA |
     ADC.w #$0200                            ;$01EEBB |
-    STA.w $0D95                             ;$01EEBE |
+    STA.w $0D95                             ;$01EEBE | set Yoshi tiles
     LDA $02                                 ;$01EEC1 |
     ASL                                     ;$01EEC3 |
     ASL                                     ;$01EEC4 |
@@ -15331,10 +15329,10 @@ HandleOffYoshi:
     ASL                                     ;$01EEC7 |
     CLC                                     ;$01EEC8 |
     ADC.w #$8500                            ;$01EEC9 |
-    STA.w $0D8D                             ;$01EECC |
+    STA.w $0D8D                             ;$01EECC | set Yoshi tiles
     CLC                                     ;$01EECF |
     ADC.w #$0200                            ;$01EED0 |
-    STA.w $0D97                             ;$01EED3 |
+    STA.w $0D97                             ;$01EED3 | set Yoshi tiles
     SEP #$20                                ;$01EED6 |
     PLA                                     ;$01EED8 |
     STA.w $1602,X                           ;$01EED9 |
@@ -15374,6 +15372,11 @@ HandleOffYoshi:
 .Return01EF17:
     RTS
 
+; Calculate OAM values for Yoshi's head
+; Sets the animation frame and index to the OAM table
+; Sets offscreen flags
+; Sets $185E
+; If Yoshi is eating a berry, generate its tile and perform the berry-eating side effect.
 process_yoshi_head_01EF18:
     LDY.w $1602,X
     STY.w $185E                             ;$01EF1B |
@@ -15384,7 +15387,7 @@ process_yoshi_head_01EF18:
     PHA                                     ;$01EF28 |
     CLC                                     ;$01EF29 |
     ADC.w YoshiPositionY,Y                  ;$01EF2A |
-    STA $D8,X                               ;$01EF2D |
+    STA $D8,X                               ;$01EF2D | temporarilly shift Yoshi's Y position
     LDA.w $14D4,X                           ;$01EF2F |
     PHA                                     ;$01EF32 |
     ADC.b #$00                              ;$01EF33 |
@@ -15399,7 +15402,7 @@ process_yoshi_head_01EF18:
     PHA                                     ;$01EF44 |
     CLC                                     ;$01EF45 |
     ADC.w YoshiHeadDispX,Y                  ;$01EF46 |
-    STA $E4,X                               ;$01EF49 |
+    STA $E4,X                               ;$01EF49 | temporarilly shift Yoshi's X position
     LDA.w $14E0,X                           ;$01EF4B |
     PHA                                     ;$01EF4E |
     ADC.w DATA_01EE2D,Y                     ;$01EF4F |
@@ -15429,7 +15432,7 @@ process_yoshi_head_01EF18:
     PLA                                     ;$01EF87 |
     STA.w $14E0,X                           ;$01EF88 |
     PLA                                     ;$01EF8B |
-    STA $E4,X                               ;$01EF8C |
+    STA $E4,X                               ;$01EF8C | restore Yoshi's X position
     LDY.w $185E                             ;$01EF8E |
     LDA.w YoshiBodyTiles,Y                  ;$01EF91 |
     STA.w $1602,X                           ;$01EF94 |
@@ -15441,7 +15444,7 @@ process_yoshi_head_01EF18:
     INC.w $14D4,X                           ;$01EFA0 |
 +   JSR SubSprGfx2Entry1                    ;$01EFA3 |
     PLA                                     ;$01EFA6 |
-    STA.w $14D4,X                           ;$01EFA7 |
+    STA.w $14D4,X                           ;$01EFA7 | restore Yoshi's Y position
     PLA                                     ;$01EFAA |
     STA $D8,X                               ;$01EFAB |
     LDY $0E                                 ;$01EFAD |
