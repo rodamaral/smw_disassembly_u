@@ -10464,7 +10464,7 @@ draw_mario_and_yoshi_00E2BD:
     LDA $78                                 ;$00E2C0 |
     CMP.b #$FF                              ;$00E2C2 |
     BEQ +                                   ;$00E2C4 |
-    JSL CODE_01EA70                         ;$00E2C6 |
+    JSL draw_yoshi_01EA70                   ;$00E2C6 |
 +   LDY.w $149B                             ;$00E2CA |
     BNE .CODE_00E308                        ;$00E2CD |
     LDY.w $1490                             ;$00E2CF |

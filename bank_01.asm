@@ -14765,9 +14765,9 @@ CODE_01EA6D:
 Return01EA6F:
     RTS
 
-CODE_01EA70:
+draw_yoshi_01EA70:
     LDX.w $18E2
-    BEQ Return01EA8E                        ;$01EA73 |
+    BEQ +                                   ;$01EA73 |
     STZ.w $188B                             ;$01EA75 |
     STZ.w $191C                             ;$01EA78 |
     LDA.w $15E9                             ;$01EA7B |
@@ -14777,174 +14777,166 @@ CODE_01EA70:
     PHB                                     ;$01EA83 |
     PHK                                     ;$01EA84 |
     PLB                                     ;$01EA85 |
-    JSR CODE_01EA8F                         ;$01EA86 |
+    JSR .actually_draw_yoshi_01EA8F         ;$01EA86 | FIXME: better name
     PLB                                     ;$01EA89 |
     PLA                                     ;$01EA8A |
     STA.w $15E9                             ;$01EA8B |
-Return01EA8E:
-    RTL
++   RTL                                     ;$01EA8E |
 
-CODE_01EA8F:
+.actually_draw_yoshi_01EA8F:
     LDA.w $18E8
     ORA.w $13C6                             ;$01EA92 |
-    BEQ CODE_01EA9A                         ;$01EA95 |
-    JMP CODE_01EB48                         ;$01EA97 |
+    BEQ .not_growing_01EA9A                 ;$01EA95 |
+    JMP .growing_common_01EB48              ;$01EA97 |
 
-CODE_01EA9A:
-    STZ.w $18DC
+.not_growing_01EA9A:
+    STZ.w $18DC                             ;$01EA9A | reset Yoshi ducking status
     LDA $C2,X                               ;$01EA9D |
     CMP.b #$02                              ;$01EA9F |
-    BCC CODE_01EAA7                         ;$01EAA1 |
+    BCC .yoshi_running_01EAA7               ;$01EAA1 |
     LDA.b #$30                              ;$01EAA3 |
-    BRA CODE_01EAB2                         ;$01EAA5 |
+    BRA .set_running_animation_01EAB2       ;$01EAA5 |
 
-CODE_01EAA7:
+.yoshi_running_01EAA7:
     LDY.b #$00
-    LDA $7B                                 ;$01EAA9 |
-    BEQ CODE_01EADF                         ;$01EAAB |
-    BPL CODE_01EAB2                         ;$01EAAD |
+    LDA $7B                                 ;$01EAA9 | player x speed
+    BEQ .reset_animation_timer_01EADF       ;$01EAAB |
+    BPL .set_running_animation_01EAB2       ;$01EAAD |
     EOR.b #$FF                              ;$01EAAF |
     INC A                                   ;$01EAB1 |
-CODE_01EAB2:
+.set_running_animation_01EAB2:
     LSR
     LSR                                     ;$01EAB3 |
     LSR                                     ;$01EAB4 |
     LSR                                     ;$01EAB5 |
     TAY                                     ;$01EAB6 |
     LDA $9D                                 ;$01EAB7 |
-    BNE CODE_01EAD0                         ;$01EAB9 |
+    BNE +                                   ;$01EAB9 |
     DEC.w $1570,X                           ;$01EABB |
-    BPL CODE_01EAD0                         ;$01EABE |
+    BPL +                                   ;$01EABE |
     LDA.w DATA_01EDF5,Y                     ;$01EAC0 |
     STA.w $1570,X                           ;$01EAC3 |
     DEC.w $18AD                             ;$01EAC6 |
-    BPL CODE_01EAD0                         ;$01EAC9 |
+    BPL +                                   ;$01EAC9 |
     LDA.b #$02                              ;$01EACB |
     STA.w $18AD                             ;$01EACD |
-CODE_01EAD0:
-    LDY.w $18AD
++   LDY.w $18AD                             ;$01EAD0 |
     LDA.w YoshiWalkFrames,Y                 ;$01EAD3 |
     TAY                                     ;$01EAD6 |
     LDA $C2,X                               ;$01EAD7 |
     CMP.b #$02                              ;$01EAD9 |
-    BCS CODE_01EB2E                         ;$01EADB |
-    BRA CODE_01EAE2                         ;$01EADD |
+    BCS .CODE_01EB2E                        ;$01EADB | running
+    BRA .not_running_01EAE2                 ;$01EADD |
 
-CODE_01EADF:
+.reset_animation_timer_01EADF:
     STZ.w $1570,X
-CODE_01EAE2:
+.not_running_01EAE2:
     LDA $72
-    BEQ CODE_01EAF0                         ;$01EAE4 |
+    BEQ +                                   ;$01EAE4 |
     LDY.b #$02                              ;$01EAE6 |
     LDA $7D                                 ;$01EAE8 |
-    BPL CODE_01EAF0                         ;$01EAEA |
+    BPL +                                   ;$01EAEA |
     LDY.b #$05                              ;$01EAEC |
-    BRA CODE_01EAF0                         ;$01EAEE |
+    BRA +                                   ;$01EAEE |
 
-CODE_01EAF0:
-    LDA.w $15AC,X
-    BEQ CODE_01EAF7                         ;$01EAF3 |
++   LDA.w $15AC,X                           ;$01EAF0 |
+    BEQ +                                   ;$01EAF3 |
     LDY.b #$03                              ;$01EAF5 |
-CODE_01EAF7:
-    LDA $72
-    BNE CODE_01EB21                         ;$01EAF9 |
++   LDA $72                                 ;$01EAF7 |
+    BNE .player_in_air_01EB21               ;$01EAF9 |
     LDA.w $151C,X                           ;$01EAFB |
-    BEQ CODE_01EB0C                         ;$01EAFE |
+    BEQ .tongue_in_01EB0C                   ;$01EAFE |
     LDY.b #$07                              ;$01EB00 |
-    LDA $15                                 ;$01EB02 |
-    AND.b #$08                              ;$01EB04 |
-    BEQ CODE_01EB0A                         ;$01EB06 |
+    LDA.b byetudlrHold_15                   ;$01EB02 |
+    AND.b #$08                              ;$01EB04 | holding up
+    BEQ +                                   ;$01EB06 |
     LDY.b #$06                              ;$01EB08 |
-CODE_01EB0A:
-    BRA CODE_01EB21
++   BRA .player_in_air_01EB21               ;$01EB0A |
 
-CODE_01EB0C:
+.tongue_in_01EB0C:
     LDA.w $18AF
-    BEQ CODE_01EB16                         ;$01EB0F |
+    BEQ .not_squatting_01EB16               ;$01EB0F |
     DEC.w $18AF                             ;$01EB11 |
-    BRA CODE_01EB1C                         ;$01EB14 |
+    BRA .yoshi_squatting_01EB1C             ;$01EB14 |
 
-CODE_01EB16:
-    LDA $15
-    AND.b #$04                              ;$01EB18 |
-    BEQ CODE_01EB21                         ;$01EB1A |
-CODE_01EB1C:
+.not_squatting_01EB16:
+    LDA.b byetudlrHold_15
+    AND.b #$04                              ;$01EB18 | holding down
+    BEQ .player_in_air_01EB21               ;$01EB1A |
+.yoshi_squatting_01EB1C:
     LDY.b #$04
-    INC.w $18DC                             ;$01EB1E |
-CODE_01EB21:
+    INC.w $18DC                             ;$01EB1E | set squatting
+.player_in_air_01EB21:
     LDA $C2,X
     CMP.b #$01                              ;$01EB23 |
-    BEQ CODE_01EB2E                         ;$01EB25 |
-    LDA.w $151C,X                           ;$01EB27 |
-    BNE CODE_01EB2E                         ;$01EB2A |
-    LDY.b #$04                              ;$01EB2C |
-CODE_01EB2E:
-    LDA.w $187A
-    BEQ CODE_01EB44                         ;$01EB31 |
-    LDA.w $1419                             ;$01EB33 |
-    CMP.b #$01                              ;$01EB36 |
-    BNE CODE_01EB44                         ;$01EB38 |
-    LDA $13                                 ;$01EB3A |
-    AND.b #$08                              ;$01EB3C |
-    LSR                                     ;$01EB3E |
-    LSR                                     ;$01EB3F |
-    LSR                                     ;$01EB40 |
-    ADC.b #$08                              ;$01EB41 |
-    TAY                                     ;$01EB43 |
-CODE_01EB44:
-    TYA
-    STA.w $1602,X                           ;$01EB45 |
-CODE_01EB48:
+    BEQ .CODE_01EB2E                        ;$01EB25 |
+    LDA.w $151C,X                           ;$01EB27 |\
+    BNE .CODE_01EB2E                        ;$01EB2A || if standing still, without tongue out
+    LDY.b #$04                              ;$01EB2C |/
+.CODE_01EB2E
+    LDA.w $187A                             ;$01EB2E |
+    BEQ +                                   ;$01EB31 |\ if riding Yoshi
+    LDA.w $1419                             ;$01EB33 || 
+    CMP.b #$01                              ;$01EB36 ||
+    BNE +                                   ;$01EB38 ||\ if entering an horizontal pipe
+    LDA $13                                 ;$01EB3A |||
+    AND.b #$08                              ;$01EB3C |||
+    LSR                                     ;$01EB3E |||
+    LSR                                     ;$01EB3F |||
+    LSR                                     ;$01EB40 |||
+    ADC.b #$08                              ;$01EB41 ||/
+    TAY                                     ;$01EB43 |/
++   TYA                                     ;$01EB44 |
+    STA.w $1602,X                           ;$01EB45 | set animation frame
+.growing_common_01EB48:
     LDA $C2,X
     CMP.b #$01                              ;$01EB4A |
-    BNE CODE_01EB97                         ;$01EB4C |
-    LDY.w $157C,X                           ;$01EB4E |
-    LDA $94                                 ;$01EB51 |
-    CLC                                     ;$01EB53 |
-    ADC.w YoshiPositionX,Y                  ;$01EB54 |
-    STA $E4,X                               ;$01EB57 |
-    LDA $95                                 ;$01EB59 |
-    ADC.w DATA_01EDF3,Y                     ;$01EB5B |
-    STA.w $14E0,X                           ;$01EB5E |
-    LDY.w $1602,X                           ;$01EB61 |
-    LDA $96                                 ;$01EB64 |
-    CLC                                     ;$01EB66 |
-    ADC.b #$10                              ;$01EB67 |
-    STA $D8,X                               ;$01EB69 |
-    LDA $97                                 ;$01EB6B |
-    ADC.b #$00                              ;$01EB6D |
-    STA.w $14D4,X                           ;$01EB6F |
-    LDA.w DATA_01EDE4,Y                     ;$01EB72 |
-    STA.w $188B                             ;$01EB75 |
-    LDA.b #$01                              ;$01EB78 |
-    LDY.w $1602,X                           ;$01EB7A |
-    CPY.b #$03                              ;$01EB7D |
-    BNE BackOnYoshi                         ;$01EB7F |
-    INC A                                   ;$01EB81 |
-BackOnYoshi:
-    STA.w $187A
-    LDA.b #$01                              ;$01EB85 |
-    STA.w $0DC1                             ;$01EB87 |
-    LDA.w $15F6,X                           ;$01EB8A |
-    STA.w $13C7                             ;$01EB8D |
-    LDA.w $157C,X                           ;$01EB90 |
-    EOR.b #$01                              ;$01EB93 |
-    STA $76                                 ;$01EB95 |
-CODE_01EB97:
+    BNE .not_mounted_01EB97                 ;$01EB4C |\ If mounted:
+    LDY.w $157C,X                           ;$01EB4E || - adjust Yoshi positions
+    LDA $94                                 ;$01EB51 || - make Yoshi able to appear in another room and overworld, with the same color
+    CLC                                     ;$01EB53 || - possibly turn Yoshi around, making the player follow the direction
+    ADC.w YoshiPositionX,Y                  ;$01EB54 ||
+    STA $E4,X                               ;$01EB57 ||
+    LDA $95                                 ;$01EB59 ||
+    ADC.w DATA_01EDF3,Y                     ;$01EB5B ||
+    STA.w $14E0,X                           ;$01EB5E ||
+    LDY.w $1602,X                           ;$01EB61 ||
+    LDA $96                                 ;$01EB64 ||
+    CLC                                     ;$01EB66 ||
+    ADC.b #$10                              ;$01EB67 ||
+    STA $D8,X                               ;$01EB69 ||
+    LDA $97                                 ;$01EB6B ||
+    ADC.b #$00                              ;$01EB6D ||
+    STA.w $14D4,X                           ;$01EB6F ||
+    LDA.w DATA_01EDE4,Y                     ;$01EB72 ||
+    STA.w $188B                             ;$01EB75 ||
+    LDA.b #$01                              ;$01EB78 ||
+    LDY.w $1602,X                           ;$01EB7A ||
+    CPY.b #$03                              ;$01EB7D ||
+    BNE +                                   ;$01EB7F ||
+    INC A                                   ;$01EB81 || turn around
++   STA.w $187A                             ;$01EB82 ||
+    LDA.b #$01                              ;$01EB85 ||
+    STA.w $0DC1                             ;$01EB87 || can carry Yoshi over levels flag
+    LDA.w $15F6,X                           ;$01EB8A ||
+    STA.w $13C7                             ;$01EB8D || persist Yoshi color
+    LDA.w $157C,X                           ;$01EB90 ||
+    EOR.b #$01                              ;$01EB93 ||
+    STA $76                                 ;$01EB95 |/ make player face the same direction as Yoshi
+.not_mounted_01EB97:
     LDA $64
     PHA                                     ;$01EB99 |
     LDA.w $187A                             ;$01EB9A |
-    BEQ CODE_01EBAD                         ;$01EB9D |
-    LDA.w $1419                             ;$01EB9F |
-    BEQ CODE_01EBAD                         ;$01EBA2 |
-    LDA.w $1405                             ;$01EBA4 |
-    BNE CODE_01EBB0                         ;$01EBA7 |
-    LDA.b #$10                              ;$01EBA9 |
-    STA $64                                 ;$01EBAB |
-CODE_01EBAD:
-    JSR HandleOffYoshi
-CODE_01EBB0:
-    PLA
+    BEQ +                                   ;$01EB9D |\ skip Yoshi physics if:
+    LDA.w $1419                             ;$01EB9F || - mounted
+    BEQ +                                   ;$01EBA2 || - entering a pipe
+    LDA.w $1405                             ;$01EBA4 || - about to warp to another room
+    BNE .skip_yoshi_physics_01EBB0          ;$01EBA7 ||
+    LDA.b #$10                              ;$01EBA9 ||
+    STA $64                                 ;$01EBAB ||
++   JSR HandleOffYoshi                      ;$01EBAD |/
+.skip_yoshi_physics_01EBB0:
+    PLA                                     ;$01EBB1 |
     STA $64                                 ;$01EBB1 |
     RTS                                     ;$01EBB3 |
 
@@ -15287,27 +15279,25 @@ YoshiHeadDispY:
     db $00,$00,$00,$00,$05
 
 HandleOffYoshi:
-    LDA.w $1602,X
+    LDA.w $1602,X                           ;$01EE61 |
     PHA                                     ;$01EE64 |
     LDY.w $15AC,X                           ;$01EE65 |
     CPY.b #$08                              ;$01EE68 |
-    BNE CODE_01EE7D                         ;$01EE6A |
+    BNE +                                   ;$01EE6A |
     LDA.w $1419                             ;$01EE6C |
     ORA $9D                                 ;$01EE6F |
-    BNE CODE_01EE7D                         ;$01EE71 |
+    BNE +                                   ;$01EE71 |
     LDA.w $157C,X                           ;$01EE73 |
     STA $76                                 ;$01EE76 |
     EOR.b #$01                              ;$01EE78 |
     STA.w $157C,X                           ;$01EE7A |
-CODE_01EE7D:
-    LDA.w $1419
-    BMI CODE_01EE8A                         ;$01EE80 |
++   LDA.w $1419                             ;$01EE7D |
+    BMI +                                   ;$01EE80 |
     CMP.b #$02                              ;$01EE82 |
-    BNE CODE_01EE8A                         ;$01EE84 |
+    BNE +                                   ;$01EE84 |
     INC A                                   ;$01EE86 |
     STA.w $1602,X                           ;$01EE87 |
-CODE_01EE8A:
-    JSR CODE_01EF18
++   JSR CODE_01EF18                         ;$01EE8A |
     LDY $0E                                 ;$01EE8D |
     LDA.w $0302,Y                           ;$01EE8F |
     STA $00                                 ;$01EE92 |
@@ -15351,38 +15341,37 @@ CODE_01EE8A:
     JSR CODE_01F0A2                         ;$01EEDC |
     LDA.w $1410                             ;$01EEDF |
     CMP.b #$02                              ;$01EEE2 |
-    BCC Return01EF17                        ;$01EEE4 |
+    BCC .Return01EF17                       ;$01EEE4 |
     LDA.w $187A                             ;$01EEE6 |
-    BEQ CODE_01EF13                         ;$01EEE9 |
+    BEQ .CODE_01EF13                        ;$01EEE9 |
     LDA $72                                 ;$01EEEB |
-    BNE CODE_01EF00                         ;$01EEED |
+    BNE .player_air_01EF00                  ;$01EEED |
     LDA $7B                                 ;$01EEEF |
-    BPL CODE_01EEF6                         ;$01EEF1 |
+    BPL +                                   ;$01EEF1 |
     EOR.b #$FF                              ;$01EEF3 |
     INC A                                   ;$01EEF5 |
-CODE_01EEF6:
-    CMP.b #$28
++   CMP.b #$28                              ;$01EEF6 |
     LDA.b #$01                              ;$01EEF8 |
-    BCS CODE_01EF13                         ;$01EEFA |
+    BCS .CODE_01EF13                        ;$01EEFA |
     LDA.b #$00                              ;$01EEFC |
-    BRA CODE_01EF13                         ;$01EEFE |
+    BRA .CODE_01EF13                        ;$01EEFE |
 
-CODE_01EF00:
+.player_air_01EF00:
     LDA $14
     LSR                                     ;$01EF02 |
     LSR                                     ;$01EF03 |
     LDY $7D                                 ;$01EF04 |
-    BMI CODE_01EF0A                         ;$01EF06 |
+    BMI .CODE_01EF0A                        ;$01EF06 |
     LSR                                     ;$01EF08 |
     LSR                                     ;$01EF09 |
-CODE_01EF0A:
+.CODE_01EF0A:
     AND.b #$01
-    BNE CODE_01EF13                         ;$01EF0C |
+    BNE .CODE_01EF13                        ;$01EF0C |
     LDY.b #$21                              ;$01EF0E |
     STY.w $1DFC                             ;$01EF10 |
-CODE_01EF13:
+.CODE_01EF13:
     JSL CODE_02BB23
-Return01EF17:
+.Return01EF17:
     RTS
 
 CODE_01EF18:
