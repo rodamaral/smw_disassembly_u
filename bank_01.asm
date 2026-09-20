@@ -2223,17 +2223,15 @@ Return018EEE:
 
 CODE_018EEF:
     LDY.b #$07
-CODE_018EF1:
-    LDA.w $170B,Y
+-   LDA.w $170B,Y                           ;$018EF1 |
     BEQ CODE_018F07                         ;$018EF4 |
     DEY                                     ;$018EF6 |
-    BPL CODE_018EF1                         ;$018EF7 |
+    BPL -                                   ;$018EF7 |
     DEC.w $18FC                             ;$018EF9 |
-    BPL ADDR_018F03                         ;$018EFC |
+    BPL +                                   ;$018EFC |
     LDA.b #$07                              ;$018EFE |
     STA.w $18FC                             ;$018F00 |
-ADDR_018F03:
-    LDY.w $18FC
++   LDY.w $18FC                             ;$018F03 |
 Return018F06:
     RTS
 
@@ -15581,7 +15579,7 @@ process_yoshi_head_01EF18:
 Return01F0A1:
     RTS
 
-process_yoshi_tongue_01F0A2: ;; FIXME: confirm description
+process_yoshi_tongue_01F0A2:
     LDA $C2,X
     CMP.b #$01                              ;$01F0A4 |
     BNE +                                   ;$01F0A6 |\
@@ -15667,92 +15665,89 @@ YoshiAbilityIndex:
 
 normal_mouth_01F14B:
     LDA.w $1B95
-    BEQ CODE_01F155                         ;$01F14E |
-    LDA.b #$02                              ;$01F150 |
-    STA.w $141E                             ;$01F152 |
-CODE_01F155:
-    LDA.w $18AC
-    BEQ CODE_01F1A2                         ;$01F158 |
-    LDY.w $160E,X                           ;$01F15A |
-    LDA.w $009E,y                           ;$01F15D |
-    CMP.b #$80                              ;$01F160 |
-    BNE CODE_01F167                         ;$01F162 |
-    INC.w $191C                             ;$01F164 |
-CODE_01F167:
-    CMP.b #$0D
-    BCS CODE_01F1A2                         ;$01F169 |
-    PHY                                     ;$01F16B |
-    LDA.w $187B,Y                           ;$01F16C |
-    CMP.b #$01                              ;$01F16F |
-    LDA.b #$03                              ;$01F171 |
-    BCS CODE_01F195                         ;$01F173 |
-    LDA.w $15F6,X                           ;$01F175 |
-    LSR                                     ;$01F178 |
-    AND.b #$07                              ;$01F179 |
-    TAY                                     ;$01F17B |
-    LDA.w YoshiAbilityIndex,Y               ;$01F17C |
-    ASL                                     ;$01F17F |
-    ASL                                     ;$01F180 |
-    STA $00                                 ;$01F181 |
-    PLY                                     ;$01F183 |
-    PHY                                     ;$01F184 |
-    LDA.w $15F6,Y                           ;$01F185 |
-    LSR                                     ;$01F188 |
-    AND.b #$07                              ;$01F189 |
-    TAY                                     ;$01F18B |
-    LDA.w YoshiAbilityIndex,Y               ;$01F18C |
-    ORA $00                                 ;$01F18F |
-    TAY                                     ;$01F191 |
-    LDA.w YoshiShellAbility,Y               ;$01F192 |
-CODE_01F195:
-    PHA
-    AND.b #$02                              ;$01F196 |
-    STA.w $141E                             ;$01F198 |
-    PLA                                     ;$01F19B |
-    AND.b #$01                              ;$01F19C |
-    STA.w $18E7                             ;$01F19E |
-    PLY                                     ;$01F1A1 |
-CODE_01F1A2:
+    BEQ +                                   ;$01F14E |\ if Yoshi went to the Sky Levels
+    LDA.b #$02                              ;$01F150 || set the wings
+    STA.w $141E                             ;$01F152 |/
++   LDA.w $18AC                             ;$01F155 |
+    BEQ .try_swallow_sprite_01F1A2          ;$01F158 |\ if Yoshi has a sprite on mouth:
+    LDY.w $160E,X                           ;$01F15A ||
+    LDA.w $009E,y                           ;$01F15D ||
+    CMP.b #$80                              ;$01F160 || if Yoshi has a Key on mouth
+    BNE +                                   ;$01F162 ||
+    INC.w $191C                             ;$01F164 || set the Key on mouth flag
++   CMP.b #$0D                              ;$01F169 ||
+    BCS .try_swallow_sprite_01F1A2          ;$01F169 ||\
+    PHY                                     ;$01F16B ||| for sprite numbers 00 to 0D (Bob-Omb):
+    LDA.w $187B,Y                           ;$01F16C |||
+    CMP.b #$01                              ;$01F16F |||
+    LDA.b #$03                              ;$01F171 |||
+    BCS +                                   ;$01F173 |||\ if sprite has the Disco Shell flag
+    LDA.w $15F6,X                           ;$01F175 ||||
+    LSR                                     ;$01F178 ||||
+    AND.b #$07                              ;$01F179 ||||
+    TAY                                     ;$01F17B ||||
+    LDA.w YoshiAbilityIndex,Y               ;$01F17C ||||
+    ASL                                     ;$01F17F ||||
+    ASL                                     ;$01F180 ||||
+    STA $00                                 ;$01F181 ||||
+    PLY                                     ;$01F183 ||||
+    PHY                                     ;$01F184 ||||
+    LDA.w $15F6,Y                           ;$01F185 ||||
+    LSR                                     ;$01F188 ||||
+    AND.b #$07                              ;$01F189 ||||
+    TAY                                     ;$01F18B ||||
+    LDA.w YoshiAbilityIndex,Y               ;$01F18C ||||
+    ORA $00                                 ;$01F18F ||||
+    TAY                                     ;$01F191 ||||
+    LDA.w YoshiShellAbility,Y               ;$01F192 |||/
++   PHA                                     ;$01F195 |||
+    AND.b #$02                              ;$01F196 |||
+    STA.w $141E                             ;$01F198 ||| set wings flag accordingly
+    PLA                                     ;$01F19B |||
+    AND.b #$01                              ;$01F19C |||
+    STA.w $18E7                             ;$01F19E ||/ set stomp flag accordingly
+    PLY                                     ;$01F1A1 |/
+.try_swallow_sprite_01F1A2:
     LDA $14
     AND.b #$03                              ;$01F1A4 |
-    BNE CODE_01F1C6                         ;$01F1A6 |
-    LDA.w $18AC                             ;$01F1A8 |
-    BEQ CODE_01F1C6                         ;$01F1AB |
-    DEC.w $18AC                             ;$01F1AD |
-    BNE CODE_01F1C6                         ;$01F1B0 |
-    LDY.w $160E,X                           ;$01F1B2 |
-    LDA.b #$00                              ;$01F1B5 |
-    STA.w $14C8,Y                           ;$01F1B7 |
-    DEC A                                   ;$01F1BA |
-    STA.w $160E,X                           ;$01F1BB |
-    LDA.b #$1B                              ;$01F1BE |
-    STA.w $1564,X                           ;$01F1C0 |
-    JMP process_eaten_berry_01F0D3          ;$01F1C3 |
+    BNE .process_hitting_yoshi_01F1C6       ;$01F1A6 |\ every 4 frames
+    LDA.w $18AC                             ;$01F1A8 || if Yoshi has a sprite in his mouth
+    BEQ .process_hitting_yoshi_01F1C6       ;$01F1AB ||
+    DEC.w $18AC                             ;$01F1AD || decrease its timer
+    BNE .process_hitting_yoshi_01F1C6       ;$01F1B0 ||\
+    LDY.w $160E,X                           ;$01F1B2 ||| when timer reaches zero
+    LDA.b #$00                              ;$01F1B5 ||| swallow (erase) the sprite
+    STA.w $14C8,Y                           ;$01F1B7 |||
+    DEC A                                   ;$01F1BA |||
+    STA.w $160E,X                           ;$01F1BB ||| reset sprite slot reference on mouth
+    LDA.b #$1B                              ;$01F1BE ||| set the swallowing animation timer
+    STA.w $1564,X                           ;$01F1C0 ||/
+    JMP process_eaten_berry_01F0D3          ;$01F1C3 |/
 
-CODE_01F1C6:
+.process_hitting_yoshi_01F1C6:
     LDA.w $18AE
-    BEQ CODE_01F1DF                         ;$01F1C9 |
+    BEQ .not_hitting_yoshi_01F1DF           ;$01F1C9 |
     DEC.w $18AE                             ;$01F1CB |
-    BNE Return01F1DE                        ;$01F1CE |
-    INC.w $1594,X                           ;$01F1D0 |
-    STZ.w $151C,X                           ;$01F1D3 |
-    LDA.b #$FF                              ;$01F1D6 |
-    STA.w $160E,X                           ;$01F1D8 |
-    STZ.w $1564,X                           ;$01F1DB |
-Return01F1DE:
+    BNE .return_01F1DE                      ;$01F1CE |\
+    INC.w $1594,X                           ;$01F1D0 || change to the Extending Tongue routine
+    STZ.w $151C,X                           ;$01F1D3 ||
+    LDA.b #$FF                              ;$01F1D6 ||
+    STA.w $160E,X                           ;$01F1D8 || reset sprite slot reference on mouth
+    STZ.w $1564,X                           ;$01F1DB |/
+.return_01F1DE:
     RTS
 
-CODE_01F1DF:
+.not_hitting_yoshi_01F1DF:
     LDA $C2,X
     CMP.b #$01                              ;$01F1E1 |
-    BNE Return01F1DE                        ;$01F1E3 |
+    BNE .return_01F1DE                      ;$01F1E3 |
     BIT $16                                 ;$01F1E5 |
-    BVC Return01F1DE                        ;$01F1E7 |
+    BVC .return_01F1DE                      ;$01F1E7 | if pressed Y/X:
     LDA.w $18AC                             ;$01F1E9 |
-    BNE CODE_01F1F1                         ;$01F1EC |
-    JMP CODE_01F309                         ;$01F1EE |
+    BNE .spit_sprite_on_mouth_01F1F1        ;$01F1EC |
+    JMP hit_yoshi_to_release_tongue_01F309  ;$01F1EE |
 
-CODE_01F1F1:
+.spit_sprite_on_mouth_01F1F1:
     STZ.w $18AC
     LDY.w $160E,X                           ;$01F1F4 |
     PHY                                     ;$01F1F7 |
@@ -15762,7 +15757,7 @@ CODE_01F1F1:
     CLC                                     ;$01F1FE |
     ADC.w DATA_01F305,Y                     ;$01F1FF |
     PLY                                     ;$01F202 |
-    STA.w $00E4,y                           ;$01F203 |
+    STA.w $00E4,y                           ;$01F203 | spawn sprite near Yoshi's head
     LDY.w $157C,X                           ;$01F206 |
     LDA.w $14E0,X                           ;$01F209 |
     ADC.w DATA_01F307,Y                     ;$01F20C |
@@ -15773,25 +15768,23 @@ CODE_01F1F1:
     LDA.w $14D4,X                           ;$01F218 |
     STA.w $14D4,Y                           ;$01F21B |
     LDA.b #$00                              ;$01F21E |
-    STA.w $00C2,y                           ;$01F220 |
+    STA.w $00C2,y                           ;$01F220 | reset sprite's phase
     STA.w $15D0,Y                           ;$01F223 |
     STA.w $1626,Y                           ;$01F226 |
     LDA.w $18DC                             ;$01F229 |
     CMP.b #$01                              ;$01F22C |
     LDA.b #$0A                              ;$01F22E |
-    BCC CODE_01F234                         ;$01F230 |
+    BCC +                                   ;$01F230 |
     LDA.b #$09                              ;$01F232 |
-CODE_01F234:
-    STA.w $14C8,Y
++   STA.w $14C8,Y                           ;$01F234 | set sprite as carriable or kicked, according to Yoshi ducking state
     PHX                                     ;$01F237 |
     LDA.w $157C,X                           ;$01F238 |
-    STA.w $157C,Y                           ;$01F23B |
+    STA.w $157C,Y                           ;$01F23B | set sprite direction according to Yoshi's
     TAX                                     ;$01F23E |
-    BCC CODE_01F243                         ;$01F23F |
+    BCC +                                   ;$01F23F |
     INX                                     ;$01F241 |
     INX                                     ;$01F242 |
-CODE_01F243:
-    LDA.w DATA_01F301,X
++   LDA.w DATA_01F301,X                     ;$01F243 |
     STA.w $00B6,y                           ;$01F246 |
     LDA.b #$00                              ;$01F249 |
     STA.w $00AA,y                           ;$01F24B |
@@ -15799,37 +15792,36 @@ CODE_01F243:
     LDA.b #$10                              ;$01F24F |
     STA.w $1558,X                           ;$01F251 |
     LDA.b #$03                              ;$01F254 |
-    STA.w $1594,X                           ;$01F256 |
+    STA.w $1594,X                           ;$01F256 | change Yoshi to the Spitting routine
     LDA.b #$FF                              ;$01F259 |
-    STA.w $160E,X                           ;$01F25B |
+    STA.w $160E,X                           ;$01F25B | set null sprite on mouth
     LDA.w $009E,y                           ;$01F25E |
     CMP.b #$0D                              ;$01F261 |
-    BCS CODE_01F2DF                         ;$01F263 |
-    LDA.w $187B,Y                           ;$01F265 |
-    BNE CODE_01F27C                         ;$01F268 |
-    LDA.w $15F6,Y                           ;$01F26A |
-    AND.b #$0E                              ;$01F26D |
-    CMP.b #$08                              ;$01F26F |
-    BEQ CODE_01F27C                         ;$01F271 |
-    LDA.w $15F6,X                           ;$01F273 |
-    AND.b #$0E                              ;$01F276 |
-    CMP.b #$08                              ;$01F278 |
-    BNE CODE_01F2DF                         ;$01F27A |
-CODE_01F27C:
-    PHX
+    BCS spit_sprite_01F2DF                  ;$01F263 |
+    LDA.w $187B,Y                           ;$01F265 | for sprite numbers 00 to 0D (Bob-Omb):
+    BNE +                                   ;$01F268 |\ if sprite does not have the flag to turn into a disco shell:
+    LDA.w $15F6,Y                           ;$01F26A ||
+    AND.b #$0E                              ;$01F26D ||
+    CMP.b #$08                              ;$01F26F || and it is not a red sprite
+    BEQ +                                   ;$01F271 ||
+    LDA.w $15F6,X                           ;$01F273 ||
+    AND.b #$0E                              ;$01F276 ||
+    CMP.b #$08                              ;$01F278 || and Yoshi is not red
+    BNE spit_sprite_01F2DF                  ;$01F27A |/ then spit it
++   PHX                                     ;$01F27C | otherwise, erase sprite and spit fireballs:
     TYX                                     ;$01F27D |
     STZ.w $14C8,X                           ;$01F27E |
     LDA.b #$02                              ;$01F281 |
     STA $00                                 ;$01F283 |
-    JSR CODE_01F295                         ;$01F285 |
-    JSR CODE_01F295                         ;$01F288 |
-    JSR CODE_01F295                         ;$01F28B |
+    JSR spawn_yoshi_fireball_01F295         ;$01F285 |
+    JSR spawn_yoshi_fireball_01F295         ;$01F288 |
+    JSR spawn_yoshi_fireball_01F295         ;$01F28B |
     PLX                                     ;$01F28E |
     LDA.b #$17                              ;$01F28F |
-    STA.w $1DFC                             ;$01F291 |
+    STA.w $1DFC                             ;$01F291 | play the Fire spit sound
     RTS                                     ;$01F294 |
 
-CODE_01F295:
+spawn_yoshi_fireball_01F295:
     JSR CODE_018EEF
     LDA.b #$11                              ;$01F298 |
     STA.w $170B,Y                           ;$01F29A |
@@ -15848,11 +15840,10 @@ CODE_01F295:
     LSR                                     ;$01F2BC |
     LDX $00                                 ;$01F2BD |
     LDA.w DATA_01F2D9,X                     ;$01F2BF |
-    BCC CODE_01F2C7                         ;$01F2C2 |
+    BCC +                                   ;$01F2C2 |
     EOR.b #$FF                              ;$01F2C4 |
     INC A                                   ;$01F2C6 |
-CODE_01F2C7:
-    STA.w $1747,Y
++   STA.w $1747,Y                           ;$01F2C7 |
     LDA.w DATA_01F2DC,X                     ;$01F2CA |
     STA.w $173D,Y                           ;$01F2CD |
     LDA.b #$A0                              ;$01F2D0 |
@@ -15867,23 +15858,22 @@ DATA_01F2D9:
 DATA_01F2DC:
     db $00,$F8,$08
 
-CODE_01F2DF:
+spit_sprite_01F2DF:
     LDA.b #$20
-    STA.w $1DF9                             ;$01F2E1 |
+    STA.w $1DF9                             ;$01F2E1 | play Yoshi spit sound
     LDA.w $1686,Y                           ;$01F2E4 |
     AND.b #$40                              ;$01F2E7 |
-    BEQ Return01F2FE                        ;$01F2E9 |
-    PHX                                     ;$01F2EB |
-    LDX.w $9E,Y                             ;$01F2EC |
-    LDA.l SpriteToSpawn,X                   ;$01F2EF |
-    PLX                                     ;$01F2F3 |
-    STA.w $009E,y                           ;$01F2F4 |
-    PHX                                     ;$01F2F7 |
-    TYX                                     ;$01F2F8 |
-    JSL LoadSpriteTables                    ;$01F2F9 |
-    PLX                                     ;$01F2FD |
-Return01F2FE:
-    RTS
+    BEQ +                                   ;$01F2E9 |\ if spat sprite has the Spawns a new sprite tweaker
+    PHX                                     ;$01F2EB ||
+    LDX.w $9E,Y                             ;$01F2EC ||
+    LDA.l SpriteToSpawn,X                   ;$01F2EF || transform it into the new sprite
+    PLX                                     ;$01F2F3 ||
+    STA.w $009E,y                           ;$01F2F4 ||
+    PHX                                     ;$01F2F7 ||
+    TYX                                     ;$01F2F8 ||
+    JSL LoadSpriteTables                    ;$01F2F9 ||
+    PLX                                     ;$01F2FD ||
++   RTS                                     ;$01F2FE |/
 
 DATA_01F2FF:
     db $20,$E0
@@ -15897,7 +15887,7 @@ DATA_01F305:
 DATA_01F307:
     db $00,$FF
 
-CODE_01F309:
+hit_yoshi_to_release_tongue_01F309:
     LDA.b #$12
     STA.w $14A3                             ;$01F30B |
     LDA.b #$21                              ;$01F30E |
