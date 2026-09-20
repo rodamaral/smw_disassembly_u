@@ -15901,25 +15901,25 @@ extending_tongue_01F314:
     STA.w $151C,X                           ;$01F31A |
     CMP.b #$20                              ;$01F31D |
     BCS +                                   ;$01F31F |
-CODE_01F321:
+handle_tongue_01F321:
     JSR draw_yoshi_tongue_01F3FE
-    JSR CODE_01F4B2                         ;$01F324 |
+    JSR process_tongue_01F4B2               ;$01F324 |
     RTS                                     ;$01F327 |
 
 +   LDA.b #$08                              ;$01F328 |
     STA.w $1558,X                           ;$01F32A |
     INC.w $1594,X                           ;$01F32D | change to Retracting Tongue routine
-    BRA CODE_01F321                         ;$01F330 |
+    BRA handle_tongue_01F321                ;$01F330 |
 
 retracting_tongue_01F332:
     LDA.w $1558,X
-    BNE CODE_01F321                         ;$01F335 |
+    BNE handle_tongue_01F321                ;$01F335 |
     LDA.w $151C,X                           ;$01F337 |
     SEC                                     ;$01F33A |
     SBC.b #$04                              ;$01F33B |
     BMI CODE_01F344                         ;$01F33D |
     STA.w $151C,X                           ;$01F33F |
-    BRA CODE_01F321                         ;$01F342 |
+    BRA handle_tongue_01F321                ;$01F342 |
 
 CODE_01F344:
     STZ.w $151C,X
@@ -16124,32 +16124,29 @@ draw_yoshi_tongue_01F3FE:
 .return_01F4B1:
     RTS
 
-CODE_01F4B2:
+process_tongue_01F4B2:
     LDA.w $160E,X
-    BMI CODE_01F524                         ;$01F4B5 |
-    LDY.b #$00                              ;$01F4B7 |
-    LDA $0D                                 ;$01F4B9 |
-    BMI CODE_01F4C3                         ;$01F4BB |
+    BMI .try_lick_sprites_01F524            ;$01F4B5 | if not licking a sprite, try to do so
+    LDY.b #$00                              ;$01F4B7 | already licking a sprite:
+    LDA $0D                                 ;$01F4B9 | GLITCH: scratch RAM is uninitiated if Yoshi is offscreen
+    BMI +                                   ;$01F4BB |
     CLC                                     ;$01F4BD |
     ADC.w $151C,X                           ;$01F4BE |
-    BRA CODE_01F4CC                         ;$01F4C1 |
+    BRA ++                                  ;$01F4C1 |
 
-CODE_01F4C3:
-    LDA.w $151C,X
++   LDA.w $151C,X                           ;$01F4C3 | negative tongue length offset
     EOR.b #$FF                              ;$01F4C6 |
     INC A                                   ;$01F4C8 |
     CLC                                     ;$01F4C9 |
     ADC $0D                                 ;$01F4CA |
-CODE_01F4CC:
-    SEC
+++  SEC                                     ;$01F4CC |
     SBC.b #$04                              ;$01F4CD |
-    BPL CODE_01F4D2                         ;$01F4CF |
+    BPL +                                   ;$01F4CF |
     DEY                                     ;$01F4D1 |
-CODE_01F4D2:
-    PHY
++   PHY                                     ;$01F4D2 |
     CLC                                     ;$01F4D3 |
     ADC $E4,X                               ;$01F4D4 |
-    LDY.w $160E,X                           ;$01F4D6 |
+    LDY.w $160E,X                           ;$01F4D6 | position sprite near tongue's tip
     STA.w $00E4,y                           ;$01F4D9 |
     PLY                                     ;$01F4DC |
     TYA                                     ;$01F4DD |
@@ -16160,115 +16157,107 @@ CODE_01F4D2:
     STA $00                                 ;$01F4E9 |
     LDA.w $1662,Y                           ;$01F4EB |
     AND.b #$40                              ;$01F4EE |
-    BNE CODE_01F4FD                         ;$01F4F0 |
-    LDA.w $190F,Y                           ;$01F4F2 |
-    AND.b #$20                              ;$01F4F5 |
-    BEQ CODE_01F4FD                         ;$01F4F7 |
-    LDA.b #$F8                              ;$01F4F9 |
-    STA $00                                 ;$01F4FB |
-CODE_01F4FD:
-    STZ $01
+    BNE +                                   ;$01F4F0 |\ if sprite has tweakers:
+    LDA.w $190F,Y                           ;$01F4F2 || - use shell as death frame
+    AND.b #$20                              ;$01F4F5 || - NOT death frame 2 tiles high
+    BEQ +                                   ;$01F4F7 ||
+    LDA.b #$F8                              ;$01F4F9 || then position it a little higher
+    STA $00                                 ;$01F4FB |/
++   STZ $01                                 ;$01F4FD |
     LDA $00                                 ;$01F4FF |
     CLC                                     ;$01F501 |
     ADC.w $185E                             ;$01F502 |
-    BPL CODE_01F509                         ;$01F505 |
+    BPL +                                   ;$01F505 |
     DEC $01                                 ;$01F507 |
-CODE_01F509:
-    CLC
++   CLC                                     ;$01F509 |
     ADC $D8,X                               ;$01F50A |
     STA.w $00D8,y                           ;$01F50C |
     LDA.w $14D4,X                           ;$01F50F |
     ADC $01                                 ;$01F512 |
     STA.w $14D4,Y                           ;$01F514 |
-    LDA.b #$00                              ;$01F517 |
+    LDA.b #$00                              ;$01F517 | zero sprite speeds
     STA.w $00AA,y                           ;$01F519 |
     STA.w $00B6,y                           ;$01F51C |
     INC A                                   ;$01F51F |
-    STA.w $15D0,Y                           ;$01F520 |
+    STA.w $15D0,Y                           ;$01F520 | set sprite as licked
     RTS                                     ;$01F523 |
 
-CODE_01F524:
+.try_lick_sprites_01F524:
     PHY
     LDY.b #$00                              ;$01F525 |
-    LDA $0D                                 ;$01F527 |
-    BMI CODE_01F531                         ;$01F529 |
+    LDA $0D                                 ;$01F527 | GLITCH: scratch RAM is uninitiated if Yoshi is offscreen
+    BMI +                                   ;$01F529 |
     CLC                                     ;$01F52B |
     ADC.w $151C,X                           ;$01F52C |
-    BRA CODE_01F53A                         ;$01F52F |
+    BRA ++                                  ;$01F52F |
 
-CODE_01F531:
-    LDA.w $151C,X
++   LDA.w $151C,X                           ;$01F531 | negative tongue length offset
     EOR.b #$FF                              ;$01F534 |
     INC A                                   ;$01F536 |
     CLC                                     ;$01F537 |
     ADC $0D                                 ;$01F538 |
-CODE_01F53A:
-    CLC
+++  CLC                                     ;$01F53A |
     ADC.b #$00                              ;$01F53B |
-    BPL CODE_01F540                         ;$01F53D |
+    BPL +                                   ;$01F53D |
     DEY                                     ;$01F53F |
-CODE_01F540:
-    CLC
++   CLC                                     ;$01F540 |
     ADC $E4,X                               ;$01F541 |
-    STA $00                                 ;$01F543 |
+    STA $00                                 ;$01F543 | tongue X position, low
     TYA                                     ;$01F545 |
     ADC.w $14E0,X                           ;$01F546 |
-    STA $08                                 ;$01F549 |
+    STA $08                                 ;$01F549 | tongue X position, high
     PLY                                     ;$01F54B |
     LDA.w $185E                             ;$01F54C |
     CLC                                     ;$01F54F |
     ADC.b #$02                              ;$01F550 |
     CLC                                     ;$01F552 |
     ADC $D8,X                               ;$01F553 |
-    STA $01                                 ;$01F555 |
+    STA $01                                 ;$01F555 | tongue Y position, low
     LDA.w $14D4,X                           ;$01F557 |
     ADC.b #$00                              ;$01F55A |
-    STA $09                                 ;$01F55C |
+    STA $09                                 ;$01F55C | tongue Y position, high
     LDA.b #$08                              ;$01F55E |
     STA $02                                 ;$01F560 |
     LDA.b #$04                              ;$01F562 |
     STA $03                                 ;$01F564 |
-    LDY.b #$0B                              ;$01F566 |
-CODE_01F568:
-    STY.w $1695
+    LDY.b #$0B                              ;$01F566 | loop throw sprites slots from B to 0
+-   STY.w $1695                             ;$01F568 | mirror loop counter
     CPY.w $15E9                             ;$01F56B |
-    BEQ CODE_01F586                         ;$01F56E |
+    BEQ +                                   ;$01F56E | skip Yoshi itself
     LDA.w $160E,X                           ;$01F570 |
-    BPL CODE_01F586                         ;$01F573 |
+    BPL +                                   ;$01F573 | prevent licking more than one sprite
     LDA.w $14C8,Y                           ;$01F575 |
     CMP.b #$08                              ;$01F578 |
-    BCC CODE_01F586                         ;$01F57A |
+    BCC +                                   ;$01F57A | try licking only live sprites
     LDA.w $1632,Y                           ;$01F57C |
-    BNE CODE_01F586                         ;$01F57F |
+    BNE +                                   ;$01F57F | skip sprite behind scenery
     PHY                                     ;$01F581 |
-    JSR TryEatSprite                        ;$01F582 |
+    JSR .try_lick_sprite_01F58E             ;$01F582 |
     PLY                                     ;$01F585 |
-CODE_01F586:
-    DEY
-    BPL CODE_01F568                         ;$01F587 |
++   DEY                                     ;$01F586 |
+    BPL -                                   ;$01F587 |
     JSL CODE_02B9FA                         ;$01F589 |
     RTS                                     ;$01F58D |
 
-TryEatSprite:
-    PHX
+.try_lick_sprite_01F58E:
+    PHX                                     ;$01F58E |
     TYX                                     ;$01F58F |
     JSL GetSpriteClippingA                  ;$01F590 |
     PLX                                     ;$01F594 |
     JSL CheckForContact                     ;$01F595 |
-    BCC Return01F609                        ;$01F599 |
+    BCC .return_01F609                        ;$01F599 |
     LDA.w $1686,Y                           ;$01F59B |
     LSR                                     ;$01F59E |
-    BCC EatSprite                           ;$01F59F |
+    BCC .lick_sprite_01F5A7                 ;$01F59F | do not lick sprites with Inedible tweaker
     LDA.b #$01                              ;$01F5A1 |
     STA.w $1DF9                             ;$01F5A3 |
     RTS                                     ;$01F5A6 |
 
-EatSprite:
-    LDA.w $009E,y
+.lick_sprite_01F5A7:
+    LDA.w $009E,y                           ;$01F5A7 |
     CMP.b #$70                              ;$01F5AA |
-    BNE CODE_01F5FB                         ;$01F5AC |
-SpltPokeyInto2Sprs:
-    STY.w $185E
+    BNE .skip_pokey_01F5FB                  ;$01F5AC |
+    STY.w $185E                             ;$01F5AE | split Pokey into 2 sprites
     LDA $01                                 ;$01F5B1 |
     SEC                                     ;$01F5B3 |
     SBC.w $00D8,y                           ;$01F5B4 |
@@ -16279,7 +16268,7 @@ SpltPokeyInto2Sprs:
     JSL RemovePokeySegment                  ;$01F5BC |
     PLX                                     ;$01F5C0 |
     JSL FindFreeSprSlot                     ;$01F5C1 |
-    BMI Return01F609                        ;$01F5C5 |
+    BMI .return_01F609                      ;$01F5C5 |
     LDA.b #$08                              ;$01F5C7 |
     STA.w $14C8,Y                           ;$01F5C9 |
     LDA.b #$70                              ;$01F5CC |
@@ -16302,14 +16291,14 @@ SpltPokeyInto2Sprs:
     LDA.b #$01                              ;$01F5F5 |
     STA.w $1534,Y                           ;$01F5F7 |
     PLX                                     ;$01F5FA |
-CODE_01F5FB:
+.skip_pokey_01F5FB:
     TYA
-    STA.w $160E,X                           ;$01F5FC |
+    STA.w $160E,X                           ;$01F5FC | mark Yoshi with this sprite on tongue/mouth
     LDA.b #$02                              ;$01F5FF |
-    STA.w $1594,X                           ;$01F601 |
+    STA.w $1594,X                           ;$01F601 | change to Retracting Tongue routine
     LDA.b #$0A                              ;$01F604 |
-    STA.w $1558,X                           ;$01F606 |
-Return01F609:
+    STA.w $1558,X                           ;$01F606 | wait 10 frames before retracting
+.return_01F609:
     RTS
 
 DATA_01F60A:
