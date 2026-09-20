@@ -1441,7 +1441,7 @@ CODE_01893C:
     ROR.w $167A,X                           ;$018940 |
     JSR MarioSprInteractRt                  ;$018943 |
     BCC CODE_01894B                         ;$018946 |
-    JSR CODE_01B12A                         ;$018948 |
+    JSR kick_kill_sprite_01B12A             ;$018948 |
 CODE_01894B:
     ASL.w $167A,X
     LSR.w $167A,X                           ;$01894E |
@@ -6834,7 +6834,7 @@ CODE_01B0EA:
     BRA CODE_01B10A                         ;$01B105 |
 
 CODE_01B107:
-    JSR CODE_01B12A
+    JSR kick_kill_sprite_01B12A
 CODE_01B10A:
     LDA.w $1602,X
     LSR                                     ;$01B10D |
@@ -6851,7 +6851,7 @@ CODE_01B10A:
     ROL.w $15F6,X                           ;$01B126 |
     RTS                                     ;$01B129 |
 
-CODE_01B12A:
+kick_kill_sprite_01B12A:
     LDA.b #$10
     STA.w $149A                             ;$01B12C |
     LDA.b #$03                              ;$01B12F |
@@ -15148,7 +15148,7 @@ CODE_01ED0C:
     BMI CODE_01ED70                         ;$01ED46 |
 SetOnYoshi:
     LDY.b #$01
-    JSR CODE_01EDCE                         ;$01ED4A |
+    JSR adjust_player_y_on_yoshi_01EDCE     ;$01ED4A |
     STZ $7B                                 ;$01ED4D |
     STZ $7D                                 ;$01ED4F |
     LDA.b #$0C                              ;$01ED51 |
@@ -15167,7 +15167,7 @@ CODE_01ED70:
     LDA $C2,X
     CMP.b #$01                              ;$01ED72 |
     BNE Return01EDCB                        ;$01ED74 |
-    JSR CODE_01F622                         ;$01ED76 |
+    JSR yoshi_sprites_interaction_01F622    ;$01ED76 |
     LDA $15                                 ;$01ED79 |
     AND.b #$03                              ;$01ED7B |
     BEQ CODE_01ED95                         ;$01ED7D |
@@ -15205,25 +15205,25 @@ CODE_01EDC1:
     STA $7D
     STZ.w $187A                             ;$01EDC3 |
     STZ $AA,X                               ;$01EDC6 |
-    JSR CODE_01EDCC                         ;$01EDC8 |
+    JSR adjust_player_y_off_yoshi_01EDCC    ;$01EDC8 |
 Return01EDCB:
     RTS
 
-CODE_01EDCC:
-    LDY.b #$00
-CODE_01EDCE:
-    LDA $D8,X
+adjust_player_y_off_yoshi_01EDCC:
+    LDY.b #$00                              ;$01EDCC | offset Mario from Yoshi's Y position when mounting/dismounting
+adjust_player_y_on_yoshi_01EDCE:
+    LDA $D8,X                               ;$01EDCE |
     SEC                                     ;$01EDD0 |
-    SBC.w DATA_01EDE2,Y                     ;$01EDD1 |
-    STA $96                                 ;$01EDD4 |
-    STA $D3                                 ;$01EDD6 |
+    SBC.w .yoshi_offset_distance_01EDE2,Y   ;$01EDD1 |
+    STA $96                                 ;$01EDD4 | Offset player accordingly
+    STA $D3                                 ;$01EDD6 | also change the old Y position
     LDA.w $14D4,X                           ;$01EDD8 |
     SBC.b #$00                              ;$01EDDB |
     STA $97                                 ;$01EDDD |
     STA $D4                                 ;$01EDDF |
     RTS                                     ;$01EDE1 |
 
-DATA_01EDE2:
+.yoshi_offset_distance_01EDE2:
     db $04,$10
 
 DATA_01EDE4:
@@ -16001,10 +16001,10 @@ retracting_tongue_01F332:
     CMP.b #$02                              ;$01F3E4 | if swallowing Yoshi Wings
     BNE +                                   ;$01F3E6 |\
     LDA.b #$08                              ;$01F3E8 || if swallowing Wings with sparkles
-    STA $71                                 ;$01F3EA || set Shooting up into the sky animation
-    LDA.b #$03                              ;$01F3EC || play sound: Hit a ? block with a vine inside
+    STA $71                                 ;$01F3EA || Warp to Yoshi Wings game
+    LDA.b #$03                              ;$01F3EC || SFX for collecting wings
     STA.w $1DFC                             ;$01F3EE |/
-+   JSR CODE_01F6CD                         ;$01F3F1 |
++   JSR give_yoshi_wings_01F6CD             ;$01F3F1 | REMARK: $C2 = 01 would give wings for 1 frame without warping to the Sky Room
     JMP handle_tongue_01F321                ;$01F3F4 | immediately try to swallow sprites again
 
 .skip_yoshi_wings_01F3F7:
@@ -16299,161 +16299,156 @@ DATA_01F60A:
 DATA_01F61A:
     db $08,$08,$08,$08,$08,$08,$08,$13
 
-CODE_01F622:
-    LDA.w $163E,X
-    ORA $9D                                 ;$01F625 |
-    BNE Return01F667                        ;$01F627 |
-    LDY.b #$0B                              ;$01F629 |
-CODE_01F62B:
-    STY.w $1695
-    TYA                                     ;$01F62E |
-    EOR $13                                 ;$01F62F |
-    AND.b #$01                              ;$01F631 |
-    BNE CODE_01F661                         ;$01F633 |
-    TYA                                     ;$01F635 |
-    CMP.w $160E,X                           ;$01F636 |
-    BEQ CODE_01F661                         ;$01F639 |
-    CPY.w $15E9                             ;$01F63B |
-    BEQ CODE_01F661                         ;$01F63E |
-    LDA.w $14C8,Y                           ;$01F640 |
-    CMP.b #$08                              ;$01F643 |
-    BCC CODE_01F661                         ;$01F645 |
-    LDA.w $009E,y                           ;$01F647 |
-    LDA.w $14C8,Y                           ;$01F64A |
-    CMP.b #$09                              ;$01F64D |
-    BEQ CODE_01F661                         ;$01F64F |
-    LDA.w $167A,Y                           ;$01F651 |
-    AND.b #$02                              ;$01F654 |
-    ORA.w $15D0,Y                           ;$01F656 |
-    ORA.w $1632,Y                           ;$01F659 |
-    BNE CODE_01F661                         ;$01F65C |
-    JSR CODE_01F668                         ;$01F65E |
-CODE_01F661:
-    LDY.w $1695
-    DEY                                     ;$01F664 |
-    BPL CODE_01F62B                         ;$01F665 |
-Return01F667:
+yoshi_sprites_interaction_01F622:
+    LDA.w $163E,X                           ;$01F625 | if Yoshi has some invincibility timer
+    ORA $9D                                 ;$01F625 | or game is frozen, return
+    BNE .return_01F667                      ;$01F627 |
+    LDY.b #$0B                              ;$01F629 | Y: sprite slot
+-   STY.w $1695                             ;$01F62B |\ mirror collision sprite slot
+    TYA                                     ;$01F62E ||
+    EOR.b Frame_13                          ;$01F62F || Skip the slot if:
+    AND.b #$01                              ;$01F631 || - Not time to process (even slots on even frames, odd slots on odd frames)
+    BNE +                                   ;$01F633 || - It's on Yoshi's tongue
+    TYA                                     ;$01F635 || - It's on Yoshi's tongue
+    CMP.w $160E,X                           ;$01F636 || - It's dying (sprite status < 8)
+    BEQ +                                   ;$01F639 || - It's carryable (sprite status 9)
+    CPY.w $15E9                             ;$01F63B || - It's invincible to star/cape/fire ($167A bit 1)
+    BEQ +                                   ;$01F63E || - It has Yoshi interaction disabled (e.g. already on tongue)
+    LDA.w $14C8,Y                           ;$01F640 || - It's behind scenery
+    CMP.b #$08                              ;$01F643 ||
+    BCC +                                   ;$01F645 ||
+    LDA.w $009E,y                           ;$01F647 || NOTE: this line makes no difference
+    LDA.w $14C8,Y                           ;$01F64A ||
+    CMP.b #$09                              ;$01F64D ||
+    BEQ +                                   ;$01F64F ||
+    LDA.w $167A,Y                           ;$01F651 ||
+    AND.b #$02                              ;$01F654 ||
+    ORA.w $15D0,Y                           ;$01F656 ||
+    ORA.w $1632,Y                           ;$01F659 ||
+    BNE +                                   ;$01F65C ||
+    JSR .yoshi_sprite_interaction_01F668    ;$01F65E ||
++   LDY.w $1695                             ;$01F661 ||
+    DEY                                     ;$01F664 ||
+    BPL -                                   ;$01F665 |/
+.return_01F667:
     RTS
 
-CODE_01F668:
+.yoshi_sprite_interaction_01F668:
     PHX
     TYX                                     ;$01F669 |
     JSL GetSpriteClippingB                  ;$01F66A |
     PLX                                     ;$01F66E |
     JSL GetSpriteClippingA                  ;$01F66F |
     JSL CheckForContact                     ;$01F673 |
-    BCC Return01F667                        ;$01F677 |
+    BCC .return_01F667                      ;$01F677 | Return if sprites are not in contact
     LDA.w $009E,y                           ;$01F679 |
     CMP.b #$9D                              ;$01F67C |
-    BEQ Return01F667                        ;$01F67E |
+    BEQ .return_01F667                      ;$01F67E | Return if sprite 9D (Bubble)
     CMP.b #$15                              ;$01F680 |
-    BEQ CODE_01F69E                         ;$01F682 |
-    CMP.b #$16                              ;$01F684 |
-    BEQ CODE_01F69E                         ;$01F686 |
+    BEQ .interact_fish_01F69E               ;$01F682 | Kick-kill the sprite if it is a:
+    CMP.b #$16                              ;$01F684 | - Fish not in water
+    BEQ .interact_fish_01F69E               ;$01F686 | - Shell-less non-blue Koopa sliding out of shell
     CMP.b #$04                              ;$01F688 |
-    BCS CODE_01F6A3                         ;$01F68A |
+    BCS .no_kick_sprite_01F6A3              ;$01F68A |
     CMP.b #$02                              ;$01F68C |
-    BEQ CODE_01F6A3                         ;$01F68E |
+    BEQ .no_kick_sprite_01F6A3              ;$01F68E | If anything else, branch to check whether Yoshi should be hurt
     LDA.w $163E,Y                           ;$01F690 |
-    BPL CODE_01F6A3                         ;$01F693 |
-CODE_01F695:
+    BPL .no_kick_sprite_01F6A3              ;$01F693 |
+.kick_kill_sprite_01F695:
     PHY
     PHX                                     ;$01F696 |
     TYX                                     ;$01F697 |
-    JSR CODE_01B12A                         ;$01F698 |
+    JSR kick_kill_sprite_01B12A             ;$01F698 |
     PLX                                     ;$01F69B |
     PLY                                     ;$01F69C |
     RTS                                     ;$01F69D |
 
-CODE_01F69E:
-    LDA.w $164A,Y
-    BEQ CODE_01F695                         ;$01F6A1 |
-CODE_01F6A3:
+.interact_fish_01F69E:
+    LDA.w $164A,Y                           ;$01F69E | if fish is in liquid
+    BEQ .kick_kill_sprite_01F695            ;$01F6A1 |
+.no_kick_sprite_01F6A3:
     LDA.w $009E,y
     CMP.b #$BF                              ;$01F6A6 |
-    BNE CODE_01F6B4                         ;$01F6A8 |
-    LDA $96                                 ;$01F6AA |
-    SEC                                     ;$01F6AC |
-    SBC.w $00D8,y                           ;$01F6AD |
-    CMP.b #$E8                              ;$01F6B0 |
-    BMI Return01F6DC                        ;$01F6B2 |
-CODE_01F6B4:
-    LDA.w $009E,y
-    CMP.b #$7E                              ;$01F6B7 |
-    BNE CODE_01F6DD                         ;$01F6B9 |
-    LDA.w $00C2,y                           ;$01F6BB |
-    BEQ Return01F6DC                        ;$01F6BE |
-    CMP.b #$02                              ;$01F6C0 |
-    BNE CODE_01F6CD                         ;$01F6C2 |
-    LDA.b #$08                              ;$01F6C4 |
-    STA $71                                 ;$01F6C6 |
-    LDA.b #$03                              ;$01F6C8 |
-    STA.w $1DFC                             ;$01F6CA |
-CODE_01F6CD:
-    LDA.b #$40
-    STA.w $14AA                             ;$01F6CF |
+    BNE +                                   ;$01F6A8 |\ If sprite BF (Mega Mole)
+    LDA $96                                 ;$01F6AA || only hurt Yoshi if he is noticeably lower than it
+    SEC                                     ;$01F6AC || as Mega Moles usually insta-hurt Mario
+    SBC.w $00D8,y                           ;$01F6AD ||
+    CMP.b #$E8                              ;$01F6B0 ||
+    BMI return_01F6DC                       ;$01F6B2 |/
++   LDA.w $009E,y                           ;$01F6B4 |\
+    CMP.b #$7E                              ;$01F6B7 || Branch if not sprite 7E (wings)
+    BNE maybe_hurt_yoshi_01F6DD             ;$01F6B9 |/
+    LDA.w $00C2,y                           ;$01F6BB |\ Return if in flying red coin form
+    BEQ return_01F6DC                       ;$01F6BE |/
+    CMP.b #$02                              ;$01F6C0 | REMARK: $C2 = 01 would give wings for 1 frame without warping to the Sky Room
+    BNE give_yoshi_wings_01F6CD             ;$01F6C2 |\
+    LDA.b #$08                              ;$01F6C4 || Warp to Yoshi Wings game
+    STA $71                                 ;$01F6C6 ||
+    LDA.b #$03                              ;$01F6C8 || SFX for collecting wings
+    STA.w $1DFC                             ;$01F6CA |/
+give_yoshi_wings_01F6CD:
+    LDA.b #$40                              ;$01F6CD | 
+    STA.w $14AA                             ;$01F6CF | Unused timer
     LDA.b #$02                              ;$01F6D2 |
-    STA.w $141E                             ;$01F6D4 |
+    STA.w $141E                             ;$01F6D4 | set Yoshi Wings
     LDA.b #$00                              ;$01F6D7 |
-    STA.w $14C8,Y                           ;$01F6D9 |
-Return01F6DC:
+    STA.w $14C8,Y                           ;$01F6D9 | erase sprite
+return_01F6DC:
     RTS
 
-CODE_01F6DD:
-    CMP.b #$4E
-    BEQ CODE_01F6E5                         ;$01F6DF |
-    CMP.b #$4D                              ;$01F6E1 |
-    BNE CODE_01F6EC                         ;$01F6E3 |
-CODE_01F6E5:
-    LDA.w $00C2,y
-    CMP.b #$02                              ;$01F6E8 |
-    BCC Return01F6DC                        ;$01F6EA |
-CODE_01F6EC:
-    LDA $05
-    CLC                                     ;$01F6EE |
-    ADC.b #$0D                              ;$01F6EF |
-    CMP $01                                 ;$01F6F1 |
-    BMI Return01F74B                        ;$01F6F3 |
-    LDA.w $14C8,Y                           ;$01F6F5 |
-    CMP.b #$0A                              ;$01F6F8 |
-    BNE CODE_01F70E                         ;$01F6FA |
-    PHX                                     ;$01F6FC |
-    TYX                                     ;$01F6FD |
-    JSR SubHorizPos                         ;$01F6FE |
-    STY $00                                 ;$01F701 |
-    LDA $B6,X                               ;$01F703 |
-    PLX                                     ;$01F705 |
-    ASL                                     ;$01F706 |
-    ROL                                     ;$01F707 |
-    AND.b #$01                              ;$01F708 |
-    CMP $00                                 ;$01F70A |
-    BNE Return01F74B                        ;$01F70C |
-CODE_01F70E:
-    LDA.w $1490
-    BNE Return01F74B                        ;$01F711 |
+maybe_hurt_yoshi_01F6DD:
+    CMP.b #$4E                              ;$01F6DD |\
+    BEQ +                                   ;$01F6DF || Return if touching Monty Mole on the ground
+    CMP.b #$4D                              ;$01F6E1 ||
+    BNE ++                                  ;$01F6E3 ||
++   LDA.w $00C2,y                           ;$01F6E5 ||
+    CMP.b #$02                              ;$01F6E8 ||
+    BCC return_01F6DC                       ;$01F6EA |/
+++  LDA $05                                 ;$01F6EC |\
+    CLC                                     ;$01F6EE || Return if the sprite is below Yoshi's lower body
+    ADC.b #$0D                              ;$01F6EF || mainly meant to reduce risk of being damaged while jumping over an enemy
+    CMP $01                                 ;$01F6F1 ||
+    BMI .return_01F74B                      ;$01F6F3 |/
+    LDA.w $14C8,Y                           ;$01F6F5 |\
+    CMP.b #$0A                              ;$01F6F8 || If the sprite is in a thrown state,
+    BNE +                                   ;$01F6FA || return if it's moving away from Yoshi.
+    PHX                                     ;$01F6FC || to prevent spit shells from hurting him
+    TYX                                     ;$01F6FD ||
+    JSR SubHorizPos                         ;$01F6FE || GLITCH: it is possible to enter the kicked sprite area without getting hurt:
+    STY $00                                 ;$01F701 || - from behind, if Mario is faster
+    LDA $B6,X                               ;$01F703 || - or if the sprite falls on the player
+    PLX                                     ;$01F705 ||
+    ASL                                     ;$01F706 ||
+    ROL                                     ;$01F707 ||
+    AND.b #$01                              ;$01F708 ||
+    CMP $00                                 ;$01F70A ||
+    BNE .return_01F74B                      ;$01F70C |/
++   LDA.w $1490                             ;$01F70E |\
+    BNE .return_01F74B                      ;$01F711 |/ Return if has Star power
+;hurt_yoshi:
     LDA.b #$10                              ;$01F713 |
-    STA.w $163E,X                           ;$01F715 |
+    STA.w $163E,X                           ;$01F715 | Briefly disable sprite contact
     LDA.b #$03                              ;$01F718 |
-    STA.w $1DFA                             ;$01F71A |
+    STA.w $1DFA                             ;$01F71A | Turn off Yoshi drums
     LDA.b #$13                              ;$01F71D |
-    STA.w $1DFC                             ;$01F71F |
+    STA.w $1DFC                             ;$01F71F | SFX for losing Yoshi
     LDA.b #$02                              ;$01F722 |
-    STA $C2,X                               ;$01F724 |
-    STZ.w $187A                             ;$01F726 |
-    LDA.b #$C0                              ;$01F729 |
+    STA $C2,X                               ;$01F724 | make Yoshi run
+    STZ.w $187A                             ;$01F726 | unmount Yoshi
+    LDA.b #$C0                              ;$01F729 | Y speed to give Mario when knocked off Yoshi by a standard sprite.
     STA $7D                                 ;$01F72B |
-    STZ $7B                                 ;$01F72D |
+    STZ $7B                                 ;$01F72D | cancel Mario X speed
     JSR SubHorizPos                         ;$01F72F |
     LDA.w DATA_01EBBE,Y                     ;$01F732 |
-    STA $B6,X                               ;$01F735 |
+    STA $B6,X                               ;$01F735 | Make Yoshi run away from Mario
     STZ.w $1594,X                           ;$01F737 |
-    STZ.w $151C,X                           ;$01F73A |
-    STZ.w $18AE                             ;$01F73D |
-    STZ.w $0DC1                             ;$01F740 |
+    STZ.w $151C,X                           ;$01F73A | Clear tongue-related addresses
+    STZ.w $18AE                             ;$01F73D | GLITCH: does not clear $14A3, making it possible to release the tongue while running
+    STZ.w $0DC1                             ;$01F740 | Don't let Mario carry Yoshi to the next level or overworld
     LDA.b #$30                              ;$01F743 |
-    STA.w $1497                             ;$01F745 |
-    JSR CODE_01EDCC                         ;$01F748 |
-Return01F74B:
+    STA.w $1497                             ;$01F745 | How long to make Mario invincible after being knocked off Yoshi
+    JSR adjust_player_y_off_yoshi_01EDCC    ;$01F748 |
+.return_01F74B:
     RTS
 
 CODE_01F74C:
