@@ -15646,11 +15646,10 @@ process_eaten_berry_01F0D3:
     RTS
 
 spitting_01F12E:
-    LDA.w $1558,X
-    BNE Return01F136                        ;$01F131 |
-    STZ.w $1594,X                           ;$01F133 |
-Return01F136:
-    RTS
+    LDA.w $1558,X                           ;$01F12E |
+    BNE +                                   ;$01F131 |\ After spitting
+    STZ.w $1594,X                           ;$01F133 |/ emporarily disable tongue before returning to normal
++   RTS                                     ;$01F136 |
 
 YoshiShellAbility:
     db $00,$00,$01,$02,$00,$00,$01,$02
