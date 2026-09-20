@@ -15900,16 +15900,15 @@ extending_tongue_01F314:
     ADC.b #$03                              ;$01F318 |
     STA.w $151C,X                           ;$01F31A |
     CMP.b #$20                              ;$01F31D |
-    BCS CODE_01F328                         ;$01F31F |
+    BCS +                                   ;$01F31F |
 CODE_01F321:
-    JSR CODE_01F3FE
+    JSR draw_yoshi_tongue_01F3FE
     JSR CODE_01F4B2                         ;$01F324 |
     RTS                                     ;$01F327 |
 
-CODE_01F328:
-    LDA.b #$08
++   LDA.b #$08                              ;$01F328 |
     STA.w $1558,X                           ;$01F32A |
-    INC.w $1594,X                           ;$01F32D |
+    INC.w $1594,X                           ;$01F32D | change to Retracting Tongue routine
     BRA CODE_01F321                         ;$01F330 |
 
 retracting_tongue_01F332:
@@ -16024,10 +16023,10 @@ CODE_01F3FA:
 Return01F3FD:
     RTS
 
-CODE_01F3FE:
+draw_yoshi_tongue_01F3FE:
     LDA.w $15A0,X
-    ORA.w $186C,X                           ;$01F401 |
-    ORA.w $1419                             ;$01F404 |
+    ORA.w $186C,X                           ;$01F401 | if Yoshi is offscreen
+    ORA.w $1419                             ;$01F404 | or entering a pipe, return
     BNE Return01F3FD                        ;$01F407 |
     LDY.w $1602,X                           ;$01F409 |
     LDA.w DATA_01F61A,Y                     ;$01F40C |
@@ -16038,13 +16037,12 @@ CODE_01F3FE:
     SBC $1C                                 ;$01F416 |
     STA $01                                 ;$01F418 |
     LDA.w $157C,X                           ;$01F41A |
-    BNE CODE_01F424                         ;$01F41D |
+    BNE +                                   ;$01F41D |
     TYA                                     ;$01F41F |
     CLC                                     ;$01F420 |
     ADC.b #$08                              ;$01F421 |
     TAY                                     ;$01F423 |
-CODE_01F424:
-    LDA.w DATA_01F60A,Y
++   LDA.w DATA_01F60A,Y                     ;$01F424 |
     STA $0D                                 ;$01F427 |
     LDA $E4,X                               ;$01F429 |
     SEC                                     ;$01F42B |
@@ -16053,19 +16051,17 @@ CODE_01F424:
     ADC $0D                                 ;$01F42F |
     STA $00                                 ;$01F431 |
     LDA.w $157C,X                           ;$01F433 |
-    BNE CODE_01F43C                         ;$01F436 |
+    BNE +                                   ;$01F436 |
     BCS Return01F3FD                        ;$01F438 |
-    BRA CODE_01F43E                         ;$01F43A |
+    BRA ++                                  ;$01F43A |
 
-CODE_01F43C:
-    BCC Return01F3FD
-CODE_01F43E:
-    LDA.w $151C,X
-    STA.w $4205                             ;$01F441 |
-    STZ.w $4204                             ;$01F444 |
++   BCC Return01F3FD                        ;$01F43C |
+++  LDA.w $151C,X                           ;$01F43E | 
+    STA.w $4205                             ;$01F441 | divisor low byte = length of Yoshi's tongue
+    STZ.w $4204                             ;$01F444 | divisor high byte = 0
     LDA.b #$04                              ;$01F447 |
-    STA.w $4206                             ;$01F449 |
-    NOP                                     ;$01F44C |
+    STA.w $4206                             ;$01F449 | divisor = 4
+    NOP                                     ;$01F44C | take some time
     NOP                                     ;$01F44D |
     NOP                                     ;$01F44E |
     NOP                                     ;$01F44F |
@@ -16076,45 +16072,40 @@ CODE_01F43E:
     LDA.w $157C,X                           ;$01F454 |
     STA $07                                 ;$01F457 |
     LSR                                     ;$01F459 |
-    LDA.w $4215                             ;$01F45A |
-    BCC CODE_01F462                         ;$01F45D |
-    EOR.b #$FF                              ;$01F45F |
-    INC A                                   ;$01F461 |
-CODE_01F462:
-    STA $05
+    LDA.w $4215                             ;$01F45A | quociente (high byte)
+    BCC +                                   ;$01F45D |\
+    EOR.b #$FF                              ;$01F45F || if facing left, invert
+    INC A                                   ;$01F461 |/
++   STA $05                                 ;$01F462 | signed tongue distance / 4
     LDA.b #$04                              ;$01F464 |
-    STA $06                                 ;$01F466 |
-    LDY.b #$0C                              ;$01F468 |
-CODE_01F46A:
-    LDA $00
+    STA $06                                 ;$01F466 | loop counter: 4 to 0
+    LDY.b #$0C                              ;$01F468 | draw tongue in 5 segments, one per loop
+.loop_01F46A:
+    LDA $00                                 ;$01F46A |
     STA.w $0200,Y                           ;$01F46C |
     CLC                                     ;$01F46F |
     ADC $05                                 ;$01F470 |
     STA $00                                 ;$01F472 |
     LDA $05                                 ;$01F474 |
-    BPL CODE_01F47C                         ;$01F476 |
-    BCC Return01F4B1                        ;$01F478 |
-    BRA CODE_01F47E                         ;$01F47A |
+    BPL +                                   ;$01F476 |
+    BCC .return_01F4B1                      ;$01F478 |
+    BRA ++                                  ;$01F47A |
 
-CODE_01F47C:
-    BCS Return01F4B1
-CODE_01F47E:
-    LDA $01
++   BCS .return_01F4B1                      ;$01F47C |
+++  LDA $01                                 ;$01F47E |
     STA.w $0201,Y                           ;$01F480 |
     LDA $06                                 ;$01F483 |
     CMP.b #$01                              ;$01F485 |
     LDA.b #$76                              ;$01F487 |
-    BCS CODE_01F48D                         ;$01F489 |
+    BCS +                                   ;$01F489 |
     LDA.b #$66                              ;$01F48B |
-CODE_01F48D:
-    STA.w $0202,Y
++   STA.w $0202,Y                           ;$01F48D |
     LDA $07                                 ;$01F490 |
     LSR                                     ;$01F492 |
     LDA.b #$09                              ;$01F493 |
-    BCS CODE_01F499                         ;$01F495 |
+    BCS +                                   ;$01F495 |
     ORA.b #$40                              ;$01F497 |
-CODE_01F499:
-    ORA $64
++   ORA $64                                 ;$01F499 |
     STA.w $0203,Y                           ;$01F49B |
     PHY                                     ;$01F49E |
     TYA                                     ;$01F49F |
@@ -16128,9 +16119,9 @@ CODE_01F499:
     INY                                     ;$01F4AA |
     INY                                     ;$01F4AB |
     INY                                     ;$01F4AC |
-    DEC $06                                 ;$01F4AD |
-    BPL CODE_01F46A                         ;$01F4AF |
-Return01F4B1:
+    DEC $06                                 ;$01F4AD | decrement loop counter
+    BPL .loop_01F46A                        ;$01F4AF |
+.return_01F4B1:
     RTS
 
 CODE_01F4B2:
