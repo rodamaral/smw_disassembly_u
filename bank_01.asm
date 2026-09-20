@@ -955,7 +955,7 @@ SpriteMainPtr:
     dw DryBonesAndBeetle
     dw Fireballs
     dw BossFireball
-    dw Yoshi
+    dw yoshi_01EBCA
     dw DATA_01E41F
     dw BooPBooBlock
     dw Eerie
@@ -14926,7 +14926,7 @@ draw_yoshi_01EA70:
     BNE .skip_yoshi_physics_01EBB0          ;$01EBA7 ||
     LDA.b #$10                              ;$01EBA9 ||
     STA $64                                 ;$01EBAB ||
-+   JSR HandleOffYoshi                      ;$01EBAD |/
++   JSR handle_off_yoshi_01EE61             ;$01EBAD |/
 .skip_yoshi_physics_01EBB0:
     PLA                                     ;$01EBB1 |
     STA $64                                 ;$01EBB1 |
@@ -14945,49 +14945,48 @@ DATA_01EBC0:
 GrowingAniSequence:
     db $0C,$0B,$0C,$0B,$0A,$0B,$0A,$0B
 
-Yoshi:
-    STZ.w $13FB
+yoshi_01EBCA:
+    STZ.w $13FB                             ;$01EBCA | Unfreeze the player (from berries)
     LDA.w $141E                             ;$01EBCD |
     STA.w $1410                             ;$01EBD0 |
     STZ.w $141E                             ;$01EBD3 |
     STZ.w $18E7                             ;$01EBD6 |
     STZ.w $191B                             ;$01EBD9 |
     LDA.w $14C8,X                           ;$01EBDC |
-    CMP.b #$08                              ;$01EBDF |
-    BEQ CODE_01EBE9                         ;$01EBE1 |
-    STZ.w $0DC1                             ;$01EBE3 |
-    JMP HandleOffYoshi                      ;$01EBE6 |
+    CMP.b #$08                              ;$01EBDF |\
+    BEQ +                                   ;$01EBE1 || If Yoshi is dying, don't let Mario bring him to the next level,
+    STZ.w $0DC1                             ;$01EBE3 || and execute the dedicated Yoshi routine
+    JMP handle_off_yoshi_01EE61             ;$01EBE6 |/
 
-CODE_01EBE9:
-    TXA
++   TXA                                     ;$01EBE9 |
     INC A                                   ;$01EBEA |
     STA.w $18DF                             ;$01EBEB |
     LDA.w $187A                             ;$01EBEE |
-    BNE CODE_01EC04                         ;$01EBF1 |
+    BNE .CODE_01EC04                        ;$01EBF1 |
     JSR SubOffscreen0Bnk1                   ;$01EBF3 |
     LDA.w $14C8,X                           ;$01EBF6 |
-    BNE CODE_01EC04                         ;$01EBF9 |
+    BNE .CODE_01EC04                        ;$01EBF9 |
     LDA.w $1B95                             ;$01EBFB |
-    BNE Return01EC03                        ;$01EBFE |
+    BNE .Return01EC03                       ;$01EBFE |
     STZ.w $0DC1                             ;$01EC00 |
-Return01EC03:
+.Return01EC03:
     RTS
 
-CODE_01EC04:
+.CODE_01EC04:
     LDA.w $187A
-    BEQ CODE_01EC0E                         ;$01EC07 |
+    BEQ .CODE_01EC0E                        ;$01EC07 |
     LDA.w $1419                             ;$01EC09 |
-    BNE CODE_01EC61                         ;$01EC0C |
-CODE_01EC0E:
+    BNE .CODE_01EC61                        ;$01EC0C |
+.CODE_01EC0E:
     LDA.w $18DE
-    BNE CODE_01EC61                         ;$01EC11 |
+    BNE .CODE_01EC61                        ;$01EC11 |
     LDA.w $18E8                             ;$01EC13 |
-    BEQ CODE_01EC4C                         ;$01EC16 |
+    BEQ .CODE_01EC4C                        ;$01EC16 |
     DEC.w $18E8                             ;$01EC18 |
     STA $9D                                 ;$01EC1B |
     STA.w $13FB                             ;$01EC1D |
     CMP.b #$01                              ;$01EC20 |
-    BNE CODE_01EC40                         ;$01EC22 |
+    BNE .CODE_01EC40                        ;$01EC22 |
     STZ $9D                                 ;$01EC24 |
     STZ.w $13FB                             ;$01EC26 |
     LDY.w $0DB3                             ;$01EC29 |
@@ -14995,11 +14994,11 @@ CODE_01EC0E:
     DEC A                                   ;$01EC2F |
     ORA.w $0EF8                             ;$01EC30 |
     ORA.w $0109                             ;$01EC33 |
-    BNE CODE_01EC40                         ;$01EC36 |
+    BNE .CODE_01EC40                        ;$01EC36 |
     INC.w $0EF8                             ;$01EC38 |
     LDA.b #$03                              ;$01EC3B |
     STA.w $1426                             ;$01EC3D |
-CODE_01EC40:
+.CODE_01EC40:
     DEC A
     LSR                                     ;$01EC41 |
     LSR                                     ;$01EC42 |
@@ -15009,53 +15008,52 @@ CODE_01EC40:
     STA.w $1602,X                           ;$01EC48 |
     RTS                                     ;$01EC4B |
 
-CODE_01EC4C:
+.CODE_01EC4C:
     LDA $9D
-    BEQ CODE_01EC61                         ;$01EC4E |
-CODE_01EC50:
+    BEQ .CODE_01EC61                        ;$01EC4E |
+.CODE_01EC50:
     LDY.w $187A
-    BEQ Return01EC5A                        ;$01EC53 |
+    BEQ .Return01EC5A                       ;$01EC53 |
     LDY.b #$06                              ;$01EC55 |
     STY.w $188B                             ;$01EC57 |
-Return01EC5A:
+.Return01EC5A:
     RTS
 
-DATA_01EC5B:
+.DATA_01EC5B:
     db $F0,$10
 
-DATA_01EC5D:
+.DATA_01EC5D:
     db $FA,$06
 
-DATA_01EC5F:
+.DATA_01EC5F:
     db $FF,$00
 
-CODE_01EC61:
+.CODE_01EC61:
     LDA $72
-    BNE CODE_01EC6A                         ;$01EC63 |
+    BNE .CODE_01EC6A                        ;$01EC63 |
     LDA.w $18DE                             ;$01EC65 |
-    BNE CODE_01EC6D                         ;$01EC68 |
-CODE_01EC6A:
+    BNE .CODE_01EC6D                        ;$01EC68 |
+.CODE_01EC6A:
     JMP CODE_01ECE1
 
-CODE_01EC6D:
+.CODE_01EC6D:
     DEC.w $18DE
     CMP.b #$01                              ;$01EC70 |
-    BNE CODE_01EC78                         ;$01EC72 |
+    BNE .CODE_01EC78                        ;$01EC72 |
     STZ $9D                                 ;$01EC74 |
-    BRA CODE_01EC6A                         ;$01EC76 |
+    BRA .CODE_01EC6A                        ;$01EC76 |
 
-CODE_01EC78:
+.CODE_01EC78:
     INC.w $13FB
-    JSR CODE_01EC50                         ;$01EC7B |
+    JSR .CODE_01EC50                        ;$01EC7B |
     STY $9D                                 ;$01EC7E |
     CMP.b #$02                              ;$01EC80 |
-    BNE Return01EC8A                        ;$01EC82 |
+    BNE +                                   ;$01EC82 |
     JSL FindFreeSprSlot                     ;$01EC84 |
-    BPL CODE_01EC8B                         ;$01EC88 |
-Return01EC8A:
-    RTS
+    BPL .CODE_01EC8B                        ;$01EC88 |
++   RTS                                     ;$01EC8A |
 
-CODE_01EC8B:
+.CODE_01EC8B:
     LDA.b #$09
     STA.w $14C8,Y                           ;$01EC8D |
     LDA.b #$2C                              ;$01EC90 |
@@ -15066,12 +15064,12 @@ CODE_01EC8B:
     STY $0F                                 ;$01EC9A |
     LDA $E4,X                               ;$01EC9C |
     CLC                                     ;$01EC9E |
-    ADC.w DATA_01EC5D,Y                     ;$01EC9F |
+    ADC.w .DATA_01EC5D,Y                    ;$01EC9F |
     PLY                                     ;$01ECA2 |
     STA.w $00E4,y                           ;$01ECA3 |
     LDY.w $157C,X                           ;$01ECA6 |
     LDA.w $14E0,X                           ;$01ECA9 |
-    ADC.w DATA_01EC5F,Y                     ;$01ECAC |
+    ADC.w .DATA_01EC5F,Y                    ;$01ECAC |
     PLY                                     ;$01ECAF |
     STA.w $14E0,Y                           ;$01ECB0 |
     LDA $D8,X                               ;$01ECB3 |
@@ -15085,7 +15083,7 @@ CODE_01EC8B:
     TYX                                     ;$01ECC4 |
     JSL InitSpriteTables                    ;$01ECC5 |
     LDY $0F                                 ;$01ECC9 |
-    LDA.w DATA_01EC5B,Y                     ;$01ECCB |
+    LDA.w .DATA_01EC5B,Y                    ;$01ECCB |
     STA $B6,X                               ;$01ECCE |
     LDA.b #$F0                              ;$01ECD0 |
     STA $AA,X                               ;$01ECD2 |
@@ -15270,7 +15268,7 @@ YoshiHeadDispY:
     db $00,$00,$01,$00,$00,$00,$00,$08
     db $00,$00,$00,$00,$05
 
-HandleOffYoshi:
+handle_off_yoshi_01EE61:
     LDA.w $1602,X                           ;$01EE61 |
     PHA                                     ;$01EE64 |
     LDY.w $15AC,X                           ;$01EE65 |
@@ -15334,8 +15332,9 @@ HandleOffYoshi:
     LDA.w $1410                             ;$01EEDF |
     CMP.b #$02                              ;$01EEE2 |
     BCC .return_01EF17                      ;$01EEE4 | if Yoshi does not have wings, return
+;Draw Yoshi Wings:
     LDA.w $187A                             ;$01EEE6 |
-    BEQ .not_flying_01EF13                  ;$01EEE9 |
+    BEQ .not_flying_01EF13                  ;$01EEE9 | just draw the wings if not on Yoshi
     LDA $72                                 ;$01EEEB |
     BNE .wings_flying_01EF00                ;$01EEED |\
     LDA $7B                                 ;$01EEEF ||
@@ -15343,9 +15342,9 @@ HandleOffYoshi:
     EOR.b #$FF                              ;$01EEF3 ||
     INC A                                   ;$01EEF5 ||
 +   CMP.b #$28                              ;$01EEF6 ||
-    LDA.b #$01                              ;$01EEF8 || if player's X speed is high
-    BCS .not_flying_01EF13                  ;$01EEFA ||
-    LDA.b #$00                              ;$01EEFC || if player's X speed is slow
+    LDA.b #$01                              ;$01EEF8 || If Mario's X speed is
+    BCS .not_flying_01EF13                  ;$01EEFA ||  <  40: draw closed wings
+    LDA.b #$00                              ;$01EEFC ||  >= 40: draw open wings
     BRA .not_flying_01EF13                  ;$01EEFE |/
 
 .wings_flying_01EF00:
