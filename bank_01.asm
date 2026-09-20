@@ -9322,7 +9322,7 @@ CODE_01C287:
     LDA $9E,X                               ;$01C28F |
     CMP.b #$7E                              ;$01C291 |
     BNE CODE_01C2A6                         ;$01C293 |
-    JSR CODE_01C4F0                         ;$01C295 |
+    JSR create_glitter_sprites_01C4F0       ;$01C295 |
     LDA.b #$05                              ;$01C298 |
     JSL ADDR_05B329                         ;$01C29A |
     LDA.b #$03                              ;$01C29E |
@@ -9627,47 +9627,44 @@ CODE_01C4AC:
     JSR CODE_01A80F
     BCC Return01C4AB                        ;$01C4AF |
     LDA.w $151C,X                           ;$01C4B1 |
-    BEQ CODE_01C4BA                         ;$01C4B4 |
+    BEQ +                                   ;$01C4B4 |
     LDA $C2,X                               ;$01C4B6 |
-    BNE Return01C4FA                        ;$01C4B8 |
-CODE_01C4BA:
-    LDA.w $154C,X
-    BNE Return01C4FA                        ;$01C4BD |
-CODE_01C4BF:
+    BNE return_01C4FA                       ;$01C4B8 |
++   LDA.w $154C,X                           ;$01C4BA |
+    BNE return_01C4FA                       ;$01C4BD |
+try_give_powerup_or_coin_01C4BF:
     LDA.w $1540,X
     CMP.b #$18                              ;$01C4C2 |
-    BCS Return01C4FA                        ;$01C4C4 |
-    STZ.w $14C8,X                           ;$01C4C6 |
+    BCS return_01C4FA                       ;$01C4C4 | if sprite has stun timer >= 0x18, return
+    STZ.w $14C8,X                           ;$01C4C6 | erase sprite
     LDA $9E,X                               ;$01C4C9 |
     CMP.b #$21                              ;$01C4CB |
-    BNE TouchedPowerUp                      ;$01C4CD |
-    JSL CODE_05B34A                         ;$01C4CF |
-    LDA.w $15F6,X                           ;$01C4D3 |
-    AND.b #$0E                              ;$01C4D6 |
-    CMP.b #$02                              ;$01C4D8 |
-    BEQ CODE_01C4E0                         ;$01C4DA |
-    LDA.b #$01                              ;$01C4DC |
-    BRA CODE_01C4EC                         ;$01C4DE |
+    BNE touched_powerup_01C537              ;$01C4CD |\
+    JSL CODE_05B34A                         ;$01C4CF || touching coin
+    LDA.w $15F6,X                           ;$01C4D3 ||
+    AND.b #$0E                              ;$01C4D6 ||
+    CMP.b #$02                              ;$01C4D8 ||
+    BEQ .silver_coin_01C4E0                 ;$01C4DA ||
+    LDA.b #$01                              ;$01C4DC ||
+    BRA +                                   ;$01C4DE |/
 
-CODE_01C4E0:
+.silver_coin_01C4E0:
     LDA.w $18DD
     INC.w $18DD                             ;$01C4E3 |
     CMP.b #$0A                              ;$01C4E6 |
-    BCC CODE_01C4EC                         ;$01C4E8 |
+    BCC +                                   ;$01C4E8 |
     LDA.b #$0A                              ;$01C4EA |
-CODE_01C4EC:
-    JSL GivePoints
-CODE_01C4F0:
-    LDY.b #$03
-CODE_01C4F2:
-    LDA.w $17C0,Y
-    BEQ CODE_01C4FB                         ;$01C4F5 |
++   JSL GivePoints                          ;$01C4EC |
+create_glitter_sprites_01C4F0:
+    LDY.b #$03                              ;$01C4F0 |
+-   LDA.w $17C0,Y                           ;$01C4F2 |
+    BEQ create_glitter_sprite_01C4FB        ;$01C4F5 |
     DEY                                     ;$01C4F7 |
-    BPL CODE_01C4F2                         ;$01C4F8 |
-Return01C4FA:
+    BPL -                                   ;$01C4F8 |
+return_01C4FA:
     RTS
 
-CODE_01C4FB:
+create_glitter_sprite_01C4FB:
     LDA.b #$05
     STA.w $17C0,Y                           ;$01C4FD |
     LDA $E4,X                               ;$01C500 |
@@ -9688,23 +9685,22 @@ GivePowerPtrIndex:
     db $02,$02,$02,$02,$03,$03,$01,$03
     db $05,$05,$05,$05
 
-TouchedPowerUp:
-    SEC
+touched_powerup_01C537:
+    SEC                                     ;$01C537 |
     SBC.b #$74                              ;$01C539 |
     ASL                                     ;$01C53B |
     ASL                                     ;$01C53C |
     ORA.b Powerup_19                        ;$01C53D |
     TAY                                     ;$01C53F |
     LDA.w ItemBoxSprite,Y                   ;$01C540 |
-    BEQ NoItem                              ;$01C543 |
+    BEQ +                                   ;$01C543 |
     STA.w $0DC2                             ;$01C545 |
     LDA.b #$0B                              ;$01C548 |
     STA.w $1DFC                             ;$01C54A |
-NoItem:
-    LDA.w GivePowerPtrIndex,Y
++   LDA.w GivePowerPtrIndex,Y               ;$01C54D |
     JSL execute_pointer                     ;$01C550 |
 
-HandlePowerUpPtrs:
+.HandlePowerUpPtrs:
     dw GiveMarioMushroom
     dw CODE_01C56F
     dw GiveMarioStar
@@ -15917,108 +15913,104 @@ retracting_tongue_01F332:
     LDA.w $151C,X                           ;$01F337 |
     SEC                                     ;$01F33A |
     SBC.b #$04                              ;$01F33B |
-    BMI CODE_01F344                         ;$01F33D |
+    BMI .put_sprite_on_mouth_01F344         ;$01F33D | if tongue decremented to negative, put sprite on mouth
     STA.w $151C,X                           ;$01F33F |
     BRA handle_tongue_01F321                ;$01F342 |
 
-CODE_01F344:
+.put_sprite_on_mouth_01F344:
     STZ.w $151C,X
-    STZ.w $1594,X                           ;$01F347 |
+    STZ.w $1594,X                           ;$01F347 | change to Normal Mouth routine
     LDY.w $160E,X                           ;$01F34A |
-    BMI CODE_01F370                         ;$01F34D |
+    BMI +                                   ;$01F34D |
     LDA.w $1686,Y                           ;$01F34F |
-    AND.b #$02                              ;$01F352 |
-    BEQ CODE_01F373                         ;$01F354 | swallow sprite immediately
-    LDA.b #$07                              ;$01F356 | hold sprite on mouth
+    AND.b #$02                              ;$01F352 | if sprite does not have Stay in Yoshi's mouth tweaker
+    BEQ .swallow_sprite_fast_01F373         ;$01F354 | swallow sprite immediately, without holding it on mouth
+    LDA.b #$07                              ;$01F356 | otherwise, hold sprite on mouth
     STA.w $14C8,Y                           ;$01F358 |
     LDA.b #$FF                              ;$01F35B |
     STA.w $18AC                             ;$01F35D |
     LDA.w $009E,y                           ;$01F360 |
     CMP.b #$0D                              ;$01F363 |
-    BCS CODE_01F370                         ;$01F365 |
-    PHX                                     ;$01F367 |
-    TAX                                     ;$01F368 |
-    LDA.w SpriteToSpawn,X                   ;$01F369 | transform sprite ID for 00-0C
-    STA.w $009E,y                           ;$01F36C |
-    PLX                                     ;$01F36F |
-CODE_01F370:
-    JMP CODE_01F3FA
+    BCS +                                   ;$01F365 |\
+    PHX                                     ;$01F367 ||
+    TAX                                     ;$01F368 ||
+    LDA.w SpriteToSpawn,X                   ;$01F369 || transform sprite ID for 00-0C
+    STA.w $009E,y                           ;$01F36C ||
+    PLX                                     ;$01F36F |/
++   JMP .handle_tongue_01F3FA               ;$01F370 | immediately try to reposition swallowed sprite again
 
-CODE_01F373:
+.swallow_sprite_fast_01F373:
     LDA.b #$00
-    STA.w $14C8,Y                           ;$01F375 |
+    STA.w $14C8,Y                           ;$01F375 | erase sprite
     LDA.b #$1B                              ;$01F378 |
-    STA.w $1564,X                           ;$01F37A |
+    STA.w $1564,X                           ;$01F37A | timer for the swallowing animation
     LDA.b #$FF                              ;$01F37D |
-    STA.w $160E,X                           ;$01F37F |
+    STA.w $160E,X                           ;$01F37F | set null sprite
     STY $00                                 ;$01F382 |
     LDA.w $009E,y                           ;$01F384 |
     CMP.b #$9D                              ;$01F387 |
-    BNE CODE_01F39F                         ;$01F389 |
-    LDA.w $00C2,y                           ;$01F38B |
-    CMP.b #$03                              ;$01F38E |
-    BNE CODE_01F39F                         ;$01F390 |
-    LDA.b #$74                              ;$01F392 |
-    STA.w $009E,y                           ;$01F394 |
-    LDA.w $167A,Y                           ;$01F397 |
-    ORA.b #$40                              ;$01F39A |
-    STA.w $167A,Y                           ;$01F39C |
-CODE_01F39F:
-    LDA.w $009E,y
+    BNE +                                   ;$01F389 |\
+    LDA.w $00C2,y                           ;$01F38B || if swallowing a Bubble with a Mushroom inside
+    CMP.b #$03                              ;$01F38E ||
+    BNE +                                   ;$01F390 ||
+    LDA.b #$74                              ;$01F392 || transform it into a Mushroom
+    STA.w $009E,y                           ;$01F394 ||
+    LDA.w $167A,Y                           ;$01F397 ||
+    ORA.b #$40                              ;$01F39A || with Gives power-up when eaten by Yoshi tweaker
+    STA.w $167A,Y                           ;$01F39C |/
++   LDA.w $009E,y                           ;$01F39F |
     CMP.b #$81                              ;$01F3A2 |
-    BNE CODE_01F3BA                         ;$01F3A4 |
-    LDA.w $187B,Y                           ;$01F3A6 |
-    LSR                                     ;$01F3A9 |
-    LSR                                     ;$01F3AA |
-    LSR                                     ;$01F3AB |
-    LSR                                     ;$01F3AC |
-    LSR                                     ;$01F3AD |
-    LSR                                     ;$01F3AE |
-    AND.b #$03                              ;$01F3AF |
-    TAY                                     ;$01F3B1 |
-    LDA.w ChangingItemSprite,Y              ;$01F3B2 |
-    LDY $00                                 ;$01F3B5 |
-    STA.w $009E,y                           ;$01F3B7 |
-CODE_01F3BA:
-    PHA
+    BNE +                                   ;$01F3A4 |\
+    LDA.w $187B,Y                           ;$01F3A6 || if swallowing a Changing Item
+    LSR                                     ;$01F3A9 || get its content and transform the sprite into it
+    LSR                                     ;$01F3AA ||
+    LSR                                     ;$01F3AB ||
+    LSR                                     ;$01F3AC ||
+    LSR                                     ;$01F3AD ||
+    LSR                                     ;$01F3AE ||
+    AND.b #$03                              ;$01F3AF ||
+    TAY                                     ;$01F3B1 ||
+    LDA.w ChangingItemSprite,Y              ;$01F3B2 ||
+    LDY $00                                 ;$01F3B5 ||
+    STA.w $009E,y                           ;$01F3B7 |/
++   PHA                                     ;$01F3BA |
     LDY $00                                 ;$01F3BB |
     LDA.w $167A,Y                           ;$01F3BD |
     ASL                                     ;$01F3C0 |
-    ASL                                     ;$01F3C1 |
+    ASL                                     ;$01F3C1 | get the Gives power-up when eaten by Yoshi tweaker
     PLA                                     ;$01F3C2 |
-    BCC CODE_01F3DB                         ;$01F3C3 |
-    PHX                                     ;$01F3C5 |
-    TYX                                     ;$01F3C6 |
-    STZ $C2,X                               ;$01F3C7 |
-    JSR CODE_01C4BF                         ;$01F3C9 |
-    PLX                                     ;$01F3CC |
-    LDY.w $18DC                             ;$01F3CD |
-    LDA.w DATA_01F3D9,Y                     ;$01F3D0 |
-    STA.w $1602,X                           ;$01F3D3 |
-    JMP CODE_01F321                         ;$01F3D6 |
+    BCC .swallow_non_powerup_01F3DB         ;$01F3C3 |\
+    PHX                                     ;$01F3C5 || swallow powerup:
+    TYX                                     ;$01F3C6 ||
+    STZ $C2,X                               ;$01F3C7 || NOTE: as the sprite was already deleted, the purpose of this line is unclear
+    JSR try_give_powerup_or_coin_01C4BF     ;$01F3C9 ||
+    PLX                                     ;$01F3CC ||
+    LDY.w $18DC                             ;$01F3CD ||
+    LDA.w .DATA_01F3D9,Y                    ;$01F3D0 ||
+    STA.w $1602,X                           ;$01F3D3 ||
+    JMP handle_tongue_01F321                ;$01F3D6 || immediately try to swallow sprites again
 
-DATA_01F3D9:
+.DATA_01F3D9:
     db $00,$04
 
-CODE_01F3DB:
+.swallow_non_powerup_01F3DB:
     CMP.b #$7E
-    BNE CODE_01F3F7                         ;$01F3DD |
+    BNE .skip_yoshi_wings_01F3F7            ;$01F3DD |
     LDA.w $00C2,y                           ;$01F3DF |
-    BEQ CODE_01F3F7                         ;$01F3E2 |
-    CMP.b #$02                              ;$01F3E4 |
-    BNE ADDR_01F3F1                         ;$01F3E6 |
-    LDA.b #$08                              ;$01F3E8 |
-    STA $71                                 ;$01F3EA |
-    LDA.b #$03                              ;$01F3EC |
-    STA.w $1DFC                             ;$01F3EE |
-ADDR_01F3F1:
-    JSR CODE_01F6CD
-    JMP CODE_01F321                         ;$01F3F4 |
+    BEQ .skip_yoshi_wings_01F3F7            ;$01F3E2 |
+    CMP.b #$02                              ;$01F3E4 | if swallowing Yoshi Wings
+    BNE +                                   ;$01F3E6 |\
+    LDA.b #$08                              ;$01F3E8 || if swallowing Wings with sparkles
+    STA $71                                 ;$01F3EA || set Shooting up into the sky animation
+    LDA.b #$03                              ;$01F3EC || play sound: Hit a ? block with a vine inside
+    STA.w $1DFC                             ;$01F3EE |/
++   JSR CODE_01F6CD                         ;$01F3F1 |
+    JMP handle_tongue_01F321                ;$01F3F4 | immediately try to swallow sprites again
 
-CODE_01F3F7:
+.skip_yoshi_wings_01F3F7:
     JSR process_eaten_berry_01F0D3
-CODE_01F3FA:
-    JMP CODE_01F321
+.handle_tongue_01F3FA:
+    JMP handle_tongue_01F321
 
 Return01F3FD:
     RTS
@@ -16221,21 +16213,21 @@ process_tongue_01F4B2:
     LDA.b #$04                              ;$01F562 |
     STA $03                                 ;$01F564 |
     LDY.b #$0B                              ;$01F566 | loop throw sprites slots from B to 0
--   STY.w $1695                             ;$01F568 | mirror loop counter
-    CPY.w $15E9                             ;$01F56B |
-    BEQ +                                   ;$01F56E | skip Yoshi itself
-    LDA.w $160E,X                           ;$01F570 |
-    BPL +                                   ;$01F573 | prevent licking more than one sprite
-    LDA.w $14C8,Y                           ;$01F575 |
-    CMP.b #$08                              ;$01F578 |
-    BCC +                                   ;$01F57A | try licking only live sprites
-    LDA.w $1632,Y                           ;$01F57C |
-    BNE +                                   ;$01F57F | skip sprite behind scenery
-    PHY                                     ;$01F581 |
-    JSR .try_lick_sprite_01F58E             ;$01F582 |
-    PLY                                     ;$01F585 |
-+   DEY                                     ;$01F586 |
-    BPL -                                   ;$01F587 |
+-   STY.w $1695                             ;$01F568 |\ mirror loop counter
+    CPY.w $15E9                             ;$01F56B ||
+    BEQ +                                   ;$01F56E || skip Yoshi itself
+    LDA.w $160E,X                           ;$01F570 ||
+    BPL +                                   ;$01F573 || prevent licking more than one sprite
+    LDA.w $14C8,Y                           ;$01F575 ||
+    CMP.b #$08                              ;$01F578 ||
+    BCC +                                   ;$01F57A || try licking only live sprites
+    LDA.w $1632,Y                           ;$01F57C ||
+    BNE +                                   ;$01F57F || skip sprite behind scenery
+    PHY                                     ;$01F581 ||
+    JSR .try_lick_sprite_01F58E             ;$01F582 ||
+    PLY                                     ;$01F585 ||
++   DEY                                     ;$01F586 ||
+    BPL -                                   ;$01F587 |/
     JSL CODE_02B9FA                         ;$01F589 |
     RTS                                     ;$01F58D |
 
@@ -16245,7 +16237,7 @@ process_tongue_01F4B2:
     JSL GetSpriteClippingA                  ;$01F590 |
     PLX                                     ;$01F594 |
     JSL CheckForContact                     ;$01F595 |
-    BCC .return_01F609                        ;$01F599 |
+    BCC .return_01F609                      ;$01F599 |
     LDA.w $1686,Y                           ;$01F59B |
     LSR                                     ;$01F59E |
     BCC .lick_sprite_01F5A7                 ;$01F59F | do not lick sprites with Inedible tweaker
