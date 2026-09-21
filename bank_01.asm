@@ -14950,7 +14950,7 @@ yoshi_01EBCA:
     LDA.w YoshiHasWings_141E                ;$01EBCD |
     STA.w YoshiHasWingsGfx_1410             ;$01EBD0 |
     STZ.w YoshiHasWings_141E                ;$01EBD3 |
-    STZ.w $18E7                             ;$01EBD6 |
+    STZ.w YoshiCanStomp_18E7                ;$01EBD6 |
     STZ.w Empty_191B                        ;$01EBD9 |
     LDA.w $14C8,X                           ;$01EBDC |
     CMP.b #$08                              ;$01EBDF |\
@@ -15695,7 +15695,7 @@ normal_mouth_01F14B:
     STA.w  YoshiHasWings_141E               ;$01F198 ||| set wings flag accordingly
     PLA                                     ;$01F19B |||
     AND.b #$01                              ;$01F19C |||
-    STA.w $18E7                             ;$01F19E ||/ set stomp flag accordingly
+    STA.w YoshiCanStomp_18E7                ;$01F19E ||/ set stomp flag accordingly
     PLY                                     ;$01F1A1 |/
 .try_swallow_sprite_01F1A2:
     LDA $14

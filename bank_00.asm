@@ -11807,7 +11807,7 @@ CODE_00EF68:
     BEQ CODE_00EF95                         ;$00EF81 |
     LDA $8F                                 ;$00EF83 | uninit?
     BEQ CODE_00EF95                         ;$00EF85 |
-    LDA.w $18E7                             ;$00EF87 |
+    LDA.w YoshiCanStomp_18E7                ;$00EF87 |
     BEQ CODE_00EF95                         ;$00EF8A |
     JSL YoshiStompRoutine                   ;$00EF8C |
     LDA.b #$25                              ;$00EF90 |
