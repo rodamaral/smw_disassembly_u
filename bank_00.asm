@@ -8393,7 +8393,7 @@ set_yoshi_pose:                             ;        \
     LDA.b #$1D                              ;$00CDC4 | | use pose $1D.
 .set_pose                                   ;        | |
     STA.w $13E0                             ;$00CDC6 |/ set the player's pose.
-    LDA.w $141E                             ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
+    LDA.w  YoshiHasWings_141E               ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
     CMP.b #$01                              ;$00CDCC | |
     BNE return_00CDDC                       ;$00CDCE |/
     BIT $16                                 ;$00CDD0 |\ and X or Y is tapped,
@@ -9657,7 +9657,7 @@ CODE_00D8CD:
     LDX.b #$00                              ;$00D8D1 |
     LDA.w $187A                             ;$00D8D3 |
     BEQ CODE_00D8E7                         ;$00D8D6 |
-    LDA.w $141E                             ;$00D8D8 |
+    LDA.w  YoshiHasWings_141E               ;$00D8D8 |
     LSR                                     ;$00D8DB |
     BEQ CODE_00D8E7                         ;$00D8DC |
     LDY.b #$02                              ;$00D8DE |
@@ -13045,7 +13045,7 @@ ProcessVerticalScroll00F7F4:
     BNE .CODE_00F869                        ;$00F848 |
     LDX.w $187A                             ;$00F84A |
     BEQ .CODE_00F856                        ;$00F84D |
-    LDX.w $141E                             ;$00F84F |
+    LDX.w  YoshiHasWings_141E               ;$00F84F |
     CPX.b #$02                              ;$00F852 |
     BCS .CODE_00F869                        ;$00F854 |
 .CODE_00F856:
@@ -13570,7 +13570,7 @@ ADDR_00FC25:
     BNE ADDR_00FC73                         ;$00FC31 |
     LDA.b #$01                              ;$00FC33 |
     STA.w $0DC1                             ;$00FC35 |
-    STZ.w $141E                             ;$00FC38 |
+    STZ.w  YoshiHasWings_141E               ;$00FC38 |
     LDA.w $15F6,Y                           ;$00FC3B |
     AND.b #$F1                              ;$00FC3E |
     ORA.b #$0A                              ;$00FC40 |

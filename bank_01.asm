@@ -4786,7 +4786,7 @@ CODE_01A2AD:
     BCS CODE_01A2F4                         ;$01A2B3 |
 CODE_01A2B5:
     STZ.w $18AC
-    STZ.w $141E                             ;$01A2B8 |
+    STZ.w  YoshiHasWings_141E               ;$01A2B8 |
     LDA.b #$35                              ;$01A2BB |
     STA.w $9E,X                             ;$01A2BD |
     LDA.b #$08                              ;$01A2C0 |
@@ -14947,9 +14947,9 @@ GrowingAniSequence:
 
 yoshi_01EBCA:
     STZ.w PlayerIsFrozen_13FB               ;$01EBCA | Unfreeze the player (from berries)
-    LDA.w $141E                             ;$01EBCD |
+    LDA.w YoshiHasWings_141E                ;$01EBCD |
     STA.w $1410                             ;$01EBD0 |
-    STZ.w $141E                             ;$01EBD3 |
+    STZ.w YoshiHasWings_141E                ;$01EBD3 |
     STZ.w $18E7                             ;$01EBD6 |
     STZ.w $191B                             ;$01EBD9 |
     LDA.w $14C8,X                           ;$01EBDC |
@@ -15657,7 +15657,7 @@ normal_mouth_01F14B:
     LDA.w $1B95
     BEQ +                                   ;$01F14E |\ if Yoshi went to the Sky Levels
     LDA.b #$02                              ;$01F150 || set the wings
-    STA.w $141E                             ;$01F152 |/
+    STA.w  YoshiHasWings_141E               ;$01F152 |/
 +   LDA.w $18AC                             ;$01F155 |
     BEQ .try_swallow_sprite_01F1A2          ;$01F158 |\ if Yoshi has a sprite on mouth:
     LDY.w $160E,X                           ;$01F15A ||
@@ -15692,7 +15692,7 @@ normal_mouth_01F14B:
     LDA.w YoshiShellAbility,Y               ;$01F192 |||/
 +   PHA                                     ;$01F195 |||
     AND.b #$02                              ;$01F196 |||
-    STA.w $141E                             ;$01F198 ||| set wings flag accordingly
+    STA.w  YoshiHasWings_141E               ;$01F198 ||| set wings flag accordingly
     PLA                                     ;$01F19B |||
     AND.b #$01                              ;$01F19C |||
     STA.w $18E7                             ;$01F19E ||/ set stomp flag accordingly
@@ -16384,7 +16384,7 @@ give_yoshi_wings_01F6CD:
     LDA.b #$40                              ;$01F6CD | 
     STA.w $14AA                             ;$01F6CF | Unused timer
     LDA.b #$02                              ;$01F6D2 |
-    STA.w $141E                             ;$01F6D4 | set Yoshi Wings
+    STA.w  YoshiHasWings_141E               ;$01F6D4 | set Yoshi Wings
     LDA.b #$00                              ;$01F6D7 |
     STA.w $14C8,Y                           ;$01F6D9 | erase sprite
 return_01F6DC:

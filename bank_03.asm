@@ -7797,7 +7797,7 @@ CODE_03C054:
     BCS CODE_03C09B                         ;$03C05A |
 ADDR_03C05C:
     STZ.w $18AC
-    STZ.w $141E                             ;$03C05F |
+    STZ.w  YoshiHasWings_141E               ;$03C05F |
     LDA.b #$35                              ;$03C062 |
     STA.w $9E,X                             ;$03C064 |
     LDA.b #$08                              ;$03C067 |
