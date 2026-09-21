@@ -14951,7 +14951,7 @@ yoshi_01EBCA:
     STA.w YoshiHasWingsGfx_1410             ;$01EBD0 |
     STZ.w YoshiHasWings_141E                ;$01EBD3 |
     STZ.w $18E7                             ;$01EBD6 |
-    STZ.w $191B                             ;$01EBD9 |
+    STZ.w Empty_191B                        ;$01EBD9 |
     LDA.w $14C8,X                           ;$01EBDC |
     CMP.b #$08                              ;$01EBDF |\
     BEQ +                                   ;$01EBE1 || If Yoshi is dying, don't let Mario bring him to the next level,
