@@ -10854,7 +10854,7 @@ CODE_01CDA7:
     RTS                                     ;$01CDAA |
 
 WallKoopaKids:
-    STZ.w $13FB
+    STZ.w PlayerIsFrozen_13FB
     LDA.w $1602,X                           ;$01CDAE |
     CMP.b #$1B                              ;$01CDB1 |
     BCS CODE_01CDD5                         ;$01CDB3 |
@@ -11797,7 +11797,7 @@ DATA_01D44A:
 
 BossFireball:
     LDA $9D
-    ORA.w $13FB                             ;$01D450 |
+    ORA.w PlayerIsFrozen_13FB               ;$01D450 |
     BNE CODE_01D487                         ;$01D453 |
     LDA.w $1540,X                           ;$01D455 |
     CMP.b #$10                              ;$01D458 |
@@ -13634,7 +13634,7 @@ CODE_01E201:
     STA.w $1434                             ;$01E212 |
     LDA.b #$10                              ;$01E215 |
     STA.w $1DFB                             ;$01E217 |
-    INC.w $13FB                             ;$01E21A |
+    INC.w PlayerIsFrozen_13FB               ;$01E21A |
     INC $9D                                 ;$01E21D |
     LDA.w $14E0,X                           ;$01E21F |
     STA.w $1437                             ;$01E222 |
@@ -14946,7 +14946,7 @@ GrowingAniSequence:
     db $0C,$0B,$0C,$0B,$0A,$0B,$0A,$0B
 
 yoshi_01EBCA:
-    STZ.w $13FB                             ;$01EBCA | Unfreeze the player (from berries)
+    STZ.w PlayerIsFrozen_13FB               ;$01EBCA | Unfreeze the player (from berries)
     LDA.w $141E                             ;$01EBCD |
     STA.w $1410                             ;$01EBD0 |
     STZ.w $141E                             ;$01EBD3 |
@@ -14982,11 +14982,11 @@ yoshi_01EBCA:
     BEQ .yoshi_not_growing_01EC4C           ;$01EC16 |\
     DEC.w $18E8                             ;$01EC18 || GLITCH: with many Yoshis, the timer decreases faster per frame
     STA $9D                                 ;$01EC1B || Freeze game
-    STA.w $13FB                             ;$01EC1D ||
+    STA.w PlayerIsFrozen_13FB               ;$01EC1D ||
     CMP.b #$01                              ;$01EC20 || If Yoshi isn't done hatching yet, skip to continue running the animation
     BNE +                                   ;$01EC22 ||\
     STZ $9D                                 ;$01EC24 ||| Unfreeze game
-    STZ.w $13FB                             ;$01EC26 |||
+    STZ.w PlayerIsFrozen_13FB               ;$01EC26 |||
     LDY.w $0DB3                             ;$01EC29 ||| Show Yoshi's spawn message if:
     LDA.w $1F11,Y                           ;$01EC2C ||| - Yoshi's Island
     DEC A                                   ;$01EC2F ||| - first time
@@ -15040,7 +15040,7 @@ yoshi_01EBCA:
     BRA .CODE_01EC6A                        ;$01EC76 |
 
 .CODE_01EC78:
-    INC.w $13FB
+    INC.w PlayerIsFrozen_13FB
     JSR .mounted_player_relative_y_01EC50   ;$01EC7B |
     STY $9D                                 ;$01EC7E |
     CMP.b #$02                              ;$01EC80 |
@@ -15507,7 +15507,7 @@ process_yoshi_head_01EF18:
     PLA                                     ;$01F02C ||
     STA $0E                                 ;$01F02D |/
 .frozen_swallowing_berry_01F02F:
-    INC.w $13FB
+    INC.w PlayerIsFrozen_13FB
     LDA.b #$00                              ;$01F032 |
     LDY.b #$2A                              ;$01F034 | 2A: eating berry
     BRA .set_OAM_01F03A                     ;$01F036 |

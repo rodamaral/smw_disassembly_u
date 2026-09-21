@@ -434,7 +434,7 @@ CODE_0283E0:
     LDA.w $18A8,X                           ;$0283E2 |
     BEQ CODE_0283F4                         ;$0283E5 |
     BMI CODE_0283F1                         ;$0283E7 |
-    STA.w $13FB                             ;$0283E9 |
+    STA.w PlayerIsFrozen_13FB               ;$0283E9 |
     STA $9D                                 ;$0283EC |
     JSR CODE_0283F8                         ;$0283EE |
 CODE_0283F1:
@@ -474,7 +474,7 @@ CODE_02842A:
     CPX.b #$01
     BNE CODE_028433                         ;$02842C |
     STZ $9D                                 ;$02842E |
-    STZ.w $13FB                             ;$028430 |
+    STZ.w PlayerIsFrozen_13FB               ;$028430 |
 CODE_028433:
     LDA.b #$B0
 CODE_028435:
