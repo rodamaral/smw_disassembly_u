@@ -1037,10 +1037,650 @@ ORG $0001FF
 ; ~240 bytes available before Bad Things(TM) happen
 StackStart_01FF: skip 1
 
-; ...
+; === $7E0200 ===
+; 512 bytes
+; a work RAM buffer of Object Attribute Memory (OAM)
+; table 1: object position, tile, and attributes
+OAMMirror:
 
-ORG $0014C8
+; === $7E0200 ===
+; 128 objects
+; the lower 8 bits of the object's X position on the screen
+OAMTileXPos: skip 1
 
+; === $7E0201 ===
+; 128 objects
+; the 8 bits of the object's Y position on the screen
+; $E0 is just off the bottom of the screen
+OAMTileYPos: skip 1
+
+; === $7E0202 ===
+; 128 objects
+; the lower 8 bits of the tile number that the object uses
+OAMTileNo: skip 1
+
+; === $7E0203 ===
+; 128 objects
+; various properties of the object
+; yxppccct
+; |||||||+ the higher 1 bit of the tile number the object uses
+; ||||+++- the palette that the object uses
+; ||++---- the priority that this object has against backgrounds
+; |+------ the object is flipped horizontally
+; +------- the object is flipped vertically
+OAMTileAttr: skip 1
+
+ORG $000400
+
+; === $7E0400 ===
+; 32 bytes
+; a work RAM buffer of Object Attribute Memory (OAM)
+; table 2: object high X position & size
+OAMTileBitSize: skip 32
+
+; === $7E0400 ===
+; 128 bytes
+; expanded table of object attributes for OAM table 2
+; one byte per object
+; ------sx
+;       |+ the higher 1 bit of the object's X position on the screen
+;       +- the size of the object (big or small)
+OAMTileSize: skip 128
+
+; === $7E04A0 ===
+; 480 bytes
+; window left and right positions for each line
+; 2 bytes per line
+; last 32 lines are seldom used outside of the PAL release
+WindowTable:
+
+; === $7E04A0 ===
+; 10 bytes
+; HDMA table for background layer 1 position during the
+; enemy names credits scenes
+; first two entries are for the top half
+; (split in two because it can be large)
+; last entry for bottom half
+CreditsL1HDMATable: skip 10
+
+; === $7E04AA ===
+; 10 bytes
+; HDMA table for background layer 2 position during the
+; enemy names credits scenes
+; first two entries are for the top half
+; (split in two because it can be large)
+; last entry for bottom half
+CreditsL2HDMATable: skip 10
+
+; === $7E04B4 ===
+; 10 bytes
+; HDMA table for background layer 3 position during the
+; enemy names credits scenes
+; first two entries are for the top half
+; (split in two because it can be large)
+; last entry for bottom half
+CreditsL3HDMATable: skip 460
+
+; === $7E0680 ===
+; 1 byte
+; which palette table to use
+PaletteIndexTable: skip 1
+; Valid values
+!PaletteTableUse_Dynamic = 0
+!PaletteTableUse_Copy = 3
+!PaletteTableUse_Main = 6
+
+; === $7E0681 ===
+; 1 byte
+; the current size of the dynamic palette upload table
+DynPaletteIndex: skip 1
+
+; === $7E0682 ===
+; 127 bytes
+; list of entries of colors to upload to CGRAM
+; each entry has a 2 byte header
+; header byte 1 = number of bytes to upload in this entry
+; header byte 2 = CGRAM word address to upload this entry
+; data = the colors to upload
+DynPaletteTable: skip 127
+
+; === $7E0701 ===
+; 2 bytes
+; the fixed color, commonly used for the background
+; value buffer for PPU register $2132, COLDATA
+BackgroundColor: skip 2
+
+; === $7E0703 ===
+; 512 bytes
+; a work RAM buffer of the entirety of CGRAM
+MainPalette: skip 512
+
+; === $7E0903 ===
+; 2 bytes
+; copy of the background color
+; used during level end palette fade in and out
+CopyBGColor: skip 2
+
+; === $7E0905 ===
+; 496 bytes
+; a copy of almost all of CGRAM, missing the last 8 colors
+; used during level end palette fade in and out
+; as well as overworld event tile fading animation
+CopyPalette: skip 496
+
+; === $7E0AF5 ===
+; 1 byte
+; mostly unused
+; cleared after a boss is beaten
+Empty0AF5: skip 1
+
+; === $7E0AF6 ===
+; 352 bytes
+; graphics buffer for animated tiles on the overworld
+GfxDecompOWAni:
+
+; === $7E0AF6 ===
+; 256 bytes
+; tilemap for Iggy and Larry's rotating platform
+IggyLarryPlatInteract:
+
+; === $7E0AF6 ===
+; 15 bytes
+; timer for sprites during credits and castle cutscenes
+CreditsSprTimer: skip 15
+
+; === $7E0B05 ===
+; 15 bytes
+; Y speed for sprites during credits and castle cutscenes
+; upper 8 bits of 4.12 fixed point in pixels per frame
+CreditsSprYSpeed: skip 15
+
+; === $7E0B14 ===
+; 15 bytes
+; X speed for sprites during credits and castle cutscenes
+; upper 8 bits of 4.12 fixed point in pixels per frame
+CreditsSprXSpeed: skip 15
+
+; === $7E0B23 ===
+; 15 bytes
+; Y speed fractional part for sprites during credits and castle cutscenes
+; lower 8 bits of 4.12 fixed point in pixels per frame
+CreditsSprYSubSpd: skip 15
+
+; === $7E0B32 ===
+; 15 bytes
+; X speed fractional part for sprites during credits and castle cutscenes
+; lower 8 bits of 4.12 fixed point in pixels per frame
+CreditsSprXSubSpd: skip 15
+
+; === $7E0B41 ===
+; 15 bytes
+; low byte of Y position for sprites during credits and castle cutscenes
+CreditsSprYPosLow: skip 15
+
+; === $7E0B50 ===
+; 15 bytes
+; low byte of X position for sprites during credits and castle cutscenes
+CreditsSprXPosLow: skip 15
+
+; === $7E0B5F ===
+; 15 bytes
+; high byte of Y position for sprites during credits and castle cutscenes
+CreditsSprYPosHigh: skip 15
+
+; === $7E0B6E ===
+; 15 bytes
+; high byte of X position for sprites during credits and castle cutscenes
+CreditsSprXPosHigh: skip 15
+
+; === $7E0B7D ===
+; 15 bytes
+; vertical acceleration for sprites during credits and castle cutscenes
+CastleCutExSprAccel: skip 15
+
+; === $7E0B8C ===
+; 15 bytes
+; flag to denote slot taken for sprites during credits and castle cutscenes
+CastleCutExSprSlot: skip 106
+
+; === $7E0BF6 ===
+; 384 bytes
+; graphics buffer for OBJ tiles $4A-$4F & $5A-$5F
+; includes small pieces of Mario, springboard, sliding Koopa, et al
+GfxDecompSP1: skip 384
+
+; === $7E0D76 ===
+; 2 bytes
+; source address of the first of three
+; animated 16x16 tiles uploaded this frame
+Gfx33SrcAddrA: skip 2
+
+; === $7E0D78 ===
+; 2 bytes
+; source address of the second of three
+; animated 16x16 tiles uploaded this frame
+Gfx33SrcAddrB: skip 2
+
+; === $7E0D7A ===
+; 2 bytes
+; source address of the third of three
+; animated 16x16 tiles uploaded this frame
+Gfx33SrcAddrC: skip 2
+
+; === $7E0D7C ===
+; 2 bytes
+; destination VRAM address of the first of three
+; animated 16x16 tiles uploaded this frame
+Gfx33DestAddrA: skip 2
+
+; === $7E0D7E ===
+; 2 bytes
+; destination VRAM address of the second of three
+; animated 16x16 tiles uploaded this frame
+Gfx33DestAddrB: skip 2
+
+; === $7E0D80 ===
+; 2 bytes
+; destination VRAM address of the third of three
+; animated 16x16 tiles uploaded this frame
+Gfx33DestAddrC: skip 2
+
+; === $7E0D82 ===
+; 2 bytes
+; pointer to the player's palette (bank is $00)
+PlayerPalletePtr: skip 2
+
+; === $7E0D84 ===
+; 1 byte
+; number of 8x8 tiles that make up the player
+PlayerGfxTileCount: skip 1
+
+; === $7E0D85 ===
+; 20 bytes
+; 10 pointers to graphics that make up various parts of
+; Mario, Yoshi, cape, and Podoboo
+DynGfxTilePtr: skip 20
+
+; === $7E0D99 ===
+; 2 bytes
+; pointer to graphics that make up parts of Mario (OBJ tile $7F)
+DynGfxTile7FPtr: skip 2
+
+; === $7E0D9A ===
+; 1 byte
+; flag to determine which NMI and IRQ code to run for various game modes
+IRQNMICommand: skip 1
+; Valid values
+!IRQNMI_Standard = 0
+!IRQNMI_Cutscenes = 1
+!IRQNMI_Overworld = 2
+!IRQNMI_IggyLarry = %10000000
+!IRQNMI_ReznorMortonRoy = %11000000
+!IRQNMI_Bowser = %11000001
+
+; === $7E0D9C ===
+; 1 byte
+; unused
+WRAM_0D9C: skip 1
+
+
+ThroughMain: skip 1
+ThroughSub: skip 1
+HDMAEnable: skip 1
+ControllersPresent: skip 1
+; 7E0DA1 unused
+skip 1
+byetudlrP1Hold: skip 1
+byetudlrP2Hold: skip 1
+axlr0000P1Hold: skip 1
+axlr0000P2Hold: skip 1
+byetudlrP1Frame: skip 1
+byetudlrP2Frame: skip 1
+axlr0000P1Frame: skip 1
+axlr0000P2Frame: skip 1
+byetudlrP1Mask: skip 1
+byetudlrP2Mask: skip 1
+axlr0000P1Mask: skip 1
+axlr0000P2Mask: skip 1
+Brightness: skip 1
+MosaicDirection: skip 1
+MosaicSize: skip 1
+KeepModeActive_TODO: skip 1 ; FIXME
+IsTwoPlayerGame: skip 1
+PlayerTurnLvl: skip 1
+SavedPlayerLives: skip 2
+SavedPlayerCoins: skip 2
+SavedPlayerPowerup: skip 2
+SavedPlayerYoshi: skip 2
+SavedPlayerItembox: skip 2
+PlayerLives: skip 1
+PlayerCoins: skip 1
+GreenStarBlockCoins: skip 1
+CarryYoshiLevels_0DC1: skip 1
+PlayerItembox: skip 1
+; 7E0DC3 - 7E0DC6 unused
+skip 4
+OverworldDestXPos: skip 2
+OverworldDestYPos: skip 6
+OWPlayerSpeed: skip 4
+OWPlayerDirection: skip 2
+OWLevelExitMode: skip 1
+PlayerTurnOW: skip 2
+PlayerSwitching: skip 1
+; 7E0DD9 unused
+skip 1
+MusicBackup: skip 1
+; 7E0DDB - 7E0DDD unused
+skip 3
+SaveFileDelete: skip 1
+OWCloudOAMIndex: skip 1
+OWCloudYSpeed: skip 5
+OWSpriteNumber: skip 16
+OWSpriteMisc0DF5: skip 16
+OWSpriteMisc0E05: skip 16
+OWSpriteMisc0E15: skip 16
+OWSpriteMisc0E25: skip 16
+OWSpriteXPosLow: skip 16
+OWSpriteYPosLow: skip 16
+OWSpriteZPosLow: skip 16
+OWSpriteXPosHigh: skip 16
+OWSpriteYPosHigh: skip 16
+OWSpriteZPosHigh: skip 16 ; unused?
+OWSpriteXSpeed: skip 16
+OWSpriteYSpeed: skip 16
+OWSpriteZSpeed: skip 16
+OWSpriteXPosSpx: skip 16
+OWSpriteYPosSpx: skip 16 ; unused?
+OWSpriteZPosSpx: skip 16 ; unused?
+KoopaKidActive: skip 1
+KoopaKidTile: skip 1
+EnterLevelAuto: skip 1
+YoshiSavedFlag: skip 1
+StatusBar: skip 55
+InGameTimerFrames: skip 1
+InGameTimerHundreds: skip 1
+InGameTimerTens: skip 1
+InGameTimerOnes: skip 1
+PlayerScore: skip 6
+; 7E0F3A - 7E0F3F unused
+skip 6
+ScoreIncrement: skip 2
+; 7E0F42 - 7E0F47 unused
+skip 6
+PlayerBonusStars: skip 2
+ClusterSpriteMisc0F4A: skip 20
+ClusterSpriteMisc0F5E: skip 20 ; unused
+ClusterSpriteMisc0F72: skip 20
+ClusterSpriteMisc0F86: skip 20
+ClusterSpriteMisc0F9A: skip 20
+BooRingAngleLow: skip 2
+BooRingAngleHigh: skip 2
+BooRingXPosLow: skip 2
+BooRingXPosHigh: skip 2
+BooRingYPosLow: skip 2
+BooRingYPosHigh: skip 2
+BooRingOffscreen: skip 2
+BooRingLoadIndex: skip 2
+Map16Pointers: skip 1024
+ItemMemorySetting: skip 1
+TranslevelNo: skip 2
+OverworldLayer1Tile: skip 2
+CurrentSubmap: skip 2
+MoonCounter: skip 1
+CutsceneID: skip 1
+YoshiColor: skip 1
+; 7E13C8 unused
+skip 1
+ShowContinueEnd: skip 1
+ShowSavePrompt: skip 1
+UnusedStarCounter: skip 1
+CoinAdder: skip 1
+DisableMidway: skip 1
+MidwayFlag: skip 1
+SkipMidwayCastleIntro: skip 1
+StructureCrushTile: skip 1
+StructureCrushIndex: skip 1
+SwitchPalaceColor: skip 1
+PauseTimer: skip 1
+PauseFlag: skip 1
+Layer3ScrollType: skip 1
+DrumrollTimer: skip 1
+IntroMarchYPosSpx: skip 2
+OverworldProcess: skip 1
+PlayerXPosSpx: skip 1
+PlayerWalkingPose: skip 1
+PlayerYPosSpx: skip 1 ; unused
+PlayerTurningPose: skip 1
+PlayerOverworldPose: skip 1
+PlayerCapePose: skip 1
+PlayerPose: skip 1
+SlopeType: skip 1
+SpinjumpFireball: skip 1
+WallrunningType: skip 1
+PlayerPMeter: skip 1
+PlayerPoseLenTimer: skip 1
+; 7E13E6 - 7E13E7 unused
+skip 2
+CapeInteracts: skip 1
+CapeInteractionXPos: skip 2
+CapeInteractionYPos: skip 2
+PlayerSlopePose: skip 1
+CurrentSlope: skip 1
+PlayerIsOnGround: skip 1
+NetDoorDirIndex: skip 1
+VerticalScrollEnabled: skip 1
+; 7E13F2 unused
+skip 1
+PBalloonInflating: skip 1
+BonusRoomBlocks: skip 5
+PlayerBehindNet: skip 1
+PlayerCanJumpWater: skip 1
+PlayerIsFrozen_13FB: skip 1
+ActiveBoss: skip 1
+CameraIsScrolling: skip 1
+CameraScrollDir: skip 1
+CameraScrollPlayerDir: skip 1
+CameraProperMove: skip 1
+CameraScrollTimer: skip 1
+NoteBlockActive: skip 1
+
+; === $7E1403 ===
+; 1 byte
+; which layer 3 tide setting is enabled
+Layer3TideSetting: skip 1
+; Valid values
+!Tide_UpAndDown = 1
+!Tide_Stationary = 2
+
+ScreenScrollAtWill: skip 1
+DrawYoshiInPipe: skip 1
+BouncingOnBoard: skip 1
+FlightPhase: skip 1
+NextFlightPhase: skip 1
+MaxStageOfFlight: skip 1
+Empty_140A: skip 1
+; 7E140B - 7E140C unused
+skip 2
+SpinJumpFlag: skip 1
+Layer2Touched: skip 1
+ReznorOAMIndex: skip 1
+YoshiHasWingsGfx_1410: skip 1
+HorizLayer1Setting: skip 1
+VertLayer1Setting: skip 1
+HorizLayer2Setting: skip 1
+VertLayer2Setting: skip 1
+; 7E1415 - 7E1416 unused
+skip 2
+BackgroundVertOffset: skip 2
+YoshiInPipeSetting: skip 1
+SublevelCount: skip 1
+DidPlayBonusGame: skip 1
+SecretGoalTape: skip 1
+ShowMarioStart: skip 1
+YoshiHasWings_141E: skip 1
+DisableNoYoshiIntro: skip 1
+DragonCoinsCollected: skip 1
+OneUpCheckpoints: skip 1
+DragonCoinsShown: skip 1
+SwitchPalacePressed: skip 1
+DisplayBonusStars: skip 1
+BonusGameActivate: skip 1
+MessageBoxTrigger: skip 1
+ClownCarImage: skip 1
+ClownCarPropeller: skip 1
+BowserPalette: skip 1
+CameraMoveTrigger: skip 2
+CameraLeftBuffer: skip 2
+CameraRightBuffer: skip 2
+SolidTileStart: skip 1
+SolidTileEnd: skip 1
+DirectCoinInit: skip 1
+SpotlightSize: skip 1
+KeyholeTimer: skip 1
+KeyholeDirection: skip 1
+KeyholeXPos: skip 2
+KeyholeYPos: skip 2
+UploadMarioStart: skip 1
+DeathMessage: skip 1
+GameOverAnimation: skip 1
+GameOverTimer: skip 1
+Layer1ScrollCmd: skip 1
+Layer2ScrollCmd: skip 1
+Layer1ScrollBits: skip 1
+Layer2ScrollBits: skip 1
+Layer1ScrollType: skip 1
+CutsceneTextTimer:
+SelectedStartingZone:
+Layer2ScrollType: skip 1
+Layer1ScrollTimer: skip 1
+Layer2ScrollTimer: skip 1
+Layer1ScrollXSpeed: skip 2
+Layer1ScrollYSpeed: skip 2
+Layer2ScrollXSpeed: skip 2
+Layer2ScrollYSpeed: skip 2
+Layer1ScrollXPosUpd: skip 2
+Layer1ScrollYPosUpd: skip 2
+Layer2ScrollXPosUpd: skip 2
+Layer2ScrollYPosUpd: skip 2
+ScrollLayerIndex: skip 1
+CreditsJumpingYoshi: skip 1
+Layer3ScrollXSpeed: skip 2
+Layer3ScrollYSpeed: skip 2
+Layer3ScrollXPosUpd: skip 2
+; 7E145E - 7E145F unused
+skip 2
+Layer3ScroolDir: skip 1
+; 7E1461 unused
+skip 1
+NextLayer1XPos: skip 2
+NextLayer1YPos: skip 2
+NextLayer2XPos: skip 2
+NextLayer2YPos: skip 2
+Layer3HorizOffset: skip 2
+; 7E146C - 7E146F unused
+skip 4
+CarryingFlag: skip 1
+StandOnSolidSprite: skip 1
+LightTopWinOpenPos: skip 1
+; 7E1473 unused
+skip 1
+LightTopWinClosePos: skip 1
+; 7E1475 unused
+skip 1
+LightBotWinOpenPos: skip 1
+; 7E1477 unused
+skip 1
+LightBotWinClosePos: skip 1
+; 7E1479 unused
+skip 1
+LightWinOpenCalc: skip 1
+; 7E147B unused
+skip 1
+LightWinCloseCalc: skip 1
+; 7E147D unused
+skip 1
+LightWinOpenMove: skip 1
+LightWinCloseMove: skip 1
+LightLeftWidth: skip 1
+LightRightWidth: skip 1
+LightSkipInit: skip 1
+LightMoveDir: skip 1
+LightLeftRelPos: skip 1
+LightRightRelPos: skip 1
+LightExists: skip 1
+; 7E1487 - 7E148A unused
+skip 4
+RNGCalc: skip 2
+RandomNumber: skip 2
+IsCarryingItem: skip 1
+InvinsibilityTimer: skip 1
+SpriteXMovement: skip 1
+PlayerPeaceSign: skip 1
+EndLevelTimer: skip 1
+ColorFadeDir: skip 1
+ColorFadeTimer: skip 1
+PlayerAniTimer: skip 1
+IFrameTimer: skip 1
+PickUpItemTimer: skip 1
+FaceScreenTimer: skip 1
+KickingTimer: skip 1
+CyclePaletteTimer: skip 1
+ShootFireTimer: skip 1
+NetDoorTimer: skip 1
+PunchNetTimer: skip 1
+TakeoffTimer: skip 1
+RunTakeoffTimer: skip 1
+SkidTurnTimer: skip 1
+CapeAniTimer: skip 1
+YoshiTongueTimer: skip 1
+CapePumpTimer: skip 1
+CapeFloatTimer: skip 1
+CapeSpinTimer: skip 1
+ReznorBridgeTimer: skip 1
+EmptyTimer14A8: skip 1
+GroundPoundTimer: skip 1
+YoshiWingGrabTimer: skip 1
+BonusFinishTimer: skip 1
+; 7E14AC unused
+skip 1
+BluePSwitchTimer: skip 1
+SilverPSwitchTimer: skip 1
+OnOffSwitch: skip 1
+LakituCloudTempXPos:
+IggyLarryRotCenterX:
+BrSwingCenterXPos:
+BowserWaitTimer: skip 1
+BowserAttackTimer: skip 1
+LakituCloudTempYPos:
+IggyLarryRotCenterY:
+BrSwingCenterYPos:
+BowserFlyawayCounter: skip 1
+ClownCarTeardropPos: skip 1
+IggyLarryPlatIntXPos:
+BrSwingXDist:
+BowserMusicIndex: skip 1
+BowserHurtState: skip 1
+IggyLarryPlatIntYPos:
+BrSwingYDist:
+BowserSteelieTimer: skip 1
+BowserFireXPos: skip 1
+IggyLarryTempXPos:
+BrSwingPlatXPos:
+BowserAttackType: skip 2
+IggyLarryTempYPos:
+BrSwingPlatYPos: skip 2
+BrSwingRadiusX: skip 2
+; 7E14BE unused
+skip 1
+BrSwingRadiusY: skip 2
+; 7E14C1 unused
+skip 1
+BrSwingSine: skip 2
+; 7E14C4 unused
+skip 1
+BrSwingCosine: skip 2
+; 7E14C7 unused
+skip 1
 SpriteStatus_14C8: skip 12
 SpriteYPosHigh_14D4: skip 12
 SpriteXPosHigh_14E0: skip 12
@@ -1250,7 +1890,7 @@ GivePlayerLives: skip 1
 GiveLivesTimer: skip 1
 ; 7E18E6 unused
 skip 1
-YoshiCanStomp: skip 1
+YoshiCanStomp_18E7: skip 1
 YoshiGrowingTimer: skip 1
 SmokeSpriteSlotFull: skip 1
 MinExtSpriteXPosHigh: skip 12
