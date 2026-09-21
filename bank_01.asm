@@ -14990,10 +14990,10 @@ yoshi_01EBCA:
     LDY.w CurrentPlayer_0DB3                ;$01EC29 ||| Show Yoshi's spawn message if:
     LDA.w OWPlayerSubmap_1F11,Y             ;$01EC2C ||| - Yoshi's Island
     DEC A                                   ;$01EC2F ||| - first time
-    ORA.w $0EF8                             ;$01EC30 ||| - not title screen
+    ORA.w YoshiSavedFlag_0EF8               ;$01EC30 ||| - not title screen
     ORA.w $0109                             ;$01EC33 |||
     BNE +                                   ;$01EC36 |||\
-    INC.w $0EF8                             ;$01EC38 |||| Display Yoshi's spawn message
+    INC.w YoshiSavedFlag_0EF8               ;$01EC38 |||| Display Yoshi's spawn message
     LDA.b #$03                              ;$01EC3B |||/
     STA.w $1426                             ;$01EC3D ||/
 +   DEC A                                   ;$01EC40 ||

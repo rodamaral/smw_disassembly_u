@@ -1395,7 +1395,7 @@ OWSpriteZPosSpx: skip 16 ; unused?
 KoopaKidActive: skip 1
 KoopaKidTile: skip 1
 EnterLevelAuto: skip 1
-YoshiSavedFlag: skip 1
+YoshiSavedFlag_0EF8: skip 1
 StatusBar: skip 55
 InGameTimerFrames: skip 1
 InGameTimerHundreds: skip 1
@@ -1525,7 +1525,7 @@ DragonCoinsShown: skip 1
 SwitchPalacePressed: skip 1
 DisplayBonusStars: skip 1
 BonusGameActivate: skip 1
-MessageBoxTrigger: skip 1
+MessageBoxTrigger_1426: skip 1
 ClownCarImage: skip 1
 ClownCarPropeller: skip 1
 BowserPalette: skip 1
