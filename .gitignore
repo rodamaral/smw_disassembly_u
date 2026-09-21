@@ -15,3 +15,6 @@ smw.0*
 *.orig
 *.rej
 *.sym
+
+.vscode/settings.json
+.vscode/tasks.json
