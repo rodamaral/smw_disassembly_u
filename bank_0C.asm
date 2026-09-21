@@ -1392,15 +1392,15 @@ CODE_0C9FEA:
     STA.w $7B                               ;$0C9FFE |
     JSR CODE_0CA75A                         ;$0CA001 |
     LDA.b #$52                              ;$0CA004 |
-    STA $E4                                 ;$0CA006 |
-    STZ.w $14E0                             ;$0CA008 |
+    STA $E4                                 ;$0CA006 | WARN: unindexed table
+    STZ.w SpriteXPosHigh_14E0               ;$0CA008 | WARN: unindexed table
     LDA.b #$8F                              ;$0CA00B |
-    STA $D8                                 ;$0CA00D |
-    STZ.w $14D4                             ;$0CA00F |
+    STA $D8                                 ;$0CA00D | WARN: unindexed table
+    STZ.w $14D4                             ;$0CA00F | WARN: unindexed table
     LDA.b #$A0                              ;$0CA012 |
-    STA.w $15EA                             ;$0CA014 |
+    STA.w $15EA                             ;$0CA014 | WARN: unindexed table
     JSR CODE_0CA778                         ;$0CA017 |
-    LDX.w $1602                             ;$0CA01A |
+    LDX.w $1602                             ;$0CA01A | WARN: unindexed table
     LDA.b #$51                              ;$0CA01D |
     STA $00                                 ;$0CA01F |
     STZ $01                                 ;$0CA021 |
@@ -1688,16 +1688,16 @@ CODE_0CA24F:
     LDA.w $0B50                             ;$0CA26D |
     CLC                                     ;$0CA270 |
     ADC.b #$30                              ;$0CA271 |
-    STA $E4                                 ;$0CA273 |
+    STA $E4                                 ;$0CA273 | WARN: unindexed table
     LDA.w $0B6E                             ;$0CA275 |
     ADC.b #$00                              ;$0CA278 |
-    STA.w $14E0                             ;$0CA27A |
+    STA.w SpriteXPosHigh_14E0               ;$0CA27A | WARN: unindexed table
     LDA.b #$60                              ;$0CA27D |
-    STA $D8                                 ;$0CA27F |
+    STA $D8                                 ;$0CA27F | WARN: unindexed table
     LDA.b #$01                              ;$0CA281 |
-    STA.w $14D4                             ;$0CA283 |
+    STA.w $14D4                             ;$0CA283 | WARN: unindexed table
     LDA.b #$30                              ;$0CA286 |
-    STA.w $15EA                             ;$0CA288 |
+    STA.w $15EA                             ;$0CA288 | WARN: unindexed table
     JSR CODE_0CA778                         ;$0CA28B |
     STZ $01                                 ;$0CA28E |
     LDA.w $0B50                             ;$0CA290 |

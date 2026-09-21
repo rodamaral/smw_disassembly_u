@@ -13324,7 +13324,7 @@ FlatPalaceSwitch:
     AND.b #$F0                              ;$00FA58 |
     STA.w $00E4,y                           ;$00FA5A |
     LDA $9B                                 ;$00FA5D |
-    STA.w $14E0,Y                           ;$00FA5F |
+    STA.w SpriteXPosHigh_14E0,Y             ;$00FA5F |
     LDA $98                                 ;$00FA62 |
     AND.b #$F0                              ;$00FA64 |
     CLC                                     ;$00FA66 |
@@ -13513,8 +13513,8 @@ CODE_00FBBC:
     ADC $E4,X                               ;$00FBBD |
     STA $E4,X                               ;$00FBBF |
     TYA                                     ;$00FBC1 |
-    ADC.w $14E0,X                           ;$00FBC2 |
-    STA.w $14E0,X                           ;$00FBC5 |
+    ADC.w SpriteXPosHigh_14E0,X             ;$00FBC2 |
+    STA.w SpriteXPosHigh_14E0,X             ;$00FBC5 |
     LDA.w $1540,X                           ;$00FBC8 |
     BEQ CODE_00FBF0                         ;$00FBCB |
     CMP.b #$01                              ;$00FBCD |
@@ -13583,7 +13583,7 @@ ADDR_00FC25:
     STA.w $00E4,y                           ;$00FC4F |
     LDA $1B                                 ;$00FC52 |
     SBC.b #$00                              ;$00FC54 |
-    STA.w $14E0,Y                           ;$00FC56 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$00FC56 |
     LDA $96                                 ;$00FC59 |
     STA.w $00D8,y                           ;$00FC5B |
     LDA $97                                 ;$00FC5E |
@@ -13625,7 +13625,7 @@ CODE_00FC98:
     LDA $94                                 ;$00FCA1 |
     STA $E4,X                               ;$00FCA3 |
     LDA $95                                 ;$00FCA5 |
-    STA.w $14E0,X                           ;$00FCA7 |
+    STA.w SpriteXPosHigh_14E0,X             ;$00FCA7 |
     LDA $96                                 ;$00FCAA |
     SEC                                     ;$00FCAC |
     SBC.b #$10                              ;$00FCAD |
@@ -13668,7 +13668,7 @@ CODE_00FCF5:
     LDA.b #$A0
     STA $E4,X                               ;$00FCF7 |
     LDA.b #$00                              ;$00FCF9 |
-    STA.w $14E0,X                           ;$00FCFB |
+    STA.w SpriteXPosHigh_14E0,X             ;$00FCFB |
     LDA.b #$00                              ;$00FCFE |
     STA $D8,X                               ;$00FD00 |
     LDA.b #$00                              ;$00FD02 |
@@ -13999,7 +13999,7 @@ ADDR_00FF25:
     RTL                                     ;$00FF31 |
 
 ADDR_00FF32:
-    LDA.w $14E0,X
+    LDA.w SpriteXPosHigh_14E0,X
     XBA                                     ;$00FF35 |
     LDA $E4,X                               ;$00FF36 |
     REP #$20                                ;$00FF38 |
@@ -14026,7 +14026,7 @@ ADDR_00FF32:
     RTL                                     ;$00FF60 |
 
 CODE_00FF61:
-    LDA.w $14E0,X
+    LDA.w SpriteXPosHigh_14E0,X
     XBA                                     ;$00FF64 |
     LDA $E4,X                               ;$00FF65 |
     REP #$20                                ;$00FF67 |

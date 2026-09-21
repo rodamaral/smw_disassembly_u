@@ -45,7 +45,7 @@ ReleaseItembox028008:
     STA $E4,X                               ;$028056 |
     LDA $1B                                 ;$028058 |
     ADC.b #$00                              ;$02805A |
-    STA.w $14E0,X                           ;$02805C |
+    STA.w SpriteXPosHigh_14E0,X             ;$02805C |
     LDA.b #$20                              ;$02805F |
     CLC                                     ;$028061 |
     ADC $1C                                 ;$028062 |
@@ -538,7 +538,7 @@ SubHorzPosBnk2:
     SBC $E4,X                               ;$028492 |
     STA $0F                                 ;$028494 |
     LDA $95                                 ;$028496 |
-    SBC.w $14E0,X                           ;$028498 |
+    SBC.w SpriteXPosHigh_14E0,X             ;$028498 |
     BPL Return02849E                        ;$02849B |
     INY                                     ;$02849D |
 Return02849E:
@@ -607,7 +607,7 @@ CODE_0284E8:
     CLC                                     ;$0284F7 |
     ADC $02                                 ;$0284F8 |
     STA.w $1808,Y                           ;$0284FA |
-    LDA.w $14E0,X                           ;$0284FD |
+    LDA.w SpriteXPosHigh_14E0,X             ;$0284FD |
     ADC.b #$00                              ;$028500 |
     STA.w $18EA,Y                           ;$028502 |
     LDA.b #$07                              ;$028505 |
@@ -648,7 +648,7 @@ CODE_02853F:
     CLC                                     ;$028551 |
     ADC.b #$04                              ;$028552 |
     STA.w $171F,Y                           ;$028554 |
-    LDA.w $14E0,X                           ;$028557 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$028557 |
     ADC.b #$00                              ;$02855A |
     STA.w $1733,Y                           ;$02855C |
     JSL GetRand                             ;$02855F |
@@ -743,7 +743,7 @@ CODE_0285EF:
     CLC                                     ;$028605 |
     ADC $E4,X                               ;$028606 |
     STA.w $1808,Y                           ;$028608 |
-    LDA.w $14E0,X                           ;$02860B |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02860B |
     ADC.b #$00                              ;$02860E |
     STA.w $18EA,Y                           ;$028610 |
     LDA.w $148E                             ;$028613 |
@@ -773,7 +773,7 @@ spawn_throw_block:
     LDA $94                                 ;$028644 |\
     STA $E4,X                               ;$028646 | | Set the sprite's X position to the player's X position.
     LDA $95,X                               ;$028648 | |
-    STA.w $14E0,X                           ;$02864A |/
+    STA.w SpriteXPosHigh_14E0,X             ;$02864A |/
     LDA.b #$53                              ;$02864D |\ Set the sprite to be a throw block.
     STA $9E,X                               ;$02864F |/
     JSL InitSpriteTables                    ;$028651 | Initialize the sprite tables.
@@ -1201,7 +1201,7 @@ CODE_028972:
     LDA $9A
     STA $E4,X                               ;$028974 |
     LDA $9B                                 ;$028976 |
-    STA.w $14E0,X                           ;$028978 |
+    STA.w SpriteXPosHigh_14E0,X             ;$028978 |
     LDA $98                                 ;$02897B |
     STA $D8,X                               ;$02897D |
     LDA $99                                 ;$02897F |
@@ -1214,7 +1214,7 @@ CODE_028972:
     STA $E4,X                               ;$02898E |
     LDA $9B                                 ;$028990 |
     SBC $27                                 ;$028992 |
-    STA.w $14E0,X                           ;$028994 |
+    STA.w SpriteXPosHigh_14E0,X             ;$028994 |
     LDA $98                                 ;$028997 |
     SEC                                     ;$028999 |
     SBC $28                                 ;$02899A |
@@ -1460,7 +1460,7 @@ minor_sprites_and_loading_028AB1:
     STA $E4,X                               ;$028B4D ||
     LDA $1B                                 ;$028B4F ||
     SBC.b #$00                              ;$028B51 ||
-    STA.w $14E0,X                           ;$028B53 ||
+    STA.w SpriteXPosHigh_14E0,X             ;$028B53 ||
     LDA.w $18C3                             ;$028B56 ||
     STA $D8,X                               ;$028B59 ||
     LDA.w $18C4                             ;$028B5B ||
@@ -5544,7 +5544,7 @@ CODE_02A93C:
     STA $E4,X                               ;$02A948 |
     PLA                                     ;$02A94A |
     AND.b #$0D                              ;$02A94B |
-    STA.w $14E0,X                           ;$02A94D |
+    STA.w SpriteXPosHigh_14E0,X             ;$02A94D |
     LDA $00                                 ;$02A950 |
     STA $D8,X                               ;$02A952 |
     LDA $01                                 ;$02A954 |
@@ -5562,7 +5562,7 @@ CODE_02A95B:
     LDA $00                                 ;$02A968 |
     STA $E4,X                               ;$02A96A |
     LDA $01                                 ;$02A96C |
-    STA.w $14E0,X                           ;$02A96E |
+    STA.w SpriteXPosHigh_14E0,X             ;$02A96E |
 CODE_02A971:
     INY
     INY                                     ;$02A972 |
@@ -5934,23 +5934,23 @@ CODE_02AC13:
     BMI CODE_02AC48                         ;$02AC18 |
     STZ.w SpriteStatus_14C8,X               ;$02AC1A |
     LDA.b #$0B                              ;$02AC1D |
-    STA.w SpriteStatus_14C8                 ;$02AC1F |
+    STA.w SpriteStatus_14C8                 ;$02AC1F | WARN: unindexed table
     LDA $9E,X                               ;$02AC22 |
-    STA $9E                                 ;$02AC24 |
+    STA $9E                                 ;$02AC24 | WARN: unindexed table
     LDA $E4,X                               ;$02AC26 |
-    STA $E4                                 ;$02AC28 |
-    LDA.w $14E0,X                           ;$02AC2A |
-    STA.w $14E0                             ;$02AC2D |
+    STA $E4                                 ;$02AC28 | WARN: unindexed table
+    LDA.w SpriteXPosHigh_14E0,X             ;$02AC2A |
+    STA.w SpriteXPosHigh_14E0               ;$02AC2D | WARN: unindexed table
     LDA $D8,X                               ;$02AC30 |
-    STA $D8                                 ;$02AC32 |
+    STA $D8                                 ;$02AC32 | WARN: unindexed table
     LDA.w $14D4,X                           ;$02AC34 |
-    STA.w $14D4                             ;$02AC37 |
+    STA.w $14D4                             ;$02AC37 | WARN: unindexed table
     LDA.w $15F6,X                           ;$02AC3A |
     PHA                                     ;$02AC3D |
     LDX.b #$00                              ;$02AC3E |
     JSL InitSpriteTables                    ;$02AC40 |
     PLA                                     ;$02AC44 |
-    STA.w $15F6                             ;$02AC45 |
+    STA.w $15F6                             ;$02AC45 | WARN: unindexed table
 CODE_02AC48:
     REP #$10
     LDX.w #$027A                            ;$02AC4A |
@@ -6082,7 +6082,7 @@ CODE_02ACEF:
 CODE_02AD22:
     LDA $E4,X
     STA.w $16ED,Y                           ;$02AD24 |
-    LDA.w $14E0,X                           ;$02AD27 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02AD27 |
     STA.w $16F3,Y                           ;$02AD2A |
     LDA.b #$30                              ;$02AD2D |
     STA.w $16FF,Y                           ;$02AD2F |
@@ -6370,7 +6370,7 @@ CODE_02AF45:
     LDA $00                                 ;$02AF59 |
     STA $E4,X                               ;$02AF5B |
     LDA $01                                 ;$02AF5D |
-    STA.w $14E0,X                           ;$02AF5F |
+    STA.w SpriteXPosHigh_14E0,X             ;$02AF5F |
     LDA $08                                 ;$02AF62 |
     STA $D8,X                               ;$02AF64 |
     LDA $09                                 ;$02AF66 |
@@ -6432,7 +6432,7 @@ CODE_02AFAF:
     STA $E4,X                               ;$02AFCB |
     LDA $01                                 ;$02AFCD |
     ADC.w EerieGroupDispXHi,Y               ;$02AFCF |
-    STA.w $14E0,X                           ;$02AFD2 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02AFD2 |
     LDA $08                                 ;$02AFD5 |
     STA $D8,X                               ;$02AFD7 |
     LDA $09                                 ;$02AFD9 |
@@ -6520,7 +6520,7 @@ GenerateFire:
     STA $E4,X                               ;$02B06F |
     LDA $1B                                 ;$02B071 |
     ADC.b #$00                              ;$02B073 |
-    STA.w $14E0,X                           ;$02B075 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B075 |
     INC.w SpriteDir_157C,X                  ;$02B078 |
 Return02B07B:
     RTS
@@ -6560,7 +6560,7 @@ CODE_02B0BD:
     LDA $1B
 CODE_02B0BF:
     ADC.w DATA_02B1BA,Y
-    STA.w $14E0,X                           ;$02B0C2 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B0C2 |
     TYA                                     ;$02B0C5 |
     STA $C2,X                               ;$02B0C6 |
 Return02B0C8:
@@ -6622,7 +6622,7 @@ CODE_02B115:
     STA.w $00E4,y                           ;$02B132 |
     LDA $1B                                 ;$02B135 |
     ADC.b #$00                              ;$02B137 |
-    STA.w $14E0,Y                           ;$02B139 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02B139 |
     LDA.w DATA_02B103,X                     ;$02B13C |
     CLC                                     ;$02B13F |
     ADC $1C                                 ;$02B140 |
@@ -6676,7 +6676,7 @@ CODE_02B196:
     STA $E4,X                               ;$02B199 |
     LDA $1B                                 ;$02B19B |
     ADC.b #$00                              ;$02B19D |
-    STA.w $14E0,X                           ;$02B19F |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B19F |
     LDA.w $148E                             ;$02B1A2 |
     AND.b #$03                              ;$02B1A5 |
     TAY                                     ;$02B1A7 |
@@ -6730,7 +6730,7 @@ GenSuperKoopa:
     STA $E4,X                               ;$02B1F8 |
     LDA $1B                                 ;$02B1FA |
     ADC.w DATA_02B1BA,Y                     ;$02B1FC |
-    STA.w $14E0,X                           ;$02B1FF |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B1FF |
     TYA                                     ;$02B202 |
     STA.w SpriteDir_157C,X                  ;$02B203 |
 Return02B206:
@@ -6766,7 +6766,7 @@ GenerateBubble:
     STA $E4,X                               ;$02B23F |
     LDA $1B                                 ;$02B241 |
     ADC.w DATA_02B1BA,Y                     ;$02B243 |
-    STA.w $14E0,X                           ;$02B246 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B246 |
     TYA                                     ;$02B249 |
     STA.w SpriteDir_157C,X                  ;$02B24A |
     JSL GetRand                             ;$02B24D |
@@ -6837,7 +6837,7 @@ CODE_02B288:
     STA $E4,X                               ;$02B2BD |
     LDA $1B                                 ;$02B2BF |
     ADC.w DATA_02B25B,Y                     ;$02B2C1 |
-    STA.w $14E0,X                           ;$02B2C4 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B2C4 |
     LDA.w DATA_02B25D,Y                     ;$02B2C7 |
     STA $B6,X                               ;$02B2CA |
     INC.w $151C,X                           ;$02B2CC |
@@ -6882,7 +6882,7 @@ GenerateEerie:
     STA $E4,X                               ;$02B30F |
     LDA $1B                                 ;$02B311 |
     ADC.w DATA_02B2D2,Y                     ;$02B313 |
-    STA.w $14E0,X                           ;$02B316 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B316 |
     LDA.w DATA_02B2D4,Y                     ;$02B319 |
     STA $B6,X                               ;$02B31C |
 Return02B31E:
@@ -6941,7 +6941,7 @@ CODE_02B348:
     ADC.b #$00                              ;$02B37E |
     PLP                                     ;$02B380 |
     ADC.b #$00                              ;$02B381 |
-    STA.w $14E0,X                           ;$02B383 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02B383 |
 Return02B386:
     RTS
 
@@ -7010,7 +7010,7 @@ LaunchTorpedo:
     LDA.w $179B,X                           ;$02B3F5 |
     STA.w $00E4,y                           ;$02B3F8 |
     LDA.w $17A3,X                           ;$02B3FB |
-    STA.w $14E0,Y                           ;$02B3FE |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02B3FE |
     LDA.w $178B,X                           ;$02B401 |
     STA.w $00D8,y                           ;$02B404 |
     LDA.w $1793,X                           ;$02B407 |
@@ -7102,7 +7102,7 @@ ShootBullet:
     LDA.w $179B,X                           ;$02B4B6 |
     STA.w $00E4,y                           ;$02B4B9 |
     LDA.w $17A3,X                           ;$02B4BC |
-    STA.w $14E0,Y                           ;$02B4BF |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02B4BF |
     LDA.w $178B,X                           ;$02B4C2 |
     SEC                                     ;$02B4C5 |
     SBC.b #$01                              ;$02B4C6 |
@@ -7611,8 +7611,8 @@ CODE_02B82E:
     STA.w $009E,y                           ;$02B83B |
     LDA $E4,X                               ;$02B83E |
     STA.w $00E4,y                           ;$02B840 |
-    LDA.w $14E0,X                           ;$02B843 |
-    STA.w $14E0,Y                           ;$02B846 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02B843 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02B846 |
     PHX                                     ;$02B849 |
     TYX                                     ;$02B84A |
     JSL InitSpriteTables                    ;$02B84B |
@@ -7782,7 +7782,7 @@ CODE_02B966:
 CODE_02B969:
     LDA $E4,X
     STA $00                                 ;$02B96B |
-    LDA.w $14E0,X                           ;$02B96D |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02B96D |
     STA $01                                 ;$02B970 |
     PHX                                     ;$02B972 |
     LDA.w SpriteDir_157C,X                  ;$02B973 |
@@ -7815,7 +7815,7 @@ GenTileFromSpr0:
     STA $9C
     LDA $E4,X                               ;$02B9A6 |
     STA $9A                                 ;$02B9A8 |
-    LDA.w $14E0,X                           ;$02B9AA |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02B9AA |
     STA $9B                                 ;$02B9AD |
     LDA $D8,X                               ;$02B9AF |
     STA $98                                 ;$02B9B1 |
@@ -7976,7 +7976,7 @@ CODE_02BAC0:
     STA.w $00E4,y                           ;$02BACC |
     STA $9A                                 ;$02BACF |
     LDA $08                                 ;$02BAD1 |
-    STA.w $14E0,Y                           ;$02BAD3 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02BAD3 |
     STA $9B                                 ;$02BAD6 |
     LDA $01                                 ;$02BAD8 |
     STA.w $00D8,y                           ;$02BADA |
@@ -8025,7 +8025,7 @@ draw_yoshi_wings_02BB23:
     BNE .return_02BB87                      ;$02BB28 |
     LDA $E4,X                               ;$02BB2A |
     STA $00                                 ;$02BB2C |
-    LDA.w $14E0,X                           ;$02BB2E |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02BB2E |
     STA $04                                 ;$02BB31 |
     LDA $D8,X                               ;$02BB33 |
     STA $01                                 ;$02BB35 |
@@ -8933,7 +8933,7 @@ CODE_02C19A:
     STA $02                                 ;$02C1AD |
     LDA $E4,X                               ;$02C1AF |
     STA $00                                 ;$02C1B1 |
-    LDA.w $14E0,X                           ;$02C1B3 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02C1B3 |
     STA $01                                 ;$02C1B6 |
     PHX                                     ;$02C1B8 |
     TYX                                     ;$02C1B9 |
@@ -8945,7 +8945,7 @@ CODE_02C19A:
     STA.w $00E4,y                           ;$02C1C6 |
     LDA $01                                 ;$02C1C9 |
     ADC.w DATA_02C196,X                     ;$02C1CB |
-    STA.w $14E0,Y                           ;$02C1CE |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02C1CE |
     LDA.w DATA_02C198,X                     ;$02C1D1 |
     STA.w $00B6,y                           ;$02C1D4 |
     PLX                                     ;$02C1D7 |
@@ -9336,7 +9336,7 @@ CODE_02C479:
     STA.w $170B,Y                           ;$02C47B |
     LDA $E4,X                               ;$02C47E |
     STA $00                                 ;$02C480 |
-    LDA.w $14E0,X                           ;$02C482 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02C482 |
     STA $01                                 ;$02C485 |
     LDA $D8,X                               ;$02C487 |
     CLC                                     ;$02C489 |
@@ -9512,8 +9512,8 @@ CODE_02C5BC:
     STA.w $009E,y                           ;$02C5C9 |
     LDA $E4,X                               ;$02C5CC |
     STA.w $00E4,y                           ;$02C5CE |
-    LDA.w $14E0,X                           ;$02C5D1 |
-    STA.w $14E0,Y                           ;$02C5D4 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02C5D1 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02C5D4 |
     LDA $D8,X                               ;$02C5D7 |
     STA.w $00D8,y                           ;$02C5D9 |
     LDA.w $14D4,X                           ;$02C5DC |
@@ -10284,9 +10284,9 @@ ADDR_02CC05:
     CLC                                     ;$02CC10 |
     ADC.w $17BD                             ;$02CC11 |
     STA $E4,X                               ;$02CC14 |
-    LDA.w $14E0,X                           ;$02CC16 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02CC16 |
     ADC.b #$00                              ;$02CC19 |
-    STA.w $14E0,X                           ;$02CC1B |
+    STA.w SpriteXPosHigh_14E0,X             ;$02CC1B |
     LDA $71                                 ;$02CC1E |
     CMP.b #$01                              ;$02CC20 |
     BCS Return02CBFD                        ;$02CC22 |
@@ -10307,7 +10307,7 @@ ADDR_02CC35:
     STA.w $14D4,X                           ;$02CC3E |
     LDA $E4,X                               ;$02CC41 |
     STA $00                                 ;$02CC43 |
-    LDA.w $14E0,X                           ;$02CC45 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02CC45 |
     STA $01                                 ;$02CC48 |
     LDA $D8,X                               ;$02CC4A |
     STA $02                                 ;$02CC4C |
@@ -10462,7 +10462,7 @@ CODE_02CD59:
     STA $9C                                 ;$02CD62 |
     LDA $E4,X                               ;$02CD64 |
     STA $9A                                 ;$02CD66 |
-    LDA.w $14E0,X                           ;$02CD68 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02CD68 |
     STA $9B                                 ;$02CD6B |
     LDA $D8,X                               ;$02CD6D |
     SEC                                     ;$02CD6F |
@@ -10873,7 +10873,7 @@ CODE_02D04D:
     LSR $00                                 ;$02D063 |
     ADC.w DATA_02D00F,Y                     ;$02D065 |
     PLP                                     ;$02D068 |
-    SBC.w $14E0,X                           ;$02D069 |
+    SBC.w SpriteXPosHigh_14E0,X             ;$02D069 |
     STA $00                                 ;$02D06C |
     LSR $01                                 ;$02D06E |
     BCC CODE_02D076                         ;$02D070 |
@@ -10971,7 +10971,7 @@ try_eat_berry_tile_02D0E6:
     CLC                                     ;$02D107 |
     ADC.w DATA_02D0D0,Y                     ;$02D108 |
     STA $01                                 ;$02D10B |
-    LDA.w $14E0,X                           ;$02D10D |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02D10D |
     ADC.w DATA_02D0D2,Y                     ;$02D110 |
     CMP.b #$02                              ;$02D113 |
     BCS .return_02D148                      ;$02D115 |
@@ -11021,7 +11021,7 @@ try_eat_berry_tile_02D0E6:
     ADC.w DATA_02D0D0,Y                     ;$02D169 |
     STA $01                                 ;$02D16C |
     STA.w $18B0                             ;$02D16E | Mouth X position, low
-    LDA.w $14E0,X                           ;$02D171 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02D171 |
     ADC.w DATA_02D0D2,Y                     ;$02D174 |
     CMP $5D                                 ;$02D177 |
     BCS .return_02D148                      ;$02D179 | if Yoshi's X is beyond the number of screens, return
@@ -11234,7 +11234,7 @@ CODE_02D2B2:
     PHA                                     ;$02D2D4 |
     LDA.w $00E4,y                           ;$02D2D5 |
     STA $94                                 ;$02D2D8 |
-    LDA.w $14E0,Y                           ;$02D2DA |
+    LDA.w SpriteXPosHigh_14E0,Y             ;$02D2DA |
     STA $95                                 ;$02D2DD |
     LDA.w $00D8,y                           ;$02D2DF |
     STA $96                                 ;$02D2E2 |
@@ -11341,12 +11341,12 @@ GetDrawInfo2:
     STZ.w $15A0,X                           ;$02D37B |
     LDA $E4,X                               ;$02D37E |
     CMP $1A                                 ;$02D380 |
-    LDA.w $14E0,X                           ;$02D382 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02D382 |
     SBC $1B                                 ;$02D385 |
     BEQ CODE_02D38C                         ;$02D387 |
     INC.w $15A0,X                           ;$02D389 |
 CODE_02D38C:
-    LDA.w $14E0,X
+    LDA.w SpriteXPosHigh_14E0,X
     XBA                                     ;$02D38F |
     LDA $E4,X                               ;$02D390 |
     REP #$20                                ;$02D392 |
@@ -11414,8 +11414,8 @@ CODE_02D3FD:
     ADC $E4,X                               ;$02D3FE |
     STA $E4,X                               ;$02D400 |
     TYA                                     ;$02D402 |
-    ADC.w $14E0,X                           ;$02D403 |
-    STA.w $14E0,X                           ;$02D406 |
+    ADC.w SpriteXPosHigh_14E0,X             ;$02D403 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02D406 |
     LDA $C2,X                               ;$02D409 |
     JSL execute_pointer                     ;$02D40B |
 
@@ -11443,7 +11443,7 @@ CODE_02D422:
     ORA.b #$80                              ;$02D434 |
     STA $E4,X                               ;$02D436 |
     LDA.b #$FF                              ;$02D438 |
-    STA.w $14E0,X                           ;$02D43A |
+    STA.w SpriteXPosHigh_14E0,X             ;$02D43A |
     STZ $D8,X                               ;$02D43D |
     STZ.w $14D4,X                           ;$02D43F |
     STZ $AA,X                               ;$02D442 |
@@ -11521,7 +11521,7 @@ CODE_02D4A8:
     BCC CODE_02D4EF                         ;$02D4AD |
     LDA $E4,X                               ;$02D4AF |
     STA $00                                 ;$02D4B1 |
-    LDA.w $14E0,X                           ;$02D4B3 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02D4B3 |
     STA $01                                 ;$02D4B6 |
     REP #$20                                ;$02D4B8 |
     LDA $7E                                 ;$02D4BA |
@@ -11571,7 +11571,7 @@ CODE_02D4FA:
     SBC $E4,X                               ;$02D4FF |
     STA $0F                                 ;$02D501 |
     LDA $95                                 ;$02D503 |
-    SBC.w $14E0,X                           ;$02D505 |
+    SBC.w SpriteXPosHigh_14E0,X             ;$02D505 |
     BPL Return02D50B                        ;$02D508 |
     INY                                     ;$02D50A |
 Return02D50B:
@@ -11764,7 +11764,7 @@ CODE_02D6CD:
     STA $06
     LDA $E4,X                               ;$02D6CF |
     PHA                                     ;$02D6D1 |
-    LDA.w $14E0,X                           ;$02D6D2 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02D6D2 |
     PHA                                     ;$02D6D5 |
     LDA $D8,X                               ;$02D6D6 |
     PHA                                     ;$02D6D8 |
@@ -11787,9 +11787,9 @@ CODE_02D6E8:
     PLA                                     ;$02D6F6 |
     STA.w $1534,X                           ;$02D6F7 |
     PLP                                     ;$02D6FA |
-    LDA.w $14E0,X                           ;$02D6FB |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02D6FB |
     ADC $00                                 ;$02D6FE |
-    STA.w $14E0,X                           ;$02D700 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02D700 |
     STZ $01                                 ;$02D703 |
     LDA $06                                 ;$02D705 |
     BPL CODE_02D70B                         ;$02D707 |
@@ -11838,7 +11838,7 @@ CODE_02D757:
     PLA                                     ;$02D75B |
     STA $D8,X                               ;$02D75C |
     PLA                                     ;$02D75E |
-    STA.w $14E0,X                           ;$02D75F |
+    STA.w SpriteXPosHigh_14E0,X             ;$02D75F |
     PLA                                     ;$02D762 |
     STA $E4,X                               ;$02D763 |
     LDA $00                                 ;$02D765 |
@@ -12340,7 +12340,7 @@ GenerateHammer:
     STA.w $170B,Y                           ;$02DAC5 |
     LDA $E4,X                               ;$02DAC8 |
     STA.w $171F,Y                           ;$02DACA |
-    LDA.w $14E0,X                           ;$02DACD |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02DACD |
     STA.w $1733,Y                           ;$02DAD0 |
     LDA $D8,X                               ;$02DAD3 |
     STA.w $1715,Y                           ;$02DAD5 |
@@ -12456,8 +12456,8 @@ PutHammerBroOnPlat:
     STA.w $1594,X                           ;$02DB7A |
     LDA $E4,X                               ;$02DB7D |
     STA.w $00E4,y                           ;$02DB7F |
-    LDA.w $14E0,X                           ;$02DB82 |
-    STA.w $14E0,Y                           ;$02DB85 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02DB82 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02DB85 |
     LDA $D8,X                               ;$02DB88 |
     SEC                                     ;$02DB8A |
     SBC.b #$10                              ;$02DB8B |
@@ -12748,9 +12748,9 @@ GenSumoLightning:
     LDA $E4,X                               ;$02DD9F |
     ADC.b #$04                              ;$02DDA1 |
     STA.w $00E4,y                           ;$02DDA3 |
-    LDA.w $14E0,X                           ;$02DDA6 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02DDA6 |
     ADC.b #$00                              ;$02DDA9 |
-    STA.w $14E0,Y                           ;$02DDAB |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02DDAB |
     LDA $D8,X                               ;$02DDAE |
     STA.w $00D8,y                           ;$02DDB0 |
     LDA.w $14D4,X                           ;$02DDB3 |
@@ -12919,7 +12919,7 @@ DATA_02DF27:
 CODE_02DF2C:
     LDA $E4,X
     STA $00                                 ;$02DF2E |
-    LDA.w $14E0,X                           ;$02DF30 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02DF30 |
     STA $01                                 ;$02DF33 |
     LDY.b #$09                              ;$02DF35 |
 CODE_02DF37:
@@ -13124,7 +13124,7 @@ CODE_02E090:
     CLC                                     ;$02E097 |
     ADC.b #$04                              ;$02E098 |
     STA.w $171F,Y                           ;$02E09A |
-    LDA.w $14E0,X                           ;$02E09D |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E09D |
     ADC.b #$00                              ;$02E0A0 |
     STA.w $1733,Y                           ;$02E0A2 |
     LDA $D8,X                               ;$02E0A5 |
@@ -13297,7 +13297,7 @@ CODE_02E1CD:
     CLC                                     ;$02E1D4 |
     ADC.b #$04                              ;$02E1D5 |
     STA.w $171F,Y                           ;$02E1D7 |
-    LDA.w $14E0,X                           ;$02E1DA |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E1DA |
     ADC.b #$00                              ;$02E1DD |
     STA.w $1733,Y                           ;$02E1DF |
     LDA $D8,X                               ;$02E1E2 |
@@ -13419,7 +13419,7 @@ CODE_02E2B0:
     STA $C2,X                               ;$02E2C1 |
     LDA $E4,X                               ;$02E2C3 |
     STA $9A                                 ;$02E2C5 |
-    LDA.w $14E0,X                           ;$02E2C7 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E2C7 |
     STA $9B                                 ;$02E2CA |
     LDA $D8,X                               ;$02E2CC |
     STA $98                                 ;$02E2CE |
@@ -13642,7 +13642,7 @@ CODE_02E463:
     STA.w SpriteDir_157C,X                  ;$02E473 |
     LDA $E4,X                               ;$02E476 |
     STA $9A                                 ;$02E478 |
-    LDA.w $14E0,X                           ;$02E47A |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E47A |
     STA $9B                                 ;$02E47D |
     LDA $D8,X                               ;$02E47F |
     STA $98                                 ;$02E481 |
@@ -13674,7 +13674,7 @@ CODE_02E4A5:
     STZ.w $185E                             ;$02E4A8 |
     LDA $E4,X                               ;$02E4AB |
     PHA                                     ;$02E4AD |
-    LDA.w $14E0,X                           ;$02E4AE |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E4AE |
     PHA                                     ;$02E4B1 |
     LDA $D8,X                               ;$02E4B2 |
     PHA                                     ;$02E4B4 |
@@ -13687,7 +13687,7 @@ CODE_02E4A5:
     LDA $C2,X                               ;$02E4C4 |
     STA $E4,X                               ;$02E4C6 |
     LDA.w $1602,X                           ;$02E4C8 |
-    STA.w $14E0,X                           ;$02E4CB |
+    STA.w SpriteXPosHigh_14E0,X             ;$02E4CB |
     LDY.b #$02                              ;$02E4CE |
     JSR CODE_02E524                         ;$02E4D0 |
     PLA                                     ;$02E4D3 |
@@ -13695,7 +13695,7 @@ CODE_02E4A5:
     PLA                                     ;$02E4D7 |
     STA $D8,X                               ;$02E4D8 |
     PLA                                     ;$02E4DA |
-    STA.w $14E0,X                           ;$02E4DB |
+    STA.w SpriteXPosHigh_14E0,X             ;$02E4DB |
     PLA                                     ;$02E4DE |
     STA $E4,X                               ;$02E4DF |
     BCC CODE_02E4EB                         ;$02E4E1 |
@@ -13747,7 +13747,7 @@ CODE_02E533:
     STA $9C                                 ;$02E536 |
     LDA $E4,X                               ;$02E538 |
     STA $9A                                 ;$02E53A |
-    LDA.w $14E0,X                           ;$02E53C |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E53C |
     STA $9B                                 ;$02E53F |
     LDA $D8,X                               ;$02E541 |
     STA $98                                 ;$02E543 |
@@ -14255,7 +14255,7 @@ GrowingPipeGfx:
     STA $9C                                 ;$02E8C9 |
     LDA $E4,X                               ;$02E8CB |
     STA $9A                                 ;$02E8CD |
-    LDA.w $14E0,X                           ;$02E8CF |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E8CF |
     STA $9B                                 ;$02E8D2 |
     LDA $D8,X                               ;$02E8D4 |
     STA $98                                 ;$02E8D6 |
@@ -14268,7 +14268,7 @@ GrowingPipeGfx:
     CLC                                     ;$02E8E8 |
     ADC.b #$10                              ;$02E8E9 |
     STA $9A                                 ;$02E8EB |
-    LDA.w $14E0,X                           ;$02E8ED |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02E8ED |
     ADC.b #$00                              ;$02E8F0 |
     STA $9B                                 ;$02E8F2 |
     LDA $D8,X                               ;$02E8F4 |
@@ -14532,8 +14532,8 @@ CODE_02EAA9:
     STZ.w SpriteDir_157C,X                  ;$02EABA |
     LDA $E4,X                               ;$02EABD |
     CMP.w $00E4,y                           ;$02EABF |
-    LDA.w $14E0,X                           ;$02EAC2 |
-    SBC.w $14E0,Y                           ;$02EAC5 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02EAC2 |
+    SBC.w SpriteXPosHigh_14E0,Y             ;$02EAC5 |
     BCC Return02EACD                        ;$02EAC8 |
     INC.w SpriteDir_157C,X                  ;$02EACA |
 Return02EACD:
@@ -14559,7 +14559,7 @@ CODE_02EADA:
     CLC                                     ;$02EAE4 |
     ADC.b #$0A                              ;$02EAE5 |
     STA $94                                 ;$02EAE7 |
-    LDA.w $14E0,X                           ;$02EAE9 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02EAE9 |
     ADC.b #$00                              ;$02EAEC |
     STA $95                                 ;$02EAEE |
 Return02EAF0:
@@ -14576,8 +14576,8 @@ CODE_02EAF2:
     STA.w $009E,y                           ;$02EAFF |
     LDA $E4,X                               ;$02EB02 |
     STA.w $00E4,y                           ;$02EB04 |
-    LDA.w $14E0,X                           ;$02EB07 |
-    STA.w $14E0,Y                           ;$02EB0A |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02EB07 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02EB0A |
     LDA $D8,X                               ;$02EB0D |
     STA.w $00D8,y                           ;$02EB0F |
     LDA.w $14D4,X                           ;$02EB12 |
@@ -14906,9 +14906,9 @@ CODE_02ED93:
     CLC                                     ;$02EDB6 |
     ADC $E4,X                               ;$02EDB7 |
     STA.w $00E4,y                           ;$02EDB9 |
-    LDA.w $14E0,X                           ;$02EDBC |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02EDBC |
     ADC.b #$00                              ;$02EDBF |
-    STA.w $14E0,Y                           ;$02EDC1 |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02EDC1 |
     PHX                                     ;$02EDC4 |
     TYX                                     ;$02EDC5 |
     JSL InitSpriteTables                    ;$02EDC6 |
@@ -15164,8 +15164,8 @@ ADDR_02EF7B:
     STA.w $009E,y                           ;$02EF82 |
     LDA $E4,X                               ;$02EF85 |
     STA.w $00E4,y                           ;$02EF87 |
-    LDA.w $14E0,X                           ;$02EF8A |
-    STA.w $14E0,Y                           ;$02EF8D |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02EF8A |
+    STA.w SpriteXPosHigh_14E0,Y             ;$02EF8D |
     LDA $D8,X                               ;$02EF90 |
     STA.w $00D8,y                           ;$02EF92 |
     LDA.w $14D4,X                           ;$02EF95 |
@@ -15199,7 +15199,7 @@ ADDR_02EFBC:
     CLC                                     ;$02EFC3 |
     ADC.b #$04                              ;$02EFC4 |
     STA.w $171F,Y                           ;$02EFC6 |
-    LDA.w $14E0,X                           ;$02EFC9 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02EFC9 |
     ADC.b #$00                              ;$02EFCC |
     STA.w $1733,Y                           ;$02EFCE |
     LDA $D8,X                               ;$02EFD1 |
@@ -15522,7 +15522,7 @@ CODE_02F1EF:
     JSR CODE_02B7A7                         ;$02F1FF |
     LDA $E4,X                               ;$02F202 |
     STA $00                                 ;$02F204 |
-    LDA.w $14E0,X                           ;$02F206 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02F206 |
     STA $01                                 ;$02F209 |
     REP #$20                                ;$02F20B |
     LDA $00                                 ;$02F20D |
@@ -15652,7 +15652,7 @@ CODE_02F2E2:
     STA.w $1765,Y                           ;$02F2E9 |
     LDA $E4,X                               ;$02F2EC |
     STA.w $171F,Y                           ;$02F2EE |
-    LDA.w $14E0,X                           ;$02F2F1 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$02F2F1 |
     STA.w $1733,Y                           ;$02F2F4 |
     LDA $D8,X                               ;$02F2F7 |
     STA.w $1715,Y                           ;$02F2F9 |
@@ -16013,7 +16013,7 @@ CODE_02F553:
     LDA.b #$BB                              ;$02F563 |
     STA $E4,X                               ;$02F565 |
     LDA.b #$00                              ;$02F567 |
-    STA.w $14E0,X                           ;$02F569 |
+    STA.w SpriteXPosHigh_14E0,X             ;$02F569 |
     LDA.b #$00                              ;$02F56C |
     STA.w $14D4,X                           ;$02F56E |
     LDA.b #$E0                              ;$02F571 |
@@ -16543,13 +16543,13 @@ CODE_02F940:
     LDA.w DATA_02FF50,Y                     ;$02F943 |
     STA.w $15EA                             ;$02F946 |
     LDA.w $1E16,X                           ;$02F949 |
-    STA $E4                                 ;$02F94C |
+    STA $E4                                 ;$02F94C | WARN: unindexed table
     LDA.w $1E3E,X                           ;$02F94E |
-    STA.w $14E0                             ;$02F951 |
+    STA.w SpriteXPosHigh_14E0               ;$02F951 | WARN: unindexed table
     LDA.w $1E02,X                           ;$02F954 |
-    STA $D8                                 ;$02F957 |
+    STA $D8                                 ;$02F957 | WARN: unindexed table
     LDA.w $1E2A,X                           ;$02F959 |
-    STA.w $14D4                             ;$02F95C |
+    STA.w $14D4                             ;$02F95C | WARN: unindexed table
     TAY                                     ;$02F95F |
     LDX.b #$00                              ;$02F960 |
     JSR GetDrawInfo2                        ;$02F962 |
@@ -16901,24 +16901,24 @@ CODE_02FBE2:
     PHP                                     ;$02FBF9 |
     ADC $00                                 ;$02FBFA |
     STA.w $1E16,X                           ;$02FBFC |
-    STA $E4                                 ;$02FBFF |
+    STA $E4                                 ;$02FBFF | WARN: unindexed table
     LDA $1B                                 ;$02FC01 |
     ADC.b #$00                              ;$02FC03 |
     PLP                                     ;$02FC05 |
     ADC.b #$00                              ;$02FC06 |
     STA.w $1E3E,X                           ;$02FC08 |
-    STA.w $14E0                             ;$02FC0B |
+    STA.w SpriteXPosHigh_14E0               ;$02FC0B | WARN: unindexed table
     LDA.w $1E02,X                           ;$02FC0E |
     SBC $1C                                 ;$02FC11 |
     ADC $1C                                 ;$02FC13 |
     STA.w $1E02,X                           ;$02FC15 |
-    STA $D8                                 ;$02FC18 |
+    STA $D8                                 ;$02FC18 | WARN: unindexed table
     AND.b #$FC                              ;$02FC1A |
     STA.w $0F72,X                           ;$02FC1C |
     LDA $1D                                 ;$02FC1F |
     ADC.b #$00                              ;$02FC21 |
     STA.w $1E2A,X                           ;$02FC23 |
-    STA.w $14D4                             ;$02FC26 |
+    STA.w $14D4                             ;$02FC26 | WARN: unindexed table
     PHX                                     ;$02FC29 |
     LDX.b #$00                              ;$02FC2A |
     LDA.b #$10                              ;$02FC2C |

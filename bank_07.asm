@@ -4792,7 +4792,7 @@ CODE_07FC52:
     CLC                                     ;$07FC6D |
     ADC.b #$04                              ;$07FC6E |
     STA.w $171F,Y                           ;$07FC70 |
-    LDA.w $14E0,X                           ;$07FC73 |
+    LDA.w SpriteXPosHigh_14E0,X             ;$07FC73 |
     ADC.b #$00                              ;$07FC76 |
     STA.w $1733,Y                           ;$07FC78 |
     PLX                                     ;$07FC7B |
