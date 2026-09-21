@@ -1879,7 +1879,7 @@ SprMap16TouchVertHigh: skip 1
 ; 7E18D8 unused
 skip 1
 NoYoshiIntroTimer: skip 1
-YoshiEggSpriteHatch: skip 1
+YoshiEggSprite_18DA: skip 1
 Empty_18DB: skip 1
 PlayerDuckingOnYoshi: skip 1
 SilverCoinsCollected: skip 1

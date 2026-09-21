@@ -15085,7 +15085,7 @@ yoshi_01EBCA:
     STA $AA,X                               ;$01ECD2 |
     LDA.b #$10                              ;$01ECD4 |
     STA.w SpritePlayerContact_154C,X        ;$01ECD6 |
-    LDA.w $18DA                             ;$01ECD9 |
+    LDA.w YoshiEggSprite_18DA               ;$01ECD9 |
     STA.w $151C,X                           ;$01ECDC |
     PLX                                     ;$01ECDF |
     RTS                                     ;$01ECE0 |
@@ -15634,7 +15634,7 @@ process_eaten_berry_01F0D3:
     STZ.w $18D5                             ;$01F120 | if ate 2 berries
     LDA.b #$6A                              ;$01F123 | prepare to lay a Coin Game Cloud egg
 .prepare_egg_type_01F125:
-    STA.w $18DA
+    STA.w YoshiEggSprite_18DA
     LDY.b #$20                              ;$01F128 |
     STY.w EggLaidTimer_18DE                 ;$01F12A |
 .return_01F12D:
