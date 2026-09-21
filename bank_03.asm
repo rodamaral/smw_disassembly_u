@@ -7146,7 +7146,7 @@ GetMarioClipping:
 CODE_03B680:
     INX
 CODE_03B681:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BEQ CODE_03B688                         ;$03B684 |
     INX                                     ;$03B686 |
     INX                                     ;$03B687 |

@@ -9825,7 +9825,7 @@ Return02C80F:
     RTS
 
 CODE_02C810:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BNE Return02C819                        ;$02C813 |
     JSL HurtMario                           ;$02C815 |
 Return02C819:
@@ -16632,7 +16632,7 @@ CODE_02F9AE:
     LDA.w $1490                             ;$02F9F0 |
     BNE ADDR_02F9A6                         ;$02F9F3 |
 CODE_02F9F5:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BNE CODE_02F9FF                         ;$02F9F8 |
     JSL HurtMario                           ;$02F9FA |
 Return02F9FE:

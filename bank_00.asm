@@ -13408,7 +13408,7 @@ LvlEndPowerUp:
     BEQ CODE_00FB09                         ;$00FB05 |
     LDX.b #$04                              ;$00FB07 |
 CODE_00FB09:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BEQ CODE_00FB10                         ;$00FB0C |
     LDX.b #$05                              ;$00FB0E |
 CODE_00FB10:
@@ -13645,7 +13645,7 @@ CODE_00FC98:
     LDA.b #$06                              ;$00FCD0 |
     STA.w $15F6,X                           ;$00FCD2 |
 CODE_00FCD5:
-    INC.w $187A
+    INC.w RidingYoshi_187A
     INC $C2,X                               ;$00FCD8 |
     LDA $76                                 ;$00FCDA |
     EOR.b #$01                              ;$00FCDC |
@@ -13789,7 +13789,7 @@ CODE_00FDB4:
     BEQ CODE_00FDBC                         ;$00FDB9 |
     INX                                     ;$00FDBB |
 CODE_00FDBC:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BEQ CODE_00FDC3                         ;$00FDBF |
     INX                                     ;$00FDC1 |
     INX                                     ;$00FDC2 |

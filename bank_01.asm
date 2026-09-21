@@ -7365,7 +7365,7 @@ CODE_01B4B4:
 CODE_01B4C4:
     LDA.b #$08
 CODE_01B4C6:
-    LDY.w $187A
+    LDY.w RidingYoshi_187A
     BEQ CODE_01B4CD                         ;$01B4C9 |
     ADC.b #$08                              ;$01B4CB |
 CODE_01B4CD:
@@ -13602,7 +13602,7 @@ CODE_01E1D8:
     DEY
     BPL CODE_01E1CA                         ;$01E1D9 |
 CODE_01E1DB:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BEQ CODE_01E1E5                         ;$01E1DE |
     LDA.w $191C                             ;$01E1E0 |
     BNE CODE_01E1ED                         ;$01E1E3 |
@@ -14972,7 +14972,7 @@ yoshi_01EBCA:
 +   RTS                                     ;$01EC03 |
 
 .check_hatch_yoshi_01EC04:
-    LDA.w $187A
+    LDA.w RidingYoshi_187A
     BEQ +                                   ;$01EC07 | Skip if:
     LDA.w $1419                             ;$01EC09 | - mounted, entering a pipe
     BNE .game_running_01EC61                ;$01EC0C | - Yoshi able to lay an egg
@@ -15009,7 +15009,7 @@ yoshi_01EBCA:
     LDA $9D
     BEQ .game_running_01EC61                ;$01EC4E |
 .mounted_player_relative_y_01EC50:
-    LDY.w $187A
+    LDY.w RidingYoshi_187A
     BEQ +                                   ;$01EC53 |\
     LDY.b #$06                              ;$01EC55 || Offset the player's relative image on top of Yoshi
     STY.w $188B                             ;$01EC57 |/
