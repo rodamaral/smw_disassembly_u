@@ -13332,7 +13332,7 @@ FlatPalaceSwitch:
     STA.w $00D8,y                           ;$00FA69 |
     LDA $99                                 ;$00FA6C |
     ADC.b #$00                              ;$00FA6E |
-    STA.w $14D4,Y                           ;$00FA70 |
+    STA.w SpriteYPosHigh_14D4,Y             ;$00FA70 |
     PHX                                     ;$00FA73 |
     TYX                                     ;$00FA74 |
     JSL InitSpriteTables                    ;$00FA75 |
@@ -13587,7 +13587,7 @@ ADDR_00FC25:
     LDA $96                                 ;$00FC59 |
     STA.w $00D8,y                           ;$00FC5B |
     LDA $97                                 ;$00FC5E |
-    STA.w $14D4,Y                           ;$00FC60 |
+    STA.w SpriteYPosHigh_14D4,Y             ;$00FC60 |
     LDA.b #$03                              ;$00FC63 |
     STA.w $00C2,y                           ;$00FC65 |
     LDA.b #$00                              ;$00FC68 |
@@ -13634,7 +13634,7 @@ CODE_00FC98:
     LDA $97                                 ;$00FCB3 |
     SBC.b #$00                              ;$00FCB5 |
     STA $97                                 ;$00FCB7 |
-    STA.w $14D4,X                           ;$00FCB9 |
+    STA.w SpriteYPosHigh_14D4,X             ;$00FCB9 |
     JSL InitSpriteTables                    ;$00FCBC |
     LDA.b #$04                              ;$00FCC0 |
     STA.w $1FE2,X                           ;$00FCC2 |
@@ -13672,7 +13672,7 @@ CODE_00FCF5:
     LDA.b #$00                              ;$00FCFE |
     STA $D8,X                               ;$00FD00 |
     LDA.b #$00                              ;$00FD02 |
-    STA.w $14D4,X                           ;$00FD04 |
+    STA.w SpriteYPosHigh_14D4,X             ;$00FD04 |
     RTL                                     ;$00FD07 |
 
 CODE_00FD08:
@@ -14011,7 +14011,7 @@ ADDR_00FF32:
     SBC $00                                 ;$00FF43 |
     STA $22                                 ;$00FF45 |
     SEP #$20                                ;$00FF47 |
-    LDA.w $14D4,X                           ;$00FF49 |
+    LDA.w SpriteYPosHigh_14D4,X             ;$00FF49 |
     XBA                                     ;$00FF4C |
     LDA $D8,X                               ;$00FF4D |
     REP #$20                                ;$00FF4F |
@@ -14039,7 +14039,7 @@ CODE_00FF73:
 CODE_00FF76:
     STA $22
     SEP #$20                                ;$00FF78 |
-    LDA.w $14D4,X                           ;$00FF7A |
+    LDA.w SpriteYPosHigh_14D4,X             ;$00FF7A |
     XBA                                     ;$00FF7D |
     LDA $D8,X                               ;$00FF7E |
     REP #$20                                ;$00FF80 |

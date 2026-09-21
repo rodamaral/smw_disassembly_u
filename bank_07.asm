@@ -4785,7 +4785,7 @@ CODE_07FC52:
     CLC                                     ;$07FC5D |
     ADC.b #$04                              ;$07FC5E |
     STA.w $1715,Y                           ;$07FC60 |
-    LDA.w $14D4,X                           ;$07FC63 |
+    LDA.w SpriteYPosHigh_14D4,X             ;$07FC63 |
     ADC.b #$00                              ;$07FC66 |
     STA.w $1729,Y                           ;$07FC68 |
     LDA $E4,X                               ;$07FC6B |
