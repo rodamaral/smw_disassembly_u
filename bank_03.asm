@@ -1003,7 +1003,7 @@ CODE_0387D7:
     STA.w $154C,X                           ;$0387F1 |
     STZ $7D                                 ;$0387F4 |
     LDA.b #$D6                              ;$0387F6 |
-    LDY.w $187A                             ;$0387F8 |
+    LDY.w RidingYoshi_187A                  ;$0387F8 |
     BEQ MegaMoleNoYoshi                     ;$0387FB |
     LDA.b #$C6                              ;$0387FD |
 MegaMoleNoYoshi:
@@ -1617,7 +1617,7 @@ CODE_038C5A:
     ADC.b #$38                              ;$038C8A |
 CODE_038C8C:
     TAY
-    LDA.w $187A                             ;$038C8D |
+    LDA.w RidingYoshi_187A                  ;$038C8D |
     CMP.b #$01                              ;$038C90 |
     LDA.b #$20                              ;$038C92 |
     BCC CODE_038C98                         ;$038C94 |
@@ -1631,7 +1631,7 @@ CODE_038C98:
     ADC.w DATA_038BAA,Y                     ;$038CA0 |
     CMP $00                                 ;$038CA3 |
     BPL Return038CE3                        ;$038CA5 |
-    LDA.w $187A                             ;$038CA7 |
+    LDA.w RidingYoshi_187A                  ;$038CA7 |
     CMP.b #$01                              ;$038CAA |
     LDA.b #$1D                              ;$038CAC |
     BCC CODE_038CB2                         ;$038CAE |
@@ -1679,7 +1679,7 @@ CODE_038CE4:
     STA $02                                 ;$038CF3 |
     STA $03                                 ;$038CF5 |
     LDA.b #$20                              ;$038CF7 |
-    LDY.w $187A                             ;$038CF9 |
+    LDY.w RidingYoshi_187A                  ;$038CF9 |
     BEQ CODE_038D00                         ;$038CFC |
     LDA.b #$30                              ;$038CFE |
 CODE_038D00:
@@ -2853,7 +2853,7 @@ MarioBeatsRex:
     JSL BoostMarioSpeed                     ;$0395A3 |
     JSL DisplayContactGfx                   ;$0395A7 |
     LDA.w $140D                             ;$0395AB |
-    ORA.w $187A                             ;$0395AE |
+    ORA.w RidingYoshi_187A                  ;$0395AE |
     BNE RexSpinKill                         ;$0395B1 |
     INC $C2,X                               ;$0395B3 |
     LDA $C2,X                               ;$0395B5 |
@@ -2871,7 +2871,7 @@ SmushRex:
 
 RexWins:
     LDA.w $1497
-    ORA.w $187A                             ;$0395CD |
+    ORA.w RidingYoshi_187A                  ;$0395CD |
     BNE NoRexContact                        ;$0395D0 |
     JSR SubHorzPosBnk3                      ;$0395D2 |
     TYA                                     ;$0395D5 |

@@ -1750,7 +1750,7 @@ CODE_0491B1:
     LDA.w $0DBA,X                           ;$0491C9 |
     STA.w CarryYoshiLevels_0DC1             ;$0491CC |
     STA.w $13C7                             ;$0491CF |
-    STA.w $187A                             ;$0491D2 |
+    STA.w RidingYoshi_187A                  ;$0491D2 |
     LDA.w $0DBC,X                           ;$0491D5 |
     STA.w $0DC2                             ;$0491D8 |
     LDA.b #$02                              ;$0491DB |
@@ -3093,7 +3093,7 @@ CODE_049DD1:
     LDA.w $0DBA,X                           ;$049DEB |
     STA.w CarryYoshiLevels_0DC1             ;$049DEE |
     STA.w $13C7                             ;$049DF1 |
-    STA.w $187A                             ;$049DF4 |
+    STA.w RidingYoshi_187A                  ;$049DF4 |
     LDA.w $0DBC,X                           ;$049DF7 |
     STA.w $0DC2                             ;$049DFA |
     JSL CODE_05DBF2                         ;$049DFD |

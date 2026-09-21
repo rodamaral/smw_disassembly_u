@@ -2273,7 +2273,7 @@ CODE_02910B:
     CMP.b #$01                              ;$029136 |
     BCS CODE_02915E                         ;$029138 |
     LDA.b #$20                              ;$02913A |
-    LDY.w $187A                             ;$02913C |
+    LDY.w RidingYoshi_187A                  ;$02913C |
     BEQ CODE_029143                         ;$02913F |
     LDA.b #$30                              ;$029141 |
 CODE_029143:
@@ -4895,7 +4895,7 @@ Return02A468:
 CODE_02A469:
     LDA.w $1490
     BNE CODE_02A4B5                         ;$02A46C |
-    LDA.w $187A                             ;$02A46E |
+    LDA.w RidingYoshi_187A                  ;$02A46E |
     BEQ CODE_02A4AE                         ;$02A471 |
 CODE_02A473:
     PHX
@@ -4908,7 +4908,7 @@ CODE_02A473:
     STA.w $1DFC                             ;$02A483 |
     LDA.b #$02                              ;$02A486 |
     STA $C1,X                               ;$02A488 |
-    STZ.w $187A                             ;$02A48A |
+    STZ.w RidingYoshi_187A                  ;$02A48A |
     STZ.w CarryYoshiLevels_0DC1             ;$02A48D |
     LDA.b #$C0                              ;$02A490 |
     STA $7D                                 ;$02A492 |
@@ -10727,7 +10727,7 @@ CODE_02CF52:
     CLC                                     ;$02CF66 |
     ADC.b #$02                              ;$02CF67 |
     STA $0A                                 ;$02CF69 |
-    LDA.w $187A                             ;$02CF6B |
+    LDA.w RidingYoshi_187A                  ;$02CF6B |
     CMP.b #$01                              ;$02CF6E |
     LDA.b #$10                              ;$02CF70 |
     BCC CODE_02CF76                         ;$02CF72 |
@@ -10761,7 +10761,7 @@ CODE_02CF92:
     BMI Return02CFFD                        ;$02CFA3 |
     LDA.b #$1F                              ;$02CFA5 |
     PHX                                     ;$02CFA7 |
-    LDX.w $187A                             ;$02CFA8 |
+    LDX.w RidingYoshi_187A                  ;$02CFA8 |
     BEQ CODE_02CFAF                         ;$02CFAB |
     LDA.b #$2F                              ;$02CFAD |
 CODE_02CFAF:
@@ -11809,7 +11809,7 @@ CODE_02D70B:
     LDA.b #$03                              ;$02D724 |
     STA.w $160E,X                           ;$02D726 |
     STA.w $1471                             ;$02D729 |
-    LDA.w $187A                             ;$02D72C |
+    LDA.w RidingYoshi_187A                  ;$02D72C |
     BNE CODE_02D74B                         ;$02D72F |
     PHX                                     ;$02D731 |
     JSL draw_mario_and_yoshi_00E2BD         ;$02D732 |
@@ -15011,7 +15011,7 @@ CODE_02EE57:
     STA.w $1471                             ;$02EE72 |
     STZ.b PlayerInAir_72                    ;$02EE75 |
     LDA.b #$1C                              ;$02EE77 |
-    LDY.w $187A                             ;$02EE79 |
+    LDY.w RidingYoshi_187A                  ;$02EE79 |
     BEQ CODE_02EE80                         ;$02EE7C |
     LDA.b #$2C                              ;$02EE7E |
 CODE_02EE80:
@@ -15551,7 +15551,7 @@ CODE_02F22B:
     SBC $80                                 ;$02F23B |
     SBC.b #$10                              ;$02F23D |
     PHY                                     ;$02F23F |
-    LDY.w $187A                             ;$02F240 |
+    LDY.w RidingYoshi_187A                  ;$02F240 |
     BEQ CODE_02F247                         ;$02F243 |
     SBC.b #$10                              ;$02F245 |
 CODE_02F247:

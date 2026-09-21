@@ -130,7 +130,7 @@ standard_and_cluster_sprites_01808C:
     JSL cluster_sprites_02F808              ;$0180BA |/
 +   LDA.w $18DF                             ;$0180BE |\
     BNE +                                   ;$0180C1 || Reset some Yoshi-related flags if no Yoshi exists anymore
-    STZ.w $187A                             ;$0180C3 ||
+    STZ.w RidingYoshi_187A                  ;$0180C3 ||
     STZ.w $188B                             ;$0180C6 |/
 +   PLB                                     ;$0180C9 |
     RTL                                     ;$0180CA |
@@ -822,7 +822,7 @@ CODE_018547:
 
 InitPokey:
     LDA.b #$1F
-    LDY.w $187A                             ;$01854D |
+    LDY.w RidingYoshi_187A                  ;$01854D |
     BNE CODE_018554                         ;$018550 |
     LDA.b #$07                              ;$018552 |
 CODE_018554:
@@ -4469,7 +4469,7 @@ CODE_01A079:
     LDA.b #$0A                              ;$01A082 |
     STA.w SpriteStatus_14C8,X               ;$01A084 |
     LDY $76                                 ;$01A087 |
-    LDA.w $187A                             ;$01A089 |
+    LDA.w RidingYoshi_187A                  ;$01A089 |
     BEQ CODE_01A090                         ;$01A08C |
     INY                                     ;$01A08E |
     INY                                     ;$01A08F |
@@ -5650,7 +5650,7 @@ CODE_01A8C9:
     AND.b #$10                              ;$01A8CC |
     BNE CODE_01A91C                         ;$01A8CE |
     LDA.w $140D                             ;$01A8D0 |
-    ORA.w $187A                             ;$01A8D3 |
+    ORA.w RidingYoshi_187A                  ;$01A8D3 |
     BEQ CODE_01A8E6                         ;$01A8D6 |
 CODE_01A8D8:
     LDA.b #$02
@@ -5672,7 +5672,7 @@ CODE_01A8E6:
 CODE_01A8F9:
     LDA.w $1497
     BNE Return01A91B                        ;$01A8FC |
-    LDA.w $187A                             ;$01A8FE |
+    LDA.w RidingYoshi_187A                  ;$01A8FE |
     BNE Return01A91B                        ;$01A901 |
     LDA.w $1686,X                           ;$01A903 |
     AND.b #$10                              ;$01A906 |
@@ -5690,13 +5690,13 @@ Return01A91B:
 
 CODE_01A91C:
     LDA.w $140D
-    ORA.w $187A                             ;$01A91F |
+    ORA.w RidingYoshi_187A                  ;$01A91F |
     BEQ CODE_01A947                         ;$01A922 |
 CODE_01A924:
     JSL DisplayContactGfx
     LDA.b #$F8                              ;$01A928 | Hurt sprite with spinjump or Yoshi stomp
     STA $7D                                 ;$01A92A |
-    LDA.w $187A                             ;$01A92C |
+    LDA.w RidingYoshi_187A                  ;$01A92C |
     BEQ CODE_01A935                         ;$01A92F |
     JSL BoostMarioSpeed                     ;$01A931 |
 CODE_01A935:
@@ -5858,7 +5858,7 @@ Return01AA41:
 
 CODE_01AA42:
     LDA.w $140D
-    ORA.w $187A                             ;$01AA45 |
+    ORA.w RidingYoshi_187A                  ;$01AA45 |
     BEQ CODE_01AA58                         ;$01AA48 |
     LDA $7D                                 ;$01AA4A |
     BMI CODE_01AA58                         ;$01AA4C |
@@ -5872,7 +5872,7 @@ CODE_01AA58:
     AND.b #$40                              ;$01AA5A |
     BEQ CODE_01AA74                         ;$01AA5C |
     LDA.w $1470                             ;$01AA5E |
-    ORA.w $187A                             ;$01AA61 |
+    ORA.w RidingYoshi_187A                  ;$01AA61 |
     BNE CODE_01AA74                         ;$01AA64 |
     LDA.b #$0B                              ;$01AA66 |
     STA.w SpriteStatus_14C8,X               ;$01AA68 |
@@ -5938,7 +5938,7 @@ CODE_01AACD:
     STZ.b PlayerInAir_72                    ;$01AAD3 |
     INC.w $1471                             ;$01AAD5 |
     LDA.b #$1F                              ;$01AAD8 |
-    LDY.w $187A                             ;$01AADA |
+    LDY.w RidingYoshi_187A                  ;$01AADA |
     BEQ CODE_01AAE1                         ;$01AADD |
     LDA.b #$2F                              ;$01AADF |
 CODE_01AAE1:
@@ -6061,7 +6061,7 @@ CODE_01ABAA:
     STA.w $17C0,Y                           ;$01ABAC |
     LDA $94                                 ;$01ABAF |
     STA.w $17C8,Y                           ;$01ABB1 |
-    LDA.w $187A                             ;$01ABB4 |
+    LDA.w RidingYoshi_187A                  ;$01ABB4 |
     CMP.b #$01                              ;$01ABB7 |
     LDA.b #$14                              ;$01ABB9 |
     BCC CODE_01ABBF                         ;$01ABBB |
@@ -6341,7 +6341,7 @@ FlyingQBlock:
     LDA.w $163E,X
     BEQ CODE_01AD80                         ;$01AD71 |
     STZ.w $15EA,X                           ;$01AD73 |
-    LDA.w $187A                             ;$01AD76 |
+    LDA.w RidingYoshi_187A                  ;$01AD76 |
     BNE CODE_01AD80                         ;$01AD79 |
     LDA.b #$04                              ;$01AD7B |
     STA.w $15EA,X                           ;$01AD7D |
@@ -6828,7 +6828,7 @@ CODE_01B0EA:
     BEQ CODE_01B107                         ;$01B0F5 |
     LDA.w $1490                             ;$01B0F7 |
     BNE CODE_01B107                         ;$01B0FA |
-    LDA.w $187A                             ;$01B0FC |
+    LDA.w RidingYoshi_187A                  ;$01B0FC |
     BNE CODE_01B10A                         ;$01B0FF |
     JSL HurtMario                           ;$01B101 |
     BRA CODE_01B10A                         ;$01B105 |
@@ -7319,7 +7319,7 @@ CODE_01B457:
     LDA.b #$01                              ;$01B47A |
     STA.w $1471                             ;$01B47C |
     LDA.b #$1F                              ;$01B47F |
-    LDY.w $187A                             ;$01B481 |
+    LDY.w RidingYoshi_187A                  ;$01B481 |
     BEQ CODE_01B488                         ;$01B484 |
     LDA.b #$2F                              ;$01B486 |
 CODE_01B488:
@@ -7926,7 +7926,7 @@ CODE_01B852:
     LDA $0D                                 ;$01B882 |
     CLC                                     ;$01B884 |
     ADC.b #$1F                              ;$01B885 |
-    LDY.w $187A                             ;$01B887 |
+    LDY.w RidingYoshi_187A                  ;$01B887 |
     BEQ CODE_01B88F                         ;$01B88A |
     CLC                                     ;$01B88C |
     ADC.b #$10                              ;$01B88D |
@@ -10387,7 +10387,7 @@ CODE_01C9EC:
     STA.w $1471                             ;$01CA36 |
     STA.w $1602,X                           ;$01CA39 |
     LDA.b #$28                              ;$01CA3C |
-    LDY.w $187A                             ;$01CA3E |
+    LDY.w RidingYoshi_187A                  ;$01CA3E |
     BEQ CODE_01CA45                         ;$01CA41 |
     LDA.b #$38                              ;$01CA43 |
 CODE_01CA45:
@@ -12597,7 +12597,7 @@ CODE_01DA0A:
     LDA.w $14C8,X
     BEQ CODE_01DA37                         ;$01DA0D |
     LDA.w $1470                             ;$01DA0F |
-    ORA.w $187A                             ;$01DA12 |
+    ORA.w RidingYoshi_187A                  ;$01DA12 |
     BNE CODE_01D9FE                         ;$01DA15 |
     LDA.b #$03                              ;$01DA17 |
     STA.w $163E,X                           ;$01DA19 |
@@ -14207,7 +14207,7 @@ CODE_01E650:
     BEQ CODE_01E6B0                         ;$01E653 |
     LSR                                     ;$01E655 |
     TAY                                     ;$01E656 |
-    LDA.w $187A                             ;$01E657 |
+    LDA.w RidingYoshi_187A                  ;$01E657 |
     CMP.b #$01                              ;$01E65A |
     LDA.w DATA_01E61A,Y                     ;$01E65C |
     BCC CODE_01E664                         ;$01E65F |
@@ -14275,7 +14275,7 @@ CODE_01E6CE:
     BIT $15
     BVC CODE_01E6E2                         ;$01E6D0 |
     LDA.w $1470                             ;$01E6D2 |
-    ORA.w $187A                             ;$01E6D5 |
+    ORA.w RidingYoshi_187A                  ;$01E6D5 |
     BNE CODE_01E6E2                         ;$01E6D8 |
     LDA.b #$0B                              ;$01E6DA |
     STA.w SpriteStatus_14C8,X               ;$01E6DC |
@@ -14433,7 +14433,7 @@ CODE_01E804:
     BMI CODE_01E83D                         ;$01E810 |
     INC $C2,X                               ;$01E812 |
     LDA.b #$11                              ;$01E814 |
-    LDY.w $187A                             ;$01E816 |
+    LDY.w RidingYoshi_187A                  ;$01E816 |
     BEQ CODE_01E81D                         ;$01E819 |
     LDA.b #$22                              ;$01E81B |
 CODE_01E81D:
@@ -14473,7 +14473,7 @@ CODE_01E840:
     LSR                                     ;$01E858 |
     AND.b #$07                              ;$01E859 |
     TAY                                     ;$01E85B |
-    LDA.w $187A                             ;$01E85C |
+    LDA.w RidingYoshi_187A                  ;$01E85C |
     BEQ CODE_01E866                         ;$01E85F |
     TYA                                     ;$01E861 |
     CLC                                     ;$01E862 |
@@ -14866,7 +14866,7 @@ draw_yoshi_01EA70:
     BNE .CODE_01EB2E                        ;$01EB2A || if standing still, without tongue out
     LDY.b #$04                              ;$01EB2C |/
 .CODE_01EB2E
-    LDA.w $187A                             ;$01EB2E |
+    LDA.w RidingYoshi_187A                  ;$01EB2E |
     BEQ +                                   ;$01EB31 |\ if riding Yoshi
     LDA.w $1419                             ;$01EB33 || 
     CMP.b #$01                              ;$01EB36 ||
@@ -14907,7 +14907,7 @@ draw_yoshi_01EA70:
     CPY.b #$03                              ;$01EB7D ||
     BNE +                                   ;$01EB7F ||
     INC A                                   ;$01EB81 || turn around
-+   STA.w $187A                             ;$01EB82 ||
++   STA.w RidingYoshi_187A                  ;$01EB82 ||
     LDA.b #$01                              ;$01EB85 ||
     STA.w CarryYoshiLevels_0DC1             ;$01EB87 || can carry Yoshi over levels flag
     LDA.w $15F6,X                           ;$01EB8A ||
@@ -14918,7 +14918,7 @@ draw_yoshi_01EA70:
 .not_mounted_01EB97:
     LDA $64
     PHA                                     ;$01EB99 |
-    LDA.w $187A                             ;$01EB9A |
+    LDA.w RidingYoshi_187A                  ;$01EB9A |
     BEQ +                                   ;$01EB9D |\ skip Yoshi physics if:
     LDA.w $1419                             ;$01EB9F || - mounted
     BEQ +                                   ;$01EBA2 || - entering a pipe
@@ -14961,7 +14961,7 @@ yoshi_01EBCA:
 +   TXA                                     ;$01EBE9 |
     INC A                                   ;$01EBEA |
     STA.w $18DF                             ;$01EBEB |
-    LDA.w $187A                             ;$01EBEE |
+    LDA.w RidingYoshi_187A                  ;$01EBEE |
     BNE .check_hatch_yoshi_01EC04           ;$01EBF1 |
     JSR SubOffscreen0Bnk1                   ;$01EBF3 |
     LDA.w SpriteStatus_14C8,X               ;$01EBF6 |
@@ -15136,7 +15136,7 @@ CODE_01ED0C:
     LDA.b PlayerInAir_72                    ;$01ED38 |
     BEQ CODE_01ED70                         ;$01ED3A |
     LDA.w $1470                             ;$01ED3C |
-    ORA.w $187A                             ;$01ED3F |
+    ORA.w RidingYoshi_187A                  ;$01ED3F |
     BNE CODE_01ED70                         ;$01ED42 |
     LDA $7D                                 ;$01ED44 |
     BMI CODE_01ED70                         ;$01ED46 |
@@ -15197,7 +15197,7 @@ CODE_01ED9E:
     LDA.b #$C0                              ;$01EDBF |
 CODE_01EDC1:
     STA $7D
-    STZ.w $187A                             ;$01EDC3 |
+    STZ.w RidingYoshi_187A                  ;$01EDC3 |
     STZ $AA,X                               ;$01EDC6 |
     JSR adjust_player_y_off_yoshi_01EDCC    ;$01EDC8 |
 Return01EDCB:
@@ -15329,7 +15329,7 @@ handle_off_yoshi_01EE61:
     CMP.b #$02                              ;$01EEE2 |
     BCC .return_01EF17                      ;$01EEE4 | if Yoshi does not have wings, return
 ;Draw Yoshi Wings:
-    LDA.w $187A                             ;$01EEE6 |
+    LDA.w RidingYoshi_187A                  ;$01EEE6 |
     BEQ .not_flying_01EF13                  ;$01EEE9 | just draw the wings if not on Yoshi
     LDA.b PlayerInAir_72                    ;$01EEEB |
     BNE .wings_flying_01EF00                ;$01EEED |\
@@ -16428,7 +16428,7 @@ maybe_hurt_yoshi_01F6DD:
     STA.w $1DFC                             ;$01F71F | SFX for losing Yoshi
     LDA.b #$02                              ;$01F722 |
     STA $C2,X                               ;$01F724 | make Yoshi run
-    STZ.w $187A                             ;$01F726 | unmount Yoshi
+    STZ.w RidingYoshi_187A                  ;$01F726 | unmount Yoshi
     LDA.b #$C0                              ;$01F729 | Y speed to give Mario when knocked off Yoshi by a standard sprite.
     STA $7D                                 ;$01F72B |
     STZ $7B                                 ;$01F72D | cancel Mario X speed

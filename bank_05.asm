@@ -3022,7 +3022,7 @@ CODE_05B1C5:
 CODE_05B1D1:
     CPX.b #$16
     BNE CODE_05B1DB                         ;$05B1D3 |
-    LDA.w $187A                             ;$05B1D5 |
+    LDA.w RidingYoshi_187A                  ;$05B1D5 |
     BEQ CODE_05B1DB                         ;$05B1D8 |
     INX                                     ;$05B1DA |
 CODE_05B1DB:

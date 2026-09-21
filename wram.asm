@@ -1820,7 +1820,7 @@ SpriteOffscreenVert: skip 12
 NetDoorPlayerXOffset: skip 1
 ; 7E1879 unused
 skip 1
-PlayerRidingYoshi: skip 1
+RidingYoshi_187A: skip 1
 SpriteMisc_187B: skip 12
 ScreenShakeTimer: skip 1
 ScreenShakeYOffset: skip 2

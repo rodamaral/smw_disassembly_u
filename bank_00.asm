@@ -4741,7 +4741,7 @@ CODE_00A768:
 CODE_00A76A:
     STY $7D
     JSR CODE_00A6C7                         ;$00A76C |
-    LDA.w $187A                             ;$00A76F |
+    LDA.w RidingYoshi_187A                  ;$00A76F |
     BEQ Return00A795                        ;$00A772 |
     LDX $89                                 ;$00A774 |
     LDA $88                                 ;$00A776 |
@@ -7797,7 +7797,7 @@ CODE_00C8D1:
     LDA.b #$24                              ;$00C8D4 |
     STA $72                                 ;$00C8D6 |
     LDA.b #$6F                              ;$00C8D8 |
-    LDY.w $187A                             ;$00C8DA |
+    LDY.w RidingYoshi_187A                  ;$00C8DA |
     BEQ CODE_00C8E1                         ;$00C8DD |
     LDA.b #$5F                              ;$00C8DF |
 CODE_00C8E1:
@@ -7980,7 +7980,7 @@ Return00CA30:
 
 SetMarioPeaceImg:
     LDA.b #$26
-    LDY.w $187A                             ;$00CA33 |
+    LDY.w RidingYoshi_187A                  ;$00CA33 |
     BEQ CODE_00CA3A                         ;$00CA36 |
     LDA.b #$14                              ;$00CA38 |
 CODE_00CA3A:
@@ -8322,7 +8322,7 @@ CODE_00CD39:                                ;        |
     LDA $74                                 ;$00CD4A |
     BNE CODE_00CD72                         ;$00CD4C |
     LDA.w $148F                             ;$00CD4E |
-    ORA.w $187A                             ;$00CD51 |
+    ORA.w RidingYoshi_187A                  ;$00CD51 |
     BNE CODE_00CD79                         ;$00CD54 |
     LDA $8B                                 ;$00CD56 |
     AND.b #$1B                              ;$00CD58 |
@@ -8356,7 +8356,7 @@ use_land_physics:
 CODE_00CD8B:
     JSL set_player_pose
 CODE_00CD8F:
-    LDY.w $187A                             ;$00CD8F |
+    LDY.w RidingYoshi_187A                  ;$00CD8F |
     BNE set_yoshi_pose                      ;$00CD92 |
     RTS                                     ;$00CD94 |
 
@@ -8768,7 +8768,7 @@ powerup_physics:                            ;        \
     BIT $16                                 ;$00D068 |\ and X or Y are tapped,
     BVC .return                             ;$00D06A |/
     LDA $73                                 ;$00D06C |\ and the player is neither ducking,
-    ORA.w $187A                             ;$00D06E | | nor on Yoshi,
+    ORA.w RidingYoshi_187A                  ;$00D06E | | nor on Yoshi,
     ORA.w $140D                             ;$00D071 | | nor spin jumping,
     BNE .return                             ;$00D074 |/
     LDA.b #$12                              ;$00D076 |\ then set the cape spin timer
@@ -8781,7 +8781,7 @@ powerup_physics:                            ;        \
     CMP.b #$03                              ;$00D081 |\ If the player is fiery,
     BNE .return                             ;$00D083 |/ 
     LDA $73                                 ;$00D085 |\ and not on Yoshi,
-    ORA.w $187A                             ;$00D087 | |
+    ORA.w RidingYoshi_187A                  ;$00D087 | |
     BNE .return                             ;$00D08A |/
     BIT $16                                 ;$00D08C |\ and X or Y are tapped,
     BVS .shoot_fireball                     ;$00D08E |/ shoot a fireball.
@@ -8950,7 +8950,7 @@ horizontal_pipe_animation:
     JSL set_player_pose                     ;$00D19D |
     JSL CODE_00CFBC                         ;$00D1A1 |
     JSR CODE_00D1F4                         ;$00D1A5 |
-    LDA.w $187A                             ;$00D1A8 |
+    LDA.w RidingYoshi_187A                  ;$00D1A8 |
     BEQ CODE_00D1B2                         ;$00D1AB |
     LDA.b #$29                              ;$00D1AD |
     STA.w $13E0                             ;$00D1AF |
@@ -9007,7 +9007,7 @@ vertical_pipe_animation:
     JSR disable_controls
     STZ.w $13DF                             ;$00D206 |
     LDA.b #$0F                              ;$00D209 |
-    LDY.w $187A                             ;$00D20B |
+    LDY.w RidingYoshi_187A                  ;$00D20B |
     BEQ CODE_00D22A                         ;$00D20E |
     LDX.b #$00                              ;$00D210 |
     LDY $76                                 ;$00D212 |
@@ -9294,7 +9294,7 @@ CODE_00D637:
     LDY $76                                 ;$00D64E |
     LDA.w DATA_00D5F0,Y                     ;$00D650 |
     STA.w $13E2                             ;$00D653 |
-    LDA.w $187A                             ;$00D656 |
+    LDA.w RidingYoshi_187A                  ;$00D656 |
     BNE CODE_00D682                         ;$00D659 |
     INX                                     ;$00D65B |
     BRA CODE_00D663                         ;$00D65C |
@@ -9526,7 +9526,7 @@ aerial_physics:
     LDA $72                                 ;$00D7E9 |
     BEQ CODE_00D811                         ;$00D7EB |
     LDA.w $148F                             ;$00D7ED |
-    ORA.w $187A                             ;$00D7F0 |
+    ORA.w RidingYoshi_187A                  ;$00D7F0 |
     ORA.w $140D                             ;$00D7F3 |
     BNE CODE_00D811                         ;$00D7F6 |
     LDA.w $13ED                             ;$00D7F8 |
@@ -9655,7 +9655,7 @@ CODE_00D8CD:
     LDA $72
     BEQ CODE_00D928                         ;$00D8CF |
     LDX.b #$00                              ;$00D8D1 |
-    LDA.w $187A                             ;$00D8D3 |
+    LDA.w RidingYoshi_187A                  ;$00D8D3 |
     BEQ CODE_00D8E7                         ;$00D8D6 |
     LDA.w YoshiHasWings_141E                ;$00D8D8 |
     LSR                                     ;$00D8DB |
@@ -11140,7 +11140,7 @@ layer_collision:
     LDA $72                                 ;$00EAF7 |
     ORA.w $148F                             ;$00EAF9 |
     ORA $73                                 ;$00EAFC |
-    ORA.w $187A                             ;$00EAFE |
+    ORA.w RidingYoshi_187A                  ;$00EAFE |
     BNE walk_off_wall                       ;$00EB01 |
     LDA.w $13E3                             ;$00EB03 |
     CMP.b #$06                              ;$00EB06 |
@@ -11222,7 +11222,7 @@ normal_collision:
     BNE .not_big                            ;$00EB7F | | and not ducking,
     LDX.b #$18                              ;$00EB81 | | use the big Mario collision point indices.
 .not_big                                    ;        |/
-    LDA.w $187A                             ;$00EB83 |\
+    LDA.w RidingYoshi_187A                  ;$00EB83 |\
     BEQ .not_on_yoshi                       ;$00EB86 | | If the player is on yoshi,
     TXA                                     ;$00EB88 | |
     CLC                                     ;$00EB89 | |
@@ -11803,7 +11803,7 @@ CODE_00EF68:
     TSB $77                                 ;$00EF77 |
     LDY.w $1407                             ;$00EF79 |
     BNE CODE_00EF99                         ;$00EF7C |
-    LDA.w $187A                             ;$00EF7E |
+    LDA.w RidingYoshi_187A                  ;$00EF7E |
     BEQ CODE_00EF95                         ;$00EF81 |
     LDA $8F                                 ;$00EF83 | uninit?
     BEQ CODE_00EF95                         ;$00EF85 |
@@ -11903,7 +11903,7 @@ CODE_00F005:
 CODE_00F01B:
     CMP.b #$08
     BCS Return00F04C                        ;$00F01D |
-    LDA.w $187A                             ;$00F01F |
+    LDA.w RidingYoshi_187A                  ;$00F01F |
     BEQ CODE_00F035                         ;$00F022 |
     LDA.b #$08                              ;$00F024 |
     STA.w $1DFC                             ;$00F026 |
@@ -11984,7 +11984,7 @@ DATA_00F100:
 
 CODE_00F120:
     XBA
-    LDA.w $187A                             ;$00F121 |
+    LDA.w RidingYoshi_187A                  ;$00F121 |
     BNE CODE_00F15F                         ;$00F124 |
     XBA                                     ;$00F126 |
 CODE_00F127:
@@ -12193,7 +12193,7 @@ process_throw_block:
     BIT $16                                 ;$00F26B |\ If the player didn't press X or Y,
     BVC .return                             ;$00F26D |/ return.
     LDA.w $148F                             ;$00F26F |\ If the player is already carrying something
-    ORA.w $187A                             ;$00F272 | | or on Yoshi,
+    ORA.w RidingYoshi_187A                  ;$00F272 | | or on Yoshi,
     BNE .return                             ;$00F275 |/ return.
     LDA.b #$02                              ;$00F277 |\
     PHA                                     ;$00F279 | | Set the data bank to $02.
@@ -12433,7 +12433,7 @@ CODE_00F3E9:
     XBA                                     ;$00F3FD |
     TAX                                     ;$00F3FE |
     LDA.b #$20                              ;$00F3FF |
-    LDY.w $187A                             ;$00F401 |
+    LDY.w RidingYoshi_187A                  ;$00F401 |
     BEQ CODE_00F408                         ;$00F404 |
     LDA.b #$30                              ;$00F406 |
 CODE_00F408:
@@ -13043,7 +13043,7 @@ ProcessVerticalScroll00F7F4:
     TAX
     REP #$20                                ;$00F846 |
     BNE .CODE_00F869                        ;$00F848 |
-    LDX.w $187A                             ;$00F84A |
+    LDX.w RidingYoshi_187A                  ;$00F84A |
     BEQ .CODE_00F856                        ;$00F84D |
     LDX.w YoshiHasWings_141E                ;$00F84F |
     CPX.b #$02                              ;$00F852 |
@@ -13575,7 +13575,7 @@ ADDR_00FC25:
     AND.b #$F1                              ;$00FC3E |
     ORA.b #$0A                              ;$00FC40 |
     STA.w $15F6,Y                           ;$00FC42 |
-    LDA.w $187A                             ;$00FC45 |
+    LDA.w RidingYoshi_187A                  ;$00FC45 |
     BNE Return00FC72                        ;$00FC48 |
     LDA $1A                                 ;$00FC4A |
     SEC                                     ;$00FC4C |
@@ -13902,7 +13902,7 @@ CODE_00FE72:
     LDA $96                                 ;$00FE7E |
     ADC.b #$1A                              ;$00FE80 |
     PHX                                     ;$00FE82 |
-    LDX.w $187A                             ;$00FE83 |
+    LDX.w RidingYoshi_187A                  ;$00FE83 |
     BEQ CODE_00FE8A                         ;$00FE86 |
     ADC.b #$10                              ;$00FE88 |
 CODE_00FE8A:
@@ -13946,7 +13946,7 @@ shoot_fireball:
     LDY $76                                 ;$00FEC9 |\ Set the fireball's X speed
     LDA.w fireball_x_speeds,Y               ;$00FECB | | depending on the player's direction.
     STA.w $1747,X                           ;$00FECE |/
-    LDA.w $187A                             ;$00FED1 |\ If on Yoshi,
+    LDA.w RidingYoshi_187A                  ;$00FED1 |\ If on Yoshi,
     BEQ .not_on_yoshi                       ;$00FED4 | | use the next two position offsets.
     INY                                     ;$00FED6 | |
     INY                                     ;$00FED7 |/
