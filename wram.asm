@@ -1891,7 +1891,7 @@ GiveLivesTimer: skip 1
 ; 7E18E6 unused
 skip 1
 YoshiCanStomp_18E7: skip 1
-YoshiGrowingTimer: skip 1
+YoshiGrowingTimer_18E8: skip 1
 SmokeSpriteSlotFull: skip 1
 MinExtSpriteXPosHigh: skip 12
 ; 7E18F6 unused

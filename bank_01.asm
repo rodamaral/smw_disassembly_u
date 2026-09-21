@@ -4809,7 +4809,7 @@ CODE_01A2B5:
     STA.w $1602,X                           ;$01A2E8 |
     DEC.w $160E,X                           ;$01A2EB |
     LDA.b #$40                              ;$01A2EE |
-    STA.w $18E8                             ;$01A2F0 |
+    STA.w YoshiGrowingTimer_18E8            ;$01A2F0 |
     RTS                                     ;$01A2F3 |
 
 CODE_01A2F4:
@@ -14776,7 +14776,7 @@ draw_yoshi_01EA70:
 +   RTL                                     ;$01EA8E |
 
 .actually_draw_yoshi_01EA8F:
-    LDA.w $18E8
+    LDA.w YoshiGrowingTimer_18E8
     ORA.w $13C6                             ;$01EA92 |
     BEQ .not_growing_01EA9A                 ;$01EA95 |
     JMP .growing_common_01EB48              ;$01EA97 |
@@ -14978,9 +14978,9 @@ yoshi_01EBCA:
     BNE .game_running_01EC61                ;$01EC0C | - Yoshi able to lay an egg
 +   LDA.w EggLaidTimer_18DE                 ;$01EC0E |
     BNE .game_running_01EC61                ;$01EC11 |
-    LDA.w $18E8                             ;$01EC13 | skip if not growing
+    LDA.w YoshiGrowingTimer_18E8            ;$01EC13 | skip if not growing
     BEQ .yoshi_not_growing_01EC4C           ;$01EC16 |\
-    DEC.w $18E8                             ;$01EC18 || GLITCH: with many Yoshis, the timer decreases faster per frame
+    DEC.w YoshiGrowingTimer_18E8            ;$01EC18 || GLITCH: with many Yoshis, the timer decreases faster per frame
     STA $9D                                 ;$01EC1B || Freeze game
     STA.w PlayerIsFrozen_13FB               ;$01EC1D ||
     CMP.b #$01                              ;$01EC20 || If Yoshi isn't done hatching yet, skip to continue running the animation

@@ -14500,7 +14500,7 @@ CODE_02EA50:
     BCC CODE_02EA83                         ;$02EA77 |
     LDA.w $1686,Y                           ;$02EA79 |
     AND.b #$03                              ;$02EA7C |
-    ORA.w $18E8                             ;$02EA7E |
+    ORA.w YoshiGrowingTimer_18E8            ;$02EA7E |
     BNE CODE_02EA86                         ;$02EA81 |
 CODE_02EA83:
     JSR CODE_02EA8A
@@ -14520,7 +14520,7 @@ CODE_02EA8A:
     LDA.w $163E,X                           ;$02EA9B |
     BEQ CODE_02EAA9                         ;$02EA9E |
     JSL CODE_03C023                         ;$02EAA0 |
-    LDA.w $18E8                             ;$02EAA4 |
+    LDA.w YoshiGrowingTimer_18E8            ;$02EAA4 |
     BNE ADDR_02EACE                         ;$02EAA7 |
 CODE_02EAA9:
     LDA.b #$37

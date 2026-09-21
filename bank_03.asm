@@ -7820,7 +7820,7 @@ ADDR_03C05C:
     STA.w $1602,X                           ;$03C08F |
     DEC.w $160E,X                           ;$03C092 |
     LDA.b #$40                              ;$03C095 |
-    STA.w $18E8                             ;$03C097 |
+    STA.w YoshiGrowingTimer_18E8            ;$03C097 |
     RTS                                     ;$03C09A |
 
 CODE_03C09B:
