@@ -38,7 +38,7 @@ reset_start:
     STA.l $7F8182                           ;$00804E |/
     JSR upload_SPC_engine                   ;$008052 | Upload the SPC engine
     STZ.w $0100                             ;$008055 | Clear game mode
-    STZ.w $0109                             ;$008058 | Clear level number(used for OW bypass)
+    STZ.w OverworldOverride_0109            ;$008058 | Clear level number(used for OW bypass)
     JSR clear_non_stack                     ;$00805B | RAM clear routine
     JSR upload_samples                      ;$00805E | Upload SPC samples
     JSR setup_window_HDMA                   ;$008061 | Set up HDMA for window settings
@@ -168,7 +168,7 @@ SPC_upload_return:                          ;        |
 upload_level_music:
     LDA.w $1425                             ;$008134 \ Load bank 2 music if you are going to a bonus game
     BNE upload_music_bank_2                 ;$008137 |
-    LDA.w $0109                             ;$008139 | Load bank 2 music if this is the intro level
+    LDA.w OverworldOverride_0109            ;$008139 | Load bank 2 music if this is the intro level
     CMP.b #$E9                              ;$00813C |
     BEQ upload_music_bank_2                 ;$00813E |
     ORA.w $141A                             ;$008140 | If you are transitioning levels reupload music
@@ -2621,7 +2621,7 @@ GM10_level_start_00968E:
     BNE CODE_0096A8                         ;$009694 |
     LDA.w $141A                             ;$009696 |
     ORA.w $141D                             ;$009699 |
-    ORA.w $0109                             ;$00969C |
+    ORA.w OverworldOverride_0109            ;$00969C |
     BNE CODE_0096AB                         ;$00969F |
     LDA.w $13C1                             ;$0096A1 |
     CMP.b #$56                              ;$0096A4 |
@@ -2640,7 +2640,7 @@ CODE_0096B8:
     STA.w $0101,X
     DEX                                     ;$0096BB |
     BPL CODE_0096B8                         ;$0096BC |
-    LDA.w $0109                             ;$0096BE |
+    LDA.w OverworldOverride_0109            ;$0096BE |
     BNE CODE_0096CB                         ;$0096C1 |
     JSR upload_music_bank_1                 ;$0096C3 |
     LDA.b #$01                              ;$0096C6 |
@@ -2649,7 +2649,7 @@ CODE_0096CB:
     LDA.b #$EB
     LDY.b #$00                              ;$0096CD |
 CODE_0096CF:
-    STA.w $0109
+    STA.w OverworldOverride_0109
     STY.w OWPlayerSubmap_1F11               ;$0096D2 |
 GM11_level_load_1_0096D5:
     STZ.w $4200
@@ -2679,7 +2679,7 @@ CODE_0096FA:
     INC.w $1404                             ;$00970F |
     JSL update_screen_position_00F6DB       ;$009712 |
     JSL CODE_05801E                         ;$009716 |
-    LDA.w $0109                             ;$00971A |
+    LDA.w OverworldOverride_0109            ;$00971A |
     BEQ CODE_009728                         ;$00971D |
     CMP.b #$E9                              ;$00971F |
     BNE CODE_009740                         ;$009721 |
@@ -3394,7 +3394,7 @@ CODE_009C9F:
     STZ.w $0D9F                             ;$009CAD |
 CODE_009CB0:
     LDA.b #$E9
-    STA.w $0109                             ;$009CB2 |
+    STA.w OverworldOverride_0109            ;$009CB2 |
     JSR CODE_WRITEOW                        ;$009CB5 |
     JSR CODE_009D38                         ;$009CB8 |
     JMP CODE_009417                         ;$009CBB |
@@ -3434,7 +3434,7 @@ CODE_009CEF:
     JSR CODE_009DB5                         ;$009CF2 |
     BNE CODE_009D22                         ;$009CF5 |
     PHX                                     ;$009CF7 |
-    STZ.w $0109                             ;$009CF8 |
+    STZ.w OverworldOverride_0109            ;$009CF8 |
     LDA.b #$8F                              ;$009CFB |
     STA $00                                 ;$009CFD |
 CODE_009CFF:
@@ -3916,7 +3916,7 @@ GM0C_overworld_load_00A087:
     JSL CODE_04853B                         ;$00A08F |
 .CODE_00A093:
     JSR Clear_1A_13D3
-    LDA.w $0109                             ;$00A096 |
+    LDA.w OverworldOverride_0109            ;$00A096 |
     BEQ .CODE_00A0B0                        ;$00A099 |
     LDA.b #$B0                              ;$00A09B |
     STA.w $1DF5                             ;$00A09D |

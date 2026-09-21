@@ -14991,7 +14991,7 @@ yoshi_01EBCA:
     LDA.w OWPlayerSubmap_1F11,Y             ;$01EC2C ||| - Yoshi's Island
     DEC A                                   ;$01EC2F ||| - first time
     ORA.w YoshiSavedFlag_0EF8               ;$01EC30 ||| - not title screen
-    ORA.w $0109                             ;$01EC33 |||
+    ORA.w OverworldOverride_0109            ;$01EC33 |||
     BNE +                                   ;$01EC36 |||\
     INC.w YoshiSavedFlag_0EF8               ;$01EC38 |||| Display Yoshi's spawn message
     LDA.b #$03                              ;$01EC3B |||/

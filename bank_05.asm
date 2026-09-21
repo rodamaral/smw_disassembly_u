@@ -2929,7 +2929,7 @@ CODE_05B10C:
     BRA CODE_05B18E                         ;$05B130 |
 
 CODE_05B132:
-    LDA.w $0109
+    LDA.w OverworldOverride_0109
     ORA.w $13D2                             ;$05B135 |
     BEQ CODE_05B16E                         ;$05B138 |
     LDA.w $1DF5                             ;$05B13A |
@@ -2952,7 +2952,7 @@ CODE_05B15A:
     LDA.b #$8E                              ;$05B15B |
     STA.w $1F19                             ;$05B15D |
 side_exit_level:
-    STZ.w $0109                             ;$05B160 |
+    STZ.w OverworldOverride_0109            ;$05B160 |
     LDA.b #$00                              ;$05B163 |
 CODE_05B165:
     STA.w $0DD5
@@ -2974,7 +2974,7 @@ CODE_05B16E:
     AND.b #$C0                              ;$05B182 |
     BNE CODE_05B18E                         ;$05B184 |
 CODE_05B186:
-    LDA.w $0109
+    LDA.w OverworldOverride_0109
     BNE CODE_05B15A                         ;$05B189 |
     INC.w $1B88                             ;$05B18B |
 CODE_05B18E:
@@ -6391,7 +6391,7 @@ CODE_05D83B:
 CODE_05D83E:
     STZ $0F
     LDY.b #$00                              ;$05D840 |
-    LDA.w $0109                             ;$05D842 |
+    LDA.w OverworldOverride_0109            ;$05D842 |
     BNE CODE_05D8A2                         ;$05D845 |
     REP #$30                                ;$05D847 |
     STZ $1A                                 ;$05D849 |
