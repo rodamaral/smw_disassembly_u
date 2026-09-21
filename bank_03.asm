@@ -1000,7 +1000,7 @@ CODE_0387D7:
     LDA.b #$01                              ;$0387EA |
     STA.w $1471                             ;$0387EC |
     LDA.b #$06                              ;$0387EF |
-    STA.w $154C,X                           ;$0387F1 |
+    STA.w SpritePlayerContact_154C,X        ;$0387F1 |
     STZ $7D                                 ;$0387F4 |
     LDA.b #$D6                              ;$0387F6 |
     LDY.w RidingYoshi_187A                  ;$0387F8 |
@@ -1027,7 +1027,7 @@ CODE_038813:
     RTS                                     ;$03881D |
 
 MegaMoleContact:
-    LDA.w $154C,X
+    LDA.w SpritePlayerContact_154C,X
     ORA.w $15D0,X                           ;$038821 |
     BNE Return03882A                        ;$038824 |
     JSL HurtMario                           ;$038826 |
@@ -2841,10 +2841,10 @@ CODE_039581:
     BCC NoRexContact                        ;$039589 |
     LDA.w $1490                             ;$03958B |
     BNE RexStarKill                         ;$03958E |
-    LDA.w $154C,X                           ;$039590 |
+    LDA.w SpritePlayerContact_154C,X        ;$039590 |
     BNE NoRexContact                        ;$039593 |
     LDA.b #$08                              ;$039595 |
-    STA.w $154C,X                           ;$039597 |
+    STA.w SpritePlayerContact_154C,X        ;$039597 |
     LDA $7D                                 ;$03959A |
     CMP.b #$10                              ;$03959C |
     BMI RexWins                             ;$03959E |
@@ -3505,12 +3505,12 @@ NoSetRznrFireTime:
     LDA.b #$0A                              ;$039A32 |
     STA.w $15AC,X                           ;$039A34 |
 NoSetRenrTurnTime:
-    LDA.w $154C,X
+    LDA.w SpritePlayerContact_154C,X
     BNE DrawReznor                          ;$039A3A |
     JSL MarioSprInteract                    ;$039A3C |
     BCC DrawReznor                          ;$039A40 |
     LDA.b #$08                              ;$039A42 |
-    STA.w $154C,X                           ;$039A44 |
+    STA.w SpritePlayerContact_154C,X        ;$039A44 |
     LDA $96                                 ;$039A47 |
     SEC                                     ;$039A49 |
     SBC $D8,X                               ;$039A4A |
@@ -4880,7 +4880,7 @@ DATA_03A437:
     db $0A,$0E
 
 CODE_03A441:
-    LDA.w $154C,X
+    LDA.w SpritePlayerContact_154C,X
     BNE CODE_03A482                         ;$03A444 |
     LDA.w $1540,X                           ;$03A446 |
     BNE CODE_03A465                         ;$03A449 |
@@ -4917,7 +4917,7 @@ Return03A47B:
 
 CODE_03A47C:
     LDA.b #$24
-    STA.w $154C,X                           ;$03A47E |
+    STA.w SpritePlayerContact_154C,X        ;$03A47E |
     RTS                                     ;$03A481 |
 
 CODE_03A482:
@@ -5806,7 +5806,7 @@ CODE_03ABBE:
     BEQ Return03ABEA                        ;$03ABD7 |
     STZ $36                                 ;$03ABD9 |
     LDA.b #$20                              ;$03ABDB |
-    STA.w $154C,X                           ;$03ABDD |
+    STA.w SpritePlayerContact_154C,X        ;$03ABDD |
     LDA.b #$60                              ;$03ABE0 |
     STA.w $1540,X                           ;$03ABE2 |
     LDA.b #$06                              ;$03ABE5 |
@@ -5831,7 +5831,7 @@ Return03AC02:
 
 CODE_03AC03:
     JSR CODE_03A6AC
-    LDA.w $154C,X                           ;$03AC06 |
+    LDA.w SpritePlayerContact_154C,X        ;$03AC06 |
     CMP.b #$01                              ;$03AC09 |
     BNE CODE_03AC22                         ;$03AC0B |
     LDA.b #$0B                              ;$03AC0D |
@@ -5926,10 +5926,10 @@ PrincessPeach:
     AND.b #$07                              ;$03ACAF |
     BNE CODE_03ACB8                         ;$03ACB1 |
     LDA.b #$0C                              ;$03ACB3 |
-    STA.w $154C,X                           ;$03ACB5 |
+    STA.w SpritePlayerContact_154C,X        ;$03ACB5 |
 CODE_03ACB8:
     LDY.w $1602,X
-    LDA.w $154C,X                           ;$03ACBB |
+    LDA.w SpritePlayerContact_154C,X        ;$03ACBB |
     BEQ CODE_03ACC1                         ;$03ACBE |
     INY                                     ;$03ACC0 |
 CODE_03ACC1:
@@ -6149,7 +6149,7 @@ CODE_03AE3F:
     PHA                                     ;$03AE43 |
     BNE CODE_03AE4B                         ;$03AE44 |
     LDA.b #$14                              ;$03AE46 |
-    STA.w $154C,X                           ;$03AE48 |
+    STA.w SpritePlayerContact_154C,X        ;$03AE48 |
 CODE_03AE4B:
     LDA.b #$0A
     STA.w $1602,X                           ;$03AE4D |
@@ -6435,7 +6435,7 @@ CODE_03B078:
     ORA $37                                 ;$03B087 |
     BNE Return03B0F2                        ;$03B089 |
     JSR CODE_03B0DC                         ;$03B08B |
-    LDA.w $154C,X                           ;$03B08E |
+    LDA.w SpritePlayerContact_154C,X        ;$03B08E |
     BNE Return03B0DB                        ;$03B091 |
     LDA.b #$24                              ;$03B093 |
     STA.w $1662,X                           ;$03B095 |
@@ -6469,7 +6469,7 @@ CODE_03B0D2:
     JSL HurtMario
 CODE_03B0D6:
     LDA.b #$20
-    STA.w $154C,X                           ;$03B0D8 |
+    STA.w SpritePlayerContact_154C,X        ;$03B0D8 |
 Return03B0DB:
     RTS
 
@@ -8137,7 +8137,7 @@ Generate1Up:
     STA.w $14D4,X                           ;$03C2FE |
     JSL InitSpriteTables                    ;$03C301 |
     LDA.b #$10                              ;$03C305 |
-    STA.w $154C,X                           ;$03C307 |
+    STA.w SpritePlayerContact_154C,X        ;$03C307 |
     JSR PopupMushroom                       ;$03C30A |
     PLX                                     ;$03C30D |
     RTL                                     ;$03C30E |
@@ -8150,7 +8150,7 @@ InvisMushroom:
     STA $9E,X                               ;$03C31A |
     JSL InitSpriteTables                    ;$03C31C |
     LDA.b #$20                              ;$03C320 |
-    STA.w $154C,X                           ;$03C322 |
+    STA.w SpritePlayerContact_154C,X        ;$03C322 |
     LDA $D8,X                               ;$03C325 |
     SEC                                     ;$03C327 |
     SBC.b #$0F                              ;$03C328 |

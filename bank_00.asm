@@ -13470,7 +13470,7 @@ CODE_00FB5F:
     LDA.b #$05                              ;$00FB73 |
     STA.w $00B6,y                           ;$00FB75 |
     LDA.b #$20                              ;$00FB78 |
-    STA.w $154C,Y                           ;$00FB7A |
+    STA.w SpritePlayerContact_154C,Y        ;$00FB7A |
     LDA.b #$0C                              ;$00FB7D |
     STA.w $1DF9                             ;$00FB7F |
     LDX.b #$03                              ;$00FB82 |

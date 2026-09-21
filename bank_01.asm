@@ -157,9 +157,9 @@ process_OAM_index_and_timers_0180D2:
     LDA.w $1540,X                           ;$0180EE || - animation/sprites not locked
     BEQ +                                   ;$0180F1 || - sprite status not zero
     DEC.w $1540,X                           ;$0180F3 || - timer not zero
-+   LDA.w $154C,X                           ;$0180F6 ||
++   LDA.w SpritePlayerContact_154C,X        ;$0180F6 ||
     BEQ +                                   ;$0180F9 ||
-    DEC.w $154C,X                           ;$0180FB ||
+    DEC.w SpritePlayerContact_154C,X        ;$0180FB ||
 +   LDA.w $1558,X                           ;$0180FE ||
     BEQ +                                   ;$018101 ||
     DEC.w $1558,X                           ;$018103 ||
@@ -3304,7 +3304,7 @@ CODE_019747:
     STA.w SpriteDir_157C,Y                  ;$019758 |
     STA $01                                 ;$01975B |
     LDA.b #$10                              ;$01975D |
-    STA.w $154C,Y                           ;$01975F |
+    STA.w SpritePlayerContact_154C,Y        ;$01975F |
     STA.w $1528,Y                           ;$019762 |
     LDA $9E,X                               ;$019765 |
     CMP.b #$07                              ;$019767 |
@@ -3340,7 +3340,7 @@ SpawnMovingCoin:
     LDA $01                                 ;$0197A2 |
     STA.w SpriteDir_157C,Y                  ;$0197A4 |
     LDA.b #$20                              ;$0197A7 |
-    STA.w $154C,Y                           ;$0197A9 |
+    STA.w SpritePlayerContact_154C,Y        ;$0197A9 |
     RTS                                     ;$0197AC |
 
 DATA_0197AD:
@@ -4487,7 +4487,7 @@ CODE_01A090:
     STA $B6,X                               ;$01A0A4 |
 CODE_01A0A6:
     LDA.b #$10
-    STA.w $154C,X                           ;$01A0A8 |
+    STA.w SpritePlayerContact_154C,X        ;$01A0A8 |
     LDA.b #$0C                              ;$01A0AB |
     STA.w $149A                             ;$01A0AD |
     RTS                                     ;$01A0B0 |
@@ -5606,10 +5606,10 @@ ReturnNoContact2:
 
 CODE_01A87E:
     STZ.w $18D2
-    LDA.w $154C,X                           ;$01A881 |
+    LDA.w SpritePlayerContact_154C,X        ;$01A881 |
     BNE CODE_01A895                         ;$01A884 |
     LDA.b #$08                              ;$01A886 |
-    STA.w $154C,X                           ;$01A888 |
+    STA.w SpritePlayerContact_154C,X        ;$01A888 |
     LDA.w SpriteStatus_14C8,X               ;$01A88B |
     CMP.b #$09                              ;$01A88E |
     BNE CODE_01A897                         ;$01A890 |
@@ -5908,7 +5908,7 @@ CODE_01AA97:
     LDA.b #$0A                              ;$01AA9F |
     STA.w SpriteStatus_14C8,X               ;$01AAA1 |
     LDA.b #$10                              ;$01AAA4 |
-    STA.w $154C,X                           ;$01AAA6 |
+    STA.w SpritePlayerContact_154C,X        ;$01AAA6 |
     JSR SubHorizPos                         ;$01AAA9 |
     LDA.w ShellSpeedX,Y                     ;$01AAAC |
     STA $B6,X                               ;$01AAAF |
@@ -5918,7 +5918,7 @@ CODE_01AAB2:
     LDA.w $163E,X
     BNE Return01AB2C                        ;$01AAB5 |
 CODE_01AAB7:
-    STZ.w $154C,X
+    STZ.w SpritePlayerContact_154C,X
     LDA $D8,X                               ;$01AABA |
     SEC                                     ;$01AABC |
     SBC $D3                                 ;$01AABD |
@@ -8258,7 +8258,7 @@ Return01BACC:
 
 ClimbingDoor:
     JSR SubOffscreen0Bnk1
-    LDA.w $154C,X                           ;$01BAD0 |
+    LDA.w SpritePlayerContact_154C,X        ;$01BAD0 |
     CMP.b #$01                              ;$01BAD3 |
     BNE CODE_01BAF5                         ;$01BAD5 |
     LDA.b #$0F                              ;$01BAD7 |
@@ -8276,7 +8276,7 @@ ClimbingDoor:
     STA.w $1878                             ;$01BAF2 |
 CODE_01BAF5:
     LDA.w $1540,X
-    ORA.w $154C,X                           ;$01BAF8 |
+    ORA.w SpritePlayerContact_154C,X        ;$01BAF8 |
     BNE CODE_01BB16                         ;$01BAFB |
     JSL GetSpriteClippingA                  ;$01BAFD |
     JSR CODE_01BC1D                         ;$01BB01 |
@@ -8286,7 +8286,7 @@ CODE_01BAF5:
     CMP.b #$01                              ;$01BB0D |
     BNE CODE_01BB16                         ;$01BB0F |
     LDA.b #$06                              ;$01BB11 |
-    STA.w $154C,X                           ;$01BB13 |
+    STA.w SpritePlayerContact_154C,X        ;$01BB13 |
 CODE_01BB16:
     LDA.w $1540,X
     BEQ Return01BACC                        ;$01BB19 |
@@ -9630,7 +9630,7 @@ CODE_01C4AC:
     BEQ +                                   ;$01C4B4 |
     LDA $C2,X                               ;$01C4B6 |
     BNE return_01C4FA                       ;$01C4B8 |
-+   LDA.w $154C,X                           ;$01C4BA |
++   LDA.w SpritePlayerContact_154C,X        ;$01C4BA |
     BNE return_01C4FA                       ;$01C4BD |
 try_give_powerup_or_coin_01C4BF:
     LDA.w $1540,X
@@ -9947,7 +9947,7 @@ CODE_01C701:
     LDA.w $14C8,X
     CMP.b #$0C                              ;$01C704 |
     BEQ CODE_01C744                         ;$01C706 |
-    LDA.w $154C,X                           ;$01C708 |
+    LDA.w SpritePlayerContact_154C,X        ;$01C708 |
     BEQ CODE_01C715                         ;$01C70B |
     JSR SubSprYPosNoGrvty                   ;$01C70D |
     INC $AA,X                               ;$01C710 |
@@ -12601,7 +12601,7 @@ CODE_01DA0A:
     BNE CODE_01D9FE                         ;$01DA15 |
     LDA.b #$03                              ;$01DA17 |
     STA.w $163E,X                           ;$01DA19 |
-    LDA.w $154C,X                           ;$01DA1C |
+    LDA.w SpritePlayerContact_154C,X        ;$01DA1C |
     BNE Return01DA8F                        ;$01DA1F |
     LDA.w $18BE                             ;$01DA21 |
     BNE CODE_01DA2F                         ;$01DA24 |
@@ -12617,7 +12617,7 @@ CODE_01DA2F:
 CODE_01DA37:
     STZ.w $18BE
     LDA.b #$10                              ;$01DA3A |
-    STA.w $154C,X                           ;$01DA3C |
+    STA.w SpritePlayerContact_154C,X        ;$01DA3C |
 CODE_01DA3F:
     LDY.b #$00
     LDA.w $185E                             ;$01DA41 |
@@ -13246,7 +13246,7 @@ CODE_01DF19:
     ADC.b #$08                              ;$01DF35 |
     STA.w $0304,Y                           ;$01DF37 |
     STA.w $030C,Y                           ;$01DF3A |
-    LDA.w $154C,X                           ;$01DF3D |
+    LDA.w SpritePlayerContact_154C,X        ;$01DF3D |
     CLC                                     ;$01DF40 |
     BEQ CODE_01DF4E                         ;$01DF41 |
     LSR                                     ;$01DF43 |
@@ -13365,11 +13365,11 @@ CODE_01E00D:
     INC.w $1890                             ;$01E021 |
     LDA.b #$70                              ;$01E024 |
     LDY $07                                 ;$01E026 |
-    STA.w $154C,Y                           ;$01E028 |
+    STA.w SpritePlayerContact_154C,Y        ;$01E028 |
     LDY $08                                 ;$01E02B |
-    STA.w $154C,Y                           ;$01E02D |
+    STA.w SpritePlayerContact_154C,Y        ;$01E02D |
     LDY $09                                 ;$01E030 |
-    STA.w $154C,Y                           ;$01E032 |
+    STA.w SpritePlayerContact_154C,Y        ;$01E032 |
 CODE_01E035:
     DEC $00
     BPL CODE_01DFDD                         ;$01E037 |
@@ -13628,7 +13628,7 @@ CODE_01E201:
     JSL GetSpriteClippingA
     JSL CheckForContact                     ;$01E205 |
     BCC CODE_01E23A                         ;$01E209 |
-    LDA.w $154C,X                           ;$01E20B |
+    LDA.w SpritePlayerContact_154C,X        ;$01E20B |
     BNE CODE_01E23A                         ;$01E20E |
     LDA.b #$30                              ;$01E210 |
     STA.w $1434                             ;$01E212 |
@@ -13645,7 +13645,7 @@ CODE_01E201:
     LDA $D8,X                               ;$01E230 |
     STA.w $1438                             ;$01E232 |
     LDA.b #$30                              ;$01E235 |
-    STA.w $154C,X                           ;$01E237 |
+    STA.w SpritePlayerContact_154C,X        ;$01E237 |
 CODE_01E23A:
     JSR get_draw_info_bnk1_01A365
     LDA $00                                 ;$01E23D |
@@ -14257,7 +14257,7 @@ CODE_01E6AE:
 CODE_01E6B0:
     JSR ProcessInteract
     BCC CODE_01E6F0                         ;$01E6B3 |
-    STZ.w $154C,X                           ;$01E6B5 |
+    STZ.w SpritePlayerContact_154C,X        ;$01E6B5 |
     LDA $D8,X                               ;$01E6B8 |
     SEC                                     ;$01E6BA |
     SBC $96                                 ;$01E6BB |
@@ -14425,7 +14425,7 @@ CODE_01E7F2:
     JSR SubSprXPosNoGrvty                   ;$01E7FE |
     JSR SubSprYPosNoGrvty                   ;$01E801 |
 CODE_01E804:
-    LDA.w $154C,X
+    LDA.w SpritePlayerContact_154C,X
     BNE CODE_01E83D                         ;$01E807 |
     JSR ProcessInteract                     ;$01E809 |
     BCC CODE_01E83D                         ;$01E80C |
@@ -14500,7 +14500,7 @@ CODE_01E866:
     LDA.b #$C0                              ;$01E88C |
     STA $7D                                 ;$01E88E |
     LDA.b #$10                              ;$01E890 |
-    STA.w $154C,X                           ;$01E892 |
+    STA.w SpritePlayerContact_154C,X        ;$01E892 |
     STZ $C2,X                               ;$01E895 |
 Return01E897:
     RTS
@@ -14529,7 +14529,7 @@ CODE_01E898:
     SBC.b #$00                              ;$01E8C0 |
     STA.w $14D4,Y                           ;$01E8C2 |
     LDA.b #$10                              ;$01E8C5 |
-    STA.w $154C,X                           ;$01E8C7 |
+    STA.w SpritePlayerContact_154C,X        ;$01E8C7 |
 LakituCloudGfx:
     JSR get_draw_info_bnk1_01A365
     LDA.w $186C,X                           ;$01E8CD |
@@ -15084,7 +15084,7 @@ yoshi_01EBCA:
     LDA.b #$F0                              ;$01ECD0 |
     STA $AA,X                               ;$01ECD2 |
     LDA.b #$10                              ;$01ECD4 |
-    STA.w $154C,X                           ;$01ECD6 |
+    STA.w SpritePlayerContact_154C,X        ;$01ECD6 |
     LDA.w $18DA                             ;$01ECD9 |
     STA.w $151C,X                           ;$01ECDC |
     PLX                                     ;$01ECDF |
@@ -16978,7 +16978,7 @@ DATA_01FAE5:
 
 PlatformKoopaKids:
     LDA.b SpriteLock_9D
-    ORA.w $154C,X                           ;$01FAF7 |
+    ORA.w SpritePlayerContact_154C,X        ;$01FAF7 |
     BNE CODE_01FB1A                         ;$01FAFA |
     JSR SubHorizPos                         ;$01FAFC |
     STY $00                                 ;$01FAFF |
@@ -17075,7 +17075,7 @@ CODE_01FBA4:
     INC A                                   ;$01FBAD |
     AND.b #$0F                              ;$01FBAE |
     STA $01                                 ;$01FBB0 |
-    LDA.w $154C,X                           ;$01FBB2 |
+    LDA.w SpritePlayerContact_154C,X        ;$01FBB2 |
     BNE CODE_01FBD9                         ;$01FBB5 |
     LDA $37                                 ;$01FBB7 |
     BNE CODE_01FBC9                         ;$01FBB9 |
@@ -17135,7 +17135,7 @@ CODE_01FC08:
     JSR CODE_01FD50
     JSR CODE_01FC62                         ;$01FC0B |
 CODE_01FC0E:
-    LDA.w $154C,X
+    LDA.w SpritePlayerContact_154C,X
     BNE CODE_01FC4E                         ;$01FC11 |
 CODE_01FC13:
     LDA.w SpriteDir_157C,X
@@ -17261,10 +17261,10 @@ CODE_01FC84:
     STA $D8,X                               ;$01FCF5 |
     PLA                                     ;$01FCF7 |
     STA $E4,X                               ;$01FCF8 |
-    LDA.w $154C,X                           ;$01FCFA |
+    LDA.w SpritePlayerContact_154C,X        ;$01FCFA |
     BNE Return01FD09                        ;$01FCFD |
     LDA.b #$18                              ;$01FCFF |
-    STA.w $154C,X                           ;$01FD01 |
+    STA.w SpritePlayerContact_154C,X        ;$01FD01 |
     RTS                                     ;$01FD04 |
 
 CODE_01FD05:
@@ -17301,7 +17301,7 @@ CODE_01FD0C:
     LDA.b #$01                              ;$01FD40 |
     STA.w $1DF9                             ;$01FD42 |
     LDA.b #$10                              ;$01FD45 |
-    STA.w $154C,X                           ;$01FD47 |
+    STA.w SpritePlayerContact_154C,X        ;$01FD47 |
 CODE_01FD4A:
     DEY
     CPY.b #$07                              ;$01FD4B |

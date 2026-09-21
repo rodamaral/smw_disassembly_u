@@ -4545,7 +4545,7 @@ ZeroSpriteTables:
     STZ.w $15C4,X                           ;$07F739 |
     STZ.w $1602,X                           ;$07F73C |
     STZ.w $1540,X                           ;$07F73F |
-    STZ.w $154C,X                           ;$07F742 |
+    STZ.w SpritePlayerContact_154C,X        ;$07F742 |
     STZ.w $1558,X                           ;$07F745 |
     STZ.w $1564,X                           ;$07F748 |
     STZ.w $1FE2,X                           ;$07F74B |

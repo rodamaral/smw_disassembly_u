@@ -1692,7 +1692,7 @@ SpriteMisc_151C: skip 12
 SpriteMisc_1528: skip 12
 SpriteMisc_1534: skip 12
 SpriteMisc_1540: skip 12
-SpriteMisc_154C: skip 12
+SpritePlayerContact_154C: skip 12
 SpriteMisc_1558: skip 12
 SpriteMisc_1564: skip 12
 SpriteMisc_1570: skip 12

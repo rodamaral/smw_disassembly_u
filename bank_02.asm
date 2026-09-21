@@ -1299,7 +1299,7 @@ CODE_028A11:
 CODE_028A18:
     STA $AA,X
     LDA.b #$2C                              ;$028A1A |
-    STA.w $154C,X                           ;$028A1C |
+    STA.w SpritePlayerContact_154C,X        ;$028A1C |
     LDA.w $190F,X                           ;$028A1F |
     BPL Return028A29                        ;$028A22 |
     LDA.b #$10                              ;$028A24 |
@@ -2611,7 +2611,7 @@ CODE_0293B0:
     LDA.w $166E,X                           ;$0293BE |
     AND.b #$20                              ;$0293C1 |
     ORA.w $15D0,X                           ;$0293C3 |
-    ORA.w $154C,X                           ;$0293C6 |
+    ORA.w SpritePlayerContact_154C,X        ;$0293C6 |
     ORA.w $1FE2,X                           ;$0293C9 |
     BNE CODE_0293F7                         ;$0293CC |
     LDA.w $1632,X                           ;$0293CE |
@@ -2647,7 +2647,7 @@ CODE_029400:
 
 CODE_029404:
     LDA.b #$08
-    STA.w $154C,X                           ;$029406 |
+    STA.w SpritePlayerContact_154C,X        ;$029406 |
     LDA $9E,X                               ;$029409 |
     CMP.b #$81                              ;$02940B |
     BNE CODE_029427                         ;$02940D |
@@ -2758,7 +2758,7 @@ KillSprLoopStart:
     LDA.w $166E,X                           ;$0294DC |
     AND.b #$20                              ;$0294DF |
     ORA.w $15D0,X                           ;$0294E1 |
-    ORA.w $154C,X                           ;$0294E4 |
+    ORA.w SpritePlayerContact_154C,X        ;$0294E4 |
     BNE GroundPoundNextSpr                  ;$0294E7 |
     LDA.b #$35                              ;$0294E9 |
     STA $0E                                 ;$0294EB |
@@ -12167,7 +12167,7 @@ CODE_02D978:
     BNE CODE_02D98D                         ;$02D989 |
     LDA.b #$04                              ;$02D98B |
 CODE_02D98D:
-    STA.w $154C,X
+    STA.w SpritePlayerContact_154C,X
     LDA $9E,X                               ;$02D990 |
     CMP.b #$0D                              ;$02D992 |
     BNE CODE_02D999                         ;$02D994 |
@@ -14585,7 +14585,7 @@ CODE_02EAF2:
     TYX                                     ;$02EB18 |
     JSL InitSpriteTables                    ;$02EB19 |
     LDA.b #$30                              ;$02EB1D |
-    STA.w $154C,X                           ;$02EB1F |
+    STA.w SpritePlayerContact_154C,X        ;$02EB1F |
     LDA.b #$D0                              ;$02EB22 |
     STA $AA,X                               ;$02EB24 |
 Return02EB26:
@@ -15562,11 +15562,11 @@ CODE_02F247:
     BCS CODE_02F29B                         ;$02F24D |
     LDA.w $1490                             ;$02F24F |
     BNE ADDR_02F29D                         ;$02F252 |
-    LDA.w $154C,X                           ;$02F254 |
+    LDA.w SpritePlayerContact_154C,X        ;$02F254 |
     ORA $81                                 ;$02F257 |
     BNE CODE_02F29B                         ;$02F259 |
     LDA.b #$08                              ;$02F25B |
-    STA.w $154C,X                           ;$02F25D |
+    STA.w SpritePlayerContact_154C,X        ;$02F25D |
     LDA.w $1697                             ;$02F260 |
     BNE CODE_02F26B                         ;$02F263 |
     LDA $7D                                 ;$02F265 |
@@ -15737,11 +15737,11 @@ CODE_02F371:
     RTS                                     ;$02F380 |
 
 CODE_02F381:
-    LDA.w $154C,X
+    LDA.w SpritePlayerContact_154C,X
     BNE Return02F38E                        ;$02F384 |
     JSR CODE_02F3C1                         ;$02F386 |
     LDA.b #$10                              ;$02F389 |
-    STA.w $154C,X                           ;$02F38B |
+    STA.w SpritePlayerContact_154C,X        ;$02F38B |
 Return02F38E:
     RTS
 
