@@ -14962,73 +14962,69 @@ yoshi_01EBCA:
     INC A                                   ;$01EBEA |
     STA.w $18DF                             ;$01EBEB |
     LDA.w $187A                             ;$01EBEE |
-    BNE .CODE_01EC04                        ;$01EBF1 |
+    BNE .check_hatch_yoshi_01EC04           ;$01EBF1 |
     JSR SubOffscreen0Bnk1                   ;$01EBF3 |
     LDA.w $14C8,X                           ;$01EBF6 |
-    BNE .CODE_01EC04                        ;$01EBF9 |
+    BNE .check_hatch_yoshi_01EC04           ;$01EBF9 |
     LDA.w $1B95                             ;$01EBFB |
-    BNE .Return01EC03                       ;$01EBFE |
+    BNE +                                   ;$01EBFE |
     STZ.w $0DC1                             ;$01EC00 |
-.Return01EC03:
-    RTS
++   RTS                                     ;$01EC03 |
 
-.CODE_01EC04:
+.check_hatch_yoshi_01EC04:
     LDA.w $187A
-    BEQ .CODE_01EC0E                        ;$01EC07 |
-    LDA.w $1419                             ;$01EC09 |
-    BNE .CODE_01EC61                        ;$01EC0C |
-.CODE_01EC0E:
-    LDA.w $18DE
-    BNE .CODE_01EC61                        ;$01EC11 |
-    LDA.w $18E8                             ;$01EC13 |
-    BEQ .CODE_01EC4C                        ;$01EC16 |
-    DEC.w $18E8                             ;$01EC18 |
-    STA $9D                                 ;$01EC1B |
-    STA.w $13FB                             ;$01EC1D |
-    CMP.b #$01                              ;$01EC20 |
-    BNE .CODE_01EC40                        ;$01EC22 |
-    STZ $9D                                 ;$01EC24 |
-    STZ.w $13FB                             ;$01EC26 |
-    LDY.w $0DB3                             ;$01EC29 |
-    LDA.w $1F11,Y                           ;$01EC2C |
-    DEC A                                   ;$01EC2F |
-    ORA.w $0EF8                             ;$01EC30 |
-    ORA.w $0109                             ;$01EC33 |
-    BNE .CODE_01EC40                        ;$01EC36 |
-    INC.w $0EF8                             ;$01EC38 |
-    LDA.b #$03                              ;$01EC3B |
-    STA.w $1426                             ;$01EC3D |
-.CODE_01EC40:
-    DEC A
-    LSR                                     ;$01EC41 |
-    LSR                                     ;$01EC42 |
-    LSR                                     ;$01EC43 |
-    TAY                                     ;$01EC44 |
-    LDA.w GrowingAniSequence,Y              ;$01EC45 |
-    STA.w $1602,X                           ;$01EC48 |
-    RTS                                     ;$01EC4B |
+    BEQ +                                   ;$01EC07 | Skip if:
+    LDA.w $1419                             ;$01EC09 | - mounted, entering a pipe
+    BNE .game_running_01EC61                ;$01EC0C | - Yoshi able to lay an egg
++   LDA.w $18DE                             ;$01EC0E |
+    BNE .game_running_01EC61                ;$01EC11 |
+    LDA.w $18E8                             ;$01EC13 | skip if not growing
+    BEQ .yoshi_not_growing_01EC4C           ;$01EC16 |\
+    DEC.w $18E8                             ;$01EC18 || GLITCH: with many Yoshis, the timer decreases faster per frame
+    STA $9D                                 ;$01EC1B || Freeze game
+    STA.w $13FB                             ;$01EC1D ||
+    CMP.b #$01                              ;$01EC20 || If Yoshi isn't done hatching yet, skip to continue running the animation
+    BNE +                                   ;$01EC22 ||\
+    STZ $9D                                 ;$01EC24 ||| Unfreeze game
+    STZ.w $13FB                             ;$01EC26 |||
+    LDY.w $0DB3                             ;$01EC29 ||| Show Yoshi's spawn message if:
+    LDA.w $1F11,Y                           ;$01EC2C ||| - Yoshi's Island
+    DEC A                                   ;$01EC2F ||| - first time
+    ORA.w $0EF8                             ;$01EC30 ||| - not title screen
+    ORA.w $0109                             ;$01EC33 |||
+    BNE +                                   ;$01EC36 |||\
+    INC.w $0EF8                             ;$01EC38 |||| Display Yoshi's spawn message
+    LDA.b #$03                              ;$01EC3B |||/
+    STA.w $1426                             ;$01EC3D ||/
++   DEC A                                   ;$01EC40 ||
+    LSR                                     ;$01EC41 ||
+    LSR                                     ;$01EC42 ||
+    LSR                                     ;$01EC43 ||
+    TAY                                     ;$01EC44 ||
+    LDA.w GrowingAniSequence,Y              ;$01EC45 ||
+    STA.w $1602,X                           ;$01EC48 || set growing animation frame
+    RTS                                     ;$01EC4B |/
 
-.CODE_01EC4C:
+.yoshi_not_growing_01EC4C:
     LDA $9D
-    BEQ .CODE_01EC61                        ;$01EC4E |
-.CODE_01EC50:
+    BEQ .game_running_01EC61                ;$01EC4E |
+.mounted_player_relative_y_01EC50:
     LDY.w $187A
-    BEQ .Return01EC5A                       ;$01EC53 |
-    LDY.b #$06                              ;$01EC55 |
-    STY.w $188B                             ;$01EC57 |
-.Return01EC5A:
-    RTS
+    BEQ +                                   ;$01EC53 |\
+    LDY.b #$06                              ;$01EC55 || Offset the player's relative image on top of Yoshi
+    STY.w $188B                             ;$01EC57 |/
++   RTS                                     ;$01EC5A |
 
-.DATA_01EC5B:
+.egg_X_speeds_01EC5B:
     db $F0,$10
 
-.DATA_01EC5D:
+.egg_X_low_01EC5D:
     db $FA,$06
 
-.DATA_01EC5F:
+.egg_X_high_01EC5F:
     db $FF,$00
 
-.CODE_01EC61:
+.game_running_01EC61:
     LDA $72
     BNE .CODE_01EC6A                        ;$01EC63 |
     LDA.w $18DE                             ;$01EC65 |
@@ -15045,15 +15041,15 @@ yoshi_01EBCA:
 
 .CODE_01EC78:
     INC.w $13FB
-    JSR .CODE_01EC50                        ;$01EC7B |
+    JSR .mounted_player_relative_y_01EC50   ;$01EC7B |
     STY $9D                                 ;$01EC7E |
     CMP.b #$02                              ;$01EC80 |
     BNE +                                   ;$01EC82 |
     JSL FindFreeSprSlot                     ;$01EC84 |
-    BPL .CODE_01EC8B                        ;$01EC88 |
+    BPL .lay_yoshi_egg_01EC8B               ;$01EC88 |
 +   RTS                                     ;$01EC8A |
 
-.CODE_01EC8B:
+.lay_yoshi_egg_01EC8B:
     LDA.b #$09
     STA.w $14C8,Y                           ;$01EC8D |
     LDA.b #$2C                              ;$01EC90 |
@@ -15064,12 +15060,12 @@ yoshi_01EBCA:
     STY $0F                                 ;$01EC9A |
     LDA $E4,X                               ;$01EC9C |
     CLC                                     ;$01EC9E |
-    ADC.w .DATA_01EC5D,Y                    ;$01EC9F |
+    ADC.w .egg_X_low_01EC5D,Y               ;$01EC9F |
     PLY                                     ;$01ECA2 |
     STA.w $00E4,y                           ;$01ECA3 |
     LDY.w $157C,X                           ;$01ECA6 |
     LDA.w $14E0,X                           ;$01ECA9 |
-    ADC.w .DATA_01EC5F,Y                    ;$01ECAC |
+    ADC.w .egg_X_high_01EC5F,Y              ;$01ECAC |
     PLY                                     ;$01ECAF |
     STA.w $14E0,Y                           ;$01ECB0 |
     LDA $D8,X                               ;$01ECB3 |
@@ -15083,7 +15079,7 @@ yoshi_01EBCA:
     TYX                                     ;$01ECC4 |
     JSL InitSpriteTables                    ;$01ECC5 |
     LDY $0F                                 ;$01ECC9 |
-    LDA.w .DATA_01EC5B,Y                    ;$01ECCB |
+    LDA.w .egg_X_speeds_01EC5B,Y            ;$01ECCB |
     STA $B6,X                               ;$01ECCE |
     LDA.b #$F0                              ;$01ECD0 |
     STA $AA,X                               ;$01ECD2 |
