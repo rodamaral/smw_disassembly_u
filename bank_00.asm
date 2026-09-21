@@ -8393,7 +8393,7 @@ set_yoshi_pose:                             ;        \
     LDA.b #$1D                              ;$00CDC4 | | use pose $1D.
 .set_pose                                   ;        | |
     STA.w $13E0                             ;$00CDC6 |/ set the player's pose.
-    LDA.w  YoshiHasWings_141E               ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
+    LDA.w YoshiHasWings_141E                ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
     CMP.b #$01                              ;$00CDCC | |
     BNE return_00CDDC                       ;$00CDCE |/
     BIT $16                                 ;$00CDD0 |\ and X or Y is tapped,
@@ -9657,7 +9657,7 @@ CODE_00D8CD:
     LDX.b #$00                              ;$00D8D1 |
     LDA.w $187A                             ;$00D8D3 |
     BEQ CODE_00D8E7                         ;$00D8D6 |
-    LDA.w  YoshiHasWings_141E               ;$00D8D8 |
+    LDA.w YoshiHasWings_141E                ;$00D8D8 |
     LSR                                     ;$00D8DB |
     BEQ CODE_00D8E7                         ;$00D8DC |
     LDY.b #$02                              ;$00D8DE |
@@ -13045,7 +13045,7 @@ ProcessVerticalScroll00F7F4:
     BNE .CODE_00F869                        ;$00F848 |
     LDX.w $187A                             ;$00F84A |
     BEQ .CODE_00F856                        ;$00F84D |
-    LDX.w  YoshiHasWings_141E               ;$00F84F |
+    LDX.w YoshiHasWings_141E                ;$00F84F |
     CPX.b #$02                              ;$00F852 |
     BCS .CODE_00F869                        ;$00F854 |
 .CODE_00F856:
@@ -13319,7 +13319,7 @@ FlatPalaceSwitch:
     LDA.b #$60                              ;$00FA4C |
     STA.w $009E,y                           ;$00FA4E |
     LDA.b #$08                              ;$00FA51 |
-    STA.w $14C8,Y                           ;$00FA53 |
+    STA.w SpriteStatus_14C8,Y               ;$00FA53 |
     LDA $9A                                 ;$00FA56 |
     AND.b #$F0                              ;$00FA58 |
     STA.w $00E4,y                           ;$00FA5A |
@@ -13349,7 +13349,7 @@ TriggerGoalTape:
     STZ.w $18DD                             ;$00FA8C |
     LDY.b #$0B                              ;$00FA8F |
 LvlEndSprLoopStrt:
-    LDA.w $14C8,Y
+    LDA.w SpriteStatus_14C8,Y
     CMP.b #$08                              ;$00FA94 |
     BCC LvlEndNextSprite                    ;$00FA96 |
     CMP.b #$0B                              ;$00FA98 |
@@ -13373,7 +13373,7 @@ CODE_00FAB2:
     LDA.b #$10                              ;$00FAB9 |
     STA.w $1540,Y                           ;$00FABB |
     LDA.b #$06                              ;$00FABE |
-    STA.w $14C8,Y                           ;$00FAC0 |
+    STA.w SpriteStatus_14C8,Y               ;$00FAC0 |
     BRA LvlEndNextSprite                    ;$00FAC3 |
 
 CODE_00FAC5:
@@ -13381,7 +13381,7 @@ CODE_00FAC5:
     AND.b #$02                              ;$00FAC8 |
     BNE LvlEndNextSprite                    ;$00FACA |
     LDA.b #$00                              ;$00FACC |
-    STA.w $14C8,Y                           ;$00FACE |
+    STA.w SpriteStatus_14C8,Y               ;$00FACE |
 LvlEndNextSprite:
     DEY
     BPL LvlEndSprLoopStrt                   ;$00FAD2 |
@@ -13464,7 +13464,7 @@ CODE_00FB5F:
     LDA $0F                                 ;$00FB64 |
     STA.w $1594,Y                           ;$00FB66 |
     LDA.b #$0C                              ;$00FB69 |
-    STA.w $14C8,Y                           ;$00FB6B |
+    STA.w SpriteStatus_14C8,Y               ;$00FB6B |
     LDA.b #$D0                              ;$00FB6E |
     STA.w $00AA,y                           ;$00FB70 |
     LDA.b #$05                              ;$00FB73 |
@@ -13555,14 +13555,14 @@ CODE_00FC0E:
     CLC                                     ;$00FC15 |
     ADC.b #$02                              ;$00FC16 |
     STA.w $18DD                             ;$00FC18 |
-    STZ.w $14C8,X                           ;$00FC1B |
+    STZ.w SpriteStatus_14C8,X               ;$00FC1B |
 CODE_00FC1E:
     JSL CoinSprGfx
     RTS                                     ;$00FC22 |
 
     LDY.b #$0B                              ;$00FC23 |
 ADDR_00FC25:
-    LDA.w $14C8,Y
+    LDA.w SpriteStatus_14C8,Y
     CMP.b #$08                              ;$00FC28 |
     BNE ADDR_00FC73                         ;$00FC2A |
     LDA.w $009E,y                           ;$00FC2C |
@@ -13570,7 +13570,7 @@ ADDR_00FC25:
     BNE ADDR_00FC73                         ;$00FC31 |
     LDA.b #$01                              ;$00FC33 |
     STA.w $0DC1                             ;$00FC35 |
-    STZ.w  YoshiHasWings_141E               ;$00FC38 |
+    STZ.w YoshiHasWings_141E                ;$00FC38 |
     LDA.w $15F6,Y                           ;$00FC3B |
     AND.b #$F1                              ;$00FC3E |
     ORA.b #$0A                              ;$00FC40 |
@@ -13619,7 +13619,7 @@ CODE_00FC7A:
     LDX.b #$03                              ;$00FC96 |
 CODE_00FC98:
     LDA.b #$08
-    STA.w $14C8,X                           ;$00FC9A |
+    STA.w SpriteStatus_14C8,X               ;$00FC9A |
     LDA.b #$35                              ;$00FC9D |
     STA $9E,X                               ;$00FC9F |
     LDA $94                                 ;$00FCA1 |
