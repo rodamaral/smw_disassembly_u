@@ -2721,7 +2721,7 @@ GM17_game_over_main_009759:
     BNE CODE_00978E                         ;$009765 |
     LDA.w $0DBE                             ;$009767 |
     BPL CODE_009788                         ;$00976A |
-    STZ.w $0DC1                             ;$00976C |
+    STZ.w CarryYoshiLevels_0DC1             ;$00976C |
     LDA.w $0DB4                             ;$00976F |
     ORA.w $0DB5                             ;$009772 |
     BPL CODE_009788                         ;$009775 |
@@ -3613,7 +3613,7 @@ CODE_009E26:
     BPL CODE_009E26                         ;$009E2A |
     STA.w $0DBE                             ;$009E2C |
     STZ.w $0DBF                             ;$009E2F |
-    STZ.w $0DC1                             ;$009E32 |
+    STZ.w CarryYoshiLevels_0DC1             ;$009E32 |
     STZ.b Powerup_19                        ;$009E35 |
     STZ.w $0DC2                             ;$009E37 |
     STZ.w $13C9                             ;$009E3A |
@@ -3942,7 +3942,7 @@ GM0C_overworld_load_00A087:
     STA.w $0DB8,X                           ;$00A0CC |
     LDA.w $0DBF                             ;$00A0CF |
     STA.w $0DB6,X                           ;$00A0D2 |
-    LDA.w $0DC1                             ;$00A0D5 |
+    LDA.w CarryYoshiLevels_0DC1             ;$00A0D5 |
     BEQ .CODE_00A0DD                        ;$00A0D8 |
     LDA.w $13C7                             ;$00A0DA |
 .CODE_00A0DD:
@@ -4644,7 +4644,7 @@ CODE_00A6B6:
     STY $89                                 ;$00A6BA |
     LDX.b #$0A                              ;$00A6BC |
     LDY.b #$00                              ;$00A6BE |
-    LDA.w $0DC1                             ;$00A6C0 |
+    LDA.w CarryYoshiLevels_0DC1             ;$00A6C0 |
     BEQ CODE_00A6C7                         ;$00A6C3 |
     LDY.b #$0F                              ;$00A6C5 |
 CODE_00A6C7:
@@ -7822,7 +7822,7 @@ CODE_00C8FB:
     STA.w $0100                             ;$00C900 |
     CPX.b #$11                              ;$00C903 |
     BCC CODE_00C90A                         ;$00C905 |
-    INC.w $0DC1                             ;$00C907 |
+    INC.w CarryYoshiLevels_0DC1             ;$00C907 |
 CODE_00C90A:
     LDA.b #$01
     STA.w $1B9B                             ;$00C90C |
@@ -8821,7 +8821,7 @@ death_animation:
     STA.w $0DD5                             ;$00D0CD |/
     LDA.w $1B9B                             ;$00D0D0 |\ If yoshi has not been left behind,
     BNE .keep_yoshi                         ;$00D0D3 | |
-    STZ.w $0DC1                             ;$00D0D5 | | get rid of him.
+    STZ.w CarryYoshiLevels_0DC1             ;$00D0D5 | | get rid of him.
 .keep_yoshi                                 ;        |/
     DEC.w $0DBE                             ;$00D0D8 |\ Decrease the player's lives.
     BPL .not_game_over                      ;$00D0DB |/ If it's negative, show "GAME OVER"
@@ -13569,7 +13569,7 @@ ADDR_00FC25:
     CMP.b #$35                              ;$00FC2F |
     BNE ADDR_00FC73                         ;$00FC31 |
     LDA.b #$01                              ;$00FC33 |
-    STA.w $0DC1                             ;$00FC35 |
+    STA.w CarryYoshiLevels_0DC1             ;$00FC35 |
     STZ.w YoshiHasWings_141E                ;$00FC38 |
     LDA.w $15F6,Y                           ;$00FC3B |
     AND.b #$F1                              ;$00FC3E |
@@ -13600,7 +13600,7 @@ Return00FC72:
 ADDR_00FC73:
     DEY
     BPL ADDR_00FC25                         ;$00FC74 |
-    STZ.w $0DC1                             ;$00FC76 |
+    STZ.w CarryYoshiLevels_0DC1             ;$00FC76 |
     RTL                                     ;$00FC79 |
 
 CODE_00FC7A:

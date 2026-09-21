@@ -591,7 +591,7 @@ InitMsgPSideExit:
 InitYoshi:
     DEC.w $160E,X
     INC.w $157C,X                           ;$0183E3 |
-    LDA.w $0DC1                             ;$0183E6 |
+    LDA.w CarryYoshiLevels_0DC1             ;$0183E6 |
     BEQ Return0183EE                        ;$0183E9 |
     STZ.w SpriteStatus_14C8,X               ;$0183EB |
 Return0183EE:
@@ -14909,7 +14909,7 @@ draw_yoshi_01EA70:
     INC A                                   ;$01EB81 || turn around
 +   STA.w $187A                             ;$01EB82 ||
     LDA.b #$01                              ;$01EB85 ||
-    STA.w $0DC1                             ;$01EB87 || can carry Yoshi over levels flag
+    STA.w CarryYoshiLevels_0DC1             ;$01EB87 || can carry Yoshi over levels flag
     LDA.w $15F6,X                           ;$01EB8A ||
     STA.w $13C7                             ;$01EB8D || persist Yoshi color
     LDA.w $157C,X                           ;$01EB90 ||
@@ -14955,7 +14955,7 @@ yoshi_01EBCA:
     LDA.w SpriteStatus_14C8,X               ;$01EBDC |
     CMP.b #$08                              ;$01EBDF |\
     BEQ +                                   ;$01EBE1 || If Yoshi is dying, don't let Mario bring him to the next level,
-    STZ.w $0DC1                             ;$01EBE3 || and execute the dedicated Yoshi routine
+    STZ.w CarryYoshiLevels_0DC1             ;$01EBE3 || and execute the dedicated Yoshi routine
     JMP handle_off_yoshi_01EE61             ;$01EBE6 |/
 
 +   TXA                                     ;$01EBE9 |
@@ -14968,7 +14968,7 @@ yoshi_01EBCA:
     BNE .check_hatch_yoshi_01EC04           ;$01EBF9 |
     LDA.w $1B95                             ;$01EBFB |
     BNE +                                   ;$01EBFE |
-    STZ.w $0DC1                             ;$01EC00 |
+    STZ.w CarryYoshiLevels_0DC1             ;$01EC00 |
 +   RTS                                     ;$01EC03 |
 
 .check_hatch_yoshi_01EC04:
@@ -15185,7 +15185,7 @@ CODE_01ED9E:
     STZ $C2,X                               ;$01EDA3 |
     LDA.b #$03                              ;$01EDA5 |
     STA.w $1DFA                             ;$01EDA7 |
-    STZ.w $0DC1                             ;$01EDAA |
+    STZ.w CarryYoshiLevels_0DC1             ;$01EDAA |
     LDA $7B                                 ;$01EDAD |
     STA $B6,X                               ;$01EDAF |
     LDA.b #$A0                              ;$01EDB1 |
@@ -16438,7 +16438,7 @@ maybe_hurt_yoshi_01F6DD:
     STZ.w $1594,X                           ;$01F737 |
     STZ.w $151C,X                           ;$01F73A | Clear tongue-related addresses
     STZ.w $18AE                             ;$01F73D | GLITCH: does not clear $14A3, making it possible to release the tongue while running
-    STZ.w $0DC1                             ;$01F740 | Don't let Mario carry Yoshi to the next level or overworld
+    STZ.w CarryYoshiLevels_0DC1             ;$01F740 | Don't let Mario carry Yoshi to the next level or overworld
     LDA.b #$30                              ;$01F743 |
     STA.w $1497                             ;$01F745 | How long to make Mario invincible after being knocked off Yoshi
     JSR adjust_player_y_off_yoshi_01EDCC    ;$01F748 |

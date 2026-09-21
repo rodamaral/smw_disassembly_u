@@ -4909,7 +4909,7 @@ CODE_02A473:
     LDA.b #$02                              ;$02A486 |
     STA $C1,X                               ;$02A488 |
     STZ.w $187A                             ;$02A48A |
-    STZ.w $0DC1                             ;$02A48D |
+    STZ.w CarryYoshiLevels_0DC1             ;$02A48D |
     LDA.b #$C0                              ;$02A490 |
     STA $7D                                 ;$02A492 |
     STZ $7B                                 ;$02A494 |
@@ -5279,7 +5279,7 @@ CODE_02A751:
     BMI CODE_02A763                         ;$02A75D |
     JSL standard_and_cluster_sprites_01808C ;$02A75F |
 CODE_02A763:
-    LDA.w $0DC1
+    LDA.w CarryYoshiLevels_0DC1
     BEQ CODE_02A771                         ;$02A766 |
     LDA.w $1B9B                             ;$02A768 |
     BNE CODE_02A771                         ;$02A76B |

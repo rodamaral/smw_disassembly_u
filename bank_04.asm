@@ -1748,7 +1748,7 @@ CODE_0491B1:
     LDA.w $0DB8,X                           ;$0491C4 |
     STA.b Powerup_19                        ;$0491C7 |
     LDA.w $0DBA,X                           ;$0491C9 |
-    STA.w $0DC1                             ;$0491CC |
+    STA.w CarryYoshiLevels_0DC1             ;$0491CC |
     STA.w $13C7                             ;$0491CF |
     STA.w $187A                             ;$0491D2 |
     LDA.w $0DBC,X                           ;$0491D5 |
@@ -3091,7 +3091,7 @@ CODE_049DD1:
     LDA.w $0DB8,X                           ;$049DE6 |
     STA.b Powerup_19                        ;$049DE9 |
     LDA.w $0DBA,X                           ;$049DEB |
-    STA.w $0DC1                             ;$049DEE |
+    STA.w CarryYoshiLevels_0DC1             ;$049DEE |
     STA.w $13C7                             ;$049DF1 |
     STA.w $187A                             ;$049DF4 |
     LDA.w $0DBC,X                           ;$049DF7 |
