@@ -14948,7 +14948,7 @@ GrowingAniSequence:
 yoshi_01EBCA:
     STZ.w PlayerIsFrozen_13FB               ;$01EBCA | Unfreeze the player (from berries)
     LDA.w YoshiHasWings_141E                ;$01EBCD |
-    STA.w $1410                             ;$01EBD0 |
+    STA.w YoshiHasWingsGfx_1410             ;$01EBD0 |
     STZ.w YoshiHasWings_141E                ;$01EBD3 |
     STZ.w $18E7                             ;$01EBD6 |
     STZ.w $191B                             ;$01EBD9 |
@@ -15325,7 +15325,7 @@ handle_off_yoshi_01EE61:
     PLA                                     ;$01EED8 |
     STA.w $1602,X                           ;$01EED9 |
     JSR process_yoshi_tongue_01F0A2         ;$01EEDC |
-    LDA.w $1410                             ;$01EEDF |
+    LDA.w YoshiHasWingsGfx_1410             ;$01EEDF |
     CMP.b #$02                              ;$01EEE2 |
     BCC .return_01EF17                      ;$01EEE4 | if Yoshi does not have wings, return
 ;Draw Yoshi Wings:
@@ -15575,7 +15575,7 @@ process_yoshi_tongue_01F0A2:
     CMP.b #$01                              ;$01F0A4 |
     BNE +                                   ;$01F0A6 |\
     JSL try_auto_eat_berry_02D0D4           ;$01F0A8 |/
-+   LDA.w $1410                             ;$01F0AC |
++   LDA.w YoshiHasWingsGfx_1410             ;$01F0AC |
     CMP.b #$01                              ;$01F0AF | would mean that the player with a fire flower powerup can shoot fireballs while on Yoshi
     BEQ Return01F0A1                        ;$01F0B1 | (never occurs in the game)
     LDA.w $14A3                             ;$01F0B3 | A timer for Yoshi's tongue stretching out

@@ -13032,7 +13032,7 @@ ProcessVerticalScroll00F7F4:
     LDA.w $13E3                             ;$00F82C |
     CMP.b #$06                              ;$00F82F |
     BCS .CODE_00F845                        ;$00F831 |
-    LDA.w $1410                             ;$00F833 |
+    LDA.w YoshiHasWingsGfx_1410             ;$00F833 |
     LSR                                     ;$00F836 |
     ORA.w $149F                             ;$00F837 |
     ORA $74                                 ;$00F83A |
