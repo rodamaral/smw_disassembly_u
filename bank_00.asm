@@ -4621,7 +4621,7 @@ CODE_00A67D:
     STZ.w $149A                             ;$00A686 |
     STZ.w $1498                             ;$00A689 |
     STZ.w $1495                             ;$00A68C |
-    STZ.w $1419                             ;$00A68F |
+    STZ.w SpriteInPipeMode_1419             ;$00A68F |
     LDY.b #$01                              ;$00A692 |
     LDX.w $1931                             ;$00A694 |
     CPX.b #$10                              ;$00A697 |
@@ -4699,7 +4699,7 @@ CODE_00A716:
     STY $76                                 ;$00A71C |
     STY.w $13DF                             ;$00A71E |
     LDA.b #$FF                              ;$00A721 |
-    STA.w $1419                             ;$00A723 |
+    STA.w SpriteInPipeMode_1419             ;$00A723 |
     LDA.b #$08                              ;$00A726 |
     TSB $94                                 ;$00A728 |
     LDA.b #$02                              ;$00A72A |
@@ -4721,7 +4721,7 @@ CODE_00A740:
     TAY                                     ;$00A745 |
     LSR                                     ;$00A746 |
     DEC A                                   ;$00A747 |
-    STA.w $1419                             ;$00A748 |
+    STA.w SpriteInPipeMode_1419             ;$00A748 |
     LDA.w $A609,Y                           ;$00A74B |
     STA $76                                 ;$00A74E |
     LDX.b #$05                              ;$00A750 |
@@ -9061,7 +9061,7 @@ CODE_00D268:
     BCC go_to_sublevel
 CODE_00D26A:
     STZ.w $13F9
-    STZ.w $1419                             ;$00D26D |
+    STZ.w SpriteInPipeMode_1419             ;$00D26D |
     JMP reset_animation                     ;$00D270 |
 
 go_to_sublevel:
@@ -9098,7 +9098,7 @@ CODE_00D29D:
     STA.w $1DFC                             ;$00D2A7 |
 CODE_00D2AA:
     STZ.w $13F9
-    STZ.w $1419                             ;$00D2AD |
+    STZ.w SpriteInPipeMode_1419             ;$00D2AD |
     STZ $9D                                 ;$00D2B0 |
 CODE_00D2B2:
     LDA.b #$40
@@ -12460,7 +12460,7 @@ CODE_00F40A:
     STA.w $1499                             ;$00F42D |
 CODE_00F430:
     INX
-    STX.w $1419                             ;$00F431 |
+    STX.w SpriteInPipeMode_1419             ;$00F431 |
     STY $71                                 ;$00F434 |
     JSR disable_controls                    ;$00F436 |
     LDA.b #$04                              ;$00F439 |

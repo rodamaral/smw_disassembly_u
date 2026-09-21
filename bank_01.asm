@@ -4315,7 +4315,7 @@ HandleSprCarried:
     JSR CODE_019F9B
     LDA.w $13DD                             ;$019F74 |
     BNE CODE_019F83                         ;$019F77 |
-    LDA.w $1419                             ;$019F79 |
+    LDA.w SpriteInPipeMode_1419             ;$019F79 |
     BNE CODE_019F83                         ;$019F7C |
     LDA.w $1499                             ;$019F7E |
     BEQ CODE_019F86                         ;$019F81 |
@@ -4324,7 +4324,7 @@ CODE_019F83:
 CODE_019F86:
     LDA $64
     PHA                                     ;$019F88 |
-    LDA.w $1419                             ;$019F89 |
+    LDA.w SpriteInPipeMode_1419             ;$019F89 |
     BEQ CODE_019F92                         ;$019F8C |
     LDA.b #$10                              ;$019F8E |
     STA $64                                 ;$019F90 |
@@ -4381,7 +4381,7 @@ CODE_019FE0:
     LDA $71                                 ;$019FE3 |
     CMP.b #$01                              ;$019FE5 |
     BCC CODE_019FF4                         ;$019FE7 |
-    LDA.w $1419                             ;$019FE9 |
+    LDA.w SpriteInPipeMode_1419             ;$019FE9 |
     BNE CODE_019FF4                         ;$019FEC |
     LDA.b #$09                              ;$019FEE |
     STA.w SpriteStatus_14C8,X               ;$019FF0 |
@@ -4398,7 +4398,7 @@ CODE_019FF4:
 CODE_01A002:
     JSR CODE_019624
     JSR SubSprSprInteract                   ;$01A005 |
-    LDA.w $1419                             ;$01A008 |
+    LDA.w SpriteInPipeMode_1419             ;$01A008 |
     BNE CODE_01A011                         ;$01A00B |
     BIT $15                                 ;$01A00D |
     BVC CODE_01A015                         ;$01A00F |
@@ -4506,7 +4506,7 @@ CODE_01A0B8:
     BCC CODE_01A0C4                         ;$01A0C1 |
     INY                                     ;$01A0C3 |
 CODE_01A0C4:
-    LDA.w $1419
+    LDA.w SpriteInPipeMode_1419
     BEQ CODE_01A0CD                         ;$01A0C7 |
     CMP.b #$02                              ;$01A0C9 |
     BEQ CODE_01A0D4                         ;$01A0CB |
@@ -14868,7 +14868,7 @@ draw_yoshi_01EA70:
 .CODE_01EB2E
     LDA.w RidingYoshi_187A                  ;$01EB2E |
     BEQ +                                   ;$01EB31 |\ if riding Yoshi
-    LDA.w $1419                             ;$01EB33 || 
+    LDA.w SpriteInPipeMode_1419             ;$01EB33 || 
     CMP.b #$01                              ;$01EB36 ||
     BNE +                                   ;$01EB38 ||\ if entering an horizontal pipe
     LDA $13                                 ;$01EB3A |||
@@ -14920,7 +14920,7 @@ draw_yoshi_01EA70:
     PHA                                     ;$01EB99 |
     LDA.w RidingYoshi_187A                  ;$01EB9A |
     BEQ +                                   ;$01EB9D |\ skip Yoshi physics if:
-    LDA.w $1419                             ;$01EB9F || - mounted
+    LDA.w SpriteInPipeMode_1419             ;$01EB9F || - mounted
     BEQ +                                   ;$01EBA2 || - entering a pipe
     LDA.w $1405                             ;$01EBA4 || - about to warp to another room
     BNE .skip_yoshi_physics_01EBB0          ;$01EBA7 ||
@@ -14974,7 +14974,7 @@ yoshi_01EBCA:
 .check_hatch_yoshi_01EC04:
     LDA.w RidingYoshi_187A
     BEQ +                                   ;$01EC07 | Skip if:
-    LDA.w $1419                             ;$01EC09 | - mounted, entering a pipe
+    LDA.w SpriteInPipeMode_1419             ;$01EC09 | - mounted, entering a pipe
     BNE .game_running_01EC61                ;$01EC0C | - Yoshi able to lay an egg
 +   LDA.w $18DE                             ;$01EC0E |
     BNE .game_running_01EC61                ;$01EC11 |
@@ -15270,14 +15270,14 @@ handle_off_yoshi_01EE61:
     LDY.w $15AC,X                           ;$01EE65 |
     CPY.b #$08                              ;$01EE68 |
     BNE +                                   ;$01EE6A |
-    LDA.w $1419                             ;$01EE6C |
+    LDA.w SpriteInPipeMode_1419             ;$01EE6C |
     ORA $9D                                 ;$01EE6F |
     BNE +                                   ;$01EE71 |
     LDA.w $157C,X                           ;$01EE73 |
     STA $76                                 ;$01EE76 |
     EOR.b #$01                              ;$01EE78 |
     STA.w $157C,X                           ;$01EE7A |
-+   LDA.w $1419                             ;$01EE7D |
++   LDA.w SpriteInPipeMode_1419             ;$01EE7D |
     BMI +                                   ;$01EE80 |
     CMP.b #$02                              ;$01EE82 |
     BNE +                                   ;$01EE84 |
@@ -15398,7 +15398,7 @@ process_yoshi_head_01EF18:
     LDA.w $15EA,X                           ;$01EF55 |
     PHA                                     ;$01EF58 |
     LDA.w $15AC,X                           ;$01EF59 |
-    ORA.w $1419                             ;$01EF5C |
+    ORA.w SpriteInPipeMode_1419             ;$01EF5C |
     BEQ +                                   ;$01EF5F |
     LDA.b #$04                              ;$01EF61 |
     STA.w $15EA,X                           ;$01EF63 |
@@ -16012,7 +16012,7 @@ Return01F3FD:
 draw_yoshi_tongue_01F3FE:
     LDA.w $15A0,X
     ORA.w $186C,X                           ;$01F401 | if Yoshi is offscreen
-    ORA.w $1419                             ;$01F404 | or entering a pipe, return
+    ORA.w SpriteInPipeMode_1419             ;$01F404 | or entering a pipe, return
     BNE Return01F3FD                        ;$01F407 |
     LDY.w $1602,X                           ;$01F409 |
     LDA.w DATA_01F61A,Y                     ;$01F40C |

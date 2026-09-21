@@ -1512,7 +1512,7 @@ VertLayer2Setting: skip 1
 ; 7E1415 - 7E1416 unused
 skip 2
 BackgroundVertOffset: skip 2
-YoshiInPipeSetting: skip 1
+SpriteInPipeMode_1419: skip 1
 SublevelCount: skip 1
 DidPlayBonusGame: skip 1
 SecretGoalTape: skip 1
