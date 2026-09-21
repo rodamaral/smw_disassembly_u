@@ -920,9 +920,9 @@ CODE_028752:
     CMP.b #$07                              ;$028754 |
     BNE NotBreakable                        ;$028756 |
 BreakTurnBlock:
-    LDA.w $0DB3
+    LDA.w CurrentPlayer_0DB3
     ASL                                     ;$02875B |
-    ADC.w $0DB3                             ;$02875C |
+    ADC.w CurrentPlayer_0DB3                ;$02875C |
     TAX                                     ;$02875F |
     LDA.w $0F34,X                           ;$028760 |
     CLC                                     ;$028763 |
@@ -6196,9 +6196,9 @@ CODE_02AE03:
     BRA CODE_02AE35                         ;$02AE10 |
 
 CODE_02AE12:
-    LDA.w $0DB3
+    LDA.w CurrentPlayer_0DB3
     ASL                                     ;$02AE15 |
-    ADC.w $0DB3                             ;$02AE16 |
+    ADC.w CurrentPlayer_0DB3                ;$02AE16 |
     TAX                                     ;$02AE19 |
     LDA.w $0F34,X                           ;$02AE1A |
     CLC                                     ;$02AE1D |
@@ -12297,7 +12297,7 @@ CODE_02DA6E:
     BNE Return02DAE8                        ;$02DA70 |
     JSL SprSprPMarioSprRts                  ;$02DA72 |
     JSR SubOffscreen1Bnk2                   ;$02DA76 |
-    LDY.w $0DB3                             ;$02DA79 |
+    LDY.w CurrentPlayer_0DB3                ;$02DA79 |
     LDA.w $1F11,Y                           ;$02DA7C |
     TAY                                     ;$02DA7F |
     LDA $13                                 ;$02DA80 |

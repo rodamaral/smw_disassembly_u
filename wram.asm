@@ -1347,7 +1347,7 @@ MosaicDirection: skip 1
 MosaicSize: skip 1
 KeepModeActive_TODO: skip 1 ; FIXME
 IsTwoPlayerGame: skip 1
-PlayerTurnLvl: skip 1
+CurrentPlayer_0DB3: skip 1
 SavedPlayerLives: skip 2
 SavedPlayerCoins: skip 2
 SavedPlayerPowerup: skip 2

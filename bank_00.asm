@@ -797,7 +797,7 @@ update_controllers:                         ;        \
     STY.w $0DAB                             ;$00869D |/
     LDX.w $0DA0                             ;$0086A0 |\ Check for the second controller
     BPL .single_controller                  ;$0086A3 |/
-    LDX.w $0DB3                             ;$0086A5 | Load current player
+    LDX.w CurrentPlayer_0DB3                ;$0086A5 | Load current player
 .single_controller                          ;        |
     LDA.w $0DA4,X                           ;$0086A8 |\ Update $15 t0 current button press high byte
     AND.b #$C0                              ;$0086AB | | Share bit 6 with X/Y
@@ -1691,7 +1691,7 @@ update_status_tileset_008E1A:
     CPX.b #$06                              ;$008EEB |
     BNE -                                   ;$008EED |
 
-+   LDA.w $0DB3                             ;$008EEF |
++   LDA.w CurrentPlayer_0DB3                ;$008EEF |
     BEQ .handle_coins_008F1D                ;$008EF2 |
     LDA.w $0F39                             ;$008EF4 | copy Luigi score to scratch RAM
     STA $00                                 ;$008EF7 | that are parameters to $009012
@@ -1744,7 +1744,7 @@ update_status_tileset_008E1A:
     STA.w $0F17                             ;$008F58 |
 
 ; Handle Bonus Stars overflow
-    LDX.w $0DB3                             ;$008F5B |
+    LDX.w CurrentPlayer_0DB3                ;$008F5B |
     LDA.w $0F48,X                           ;$008F5E |
     CMP.b #$64                              ;$008F61 |
     BCC .draw_coin_count_008F73             ;$008F63 |
@@ -1766,7 +1766,7 @@ update_status_tileset_008E1A:
 
 ; Calculate Bonus Stars digits
     SEP #$20                                ;$008F84 | A->8
-    LDX.w $0DB3                             ;$008F86 | use current character as index
+    LDX.w CurrentPlayer_0DB3                ;$008F86 | use current character as index
     STZ $00                                 ;$008F89 |
     STZ $01                                 ;$008F8B |
     STZ $03                                 ;$008F8D |
@@ -1799,7 +1799,7 @@ update_status_tileset_008E1A:
 
     JSR draw_reserve_item_009079            ;$008FC5 |
 ; Draw Luigi Name
-    LDA.w $0DB3                             ;$008FC8 |
+    LDA.w CurrentPlayer_0DB3                ;$008FC8 |
     BEQ .draw_dragon_coins_008FD8           ;$008FCB |
     LDX.b #$04                              ;$008FCD |\
 -   LDA.w DATA_008DF5,X                     ;$008FCF ||
@@ -2015,7 +2015,7 @@ CODE_0091D0:
     INX                                     ;$0091D3 |
     CPX.b #$08                              ;$0091D4 |
     BNE CODE_0091DF                         ;$0091D6 |
-    LDA.w $0DB3                             ;$0091D8 |
+    LDA.w CurrentPlayer_0DB3                ;$0091D8 |
     BEQ CODE_0091DF                         ;$0091DB |
     LDX.b #$0E                              ;$0091DD |
 CODE_0091DF:
@@ -3629,7 +3629,7 @@ CODE_009E26:
     STZ.w $0F36                             ;$009E56 |
     STZ.w $0F39                             ;$009E59 |
     STZ.w $0DD5                             ;$009E5C |
-    STZ.w $0DB3                             ;$009E5F |
+    STZ.w CurrentPlayer_0DB3                ;$009E5F |
 CODE_009E62:
     JSR KeepModeActive
     LDY.b #$0B                              ;$009E65 |
@@ -3932,7 +3932,7 @@ GM0C_overworld_load_00A087:
     JSR upload_music_bank_1                 ;$00A0B3 |
     JSR SetUpScreen                         ;$00A0B6 |
     STZ.w $0DDA                             ;$00A0B9 |
-    LDX.w $0DB3                             ;$00A0BC |
+    LDX.w CurrentPlayer_0DB3                ;$00A0BC |
     LDA.w $0DBE                             ;$00A0BF |
     BPL .CODE_00A0C7                        ;$00A0C2 |
     INC.w $1B87                             ;$00A0C4 |
@@ -3979,7 +3979,7 @@ CODE_00A11B:
     STX.w $212E                             ;$00A120 |
     STY.w $212F                             ;$00A123 |
     JSL CODE_04DC09                         ;$00A126 |
-    LDX.w $0DB3                             ;$00A12A |
+    LDX.w CurrentPlayer_0DB3                ;$00A12A |
     LDA.w $1F11,X                           ;$00A12D |
     ASL                                     ;$00A130 |
     TAX                                     ;$00A131 |
@@ -10508,7 +10508,7 @@ draw_mario_and_yoshi_00E2BD:
 .CODE_00E314:
     LDA $19
     ASL                                     ;$00E316 |
-    ORA.w $0DB3                             ;$00E317 |
+    ORA.w CurrentPlayer_0DB3                ;$00E317 |
 .CODE_00E31A:
     ASL
     TAY                                     ;$00E31B |

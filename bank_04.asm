@@ -400,7 +400,7 @@ CODE_048366:
     LDA.b #$01                              ;$048370 |
     STA.w $1B87                             ;$048372 |
 CODE_048375:
-    LDX.w $0DB3
+    LDX.w CurrentPlayer_0DB3
     LDA.w $1F11,X                           ;$048378 |
     BNE CODE_04839A                         ;$04837B |
     LDA $16                                 ;$04837D |
@@ -546,7 +546,7 @@ DATA_0484D3:
     db $78,$00,$D8,$01,$D8,$01
 
 CODE_048509:
-    LDY.w $0DB3
+    LDY.w CurrentPlayer_0DB3
     LDA.w $1F11,Y                           ;$04850C |
     STA $01                                 ;$04850F |
     STZ $00                                 ;$048511 |
@@ -880,7 +880,7 @@ CODE_048789:
     XBA                                     ;$04878F |
     LSR                                     ;$048790 |
     TAX                                     ;$048791 |
-    LDA.w $0DB3,X                           ;$048792 |
+    LDA.w CurrentPlayer_0DB3,X                           ;$048792 |
     PLX                                     ;$048795 |
     AND.w #$FF00                            ;$048796 |
     BPL CODE_0487C7                         ;$048799 |
@@ -992,7 +992,7 @@ CODE_048962:
     XBA                                     ;$04897A |
     LSR                                     ;$04897B |
     TAX                                     ;$04897C |
-    LDA.w $0DB3,X                           ;$04897D |
+    LDA.w CurrentPlayer_0DB3,X                           ;$04897D |
     PLX                                     ;$048980 |
     AND.w #$FF00                            ;$048981 |
     BPL CODE_04898B                         ;$048984 |
@@ -1331,7 +1331,7 @@ CODE_048E34:
 
 CODE_048E38:
     SEP #$30
-    LDX.w $0DB3                             ;$048E3A |
+    LDX.w CurrentPlayer_0DB3                ;$048E3A |
     LDA.w $1F11,X                           ;$048E3D |
     TAX                                     ;$048E40 |
     LDA.w DATA_048D8A,X                     ;$048E41 |
@@ -1348,7 +1348,7 @@ DATA_048E4F:
 
 CODE_048E55:
     REP #$30
-    LDA.w $0DB3                             ;$048E57 |
+    LDA.w CurrentPlayer_0DB3                ;$048E57 |
     AND.w #$00FF                            ;$048E5A |
     ASL                                     ;$048E5D |
     ASL                                     ;$048E5E |
@@ -1740,7 +1740,7 @@ OWPU_EnterLevel:
 CODE_0491B1:
     TYA
     STA.w $1F13,X                           ;$0491B2 |
-    LDX.w $0DB3                             ;$0491B5 |
+    LDX.w CurrentPlayer_0DB3                ;$0491B5 |
     LDA.w $0DB6,X                           ;$0491B8 |
     STA.w $0DBF                             ;$0491BB |
     LDA.w $0DB4,X                           ;$0491BE |
@@ -1931,7 +1931,7 @@ CODE_049315:
     LDA.w $1F17,X                           ;$04932C |
     CMP.w DATA_049084                       ;$04932F |
     BNE CODE_049346                         ;$049332 |
-    LDA.w $0DB3                             ;$049334 |
+    LDA.w CurrentPlayer_0DB3                ;$049334 |
     AND.w #$00FF                            ;$049337 |
     TAX                                     ;$04933A |
     LDA.w $1F11,X                           ;$04933B |
@@ -3054,7 +3054,7 @@ CODE_049D95:
 CODE_049D9A:
     LDA.w $0DB2
     BEQ CODE_049DAF                         ;$049D9D |
-    LDA.w $0DB3                             ;$049D9F |
+    LDA.w CurrentPlayer_0DB3                ;$049D9F |
     EOR.b #$01                              ;$049DA2 |
     TAX                                     ;$049DA4 |
     LDA.w $0DB4,X                           ;$049DA5 |
@@ -3080,9 +3080,9 @@ CODE_049DCC:
     JMP CODE_049831                         ;$049DCE |
 
 CODE_049DD1:
-    LDA.w $0DB3
+    LDA.w CurrentPlayer_0DB3
     EOR.b #$01                              ;$049DD4 |
-    STA.w $0DB3                             ;$049DD6 |
+    STA.w CurrentPlayer_0DB3                ;$049DD6 |
     TAX                                     ;$049DD9 |
     LDA.w $0DB6,X                           ;$049DDA |
     STA.w $0DBF                             ;$049DDD |
@@ -3100,7 +3100,7 @@ CODE_049DD1:
     REP #$20                                ;$049E01 |
     JSR CODE_048E55                         ;$049E03 |
     SEP #$20                                ;$049E06 |
-    LDX.w $0DB3                             ;$049E08 |
+    LDX.w CurrentPlayer_0DB3                ;$049E08 |
     LDA.w $1F11,X                           ;$049E0B |
     STA.w $13C3                             ;$049E0E |
     STZ.w $13C4                             ;$049E11 |
@@ -6745,7 +6745,7 @@ CODE_04EB32:
     DEX                                     ;$04EB35 |
     BPL CODE_04EB32                         ;$04EB36 |
     LDY.b #$08                              ;$04EB38 |
-    LDX.w $0DB3                             ;$04EB3A |
+    LDX.w CurrentPlayer_0DB3                ;$04EB3A |
     LDA.w $1F11,X                           ;$04EB3D |
     CMP.b #$03                              ;$04EB40 |
     BNE CODE_04EB46                         ;$04EB42 |
@@ -7571,7 +7571,7 @@ CODE_04F513:
     ORA.w $0DA7                             ;$04F516 |
     AND.b #$10                              ;$04F519 |
     BEQ CODE_04F52B                         ;$04F51B |
-    LDX.w $0DB3                             ;$04F51D |
+    LDX.w CurrentPlayer_0DB3                ;$04F51D |
     LDA.w $0DB4,X                           ;$04F520 |
     STA.w $0DBE                             ;$04F523 |
     JSL CODE_009C13                         ;$04F526 |
@@ -8660,7 +8660,7 @@ CODE_04FD70:
     JSR CODE_04FE90
     JSR CODE_04FE62                         ;$04FD73 |
     JSR CODE_04FE62                         ;$04FD76 |
-    LDY.w $0DB3                             ;$04FD79 |
+    LDY.w CurrentPlayer_0DB3                ;$04FD79 |
     LDA.w $1F11,Y                           ;$04FD7C |
     BEQ CODE_04FDA5                         ;$04FD7F |
     CPX.b #$0F                              ;$04FD81 |

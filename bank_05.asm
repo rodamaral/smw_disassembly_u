@@ -5588,7 +5588,7 @@ DATA_05CC61:
 
 CODE_05CC66:
     LDY.b #$00
-    LDX.w $0DB3                             ;$05CC68 |
+    LDX.w CurrentPlayer_0DB3                ;$05CC68 |
     LDA.w $0F48,X                           ;$05CC6B |
 CODE_05CC6E:
     CMP.b #$0A
@@ -5627,7 +5627,7 @@ CODE_05CC9D:
     LDA.l $7F837B                           ;$05CCAA |
     TAX                                     ;$05CCAE |
     SEP #$20                                ;$05CCAF |
-    LDA.w $0DB3                             ;$05CCB1 |
+    LDA.w CurrentPlayer_0DB3                ;$05CCB1 |
     BEQ CODE_05CCC8                         ;$05CCB4 |
     LDY.w #$0000                            ;$05CCB6 |
 CODE_05CCB9:
@@ -5882,7 +5882,7 @@ CODE_05CECA:
     PLB                                     ;$05CECC |
     REP #$20                                ;$05CECD |
     LDX.b #$00                              ;$05CECF |
-    LDA.w $0DB3                             ;$05CED1 |
+    LDA.w CurrentPlayer_0DB3                ;$05CED1 |
     AND.w #$00FF                            ;$05CED4 |
     BEQ CODE_05CEDB                         ;$05CED7 |
     LDX.b #$03                              ;$05CED9 |
@@ -5912,7 +5912,7 @@ CODE_05CF05:
     LDA $13                                 ;$05CF0C |
     AND.b #$03                              ;$05CF0E |
     BNE CODE_05CF34                         ;$05CF10 |
-    LDX.w $0DB3                             ;$05CF12 |
+    LDX.w CurrentPlayer_0DB3                ;$05CF12 |
     LDA.w $0F48,X                           ;$05CF15 |
     CLC                                     ;$05CF18 |
     ADC.b #$01                              ;$05CF19 |
@@ -6880,7 +6880,7 @@ CODE_05DBF7:
     DEX                                     ;$05DBFE |
     BPL CODE_05DBF7                         ;$05DBFF |
     LDX.b #$00                              ;$05DC01 |
-    LDA.w $0DB3                             ;$05DC03 |
+    LDA.w CurrentPlayer_0DB3                ;$05DC03 |
     BEQ CODE_05DC0A                         ;$05DC06 |
     LDX.b #$01                              ;$05DC08 |
 CODE_05DC0A:

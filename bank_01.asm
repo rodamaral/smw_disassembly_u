@@ -13734,7 +13734,7 @@ CODE_01E2E0:
     LDA.w $15A0,X                           ;$01E2EC |
     BNE CODE_01E305                         ;$01E2EF |
     INC $C2,X                               ;$01E2F1 |
-    LDY.w $0DB3                             ;$01E2F3 |
+    LDY.w CurrentPlayer_0DB3                ;$01E2F3 |
     LDA.w $1F11,Y                           ;$01E2F6 |
     TAY                                     ;$01E2F9 |
     LDA.b #$68                              ;$01E2FA |
@@ -14987,7 +14987,7 @@ yoshi_01EBCA:
     BNE +                                   ;$01EC22 ||\
     STZ.b SpriteLock_9D                     ;$01EC24 ||| Unfreeze game
     STZ.w PlayerIsFrozen_13FB               ;$01EC26 |||
-    LDY.w $0DB3                             ;$01EC29 ||| Show Yoshi's spawn message if:
+    LDY.w CurrentPlayer_0DB3                ;$01EC29 ||| Show Yoshi's spawn message if:
     LDA.w $1F11,Y                           ;$01EC2C ||| - Yoshi's Island
     DEC A                                   ;$01EC2F ||| - first time
     ORA.w $0EF8                             ;$01EC30 ||| - not title screen

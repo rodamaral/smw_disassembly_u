@@ -2508,7 +2508,7 @@ CODE_0392C0:
     BMI CODE_0392F8                         ;$0392F4 |
     BNE CODE_03931F                         ;$0392F6 |
 CODE_0392F8:
-    LDY.w $0DB3
+    LDY.w CurrentPlayer_0DB3
     LDA.w $1F11,Y                           ;$0392FB |
     CMP.b #$01                              ;$0392FE |
     LDY.w $1534,X                           ;$039300 |
