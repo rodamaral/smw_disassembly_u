@@ -4788,7 +4788,7 @@ CODE_07FC52:
     LDA.w SpriteYPosHigh_14D4,X             ;$07FC63 |
     ADC.b #$00                              ;$07FC66 |
     STA.w $1729,Y                           ;$07FC68 |
-    LDA $E4,X                               ;$07FC6B |
+    LDA.b SpriteXPosLow_E4,X                ;$07FC6B |
     CLC                                     ;$07FC6D |
     ADC.b #$04                              ;$07FC6E |
     STA.w $171F,Y                           ;$07FC70 |

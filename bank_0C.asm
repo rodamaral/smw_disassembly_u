@@ -1392,7 +1392,7 @@ CODE_0C9FEA:
     STA.w $7B                               ;$0C9FFE |
     JSR CODE_0CA75A                         ;$0CA001 |
     LDA.b #$52                              ;$0CA004 |
-    STA $E4                                 ;$0CA006 | WARN: unindexed table
+    STA.b SpriteXPosLow_E4                  ;$0CA006 | WARN: unindexed table
     STZ.w SpriteXPosHigh_14E0               ;$0CA008 | WARN: unindexed table
     LDA.b #$8F                              ;$0CA00B |
     STA.b SpriteYPosLow_D8                  ;$0CA00D | WARN: unindexed table
@@ -1645,7 +1645,7 @@ CODE_0CA1F6:
     JSR CODE_0CA7B4                         ;$0CA212 |
     LDA.w $1442                             ;$0CA215 |
     BNE CODE_0CA22D                         ;$0CA218 |
-    LDA $E4                                 ;$0CA21A |
+    LDA.b SpriteXPosLow_E4                  ;$0CA21A | WARN: unindexed table
     STA $00                                 ;$0CA21C |
     LDA.b #$9F                              ;$0CA21E |
     STA $02                                 ;$0CA220 |
@@ -1688,7 +1688,7 @@ CODE_0CA24F:
     LDA.w $0B50                             ;$0CA26D |
     CLC                                     ;$0CA270 |
     ADC.b #$30                              ;$0CA271 |
-    STA $E4                                 ;$0CA273 | WARN: unindexed table
+    STA.b SpriteXPosLow_E4                  ;$0CA273 | WARN: unindexed table
     LDA.w $0B6E                             ;$0CA275 |
     ADC.b #$00                              ;$0CA278 |
     STA.w SpriteXPosHigh_14E0               ;$0CA27A | WARN: unindexed table
@@ -2027,7 +2027,7 @@ CODE_0CA4E9:
     ASL                                     ;$0CA50E |
     TAY                                     ;$0CA50F |
 CODE_0CA510:
-    LDA $E4
+    LDA.b SpriteXPosLow_E4                  ;$0CA510 |  WARN: unindexed table
     STA $00                                 ;$0CA512 |
     LDA.b #$9F                              ;$0CA514 |
     STA $02                                 ;$0CA516 |
@@ -2253,7 +2253,7 @@ CODE_0CA6B0:
     LDA.w DATA_0CA311,Y                     ;$0CA6D2 |
     ASL                                     ;$0CA6D5 |
     TAY                                     ;$0CA6D6 |
-    LDA $E4                                 ;$0CA6D7 |
+    LDA.b SpriteXPosLow_E4                  ;$0CA6D7 |  WARN: unindexed table
     STA $00                                 ;$0CA6D9 |
     LDA.w $0B42                             ;$0CA6DB |
     STA $02                                 ;$0CA6DE |

@@ -97,7 +97,7 @@ Return018072:
 CODE_018073:
     LDA.b #$03
     STA.w $17C0,Y                           ;$018075 |
-    LDA $E4,X                               ;$018078 |
+    LDA.b SpriteXPosLow_E4,X                ;$018078 |
     ADC $00                                 ;$01807A |
     STA.w $17C8,Y                           ;$01807C |
     LDA.b SpriteYPosLow_D8,X                ;$01807F |
@@ -453,7 +453,7 @@ Return018325:
 
 InitTimedPlat:
     LDY.b #$3F
-    LDA $E4,X                               ;$018328 |
+    LDA.b SpriteXPosLow_E4,X                ;$018328 |
     AND.b #$10                              ;$01832A |
     BNE CODE_018330                         ;$01832C |
     LDY.b #$FF                              ;$01832E |
@@ -466,7 +466,7 @@ YoshiPal:
     db $09,$07,$05,$07
 
 InitYoshiEgg:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     LSR                                     ;$01833B |
     LSR                                     ;$01833C |
     LSR                                     ;$01833D |
@@ -548,7 +548,7 @@ ExplodingBlkSpr:
     db $15,$0F,$00,$04
 
 InitExplodingBlk:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     LSR                                     ;$0183A6 |
     LSR                                     ;$0183A7 |
     LSR                                     ;$0183A8 |
@@ -567,14 +567,14 @@ InitScalePlats:
     STA.w $1534,X                           ;$0183B7 |
     LDA.w SpriteYPosHigh_14D4,X             ;$0183BA |
     STA.w $151C,X                           ;$0183BD |
-    LDA $E4,X                               ;$0183C0 |
+    LDA.b SpriteXPosLow_E4,X                ;$0183C0 |
     AND.b #$10                              ;$0183C2 |
     LSR                                     ;$0183C4 |
     LSR                                     ;$0183C5 |
     LSR                                     ;$0183C6 |
     LSR                                     ;$0183C7 |
     TAY                                     ;$0183C8 |
-    LDA $E4,X                               ;$0183C9 |
+    LDA.b SpriteXPosLow_E4,X                ;$0183C9 |
     CLC                                     ;$0183CB |
     ADC.w DATA_0183B3,Y                     ;$0183CC |
     STA $C2,X                               ;$0183CF |
@@ -631,7 +631,7 @@ CODE_01840E:
     RTS                                     ;$01841A |
 
 InitUrchin:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
 CODE_01841D:
     LDY.b #$00
     AND.b #$10                              ;$01841F |
@@ -658,17 +658,17 @@ Return01843D:
     RTS
 
 InitPeaBouncer:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     SEC                                     ;$018440 |
     SBC.b #$08                              ;$018441 |
-    STA $E4,X                               ;$018443 |
+    STA.b SpriteXPosLow_E4,X                ;$018443 |
     LDA.w SpriteXPosHigh_14E0,X             ;$018445 |
     SBC.b #$00                              ;$018448 |
     STA.w SpriteXPosHigh_14E0,X             ;$01844A |
     RTS                                     ;$01844D |
 
 InitPSwitch:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     LSR                                     ;$018450 |
     LSR                                     ;$018451 |
     LSR                                     ;$018452 |
@@ -718,8 +718,8 @@ CODE_018484:
     STA.w $009E,y                           ;$0184A6 |
     LDA.b #$08                              ;$0184A9 |
     STA.w SpriteStatus_14C8,Y               ;$0184AB |
-    LDA $E4,X                               ;$0184AE |
-    STA.w $00E4,y                           ;$0184B0 |
+    LDA.b SpriteXPosLow_E4,X                ;$0184AE |
+    STA.w SpriteXPosLow_E4,y                ;$0184B0 |
     LDA.w SpriteXPosHigh_14E0,X             ;$0184B3 |
     STA.w SpriteXPosHigh_14E0,Y             ;$0184B6 |
     LDA.b SpriteYPosLow_D8,X                ;$0184B9 |
@@ -732,7 +732,7 @@ CODE_018484:
     PLX                                     ;$0184CA |
     STZ.w $18E0                             ;$0184CB |
 InitMontyMole:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     AND.b #$10                              ;$0184D0 |
     STA.w $151C,X                           ;$0184D2 |
     RTS                                     ;$0184D5 |
@@ -755,7 +755,7 @@ InitClappinChuck:
     BRA CODE_01851A                         ;$0184EB |
 
 InitPitchinChuck:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     AND.b #$30                              ;$0184EF |
     LSR                                     ;$0184F1 |
     LSR                                     ;$0184F2 |
@@ -780,7 +780,7 @@ InitChuck:
 InitDigginChuck:
     LDA.b #$30
     STA.w $1540,X                           ;$01850A |
-    LDA $E4,X                               ;$01850D |
+    LDA.b SpriteXPosLow_E4,X                ;$01850D |
     AND.b #$10                              ;$01850F |
     LSR                                     ;$018511 |
     LSR                                     ;$018512 |
@@ -805,7 +805,7 @@ InitSuperKoopa:
 
 InitSuperKoopaFthr:
     JSR FaceMario
-    LDA $E4,X                               ;$018531 |
+    LDA.b SpriteXPosLow_E4,X                ;$018531 |
     AND.b #$10                              ;$018533 |
     BEQ CODE_018547                         ;$018535 |
     LDA.b #$10                              ;$018537 |
@@ -884,10 +884,10 @@ InitDownPiranha:
     SBC.b #$00                              ;$0185AB |
     STA.w SpriteYPosHigh_14D4,X             ;$0185AD |
 InitPiranha:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$0185B2 |
     ADC.b #$08                              ;$0185B3 |
-    STA $E4,X                               ;$0185B5 |
+    STA.b SpriteXPosLow_E4,X                ;$0185B5 |
     DEC.b SpriteYPosLow_D8,X                ;$0185B7 |
     LDA.b SpriteYPosLow_D8,X                ;$0185B9 |
     CMP.b #$FF                              ;$0185BB |
@@ -1366,7 +1366,7 @@ Return0188AB:
     RTS
 
 HandleJumpOver:
-    LDA.w $00E4,y
+    LDA.w SpriteXPosLow_E4,y
     SEC                                     ;$0188AF |
     SBC.b #$1A                              ;$0188B0 |
     STA $00                                 ;$0188B2 |
@@ -1468,9 +1468,9 @@ CODE_01896B:
     LDA.w SpriteStatus_14C8,Y               ;$018972 |
     CMP.b #$09                              ;$018975 |
     BNE CODE_018908                         ;$018977 |
-    LDA $E4,X                               ;$018979 |
+    LDA.b SpriteXPosLow_E4,X                ;$018979 |
     SEC                                     ;$01897B |
-    SBC.w $00E4,y                           ;$01897C |
+    SBC.w SpriteXPosLow_E4,y                ;$01897C |
     CLC                                     ;$01897F |
     ADC.b #$12                              ;$018980 |
     CMP.b #$24                              ;$018982 |
@@ -2286,7 +2286,7 @@ CODE_018F64:
     JSR IsSprOffScreen
     BNE Return018F96                        ;$018F67 |
     JSR CODE_018EEF                         ;$018F69 |
-    LDA $E4,X                               ;$018F6C |
+    LDA.b SpriteXPosLow_E4,X                ;$018F6C |
     CLC                                     ;$018F6E |
     ADC.b #$04                              ;$018F6F |
     STA.w $171F,Y                           ;$018F71 |
@@ -2508,10 +2508,10 @@ CODE_019140:
     LDA $5B                                 ;$019158 |
     BPL CODE_0191BE                         ;$01915A |
     INC.w $185E                             ;$01915C |
-    LDA $E4,X                               ;$01915F |
+    LDA.b SpriteXPosLow_E4,X                ;$01915F |
     CLC                                     ;$019161 |
     ADC $26                                 ;$019162 |
-    STA $E4,X                               ;$019164 |
+    STA.b SpriteXPosLow_E4,X                ;$019164 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019166 |
     ADC $27                                 ;$019169 |
     STA.w SpriteXPosHigh_14E0,X             ;$01916B |
@@ -2523,10 +2523,10 @@ CODE_019140:
     ADC $29                                 ;$019178 |
     STA.w SpriteYPosHigh_14D4,X             ;$01917A |
     JSR CODE_019211                         ;$01917D |
-    LDA $E4,X                               ;$019180 |
+    LDA.b SpriteXPosLow_E4,X                ;$019180 |
     SEC                                     ;$019182 |
     SBC $26                                 ;$019183 |
-    STA $E4,X                               ;$019185 |
+    STA.b SpriteXPosLow_E4,X                ;$019185 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019187 |
     SBC $27                                 ;$01918A |
     STA.w SpriteXPosHigh_14E0,X             ;$01918C |
@@ -2549,8 +2549,8 @@ CODE_019140:
     DEY                                     ;$0191B1 |
 CODE_0191B2:
     CLC
-    ADC $E4,X                               ;$0191B3 |
-    STA $E4,X                               ;$0191B5 |
+    ADC.b SpriteXPosLow_E4,X                ;$0191B3 |
+    STA.b SpriteXPosLow_E4,X                ;$0191B5 |
     TYA                                     ;$0191B7 |
     ADC.w SpriteXPosHigh_14E0,X             ;$0191B8 |
     STA.w SpriteXPosHigh_14E0,X             ;$0191BB |
@@ -2563,10 +2563,10 @@ CODE_0191BE:
     TAY                                     ;$0191CA |
     LDA.w $15D0,X                           ;$0191CB |
     BNE CODE_0191ED                         ;$0191CE |
-    LDA $E4,X                               ;$0191D0 |
+    LDA.b SpriteXPosLow_E4,X                ;$0191D0 |
     CLC                                     ;$0191D2 |
     ADC.w Return019283,Y                    ;$0191D3 |
-    STA $E4,X                               ;$0191D6 |
+    STA.b SpriteXPosLow_E4,X                ;$0191D6 |
     LDA.w SpriteXPosHigh_14E0,X             ;$0191D8 |
     ADC.w DATA_019285,Y                     ;$0191DB |
     STA.w SpriteXPosHigh_14E0,X             ;$0191DE |
@@ -2860,10 +2860,10 @@ ADDR_0193EF:
     SEC                                     ;$0193F0 |
     SBC.b #$0C                              ;$0193F1 |
     TAY                                     ;$0193F3 |
-    LDA $E4,X                               ;$0193F4 |
+    LDA.b SpriteXPosLow_E4,X                ;$0193F4 |
     CLC                                     ;$0193F6 |
     ADC.w DATA_0192C5,Y                     ;$0193F7 |
-    STA $E4,X                               ;$0193FA |
+    STA.b SpriteXPosLow_E4,X                ;$0193FA |
     LDA.w SpriteXPosHigh_14E0,X             ;$0193FC |
     ADC.w DATA_0192C7,Y                     ;$0193FF |
     STA.w SpriteXPosHigh_14E0,X             ;$019402 |
@@ -2925,7 +2925,7 @@ CODE_01944D:
     CMP $5D                                 ;$019466 |
     BCS CODE_0194B4                         ;$019468 |
     STA $0D                                 ;$01946A |
-    LDA $E4,X                               ;$01946C |
+    LDA.b SpriteXPosLow_E4,X                ;$01946C |
     CLC                                     ;$01946E |
     ADC.w SpriteObjClippingX,Y              ;$01946F |
     STA $0A                                 ;$019472 |
@@ -2983,7 +2983,7 @@ CODE_0194BF:
     CMP.w #$01B0                            ;$0194D6 |
     SEP #$20                                ;$0194D9 |
     BCS CODE_0194B4                         ;$0194DB |
-    LDA $E4,X                               ;$0194DD |
+    LDA.b SpriteXPosLow_E4,X                ;$0194DD |
     CLC                                     ;$0194DF |
     ADC.w SpriteObjClippingX,Y              ;$0194E0 |
     STA $0A                                 ;$0194E3 |
@@ -3092,7 +3092,7 @@ CODE_019598:
     STA $AA,X                               ;$01959F |
     JSR IsTouchingObjSide                   ;$0195A1 |
     BNE CODE_0195DB                         ;$0195A4 |
-    LDA $E4,X                               ;$0195A6 |
+    LDA.b SpriteXPosLow_E4,X                ;$0195A6 |
     CLC                                     ;$0195A8 |
     ADC.b #$08                              ;$0195A9 |
     STA $9A                                 ;$0195AB |
@@ -3259,8 +3259,8 @@ GeneralResetSpr:
     TYX                                     ;$0196F5 |
     JSL InitSpriteTables                    ;$0196F6 |
     LDX.w $15E9                             ;$0196FA |
-    LDA $E4,X                               ;$0196FD |
-    STA.w $00E4,y                           ;$0196FF |
+    LDA.b SpriteXPosLow_E4,X                ;$0196FD |
+    STA.w SpriteXPosLow_E4,y                ;$0196FF |
     LDA.w SpriteXPosHigh_14E0,X             ;$019702 |
     STA.w SpriteXPosHigh_14E0,Y             ;$019705 |
     LDA.b SpriteYPosLow_D8,X                ;$019708 |
@@ -3323,8 +3323,8 @@ SpawnMovingCoin:
     STA.w SpriteStatus_14C8,Y               ;$019778 |
     LDA.b #$21                              ;$01977B |
     STA.w $009E,y                           ;$01977D |
-    LDA $E4,X                               ;$019780 |
-    STA.w $00E4,y                           ;$019782 |
+    LDA.b SpriteXPosLow_E4,X                ;$019780 |
+    STA.w SpriteXPosLow_E4,y                ;$019782 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019785 |
     STA.w SpriteXPosHigh_14E0,Y             ;$019788 |
     LDA.b SpriteYPosLow_D8,X                ;$01978B |
@@ -3619,7 +3619,7 @@ CODE_01999E:
     JSR CODE_0190A2                         ;$0199A3 |
     LDA.w $15A0,X                           ;$0199A6 |
     BNE CODE_0199D2                         ;$0199A9 |
-    LDA $E4,X                               ;$0199AB |
+    LDA.b SpriteXPosLow_E4,X                ;$0199AB |
     SEC                                     ;$0199AD |
     SBC $1A                                 ;$0199AE |
     CLC                                     ;$0199B0 |
@@ -3652,7 +3652,7 @@ BreakThrowBlock:
 CODE_0199E1:
     JSR IsSprOffScreen
     BNE Return019A03                        ;$0199E4 |
-    LDA $E4,X                               ;$0199E6 |
+    LDA.b SpriteXPosLow_E4,X                ;$0199E6 |
     STA $9A                                 ;$0199E8 |
     LDA.w SpriteXPosHigh_14E0,X             ;$0199EA |
     STA $9B                                 ;$0199ED |
@@ -4144,7 +4144,7 @@ CODE_019E35:
 CODE_019E37:
     LDA.w $186C,X
     BNE Return019E94                        ;$019E3A |
-    LDA $E4,X                               ;$019E3C |
+    LDA.b SpriteXPosLow_E4,X                ;$019E3C |
     STA $00                                 ;$019E3E |
     LDA.w SpriteXPosHigh_14E0,X             ;$019E40 |
     STA $04                                 ;$019E43 |
@@ -4202,11 +4202,11 @@ CODE_019E95:
     PHA                                     ;$019EA0 |
     ADC.b #$00                              ;$019EA1 |
     STA.w SpriteYPosHigh_14D4,X             ;$019EA3 |
-    LDA $E4,X                               ;$019EA6 |
+    LDA.b SpriteXPosLow_E4,X                ;$019EA6 |
     PHA                                     ;$019EA8 |
     SEC                                     ;$019EA9 |
     SBC.b #$02                              ;$019EAA |
-    STA $E4,X                               ;$019EAC |
+    STA.b SpriteXPosLow_E4,X                ;$019EAC |
     LDA.w SpriteXPosHigh_14E0,X             ;$019EAE |
     PHA                                     ;$019EB1 |
     SBC.b #$00                              ;$019EB2 |
@@ -4226,10 +4226,10 @@ CODE_019E95:
     AND.b #$01                              ;$019ECE |
     TAY                                     ;$019ED0 |
     JSR CODE_019E35                         ;$019ED1 |
-    LDA $E4,X                               ;$019ED4 |
+    LDA.b SpriteXPosLow_E4,X                ;$019ED4 |
     CLC                                     ;$019ED6 |
     ADC.b #$04                              ;$019ED7 |
-    STA $E4,X                               ;$019ED9 |
+    STA.b SpriteXPosLow_E4,X                ;$019ED9 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019EDB |
     ADC.b #$00                              ;$019EDE |
     STA.w SpriteXPosHigh_14E0,X             ;$019EE0 |
@@ -4246,7 +4246,7 @@ CODE_019E95:
     PLA                                     ;$019EFA |
     STA.w SpriteXPosHigh_14E0,X             ;$019EFB |
     PLA                                     ;$019EFE |
-    STA $E4,X                               ;$019EFF |
+    STA.b SpriteXPosLow_E4,X                ;$019EFF |
     PLA                                     ;$019F01 |
     STA.w SpriteYPosHigh_14D4,X             ;$019F02 |
     PLA                                     ;$019F05 |
@@ -4440,7 +4440,7 @@ CODE_01A047:
     LDA $D1                                 ;$01A049 |
     CLC                                     ;$01A04B |
     ADC.w DATA_019F67,Y                     ;$01A04C |
-    STA $E4,X                               ;$01A04F |
+    STA.b SpriteXPosLow_E4,X                ;$01A04F |
     LDA $D2                                 ;$01A051 |
     ADC.w DATA_019F69,Y                     ;$01A053 |
     STA.w SpriteXPosHigh_14E0,X             ;$01A056 |
@@ -4536,7 +4536,7 @@ CODE_01A0E2:
     LDA $00                                 ;$01A0F7 |
     CLC                                     ;$01A0F9 |
     ADC.w DATA_019F5B,Y                     ;$01A0FA |
-    STA $E4,X                               ;$01A0FD |
+    STA.b SpriteXPosLow_E4,X                ;$01A0FD |
     LDA $01                                 ;$01A0FF |
     ADC.w DATA_019F61,Y                     ;$01A101 |
     STA.w SpriteXPosHigh_14E0,X             ;$01A104 |
@@ -4715,7 +4715,7 @@ StunSpringBoard:
 StunBabyYoshi:
     LDA.b SpriteLock_9D
     BNE CODE_01A27B                         ;$01A22E |
-    LDA $E4,X                               ;$01A230 |
+    LDA.b SpriteXPosLow_E4,X                ;$01A230 |
     CLC                                     ;$01A232 |
     ADC.b #$08                              ;$01A233 |
     STA $00                                 ;$01A235 |
@@ -4846,8 +4846,8 @@ CODE_01A30A:
 CODE_01A32E:
     LDY.w $160E,X
     CLC                                     ;$01A331 |
-    ADC $E4,X                               ;$01A332 |
-    STA.w $00E4,y                           ;$01A334 |
+    ADC.b SpriteXPosLow_E4,X                ;$01A332 |
+    STA.w SpriteXPosLow_E4,y                ;$01A334 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A337 |
     ADC $01                                 ;$01A33A |
     STA.w SpriteXPosHigh_14E0,Y             ;$01A33C |
@@ -4877,7 +4877,7 @@ DATA_01A363:
 get_draw_info_bnk1_01A365:
     STZ.w $186C,X
     STZ.w $15A0,X                           ;$01A368 | reset offscreen flags
-    LDA $E4,X                               ;$01A36B |
+    LDA.b SpriteXPosLow_E4,X                ;$01A36B |
     CMP $1A                                 ;$01A36D |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A36F |
     SBC $1B                                 ;$01A372 |
@@ -4885,7 +4885,7 @@ get_draw_info_bnk1_01A365:
     INC.w $15A0,X                           ;$01A376 |
 +   LDA.w SpriteXPosHigh_14E0,X             ;$01A379 |
     XBA                                     ;$01A37C |
-    LDA $E4,X                               ;$01A37D |
+    LDA.b SpriteXPosLow_E4,X                ;$01A37D |
     REP #$20                                ;$01A37F |
     SEC                                     ;$01A381 |
     SBC $1A                                 ;$01A382 |
@@ -4930,7 +4930,7 @@ get_draw_info_bnk1_01A365:
     PLA                                     ;$01A3CC |
 .CODE_01A3CD:
     LDY.w $15EA,X
-    LDA $E4,X                               ;$01A3D0 |
+    LDA.b SpriteXPosLow_E4,X                ;$01A3D0 |
     SEC                                     ;$01A3D2 |
     SBC $1A                                 ;$01A3D3 |
     STA $00                                 ;$01A3D5 |
@@ -4999,11 +4999,11 @@ CODE_01A421:
     EOR.w $1632,Y                           ;$01A435 |
     BNE CODE_01A4B0                         ;$01A438 |
     STX.w $1695                             ;$01A43A |
-    LDA $E4,X                               ;$01A43D |
+    LDA.b SpriteXPosLow_E4,X                ;$01A43D |
     STA $00                                 ;$01A43F |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A441 |
     STA $01                                 ;$01A444 |
-    LDA.w $00E4,y                           ;$01A446 |
+    LDA.w SpriteXPosLow_E4,y                ;$01A446 |
     STA $02                                 ;$01A449 |
     LDA.w SpriteXPosHigh_14E0,Y             ;$01A44B |
     STA $03                                 ;$01A44E |
@@ -5178,9 +5178,9 @@ CODE_01A56A:
     JMP CODE_01A5C4
 
 CODE_01A56D:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     SEC                                     ;$01A56F |
-    SBC.w $00E4,y                           ;$01A570 |
+    SBC.w SpriteXPosLow_E4,y                ;$01A570 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A573 |
     SBC.w SpriteXPosHigh_14E0,Y             ;$01A576 |
     ROL                                     ;$01A579 |
@@ -5394,9 +5394,9 @@ CODE_01A6D9:
     ORA.w $1558,X                           ;$01A6F1 |
     BNE Return01A72D                        ;$01A6F4 |
     STZ $02                                 ;$01A6F6 |
-    LDA $E4,X                               ;$01A6F8 |
+    LDA.b SpriteXPosLow_E4,X                ;$01A6F8 |
     SEC                                     ;$01A6FA |
-    SBC.w $00E4,y                           ;$01A6FB |
+    SBC.w SpriteXPosLow_E4,y                ;$01A6FB |
     BMI CODE_01A702                         ;$01A6FE |
     INC $02                                 ;$01A700 |
 CODE_01A702:
@@ -5487,11 +5487,11 @@ CODE_01A77C:
     STZ.w $163E,X                           ;$01A799 |
     TAY                                     ;$01A79C |
     STY $00                                 ;$01A79D |
-    LDA $E4,X                               ;$01A79F |
+    LDA.b SpriteXPosLow_E4,X                ;$01A79F |
     CLC                                     ;$01A7A1 |
     ADC.w DATA_01A778,Y                     ;$01A7A2 |
     LDY $01                                 ;$01A7A5 |
-    STA.w $00E4,y                           ;$01A7A7 |
+    STA.w SpriteXPosLow_E4,y                ;$01A7A7 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A7AA |
     LDY $00                                 ;$01A7AD |
     ADC.w DATA_01A77A,Y                     ;$01A7AF |
@@ -6035,7 +6035,7 @@ CODE_01AB7A:
 CODE_01AB83:
     LDA.b #$02
     STA.w $17C0,Y                           ;$01AB85 |
-    LDA $E4,X                               ;$01AB88 |
+    LDA.b SpriteXPosLow_E4,X                ;$01AB88 |
     STA.w $17C8,Y                           ;$01AB8A |
     LDA.b SpriteYPosLow_D8,X                ;$01AB8D |
     STA.w $17C4,Y                           ;$01AB8F |
@@ -6175,7 +6175,7 @@ CODE_01AC33:
     CLC                                     ;$01AC5E |
     ADC.w SpriteOffScreen3,Y                ;$01AC5F |
     ROL $00                                 ;$01AC62 |
-    CMP $E4,X                               ;$01AC64 |
+    CMP.b SpriteXPosLow_E4,X                ;$01AC64 |
     PHP                                     ;$01AC66 |
     LDA $1B                                 ;$01AC67 |
     LSR $00                                 ;$01AC69 |
@@ -6218,7 +6218,7 @@ VerticalLevel:
     LDA $13                                 ;$01ACAC |
     LSR                                     ;$01ACAE |
     BCS Return01ACA4                        ;$01ACAF |
-    LDA $E4,X                               ;$01ACB1 |
+    LDA.b SpriteXPosLow_E4,X                ;$01ACB1 |
     CMP.b #$00                              ;$01ACB3 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01ACB5 |
     SBC.b #$00                              ;$01ACB8 |
@@ -6292,7 +6292,7 @@ SubHorizPos:
     LDY.b #$00
     LDA $D1                                 ;$01AD32 |
     SEC                                     ;$01AD34 |
-    SBC $E4,X                               ;$01AD35 |
+    SBC.b SpriteXPosLow_E4,X                ;$01AD35 |
     STA $0F                                 ;$01AD37 |
     LDA $D2                                 ;$01AD39 |
     SBC.w SpriteXPosHigh_14E0,X             ;$01AD3B |
@@ -6318,7 +6318,7 @@ DATA_01AD54:
     db $FF,$FF,$FF,$FF,$FF
 
 InitFlyingQBlock:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     LSR                                     ;$01AD5B |
     LSR                                     ;$01AD5C |
     LSR                                     ;$01AD5D |
@@ -6417,7 +6417,7 @@ CODE_01ADF8:
     INC $C2,X                               ;$01AE0F |
     LDA.b #$50                              ;$01AE11 |
     STA.w $163E,X                           ;$01AE13 |
-    LDA $E4,X                               ;$01AE16 |
+    LDA.b SpriteXPosLow_E4,X                ;$01AE16 |
     STA $9A                                 ;$01AE18 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01AE1A |
     STA $9B                                 ;$01AE1D |
@@ -6491,10 +6491,10 @@ PalaceSwitch:
 InitThwomp:
     LDA.b SpriteYPosLow_D8,X
     STA.w $151C,X                           ;$01AE98 |
-    LDA $E4,X                               ;$01AE9B |
+    LDA.b SpriteXPosLow_E4,X                ;$01AE9B |
     CLC                                     ;$01AE9D |
     ADC.b #$08                              ;$01AE9E |
-    STA $E4,X                               ;$01AEA0 |
+    STA.b SpriteXPosLow_E4,X                ;$01AEA0 |
 Return01AEA2:
     RTS
 
@@ -6884,7 +6884,7 @@ CODE_01B152:
     DEY                                     ;$01B166 |
 CODE_01B167:
     CLC
-    ADC $E4,X                               ;$01B168 |
+    ADC.b SpriteXPosLow_E4,X                ;$01B168 |
     STA $02                                 ;$01B16A |
     TYA                                     ;$01B16C |
     ADC.w SpriteXPosHigh_14E0,X             ;$01B16D |
@@ -6983,7 +6983,7 @@ DATA_01B212:
 InitFloatSpkBall:
     JSR FaceMario
     LDY.w SpriteDir_157C,X                  ;$01B219 |
-    LDA $E4,X                               ;$01B21C |
+    LDA.b SpriteXPosLow_E4,X                ;$01B21C |
     AND.b #$10                              ;$01B21E |
     BEQ CODE_01B224                         ;$01B220 |
     INY                                     ;$01B222 |
@@ -7115,7 +7115,7 @@ CODE_01B2DF:
     STA.w $0311,Y                           ;$01B2FC |
 CODE_01B2FF:
     LDX.w $15E9
-    LDA $E4,X                               ;$01B302 |
+    LDA.b SpriteXPosLow_E4,X                ;$01B302 |
     SEC                                     ;$01B304 |
     SBC $1A                                 ;$01B305 |
     STA.w $0300,Y                           ;$01B307 |
@@ -7234,7 +7234,7 @@ CODE_01B3D8:
     LDA.b #$09                              ;$01B3ED |
 CODE_01B3EF:
     PHA
-    LDA $E4,X                               ;$01B3F0 |
+    LDA.b SpriteXPosLow_E4,X                ;$01B3F0 |
     SEC                                     ;$01B3F2 |
     SBC $1A                                 ;$01B3F3 |
     PLX                                     ;$01B3F5 |
@@ -7423,7 +7423,7 @@ CODE_01B520:
 CODE_01B522:
     LDA.w DATA_01B4F9,Y
     CLC                                     ;$01B525 |
-    ADC $E4,X                               ;$01B526 |
+    ADC.b SpriteXPosLow_E4,X                ;$01B526 |
     STA $94                                 ;$01B528 |
     LDA.w DATA_01B4FF,Y                     ;$01B52A |
     ADC.w SpriteXPosHigh_14E0,X             ;$01B52D |
@@ -7746,7 +7746,7 @@ CODE_01B710:
     CLC                                     ;$01B74D |
     ADC $03                                 ;$01B74E |
     STA.w $0305,Y                           ;$01B750 |
-    LDA $E4,X                               ;$01B753 |
+    LDA.b SpriteXPosLow_E4,X                ;$01B753 |
     SEC                                     ;$01B755 |
     SBC $1A                                 ;$01B756 |
     STA.w $0310,Y                           ;$01B758 |
@@ -7815,7 +7815,7 @@ FinishOAMWriteRt:
     STA $06                                 ;$01B7C9 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01B7CB |
     STA $01                                 ;$01B7CE |
-    LDA $E4,X                               ;$01B7D0 |
+    LDA.b SpriteXPosLow_E4,X                ;$01B7D0 |
     STA $02                                 ;$01B7D2 |
     SEC                                     ;$01B7D4 |
     SBC $1A                                 ;$01B7D5 |
@@ -7983,7 +7983,7 @@ ADDR_01B8D5:
     ADC.b #$10                              ;$01B8D8 |
     STA $00                                 ;$01B8DA |
     LDY.b #$00                              ;$01B8DC |
-    LDA $E4,X                               ;$01B8DE |
+    LDA.b SpriteXPosLow_E4,X                ;$01B8DE |
     SEC                                     ;$01B8E0 |
     SBC $1A                                 ;$01B8E1 |
     CMP $7E                                 ;$01B8E3 |
@@ -7994,7 +7994,7 @@ ADDR_01B8D5:
     STA $00                                 ;$01B8EC |
     DEY                                     ;$01B8EE |
 ADDR_01B8EF:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01B8F1 |
     ADC $00                                 ;$01B8F2 |
     STA $94                                 ;$01B8F4 |
@@ -8009,7 +8009,7 @@ CODE_01B8FF:
     STA $0E                                 ;$01B901 |
     LDA $02                                 ;$01B903 |
     STA $0D                                 ;$01B905 |
-    LDA $E4,X                               ;$01B907 |
+    LDA.b SpriteXPosLow_E4,X                ;$01B907 |
     SEC                                     ;$01B909 |
     SBC $00                                 ;$01B90A |
     STA $04                                 ;$01B90C |
@@ -8052,7 +8052,7 @@ InitVertNetKoopa:
     LDA.b #$F8                              ;$01B94C |
     STA $AA,X                               ;$01B94E |
 CODE_01B950:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     LDY.b #$00                              ;$01B952 |
     AND.b #$10                              ;$01B954 |
     BNE CODE_01B959                         ;$01B956 |
@@ -8230,10 +8230,10 @@ CODE_01BA7F:
     RTS                                     ;$01BA86 |
 
 InitClimbingDoor:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01BA89 |
     ADC.b #$08                              ;$01BA8A |
-    STA $E4,X                               ;$01BA8C |
+    STA.b SpriteXPosLow_E4,X                ;$01BA8C |
     LDA.b SpriteYPosLow_D8,X                ;$01BA8E |
     ADC.b #$07                              ;$01BA90 |
     STA.b SpriteYPosLow_D8,X                ;$01BA92 |
@@ -8272,7 +8272,7 @@ ClimbingDoor:
     SEC                                     ;$01BAEC |
     SBC.b #$10                              ;$01BAED |
     SEC                                     ;$01BAEF |
-    SBC $E4,X                               ;$01BAF0 |
+    SBC.b SpriteXPosLow_E4,X                ;$01BAF0 |
     STA.w $1878                             ;$01BAF2 |
 CODE_01BAF5:
     LDA.w $1540,X
@@ -8307,7 +8307,7 @@ CODE_01BB33:
     STA.w $15EA,X                           ;$01BB35 |
     STA $03                                 ;$01BB38 |
     TAY                                     ;$01BB3A |
-    LDA $E4,X                               ;$01BB3B |
+    LDA.b SpriteXPosLow_E4,X                ;$01BB3B |
     SEC                                     ;$01BB3D |
     SBC $1A                                 ;$01BB3E |
     STA $00                                 ;$01BB40 |
@@ -8494,7 +8494,7 @@ StoreSpriteNum:
     STA.w SpriteXPosHigh_14E0,X             ;$01BC9D |
     LDA $9A                                 ;$01BCA0 |
     AND.b #$F0                              ;$01BCA2 |
-    STA $E4,X                               ;$01BCA4 |
+    STA.b SpriteXPosLow_E4,X                ;$01BCA4 |
     LDA $99                                 ;$01BCA6 |
     STA.w SpriteYPosHigh_14D4,X             ;$01BCA8 |
     LDA $98                                 ;$01BCAB |
@@ -8627,7 +8627,7 @@ CODE_01BD9A:
 CODE_01BDA3:
     LDA.b #$01
     STA.w $17C0,Y                           ;$01BDA5 |
-    LDA $E4,X                               ;$01BDA8 |
+    LDA.b SpriteXPosLow_E4,X                ;$01BDA8 |
     STA.w $17C8,Y                           ;$01BDAA |
     LDA.b SpriteYPosLow_D8,X                ;$01BDAD |
     STA.w $17C4,Y                           ;$01BDAF |
@@ -8698,7 +8698,7 @@ CODE_01BDFB:
     CLC                                     ;$01BE22 |
     ADC $1A                                 ;$01BE23 |
     AND.b #$F0                              ;$01BE25 |
-    STA $E4,X                               ;$01BE27 |
+    STA.b SpriteXPosLow_E4,X                ;$01BE27 |
     LDA $1B                                 ;$01BE29 |
     ADC.b #$00                              ;$01BE2B |
     STA.w SpriteXPosHigh_14E0,X             ;$01BE2D |
@@ -8797,7 +8797,7 @@ CODE_01BECE:
     CMP.b #$04                              ;$01BED1 |
     BCC Return01BF15                        ;$01BED3 |
     LDY.w SpriteDir_157C,X                  ;$01BED5 |
-    LDA $E4,X                               ;$01BED8 |
+    LDA.b SpriteXPosLow_E4,X                ;$01BED8 |
     CLC                                     ;$01BEDA |
     ADC.w DATA_01BE6C,Y                     ;$01BEDB |
     SEC                                     ;$01BEDE |
@@ -8852,8 +8852,8 @@ CODE_01BF28:
     STA.w SpriteStatus_14C8,Y               ;$01BF2F |
     LDA.b #$20                              ;$01BF32 |
     STA.w $009E,y                           ;$01BF34 |
-    LDA $E4,X                               ;$01BF37 |
-    STA.w $00E4,y                           ;$01BF39 |
+    LDA.b SpriteXPosLow_E4,X                ;$01BF37 |
+    STA.w SpriteXPosLow_E4,y                ;$01BF39 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01BF3C |
     STA.w SpriteXPosHigh_14E0,Y             ;$01BF3F |
     LDA.b SpriteYPosLow_D8,X                ;$01BF42 |
@@ -9035,7 +9035,7 @@ CODE_01C05E:
     RTS                                     ;$01C074 |
 
 InitGoalTape:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     SEC                                     ;$01C077 |
     SBC.b #$08                              ;$01C078 |
     STA $C2,X                               ;$01C07A |
@@ -9213,7 +9213,7 @@ CODE_01C1CB:
     AND.b #$0F                              ;$01C1CD |
     CMP.b #$00                              ;$01C1CF |
     BNE Return01C1ED                        ;$01C1D1 |
-    LDA $E4,X                               ;$01C1D3 |
+    LDA.b SpriteXPosLow_E4,X                ;$01C1D3 |
     STA $9A                                 ;$01C1D5 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01C1D7 |
     STA $9B                                 ;$01C1DA |
@@ -9667,7 +9667,7 @@ return_01C4FA:
 create_glitter_sprite_01C4FB:
     LDA.b #$05
     STA.w $17C0,Y                           ;$01C4FD |
-    LDA $E4,X                               ;$01C500 |
+    LDA.b SpriteXPosLow_E4,X                ;$01C500 |
     STA.w $17C8,Y                           ;$01C502 |
     LDA.b SpriteYPosLow_D8,X                ;$01C505 |
     STA.w $17C4,Y                           ;$01C507 |
@@ -9987,10 +9987,10 @@ InitBrwnChainPlat:
     STA.w $151C,X                           ;$01C74C |
     LDA.b #$01                              ;$01C74F |
     STA.w $1528,X                           ;$01C751 |
-    LDA $E4,X                               ;$01C754 |
+    LDA.b SpriteXPosLow_E4,X                ;$01C754 |
     CLC                                     ;$01C756 |
     ADC.b #$78                              ;$01C757 |
-    STA $E4,X                               ;$01C759 |
+    STA.b SpriteXPosLow_E4,X                ;$01C759 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01C75B |
     ADC.b #$00                              ;$01C75E |
     STA.w SpriteXPosHigh_14E0,X             ;$01C760 |
@@ -10468,7 +10468,7 @@ CODE_01CACB:
     STZ.w $14BF                             ;$01CAD0 |
     STZ.w $14BD                             ;$01CAD3 |
     STZ.w $14C0                             ;$01CAD6 |
-    LDA $E4,X                               ;$01CAD9 |
+    LDA.b SpriteXPosLow_E4,X                ;$01CAD9 |
     STA.w $14B4                             ;$01CADB |
     LDA.w SpriteXPosHigh_14E0,X             ;$01CADE |
     STA.w $14B5                             ;$01CAE1 |
@@ -10790,7 +10790,7 @@ InitKoopaKid:
     CMP.b #$05                              ;$01CD37 |
     BCC CODE_01CD4E                         ;$01CD39 |
     LDA.b #$78                              ;$01CD3B |
-    STA $E4,X                               ;$01CD3D |
+    STA.b SpriteXPosLow_E4,X                ;$01CD3D |
     LDA.b #$40                              ;$01CD3F |
     STA.b SpriteYPosLow_D8,X                ;$01CD41 |
     LDA.b #$01                              ;$01CD43 |
@@ -10823,7 +10823,7 @@ CODE_01CD5E:
     CMP.b #$00                              ;$01CD79 |
     BNE CODE_01CD81                         ;$01CD7B |
     LDA.b #$70                              ;$01CD7D |
-    STA $E4,X                               ;$01CD7F |
+    STA.b SpriteXPosLow_E4,X                ;$01CD7F |
 CODE_01CD81:
     LDA.b #$01
     STA.w SpriteXPosHigh_14E0,X             ;$01CD83 |
@@ -11217,7 +11217,7 @@ CODE_01D00F:
     BNE CODE_01D032                         ;$01D018 |
     LDA.b #$01                              ;$01D01A |
     STA.w $17C0                             ;$01D01C |
-    LDA $E4,X                               ;$01D01F |
+    LDA.b SpriteXPosLow_E4,X                ;$01D01F |
     SBC.b #$08                              ;$01D021 |
     STA.w $17C8                             ;$01D023 |
     LDA.b SpriteYPosLow_D8,X                ;$01D026 |
@@ -11265,7 +11265,7 @@ CODE_01D069:
     STA.w SpriteStatus_14C8,Y               ;$01D06B |
     LDA.b #$34                              ;$01D06E |
     STA.w $009E,y                           ;$01D070 |
-    LDA $E4,X                               ;$01D073 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D073 |
     STA $00                                 ;$01D075 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01D077 |
     STA $01                                 ;$01D07A |
@@ -11282,7 +11282,7 @@ CODE_01D069:
     LDA $00                                 ;$01D091 |
     CLC                                     ;$01D093 |
     ADC.w DATA_01D057,X                     ;$01D094 |
-    STA.w $00E4,y                           ;$01D097 |
+    STA.w SpriteXPosLow_E4,y                ;$01D097 |
     LDA $01                                 ;$01D09A |
     ADC.b #$FF                              ;$01D09C |
     STA.w SpriteXPosHigh_14E0,Y             ;$01D09E |
@@ -11375,7 +11375,7 @@ CODE_01D15E:
     STA.w $1602,X
     LDA.w $164A,X                           ;$01D161 |
     BEQ CODE_01D17C                         ;$01D164 |
-    LDY $E4,X                               ;$01D166 |
+    LDY.b SpriteXPosLow_E4,X                ;$01D166 |
     CPY.b #$50                              ;$01D168 |
     BCC CODE_01D17C                         ;$01D16A |
     CPY.b #$80                              ;$01D16C |
@@ -11406,7 +11406,7 @@ CODE_01D19A:
     TYA                                     ;$01D19D |
     LSR                                     ;$01D19E |
     BCS CODE_01D1B5                         ;$01D19F |
-    LDA $E4,X                               ;$01D1A1 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D1A1 |
     CPY.b #$00                              ;$01D1A3 |
     BNE CODE_01D1AE                         ;$01D1A5 |
     CMP.w $1534,X                           ;$01D1A7 |
@@ -11427,7 +11427,7 @@ CODE_01D1B5:
     INY                                     ;$01D1BD |
 CODE_01D1BE:
     LDA.w $0005,Y
-    STA $E4,X                               ;$01D1C1 |
+    STA.b SpriteXPosLow_E4,X                ;$01D1C1 |
     LDY.w $1594,X                           ;$01D1C3 |
     LDA.b SpriteYPosLow_D8,X                ;$01D1C6 |
     CPY.b #$03                              ;$01D1C8 |
@@ -11604,7 +11604,7 @@ CODE_01D2E3:
     BCC CODE_01D379                         ;$01D307 |
 ADDR_01D309:
     LDY.b #$20
-    LDA $E4,X                               ;$01D30B |
+    LDA.b SpriteXPosLow_E4,X                ;$01D30B |
     SEC                                     ;$01D30D |
     SBC.b #$08                              ;$01D30E |
     CMP $94                                 ;$01D310 |
@@ -11646,7 +11646,7 @@ CODE_01D334:
 
 CODE_01D342:
     LDY.b #$20
-    LDA $E4,X                               ;$01D344 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D344 |
     BPL CODE_01D34A                         ;$01D346 |
     LDY.b #$E0                              ;$01D348 |
 CODE_01D34A:
@@ -11656,11 +11656,11 @@ CODE_01D34A:
     RTS                                     ;$01D350 |
 
 CODE_01D351:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     PHA                                     ;$01D353 |
     SEC                                     ;$01D354 |
     SBC.b #$08                              ;$01D355 |
-    STA $E4,X                               ;$01D357 |
+    STA.b SpriteXPosLow_E4,X                ;$01D357 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01D359 |
     PHA                                     ;$01D35C |
     SBC.b #$00                              ;$01D35D |
@@ -11676,7 +11676,7 @@ CODE_01D351:
     PLA                                     ;$01D371 |
     STA.w SpriteXPosHigh_14E0,X             ;$01D372 |
     PLA                                     ;$01D375 |
-    STA $E4,X                               ;$01D376 |
+    STA.b SpriteXPosLow_E4,X                ;$01D376 |
     RTS                                     ;$01D378 |
 
 CODE_01D379:
@@ -11755,7 +11755,7 @@ Return01D40A:
     RTS
 
 CODE_01D40B:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     SEC                                     ;$01D40D |
     SBC.b #$08                              ;$01D40E |
     STA $04                                 ;$01D410 |
@@ -11809,7 +11809,7 @@ BossFireball:
     JSR MarioSprInteractRt                  ;$01D465 |
 CODE_01D468:
     JSR SubSprXPosNoGrvty
-    LDA $E4,X                               ;$01D46B |
+    LDA.b SpriteXPosLow_E4,X                ;$01D46B |
     CLC                                     ;$01D46D |
     ADC.b #$20                              ;$01D46E |
     STA $00                                 ;$01D470 |
@@ -12006,11 +12006,11 @@ CODE_01D5C7:
     ADC.b #$04                              ;$01D5FF |
     STA.w $15EA,X                           ;$01D601 |
     LDY.w $1570,X                           ;$01D604 |
-    LDA $E4,X                               ;$01D607 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D607 |
     PHA                                     ;$01D609 |
     CLC                                     ;$01D60A |
     ADC.w DATA_01D57E,Y                     ;$01D60B |
-    STA $E4,X                               ;$01D60E |
+    STA.b SpriteXPosLow_E4,X                ;$01D60E |
     LDA.w SpriteXPosHigh_14E0,X             ;$01D610 |
     PHA                                     ;$01D613 |
     ADC.w DATA_01D58E,Y                     ;$01D614 |
@@ -12099,7 +12099,7 @@ CODE_01D6B5:
     PLA
     STA.w SpriteXPosHigh_14E0,X             ;$01D6B6 |
     PLA                                     ;$01D6B9 |
-    STA $E4,X                               ;$01D6BA |
+    STA.b SpriteXPosLow_E4,X                ;$01D6BA |
     PLA                                     ;$01D6BC |
     STA.w SpriteYPosHigh_14D4,X             ;$01D6BD |
     PLA                                     ;$01D6C0 |
@@ -12116,7 +12116,7 @@ InitLineRope:
     BRA CODE_01D6E0                         ;$01D6D0 |
 
 InitLinePlat:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     AND.b #$10                              ;$01D6D4 |
     EOR.b #$10                              ;$01D6D6 |
     STA.w $1602,X                           ;$01D6D8 |
@@ -12132,13 +12132,13 @@ Return01D6EC:
 
 InitLineGuidedSpr:
     INC.w $187B,X
-    LDA $E4,X                               ;$01D6F0 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D6F0 |
     AND.b #$10                              ;$01D6F2 |
     BNE CODE_01D707                         ;$01D6F4 |
-    LDA $E4,X                               ;$01D6F6 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D6F6 |
     SEC                                     ;$01D6F8 |
     SBC.b #$40                              ;$01D6F9 |
-    STA $E4,X                               ;$01D6FB |
+    STA.b SpriteXPosLow_E4,X                ;$01D6FB |
     LDA.w SpriteXPosHigh_14E0,X             ;$01D6FD |
     SBC.b #$01                              ;$01D700 |
     STA.w SpriteXPosHigh_14E0,X             ;$01D702 |
@@ -12146,10 +12146,10 @@ InitLineGuidedSpr:
 
 CODE_01D707:
     INC.w SpriteDir_157C,X
-    LDA $E4,X                               ;$01D70A |
+    LDA.b SpriteXPosLow_E4,X                ;$01D70A |
     CLC                                     ;$01D70C |
     ADC.b #$0F                              ;$01D70D |
-    STA $E4,X                               ;$01D70F |
+    STA.b SpriteXPosLow_E4,X                ;$01D70F |
 InitLineBrwnPlat:
     LDA.b #$02
     STA.w $1540,X                           ;$01D713 |
@@ -12269,11 +12269,11 @@ CODE_01D7B0:
     CLC                                     ;$01D7D2 |
     ADC $07                                 ;$01D7D3 |
     STA.b SpriteYPosLow_D8,X                ;$01D7D5 |
-    LDA $E4,X                               ;$01D7D7 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D7D7 |
     AND.b #$F0                              ;$01D7D9 |
     CLC                                     ;$01D7DB |
     ADC $06                                 ;$01D7DC |
-    STA $E4,X                               ;$01D7DE |
+    STA.b SpriteXPosLow_E4,X                ;$01D7DE |
     RTS                                     ;$01D7E0 |
 
 DATA_01D7E1:
@@ -12295,7 +12295,7 @@ CODE_01D7F4:
     LDY.b #$03
 CODE_01D7F6:
     STY.w $1695
-    LDA $E4,X                               ;$01D7F9 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D7F9 |
     CLC                                     ;$01D7FB |
     ADC.w DATA_01D7E1,Y                     ;$01D7FC |
     STA $02                                 ;$01D7FF |
@@ -12321,7 +12321,7 @@ CODE_01D7F6:
     LDA $02                                 ;$01D82C |
     AND.b #$F0                              ;$01D82E |
     STA $05                                 ;$01D830 |
-    LDA $E4,X                               ;$01D832 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D832 |
     AND.b #$F0                              ;$01D834 |
     CMP $05                                 ;$01D836 |
     BEQ CODE_01D861                         ;$01D838 |
@@ -12395,7 +12395,7 @@ CODE_01D8A4:
     STA $08                                 ;$01D8A6 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01D8A8 |
     STA $09                                 ;$01D8AB |
-    LDA $E4,X                               ;$01D8AD |
+    LDA.b SpriteXPosLow_E4,X                ;$01D8AD |
     STA $0A                                 ;$01D8AF |
     LDA.w SpriteXPosHigh_14E0,X             ;$01D8B1 |
     STA $0B                                 ;$01D8B4 |
@@ -12404,7 +12404,7 @@ CODE_01D8A4:
     LDA $01                                 ;$01D8BA |
     STA.w SpriteYPosHigh_14D4,X             ;$01D8BC |
     LDA $02                                 ;$01D8BF |
-    STA $E4,X                               ;$01D8C1 |
+    STA.b SpriteXPosLow_E4,X                ;$01D8C1 |
     LDA $03                                 ;$01D8C3 |
     STA.w SpriteXPosHigh_14E0,X             ;$01D8C5 |
 CODE_01D8C8:
@@ -12436,7 +12436,7 @@ CODE_01D8FD:
     BRA CODE_01D901
 
 CODE_01D8FF:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
 CODE_01D901:
     AND.b #$0F
     CMP.b #$0A                              ;$01D903 |
@@ -12448,7 +12448,7 @@ CODE_01D901:
 CODE_01D910:
     LDA.b SpriteYPosLow_D8,X
     STA $0C                                 ;$01D912 |
-    LDA $E4,X                               ;$01D914 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D914 |
     STA $0D                                 ;$01D916 |
     JSR CODE_01D768                         ;$01D918 |
     LDA $0C                                 ;$01D91B |
@@ -12460,7 +12460,7 @@ CODE_01D910:
     BCS CODE_01D938                         ;$01D925 |
     LDA $0D                                 ;$01D927 |
     SEC                                     ;$01D929 |
-    SBC $E4,X                               ;$01D92A |
+    SBC.b SpriteXPosLow_E4,X                ;$01D92A |
     CLC                                     ;$01D92C |
     ADC.b #$08                              ;$01D92D |
     CMP.b #$10                              ;$01D92F |
@@ -12476,7 +12476,7 @@ CODE_01D938:
     LDA $09                                 ;$01D93C |
     STA.w SpriteYPosHigh_14D4,X             ;$01D93E |
     LDA $0A                                 ;$01D941 |
-    STA $E4,X                               ;$01D943 |
+    STA.b SpriteXPosLow_E4,X                ;$01D943 |
     LDA $0B                                 ;$01D945 |
     STA.w SpriteXPosHigh_14E0,X             ;$01D947 |
     JMP CODE_01D861                         ;$01D94A |
@@ -12563,7 +12563,7 @@ CODE_01D9D0:
 
 CODE_01D9D3:
     JSR CODE_01DC54
-    LDA $E4,X                               ;$01D9D6 |
+    LDA.b SpriteXPosLow_E4,X                ;$01D9D6 |
     PHA                                     ;$01D9D8 |
     LDA.b SpriteYPosLow_D8,X                ;$01D9D9 |
     PHA                                     ;$01D9DB |
@@ -12576,7 +12576,7 @@ CODE_01D9D3:
     STA.w $185E                             ;$01D9E6 |
     PLA                                     ;$01D9E9 |
     SEC                                     ;$01D9EA |
-    SBC $E4,X                               ;$01D9EB |
+    SBC.b SpriteXPosLow_E4,X                ;$01D9EB |
     EOR.b #$FF                              ;$01D9ED |
     INC A                                   ;$01D9EF |
     STA.w $18B6                             ;$01D9F0 |
@@ -12645,7 +12645,7 @@ CODE_01DA68:
     SEP #$20
     LDA.w $18B6                             ;$01DA6A |
     JSR CODE_01DA90                         ;$01DA6D |
-    LDA $E4,X                               ;$01DA70 |
+    LDA.b SpriteXPosLow_E4,X                ;$01DA70 |
     SEC                                     ;$01DA72 |
     SBC.b #$08                              ;$01DA73 |
     CMP $94                                 ;$01DA75 |
@@ -12687,11 +12687,11 @@ CODE_01DAA2:
     LDY.b #$28                              ;$01DAA9 |
 CODE_01DAAB:
     STY $00
-    LDA $E4,X                               ;$01DAAD |
+    LDA.b SpriteXPosLow_E4,X                ;$01DAAD |
     PHA                                     ;$01DAAF |
     SEC                                     ;$01DAB0 |
     SBC $00                                 ;$01DAB1 |
-    STA $E4,X                               ;$01DAB3 |
+    STA.b SpriteXPosLow_E4,X                ;$01DAB3 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01DAB5 |
     PHA                                     ;$01DAB8 |
     SBC.b #$00                              ;$01DAB9 |
@@ -12713,13 +12713,13 @@ CODE_01DAAB:
     PLA                                     ;$01DAD9 |
     STA.w SpriteXPosHigh_14E0,X             ;$01DADA |
     PLA                                     ;$01DADD |
-    STA $E4,X                               ;$01DADE |
-    LDA $E4,X                               ;$01DAE0 |
+    STA.b SpriteXPosLow_E4,X                ;$01DADE |
+    LDA.b SpriteXPosLow_E4,X                ;$01DAE0 |
     PHA                                     ;$01DAE2 |
     JSR CODE_01D74D                         ;$01DAE3 |
     PLA                                     ;$01DAE6 |
     SEC                                     ;$01DAE7 |
-    SBC $E4,X                               ;$01DAE8 |
+    SBC.b SpriteXPosLow_E4,X                ;$01DAE8 |
     LDY.w $1528,X                           ;$01DAEA |
     PHY                                     ;$01DAED |
     EOR.b #$FF                              ;$01DAEE |
@@ -12731,11 +12731,11 @@ CODE_01DAAB:
     LDY.b #$28                              ;$01DAFB |
 CODE_01DAFD:
     STY $00
-    LDA $E4,X                               ;$01DAFF |
+    LDA.b SpriteXPosLow_E4,X                ;$01DAFF |
     PHA                                     ;$01DB01 |
     SEC                                     ;$01DB02 |
     SBC $00                                 ;$01DB03 |
-    STA $E4,X                               ;$01DB05 |
+    STA.b SpriteXPosLow_E4,X                ;$01DB05 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01DB07 |
     PHA                                     ;$01DB0A |
     SBC.b #$00                              ;$01DB0B |
@@ -12763,7 +12763,7 @@ CODE_01DB31:
     PLA                                     ;$01DB38 |
     STA.w SpriteXPosHigh_14E0,X             ;$01DB39 |
     PLA                                     ;$01DB3C |
-    STA $E4,X                               ;$01DB3D |
+    STA.b SpriteXPosLow_E4,X                ;$01DB3D |
     PLA                                     ;$01DB3F |
     STA.w $1528,X                           ;$01DB40 |
     RTS                                     ;$01DB43 |
@@ -13054,7 +13054,7 @@ CODE_01DDB7:
     LDA.b #$82                              ;$01DDBC |
     STA.w $9E,X                             ;$01DDBE |
     LDA.w DATA_01DD90,X                     ;$01DDC1 |
-    STA $E4,X                               ;$01DDC4 |
+    STA.b SpriteXPosLow_E4,X                ;$01DDC4 |
     LDA.b #$00                              ;$01DDC6 |
     STA.w SpriteXPosHigh_14E0,X             ;$01DDC8 |
     LDA.w DATA_01DD99,X                     ;$01DDCB |
@@ -13160,7 +13160,7 @@ CODE_01DE69:
 CODE_01DE8C:
     LDY.w SpriteDir_157C,X
     BMI Return01DEAF                        ;$01DE8F |
-    LDA $E4,X                               ;$01DE91 |
+    LDA.b SpriteXPosLow_E4,X                ;$01DE91 |
     CMP.w DATA_01DE19,Y                     ;$01DE93 |
     BNE CODE_01DE9F                         ;$01DE96 |
     LDA.b SpriteYPosLow_D8,X                ;$01DE98 |
@@ -13186,11 +13186,11 @@ CODE_01DEB2:
     ADC.b #$04                              ;$01DEBB |
     AND.b #$F8                              ;$01DEBD |
     STA.w SpriteYPosLow_D8,Y                ;$01DEBF |
-    LDA.w $00E4,y                           ;$01DEC2 |
+    LDA.w SpriteXPosLow_E4,y                ;$01DEC2 |
     CLC                                     ;$01DEC5 |
     ADC.b #$04                              ;$01DEC6 |
     AND.b #$F8                              ;$01DEC8 |
-    STA.w $00E4,y                           ;$01DECA |
+    STA.w SpriteXPosLow_E4,y                ;$01DECA |
     DEY                                     ;$01DECD |
     BNE CODE_01DEB2                         ;$01DECE |
     INC.w $188F                             ;$01DED0 |
@@ -13236,7 +13236,7 @@ CODE_01DF19:
     LDA.w DATA_01DF10,Y                     ;$01DF1E |
     STA $00                                 ;$01DF21 |
     LDY.w $15EA,X                           ;$01DF23 |
-    LDA $E4,X                               ;$01DF26 |
+    LDA.b SpriteXPosLow_E4,X                ;$01DF26 |
     SEC                                     ;$01DF28 |
     SBC $1A                                 ;$01DF29 |
     STA.w $0310,Y                           ;$01DF2B |
@@ -13344,7 +13344,7 @@ CODE_01DFFA:
     LDA.w SpriteYPosLow_D8,Y
     CMP $02                                 ;$01DFFD |
     BNE CODE_01E008                         ;$01DFFF |
-    LDA.w $00E4,y                           ;$01E001 |
+    LDA.w SpriteXPosLow_E4,y                ;$01E001 |
     CMP $03                                 ;$01E004 |
     BEQ CODE_01E00D                         ;$01E006 |
 CODE_01E008:
@@ -13580,10 +13580,10 @@ CODE_01E198:
     RTS                                     ;$01E1B7 |
 
 InitKeyHole:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01E1BA |
     ADC.b #$08                              ;$01E1BB |
-    STA $E4,X                               ;$01E1BD |
+    STA.b SpriteXPosLow_E4,X                ;$01E1BD |
     LDA.w SpriteXPosHigh_14E0,X             ;$01E1BF |
     ADC.b #$00                              ;$01E1C2 |
     STA.w SpriteXPosHigh_14E0,X             ;$01E1C4 |
@@ -13638,7 +13638,7 @@ CODE_01E201:
     INC.b SpriteLock_9D                     ;$01E21D |
     LDA.w SpriteXPosHigh_14E0,X             ;$01E21F |
     STA.w $1437                             ;$01E222 |
-    LDA $E4,X                               ;$01E225 |
+    LDA.b SpriteXPosLow_E4,X                ;$01E225 |
     STA.w $1436                             ;$01E227 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01E22A |
     STA.w $1439                             ;$01E22D |
@@ -13763,7 +13763,7 @@ CODE_01E320:
     LDA $9E,X                               ;$01E323 |
     CMP.b #$4E                              ;$01E325 |
     BNE CODE_01E343                         ;$01E327 |
-    LDA $E4,X                               ;$01E329 |
+    LDA.b SpriteXPosLow_E4,X                ;$01E329 |
     STA $9A                                 ;$01E32B |
     LDA.w SpriteXPosHigh_14E0,X             ;$01E32D |
     STA $9B                                 ;$01E330 |
@@ -14444,7 +14444,7 @@ CODE_01E81D:
     ADC.b #$00                              ;$01E824 |
     STA.w SpriteYPosHigh_14D4,X             ;$01E826 |
     LDA $D1                                 ;$01E829 |
-    STA $E4,X                               ;$01E82B |
+    STA.b SpriteXPosLow_E4,X                ;$01E82B |
     LDA $D2                                 ;$01E82D |
     STA.w SpriteXPosHigh_14E0,X             ;$01E82F |
     LDA.b #$10                              ;$01E832 |
@@ -14481,7 +14481,7 @@ CODE_01E840:
     TAY                                     ;$01E865 |
 CODE_01E866:
     LDA $D1
-    STA $E4,X                               ;$01E868 |
+    STA.b SpriteXPosLow_E4,X                ;$01E868 |
     LDA $D2                                 ;$01E86A |
     STA.w SpriteXPosHigh_14E0,X             ;$01E86C |
     LDA $D3                                 ;$01E86F |
@@ -14517,8 +14517,8 @@ CODE_01E898:
     LDA.w DATA_01E793,Y                     ;$01E8A4 |
     STA $00                                 ;$01E8A7 |
     PLY                                     ;$01E8A9 |
-    LDA $E4,X                               ;$01E8AA |
-    STA.w $00E4,y                           ;$01E8AC |
+    LDA.b SpriteXPosLow_E4,X                ;$01E8AA |
+    STA.w SpriteXPosLow_E4,y                ;$01E8AC |
     LDA.w SpriteXPosHigh_14E0,X             ;$01E8AF |
     STA.w SpriteXPosHigh_14E0,Y             ;$01E8B2 |
     LDA.b SpriteYPosLow_D8,X                ;$01E8B5 |
@@ -14730,8 +14730,8 @@ CODE_01EA21:
     LDA.b #$21                              ;$01EA35 |
 CODE_01EA37:
     STA.w $009E,y
-    LDA $E4,X                               ;$01EA3A |
-    STA.w $00E4,y                           ;$01EA3C |
+    LDA.b SpriteXPosLow_E4,X                ;$01EA3A |
+    STA.w SpriteXPosLow_E4,y                ;$01EA3C |
     LDA.w SpriteXPosHigh_14E0,X             ;$01EA3F |
     STA.w SpriteXPosHigh_14E0,Y             ;$01EA42 |
     LDA.b SpriteYPosLow_D8,X                ;$01EA45 |
@@ -14888,7 +14888,7 @@ draw_yoshi_01EA70:
     LDA $94                                 ;$01EB51 || - make Yoshi able to appear in another room and overworld, with the same color
     CLC                                     ;$01EB53 || - possibly turn Yoshi around, making the player follow the direction
     ADC.w YoshiPositionX,Y                  ;$01EB54 ||
-    STA $E4,X                               ;$01EB57 ||
+    STA.b SpriteXPosLow_E4,X                ;$01EB57 ||
     LDA $95                                 ;$01EB59 ||
     ADC.w DATA_01EDF3,Y                     ;$01EB5B ||
     STA.w SpriteXPosHigh_14E0,X             ;$01EB5E ||
@@ -15058,11 +15058,11 @@ yoshi_01EBCA:
     PHY                                     ;$01EC96 |
     LDY.w SpriteDir_157C,X                  ;$01EC97 |
     STY $0F                                 ;$01EC9A |
-    LDA $E4,X                               ;$01EC9C |
+    LDA.b SpriteXPosLow_E4,X                ;$01EC9C |
     CLC                                     ;$01EC9E |
     ADC.w .egg_X_low_01EC5D,Y               ;$01EC9F |
     PLY                                     ;$01ECA2 |
-    STA.w $00E4,y                           ;$01ECA3 |
+    STA.w SpriteXPosLow_E4,y                ;$01ECA3 |
     LDY.w SpriteDir_157C,X                  ;$01ECA6 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01ECA9 |
     ADC.w .egg_X_high_01EC5F,Y              ;$01ECAC |
@@ -15115,7 +15115,7 @@ CODE_01ED01:
 CODE_01ED0C:
     LDA.b #$04
     CLC                                     ;$01ED0E |
-    ADC $E4,X                               ;$01ED0F |
+    ADC.b SpriteXPosLow_E4,X                ;$01ED0F |
     STA $04                                 ;$01ED11 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01ED13 |
     ADC.b #$00                              ;$01ED16 |
@@ -15386,11 +15386,11 @@ process_yoshi_head_01EF18:
     CLC                                     ;$01EF3E |
     ADC.b #$0D                              ;$01EF3F |
 +   TAY                                     ;$01EF41 |
-    LDA $E4,X                               ;$01EF42 |
+    LDA.b SpriteXPosLow_E4,X                ;$01EF42 |
     PHA                                     ;$01EF44 |
     CLC                                     ;$01EF45 |
     ADC.w YoshiHeadDispX,Y                  ;$01EF46 |
-    STA $E4,X                               ;$01EF49 | temporarilly shift Yoshi's X position
+    STA.b SpriteXPosLow_E4,X                ;$01EF49 | temporarilly shift Yoshi's X position
     LDA.w SpriteXPosHigh_14E0,X             ;$01EF4B |
     PHA                                     ;$01EF4E |
     ADC.w DATA_01EE2D,Y                     ;$01EF4F |
@@ -15420,7 +15420,7 @@ process_yoshi_head_01EF18:
     PLA                                     ;$01EF87 |
     STA.w SpriteXPosHigh_14E0,X             ;$01EF88 |
     PLA                                     ;$01EF8B |
-    STA $E4,X                               ;$01EF8C | restore Yoshi's X position
+    STA.b SpriteXPosLow_E4,X                ;$01EF8C | restore Yoshi's X position
     LDY.w $185E                             ;$01EF8E |
     LDA.w YoshiBodyTiles,Y                  ;$01EF91 |
     STA.w $1602,X                           ;$01EF94 |
@@ -15537,7 +15537,7 @@ process_yoshi_head_01EF18:
 +   STA $02                                 ;$01F05E |
     JSR IsSprOffScreen                      ;$01F060 |
     BNE .return_01F0A0                      ;$01F063 |
-    LDA $E4,X                               ;$01F065 | set remaining OAM
+    LDA.b SpriteXPosLow_E4,X                ;$01F065 | set remaining OAM
     SEC                                     ;$01F067 |
     SBC $1A                                 ;$01F068 |
     STA $00                                 ;$01F06A |
@@ -15743,11 +15743,11 @@ normal_mouth_01F14B:
     PHY                                     ;$01F1F7 |
     PHY                                     ;$01F1F8 |
     LDY.w SpriteDir_157C,X                  ;$01F1F9 |
-    LDA $E4,X                               ;$01F1FC |
+    LDA.b SpriteXPosLow_E4,X                ;$01F1FC |
     CLC                                     ;$01F1FE |
     ADC.w DATA_01F305,Y                     ;$01F1FF |
     PLY                                     ;$01F202 |
-    STA.w $00E4,y                           ;$01F203 | spawn sprite near Yoshi's head
+    STA.w SpriteXPosLow_E4,y                ;$01F203 | spawn sprite near Yoshi's head
     LDY.w SpriteDir_157C,X                  ;$01F206 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01F209 |
     ADC.w DATA_01F307,Y                     ;$01F20C |
@@ -15815,7 +15815,7 @@ spawn_yoshi_fireball_01F295:
     JSR CODE_018EEF
     LDA.b #$11                              ;$01F298 |
     STA.w $170B,Y                           ;$01F29A |
-    LDA $E4,X                               ;$01F29D |
+    LDA.b SpriteXPosLow_E4,X                ;$01F29D |
     STA.w $171F,Y                           ;$01F29F |
     LDA.w SpriteXPosHigh_14E0,X             ;$01F2A2 |
     STA.w $1733,Y                           ;$01F2A5 |
@@ -16030,7 +16030,7 @@ draw_yoshi_tongue_01F3FE:
     TAY                                     ;$01F423 |
 +   LDA.w DATA_01F60A,Y                     ;$01F424 |
     STA $0D                                 ;$01F427 |
-    LDA $E4,X                               ;$01F429 |
+    LDA.b SpriteXPosLow_E4,X                ;$01F429 |
     SEC                                     ;$01F42B |
     SBC $1A                                 ;$01F42C |
     CLC                                     ;$01F42E |
@@ -16131,9 +16131,9 @@ process_tongue_01F4B2:
     DEY                                     ;$01F4D1 |
 +   PHY                                     ;$01F4D2 |
     CLC                                     ;$01F4D3 |
-    ADC $E4,X                               ;$01F4D4 |
+    ADC.b SpriteXPosLow_E4,X                ;$01F4D4 |
     LDY.w $160E,X                           ;$01F4D6 | position sprite near tongue's tip
-    STA.w $00E4,y                           ;$01F4D9 |
+    STA.w SpriteXPosLow_E4,y                ;$01F4D9 |
     PLY                                     ;$01F4DC |
     TYA                                     ;$01F4DD |
     ADC.w SpriteXPosHigh_14E0,X             ;$01F4DE |
@@ -16187,7 +16187,7 @@ process_tongue_01F4B2:
     BPL +                                   ;$01F53D |
     DEY                                     ;$01F53F |
 +   CLC                                     ;$01F540 |
-    ADC $E4,X                               ;$01F541 |
+    ADC.b SpriteXPosLow_E4,X                ;$01F541 |
     STA $00                                 ;$01F543 | tongue X position, low
     TYA                                     ;$01F545 |
     ADC.w SpriteXPosHigh_14E0,X             ;$01F546 |
@@ -16260,7 +16260,7 @@ process_tongue_01F4B2:
     LDA.b #$70                              ;$01F5CC |
     STA.w $009E,y                           ;$01F5CE |
     LDA $00                                 ;$01F5D1 |
-    STA.w $00E4,y                           ;$01F5D3 |
+    STA.w SpriteXPosLow_E4,y                ;$01F5D3 |
     LDA $08                                 ;$01F5D6 |
     STA.w SpriteXPosHigh_14E0,Y             ;$01F5D8 |
     LDA $01                                 ;$01F5DB |
@@ -16517,7 +16517,7 @@ CODE_01F7C2:
 CODE_01F7C8:
     JSR IsSprOffScreen
     BNE Return01F82C                        ;$01F7CB |
-    LDA $E4,X                               ;$01F7CD |
+    LDA.b SpriteXPosLow_E4,X                ;$01F7CD |
     STA $00                                 ;$01F7CF |
     LDA.b SpriteYPosLow_D8,X                ;$01F7D1 |
     STA $02                                 ;$01F7D3 |
@@ -17037,7 +17037,7 @@ CODE_01FB56:
     STA.w $163E,X                           ;$01FB67 |
     JSL KillMostSprites                     ;$01FB6A |
 CODE_01FB6E:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     STA.w $14B8                             ;$01FB70 |
     LDA.b SpriteYPosLow_D8,X                ;$01FB73 |
     STA.w $14BA                             ;$01FB75 |
@@ -17079,7 +17079,7 @@ CODE_01FBA4:
     BNE CODE_01FBD9                         ;$01FBB5 |
     LDA $37                                 ;$01FBB7 |
     BNE CODE_01FBC9                         ;$01FBB9 |
-    LDA $E4,X                               ;$01FBBB |
+    LDA.b SpriteXPosLow_E4,X                ;$01FBBB |
     CMP.b #$78                              ;$01FBBD |
     BCC CODE_01FBC5                         ;$01FBBF |
     LDA.b #$FF                              ;$01FBC1 |
@@ -17091,7 +17091,7 @@ CODE_01FBC5:
 
 CODE_01FBC9:
     LDY $01
-    LDA $E4,X                               ;$01FBCB |
+    LDA.b SpriteXPosLow_E4,X                ;$01FBCB |
     CMP.b #$78                              ;$01FBCD |
     BCS CODE_01FBD5                         ;$01FBCF |
     LDA.b #$01                              ;$01FBD1 |
@@ -17192,14 +17192,14 @@ CODE_01FC62:
     BCS Return01FC61                        ;$01FC66 |
     LDA.w $160E,X                           ;$01FC68 |
     BNE Return01FC61                        ;$01FC6B |
-    LDA $E4,X                               ;$01FC6D |
+    LDA.b SpriteXPosLow_E4,X                ;$01FC6D |
     CMP.b #$20                              ;$01FC6F |
     BCC CODE_01FC77                         ;$01FC71 |
     CMP.b #$D8                              ;$01FC73 |
     BCC CODE_01FC84                         ;$01FC75 |
 CODE_01FC77:
     LDA.w $14B8
-    STA $E4,X                               ;$01FC7A |
+    STA.b SpriteXPosLow_E4,X                ;$01FC7A |
     LDA.w $14BA                             ;$01FC7C |
     STA.b SpriteYPosLow_D8,X                ;$01FC7F |
     INC.w $160E,X                           ;$01FC81 |
@@ -17243,14 +17243,14 @@ CODE_01FC84:
     LDA.b #$28                              ;$01FCCE |
     STA.w $1DFC                             ;$01FCD0 |
     JSL BoostMarioSpeed                     ;$01FCD3 |
-    LDA $E4,X                               ;$01FCD7 |
+    LDA.b SpriteXPosLow_E4,X                ;$01FCD7 |
     PHA                                     ;$01FCD9 |
     LDA.b SpriteYPosLow_D8,X                ;$01FCDA |
     PHA                                     ;$01FCDC |
     LDA.w $14B8                             ;$01FCDD |
     SEC                                     ;$01FCE0 |
     SBC.b #$08                              ;$01FCE1 |
-    STA $E4,X                               ;$01FCE3 |
+    STA.b SpriteXPosLow_E4,X                ;$01FCE3 |
     LDA.w $14BA                             ;$01FCE5 |
     SEC                                     ;$01FCE8 |
     SBC.b #$10                              ;$01FCE9 |
@@ -17260,7 +17260,7 @@ CODE_01FC84:
     PLA                                     ;$01FCF4 |
     STA.b SpriteYPosLow_D8,X                ;$01FCF5 |
     PLA                                     ;$01FCF7 |
-    STA $E4,X                               ;$01FCF8 |
+    STA.b SpriteXPosLow_E4,X                ;$01FCF8 |
     LDA.w SpritePlayerContact_154C,X        ;$01FCFA |
     BNE Return01FD09                        ;$01FCFD |
     LDA.b #$18                              ;$01FCFF |
@@ -17309,7 +17309,7 @@ CODE_01FD4A:
     RTS                                     ;$01FD4F |
 
 CODE_01FD50:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01FD52 |
     ADC.b #$08                              ;$01FD53 |
     STA.w $14B4                             ;$01FD55 |
@@ -17376,7 +17376,7 @@ GenerateBall:
     SEC                                     ;$01FDD3 |
     SBC.b #$08                              ;$01FDD4 |
     ADC.w BallPositionDispX,X               ;$01FDD6 |
-    STA.w $00E4,y                           ;$01FDD9 |
+    STA.w SpriteXPosLow_E4,y                ;$01FDD9 |
     LDA.b #$00                              ;$01FDDC |
     STA.w SpriteXPosHigh_14E0,Y             ;$01FDDE |
     LDA.w $14BA                             ;$01FDE1 |
@@ -17556,7 +17556,7 @@ CODE_01FF5B:
     RTS                                     ;$01FF97 |
 
 CODE_01FF98:
-    LDA $E4,X
+    LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01FF9A |
     ADC.b #$08                              ;$01FF9B |
     STA.w $14B4                             ;$01FF9D |
