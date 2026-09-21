@@ -2650,7 +2650,7 @@ CODE_0096CB:
     LDY.b #$00                              ;$0096CD |
 CODE_0096CF:
     STA.w $0109
-    STY.w $1F11                             ;$0096D2 |
+    STY.w OWPlayerSubmap_1F11               ;$0096D2 |
 GM11_level_load_1_0096D5:
     STZ.w $4200
     JSR disable_controls                    ;$0096D8 |
@@ -3920,7 +3920,7 @@ GM0C_overworld_load_00A087:
     BEQ .CODE_00A0B0                        ;$00A099 |
     LDA.b #$B0                              ;$00A09B |
     STA.w $1DF5                             ;$00A09D |
-    STZ.w $1F11                             ;$00A0A0 |
+    STZ.w OWPlayerSubmap_1F11               ;$00A0A0 |
     LDA.b #$F0                              ;$00A0A3 |
     STA.w $0DB0                             ;$00A0A5 |
     LDA.b #$10                              ;$00A0A8 |
@@ -3980,7 +3980,7 @@ CODE_00A11B:
     STY.w $212F                             ;$00A123 |
     JSL CODE_04DC09                         ;$00A126 |
     LDX.w CurrentPlayer_0DB3                ;$00A12A |
-    LDA.w $1F11,X                           ;$00A12D |
+    LDA.w OWPlayerSubmap_1F11,X             ;$00A12D |
     ASL                                     ;$00A130 |
     TAX                                     ;$00A131 |
     REP #$20                                ;$00A132 |
@@ -4475,7 +4475,7 @@ DMA_OW_tilemap:                             ;        \
     LSR                                     ;$00A548 | |
     LSR                                     ;$00A549 | |
     TAX                                     ;$00A54A | |
-    LDA.w $1F11,X                           ;$00A54B | |
+    LDA.w OWPlayerSubmap_1F11,X             ;$00A54B | |
     BEQ .main_OW_DMA                        ;$00A54E |/ And branch if they are not going to a submap
     LDA.b #$60                              ;$00A550 |\ Set the DMA source high byte to submap tile data
     STA.w $4313                             ;$00A552 |/
@@ -7931,7 +7931,7 @@ CODE_00C9C2:
     CMP.b #$03                              ;$00C9D5 |
     BNE CODE_00C9DF                         ;$00C9D7 |
     LDA.b #$01                              ;$00C9D9 |
-    STA.w $1F11                             ;$00C9DB |
+    STA.w OWPlayerSubmap_1F11               ;$00C9DB |
     LSR                                     ;$00C9DE |
 CODE_00C9DF:
     LDY.b #$0C

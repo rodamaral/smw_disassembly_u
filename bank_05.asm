@@ -6329,7 +6329,7 @@ CODE_05D7BD:
     LSR                                     ;$05D7C8 |
     LSR                                     ;$05D7C9 |
     TAY                                     ;$05D7CA |
-    LDA.w $1F11,Y                           ;$05D7CB |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$05D7CB |
     BEQ CODE_05D7D2                         ;$05D7CE |
     LDA.b #$01                              ;$05D7D0 |
 CODE_05D7D2:
@@ -6430,7 +6430,7 @@ CODE_05D83E:
     LSR                                     ;$05D888 |
     LSR                                     ;$05D889 |
     TAY                                     ;$05D88A |
-    LDA.w $1F11,Y                           ;$05D88B |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$05D88B |
     AND.w #$000F                            ;$05D88E |
     BEQ CODE_05D899                         ;$05D891 |
     TXA                                     ;$05D893 |
@@ -6449,7 +6449,7 @@ CODE_05D8A2:
 CODE_05D8A9:
     STA.w $17BB
     STA $0E                                 ;$05D8AC |
-    LDA.w $1F11,Y                           ;$05D8AE |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$05D8AE |
     BEQ CODE_05D8B5                         ;$05D8B1 |
     LDA.b #$01                              ;$05D8B3 |
 CODE_05D8B5:

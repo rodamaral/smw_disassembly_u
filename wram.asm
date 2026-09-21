@@ -2027,7 +2027,7 @@ ClusterSpriteMisc_1E7A: skip 20
 ClusterSpriteMisc_1E8E: skip 20
 OWLevelTileSettings: skip 96
 OWEventsActivated: skip 15
-OWPlayerSubmap: skip 2
+OWPlayerSubmap_1F11: skip 2
 OWPlayerAnimation: skip 4
 OWPlayerXPos: skip 2
 OWPlayerYPos: skip 6

@@ -13735,7 +13735,7 @@ CODE_01E2E0:
     BNE CODE_01E305                         ;$01E2EF |
     INC $C2,X                               ;$01E2F1 |
     LDY.w CurrentPlayer_0DB3                ;$01E2F3 |
-    LDA.w $1F11,Y                           ;$01E2F6 |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$01E2F6 |
     TAY                                     ;$01E2F9 |
     LDA.b #$68                              ;$01E2FA |
     CPY.b #$01                              ;$01E2FC |
@@ -14352,7 +14352,7 @@ PSwitch:
     LDA.w $1564,X
     CMP.b #$01                              ;$01E75E |
     BNE Return01E76E                        ;$01E760 |
-    STA.w $1F11                             ;$01E762 |
+    STA.w OWPlayerSubmap_1F11               ;$01E762 |
     STA.w $1FB8                             ;$01E765 |
     STZ.w SpriteStatus_14C8,X               ;$01E768 |
     INC.w $1426                             ;$01E76B |
@@ -14988,7 +14988,7 @@ yoshi_01EBCA:
     STZ.b SpriteLock_9D                     ;$01EC24 ||| Unfreeze game
     STZ.w PlayerIsFrozen_13FB               ;$01EC26 |||
     LDY.w CurrentPlayer_0DB3                ;$01EC29 ||| Show Yoshi's spawn message if:
-    LDA.w $1F11,Y                           ;$01EC2C ||| - Yoshi's Island
+    LDA.w OWPlayerSubmap_1F11,Y             ;$01EC2C ||| - Yoshi's Island
     DEC A                                   ;$01EC2F ||| - first time
     ORA.w $0EF8                             ;$01EC30 ||| - not title screen
     ORA.w $0109                             ;$01EC33 |||

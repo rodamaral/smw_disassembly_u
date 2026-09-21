@@ -12298,7 +12298,7 @@ CODE_02DA6E:
     JSL SprSprPMarioSprRts                  ;$02DA72 |
     JSR SubOffscreen1Bnk2                   ;$02DA76 |
     LDY.w CurrentPlayer_0DB3                ;$02DA79 |
-    LDA.w $1F11,Y                           ;$02DA7C |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$02DA7C |
     TAY                                     ;$02DA7F |
     LDA $13                                 ;$02DA80 |
     AND.b #$03                              ;$02DA82 |

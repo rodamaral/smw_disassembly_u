@@ -2509,7 +2509,7 @@ CODE_0392C0:
     BNE CODE_03931F                         ;$0392F6 |
 CODE_0392F8:
     LDY.w CurrentPlayer_0DB3
-    LDA.w $1F11,Y                           ;$0392FB |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$0392FB |
     CMP.b #$01                              ;$0392FE |
     LDY.w $1534,X                           ;$039300 |
     INC.w $1534,X                           ;$039303 |

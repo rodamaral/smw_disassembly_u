@@ -401,7 +401,7 @@ CODE_048366:
     STA.w $1B87                             ;$048372 |
 CODE_048375:
     LDX.w CurrentPlayer_0DB3
-    LDA.w $1F11,X                           ;$048378 |
+    LDA.w OWPlayerSubmap_1F11,X             ;$048378 |
     BNE CODE_04839A                         ;$04837B |
     LDA $16                                 ;$04837D |
     AND.b #$10                              ;$04837F |
@@ -547,7 +547,7 @@ DATA_0484D3:
 
 CODE_048509:
     LDY.w CurrentPlayer_0DB3
-    LDA.w $1F11,Y                           ;$04850C |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$04850C |
     STA $01                                 ;$04850F |
     STZ $00                                 ;$048511 |
     REP #$20                                ;$048513 |
@@ -806,7 +806,7 @@ CODE_0486C5:
     STZ.w $044E                             ;$0486F6 |
     LDA.b #$03                              ;$0486F9 |
     STA $8C                                 ;$0486FB |
-    LDA.w $1F11                             ;$0486FD |
+    LDA.w OWPlayerSubmap_1F11               ;$0486FD |
     LDY.w $13D9                             ;$048700 |
     CPY.b #$0A                              ;$048703 |
     BNE CODE_048709                         ;$048705 |
@@ -1332,7 +1332,7 @@ CODE_048E34:
 CODE_048E38:
     SEP #$30
     LDX.w CurrentPlayer_0DB3                ;$048E3A |
-    LDA.w $1F11,X                           ;$048E3D |
+    LDA.w OWPlayerSubmap_1F11,X             ;$048E3D |
     TAX                                     ;$048E40 |
     LDA.w DATA_048D8A,X                     ;$048E41 |
     STA.w $1DFB                             ;$048E44 |
@@ -1424,7 +1424,7 @@ CODE_048EE1:
 CODE_048EF1:
     LDA.b #$08
     STA.w $0DB1                             ;$048EF3 |
-    LDA.w $1F11                             ;$048EF6 |
+    LDA.w OWPlayerSubmap_1F11               ;$048EF6 |
     CMP.b #$01                              ;$048EF9 |
     BNE CODE_048F13                         ;$048EFB |
     LDA.w $1F17                             ;$048EFD |
@@ -1934,7 +1934,7 @@ CODE_049315:
     LDA.w CurrentPlayer_0DB3                ;$049334 |
     AND.w #$00FF                            ;$049337 |
     TAX                                     ;$04933A |
-    LDA.w $1F11,X                           ;$04933B |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04933B |
     AND.w #$00FF                            ;$04933E |
     BNE CODE_049346                         ;$049341 |
     PLX                                     ;$049343 |
@@ -2606,7 +2606,7 @@ CODE_04983F:
     LSR                                     ;$04984F |
     LSR                                     ;$049850 |
     TAX                                     ;$049851 |
-    LDA.w $1F11,X                           ;$049852 |
+    LDA.w OWPlayerSubmap_1F11,X             ;$049852 |
     AND.w #$00FF                            ;$049855 |
     BNE CODE_049882                         ;$049858 |
     LDX.w #$0002                            ;$04985A |
@@ -2665,7 +2665,7 @@ OW_TilePos_Calc:
     ADC.w #$0200                            ;$0498B0 |
     STA $04                                 ;$0498B3 |
 CODE_0498B5:
-    LDA.w $1F11,X
+    LDA.w OWPlayerSubmap_1F11,X
     AND.w #$00FF                            ;$0498B8 |
     BEQ Return0498C5                        ;$0498BB |
     LDA $04                                 ;$0498BD |
@@ -2816,7 +2816,7 @@ CODE_049A24:
     LSR                                     ;$049A29 |
     LSR                                     ;$049A2A |
     TAX                                     ;$049A2B |
-    LDA.w $1F11,X                           ;$049A2C |
+    LDA.w OWPlayerSubmap_1F11,X             ;$049A2C |
     AND.w #$00FF                            ;$049A2F |
     STA.w $13C3                             ;$049A32 |
     LDA.w #$001A                            ;$049A35 |
@@ -2869,10 +2869,10 @@ CODE_049A93:
     LSR                                     ;$049A99 |
     LSR                                     ;$049A9A |
     TAX                                     ;$049A9B |
-    LDA.w $1F11,X                           ;$049A9C |
+    LDA.w OWPlayerSubmap_1F11,X             ;$049A9C |
     AND.w #$FF00                            ;$049A9F |
     ORA.w $13C3                             ;$049AA2 |
-    STA.w $1F11,X                           ;$049AA5 |
+    STA.w OWPlayerSubmap_1F11,X             ;$049AA5 |
     AND.w #$00FF                            ;$049AA8 |
     BNE CODE_049AB0                         ;$049AAB |
     JMP CODE_04983F                         ;$049AAD |
@@ -3101,7 +3101,7 @@ CODE_049DD1:
     JSR CODE_048E55                         ;$049E03 |
     SEP #$20                                ;$049E06 |
     LDX.w CurrentPlayer_0DB3                ;$049E08 |
-    LDA.w $1F11,X                           ;$049E0B |
+    LDA.w OWPlayerSubmap_1F11,X             ;$049E0B |
     STA.w $13C3                             ;$049E0E |
     STZ.w $13C4                             ;$049E11 |
     LDA.b #$02                              ;$049E14 |
@@ -5023,7 +5023,7 @@ CODE_04D6E9:
     LSR                                     ;$04D6FD |
     AND.w #$00FF                            ;$04D6FE |
     TAX                                     ;$04D701 |
-    LDA.w $1F11,X                           ;$04D702 |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04D702 |
     AND.w #$000F                            ;$04D705 |
     BEQ .CODE_04D714                        ;$04D708 |
     LDA.w #$0020                            ;$04D70A |
@@ -5065,7 +5065,7 @@ CODE_04D750:
     LSR                                     ;$04D75D |
     LSR                                     ;$04D75E |
     TAX                                     ;$04D75F |
-    LDA.w $1F11,X                           ;$04D760 |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04D760 |
     BEQ CODE_04D76A                         ;$04D763 |
     LDA.b #$60                              ;$04D765 |
     STA.w $4313                             ;$04D767 |
@@ -5433,7 +5433,7 @@ CODE_04DB9D:
     LSR                                     ;$04DBA0 |
     LSR                                     ;$04DBA1 |
     TAX                                     ;$04DBA2 |
-    LDA.w $1F11,X                           ;$04DBA3 |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04DBA3 |
     TAX                                     ;$04DBA6 |
     LDA.l DATA_04DC02,X                     ;$04DBA7 |
     STA.w $1931                             ;$04DBAB |
@@ -5466,11 +5466,11 @@ CODE_04DBCF:
     TYA                                     ;$04DBE7 |
     EOR.b #$01                              ;$04DBE8 |
     TAX                                     ;$04DBEA |
-    LDA.w $1F11,Y                           ;$04DBEB |
-    CMP.w $1F11,X                           ;$04DBEE |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$04DBEB |
+    CMP.w OWPlayerSubmap_1F11,X             ;$04DBEE |
     BEQ Return04DC01                        ;$04DBF1 |
 CODE_04DBF3:
-    LDA.w $1F11,Y
+    LDA.w OWPlayerSubmap_1F11,Y
     TAX                                     ;$04DBF6 |
     LDA.l DATA_04DBC8,X                     ;$04DBF7 |
     STA.w $1DFB                             ;$04DBFB |
@@ -5487,7 +5487,7 @@ CODE_04DC09:
     LSR                                     ;$04DC0E |
     LSR                                     ;$04DC0F |
     TAX                                     ;$04DC10 |
-    LDA.w $1F11,X                           ;$04DC11 |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04DC11 |
     TAX                                     ;$04DC14 |
     LDA.l DATA_04DC02,X                     ;$04DC15 |
     STA.w $1931                             ;$04DC19 |
@@ -5585,7 +5585,7 @@ CODE_04DCB6:
     AND.w #$00FF                            ;$04DCD6 |
     TAX                                     ;$04DCD9 |
     SEP #$20                                ;$04DCDA |
-    LDA.w $1F11,X                           ;$04DCDC |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04DCDC |
     BEQ CODE_04DCE8                         ;$04DCDF |
     LDA $01                                 ;$04DCE1 |
     CLC                                     ;$04DCE3 |
@@ -6746,7 +6746,7 @@ CODE_04EB32:
     BPL CODE_04EB32                         ;$04EB36 |
     LDY.b #$08                              ;$04EB38 |
     LDX.w CurrentPlayer_0DB3                ;$04EB3A |
-    LDA.w $1F11,X                           ;$04EB3D |
+    LDA.w OWPlayerSubmap_1F11,X             ;$04EB3D |
     CMP.b #$03                              ;$04EB40 |
     BNE CODE_04EB46                         ;$04EB42 |
     LDY.b #$01                              ;$04EB44 |
@@ -7976,7 +7976,7 @@ CODE_04F892:
     LSR                                     ;$04F895 |
     LSR                                     ;$04F896 |
     TAY                                     ;$04F897 |
-    LDA.w $1F11,Y                           ;$04F898 |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$04F898 |
     TAY                                     ;$04F89B |
     LDA.w DATA_04F875,Y                     ;$04F89C |
     AND $00                                 ;$04F89F |
@@ -8497,7 +8497,7 @@ CODE_04FC46:
     LSR                                     ;$04FC49 |
     LSR                                     ;$04FC4A |
     TAY                                     ;$04FC4B |
-    LDA.w $1F11,Y                           ;$04FC4C |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$04FC4C |
     ASL                                     ;$04FC4F |
     TAY                                     ;$04FC50 |
     LDA.w DATA_04FC1E,Y                     ;$04FC51 |
@@ -8661,7 +8661,7 @@ CODE_04FD70:
     JSR CODE_04FE62                         ;$04FD73 |
     JSR CODE_04FE62                         ;$04FD76 |
     LDY.w CurrentPlayer_0DB3                ;$04FD79 |
-    LDA.w $1F11,Y                           ;$04FD7C |
+    LDA.w OWPlayerSubmap_1F11,Y             ;$04FD7C |
     BEQ CODE_04FDA5                         ;$04FD7F |
     CPX.b #$0F                              ;$04FD81 |
     BNE CODE_04FD8E                         ;$04FD83 |
