@@ -1760,7 +1760,7 @@ InfoBox:
     LSR                                     ;$038D8C |
     AND.b #$01                              ;$038D8D |
     INC A                                   ;$038D8F |
-    STA.w $1426                             ;$038D90 |
+    STA.w MessageBoxTrigger_1426            ;$038D90 |
 CODE_038D93:
     LDA.w $1558,X
     LSR                                     ;$038D96 |

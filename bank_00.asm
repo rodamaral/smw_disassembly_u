@@ -4067,7 +4067,7 @@ DATA_00A1D6:
     db $12,$22,$12,$02
 
 GM14_main_level_00A1DA:
-    LDA.w $1426
+    LDA.w MessageBoxTrigger_1426
     BEQ .message_box_not_triggered          ;$00A1DD |
     JSL CODE_05B10C                         ;$00A1DF |
     RTS                                     ;$00A1E3 |
@@ -7871,7 +7871,7 @@ CODE_00C95B:
 CODE_00C962:
     LDA.b #$A0
     STA.w $1DF5                             ;$00C964 |
-    INC.w $1426                             ;$00C967 |
+    INC.w MessageBoxTrigger_1426            ;$00C967 |
 Return00C96A:
     RTS
 

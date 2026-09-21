@@ -2918,7 +2918,7 @@ CODE_05B10C:
     BNE CODE_05B191                         ;$05B118 |
     TXA                                     ;$05B11A |
     BEQ CODE_05B132                         ;$05B11B |
-    STZ.w $1426                             ;$05B11D |
+    STZ.w MessageBoxTrigger_1426            ;$05B11D |
     STZ.w $1B88                             ;$05B120 |
     STZ $41                                 ;$05B123 |
     STZ $42                                 ;$05B125 |
@@ -3000,7 +3000,7 @@ CODE_05B1A5:
     INY                                     ;$05B1AC |
     AND.b #$7F                              ;$05B1AD |
 CODE_05B1AF:
-    CPY.w $1426
+    CPY.w MessageBoxTrigger_1426
     BNE CODE_05B1B9                         ;$05B1B2 |
     CMP.w $13BF                             ;$05B1B4 |
     BEQ CODE_05B1BC                         ;$05B1B7 |
@@ -3008,7 +3008,7 @@ CODE_05B1B9:
     DEX
     BNE CODE_05B1A5                         ;$05B1BA |
 CODE_05B1BC:
-    LDY.w $1426
+    LDY.w MessageBoxTrigger_1426
     CPY.b #$03                              ;$05B1BF |
     BNE CODE_05B1C5                         ;$05B1C1 |
     LDX.b #$18                              ;$05B1C3 |

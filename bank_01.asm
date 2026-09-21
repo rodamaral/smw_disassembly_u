@@ -14355,7 +14355,7 @@ PSwitch:
     STA.w OWPlayerSubmap_1F11               ;$01E762 |
     STA.w $1FB8                             ;$01E765 |
     STZ.w SpriteStatus_14C8,X               ;$01E768 |
-    INC.w $1426                             ;$01E76B |
+    INC.w MessageBoxTrigger_1426            ;$01E76B |
 Return01E76E:
     RTS
 
@@ -14995,7 +14995,7 @@ yoshi_01EBCA:
     BNE +                                   ;$01EC36 |||\
     INC.w YoshiSavedFlag_0EF8               ;$01EC38 |||| Display Yoshi's spawn message
     LDA.b #$03                              ;$01EC3B |||/
-    STA.w $1426                             ;$01EC3D ||/
+    STA.w MessageBoxTrigger_1426            ;$01EC3D ||/
 +   DEC A                                   ;$01EC40 ||
     LSR                                     ;$01EC41 ||
     LSR                                     ;$01EC42 ||
