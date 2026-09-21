@@ -1880,7 +1880,7 @@ YoshiEggSpriteHatch: skip 1
 Empty_18DB: skip 1
 PlayerDuckingOnYoshi: skip 1
 SilverCoinsCollected: skip 1
-EggLaidTimer: skip 1
+EggLaidTimer_18DE: skip 1
 CurrentYoshiSlot: skip 1
 LakituCloudTimer: skip 1
 LakituCloudSlot: skip 1

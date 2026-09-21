@@ -14976,7 +14976,7 @@ yoshi_01EBCA:
     BEQ +                                   ;$01EC07 | Skip if:
     LDA.w SpriteInPipeMode_1419             ;$01EC09 | - mounted, entering a pipe
     BNE .game_running_01EC61                ;$01EC0C | - Yoshi able to lay an egg
-+   LDA.w $18DE                             ;$01EC0E |
++   LDA.w EggLaidTimer_18DE                 ;$01EC0E |
     BNE .game_running_01EC61                ;$01EC11 |
     LDA.w $18E8                             ;$01EC13 | skip if not growing
     BEQ .yoshi_not_growing_01EC4C           ;$01EC16 |\
@@ -15027,13 +15027,13 @@ yoshi_01EBCA:
 .game_running_01EC61:
     LDA.b PlayerInAir_72
     BNE .CODE_01EC6A                        ;$01EC63 |
-    LDA.w $18DE                             ;$01EC65 |
+    LDA.w EggLaidTimer_18DE                 ;$01EC65 |
     BNE .CODE_01EC6D                        ;$01EC68 |
 .CODE_01EC6A:
     JMP CODE_01ECE1
 
 .CODE_01EC6D:
-    DEC.w $18DE
+    DEC.w EggLaidTimer_18DE
     CMP.b #$01                              ;$01EC70 |
     BNE .CODE_01EC78                        ;$01EC72 |
     STZ $9D                                 ;$01EC74 |
@@ -15636,7 +15636,7 @@ process_eaten_berry_01F0D3:
 .prepare_egg_type_01F125:
     STA.w $18DA
     LDY.b #$20                              ;$01F128 |
-    STY.w $18DE                             ;$01F12A |
+    STY.w EggLaidTimer_18DE                 ;$01F12A |
 .return_01F12D:
     RTS
 
