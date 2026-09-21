@@ -152,7 +152,7 @@ process_OAM_index_and_timers_0180D2:
     STA.w $15EA,X                           ;$0180E2 |
     LDA.w SpriteStatus_14C8,X               ;$0180E5 |
     BEQ Return018126                        ;$0180E8 |
-    LDA $9D                                 ;$0180EA |\
+    LDA.b SpriteLock_9D                     ;$0180EA |\
     BNE Return018126                        ;$0180EC || Decrement timers if:
     LDA.w $1540,X                           ;$0180EE || - animation/sprites not locked
     BEQ +                                   ;$0180F1 || - sprite status not zero
@@ -1110,11 +1110,11 @@ InvisSolidPDinos:
 
 GoalSphere:
     JSR SubSprGfx2Entry1
-    LDA $9D                                 ;$018766 |
+    LDA.b SpriteLock_9D                     ;$018766 |
     BNE Return018788                        ;$018768 |
     LDA $13                                 ;$01876A |
     AND.b #$1F                              ;$01876C |
-    ORA $9D                                 ;$01876E |
+    ORA.b SpriteLock_9D                     ;$01876E |
     JSR CODE_01B152                         ;$018770 |
     JSR MarioSprInteractRt                  ;$018773 |
     BCC Return018788                        ;$018776 |
@@ -1404,13 +1404,13 @@ Spr0to13Prop:
     db $20,$00,$00,$00
 
 ShellessKoopas:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_018952                         ;$018906 |
 CODE_018908:
     LDA.w $163E,X           
     CMP.b #$80                              ;$01890B |
     BCC CODE_01891F                         ;$01890D |
-    LDA $9D                                 ;$01890F |
+    LDA.b SpriteLock_9D                     ;$01890F |
     BNE CODE_01891F                         ;$018911 |
 CODE_018913:
     JSR SetAnimationFrame
@@ -1672,7 +1672,7 @@ Bobomb:
     JMP SubSprGfx2Entry1                    ;$018AF9 |
 
 Spr0to13Start:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ Spr0to13Main                        ;$018AFE |
 CODE_018B00:
     JSR MarioSprInteractRt
@@ -1826,7 +1826,7 @@ DoneWithSprite:
     RTS                                     ;$018C17 |
 
 SpinyEgg:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_018C44                         ;$018C1A |
     LDA.w SpriteStatus_14C8,X               ;$018C1C |
     CMP.b #$08                              ;$018C1F |
@@ -1851,7 +1851,7 @@ CODE_018C44:
     RTS                                     ;$018C4C |
 
 GreenParaKoopa:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_018CB7                         ;$018C4F |
     LDY.w $157C,X                           ;$018C51 |
     LDA.w Spr0to13SpeedX,Y                  ;$018C54 |
@@ -1922,7 +1922,7 @@ RedHorzParaKoopa:
 RedVertParaKoopa:
     JSR SubOffscreen0Bnk1
 CODE_018CC6:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_018D2A                         ;$018CC8 |
     LDA.w $157C,X                           ;$018CCA |
     PHA                                     ;$018CCD |
@@ -1978,7 +1978,7 @@ CODE_018D2A:
 
 WingedGoomba:
     JSR SubOffscreen0Bnk1
-    LDA $9D                                 ;$018D31 |
+    LDA.b SpriteLock_9D                     ;$018D31 |
     BEQ CODE_018D39                         ;$018D33 |
     JSR CODE_018DAC                         ;$018D35 |
     RTS                                     ;$018D38 |
@@ -2175,7 +2175,7 @@ CODE_018E87:
     STA $64                                 ;$018E98 |
 CODE_018E9A:
     JSR SubOffscreen0Bnk1
-    LDA $9D                                 ;$018E9D |
+    LDA.b SpriteLock_9D                     ;$018E9D |
     BNE Return018EC7                        ;$018E9F |
     JSR SetAnimationFrame                   ;$018EA1 |
     LDA.w $1594,X                           ;$018EA4 |
@@ -2241,7 +2241,7 @@ CODE_018F07:
     RTS                                     ;$018F0C |
 
 HoppingFlame:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_018F49                         ;$018F0F |
     INC.w $1602,X                           ;$018F11 |
     JSR SetAnimationFrame                   ;$018F14 |
@@ -2343,7 +2343,7 @@ BulletSpeedY:
 BulletBill:
     LDA.b #$01
     STA.w $157C,X                           ;$018FE9 |
-    LDA $9D                                 ;$018FEC |
+    LDA.b SpriteLock_9D                     ;$018FEC |
     BNE CODE_019014                         ;$018FEE |
     LDY $C2,X                               ;$018FF0 |
     LDA.w BulletGfxProp,Y                   ;$018FF2 |
@@ -3061,7 +3061,7 @@ SetNormalStatus2:
     JMP CODE_01A187                         ;$019567 |
 
 CODE_01956A:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_019571                         ;$01956C |
     JMP CODE_0195F5                         ;$01956E |
 
@@ -3475,7 +3475,7 @@ DATA_0198A7:
     db $E0,$20
 
 CODE_0198A9:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_0198B0                         ;$0198AB |
     JMP CODE_019A2A                         ;$0198AD |
 
@@ -3559,7 +3559,7 @@ CODE_019928:
     JSR CODE_01AA0B                         ;$019936 |
 CODE_019939:
     STZ.w $1528,X
-    LDA $9D                                 ;$01993C |
+    LDA.b SpriteLock_9D                     ;$01993C |
     ORA.w $163E,X                           ;$01993E |
     BEQ CODE_019946                         ;$019941 |
     JMP CODE_01998F                         ;$019943 |
@@ -3799,7 +3799,7 @@ CODE_019ACB:
     RTS                                     ;$019AD5 |
 
 CODE_019AD6:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_019ADD                         ;$019AD8 |
     JSR SubUpdateSprPos                     ;$019ADA |
 CODE_019ADD:
@@ -3808,7 +3808,7 @@ CODE_019ADD:
     RTS                                     ;$019AE3 |
 
 HandleSprSmushed:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_019AFE                         ;$019AE6 |
     LDA.w $1540,X                           ;$019AE8 |
     BNE ShowSmushedGfx                      ;$019AEB |
@@ -4391,7 +4391,7 @@ CODE_019FF4:
     LDA.w $14C8,X
     CMP.b #$08                              ;$019FF7 |
     BEQ Return01A014                        ;$019FF9 |
-    LDA $9D                                 ;$019FFB |
+    LDA.b SpriteLock_9D                     ;$019FFB |
     BEQ CODE_01A002                         ;$019FFD |
     JMP CODE_01A0B1                         ;$019FFF |
 
@@ -4713,7 +4713,7 @@ StunSpringBoard:
     JMP CODE_01E6F0
 
 StunBabyYoshi:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01A27B                         ;$01A22E |
     LDA $E4,X                               ;$01A230 |
     CLC                                     ;$01A232 |
@@ -6355,7 +6355,7 @@ CODE_01AD80:
     LDA $C2,X                               ;$01AD90 |
     BNE CODE_01ADF8                         ;$01AD92 |
     JSR CODE_019E95                         ;$01AD94 |
-    LDA $9D                                 ;$01AD97 |
+    LDA.b SpriteLock_9D                     ;$01AD97 |
     BNE CODE_01ADF8                         ;$01AD99 |
     LDA $13                                 ;$01AD9B |
     AND.b #$01                              ;$01AD9D |
@@ -6503,7 +6503,7 @@ Thwomp:
     LDA.w SpriteStatus_14C8,X               ;$01AEA6 |
     CMP.b #$08                              ;$01AEA9 |
     BNE Return01AEA2                        ;$01AEAB |
-    LDA $9D                                 ;$01AEAD |
+    LDA.b SpriteLock_9D                     ;$01AEAD |
     BNE Return01AEA2                        ;$01AEAF |
     JSR SubOffscreen0Bnk1                   ;$01AEB1 |
     JSR MarioSprInteractRt                  ;$01AEB4 |
@@ -6645,7 +6645,7 @@ Thwimp:
     LDA.w $14C8,X
     CMP.b #$08                              ;$01AFA2 |
     BNE CODE_01B006                         ;$01AFA4 |
-    LDA $9D                                 ;$01AFA6 |
+    LDA.b SpriteLock_9D                     ;$01AFA6 |
     BNE CODE_01B006                         ;$01AFA8 |
     JSR SubOffscreen0Bnk1                   ;$01AFAA |
     JSR MarioSprInteractRt                  ;$01AFAD |
@@ -6737,7 +6737,7 @@ Fish:
     LDA.w $14C8,X
     CMP.b #$08                              ;$01B036 |
     BNE CODE_01B03E                         ;$01B038 |
-    LDA $9D                                 ;$01B03A |
+    LDA.b SpriteLock_9D                     ;$01B03A |
     BEQ CODE_01B041                         ;$01B03C |
 CODE_01B03E:
     JMP CODE_01B10A
@@ -6873,7 +6873,7 @@ CODE_01B14E:
     AND.b #$03                              ;$01B150 |
 CODE_01B152:
     ORA.w $186C,X
-    ORA $9D                                 ;$01B155 |
+    ORA.b SpriteLock_9D                     ;$01B155 |
     BNE Return01B191                        ;$01B157 |
     JSL GetRand                             ;$01B159 |
     AND.b #$0F                              ;$01B15D |
@@ -6909,7 +6909,7 @@ Return01B191:
 
 GeneratedFish:
     JSR CODE_01B209
-    LDA $9D                                 ;$01B195 |
+    LDA.b SpriteLock_9D                     ;$01B195 |
     BNE Return01B1B0                        ;$01B197 |
     JSR SetAnimationFrame                   ;$01B199 |
     JSR SubSprXPosNoGrvty                   ;$01B19C |
@@ -6929,7 +6929,7 @@ DATA_01B1B1:
     db $D0,$D0,$B0
 
 JumpingFish:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01B209                         ;$01B1B6 |
     LDA.w $164A,X                           ;$01B1B8 |
     STA.w $151C,X                           ;$01B1BB |
@@ -7042,7 +7042,7 @@ DATA_01B26A:
 
 Platforms:
     JSR CODE_01B2D1
-    LDA $9D                                 ;$01B26F |
+    LDA.b SpriteLock_9D                     ;$01B26F |
     BNE Return01B2C2                        ;$01B271 |
     LDA.w $1540,X                           ;$01B273 |
     BNE CODE_01B2A5                         ;$01B276 |
@@ -7436,7 +7436,7 @@ OrangePlatform:
     LDA $C2,X
     BEQ Platforms2                          ;$01B538 |
     JSR CODE_01B2D1                         ;$01B53A |
-    LDA $9D                                 ;$01B53D |
+    LDA.b SpriteLock_9D                     ;$01B53D |
     BNE Return01B558                        ;$01B53F |
     JSR SubSprXPosNoGrvty                   ;$01B541 |
     LDA.w $1491                             ;$01B544 |
@@ -7457,7 +7457,7 @@ FloatingSpikeBall:
     JMP CODE_01B666                         ;$01B560 |
 
 Platforms2:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_01B56A                         ;$01B565 |
     JMP CODE_01B64E                         ;$01B567 |
 
@@ -7665,7 +7665,7 @@ CODE_01B6B2:
     CMP.w BlkBridgeLength,Y                 ;$01B6BA |
     BEQ CODE_01B6D1                         ;$01B6BD |
     LDA.w $1540,X                           ;$01B6BF |
-    ORA $9D                                 ;$01B6C2 |
+    ORA.b SpriteLock_9D                     ;$01B6C2 |
     BNE Return01B6D0                        ;$01B6C4 |
     LDA.w $151C,X                           ;$01B6C6 |
     CLC                                     ;$01B6C9 |
@@ -7693,7 +7693,7 @@ CODE_01B6E7:
     CMP.w BlkBridgeLength,Y                 ;$01B6EC |
     BEQ CODE_01B703                         ;$01B6EF |
     LDA.w $1540,X                           ;$01B6F1 |
-    ORA $9D                                 ;$01B6F4 |
+    ORA.b SpriteLock_9D                     ;$01B6F4 |
     BNE Return01B702                        ;$01B6F6 |
     LDA.w $151C,X                           ;$01B6F8 |
     CLC                                     ;$01B6FB |
@@ -8087,7 +8087,7 @@ ClimbingKoopa:
     CMP.b #$40                              ;$01B988 |
     BCC CODE_01B9A3                         ;$01B98A |
     BNE CODE_01B9A0                         ;$01B98C |
-    LDY $9D                                 ;$01B98E |
+    LDY.b SpriteLock_9D                     ;$01B98E |
     BNE CODE_01B9A0                         ;$01B990 |
     LDA.w $1632,X                           ;$01B992 |
     EOR.b #$01                              ;$01B995 |
@@ -8149,7 +8149,7 @@ CODE_01B9D6:
     RTS                                     ;$01B9FA |
 
 CODE_01B9FB:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01BA53                         ;$01B9FD |
     JSR CODE_019140                         ;$01B9FF |
     LDY $C2,X                               ;$01BA02 |
@@ -8183,7 +8183,7 @@ CODE_01BA32:
     LDA.b #$50
     STA.w $1540,X                           ;$01BA34 |
 CODE_01BA37:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01BA53                         ;$01BA39 |
     INC.w $1570,X                           ;$01BA3B |
     JSR UpdateDirection                     ;$01BA3E |
@@ -8444,7 +8444,7 @@ MagiKoopasMagicPals:
     db $05,$07,$09,$0B
 
 MagikoopasMagic:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_01BC3F                         ;$01BC3A |
     JMP CODE_01BCBD                         ;$01BC3C |
 
@@ -8678,7 +8678,7 @@ CODE_01BDF2:
     RTS                                     ;$01BDFA |
 
 CODE_01BDFB:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return01BE5E                        ;$01BDFD |
     LDY.b #$24                              ;$01BDFF |
     STY $40                                 ;$01BE01 |
@@ -8753,7 +8753,7 @@ CODE_01BE86:
     CMP.b #$40
     BNE CODE_01BE96                         ;$01BE88 |
     PHA                                     ;$01BE8A |
-    LDA $9D                                 ;$01BE8B |
+    LDA.b SpriteLock_9D                     ;$01BE8B |
     ORA.w $15A0,X                           ;$01BE8D |
     BNE CODE_01BE95                         ;$01BE90 |
     JSR CODE_01BF1D                         ;$01BE92 |
@@ -9053,7 +9053,7 @@ InitGoalTape:
 
 GoalTape:
     JSR CODE_01C12D
-    LDA $9D                                 ;$01C09B |
+    LDA.b SpriteLock_9D                     ;$01C09B |
     BNE Return01C0A4                        ;$01C09D |
     LDA.w $1602,X                           ;$01C09F |
     BEQ CODE_01C0A7                         ;$01C0A2 |
@@ -9192,7 +9192,7 @@ CODE_01C1A3:
     STA.w $0302,Y
     PLA                                     ;$01C1A6 |
     STA $64                                 ;$01C1A7 |
-    LDA $9D                                 ;$01C1A9 |
+    LDA.b SpriteLock_9D                     ;$01C1A9 |
     BNE Return01C1ED                        ;$01C1AB |
     LDA.b #$F0                              ;$01C1AD |
     STA $AA,X                               ;$01C1AF |
@@ -9237,7 +9237,7 @@ BalloonKeyFlyObjs:
     LDA.w $14C8,X
     CMP.b #$0C                              ;$01C1F5 |
     BEQ CODE_01C255                         ;$01C1F7 |
-    LDA $9D                                 ;$01C1F9 |
+    LDA.b SpriteLock_9D                     ;$01C1F9 |
     BNE CODE_01C255                         ;$01C1FB |
     LDA $9E,X                               ;$01C1FD |
     CMP.b #$7D                              ;$01C1FF |
@@ -9453,7 +9453,7 @@ CODE_01C371:
     JSR CODE_01C4AC                         ;$01C374 |
     LDA.w $1534,X                           ;$01C377 |
     BEQ CODE_01C38F                         ;$01C37A |
-    LDA $9D                                 ;$01C37C |
+    LDA.b SpriteLock_9D                     ;$01C37C |
     BNE CODE_01C387                         ;$01C37E |
     LDA.b #$10                              ;$01C380 |
     STA $AA,X                               ;$01C382 |
@@ -9474,7 +9474,7 @@ CODE_01C38F:
     LDA.b #$10                              ;$01C39C |
     STA $64                                 ;$01C39E |
 CODE_01C3A0:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01C3AB                         ;$01C3A2 |
     LDA.b #$FC                              ;$01C3A4 |
     STA $AA,X                               ;$01C3A6 |
@@ -9483,7 +9483,7 @@ CODE_01C3AB:
     JMP CODE_01C48D
 
 CODE_01C3AE:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01C3AB                         ;$01C3B0 |
     LDA.w SpriteStatus_14C8,X               ;$01C3B2 |
     CMP.b #$0C                              ;$01C3B5 |
@@ -9715,7 +9715,7 @@ GiveMarioMushroom:
     STA $71                                 ;$01C563 |
     LDA.b #$2F                              ;$01C565 |
     STA.w $1496,Y                           ;$01C567 |
-    STA $9D                                 ;$01C56A |
+    STA.b SpriteLock_9D                     ;$01C56A |
     JMP CODE_01C56F                         ;$01C56C |
 
 CODE_01C56F:
@@ -9750,7 +9750,7 @@ GiveMarioCape:
     LDA.b #$04                              ;$01C5A1 |
     JSL GivePoints                          ;$01C5A3 |
     JSL CODE_01C5AE                         ;$01C5A7 |
-    INC $9D                                 ;$01C5AB |
+    INC.b SpriteLock_9D                     ;$01C5AB |
     RTS                                     ;$01C5AD |
 
 CODE_01C5AE:
@@ -9790,7 +9790,7 @@ Return01C5EB:
 GiveMarioFire:
     LDA.b #$20
     STA.w $149B                             ;$01C5EE |
-    STA $9D                                 ;$01C5F1 |
+    STA.b SpriteLock_9D                     ;$01C5F1 |
     LDA.b #$04                              ;$01C5F3 |
     STA $71                                 ;$01C5F5 |
     LDA.b #$03                              ;$01C5F7 |
@@ -9932,7 +9932,7 @@ DATA_01C6EA:
     db $0A,$F6,$08
 
 Feather:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01C744                         ;$01C6EF |
     LDA $C2,X                               ;$01C6F1 |
     BEQ CODE_01C701                         ;$01C6F3 |
@@ -10005,7 +10005,7 @@ InitBrwnChainPlat:
 
 BrownChainedPlat:
     JSR SubOffscreen2Bnk1
-    LDA $9D                                 ;$01C776 |
+    LDA.b SpriteLock_9D                     ;$01C776 |
     BNE CODE_01C795                         ;$01C778 |
     LDA $13                                 ;$01C77A |
     AND.b #$03                              ;$01C77C |
@@ -10299,7 +10299,7 @@ CODE_01C999:
     LDY.w $15EA,X                           ;$01C9A4 |
     LDA.b #$F0                              ;$01C9A7 |
     STA.w $0305,Y                           ;$01C9A9 |
-    LDA $9D                                 ;$01C9AC |
+    LDA.b SpriteLock_9D                     ;$01C9AC |
     BNE Return01C9B6                        ;$01C9AE |
     JSR CODE_01CCF0                         ;$01C9B0 |
     JMP CODE_01C9EC                         ;$01C9B3 |
@@ -10360,7 +10360,7 @@ CODE_01C9EC:
     SEP #$20                                ;$01C9FF |
     ROL                                     ;$01CA01 |
     AND.b #$01                              ;$01CA02 |
-    ORA $9D                                 ;$01CA04 |
+    ORA.b SpriteLock_9D                     ;$01CA04 |
     STA.w $15C4,X                           ;$01CA06 |
     BNE Return01C9D5                        ;$01CA09 |
     JSR CODE_01CA9C                         ;$01CA0B |
@@ -10877,7 +10877,7 @@ CODE_01CDD5:
     STA.w $1BA2
     JSL CODE_03DEDF                         ;$01CDD8 |
     JSR CODE_01CDA7                         ;$01CDDC |
-    LDA $9D                                 ;$01CDDF |
+    LDA.b SpriteLock_9D                     ;$01CDDF |
     BNE Return01CE3D                        ;$01CDE1 |
     JSR CODE_01D2A8                         ;$01CDE3 |
     JSR CODE_01D3B1                         ;$01CDE6 |
@@ -10915,7 +10915,7 @@ CODE_01CE1E:
     STZ.w $1411                             ;$01CE25 |
     INC.w $18A8                             ;$01CE28 |
     STZ.w $18AA                             ;$01CE2B |
-    INC $9D                                 ;$01CE2E |
+    INC.b SpriteLock_9D                     ;$01CE2E |
     INC.w $151C,X                           ;$01CE30 |
     RTS                                     ;$01CE33 |
 
@@ -11796,7 +11796,7 @@ DATA_01D44A:
     db $45,$45,$05,$05
 
 BossFireball:
-    LDA $9D
+    LDA.b SpriteLock_9D
     ORA.w PlayerIsFrozen_13FB               ;$01D450 |
     BNE CODE_01D487                         ;$01D453 |
     LDA.w $1540,X                           ;$01D455 |
@@ -11896,7 +11896,7 @@ ParachuteSprites:
     JMP CODE_01D671                         ;$01D502 |
 
 CODE_01D505:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_01D558                         ;$01D507 |
     LDA.w $1540,X                           ;$01D509 |
     BNE CODE_01D558                         ;$01D50C |
@@ -12165,7 +12165,7 @@ LineRopePChainsaw:
     EOR $14                                 ;$01D71C |
     STA $02                                 ;$01D71E |
     AND.b #$07                              ;$01D720 |
-    ORA $9D                                 ;$01D722 |
+    ORA.b SpriteLock_9D                     ;$01D722 |
     BNE LineGrinder                         ;$01D724 |
     LDA $02                                 ;$01D726 |
     LSR                                     ;$01D728 |
@@ -12182,7 +12182,7 @@ LineGrinder:
     LDA $13
     AND.b #$07                              ;$01D73C |
     ORA.w $1626,X                           ;$01D73E |
-    ORA $9D                                 ;$01D741 |
+    ORA.b SpriteLock_9D                     ;$01D741 |
     BNE LineFuzzyPPlats                     ;$01D743 |
     LDA.b #$04                              ;$01D745 |
     STA.w $1DFA                             ;$01D747 |
@@ -12193,7 +12193,7 @@ CODE_01D74D:
     JSR SubOffscreen1Bnk1
     LDA.w $1540,X                           ;$01D750 |
     BNE CODE_01D75C                         ;$01D753 |
-    LDA $9D                                 ;$01D755 |
+    LDA.b SpriteLock_9D                     ;$01D755 |
     ORA.w $1626,X                           ;$01D757 |
     BNE Return01D6EC                        ;$01D75A |
 CODE_01D75C:
@@ -12206,7 +12206,7 @@ Ptrs01D762:
     dw CODE_01DB44
 
 CODE_01D768:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return01D791                        ;$01D76A |
     LDA.w $157C,X                           ;$01D76C |
     BNE CODE_01D792                         ;$01D76F |
@@ -12769,7 +12769,7 @@ CODE_01DB31:
     RTS                                     ;$01DB43 |
 
 CODE_01DB44:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return01DB59                        ;$01DB46 |
     JSR SubUpdateSprPos                     ;$01DB48 |
     LDA.w $1540,X                           ;$01DB4B |
@@ -12789,7 +12789,7 @@ Grinder:
     LDA.w SpriteStatus_14C8,X               ;$01DB5F |
     CMP.b #$08                              ;$01DB62 |
     BNE Return01DB95                        ;$01DB64 |
-    LDA $9D                                 ;$01DB66 |
+    LDA.b SpriteLock_9D                     ;$01DB66 |
     BNE Return01DB95                        ;$01DB68 |
     LDA $13                                 ;$01DB6A |
     AND.b #$03                              ;$01DB6C |
@@ -13113,7 +13113,7 @@ BonusGame:
     JSR CODE_01E26A                         ;$01DE31 |
 CODE_01DE34:
     JSR CODE_01DF19
-    LDA $9D                                 ;$01DE37 |
+    LDA.b SpriteLock_9D                     ;$01DE37 |
     BNE Return01DE40                        ;$01DE39 |
     LDA.w $188F                             ;$01DE3B |
     BEQ CODE_01DE41                         ;$01DE3E |
@@ -13427,7 +13427,7 @@ Return01E0A6:
     RTS
 
 CODE_01E0A7:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_01E0AE                         ;$01E0A9 |
     JMP CODE_01E12D                         ;$01E0AB |
 
@@ -13499,7 +13499,7 @@ CODE_01E12A:
 CODE_01E12D:
     LDA $C2,X
     BEQ CODE_01E198                         ;$01E12F |
-    LDY $9D                                 ;$01E131 |
+    LDY.b SpriteLock_9D                     ;$01E131 |
     BNE CODE_01E164                         ;$01E133 |
     LDA.w $1588,X                           ;$01E135 |
     AND.b #$04                              ;$01E138 |
@@ -13635,7 +13635,7 @@ CODE_01E201:
     LDA.b #$10                              ;$01E215 |
     STA.w $1DFB                             ;$01E217 |
     INC.w PlayerIsFrozen_13FB               ;$01E21A |
-    INC $9D                                 ;$01E21D |
+    INC.b SpriteLock_9D                     ;$01E21D |
     LDA.w $14E0,X                           ;$01E21F |
     STA.w $1437                             ;$01E222 |
     LDA $E4,X                               ;$01E225 |
@@ -13887,7 +13887,7 @@ CODE_01E3FB:
     JSR SubSprGfx2Entry1
     PLA                                     ;$01E3FE |
     STA $64                                 ;$01E3FF |
-    LDA $9D                                 ;$01E401 |
+    LDA.b SpriteLock_9D                     ;$01E401 |
     BNE CODE_01E41C                         ;$01E403 |
     JSR SubSprSprPMarioSpr                  ;$01E405 |
     JSR SubUpdateSprPos                     ;$01E408 |
@@ -13988,7 +13988,7 @@ Return01E4BF:
     RTS
 
 CODE_01E4C0:
-    LDA $9D
+    LDA.b SpriteLock_9D
     ORA.w $163E,X                           ;$01E4C2 |
     BEQ CODE_01E4CA                         ;$01E4C5 |
     JMP CODE_01E5B6                         ;$01E4C7 |
@@ -14178,7 +14178,7 @@ DATA_01E61A:
     db $1E
 
 SpringBoard:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_01E62A                         ;$01E625 |
     JMP CODE_01E6F0                         ;$01E627 |
 
@@ -14373,7 +14373,7 @@ DATA_01E793:
     db $1A
 
 LakituCloud:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ NoCloudGfx                          ;$01E7A6 |
 CODE_01E7A8:
     JMP LakituCloudGfx
@@ -14633,7 +14633,7 @@ DATA_01E98B:
     db $10,$F0
 
 CODE_01E98D:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return01E984                        ;$01E98F |
     JSR SubHorizPos                         ;$01E991 |
     TYA                                     ;$01E994 |
@@ -14802,7 +14802,7 @@ draw_yoshi_01EA70:
     LSR                                     ;$01EAB4 |
     LSR                                     ;$01EAB5 |
     TAY                                     ;$01EAB6 |
-    LDA $9D                                 ;$01EAB7 |
+    LDA.b SpriteLock_9D                     ;$01EAB7 |
     BNE +                                   ;$01EAB9 |
     DEC.w $1570,X                           ;$01EABB |
     BPL +                                   ;$01EABE |
@@ -14981,11 +14981,11 @@ yoshi_01EBCA:
     LDA.w YoshiGrowingTimer_18E8            ;$01EC13 | skip if not growing
     BEQ .yoshi_not_growing_01EC4C           ;$01EC16 |\
     DEC.w YoshiGrowingTimer_18E8            ;$01EC18 || GLITCH: with many Yoshis, the timer decreases faster per frame
-    STA $9D                                 ;$01EC1B || Freeze game
+    STA.b SpriteLock_9D                     ;$01EC1B || Freeze game
     STA.w PlayerIsFrozen_13FB               ;$01EC1D ||
     CMP.b #$01                              ;$01EC20 || If Yoshi isn't done hatching yet, skip to continue running the animation
     BNE +                                   ;$01EC22 ||\
-    STZ $9D                                 ;$01EC24 ||| Unfreeze game
+    STZ.b SpriteLock_9D                     ;$01EC24 ||| Unfreeze game
     STZ.w PlayerIsFrozen_13FB               ;$01EC26 |||
     LDY.w $0DB3                             ;$01EC29 ||| Show Yoshi's spawn message if:
     LDA.w $1F11,Y                           ;$01EC2C ||| - Yoshi's Island
@@ -15006,7 +15006,7 @@ yoshi_01EBCA:
     RTS                                     ;$01EC4B |/
 
 .yoshi_not_growing_01EC4C:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ .game_running_01EC61                ;$01EC4E |
 .mounted_player_relative_y_01EC50:
     LDY.w RidingYoshi_187A
@@ -15036,13 +15036,13 @@ yoshi_01EBCA:
     DEC.w EggLaidTimer_18DE
     CMP.b #$01                              ;$01EC70 |
     BNE .CODE_01EC78                        ;$01EC72 |
-    STZ $9D                                 ;$01EC74 |
+    STZ.b SpriteLock_9D                     ;$01EC74 |
     BRA .CODE_01EC6A                        ;$01EC76 |
 
 .CODE_01EC78:
     INC.w PlayerIsFrozen_13FB
     JSR .mounted_player_relative_y_01EC50   ;$01EC7B |
-    STY $9D                                 ;$01EC7E |
+    STY.b SpriteLock_9D                     ;$01EC7E |
     CMP.b #$02                              ;$01EC80 |
     BNE +                                   ;$01EC82 |
     JSL FindFreeSprSlot                     ;$01EC84 |
@@ -15271,7 +15271,7 @@ handle_off_yoshi_01EE61:
     CPY.b #$08                              ;$01EE68 |
     BNE +                                   ;$01EE6A |
     LDA.w SpriteInPipeMode_1419             ;$01EE6C |
-    ORA $9D                                 ;$01EE6F |
+    ORA.b SpriteLock_9D                     ;$01EE6F |
     BNE +                                   ;$01EE71 |
     LDA.w $157C,X                           ;$01EE73 |
     STA $76                                 ;$01EE76 |
@@ -16295,7 +16295,7 @@ DATA_01F61A:
 
 yoshi_sprites_interaction_01F622:
     LDA.w $163E,X                           ;$01F625 | if Yoshi has some invincibility timer
-    ORA $9D                                 ;$01F625 | or game is frozen, return
+    ORA.b SpriteLock_9D                     ;$01F625 | or game is frozen, return
     BNE .return_01F667                      ;$01F627 |
     LDY.b #$0B                              ;$01F629 | Y: sprite slot
 -   STY.w $1695                             ;$01F62B |\ mirror collision sprite slot
@@ -16639,7 +16639,7 @@ Eerie:
     LDA.w $14C8,X
     CMP.b #$08                              ;$01F893 |
     BNE CODE_01F8C9                         ;$01F895 |
-    LDA $9D                                 ;$01F897 |
+    LDA.b SpriteLock_9D                     ;$01F897 |
     BNE CODE_01F8C9                         ;$01F899 |
     JSR SubSprXPosNoGrvty                   ;$01F89B |
     LDA $9E,X                               ;$01F89E |
@@ -16688,7 +16688,7 @@ CODE_01F8E1:
     LDA.w SpriteStatus_14C8,X               ;$01F8E4 |
     CMP.b #$08                              ;$01F8E7 |
     BNE CODE_01F8EF                         ;$01F8E9 |
-    LDA $9D                                 ;$01F8EB |
+    LDA.b SpriteLock_9D                     ;$01F8EB |
     BEQ CODE_01F8F2                         ;$01F8ED |
 CODE_01F8EF:
     JMP CODE_01F9CE
@@ -16922,7 +16922,7 @@ IggysBall:
     EOR $00                                 ;$01FA77 |
     STA.w $0303,Y                           ;$01FA79 |
     PLX                                     ;$01FA7C |
-    LDA $9D                                 ;$01FA7D |
+    LDA.b SpriteLock_9D                     ;$01FA7D |
     BNE Return01FAB3                        ;$01FA7F |
     LDY.w $157C,X                           ;$01FA81 |
     LDA.w DATA_01FA56,Y                     ;$01FA84 |
@@ -16977,7 +16977,7 @@ DATA_01FAE5:
     db $02,$00,$01,$02,$00,$01,$02,$01
 
 PlatformKoopaKids:
-    LDA $9D
+    LDA.b SpriteLock_9D
     ORA.w $154C,X                           ;$01FAF7 |
     BNE CODE_01FB1A                         ;$01FAFA |
     JSR SubHorizPos                         ;$01FAFC |
@@ -17011,7 +17011,7 @@ Return01FB35:
 
 CODE_01FB36:
     JSL LoadTweakerBytes
-    LDA $9D                                 ;$01FB3A |
+    LDA.b SpriteLock_9D                     ;$01FB3A |
     BEQ CODE_01FB41                         ;$01FB3C |
     JMP CODE_01FC08                         ;$01FB3E |
 
@@ -17162,7 +17162,7 @@ CODE_01FC2A:
     PLA                                     ;$01FC3A |
     CMP.b #$28                              ;$01FC3B |
     BNE CODE_01FC46                         ;$01FC3D |
-    LDA $9D                                 ;$01FC3F |
+    LDA.b SpriteLock_9D                     ;$01FC3F |
     BNE CODE_01FC46                         ;$01FC41 |
     JSR ThrowBall                           ;$01FC43 |
 CODE_01FC46:

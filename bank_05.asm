@@ -3668,7 +3668,7 @@ CODE_05BC72:
 
 execute_scroll_layer_1_05BC76:
     STZ.w $1456
-    LDA.w $9D                               ;$05BC79 |
+    LDA.w SpriteLock_9D                     ;$05BC79 |
     BNE Return05BC49                        ;$05BC7C |
     LDA.w $143E                             ;$05BC7E |
     BEQ Return05BC49                        ;$05BC81 |
@@ -3696,7 +3696,7 @@ execute_scroll_layer_2_05BCA5:
     STA.w $1456                             ;$05BCA7 |
     LDA.w $143F                             ;$05BCAA |
     BEQ Return05BC49                        ;$05BCAD |
-    LDY.w $9D                               ;$05BCAF |
+    LDY.w SpriteLock_9D                     ;$05BCAF |
     BNE Return05BC49                        ;$05BCB2 |
     JSL execute_pointer                     ;$05BCB4 |
 
@@ -4706,7 +4706,7 @@ process_layer_3_05C40C:
     LSR                                     ;$05C423 |
     STA $22                                 ;$05C424 |
     BRA .CODE_05C491                        ;$05C426 |
-++  LDY.w $9D                               ;$05C428 |
+++  LDY.w SpriteLock_9D                     ;$05C428 |
     BNE .CODE_05C48D                        ;$05C42B |
     LDA.w $1460                             ;$05C42D |
     AND.w #$00FF                            ;$05C430 |
@@ -4762,7 +4762,7 @@ process_layer_3_05C40C:
 .not_a_tide_05C494:
     DEC A
     BNE .CODE_05C4EC                        ;$05C495 |
-    LDA.w $9D                               ;$05C497 |
+    LDA.w SpriteLock_9D                     ;$05C497 |
     BNE .CODE_05C4EC                        ;$05C49A |
     LDY.w $1460                             ;$05C49C |
     LDA $14                                 ;$05C49F |

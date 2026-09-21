@@ -1591,7 +1591,7 @@ DATA_008E07:
 
 update_status_tileset_008E1A:
     LDA.w $1493                             ;$008E1A |\
-    ORA $9D                                 ;$008E1D || Don't update the clock if:
+    ORA.b SpriteLock_9D                     ;$008E1D || Don't update the clock if:
     BNE .update_time_tilemap                ;$008E1F ||  - Ending a level
     LDA.w $0D9B                             ;$008E21 ||  - Game is frozen
     CMP.b #$C1                              ;$008E24 ||  - In Bowser's battle mode
@@ -4667,7 +4667,7 @@ CODE_00A6E0:
     STY $76
     LDA.b #$24                              ;$00A6E2 |
     STA $72                                 ;$00A6E4 |
-    STZ $9D                                 ;$00A6E6 |
+    STZ.b SpriteLock_9D                     ;$00A6E6 |
     LDA.w $1434                             ;$00A6E8 |
     BEQ CODE_00A704                         ;$00A6EB |
     LDA.w $0DDA                             ;$00A6ED |
@@ -7310,7 +7310,7 @@ timers_and_animation_00C47E:
 +   LDY.w $1434                             ;$00C48C |
     BEQ .CODE_00C4BA                        ;$00C48F | if keyhole timer is set
     STY.w PlayerIsFrozen_13FB               ;$00C491 |
-    STY $9D                                 ;$00C494 |
+    STY.b SpriteLock_9D                     ;$00C494 |
     LDX.w $1435                             ;$00C496 |
     LDA.w $1433                             ;$00C499 |
     CMP.w DATA_00C470,X                     ;$00C49C |
@@ -7366,7 +7366,7 @@ timers_and_animation_00C47E:
     JMP .restore_noteblock_down_00C58F      ;$00C4FD |
 
 .CODE_00C500:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE .skip_timers_00C569                 ;$00C502 |
     INC $14                                 ;$00C504 |
     LDX.b #$13                              ;$00C506 |
@@ -7855,7 +7855,7 @@ CODE_00C944:
     JSL CODE_05CBFF
 CODE_00C948:
     LDY.b #$01
-    STY $9D                                 ;$00C94A |
+    STY.b SpriteLock_9D                     ;$00C94A |
     LDA $13                                 ;$00C94C |
     LSR                                     ;$00C94E |
     BCC Return00C96A                        ;$00C94F |
@@ -8252,7 +8252,7 @@ no_animation:                               ;        \
 
 .not_ending_level
     JSR screen_scrolling                    ;$00CCC3 \ Process screen scrolling.
-    LDA $9D                                 ;$00CCC6 |\ If sprites are locked, return.
+    LDA.b SpriteLock_9D                     ;$00CCC6 |\ If sprites are locked, return.
     BNE .return                             ;$00CCC8 |/
     STZ.w $13E8                             ;$00CCCA | Clear the cape spin interaction flag.
     STZ.w $13DE                             ;$00CCCD | Clear the looking up flag.
@@ -8409,7 +8409,7 @@ screen_scrolling:
     BEQ return_00CDDC                       ;$00CDE0 |
     LDY.w $13FE                             ;$00CDE2 |
     LDA.w $13FD                             ;$00CDE5 |
-    STA $9D                                 ;$00CDE8 |
+    STA.b SpriteLock_9D                     ;$00CDE8 |
     BNE CODE_00CE4C                         ;$00CDEA |
     LDA.w $1400                             ;$00CDEC |
     BEQ CODE_00CDF6                         ;$00CDEF |
@@ -8903,7 +8903,7 @@ mushroom_animation:
 reset_animation:                            ;        |
     LDA.b #$00                              ;$00D158 |\ Reset the player animation,
     STA $71                                 ;$00D15A | |
-    STZ $9D                                 ;$00D15C |/ and clear the lock sprites flag.
+    STZ.b SpriteLock_9D                     ;$00D15C |/ and clear the lock sprites flag.
 return_00D15E:                              ;        |
     RTS                                     ;$00D15E /
 
@@ -9099,7 +9099,7 @@ CODE_00D29D:
 CODE_00D2AA:
     STZ.w $13F9
     STZ.w SpriteInPipeMode_1419             ;$00D2AD |
-    STZ $9D                                 ;$00D2B0 |
+    STZ.b SpriteLock_9D                     ;$00D2B0 |
 CODE_00D2B2:
     LDA.b #$40
     STA $7B                                 ;$00D2B4 |
@@ -10562,7 +10562,7 @@ draw_mario_and_yoshi_00E2BD:
     TAY                                     ;$00E375 |
     LDA.w DATA_00E292,Y                     ;$00E376 |
     AND.w $1497                             ;$00E379 |
-    ORA $9D                                 ;$00E37C |
+    ORA.b SpriteLock_9D                                 ;$00E37C |
     ORA.w PlayerIsFrozen_13FB               ;$00E37E |
     BNE .CODE_00E385                        ;$00E381 |
     PLB                                     ;$00E383 |
@@ -12443,7 +12443,7 @@ CODE_00F40A:
     LDA $15                                 ;$00F40C |
     AND.w DATA_00F3E5,X                     ;$00F40E |
     BEQ CODE_00F43E                         ;$00F411 |
-    STA $9D                                 ;$00F413 |
+    STA.b SpriteLock_9D                     ;$00F413 |
     AND.b #$01                              ;$00F415 |
     STA $76                                 ;$00F417 |
     STX $89                                 ;$00F419 |
@@ -12755,7 +12755,7 @@ kill_player_no_speed:                       ;        |
     LDA.b #$30                              ;$00F61B |\
 CODE_00F61D:                                ;        | | Set the player animation timer
     STA.w $1496                             ;$00F61D | | and the sprite lock timer.
-    STA $9D                                 ;$00F620 |/
+    STA.b SpriteLock_9D                     ;$00F620 |/
 CODE_00F622:                                ;        |
     STZ.w $1407                             ;$00F622 | Stop flying.
     STZ.w $188A                             ;$00F625 |
@@ -13684,7 +13684,7 @@ CODE_00FD08:
 CODE_00FD12:
     TYA
     AND $14                                 ;$00FD13 |
-    ORA $9D                                 ;$00FD15 |
+    ORA.b SpriteLock_9D                                 ;$00FD15 |
     BNE Return00FD23                        ;$00FD17 |
     LDX.b #$07                              ;$00FD19 |
 CODE_00FD1B:
@@ -13873,7 +13873,7 @@ CODE_00FE4A:
     ORA $72                                 ;$00FE4E |
     ORA $7F                                 ;$00FE50 |
     ORA $81                                 ;$00FE52 |
-    ORA $9D                                 ;$00FE54 |
+    ORA.b SpriteLock_9D                                 ;$00FE54 |
     BNE Return00FE71                        ;$00FE56 |
     LDA $15                                 ;$00FE58 |
     AND.b #$04                              ;$00FE5A |

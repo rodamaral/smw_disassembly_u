@@ -75,7 +75,7 @@ ExplodeBombSubRt:
     LDA.b #$11                              ;$02808D |
     STA.w $1662,X                           ;$02808F |
     JSR GetDrawInfo2                        ;$028092 |
-    LDA $9D                                 ;$028095 |
+    LDA.b SpriteLock_9D                     ;$028095 |
     BNE CODE_02809C                         ;$028097 |
     INC.w $1570,X                           ;$028099 |
 CODE_02809C:
@@ -435,7 +435,7 @@ CODE_0283E0:
     BEQ CODE_0283F4                         ;$0283E5 |
     BMI CODE_0283F1                         ;$0283E7 |
     STA.w PlayerIsFrozen_13FB               ;$0283E9 |
-    STA $9D                                 ;$0283EC |
+    STA.b SpriteLock_9D                     ;$0283EC |
     JSR CODE_0283F8                         ;$0283EE |
 CODE_0283F1:
     JSR CODE_028439
@@ -473,7 +473,7 @@ CODE_0283F8:
 CODE_02842A:
     CPX.b #$01
     BNE CODE_028433                         ;$02842C |
-    STZ $9D                                 ;$02842E |
+    STZ.b SpriteLock_9D                     ;$02842E |
     STZ.w PlayerIsFrozen_13FB               ;$028430 |
 CODE_028433:
     LDA.b #$B0
@@ -1441,7 +1441,7 @@ minor_sprites_and_loading_028AB1:
     BEQ +                                   ;$028B23 || Handle sprites that respawn (e.g. Lakitu)
     LDA $13                                 ;$028B25 ||\ 
     AND.b #$01                              ;$028B27 |||
-    ORA $9D                                 ;$028B29 ||| Only respawn the sprite if:
+    ORA.b SpriteLock_9D                     ;$028B29 ||| Only respawn the sprite if:
     ORA.w $18BF                             ;$028B2B ||| - On an even frame
     BNE +                                   ;$028B2E ||| - Game isn't frozen
     DEC.w $18C0                             ;$028B30 ||| - Actually time to respawn
@@ -1670,7 +1670,7 @@ BooStreamTiles:
     db $AA,$8C,$8E,$AE
 
 CODE_028CC4:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_028CFF                         ;$028CC6 |
     LDA.w $1808,X                           ;$028CC8 |
     CLC                                     ;$028CCB |
@@ -1753,7 +1753,7 @@ CODE_028D66:
     CMP.b #$10                              ;$028D68 |
     BCC CODE_028D8B                         ;$028D6A |
     AND.b #$01                              ;$028D6C |
-    ORA $9D                                 ;$028D6E |
+    ORA.b SpriteLock_9D                     ;$028D6E |
     BNE CODE_028D75                         ;$028D70 |
     INC.w $17FC,X                           ;$028D72 |
 CODE_028D75:
@@ -1806,7 +1806,7 @@ CODE_028DB6:
     TAY                                     ;$028DC9 |
     LDA.b #$02                              ;$028DCA |
     STA.w $0420,Y                           ;$028DCC |
-    LDA $9D                                 ;$028DCF |
+    LDA.b SpriteLock_9D                     ;$028DCF |
     BNE Return028DD6                        ;$028DD1 |
     INC.w $1850,X                           ;$028DD3 |
 Return028DD6:
@@ -1816,7 +1816,7 @@ RipVanFishZsTiles:
     db $F1,$F0,$E1,$E0
 
 CODE_028DDB:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_028E20                         ;$028DDD |
     LDA.w $1850,X                           ;$028DDF |
     BEQ CODE_028DE7                         ;$028DE2 |
@@ -1948,7 +1948,7 @@ CODE_028ED7:
     JMP CODE_028F87
 
 CODE_028EDA:
-    LDY $9D
+    LDY.b SpriteLock_9D
     BNE CODE_028EE1                         ;$028EDC |
     DEC.w $1850,X                           ;$028EDE |
 CODE_028EE1:
@@ -2004,7 +2004,7 @@ CODE_028F2F:
     BNE CODE_028F87                         ;$028F39 |
     LDA.w $1850,X                           ;$028F3B |
     BEQ CODE_028F87                         ;$028F3E |
-    LDY $9D                                 ;$028F40 |
+    LDY.b SpriteLock_9D                     ;$028F40 |
     BNE CODE_028F4D                         ;$028F42 |
     DEC.w $1850,X                           ;$028F44 |
     JSR CODE_02B5C8                         ;$028F47 |
@@ -2045,7 +2045,7 @@ CODE_028F87:
     RTS                                     ;$028F8A |
 
 CODE_028F8B:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_028FCA                         ;$028F8D |
     LDA $13                                 ;$028F8F |
     AND.b #$03                              ;$028F91 |
@@ -2134,7 +2134,7 @@ MultipleCoinBlock02902D:
     LDA.w $186B
     CMP.b #$02                              ;$029030 |
     BCC CODE_02903B                         ;$029032 |
-    LDA $9D                                 ;$029034 |
+    LDA.b SpriteLock_9D                     ;$029034 |
     BNE CODE_02903B                         ;$029036 |
     DEC.w $186B                             ;$029038 |
 CODE_02903B:
@@ -2152,7 +2152,7 @@ Return02904C:
 CODE_02904D:
     LDA.w $1699,X
     BEQ Return02904C                        ;$029050 |
-    LDY $9D                                 ;$029052 |
+    LDY.b SpriteLock_9D                     ;$029052 |
     BNE CODE_02905E                         ;$029054 |
     LDY.w $16C5,X                           ;$029056 |
     BEQ CODE_02905E                         ;$029059 |
@@ -2174,7 +2174,7 @@ DATA_029072:
     db $13,$00,$00,$ED
 
 TurnBlockSpr:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return0290CD                        ;$029078 |
     LDA.w $169D,X                           ;$02907A |
     BNE CODE_029085                         ;$02907D |
@@ -2232,7 +2232,7 @@ DATA_0290DA:
 
 BounceBlockSpr:
     JSR BounceSprGfx
-    LDA $9D                                 ;$0290E1 |
+    LDA.b SpriteLock_9D                     ;$0290E1 |
     BNE Return0290CD                        ;$0290E3 |
     LDA.w $169D,X                           ;$0290E5 |
     BNE CODE_02910B                         ;$0290E8 |
@@ -3048,7 +3048,7 @@ CODE_0296E3:
     BEQ CODE_0296DF                         ;$0296E6 |
     LDA.w $17C0,X                           ;$0296E8 |
     BMI CODE_0296F1                         ;$0296EB |
-    LDA $9D                                 ;$0296ED |
+    LDA.b SpriteLock_9D                     ;$0296ED |
     BNE CODE_0296F4                         ;$0296EF |
 CODE_0296F1:
     DEC.w $17CC,X
@@ -3149,7 +3149,7 @@ CODE_029793:
 CODE_029797:
     LDA.w $17CC,X
     BEQ CODE_029793                         ;$02979A |
-    LDY $9D                                 ;$02979C |
+    LDY.b SpriteLock_9D                     ;$02979C |
     BNE CODE_0297A3                         ;$02979E |
     DEC.w $17CC,X                           ;$0297A0 |
 CODE_0297A3:
@@ -3303,7 +3303,7 @@ DATA_0298C6:
 CODE_0298CA:
     LDA.w $17CC,X
     BEQ CODE_0298BE                         ;$0298CD |
-    LDY $9D                                 ;$0298CF |
+    LDY.b SpriteLock_9D                     ;$0298CF |
     BNE Return029921                        ;$0298D1 |
     DEC.w $17CC,X                           ;$0298D3 |
     AND.b #$03                              ;$0298D6 |
@@ -3364,7 +3364,7 @@ CODE_02993E:
     JMP CODE_029793
 
 CODE_029941:
-    LDY $9D
+    LDY.b SpriteLock_9D
     BNE CODE_02994F                         ;$029943 |
     DEC.w $17CC,X                           ;$029945 |
     AND.b #$07                              ;$029948 |
@@ -3462,7 +3462,7 @@ DATA_0299E9:
     db $30,$38,$40,$48,$EC,$EA,$E8,$EC
 
 CODE_0299F1:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_029A08                         ;$0299F3 |
     JSR CODE_02B58E                         ;$0299F5 |
     LDA.w $17D8,X                           ;$0299F8 |
@@ -3621,7 +3621,7 @@ Return029B15:
 CODE_029B16:
     LDA.w $170B,X
     BEQ Return029B15                        ;$029B19 |
-    LDY $9D                                 ;$029B1B |
+    LDY.b SpriteLock_9D                     ;$029B1B |
     BNE CODE_029B27                         ;$029B1D |
     LDY.w $176F,X                           ;$029B1F |
     BEQ CODE_029B27                         ;$029B22 |
@@ -3695,7 +3695,7 @@ CODE_029B99:
     LDA.b #$00                              ;$029BA0 |
     STA.w $0420,Y                           ;$029BA2 |
 CODE_029BA5:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return029BD9                        ;$029BA7 |
     JSR CODE_02A3F6                         ;$029BA9 |
     JSR CODE_02B554                         ;$029BAC |
@@ -3807,7 +3807,7 @@ SmokeTrail:
     LDA.b #$02                              ;$029C61 |
     STA.w $0420,Y                           ;$029C63 |
     PLX                                     ;$029C66 |
-    LDA $9D                                 ;$029C67 |
+    LDA.b SpriteLock_9D                     ;$029C67 |
     BNE Return029C7E                        ;$029C69 |
     LDA.w $176F,X                           ;$029C6B |
     BEQ CODE_029C7F                         ;$029C6E |
@@ -3834,7 +3834,7 @@ SpinJumpStars:
     STA.w $0203,Y                           ;$029C90 |
     LDA.b #$EF                              ;$029C93 |
     STA.w $0202,Y                           ;$029C95 |
-    LDA $9D                                 ;$029C98 |
+    LDA.b SpriteLock_9D                     ;$029C98 |
     BNE Return029CAF                        ;$029C9A |
     LDA.w $176F,X                           ;$029C9C |
     LSR                                     ;$029C9F |
@@ -3852,7 +3852,7 @@ DATA_029CB0:
     db $FF,$07,$01,$00,$00
 
 CloudCoin:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_029CF8                         ;$029CB7 |
     JSR CODE_02B560                         ;$029CB9 |
     LDA.w $173D,X                           ;$029CBC |
@@ -4067,7 +4067,7 @@ LauncherArm:
     INY                                     ;$029E4D |
 CODE_029E4E:
     PHY
-    LDA $9D                                 ;$029E4F |
+    LDA.b SpriteLock_9D                     ;$029E4F |
     BNE CODE_029E5C                         ;$029E51 |
     LDA.w DATA_029E36,Y                     ;$029E53 |
     STA.w $173D,X                           ;$029E56 |
@@ -4098,7 +4098,7 @@ LavaSplashTiles2:
     db $D7,$C7,$D6,$C6
 
 LavaSplash:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_029E9D                         ;$029E88 |
     JSR CODE_02B554                         ;$029E8A |
     JSR CODE_02B560                         ;$029E8D |
@@ -4155,7 +4155,7 @@ DATA_029EEA:
     db $00,$01,$00,$FF
 
 WaterBubble:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_029F2A                         ;$029EF0 |
     INC.w $1765,X                           ;$029EF2 |
     LDA.w $1765,X                           ;$029EF5 |
@@ -4214,7 +4214,7 @@ CODE_029F2A:
     RTS                                     ;$029F60 |
 
 YoshiFireball:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_029F6E                         ;$029F63 |
     JSR CODE_02B554                         ;$029F65 |
     JSR CODE_02B560                         ;$029F68 |
@@ -4260,7 +4260,7 @@ DATA_029FA5:
     db $A0,$A4
 
 MarioFireball:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02A02C                         ;$029FB1 |
     LDA.w $1715,X                           ;$029FB3 |
     CMP $1C                                 ;$029FB6 |
@@ -4493,7 +4493,7 @@ DATA_02A167:
     db $35,$35,$F5,$F5
 
 ReznorFireball:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02A178                         ;$02A16D |
     JSR CODE_02B554                         ;$02A16F |
     JSR CODE_02B560                         ;$02A172 |
@@ -4588,7 +4588,7 @@ SmallFlameTiles:
     db $AC,$AD
 
 FlameRemnant:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02A22F                         ;$02A21B |
     INC.w $1765,X                           ;$02A21D |
     LDA.w $176F,X                           ;$02A220 |
@@ -4619,7 +4619,7 @@ Return02A253:
     RTS
 
 Baseball:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02A26A                         ;$02A256 |
     JSR CODE_02B554                         ;$02A258 |
     INC.w $1765,X                           ;$02A25B |
@@ -4700,7 +4700,7 @@ HammerGfxProp:
     db $47,$47,$07,$07,$87,$87,$C7,$C7
 
 Hammer:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02A30C                         ;$02A2F1 |
     JSR CODE_02B554                         ;$02A2F3 |
     JSR CODE_02B560                         ;$02A2F6 |
@@ -6154,7 +6154,7 @@ Return02ADC8:
     RTS
 
 CODE_02ADC9:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BEQ CODE_02ADD0                         ;$02ADCA |
     JMP CODE_02AE5B                         ;$02ADCD |
 CODE_02ADD0:
@@ -6457,7 +6457,7 @@ Return02AFFD:
 CallGenerator:
     LDA.w $18B9
     BEQ Return02B02A                        ;$02B001 |
-    LDY $9D                                 ;$02B003 |
+    LDY.b SpriteLock_9D                     ;$02B003 |
     BNE Return02B02A                        ;$02B005 |
     DEC A                                   ;$02B007 |
     JSL execute_pointer                     ;$02B008 |
@@ -6946,7 +6946,7 @@ Return02B386:
     RTS
 
 ShooterSprites02B387:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02B3AA                        ;$02B389 |
     LDX.b #$07                              ;$02B38B |
 CODE_02B38D:
@@ -7385,7 +7385,7 @@ CODE_02B6AB:
 PokeyAlive:
     CMP.b #$20
     BCS CODE_02B6AB                         ;$02B6B1 |
-    LDA $9D                                 ;$02B6B3 |
+    LDA.b SpriteLock_9D                     ;$02B6B3 |
     BNE CODE_02B726                         ;$02B6B5 |
     JSR SubOffscreen0Bnk2                   ;$02B6B7 |
     JSL MarioSprInteract                    ;$02B6BA |
@@ -7659,7 +7659,7 @@ CODE_02B896:
     JSR TorpedoGfxRt
     PLA                                     ;$02B899 |
     STA $64                                 ;$02B89A |
-    LDA $9D                                 ;$02B89C |
+    LDA.b SpriteLock_9D                     ;$02B89C |
     BNE Return02B8B7                        ;$02B89E |
     JSR SubOffscreen0Bnk2                   ;$02B8A0 |
     JSL SprSprPMarioSprRts                  ;$02B8A3 |
@@ -8078,7 +8078,7 @@ DATA_02BB8E:
 
 DolphinMain:
     JSR CODE_02BC14
-    LDA $9D                                 ;$02BB97 |
+    LDA.b SpriteLock_9D                     ;$02BB97 |
     BNE Return02BBFF                        ;$02BB99 |
     JSR SubOffscreen1Bnk2                   ;$02BB9B |
     JSR UpdateYPosNoGrvtyB1                 ;$02BB9E |
@@ -8244,7 +8244,7 @@ WallFollowersMain:
     JSL SprSprInteract
     JSL GetRand                             ;$02BCDF |
     AND.b #$FF                              ;$02BCE3 |
-    ORA $9D                                 ;$02BCE5 |
+    ORA.b SpriteLock_9D                     ;$02BCE5 |
     BNE CODE_02BCEE                         ;$02BCE7 |
     LDA.b #$0C                              ;$02BCE9 |
     STA.w $1558,X                           ;$02BCEB |
@@ -8297,7 +8297,7 @@ CODE_02BD2F:
     RTL                                     ;$02BD3E |
 
 CODE_02BD3F:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02BD74                        ;$02BD41 |
     JSR SubOffscreen3Bnk2                   ;$02BD43 |
     JSL MarioSprInteract                    ;$02BD46 |
@@ -8659,7 +8659,7 @@ Return02BFCC:
 
 RipVanFishMain:
     JSL GenericSprGfxRt2
-    LDA $9D                                 ;$02BFD1 |
+    LDA.b SpriteLock_9D                     ;$02BFD1 |
     BNE Return02BFCC                        ;$02BFD3 |
     JSR SubOffscreen0Bnk2                   ;$02BFD5 |
     JSL SprSprPMarioSprRts                  ;$02BFD8 |
@@ -9026,7 +9026,7 @@ CODE_02C23D:
     STA.w $1602,X                           ;$02C250 |
 CODE_02C253:
     JSR CODE_02C81A
-    LDA $9D                                 ;$02C256 |
+    LDA.b SpriteLock_9D                     ;$02C256 |
     BEQ CODE_02C25B                         ;$02C258 |
     RTS                                     ;$02C25A |
 
@@ -10272,7 +10272,7 @@ Return02CBFD:
     RTL
 
 WingedCageMain:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE ADDR_02CC05                         ;$02CC00 |
     INC.w $1570,X                           ;$02CC02 |
 ADDR_02CC05:
@@ -10516,7 +10516,7 @@ DATA_02CDC5:
 PeaBouncerMain:
     JSR SubOffscreen0Bnk2
     JSR CODE_02CEE0                         ;$02CDCE |
-    LDA $9D                                 ;$02CDD1 |
+    LDA.b SpriteLock_9D                     ;$02CDD1 |
     BNE Return02CDFE                        ;$02CDD3 |
     LDA.w $1534,X                           ;$02CDD5 |
     BEQ CODE_02CDF1                         ;$02CDD8 |
@@ -11402,7 +11402,7 @@ CODE_02D3E7:
 
 Layer3SmashMain:
     JSL CODE_00FF61
-    LDA $9D                                 ;$02D3EE |
+    LDA.b SpriteLock_9D                     ;$02D3EE |
     BNE Return02D444                        ;$02D3F0 |
     JSR CODE_02D49C                         ;$02D3F2 |
     LDY.b #$00                              ;$02D3F5 |
@@ -11613,7 +11613,7 @@ CODE_02D587:
     LDA.w SpriteStatus_14C8,X               ;$02D58A |
     CMP.b #$02                              ;$02D58D |
     BEQ Return02D5A3                        ;$02D58F |
-    LDA $9D                                 ;$02D591 |
+    LDA.b SpriteLock_9D                     ;$02D591 |
     BNE Return02D5A3                        ;$02D593 |
     JSR SubOffscreen0Bnk2                   ;$02D595 |
     LDA.b #$E8                              ;$02D598 |
@@ -11682,7 +11682,7 @@ CODE_02D628:
 
 CODE_02D62A:
     JSR SubOffscreen3Bnk2
-    LDA $9D                                 ;$02D62D |
+    LDA.b SpriteLock_9D                     ;$02D62D |
     BNE CODE_02D653                         ;$02D62F |
     LDA $E4,X                               ;$02D631 |
     LDY.b #$02                              ;$02D633 |
@@ -12101,7 +12101,7 @@ CODE_02D8F6:
     BRA CODE_02D96B                         ;$02D902 |
 
 CODE_02D904:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02D977                        ;$02D906 |
     LDA $13                                 ;$02D908 |
     AND.b #$01                              ;$02D90A |
@@ -12293,7 +12293,7 @@ HammerFreq:
     db $1F,$0F,$0F,$0F,$0F,$0F,$0F
 
 CODE_02DA6E:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02DAE8                        ;$02DA70 |
     JSL SprSprPMarioSprRts                  ;$02DA72 |
     JSR SubOffscreen1Bnk2                   ;$02DA76 |
@@ -12470,7 +12470,7 @@ PutHammerBroOnPlat:
     JSR HammerBroGfx                        ;$02DB9A |
     PLX                                     ;$02DB9D |
 CODE_02DB9E:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02DC0E                        ;$02DBA0 |
     JSR SubOffscreen1Bnk2                   ;$02DBA2 |
     LDA $13                                 ;$02DBA5 |
@@ -12611,7 +12611,7 @@ SumoBrotherMain:
 
 CODE_02DCB7:
     JSR SumoBroGfx
-    LDA $9D                                 ;$02DCBA |
+    LDA.b SpriteLock_9D                     ;$02DCBA |
     BNE Return02DCE9                        ;$02DCBC |
     LDA.w SpriteStatus_14C8,X               ;$02DCBE |
     CMP.b #$08                              ;$02DCC1 |
@@ -12975,7 +12975,7 @@ VolcanoLotusMain:
 
 CODE_02DF93:
     JSR VolcanoLotusGfx
-    LDA $9D                                 ;$02DF96 |
+    LDA.b SpriteLock_9D                     ;$02DF96 |
     BNE Return02DFC8                        ;$02DF98 |
     STZ.w $151C,X                           ;$02DF9A |
     JSL SprSprPMarioSprRts                  ;$02DF9D |
@@ -13193,7 +13193,7 @@ CODE_02E0CD:
     STA $D8,X                               ;$02E11D |
     PLA                                     ;$02E11F |
     STA $64                                 ;$02E120 |
-    LDA $9D                                 ;$02E122 |
+    LDA.b SpriteLock_9D                     ;$02E122 |
     BNE Return02E158                        ;$02E124 |
     JSR SubOffscreen0Bnk2                   ;$02E126 |
     JSL SprSprPMarioSprRts                  ;$02E129 |
@@ -13369,7 +13369,7 @@ CODE_02E259:
     STA $1C                                 ;$02E25D |
     PLA                                     ;$02E25F |
     STA $64                                 ;$02E260 |
-    LDA $9D                                 ;$02E262 |
+    LDA.b SpriteLock_9D                     ;$02E262 |
     BNE CODE_02E2DE                         ;$02E264 |
     LDA $13                                 ;$02E266 |
     AND.b #$03                              ;$02E268 |
@@ -13471,7 +13471,7 @@ DATA_02E30F:
 
 CODE_02E311:
     JSR GasBubbleGfx
-    LDA $9D                                 ;$02E314 |
+    LDA.b SpriteLock_9D                     ;$02E314 |
     BNE Return02E351                        ;$02E316 |
     LDA.w SpriteStatus_14C8,X               ;$02E318 |
     CMP.b #$08                              ;$02E31B |
@@ -13599,7 +13599,7 @@ ExplodingBlkMain:
 
 CODE_02E41F:
     JSL GenericSprGfxRt2
-    LDA $9D                                 ;$02E423 |
+    LDA.b SpriteLock_9D                     ;$02E423 |
     BNE Return02E462                        ;$02E425 |
     BRA CODE_02E42D                         ;$02E427 |
 
@@ -13761,7 +13761,7 @@ CODE_02E54E:
     RTS                                     ;$02E558 |
 
 CODE_02E559:
-    LDY $9D
+    LDY.b SpriteLock_9D
     BNE Return02E57D                        ;$02E55B |
     PHA                                     ;$02E55D |
     JSR UpdateYPosNoGrvtyB1                 ;$02E55E |
@@ -13818,7 +13818,7 @@ MovingLedgeMain:
 
 CODE_02E5BC:
     JSR SubOffscreen0Bnk2
-    LDA $9D                                 ;$02E5BF |
+    LDA.b SpriteLock_9D                     ;$02E5BF |
     BNE CODE_02E5D7                         ;$02E5C1 |
     INC.w $1570,X                           ;$02E5C3 |
     LDY.b #$10                              ;$02E5C6 |
@@ -14017,7 +14017,7 @@ SwimJumpFishMain:
 
 CODE_02E727:
     JSL GenericSprGfxRt2
-    LDA $9D                                 ;$02E72B |
+    LDA.b SpriteLock_9D                     ;$02E72B |
     BNE Return02E74B                        ;$02E72D |
     JSR SubOffscreen0Bnk2                   ;$02E72F |
     JSL SprSprPMarioSprRts                  ;$02E732 |
@@ -14116,7 +14116,7 @@ CODE_02E7C9:
     JSL GenericSprGfxRt2
     PLA                                     ;$02E7CD |
     STA $64                                 ;$02E7CE |
-    LDA $9D                                 ;$02E7D0 |
+    LDA.b SpriteLock_9D                     ;$02E7D0 |
     BNE Return02E82C                        ;$02E7D2 |
     LDA.w $1540,X                           ;$02E7D4 |
     CMP.b #$08                              ;$02E7D7 |
@@ -14212,7 +14212,7 @@ CODE_02E845:
 CODE_02E872:
     JSR CODE_02E902
     JSR SubOffscreen0Bnk2                   ;$02E875 |
-    LDA $9D                                 ;$02E878 |
+    LDA.b SpriteLock_9D                     ;$02E878 |
     ORA.w $15A0,X                           ;$02E87A |
     BNE CODE_02E8B5                         ;$02E87D |
     JSR CODE_02D4FA                         ;$02E87F |
@@ -14320,7 +14320,7 @@ CODE_02E93D:
 
 CODE_02E94C:
     JSR CODE_02E9EC
-    LDA $9D                                 ;$02E94F |
+    LDA.b SpriteLock_9D                     ;$02E94F |
     BNE Return02E985                        ;$02E951 |
     STZ.w $1602,X                           ;$02E953 |
     JSR SubOffscreen0Bnk2                   ;$02E956 |
@@ -14619,7 +14619,7 @@ CODE_02EB44:
     RTS                                     ;$02EB48 |
 
 CODE_02EB49:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02EB7C                        ;$02EB4B |
     JSR SubOffscreen0Bnk2                   ;$02EB4D |
     JSL SprSprPMarioSprRts                  ;$02EB50 |
@@ -14965,7 +14965,7 @@ CODE_02EE09:
     ADC.b #$03                              ;$02EE14 |
     STA.w $0301,Y                           ;$02EE16 |
 CODE_02EE19:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE Return02EDF5                        ;$02EE1B |
     STZ $00                                 ;$02EE1D |
     LDY.b #$09                              ;$02EE1F |
@@ -15060,7 +15060,7 @@ ADDR_02EEB5:
     INC $C2,X                               ;$02EEB9 |
     STZ.w $18E3                             ;$02EEBB |
 ADDR_02EEBE:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE ADDR_02EF1C                         ;$02EEC0 |
     LDA $14                                 ;$02EEC2 |
     AND.b #$7F                              ;$02EEC4 |
@@ -15269,7 +15269,7 @@ WigglerSpeed:
 
 WigglerMainRt:
     JSR CODE_02F011
-    LDA $9D                                 ;$02F038 |
+    LDA.b SpriteLock_9D                     ;$02F038 |
     BEQ CODE_02F03F                         ;$02F03A |
     JMP CODE_02F0D8                         ;$02F03C |
 
@@ -16451,7 +16451,7 @@ CODE_02F89E:
     ADC $14                                 ;$02F8A1 |
     STA $00                                 ;$02F8A3 |
     AND.b #$07                              ;$02F8A5 |
-    ORA $9D                                 ;$02F8A7 |
+    ORA.b SpriteLock_9D                     ;$02F8A7 |
     BNE CODE_02F8C8                         ;$02F8A9 |
     LDA $00                                 ;$02F8AB |
     AND.b #$20                              ;$02F8AD |
@@ -16515,7 +16515,7 @@ DATA_02F90C:
 CODE_02F91C:
     LDA.w $0F4A,X
     BEQ CODE_02F93C                         ;$02F91F |
-    LDY $9D                                 ;$02F921 |
+    LDY.b SpriteLock_9D                     ;$02F921 |
     BNE CODE_02F928                         ;$02F923 |
     DEC.w $0F4A,X                           ;$02F925 |
 CODE_02F928:
@@ -16653,7 +16653,7 @@ CastleFlameGfxProp:
     db $09,$09,$49,$49
 
 CODE_02FA16:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02FA2B                         ;$02FA18 |
     JSL GetRand                             ;$02FA1A |
     AND.b #$07                              ;$02FA1E |
@@ -16721,7 +16721,7 @@ CODE_02FA98:
     RTS                                     ;$02FAA3 |
 
 CODE_02FAA4:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02FAF0                         ;$02FAA6 |
     LDA.w $0F4A,X                           ;$02FAA8 |
     BEQ CODE_02FAF0                         ;$02FAAB |
@@ -16880,7 +16880,7 @@ CODE_02FBC7:
 CODE_02FBCE:
     LDA $13
     AND.b #$07                              ;$02FBD0 |
-    ORA $9D                                 ;$02FBD2 |
+    ORA.b SpriteLock_9D                     ;$02FBD2 |
     BNE CODE_02FC3E                         ;$02FBD4 |
     JSL GetRand                             ;$02FBD6 |
     AND.b #$1F                              ;$02FBDA |
@@ -16932,7 +16932,7 @@ CODE_02FBE2:
 CODE_02FC3E:
     LDX.w $15E9
 CODE_02FC41:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02FC4D                         ;$02FC43 |
     LDA.w $0F9A,X                           ;$02FC45 |
     BEQ CODE_02FC4D                         ;$02FC48 |
@@ -16943,7 +16943,7 @@ CODE_02FC4D:
     JMP CODE_02FCE2                         ;$02FC52 |
 
 CODE_02FC55:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02FC8D                         ;$02FC57 |
     LDA.w $0F9A,X                           ;$02FC59 |
     BNE CODE_02FC78                         ;$02FC5C |
@@ -17014,7 +17014,7 @@ CODE_02FCD9:
     RTS                                     ;$02FCE1 |
 
 CODE_02FCE2:
-    LDA $9D
+    LDA.b SpriteLock_9D
     BNE CODE_02FD46                         ;$02FCE4 |
     LDA.w $1892,X                           ;$02FCE6 |
     CMP.b #$08                              ;$02FCE9 |
