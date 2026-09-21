@@ -2421,7 +2421,7 @@ CODE_0094E2:
     STA $64                                 ;$0094E9 |
     JSR CODE_00A635                         ;$0094EB |
     STZ $76                                 ;$0094EE |
-    STZ $72                                 ;$0094F0 |
+    STZ.b PlayerInAir_72                    ;$0094F0 |
     JSL set_player_pose                     ;$0094F2 |
     LDX.b #$17                              ;$0094F6 |
     LDY.b #$00                              ;$0094F8 |
@@ -4666,7 +4666,7 @@ CODE_00A6D5:
 CODE_00A6E0:
     STY $76
     LDA.b #$24                              ;$00A6E2 |
-    STA $72                                 ;$00A6E4 |
+    STA.b PlayerInAir_72                    ;$00A6E4 |
     STZ $9D                                 ;$00A6E6 |
     LDA.w $1434                             ;$00A6E8 |
     BEQ CODE_00A704                         ;$00A6EB |
@@ -7695,7 +7695,7 @@ DATA_00C7F9:
 yoshi_wings_animation:
     JSR disable_controls
     LDA.b #$0B                              ;$00C800 |
-    STA $72                                 ;$00C802 |
+    STA.b PlayerInAir_72                    ;$00C802 |
     JSR aerial_physics                      ;$00C804 |
     LDA $7D                                 ;$00C807 |
     BPL CODE_00C80F                         ;$00C809 |
@@ -7795,7 +7795,7 @@ CODE_00C8CE:
 CODE_00C8D1:
     JSR apply_player_speeds
     LDA.b #$24                              ;$00C8D4 |
-    STA $72                                 ;$00C8D6 |
+    STA.b PlayerInAir_72                    ;$00C8D6 |
     LDA.b #$6F                              ;$00C8D8 |
     LDY.w $187A                             ;$00C8DA |
     BEQ CODE_00C8E1                         ;$00C8DD |
@@ -7811,7 +7811,7 @@ CODE_00C8EC:
     BCS CODE_00C8F8                         ;$00C8EE |
     INC A                                   ;$00C8F0 |
     STA $96                                 ;$00C8F1 |
-    STZ $72                                 ;$00C8F3 |
+    STZ.b PlayerInAir_72                    ;$00C8F3 |
     STZ.w $140D                             ;$00C8F5 |
 CODE_00C8F8:
     JMP use_land_physics
@@ -7841,7 +7841,7 @@ ending_level:
     LDA.w $13C6                             ;$00C926 |
     ORA.w $13D2                             ;$00C929 |
     BEQ CODE_00C96B                         ;$00C92C |
-    LDA $72                                 ;$00C92E |
+    LDA.b PlayerInAir_72                    ;$00C92E |
     BEQ CODE_00C935                         ;$00C930 |
     JSR not_frozen_physics                  ;$00C932 |
 CODE_00C935:
@@ -8272,7 +8272,7 @@ not_frozen_physics:                         ;        \
     BCS no_special_collision                ;$00CCE6 |/
     BIT.w $0D9B                             ;$00CCE8 |\ If fighting Morton, Roy, or Ludwig,
     BVS .not_platform                       ;$00CCEB |/ don't use the platform collision.
-    LDA $72                                 ;$00CCED |\ If in the air,
+    LDA.b PlayerInAir_72                    ;$00CCED |\ If in the air,
     BNE .not_platform                       ;$00CCEF |/ use a solid boss room.
     REP #$20                                ;$00CCF1 |\
     LDA.w $1436                             ;$00CCF3 | | Set the player's platform X position.
@@ -8331,7 +8331,7 @@ CODE_00CD39:                                ;        |
     LDA $15                                 ;$00CD5E |
     AND.b #$0C                              ;$00CD60 |
     BEQ CODE_00CD79                         ;$00CD62 |
-    LDY $72                                 ;$00CD64 |
+    LDY.b PlayerInAir_72                    ;$00CD64 |
     BNE CODE_00CD72                         ;$00CD66 |
     AND.b #$08                              ;$00CD68 |
     BNE CODE_00CD72                         ;$00CD6A |
@@ -8508,7 +8508,7 @@ set_player_pose:
     LDA.w $14A2                             ;$00CEB1 |
     BNE lbl14A2Not0                         ;$00CEB4 |
     LDX.w $13DF                             ;$00CEB6 |
-    LDA $72                                 ;$00CEB9 |
+    LDA.b PlayerInAir_72                    ;$00CEB9 |
     BEQ MarioAnimAir                        ;$00CEBB |
     LDY.b #$04                              ;$00CEBD |
     BIT $7D                                 ;$00CEBF |
@@ -8582,7 +8582,7 @@ lbl14A2Not0:
     AND.b #$06                              ;$00CF22 |
     TAX                                     ;$00CF24 |
     TAY                                     ;$00CF25 |
-    LDA $72                                 ;$00CF26 |
+    LDA.b PlayerInAir_72                    ;$00CF26 |
     BEQ CODE_00CF2F                         ;$00CF28 |
     LDA $7D                                 ;$00CF2A |
     BMI CODE_00CF2F                         ;$00CF2C |
@@ -8627,7 +8627,7 @@ CODE_00CF6B:
     LDA.w $149C                             ;$00CF6F |
     BEQ CODE_00CF7E                         ;$00CF72 |
     LDA.b #$3F                              ;$00CF74 |
-    LDY $72                                 ;$00CF76 |
+    LDY.b PlayerInAir_72                    ;$00CF76 |
     BEQ CODE_00CF85                         ;$00CF78 |
     LDA.b #$16                              ;$00CF7A |
     BRA CODE_00CF85                         ;$00CF7C |
@@ -8649,7 +8649,7 @@ CODE_00CF88:
     LDA.b #$00                              ;$00CF96 |
     LDX.w $18C2                             ;$00CF98 |
     BNE MarioAnimNoAbs1                     ;$00CF9B |
-    LDA $72                                 ;$00CF9D |
+    LDA.b PlayerInAir_72                    ;$00CF9D |
     BEQ CODE_00CFB7                         ;$00CF9F |
     LDY.w $14A0                             ;$00CFA1 |
     BNE CODE_00CFBC                         ;$00CFA4 |
@@ -9054,7 +9054,7 @@ CODE_00D259:
     STA $7B                                 ;$00D25C |
     LDA.w pipe_y_speeds,Y                   ;$00D25E |
     STA $7D                                 ;$00D261 |
-    STZ $72                                 ;$00D263 |
+    STZ.b PlayerInAir_72                    ;$00D263 |
     JMP apply_player_speeds                 ;$00D265 |
 
 CODE_00D268:
@@ -9083,7 +9083,7 @@ slanted_pipe_animation:
     LDA.b #$02                              ;$00D28A |
     STA.w $13F9                             ;$00D28C |
     LDA.b #$0C                              ;$00D28F |
-    STA $72                                 ;$00D291 |
+    STA.b PlayerInAir_72                    ;$00D291 |
     JSR CODE_00CD8B                         ;$00D293 |
     DEC $88                                 ;$00D296 |
     BNE CODE_00D29D                         ;$00D298 |
@@ -9239,7 +9239,7 @@ DATA_00D5F0:
     db $1C,$0C
 
 land_physics:
-    LDA $72                                 ;$00D5F2 |
+    LDA.b PlayerInAir_72                    ;$00D5F2 |
     BEQ CODE_00D5F9                         ;$00D5F4 |
     JMP CODE_00D682                         ;$00D5F6 |
 
@@ -9415,7 +9415,7 @@ CODE_00D713:
 CODE_00D723:
     CMP.b #$23
     BMI CODE_00D737                         ;$00D725 |
-    LDA $72                                 ;$00D727 |
+    LDA.b PlayerInAir_72                    ;$00D727 |
     BNE CODE_00D732                         ;$00D729 |
     LDA.b #$10                              ;$00D72B |
     STA.w $14A0                             ;$00D72D |
@@ -9444,7 +9444,7 @@ CODE_00D742:
     LDA.w MarioAccel,X                      ;$00D751 |
     LDY $86                                 ;$00D754 |
     BEQ CODE_00D75F                         ;$00D756 |
-    LDY $72                                 ;$00D758 |
+    LDY.b PlayerInAir_72                    ;$00D758 |
     BNE CODE_00D75F                         ;$00D75A |
     LDA.w DATA_00D43D,X                     ;$00D75C |
 CODE_00D75F:
@@ -9454,7 +9454,7 @@ CODE_00D75F:
 
 CODE_00D764:
     JSR CODE_00D968
-    LDA $72                                 ;$00D767 |
+    LDA.b PlayerInAir_72                    ;$00D767 |
     BNE Return00D7A4                        ;$00D769 |
 CODE_00D76B:
     LDA.w $13E1
@@ -9471,7 +9471,7 @@ CODE_00D772:
     INY                                     ;$00D77B |
 CODE_00D77C:
     LDA.w $1493
-    ORA $72                                 ;$00D77F |
+    ORA.b PlayerInAir_72                    ;$00D77F |
     REP #$20                                ;$00D781 |
     BNE CODE_00D78C                         ;$00D783 |
     LDA.w DATA_00D309,Y                     ;$00D785 |
@@ -9523,7 +9523,7 @@ DATA_00D7D9:
 aerial_physics:
     LDY.w $1407                             ;$00D7E4 |
     BNE CODE_00D824                         ;$00D7E7 |
-    LDA $72                                 ;$00D7E9 |
+    LDA.b PlayerInAir_72                    ;$00D7E9 |
     BEQ CODE_00D811                         ;$00D7EB |
     LDA.w $148F                             ;$00D7ED |
     ORA.w $187A                             ;$00D7F0 |
@@ -9547,7 +9547,7 @@ CODE_00D811:
 CODE_00D814:
     STZ $73
     LDA.b #$0B                              ;$00D816 |
-    STA $72                                 ;$00D818 |
+    STA.b PlayerInAir_72                    ;$00D818 |
     STZ.w $1409                             ;$00D81A |
     JSR CODE_00D94F                         ;$00D81D |
     LDX.b #$02                              ;$00D820 |
@@ -9671,7 +9671,7 @@ CODE_00D8E7:
     LDA $19
     CMP.b #$02                              ;$00D8E9 |
     BNE CODE_00D928                         ;$00D8EB |
-    LDA $72                                 ;$00D8ED |
+    LDA.b PlayerInAir_72                    ;$00D8ED |
     CMP.b #$0C                              ;$00D8EF |
     BNE CODE_00D8FD                         ;$00D8F1 |
     LDY.b #$01                              ;$00D8F3 |
@@ -9720,7 +9720,7 @@ CODE_00D93C:
     CPX.b #$0B                              ;$00D940 |
     BNE CODE_00D948                         ;$00D942 |
     LDX.b #$24                              ;$00D944 |
-    STX $72                                 ;$00D946 |
+    STX.b PlayerInAir_72                    ;$00D946 |
 CODE_00D948:
     CLC
     ADC.w DATA_00D7A5,Y                     ;$00D949 |
@@ -9776,13 +9776,13 @@ water_physics:
     LDY $7D                                 ;$00D993 |
     LDA.w $148F                             ;$00D995 |
     BEQ CODE_00D9EB                         ;$00D998 |
-    LDA $72                                 ;$00D99A |
+    LDA.b PlayerInAir_72                    ;$00D99A |
     BNE CODE_00D9AF                         ;$00D99C |
     LDA $16                                 ;$00D99E |
     ORA $18                                 ;$00D9A0 |
     BPL CODE_00D9AF                         ;$00D9A2 |
     LDA.b #$0B                              ;$00D9A4 |
-    STA $72                                 ;$00D9A6 |
+    STA.b PlayerInAir_72                    ;$00D9A6 |
     STZ.w $13ED                             ;$00D9A8 |
     LDY.b #$F0                              ;$00D9AB |
     BRA CODE_00D9B5                         ;$00D9AD |
@@ -9835,10 +9835,10 @@ CODE_00D9EB:
     LDA.w $13FA                             ;$00D9F1 |
     BNE CODE_00DA0B                         ;$00D9F4 |
     JSR CODE_00DAA9                         ;$00D9F6 |
-    LDA $72                                 ;$00D9F9 |
+    LDA.b PlayerInAir_72                    ;$00D9F9 |
     BNE CODE_00DA06                         ;$00D9FB |
     LDA.b #$0B                              ;$00D9FD |
-    STA $72                                 ;$00D9FF |
+    STA.b PlayerInAir_72                    ;$00D9FF |
     STZ.w $13ED                             ;$00DA01 |
     LDY.b #$F0                              ;$00DA04 |
 CODE_00DA06:
@@ -9871,7 +9871,7 @@ CODE_00DA25:
     LDA.w DATA_00D984,X                     ;$00DA2A |
 CODE_00DA2D:
     STA $7D
-    LDA $72                                 ;$00DA2F |
+    LDA.b PlayerInAir_72                    ;$00DA2F |
     BNE CODE_00DA40                         ;$00DA31 |
     LDA $15                                 ;$00DA33 |
     AND.b #$04                              ;$00DA35 |
@@ -9902,7 +9902,7 @@ CODE_00DA48:
     ADC.b #$04                              ;$00DA5B |
 CODE_00DA5D:
     TAY
-    LDA $72                                 ;$00DA5E |
+    LDA.b PlayerInAir_72                    ;$00DA5E |
     BEQ CODE_00DA64                         ;$00DA60 |
     INY                                     ;$00DA62 |
     INY                                     ;$00DA63 |
@@ -9916,7 +9916,7 @@ CODE_00DA69:
     LDA.w $1403                             ;$00DA6C |
     BEQ CODE_00DA79                         ;$00DA6F |
     LDX.b #$1E                              ;$00DA71 |
-    LDA $72                                 ;$00DA73 |
+    LDA.b PlayerInAir_72                    ;$00DA73 |
     BNE CODE_00DA79                         ;$00DA75 |
     INX                                     ;$00DA77 |
     INX                                     ;$00DA78 |
@@ -9927,7 +9927,7 @@ CODE_00DA7C:
     JSL set_player_pose                     ;$00DA7F |
     LDA.w $14A6                             ;$00DA83 |
     BNE Return00DA8C                        ;$00DA86 |
-    LDA $72                                 ;$00DA88 |
+    LDA.b PlayerInAir_72                    ;$00DA88 |
     BNE CODE_00DA8D                         ;$00DA8A |
 Return00DA8C:
     RTS
@@ -10067,7 +10067,7 @@ CODE_00DB96:
     BIT $16                                 ;$00DB98 |
     BPL CODE_00DBAC                         ;$00DB9A |
     LDA.b #$0B                              ;$00DB9C |
-    STA $72                                 ;$00DB9E |
+    STA.b PlayerInAir_72                    ;$00DB9E |
     LDA.w DATA_00DABB,Y                     ;$00DBA0 |
     STA $7D                                 ;$00DBA3 |
     LDA.b #$01                              ;$00DBA5 |
@@ -10903,7 +10903,7 @@ level_collision:
     LDA.w $13EF                             ;$00E938 |\
     STA $8D                                 ;$00E93B | | Backup the on ground flag,
     STZ.w $13EF                             ;$00E93D | |
-    LDA $72                                 ;$00E940 | | and the in air flag.
+    LDA.b PlayerInAir_72                    ;$00E940 | | and the in air flag.
     STA $8F                                 ;$00E942 |/
     LDA $5B                                 ;$00E944 |\ If layer 2 isn't interactive,
     BPL .no_layer2_collision                ;$00E946 |/ skip to processing layer 1 collision.
@@ -11088,7 +11088,7 @@ CODE_00EA92:
     BNE CODE_00EA62                         ;$00EA96 |
     JSR CODE_00FDA5                         ;$00EA98 |
     LDA.b #$0B                              ;$00EA9B |
-    STA $72                                 ;$00EA9D |
+    STA.b PlayerInAir_72                    ;$00EA9D |
     LDA.b #$AA                              ;$00EA9F |
     STA $7D                                 ;$00EAA1 |
 CODE_00EAA3:
@@ -11137,7 +11137,7 @@ layer_collision:
     SBC.w DATA_00EAB9,Y                     ;$00EAEF |
     EOR.w DATA_00EAB9,Y                     ;$00EAF2 |
     BMI walk_off_wall                       ;$00EAF5 |
-    LDA $72                                 ;$00EAF7 |
+    LDA.b PlayerInAir_72                    ;$00EAF7 |
     ORA.w $148F                             ;$00EAF9 |
     ORA $73                                 ;$00EAFC |
     ORA.w $187A                             ;$00EAFE |
@@ -11206,7 +11206,7 @@ walk_off_wall:                              ;               |
     STA $96                                 ;$00EB67 |
     SEP #$20                                ;$00EB69 |
     LDA.b #$24                              ;$00EB6B |
-    STA $72                                 ;$00EB6D |
+    STA.b PlayerInAir_72                    ;$00EB6D |
     LDA.b #$E0                              ;$00EB6F |
     STA $7D                                 ;$00EB71 |
 stop_wall_running:
@@ -11454,7 +11454,7 @@ CODE_00ED0F:
     BPL CODE_00ED4A                         ;$00ED12 |
     CMP.b #$F9                              ;$00ED14 |
     BCS CODE_00ED28                         ;$00ED16 |
-    LDY $72                                 ;$00ED18 |
+    LDY.b PlayerInAir_72                    ;$00ED18 |
     BNE CODE_00ED28                         ;$00ED1A |
     LDA $77                                 ;$00ED1C |
     AND.b #$FC                              ;$00ED1E |
@@ -11619,11 +11619,11 @@ CODE_00EE1D:
 CODE_00EE2D:
     LDA $77
     AND.b #$04                              ;$00EE2F |
-    ORA $72                                 ;$00EE31 |
+    ORA.b PlayerInAir_72                    ;$00EE31 |
     BNE Return00EE39                        ;$00EE33 |
 CODE_00EE35:
     LDA.b #$24
-    STA $72                                 ;$00EE37 |
+    STA.b PlayerInAir_72                    ;$00EE37 |
 Return00EE39:
     RTS
 
@@ -11795,7 +11795,7 @@ CODE_00EF60:
     INC.w $13EF                             ;$00EF65 |
 CODE_00EF68:
     STZ.w $18B5
-    STZ $72                                 ;$00EF6B |
+    STZ.b PlayerInAir_72                    ;$00EF6B |
     STZ $74                                 ;$00EF6D |
     STZ.w $1406                             ;$00EF6F |
     STZ.w $140D                             ;$00EF72 |
@@ -13051,7 +13051,7 @@ ProcessVerticalScroll00F7F4:
 .CODE_00F856:
     LDX $75
     BEQ .CODE_00F85E                        ;$00F858 |
-    LDX $72                                 ;$00F85A |
+    LDX.b PlayerInAir_72                    ;$00F85A |
     BNE .CODE_00F869                        ;$00F85C |
 .CODE_00F85E:
     LDX.w $1412
@@ -13068,7 +13068,7 @@ ProcessVerticalScroll00F7F4:
 .CODE_00F875:
     LDX.w $1404
     BNE .CODE_00F881                        ;$00F878 |
-    LDX $72                                 ;$00F87A |
+    LDX.b PlayerInAir_72                    ;$00F87A |
     BNE .Return00F8AA                       ;$00F87C |
     INC.w $1404                             ;$00F87E |
 .CODE_00F881:
@@ -13819,7 +13819,7 @@ CODE_00FDC3:
     LDA $7D                                 ;$00FDF2 |
     BMI Return00FE0D                        ;$00FDF4 |
     STZ $7D                                 ;$00FDF6 |
-    LDY $72                                 ;$00FDF8 |
+    LDY.b PlayerInAir_72                    ;$00FDF8 |
     BEQ CODE_00FDFE                         ;$00FDFA |
     STZ $7B                                 ;$00FDFC |
 CODE_00FDFE:
@@ -13870,7 +13870,7 @@ CODE_00FE16:
 CODE_00FE4A:
     LDA $13
     AND.b #$03                              ;$00FE4C |
-    ORA $72                                 ;$00FE4E |
+    ORA.b PlayerInAir_72                    ;$00FE4E |
     ORA $7F                                 ;$00FE50 |
     ORA $81                                 ;$00FE52 |
     ORA $9D                                 ;$00FE54 |

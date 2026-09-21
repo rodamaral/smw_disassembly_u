@@ -10779,7 +10779,7 @@ CODE_02CFAF:
     PLP                                     ;$02CFC2 |
     SBC.b #$00                              ;$02CFC3 |
     STA $97                                 ;$02CFC5 |
-    STZ $72                                 ;$02CFC7 |
+    STZ.b PlayerInAir_72                    ;$02CFC7 |
     LDA.b #$02                              ;$02CFC9 |
     STA.w $1471                             ;$02CFCB |
     LDA.w $1528,X                           ;$02CFCE |
@@ -11536,7 +11536,7 @@ CODE_02D4A8:
     CMP.w #$0080                            ;$02D4CC |
     SEP #$20                                ;$02D4CF |
     BCS CODE_02D4E5                         ;$02D4D1 |
-    LDA $72                                 ;$02D4D3 |
+    LDA.b PlayerInAir_72                    ;$02D4D3 |
     BNE CODE_02D4DC                         ;$02D4D5 |
     JSL HurtMario                           ;$02D4D7 |
     RTS                                     ;$02D4DB |
@@ -15009,7 +15009,7 @@ CODE_02EE57:
     LDX.w $15E9                             ;$02EE6D |
     LDA.b #$01                              ;$02EE70 |
     STA.w $1471                             ;$02EE72 |
-    STZ $72                                 ;$02EE75 |
+    STZ.b PlayerInAir_72                    ;$02EE75 |
     LDA.b #$1C                              ;$02EE77 |
     LDY.w $187A                             ;$02EE79 |
     BEQ CODE_02EE80                         ;$02EE7C |

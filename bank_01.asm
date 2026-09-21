@@ -4413,7 +4413,7 @@ CODE_01A015:
     LDA $9E,X                               ;$01A01A |
     CMP.b #$0F                              ;$01A01C |
     BNE CODE_01A026                         ;$01A01E |
-    LDA $72                                 ;$01A020 |
+    LDA.b PlayerInAir_72                    ;$01A020 |
     BNE CODE_01A026                         ;$01A022 |
     LDY.b #$EC                              ;$01A024 |
 CODE_01A026:
@@ -5643,7 +5643,7 @@ CODE_01A897:
 CODE_01A8C0:
     JSR IsOnGround
     BEQ CODE_01A8C9                         ;$01A8C3 |
-    LDA $72                                 ;$01A8C5 |
+    LDA.b PlayerInAir_72                    ;$01A8C5 |
     BEQ CODE_01A8E6                         ;$01A8C7 |
 CODE_01A8C9:
     LDA.w $1656,X
@@ -5935,7 +5935,7 @@ CODE_01AACD:
     LDA $7D
     BMI Return01AB2C                        ;$01AACF |
     STZ $7D                                 ;$01AAD1 |
-    STZ $72                                 ;$01AAD3 |
+    STZ.b PlayerInAir_72                    ;$01AAD3 |
     INC.w $1471                             ;$01AAD5 |
     LDA.b #$1F                              ;$01AAD8 |
     LDY.w $187A                             ;$01AADA |
@@ -11543,7 +11543,7 @@ CODE_01D286:
     BCC Return01D2A7                        ;$01D289 |
     LDA.b #$20                              ;$01D28B |
     STA.w $1887                             ;$01D28D |
-    LDA $72                                 ;$01D290 |
+    LDA.b PlayerInAir_72                    ;$01D290 |
     BNE CODE_01D299                         ;$01D292 |
     LDA.b #$28                              ;$01D294 |
     STA.w $18BD                             ;$01D296 |
@@ -11576,7 +11576,7 @@ CODE_01D2BD:
     BNE Return01D318                        ;$01D2CD |
     LDA.b #$08                              ;$01D2CF |
     STA.w $1FE2,X                           ;$01D2D1 |
-    LDA $72                                 ;$01D2D4 |
+    LDA.b PlayerInAir_72                    ;$01D2D4 |
     BEQ CODE_01D319                         ;$01D2D6 |
     LDA.w $1602,X                           ;$01D2D8 |
     CMP.b #$10                              ;$01D2DB |
@@ -14224,7 +14224,7 @@ CODE_01E664:
     LDA.w $14D4,X                           ;$01E673 |
     SBC.b #$00                              ;$01E676 |
     STA $97                                 ;$01E678 |
-    STZ $72                                 ;$01E67A |
+    STZ.b PlayerInAir_72                    ;$01E67A |
     STZ $7B                                 ;$01E67C |
     LDA.b #$02                              ;$01E67E |
     STA.w $1471                             ;$01E680 |
@@ -14244,7 +14244,7 @@ CODE_01E69A:
     BPL CODE_01E6A7                         ;$01E69C |
 CODE_01E69E:
     LDA.b #$0B
-    STA $72                                 ;$01E6A0 |
+    STA.b PlayerInAir_72                    ;$01E6A0 |
     LDY.b #$80                              ;$01E6A2 |
     STY.w $1406                             ;$01E6A4 |
 CODE_01E6A7:
@@ -14491,7 +14491,7 @@ CODE_01E866:
     LDA $D4                                 ;$01E877 |
     ADC.b #$00                              ;$01E879 |
     STA.w $14D4,X                           ;$01E87B |
-    STZ $72                                 ;$01E87E |
+    STZ.b PlayerInAir_72                    ;$01E87E |
     INC.w $1471                             ;$01E880 |
     INC.w $18C2                             ;$01E883 |
     LDA $16                                 ;$01E886 |
@@ -14823,7 +14823,7 @@ draw_yoshi_01EA70:
 .reset_animation_timer_01EADF:
     STZ.w $1570,X
 .not_running_01EAE2:
-    LDA $72
+    LDA.b PlayerInAir_72
     BEQ +                                   ;$01EAE4 |
     LDY.b #$02                              ;$01EAE6 |
     LDA $7D                                 ;$01EAE8 |
@@ -14834,7 +14834,7 @@ draw_yoshi_01EA70:
 +   LDA.w $15AC,X                           ;$01EAF0 |
     BEQ +                                   ;$01EAF3 |
     LDY.b #$03                              ;$01EAF5 |
-+   LDA $72                                 ;$01EAF7 |
++   LDA.b PlayerInAir_72                    ;$01EAF7 |
     BNE .player_in_air_01EB21               ;$01EAF9 |
     LDA.w $151C,X                           ;$01EAFB |
     BEQ .tongue_in_01EB0C                   ;$01EAFE |
@@ -15025,7 +15025,7 @@ yoshi_01EBCA:
     db $FF,$00
 
 .game_running_01EC61:
-    LDA $72
+    LDA.b PlayerInAir_72
     BNE .CODE_01EC6A                        ;$01EC63 |
     LDA.w $18DE                             ;$01EC65 |
     BNE .CODE_01EC6D                        ;$01EC68 |
@@ -15133,7 +15133,7 @@ CODE_01ED0C:
     JSL GetMarioClipping                    ;$01ED2E |
     JSL CheckForContact                     ;$01ED32 |
     BCC CODE_01ED70                         ;$01ED36 |
-    LDA $72                                 ;$01ED38 |
+    LDA.b PlayerInAir_72                    ;$01ED38 |
     BEQ CODE_01ED70                         ;$01ED3A |
     LDA.w $1470                             ;$01ED3C |
     ORA.w $187A                             ;$01ED3F |
@@ -15189,7 +15189,7 @@ CODE_01ED9E:
     LDA $7B                                 ;$01EDAD |
     STA $B6,X                               ;$01EDAF |
     LDA.b #$A0                              ;$01EDB1 |
-    LDY $72                                 ;$01EDB3 |
+    LDY.b PlayerInAir_72                    ;$01EDB3 |
     BNE CODE_01EDC1                         ;$01EDB5 |
     JSR SubHorizPos                         ;$01EDB7 |
     LDA.w DATA_01EBC0,Y                     ;$01EDBA |
@@ -15331,7 +15331,7 @@ handle_off_yoshi_01EE61:
 ;Draw Yoshi Wings:
     LDA.w $187A                             ;$01EEE6 |
     BEQ .not_flying_01EF13                  ;$01EEE9 | just draw the wings if not on Yoshi
-    LDA $72                                 ;$01EEEB |
+    LDA.b PlayerInAir_72                    ;$01EEEB |
     BNE .wings_flying_01EF00                ;$01EEED |\
     LDA $7B                                 ;$01EEEF ||
     BPL +                                   ;$01EEF1 ||
@@ -17238,7 +17238,7 @@ CODE_01FC84:
     BNE Return01FD09                        ;$01FCC3 |
     LDA.b #$08                              ;$01FCC5 |
     STA.w $1558,X                           ;$01FCC7 |
-    LDA $72                                 ;$01FCCA |
+    LDA.b PlayerInAir_72                    ;$01FCCA |
     BEQ CODE_01FD05                         ;$01FCCC |
     LDA.b #$28                              ;$01FCCE |
     STA.w $1DFC                             ;$01FCD0 |
