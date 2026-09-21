@@ -1696,7 +1696,10 @@ SpriteMisc_154C: skip 12
 SpriteMisc_1558: skip 12
 SpriteMisc_1564: skip 12
 SpriteMisc_1570: skip 12
-SpriteMisc_157C: skip 12
+SpriteDir_157C: skip 12
+; Valid values
+!SpriteDir_Left = 0
+!SpriteDir_Right = 1
 SpriteBlockedDirs_1588: skip 12
 SpriteMisc_1594: skip 12
 SpriteOffscreenX_15A0: skip 12

@@ -2363,7 +2363,7 @@ CODE_0CA778:
     LDA.b #$02                              ;$0CA78D |
     STA $C2                                 ;$0CA78F |
     LDA.b #$01                              ;$0CA791 |
-    STA.w $157C                             ;$0CA793 |
+    STA.w SpriteDir_157C                    ;$0CA793 | WARN: unindexed table
     LDA.w $1456                             ;$0CA796 |
     CLC                                     ;$0CA799 |
     ADC.b #$38                              ;$0CA79A |

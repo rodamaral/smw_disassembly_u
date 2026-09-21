@@ -13591,7 +13591,7 @@ ADDR_00FC25:
     LDA.b #$03                              ;$00FC63 |
     STA.w $00C2,y                           ;$00FC65 |
     LDA.b #$00                              ;$00FC68 |
-    STA.w $157C,Y                           ;$00FC6A |
+    STA.w SpriteDir_157C,Y                  ;$00FC6A |
     LDA.b #$10                              ;$00FC6D |
     STA.w $00B6,y                           ;$00FC6F |
 Return00FC72:
@@ -13649,7 +13649,7 @@ CODE_00FCD5:
     INC $C2,X                               ;$00FCD8 |
     LDA $76                                 ;$00FCDA |
     EOR.b #$01                              ;$00FCDC |
-    STA.w $157C,X                           ;$00FCDE |
+    STA.w SpriteDir_157C,X                  ;$00FCDE |
     DEC.w $160E,X                           ;$00FCE1 |
     INX                                     ;$00FCE4 |
     STX.w $18DF                             ;$00FCE5 |

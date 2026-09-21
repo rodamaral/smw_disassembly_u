@@ -4540,7 +4540,7 @@ ZeroSpriteTables:
     STZ.w $151C,X                           ;$07F72A |
     STZ.w $1528,X                           ;$07F72D |
     STZ.w $1534,X                           ;$07F730 |
-    STZ.w $157C,X                           ;$07F733 |
+    STZ.w SpriteDir_157C,X                  ;$07F733 |
     STZ.w $1588,X                           ;$07F736 |
     STZ.w $15C4,X                           ;$07F739 |
     STZ.w $1602,X                           ;$07F73C |

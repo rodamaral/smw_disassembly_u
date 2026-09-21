@@ -1242,7 +1242,7 @@ CODE_0289A5:
     PLA                                     ;$0289C4 |
     CMP.b #$7D                              ;$0289C5 |
     BNE CODE_0289CD                         ;$0289C7 |
-    INC.w $157C,X                           ;$0289C9 |
+    INC.w SpriteDir_157C,X                  ;$0289C9 |
     RTL                                     ;$0289CC |
 
 CODE_0289CD:
@@ -2658,7 +2658,7 @@ CODE_029404:
     STA $AA,X                               ;$029417 |
     LDA.b #$10                              ;$029419 |
     STA.w $1540,X                           ;$02941B |
-    STZ.w $157C,X                           ;$02941E |
+    STZ.w SpriteDir_157C,X                  ;$02941E |
     LDA.b #$20                              ;$029421 |
     STA.w $1558,X                           ;$029423 |
 Return029426:
@@ -2737,7 +2737,7 @@ CODE_0294B0:
     STA $B6,X                               ;$0294B8 |
     TYA                                     ;$0294BA |
     EOR.b #$01                              ;$0294BB |
-    STA.w $157C,X                           ;$0294BD |
+    STA.w SpriteDir_157C,X                  ;$0294BD |
     RTS                                     ;$0294C0 |
 
 GroundPound:
@@ -4463,7 +4463,7 @@ TurnSpriteToCoin:
     JSR SubHorzPosBnk2                      ;$02A13A |
     TYA                                     ;$02A13D |
     EOR.b #$01                              ;$02A13E |
-    STA.w $157C,X                           ;$02A140 |
+    STA.w SpriteDir_157C,X                  ;$02A140 |
 FireRtNextSprite:
     LDY.w $185E
     DEX                                     ;$02A146 |
@@ -6521,7 +6521,7 @@ GenerateFire:
     LDA $1B                                 ;$02B071 |
     ADC.b #$00                              ;$02B073 |
     STA.w $14E0,X                           ;$02B075 |
-    INC.w $157C,X                           ;$02B078 |
+    INC.w SpriteDir_157C,X                  ;$02B078 |
 Return02B07B:
     RTS
 
@@ -6732,7 +6732,7 @@ GenSuperKoopa:
     ADC.w DATA_02B1BA,Y                     ;$02B1FC |
     STA.w $14E0,X                           ;$02B1FF |
     TYA                                     ;$02B202 |
-    STA.w $157C,X                           ;$02B203 |
+    STA.w SpriteDir_157C,X                  ;$02B203 |
 Return02B206:
     RTS
 
@@ -6768,7 +6768,7 @@ GenerateBubble:
     ADC.w DATA_02B1BA,Y                     ;$02B243 |
     STA.w $14E0,X                           ;$02B246 |
     TYA                                     ;$02B249 |
-    STA.w $157C,X                           ;$02B24A |
+    STA.w SpriteDir_157C,X                  ;$02B24A |
     JSL GetRand                             ;$02B24D |
     AND.b #$03                              ;$02B251 |
     TAY                                     ;$02B253 |
@@ -7020,7 +7020,7 @@ LaunchTorpedo:
     JSL InitSpriteTables                    ;$02B40F |
     JSR SubHorzPosBnk2                      ;$02B413 |
     TYA                                     ;$02B416 |
-    STA.w $157C,X                           ;$02B417 |
+    STA.w SpriteDir_157C,X                  ;$02B417 |
     STA $00                                 ;$02B41A |
     LDA.b #$30                              ;$02B41C |
     STA.w $1540,X                           ;$02B41E |
@@ -7395,9 +7395,9 @@ PokeyAlive:
     BNE CODE_02B6CF                         ;$02B6C6 |
     JSR CODE_02D4FA                         ;$02B6C8 |
     TYA                                     ;$02B6CB |
-    STA.w $157C,X                           ;$02B6CC |
+    STA.w SpriteDir_157C,X                  ;$02B6CC |
 CODE_02B6CF:
-    LDY.w $157C,X
+    LDY.w SpriteDir_157C,X
     LDA.w PokeySpeed,Y                      ;$02B6D2 |
     STA $B6,X                               ;$02B6D5 |
     JSR UpdateXPosNoGrvtyB1                 ;$02B6D7 |
@@ -7418,9 +7418,9 @@ CODE_02B6F5:
     LDA.w $1588,X
     AND.b #$03                              ;$02B6F8 |
     BEQ CODE_02B704                         ;$02B6FA |
-    LDA.w $157C,X                           ;$02B6FC |
+    LDA.w SpriteDir_157C,X                  ;$02B6FC |
     EOR.b #$01                              ;$02B6FF |
-    STA.w $157C,X                           ;$02B701 |
+    STA.w SpriteDir_157C,X                  ;$02B701 |
 CODE_02B704:
     JSR CODE_02B7AC
     LDY.b #$00                              ;$02B707 |
@@ -7683,7 +7683,7 @@ CODE_02B8BC:
     LDA $13
     AND.b #$03                              ;$02B8BE |
     BNE CODE_02B8D2                         ;$02B8C0 |
-    LDY.w $157C,X                           ;$02B8C2 |
+    LDY.w SpriteDir_157C,X                  ;$02B8C2 |
     LDA $B6,X                               ;$02B8C5 |
     CMP.w TorpedoMaxSpeed,Y                 ;$02B8C7 |
     BEQ CODE_02B8D2                         ;$02B8CA |
@@ -7727,7 +7727,7 @@ TorpedoGfxRt:
     LDA.w $15F6,X                           ;$02B903 |
     ORA $64                                 ;$02B906 |
     STA $02                                 ;$02B908 |
-    LDA.w $157C,X                           ;$02B90A |
+    LDA.w SpriteDir_157C,X                  ;$02B90A |
     TAX                                     ;$02B90D |
     LDA $00                                 ;$02B90E |
     CLC                                     ;$02B910 |
@@ -7785,7 +7785,7 @@ CODE_02B969:
     LDA.w $14E0,X                           ;$02B96D |
     STA $01                                 ;$02B970 |
     PHX                                     ;$02B972 |
-    LDA.w $157C,X                           ;$02B973 |
+    LDA.w SpriteDir_157C,X                  ;$02B973 |
     TAX                                     ;$02B976 |
     LDA $00                                 ;$02B977 |
     CLC                                     ;$02B979 |
@@ -8031,7 +8031,7 @@ draw_yoshi_wings_02BB23:
     STA $01                                 ;$02BB35 |
     LDY.b #$F8                              ;$02BB37 |
     PHX                                     ;$02BB39 |
-    LDA.w $157C,X                           ;$02BB3A |
+    LDA.w SpriteDir_157C,X                  ;$02BB3A |
     ASL                                     ;$02BB3D |
     ADC $02                                 ;$02BB3E |
     TAX                                     ;$02BB40 |
@@ -8143,7 +8143,7 @@ CODE_02BC00:
     AND.b #$04                              ;$02BC02 |
     LSR                                     ;$02BC04 |
     LSR                                     ;$02BC05 |
-    STA.w $157C,X                           ;$02BC06 |
+    STA.w SpriteDir_157C,X                  ;$02BC06 |
     JSL GenericSprGfxRt1                    ;$02BC09 |
     RTS                                     ;$02BC0D |
 
@@ -8803,7 +8803,7 @@ CODE_02C0CA:
 
 ADDR_02C0CF:
     LDA.b #$08
-    LDY.w $157C,X                           ;$02C0D1 |
+    LDY.w SpriteDir_157C,X                  ;$02C0D1 |
     BEQ ADDR_02C0D7                         ;$02C0D4 |
     INC A                                   ;$02C0D6 |
 ADDR_02C0D7:
@@ -8859,7 +8859,7 @@ CODE_02C126:
     INY                                     ;$02C12C |
 CODE_02C12D:
     TYA
-    STA.w $157C,X                           ;$02C12E |
+    STA.w SpriteDir_157C,X                  ;$02C12E |
     RTS                                     ;$02C131 |
 
 DATA_02C132:
@@ -8908,7 +8908,7 @@ CODE_02C181:
     LDY.w $1570,X
     LDA.w DATA_02C136,Y                     ;$02C184 |
     STA.w $1602,X                           ;$02C187 |
-    LDY.w $157C,X                           ;$02C18A |
+    LDY.w SpriteDir_157C,X                  ;$02C18A |
     LDA.w DATA_02C1F3,Y                     ;$02C18D |
     STA.w $151C,X                           ;$02C190 |
     RTS                                     ;$02C193 |
@@ -8929,7 +8929,7 @@ CODE_02C19A:
     STA.w SpriteStatus_14C8,Y               ;$02C1A2 |
     LDA.b #$48                              ;$02C1A5 |
     STA.w $009E,y                           ;$02C1A7 |
-    LDA.w $157C,X                           ;$02C1AA |
+    LDA.w SpriteDir_157C,X                  ;$02C1AA |
     STA $02                                 ;$02C1AD |
     LDA $E4,X                               ;$02C1AF |
     STA $00                                 ;$02C1B1 |
@@ -9346,7 +9346,7 @@ CODE_02C479:
     ADC.b #$00                              ;$02C492 |
     STA.w $1729,Y                           ;$02C494 |
     PHX                                     ;$02C497 |
-    LDA.w $157C,X                           ;$02C498 |
+    LDA.w SpriteDir_157C,X                  ;$02C498 |
     TAX                                     ;$02C49B |
     LDA $00                                 ;$02C49C |
     CLC                                     ;$02C49E |
@@ -9449,7 +9449,7 @@ Return02C555:
 CODE_02C556:
     JSR CODE_02D4FA
     TYA                                     ;$02C559 |
-    STA.w $157C,X                           ;$02C55A |
+    STA.w SpriteDir_157C,X                  ;$02C55A |
     LDA.w DATA_02C639,Y                     ;$02C55D |
     STA.w $151C,X                           ;$02C560 |
     RTS                                     ;$02C563 |
@@ -9537,7 +9537,7 @@ CODE_02C5FC:
 CODE_02C602:
     JSR CODE_02D4FA
     TYA                                     ;$02C605 |
-    STA.w $157C,X                           ;$02C606 |
+    STA.w SpriteDir_157C,X                  ;$02C606 |
     LDA $0F                                 ;$02C609 |
     CLC                                     ;$02C60B |
     ADC.b #$50                              ;$02C60C |
@@ -9598,9 +9598,9 @@ DATA_02C666:
 CODE_02C668:
     LDA.w $1540,X
     BNE CODE_02C677                         ;$02C66B |
-    LDA.w $157C,X                           ;$02C66D |
+    LDA.w SpriteDir_157C,X                  ;$02C66D |
     EOR.b #$01                              ;$02C670 |
-    STA.w $157C,X                           ;$02C672 |
+    STA.w SpriteDir_157C,X                  ;$02C672 |
     BRA CODE_02C65C                         ;$02C675 |
 
 CODE_02C677:
@@ -9651,7 +9651,7 @@ CODE_02C6BA:
     BCS CODE_02C6D7                         ;$02C6C4 |
     JSR CODE_02D4FA                         ;$02C6C6 |
     TYA                                     ;$02C6C9 |
-    CMP.w $157C,X                           ;$02C6CA |
+    CMP.w SpriteDir_157C,X                  ;$02C6CA |
     BNE CODE_02C6D7                         ;$02C6CD |
     LDA.b #$20                              ;$02C6CF |
     STA.w $1540,X                           ;$02C6D1 |
@@ -9666,7 +9666,7 @@ CODE_02C6D7:
     ORA.b #$40                              ;$02C6E7 |
     STA.w $1540,X                           ;$02C6E9 |
 CODE_02C6EC:
-    LDY.w $157C,X
+    LDY.w SpriteDir_157C,X
     LDA.w DATA_02C639,Y                     ;$02C6EF |
     STA.w $151C,X                           ;$02C6F2 |
     LDA.w $1588,X                           ;$02C6F5 |
@@ -9893,7 +9893,7 @@ CODE_02C8AB:
     STA $00                                 ;$02C8AF |
     LDA.w $151C,X                           ;$02C8B1 |
     STA $02                                 ;$02C8B4 |
-    LDA.w $157C,X                           ;$02C8B6 |
+    LDA.w SpriteDir_157C,X                  ;$02C8B6 |
     STA $03                                 ;$02C8B9 |
     LDA.w $15F6,X                           ;$02C8BB |
     ORA $64                                 ;$02C8BE |
@@ -10117,7 +10117,7 @@ ChuckGfxProp:
 
 CODE_02CAFC:
     LDY $05
-    LDA.w $157C,X                           ;$02CAFE |
+    LDA.w SpriteDir_157C,X                  ;$02CAFE |
     PHX                                     ;$02CB01 |
     TAX                                     ;$02CB02 |
     ASL                                     ;$02CB03 |
@@ -10164,7 +10164,7 @@ DATA_02CB41:
 CODE_02CB53:
     PHX
     STA $02                                 ;$02CB54 |
-    LDY.w $157C,X                           ;$02CB56 |
+    LDY.w SpriteDir_157C,X                  ;$02CB56 |
     BNE CODE_02CB5E                         ;$02CB59 |
     CLC                                     ;$02CB5B |
     ADC.b #$06                              ;$02CB5C |
@@ -10237,7 +10237,7 @@ CODE_02CBB9:
     PHX                                     ;$02CBC2 |
     LDA $02                                 ;$02CBC3 |
     ASL                                     ;$02CBC5 |
-    ORA.w $157C,X                           ;$02CBC6 |
+    ORA.w SpriteDir_157C,X                  ;$02CBC6 |
     TAX                                     ;$02CBC9 |
     LDA $00                                 ;$02CBCA |
     CLC                                     ;$02CBCC |
@@ -10553,7 +10553,7 @@ CODE_02CE0F:
     BNE Return02CE1F                        ;$02CE15 |
     INC.w $1528,X                           ;$02CE17 |
     LDA.b #$01                              ;$02CE1A |
-    STA.w $157C,X                           ;$02CE1C |
+    STA.w SpriteDir_157C,X                  ;$02CE1C |
 Return02CE1F:
     RTL
 
@@ -10587,7 +10587,7 @@ CODE_02CE49:
     EOR.b #$FF                              ;$02CE4C |
     INC A                                   ;$02CE4E |
     STA $00                                 ;$02CE4F |
-    LDA.w $157C,X                           ;$02CE51 |
+    LDA.w SpriteDir_157C,X                  ;$02CE51 |
     AND.b #$01                              ;$02CE54 |
     BNE CODE_02CE70                         ;$02CE56 |
     LDA $C2,X                               ;$02CE58 |
@@ -10603,7 +10603,7 @@ Return02CE66:
 CODE_02CE67:
     LDA.w $151C,X
     STA $C2,X                               ;$02CE6A |
-    INC.w $157C,X                           ;$02CE6C |
+    INC.w SpriteDir_157C,X                  ;$02CE6C |
     RTL                                     ;$02CE6F |
 
 CODE_02CE70:
@@ -10620,7 +10620,7 @@ Return02CE7D:
 CODE_02CE7E:
     LDA $00
     STA $C2,X                               ;$02CE80 |
-    INC.w $157C,X                           ;$02CE82 |
+    INC.w SpriteDir_157C,X                  ;$02CE82 |
     RTL                                     ;$02CE85 |
 
 CODE_02CE86:
@@ -10966,7 +10966,7 @@ try_eat_berry_tile_02D0E6:
     STA $03                                 ;$02D0FC |
     AND.b #$10                              ;$02D0FE |
     STA $08                                 ;$02D100 |
-    LDY.w $157C,X                           ;$02D102 |
+    LDY.w SpriteDir_157C,X                  ;$02D102 |
     LDA $E4,X                               ;$02D105 |
     CLC                                     ;$02D107 |
     ADC.w DATA_02D0D0,Y                     ;$02D108 |
@@ -11015,7 +11015,7 @@ try_eat_berry_tile_02D0E6:
     BCS .return_02D148                      ;$02D15C | if Yoshi's Y >= 512px, return
     STA $02                                 ;$02D15E |
     STA.w $18B3                             ;$02D160 | Mouth Y position, high
-    LDY.w $157C,X                           ;$02D163 |
+    LDY.w SpriteDir_157C,X                  ;$02D163 |
     LDA $E4,X                               ;$02D166 |
     CLC                                     ;$02D168 |
     ADC.w DATA_02D0D0,Y                     ;$02D169 |
@@ -12122,7 +12122,7 @@ CODE_02D91D:
     JSR UpdateXPosNoGrvtyB1                 ;$02D92A |
     JSR UpdateYPosNoGrvtyB1                 ;$02D92D |
     JSL CODE_019138                         ;$02D930 |
-    LDY.w $157C,X                           ;$02D934 |
+    LDY.w SpriteDir_157C,X                  ;$02D934 |
     LDA.w BubbleSprGfxProp2,Y               ;$02D937 |
     STA $B6,X                               ;$02D93A |
     LDA $13                                 ;$02D93C |
@@ -12175,7 +12175,7 @@ CODE_02D98D:
 CODE_02D999:
     JSR CODE_02D4FA
     TYA                                     ;$02D99C |
-    STA.w $157C,X                           ;$02D99D |
+    STA.w SpriteDir_157C,X                  ;$02D99D |
 Return02D9A0:
     RTS
 
@@ -12283,7 +12283,7 @@ Return02DA59:
     RTL
 
 CODE_02DA5A:
-    STZ.w $157C,X
+    STZ.w SpriteDir_157C,X
     LDA.w SpriteStatus_14C8,X               ;$02DA5D |
     CMP.b #$02                              ;$02DA60 |
     BNE CODE_02DA6E                         ;$02DA62 |
@@ -12312,7 +12312,7 @@ CODE_02DA89:
     ASL                                     ;$02DA91 |
 CODE_02DA92:
     AND.b #$40
-    STA.w $157C,X                           ;$02DA94 |
+    STA.w SpriteDir_157C,X                  ;$02DA94 |
     LDA.w $1570,X                           ;$02DA97 |
     AND.w HammerFreq,Y                      ;$02DA9A |
     ORA.w $15A0,X                           ;$02DA9D |
@@ -12322,7 +12322,7 @@ CODE_02DA92:
     LDA.b #$03                              ;$02DAA8 |
     STA.w $1540,X                           ;$02DAAA |
     LDY.b #$10                              ;$02DAAD |
-    LDA.w $157C,X                           ;$02DAAF |
+    LDA.w SpriteDir_157C,X                  ;$02DAAF |
     BNE CODE_02DAB6                         ;$02DAB2 |
     LDY.b #$F0                              ;$02DAB4 |
 CODE_02DAB6:
@@ -12366,7 +12366,7 @@ HammerBroTileSize:
 
 HammerBroGfx:
     JSR GetDrawInfo2
-    LDA.w $157C,X                           ;$02DB00 |
+    LDA.w SpriteDir_157C,X                  ;$02DB00 |
     STA $02                                 ;$02DB03 |
     PHX                                     ;$02DB05 |
     LDX.b #$03                              ;$02DB06 |
@@ -12666,7 +12666,7 @@ DATA_02DD0C:
 CODE_02DD0E:
     LDA.w $1558,X
     BNE CODE_02DD45                         ;$02DD11 |
-    LDY.w $157C,X                           ;$02DD13 |
+    LDY.w SpriteDir_157C,X                  ;$02DD13 |
     LDA.w DATA_02DD0C,Y                     ;$02DD16 |
     STA $B6,X                               ;$02DD19 |
     LDA.w $1540,X                           ;$02DD1B |
@@ -12731,9 +12731,9 @@ CODE_02DD7D:
     RTS                                     ;$02DD80 |
 
 CODE_02DD81:
-    LDA.w $157C,X
+    LDA.w SpriteDir_157C,X
     EOR.b #$01                              ;$02DD84 |
-    STA.w $157C,X                           ;$02DD86 |
+    STA.w SpriteDir_157C,X                  ;$02DD86 |
     LDA.b #$40                              ;$02DD89 |
     JSR CODE_02DD3F                         ;$02DD8B |
     RTS                                     ;$02DD8E |
@@ -12786,7 +12786,7 @@ SumoBrosTileSize:
 
 SumoBroGfx:
     JSR GetDrawInfo2
-    LDA.w $157C,X                           ;$02DE41 |
+    LDA.w SpriteDir_157C,X                  ;$02DE41 |
     LSR                                     ;$02DE44 |
     ROR                                     ;$02DE45 |
     ROR                                     ;$02DE46 |
@@ -13476,7 +13476,7 @@ CODE_02E311:
     LDA.w SpriteStatus_14C8,X               ;$02E318 |
     CMP.b #$08                              ;$02E31B |
     BNE Return02E351                        ;$02E31D |
-    LDY.w $157C,X                           ;$02E31F |
+    LDY.w SpriteDir_157C,X                  ;$02E31F |
     LDA.w DATA_02E30B,Y                     ;$02E322 |
     STA $B6,X                               ;$02E325 |
     JSR UpdateXPosNoGrvtyB1                 ;$02E327 |
@@ -13639,7 +13639,7 @@ CODE_02E463:
     STA $AA,X                               ;$02E46D |
     JSR CODE_02D4FA                         ;$02E46F |
     TYA                                     ;$02E472 |
-    STA.w $157C,X                           ;$02E473 |
+    STA.w SpriteDir_157C,X                  ;$02E473 |
     LDA $E4,X                               ;$02E476 |
     STA $9A                                 ;$02E478 |
     LDA.w $14E0,X                           ;$02E47A |
@@ -14039,7 +14039,7 @@ DATA_02E74C:
     db $14,$EC
 
 CODE_02E74E:
-    LDY.w $157C,X
+    LDY.w SpriteDir_157C,X
     LDA.w DATA_02E74C,Y                     ;$02E751 |
     STA $B6,X                               ;$02E754 |
     JSR UpdateXPosNoGrvtyB1                 ;$02E756 |
@@ -14049,9 +14049,9 @@ CODE_02E74E:
     LDY.w $1570,X                           ;$02E761 |
     CPY.b #$04                              ;$02E764 |
     BEQ CODE_02E77C                         ;$02E766 |
-    LDA.w $157C,X                           ;$02E768 |
+    LDA.w SpriteDir_157C,X                  ;$02E768 |
     EOR.b #$01                              ;$02E76B |
-    STA.w $157C,X                           ;$02E76D |
+    STA.w SpriteDir_157C,X                  ;$02E76D |
     LDA.b #$20                              ;$02E770 |
     CPY.b #$03                              ;$02E772 |
     BEQ CODE_02E778                         ;$02E774 |
@@ -14356,7 +14356,7 @@ CODE_02E986:
     BNE CODE_02E996                         ;$02E989 |
     JSR CODE_02D4FA                         ;$02E98B |
     TYA                                     ;$02E98E |
-    STA.w $157C,X                           ;$02E98F |
+    STA.w SpriteDir_157C,X                  ;$02E98F |
     LDA.b #$0C                              ;$02E992 |
     BRA CODE_02E980                         ;$02E994 |
 
@@ -14380,7 +14380,7 @@ CODE_02E9A2:
     INY                                     ;$02E9AE |
 CODE_02E9AF:
     TYA
-    STA.w $157C,X                           ;$02E9B0 |
+    STA.w SpriteDir_157C,X                  ;$02E9B0 |
 Return02E9B3:
     RTS
 
@@ -14444,7 +14444,7 @@ CODE_02E9EC:
     LDA.w PipeLakitu2,X                     ;$02EA0D |
     STA.w $0306,Y                           ;$02EA10 |
     PLX                                     ;$02EA13 |
-    LDA.w $157C,X                           ;$02EA14 |
+    LDA.w SpriteDir_157C,X                  ;$02EA14 |
     LSR                                     ;$02EA17 |
     ROR                                     ;$02EA18 |
     LSR                                     ;$02EA19 |
@@ -14529,13 +14529,13 @@ CODE_02EAA9:
     STA.w $1632,Y                           ;$02EAB1 |
     LDA.w $1695                             ;$02EAB4 |
     STA.w $160E,X                           ;$02EAB7 |
-    STZ.w $157C,X                           ;$02EABA |
+    STZ.w SpriteDir_157C,X                  ;$02EABA |
     LDA $E4,X                               ;$02EABD |
     CMP.w $00E4,y                           ;$02EABF |
     LDA.w $14E0,X                           ;$02EAC2 |
     SBC.w $14E0,Y                           ;$02EAC5 |
     BCC Return02EACD                        ;$02EAC8 |
-    INC.w $157C,X                           ;$02EACA |
+    INC.w SpriteDir_157C,X                  ;$02EACA |
 Return02EACD:
     RTS
 
@@ -14628,7 +14628,7 @@ CODE_02EB49:
     LDA $9E,X                               ;$02EB5A |
     CMP.b #$73                              ;$02EB5C |
     BEQ CODE_02EB7D                         ;$02EB5E |
-    LDY.w $157C,X                           ;$02EB60 |
+    LDY.w SpriteDir_157C,X                  ;$02EB60 |
     LDA.w DATA_02EB2F,Y                     ;$02EB63 |
     STA $B6,X                               ;$02EB66 |
     JSR CODE_02EBF8                         ;$02EB68 |
@@ -14664,7 +14664,7 @@ CODE_02EB8D:
     AND.b #$00                              ;$02EB8F |
     STA $01                                 ;$02EB91 |
     STZ $00                                 ;$02EB93 |
-    LDY.w $157C,X                           ;$02EB95 |
+    LDY.w SpriteDir_157C,X                  ;$02EB95 |
     LDA $B6,X                               ;$02EB98 |
     CMP.w DATA_02EB89,Y                     ;$02EB9A |
     BEQ CODE_02EBAB                         ;$02EB9D |
@@ -14717,7 +14717,7 @@ CODE_02EBDE:
     RTS                                     ;$02EBE6 |
 
 CODE_02EBE7:
-    LDY.w $157C,X
+    LDY.w SpriteDir_157C,X
     LDA.w DATA_02EB89,Y                     ;$02EBEA |
     STA $B6,X                               ;$02EBED |
     LDA $AA,X                               ;$02EBEF |
@@ -14776,7 +14776,7 @@ DATA_02ECBA:
 
 CODE_02ECDE:
     JSR GetDrawInfo2
-    LDA.w $157C,X                           ;$02ECE1 |
+    LDA.w SpriteDir_157C,X                  ;$02ECE1 |
     STA $02                                 ;$02ECE4 |
     LDA.w $15F6,X                           ;$02ECE6 |
     AND.b #$0E                              ;$02ECE9 |
@@ -15175,7 +15175,7 @@ ADDR_02EF7B:
     JSL InitSpriteTables                    ;$02EF9D |
     LDA.b #$E0                              ;$02EFA1 |
     STA $AA,X                               ;$02EFA3 |
-    INC.w $157C,X                           ;$02EFA5 |
+    INC.w SpriteDir_157C,X                  ;$02EFA5 |
     PLX                                     ;$02EFA8 |
     RTS                                     ;$02EFA9 |
 
@@ -15237,7 +15237,7 @@ CODE_02EFFA:
     BPL CODE_02EFFA                         ;$02F006 |
     JSR CODE_02D4FA                         ;$02F008 |
     TYA                                     ;$02F00B |
-    STA.w $157C,X                           ;$02F00C |
+    STA.w SpriteDir_157C,X                  ;$02F00C |
     PLB                                     ;$02F00F |
     RTL                                     ;$02F010 |
 
@@ -15306,9 +15306,9 @@ CODE_02F061:
     BNE CODE_02F086                         ;$02F07D |
     JSR CODE_02D4FA                         ;$02F07F |
     TYA                                     ;$02F082 |
-    STA.w $157C,X                           ;$02F083 |
+    STA.w SpriteDir_157C,X                  ;$02F083 |
 CODE_02F086:
-    LDY.w $157C,X
+    LDY.w SpriteDir_157C,X
     LDA.w $151C,X                           ;$02F089 |
     BEQ CODE_02F090                         ;$02F08C |
     INY                                     ;$02F08E |
@@ -15330,9 +15330,9 @@ CODE_02F090:
 CODE_02F0AE:
     LDA.w $15AC,X
     BNE CODE_02F0C3                         ;$02F0B1 |
-    LDA.w $157C,X                           ;$02F0B3 |
+    LDA.w SpriteDir_157C,X                  ;$02F0B3 |
     EOR.b #$01                              ;$02F0B6 |
-    STA.w $157C,X                           ;$02F0B8 |
+    STA.w SpriteDir_157C,X                  ;$02F0B8 |
     STZ.w $1602,X                           ;$02F0BB |
     LDA.b #$08                              ;$02F0BE |
     STA.w $15AC,X                           ;$02F0C0 |
@@ -15344,7 +15344,7 @@ CODE_02F0C3:
     BNE CODE_02F0D8                         ;$02F0CE |
     LDA $C2,X                               ;$02F0D0 |
     ASL                                     ;$02F0D2 |
-    ORA.w $157C,X                           ;$02F0D3 |
+    ORA.w SpriteDir_157C,X                  ;$02F0D3 |
     STA $C2,X                               ;$02F0D6 |
 CODE_02F0D8:
     JMP CODE_02F110
@@ -15476,7 +15476,7 @@ CODE_02F186:
     BEQ CODE_02F1C7                         ;$02F1A2 |
     PHX                                     ;$02F1A4 |
     LDY.w $15EA,X                           ;$02F1A5 |
-    LDA.w $157C,X                           ;$02F1A8 |
+    LDA.w SpriteDir_157C,X                  ;$02F1A8 |
     TAX                                     ;$02F1AB |
     LDA.w $0304,Y                           ;$02F1AC |
     CLC                                     ;$02F1AF |
@@ -15493,7 +15493,7 @@ CODE_02F186:
 CODE_02F1C7:
     PHX
     LDY.w $15EA,X                           ;$02F1C8 |
-    LDA.w $157C,X                           ;$02F1CB |
+    LDA.w SpriteDir_157C,X                  ;$02F1CB |
     TAX                                     ;$02F1CE |
     LDA.w $0304,Y                           ;$02F1CF |
     CLC                                     ;$02F1D2 |
@@ -15703,7 +15703,7 @@ DATA_02F340:
     db $08,$F8
 
 CODE_02F342:
-    LDY.w $157C,X
+    LDY.w SpriteDir_157C,X
     LDA.w DATA_02F340,Y                     ;$02F345 |
     STA $B6,X                               ;$02F348 |
     STZ.w $1602,X                           ;$02F34A |
@@ -15773,9 +15773,9 @@ CODE_02F3B7:
     AND.b #$01                              ;$02F3BD |
     BNE CODE_02F3CE                         ;$02F3BF |
 CODE_02F3C1:
-    LDA.w $157C,X
+    LDA.w SpriteDir_157C,X
     EOR.b #$01                              ;$02F3C4 |
-    STA.w $157C,X                           ;$02F3C6 |
+    STA.w SpriteDir_157C,X                  ;$02F3C6 |
     LDA.b #$0A                              ;$02F3C9 |
     STA.w $15AC,X                           ;$02F3CB |
 CODE_02F3CE:
@@ -15803,7 +15803,7 @@ CODE_02F3EA:
     AND.b #$03                              ;$02F3EB |
     TAY                                     ;$02F3ED |
     LDA.w BirdsPal,Y                        ;$02F3EE |
-    LDY.w $157C,X                           ;$02F3F1 |
+    LDY.w SpriteDir_157C,X                  ;$02F3F1 |
     ORA.w BirdsFlip,Y                       ;$02F3F4 |
     STA $02                                 ;$02F3F7 |
     TXA                                     ;$02F3F9 |
