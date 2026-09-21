@@ -4781,7 +4781,7 @@ CODE_07FC52:
     STA.w $170B,Y                           ;$07FC54 |
     PHX                                     ;$07FC57 |
     LDX.w $15E9                             ;$07FC58 |
-    LDA $D8,X                               ;$07FC5B |
+    LDA.b SpriteYPosLow_D8,X                ;$07FC5B |
     CLC                                     ;$07FC5D |
     ADC.b #$04                              ;$07FC5E |
     STA.w $1715,Y                           ;$07FC60 |

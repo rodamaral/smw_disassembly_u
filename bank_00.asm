@@ -13329,7 +13329,7 @@ FlatPalaceSwitch:
     AND.b #$F0                              ;$00FA64 |
     CLC                                     ;$00FA66 |
     ADC.b #$10                              ;$00FA67 |
-    STA.w $00D8,y                           ;$00FA69 |
+    STA.w SpriteYPosLow_D8,Y                ;$00FA69 |
     LDA $99                                 ;$00FA6C |
     ADC.b #$00                              ;$00FA6E |
     STA.w SpriteYPosHigh_14D4,Y             ;$00FA70 |
@@ -13484,7 +13484,7 @@ CODE_00FB84:
 CODE_00FB8D:
     LDA.b #$01
     STA.w $17C0,X                           ;$00FB8F |
-    LDA.w $00D8,y                           ;$00FB92 |
+    LDA.w SpriteYPosLow_D8,Y                ;$00FB92 |
     STA.w $17C4,X                           ;$00FB95 |
     LDA.w $00E4,y                           ;$00FB98 |
     STA.w $17C8,X                           ;$00FB9B |
@@ -13585,7 +13585,7 @@ ADDR_00FC25:
     SBC.b #$00                              ;$00FC54 |
     STA.w SpriteXPosHigh_14E0,Y             ;$00FC56 |
     LDA $96                                 ;$00FC59 |
-    STA.w $00D8,y                           ;$00FC5B |
+    STA.w SpriteYPosLow_D8,Y                ;$00FC5B |
     LDA $97                                 ;$00FC5E |
     STA.w SpriteYPosHigh_14D4,Y             ;$00FC60 |
     LDA.b #$03                              ;$00FC63 |
@@ -13630,7 +13630,7 @@ CODE_00FC98:
     SEC                                     ;$00FCAC |
     SBC.b #$10                              ;$00FCAD |
     STA $96                                 ;$00FCAF |
-    STA $D8,X                               ;$00FCB1 |
+    STA.b SpriteYPosLow_D8,X                ;$00FCB1 |
     LDA $97                                 ;$00FCB3 |
     SBC.b #$00                              ;$00FCB5 |
     STA $97                                 ;$00FCB7 |
@@ -13670,7 +13670,7 @@ CODE_00FCF5:
     LDA.b #$00                              ;$00FCF9 |
     STA.w SpriteXPosHigh_14E0,X             ;$00FCFB |
     LDA.b #$00                              ;$00FCFE |
-    STA $D8,X                               ;$00FD00 |
+    STA.b SpriteYPosLow_D8,X                ;$00FD00 |
     LDA.b #$00                              ;$00FD02 |
     STA.w SpriteYPosHigh_14D4,X             ;$00FD04 |
     RTL                                     ;$00FD07 |
@@ -14013,7 +14013,7 @@ ADDR_00FF32:
     SEP #$20                                ;$00FF47 |
     LDA.w SpriteYPosHigh_14D4,X             ;$00FF49 |
     XBA                                     ;$00FF4C |
-    LDA $D8,X                               ;$00FF4D |
+    LDA.b SpriteYPosLow_D8,X                ;$00FF4D |
     REP #$20                                ;$00FF4F |
     SEC                                     ;$00FF51 |
     SBC $1C                                 ;$00FF52 |
@@ -14041,7 +14041,7 @@ CODE_00FF76:
     SEP #$20                                ;$00FF78 |
     LDA.w SpriteYPosHigh_14D4,X             ;$00FF7A |
     XBA                                     ;$00FF7D |
-    LDA $D8,X                               ;$00FF7E |
+    LDA.b SpriteYPosLow_D8,X                ;$00FF7E |
     REP #$20                                ;$00FF80 |
     STA $00                                 ;$00FF82 |
     LDA.w #$00A0                            ;$00FF84 |

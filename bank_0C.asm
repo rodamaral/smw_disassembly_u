@@ -1395,7 +1395,7 @@ CODE_0C9FEA:
     STA $E4                                 ;$0CA006 | WARN: unindexed table
     STZ.w SpriteXPosHigh_14E0               ;$0CA008 | WARN: unindexed table
     LDA.b #$8F                              ;$0CA00B |
-    STA $D8                                 ;$0CA00D | WARN: unindexed table
+    STA.b SpriteYPosLow_D8                  ;$0CA00D | WARN: unindexed table
     STZ.w SpriteYPosHigh_14D4               ;$0CA00F | WARN: unindexed table
     LDA.b #$A0                              ;$0CA012 |
     STA.w $15EA                             ;$0CA014 | WARN: unindexed table
@@ -1693,7 +1693,7 @@ CODE_0CA24F:
     ADC.b #$00                              ;$0CA278 |
     STA.w SpriteXPosHigh_14E0               ;$0CA27A | WARN: unindexed table
     LDA.b #$60                              ;$0CA27D |
-    STA $D8                                 ;$0CA27F | WARN: unindexed table
+    STA.b SpriteYPosLow_D8                  ;$0CA27F | WARN: unindexed table
     LDA.b #$01                              ;$0CA281 |
     STA.w SpriteYPosHigh_14D4               ;$0CA283 | WARN: unindexed table
     LDA.b #$30                              ;$0CA286 |
