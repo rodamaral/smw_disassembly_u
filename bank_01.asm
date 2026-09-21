@@ -131,7 +131,7 @@ standard_and_cluster_sprites_01808C:
 +   LDA.w $18DF                             ;$0180BE |\
     BNE +                                   ;$0180C1 || Reset some Yoshi-related flags if no Yoshi exists anymore
     STZ.w RidingYoshi_187A                  ;$0180C3 ||
-    STZ.w $188B                             ;$0180C6 |/
+    STZ.w PlayerYOffset_188B                ;$0180C6 |/
 +   PLB                                     ;$0180C9 |
     RTL                                     ;$0180CA |
 
@@ -14760,7 +14760,7 @@ Return01EA6F:
 draw_yoshi_01EA70:
     LDX.w $18E2
     BEQ +                                   ;$01EA73 |
-    STZ.w $188B                             ;$01EA75 |
+    STZ.w PlayerYOffset_188B                ;$01EA75 |
     STZ.w $191C                             ;$01EA78 |
     LDA.w $15E9                             ;$01EA7B |
     PHA                                     ;$01EA7E |
@@ -14901,7 +14901,7 @@ draw_yoshi_01EA70:
     ADC.b #$00                              ;$01EB6D ||
     STA.w $14D4,X                           ;$01EB6F ||
     LDA.w DATA_01EDE4,Y                     ;$01EB72 ||
-    STA.w $188B                             ;$01EB75 ||
+    STA.w PlayerYOffset_188B                ;$01EB75 ||
     LDA.b #$01                              ;$01EB78 ||
     LDY.w $1602,X                           ;$01EB7A ||
     CPY.b #$03                              ;$01EB7D ||
@@ -15012,7 +15012,7 @@ yoshi_01EBCA:
     LDY.w RidingYoshi_187A
     BEQ +                                   ;$01EC53 |\
     LDY.b #$06                              ;$01EC55 || Offset the player's relative image on top of Yoshi
-    STY.w $188B                             ;$01EC57 |/
+    STY.w PlayerYOffset_188B                ;$01EC57 |/
 +   RTS                                     ;$01EC5A |
 
 .egg_X_speeds_01EC5B:

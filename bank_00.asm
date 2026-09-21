@@ -10534,7 +10534,7 @@ draw_mario_and_yoshi_00E2BD:
     LDA $94                                 ;$00E340 |
     SBC $1A                                 ;$00E342 |
     STA $7E                                 ;$00E344 |
-    LDA.w $188B                             ;$00E346 |
+    LDA.w PlayerYOffset_188B                ;$00E346 |
     AND.w #$00FF                            ;$00E349 |
     CLC                                     ;$00E34C |
     ADC $96                                 ;$00E34D |

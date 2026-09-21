@@ -1825,7 +1825,7 @@ SpriteMisc_187B: skip 12
 ScreenShakeTimer: skip 1
 ScreenShakeYOffset: skip 2
 Empty_188A: skip 1
-ScrShakePlayerYOffset: skip 1
+PlayerYOffset_188B: skip 1
 BossBGSpriteUpdate: skip 1
 BossBGSpriteXCalc: skip 1
 ; 7E188E unused

@@ -6142,7 +6142,7 @@ CODE_03AE32:
     BNE CODE_03AE3F                         ;$03AE35 |
     INC $C2,X                               ;$03AE37 |
     STZ.w $188A                             ;$03AE39 |
-    STZ.w $188B                             ;$03AE3C |
+    STZ.w PlayerYOffset_188B                ;$03AE3C |
 CODE_03AE3F:
     CMP.b #$50
     BCC Return03AE5A                        ;$03AE41 |
