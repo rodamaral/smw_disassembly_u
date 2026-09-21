@@ -14966,7 +14966,7 @@ yoshi_01EBCA:
     JSR SubOffscreen0Bnk1                   ;$01EBF3 |
     LDA.w SpriteStatus_14C8,X               ;$01EBF6 |
     BNE .check_hatch_yoshi_01EC04           ;$01EBF9 |
-    LDA.w $1B95                             ;$01EBFB |
+    LDA.w YoshiHeavenFlag_1B95              ;$01EBFB |
     BNE +                                   ;$01EBFE |
     STZ.w CarryYoshiLevels_0DC1             ;$01EC00 |
 +   RTS                                     ;$01EC03 |
@@ -15654,7 +15654,7 @@ YoshiAbilityIndex:
     db $03,$02,$02,$03,$01,$00
 
 normal_mouth_01F14B:
-    LDA.w $1B95
+    LDA.w YoshiHeavenFlag_1B95
     BEQ +                                   ;$01F14E |\ if Yoshi went to the Sky Levels
     LDA.b #$02                              ;$01F150 || set the wings
     STA.w YoshiHasWings_141E                ;$01F152 |/

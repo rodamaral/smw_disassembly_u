@@ -1973,7 +1973,7 @@ BlinkCursorTimer: skip 1
 BlinkCursorPos: skip 1
 UseSecondaryExit: skip 1
 DisableBonusSprite: skip 1
-YoshiHeavenFlag: skip 1
+YoshiHeavenFlag_1B95: skip 1
 SideExitEnabled: skip 1
 Empty_1B97: skip 2
 ShowPeaceSign: skip 1

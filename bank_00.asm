@@ -4681,7 +4681,7 @@ CODE_00A6E0:
     ADC.b #$10                              ;$00A6FF |
     STA.w $1438                             ;$00A701 |
 CODE_00A704:
-    LDA.w $1B95
+    LDA.w YoshiHeavenFlag_1B95
     BEQ Return00A715                        ;$00A707 |
     LDA.b #$08                              ;$00A709 |
     STA $71                                 ;$00A70B |
@@ -7720,7 +7720,7 @@ CODE_00C81E:
 CODE_00C827:
     JSR apply_player_speeds
     REP #$20                                ;$00C82A |
-    LDY.w $1B95                             ;$00C82C |
+    LDY.w YoshiHeavenFlag_1B95              ;$00C82C |
     LDA $80                                 ;$00C82F |
     CMP.w DATA_00C7F9,Y                     ;$00C831 |
     SEP #$20                                ;$00C834 |
@@ -7730,7 +7730,7 @@ CODE_00C827:
     BNE CODE_00C845                         ;$00C83B |
     INY                                     ;$00C83D |
     INY                                     ;$00C83E |
-    STY.w $1B95                             ;$00C83F |
+    STY.w YoshiHeavenFlag_1B95              ;$00C83F |
     JSR go_to_sublevel                      ;$00C842 |
 CODE_00C845:
     JMP CODE_00CD8F
@@ -12691,7 +12691,7 @@ check_y_position:
     LDA $81                                 ;$00F5A5 |\ If the player is below the screen,
     DEC A                                   ;$00F5A7 | |
     BMI .return                             ;$00F5A8 | |
-    LDA.w $1B95                             ;$00F5AA | | and it's a Yoshi wing level,
+    LDA.w YoshiHeavenFlag_1B95              ;$00F5AA | | and it's a Yoshi wing level,
     BEQ .kill                               ;$00F5AD | |
     JMP CODE_00C95B                         ;$00F5AF |/ exit and clear the level.
 
@@ -13640,7 +13640,7 @@ CODE_00FC98:
     STA.w $1FE2,X                           ;$00FCC2 |
     LDA.w $13C7                             ;$00FCC5 |
     STA.w $15F6,X                           ;$00FCC8 |
-    LDA.w $1B95                             ;$00FCCB |
+    LDA.w YoshiHeavenFlag_1B95              ;$00FCCB |
     BEQ CODE_00FCD5                         ;$00FCCE |
     LDA.b #$06                              ;$00FCD0 |
     STA.w $15F6,X                           ;$00FCD2 |

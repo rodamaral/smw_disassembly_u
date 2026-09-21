@@ -6304,7 +6304,7 @@ CODE_05D796:
     PLB                                     ;$05D798 |
     SEP #$30                                ;$05D799 |
     STZ.w $13CF                             ;$05D79B |
-    LDA.w $1B95                             ;$05D79E |
+    LDA.w YoshiHeavenFlag_1B95              ;$05D79E |
     BNE CODE_05D7A8                         ;$05D7A1 |
     LDY.w $1425                             ;$05D7A3 |
     BEQ CODE_05D7AB                         ;$05D7A6 |
@@ -6846,7 +6846,7 @@ DATA_05DBA9:
 
 CODE_05DBAC:
     LDY.b #$00
-    LDA.w $1B95                             ;$05DBAE |
+    LDA.w YoshiHeavenFlag_1B95              ;$05DBAE |
     BEQ CODE_05DBB5                         ;$05DBB1 |
     LDY.b #$01                              ;$05DBB3 |
 CODE_05DBB5:
