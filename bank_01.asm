@@ -4548,7 +4548,7 @@ CODE_01A0E2:
 CODE_01A111:
     LDA.b #$0F
 CODE_01A113:
-    LDY.w $1498
+    LDY.w PickUpItemTimer_1498
     BEQ CODE_01A11A                         ;$01A116 |
     LDA.b #$0F                              ;$01A118 |
 CODE_01A11A:
@@ -5878,7 +5878,7 @@ CODE_01AA58:
     STA.w SpriteStatus_14C8,X               ;$01AA68 |
     INC.w $1470                             ;$01AA6B |
     LDA.b #$08                              ;$01AA6E |
-    STA.w $1498                             ;$01AA70 |
+    STA.w PickUpItemTimer_1498              ;$01AA70 |
     RTS                                     ;$01AA73 |
 
 CODE_01AA74:

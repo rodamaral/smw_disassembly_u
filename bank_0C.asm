@@ -6189,7 +6189,7 @@ DATA_0CD7F3:
 CODE_0CD803:
     LDX.w $144A
     BNE CODE_0CD83D                         ;$0CD806 |
-    LDA.w $1498                             ;$0CD808 |
+    LDA.w PickUpItemTimer_1498              ;$0CD808 |
     BEQ CODE_0CD812                         ;$0CD80B |
     LSR                                     ;$0CD80D |
     BEQ CODE_0CD849                         ;$0CD80E |
@@ -6216,7 +6216,7 @@ CODE_0CD818:
     LDY $7B                                 ;$0CD831 |
     BNE CODE_0CD858                         ;$0CD833 |
     LDA.b #$10                              ;$0CD835 |
-    STA.w $1498                             ;$0CD837 |
+    STA.w PickUpItemTimer_1498              ;$0CD837 |
     STZ.w $148F                             ;$0CD83A |
 CODE_0CD83D:
     LDA.b #$05

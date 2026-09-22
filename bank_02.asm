@@ -780,7 +780,7 @@ spawn_throw_block:
     LDA.b #$FF                              ;$028655 |\ Set the throw block's disappearance timer.
     STA.w $1540,X                           ;$028657 |/
     LDA.b #$08                              ;$02865A |\ Set the time to show the player picking something up.
-    STA.w $1498                             ;$02865C |/
+    STA.w PickUpItemTimer_1498              ;$02865C |/
     STA.w $148F                             ;$02865F | Mark the player as carrying an object.
 .return                                     ;                |
     RTL                                     ;$028662        /

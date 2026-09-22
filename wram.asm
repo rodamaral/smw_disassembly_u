@@ -1621,7 +1621,7 @@ ColorFadeDir: skip 1
 ColorFadeTimer: skip 1
 PlayerAniTimer: skip 1
 IFrameTimer: skip 1
-PickUpItemTimer: skip 1
+PickUpItemTimer_1498: skip 1
 FaceScreenTimer: skip 1
 KickingTimer: skip 1
 CyclePaletteTimer: skip 1

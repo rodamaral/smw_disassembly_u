@@ -4619,7 +4619,7 @@ CODE_00A67D:
     BNE CODE_00A67D                         ;$00A681 |
     ASL.w $13CB                             ;$00A683 |
     STZ.w $149A                             ;$00A686 |
-    STZ.w $1498                             ;$00A689 |
+    STZ.w PickUpItemTimer_1498              ;$00A689 |
     STZ.w $1495                             ;$00A68C |
     STZ.w SpriteInPipeMode_1419             ;$00A68F |
     LDY.b #$01                              ;$00A692 |
@@ -7625,7 +7625,7 @@ CODE_00C789:
     BCS CODE_00C7E9                         ;$00C78E |
     DEC A                                   ;$00C790 |
     BPL CODE_00C7A2                         ;$00C791 |
-    LDA.w $1498                             ;$00C793 |
+    LDA.w PickUpItemTimer_1498              ;$00C793 |
     BEQ CODE_00C79D                         ;$00C796 |
     LDA.b #$09                              ;$00C798 |
     STA.w $1DF9                             ;$00C79A |
@@ -7674,7 +7674,7 @@ CODE_00C7CE:
 
 CODE_00C7DF:
     LDA.b #$20
-    STA.w $1498                             ;$00C7E1 |
+    STA.w PickUpItemTimer_1498              ;$00C7E1 |
     INC.w $148F                             ;$00C7E4 |
     BRA CODE_00C7F6                         ;$00C7E7 |
 
@@ -8641,7 +8641,7 @@ CODE_00CF85:
 
 CODE_00CF88:
     LDA.b #$1D
-    LDY.w $1498                             ;$00CF8A |
+    LDY.w PickUpItemTimer_1498              ;$00CF8A |
     BNE CODE_00CF85                         ;$00CF8D |
     LDA.b #$0F                              ;$00CF8F |
     LDY.w $1499                             ;$00CF91 |
