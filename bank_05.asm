@@ -6306,7 +6306,7 @@ CODE_05D796:
     STZ.w $13CF                             ;$05D79B |
     LDA.w YoshiHeavenFlag_1B95              ;$05D79E |
     BNE CODE_05D7A8                         ;$05D7A1 |
-    LDY.w $1425                             ;$05D7A3 |
+    LDY.w BonusGameFlag_1425                ;$05D7A3 |
     BEQ CODE_05D7AB                         ;$05D7A6 |
 CODE_05D7A8:
     JSR CODE_05DBAC
@@ -6725,7 +6725,7 @@ CODE_05DAD0:
 CODE_05DAD7:
     LDA.w $141A
     BEQ CODE_05DAEB                         ;$05DADA |
-    LDA.w $1425                             ;$05DADC |
+    LDA.w BonusGameFlag_1425                ;$05DADC |
     BNE CODE_05DAEB                         ;$05DADF |
     LDA.w $13BF                             ;$05DAE1 |
     CMP.b #$24                              ;$05DAE4 |

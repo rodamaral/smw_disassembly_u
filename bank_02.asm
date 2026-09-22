@@ -2269,8 +2269,8 @@ CODE_02910B:
     AND.b #$03                              ;$02912E |
     CMP.b #$03                              ;$029130 |
     BNE CODE_02915E                         ;$029132 |
-    LDA $71                                 ;$029134 |
-    CMP.b #$01                              ;$029136 |
+    LDA.b PlayerAnimation_71                ;$029134 |
+    CMP.b #!AniHurt_01                      ;$029136 |
     BCS CODE_02915E                         ;$029138 |
     LDA.b #$20                              ;$02913A |
     LDY.w RidingYoshi_187A                  ;$02913C |
@@ -10287,8 +10287,8 @@ ADDR_02CC05:
     LDA.w SpriteXPosHigh_14E0,X             ;$02CC16 |
     ADC.b #$00                              ;$02CC19 |
     STA.w SpriteXPosHigh_14E0,X             ;$02CC1B |
-    LDA $71                                 ;$02CC1E |
-    CMP.b #$01                              ;$02CC20 |
+    LDA.b PlayerAnimation_71                ;$02CC1E |
+    CMP.b #!AniHurt_01                      ;$02CC20 |
     BCS Return02CBFD                        ;$02CC22 |
     LDA.w $18B5                             ;$02CC24 |
     BEQ ADDR_02CC2D                         ;$02CC27 |
@@ -10715,8 +10715,8 @@ Return02CF51:
     RTS
 
 CODE_02CF52:
-    LDA $71
-    CMP.b #$01                              ;$02CF54 |
+    LDA.b PlayerAnimation_71
+    CMP.b #!AniHurt_01                      ;$02CF54 |
     BCS Return02CF51                        ;$02CF56 |
     LDA $81                                 ;$02CF58 |
     ORA $7F                                 ;$02CF5A |
@@ -17199,7 +17199,7 @@ CODE_02FE29:
     DEC.w $1920                             ;$02FE3E |
     BNE CODE_02FE48                         ;$02FE41 |
     LDA.b #$58                              ;$02FE43 |
-    STA.w $14AB                             ;$02FE45 |
+    STA.w BonusTimer_14AB                   ;$02FE45 |
 CODE_02FE48:
     LDY.w DATA_02FF64,X
     LDA.w $1E16,X                           ;$02FE4B |

@@ -5834,8 +5834,8 @@ CODE_03AC03:
     LDA.w SpritePlayerContact_154C,X        ;$03AC06 |
     CMP.b #$01                              ;$03AC09 |
     BNE CODE_03AC22                         ;$03AC0B |
-    LDA.b #$0B                              ;$03AC0D |
-    STA $71                                 ;$03AC0F |
+    LDA.b #!AniFrozen_0B                    ;$03AC0D |
+    STA.b PlayerAnimation_71                ;$03AC0F |
     INC.w $190D                             ;$03AC11 |
     STZ.w $0701                             ;$03AC14 |
     STZ.w $0702                             ;$03AC17 |

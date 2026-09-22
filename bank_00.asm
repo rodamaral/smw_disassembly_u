@@ -166,7 +166,7 @@ SPC_upload_return:                          ;        |
     RTS                                     ;$008133 /
 
 upload_level_music:
-    LDA.w $1425                             ;$008134 \ Load bank 2 music if you are going to a bonus game
+    LDA.w BonusGameFlag_1425                ;$008134 \ Load bank 2 music if you are going to a bonus game
     BNE upload_music_bank_2                 ;$008137 |
     LDA.w OverworldOverride_0109            ;$008139 | Load bank 2 music if this is the intro level
     CMP.b #$E9                              ;$00813C |
@@ -1749,7 +1749,7 @@ update_status_tileset_008E1A:
     CMP.b #$64                              ;$008F61 |
     BCC .draw_coin_count_008F73             ;$008F63 |
     LDA.b #$FF                              ;$008F65 |\
-    STA.w $1425                             ;$008F67 || set Bonus flag
+    STA.w BonusGameFlag_1425                ;$008F67 || set Bonus flag
     LDA.w $0F48,X                           ;$008F6A || and subtract 100 from stars
     SEC                                     ;$008F6D ||
     SBC.b #$64                              ;$008F6E ||
@@ -1983,8 +1983,8 @@ DATA_00916A:
     db $B4
 
 try_castle_entrance_00919B:
-    LDA $71
-    CMP.b #$0A                              ;$00919D |\
+    LDA.b PlayerAnimation_71
+    CMP.b #!AniEnterCastle_0A               ;$00919D |\
     BNE +                                   ;$00919F || If performing a No Yoshi entrance, execute the player animation
     JSR execute_player_animation_00C593     ;$0091A1 ||
     BRA ++                                  ;$0091A4 |/
@@ -1999,7 +1999,7 @@ CODE_0091B1:
     JSR CODE_00A82D
     LDX.b #$00                              ;$0091B4 |
     LDA.b #$B0                              ;$0091B6 |
-    LDY.w $1425                             ;$0091B8 |
+    LDY.w BonusGameFlag_1425                ;$0091B8 |
     BEQ CODE_0091CA                         ;$0091BB |
     STZ.w $0F31                             ;$0091BD |
     STZ.w $0F32                             ;$0091C0 |
@@ -2469,8 +2469,8 @@ CODE_009529:
     PLA                                     ;$009548 |
     STA.b Layer1XPos_1A                     ;$009549 |
     SEP #$20                                ;$00954B |
-    LDA.b #$0C                              ;$00954D |
-    STA $71                                 ;$00954F |
+    LDA.b #!AniCastleCutscene_0C            ;$00954D |
+    STA.b PlayerAnimation_71                ;$00954F |
     JSR timers_and_animation_00C47E         ;$009551 |
     JMP consolidate_OAM_008494              ;$009554 |
 
@@ -2617,7 +2617,7 @@ GM29_the_end_main_00968D:
 
 GM10_level_start_00968E:
     JSR CODE_0085FA
-    LDA.w $1425                             ;$009691 |
+    LDA.w BonusGameFlag_1425                ;$009691 |
     BNE CODE_0096A8                         ;$009694 |
     LDA.w $141A                             ;$009696 |
     ORA.w $141D                             ;$009699 |
@@ -4073,9 +4073,9 @@ GM14_main_level_00A1DA:
     RTS                                     ;$00A1E3 |
 
 .message_box_not_triggered:
-    LDA.w $1425
+    LDA.w BonusGameFlag_1425
     BEQ +                                   ;$00A1E7 |\
-    LDA.w $14AB                             ;$00A1E9 || Disable control and set Mario Peace pose
+    LDA.w BonusTimer_14AB                   ;$00A1E9 || Disable control and set Mario Peace pose
     BEQ +                                   ;$00A1EC || if in a bonus level and timer is ending
     CMP.b #$40                              ;$00A1EE ||
     BCS +                                   ;$00A1F0 ||
@@ -4083,9 +4083,9 @@ GM14_main_level_00A1DA:
     CMP.b #$1C                              ;$00A1F5 ||
     BCS +                                   ;$00A1F7 ||
     JSR SetMarioPeaceImg                    ;$00A1F9 ||
-    LDA.b #$0D                              ;$00A1FC ||
-    STA $71                                 ;$00A1FE |/
-+   ORA $71                                 ;$00A200 |
+    LDA.b #!AniDoor_0D                      ;$00A1FC ||
+    STA.b PlayerAnimation_71                ;$00A1FE |/
++   ORA.b PlayerAnimation_71                ;$00A200 |
     ORA.w $1493                             ;$00A202 |
     BEQ +                                   ;$00A205 |\
     LDA.b #$04                              ;$00A207 || if not able to move free:
@@ -4104,8 +4104,8 @@ GM14_main_level_00A1DA:
     BEQ .handle_paused_status_00A242        ;$00A21F |
     LDA.w $1493                             ;$00A221 | if pressed Start
     BNE .handle_paused_status_00A242        ;$00A224 | and not ending the level
-    LDA $71                                 ;$00A226 |
-    CMP.b #$09                              ;$00A228 |
+    LDA.b PlayerAnimation_71                ;$00A226 |
+    CMP.b #!AniDeath_09                     ;$00A228 |
     BCS .handle_paused_status_00A242        ;$00A22A | and with pausable animation < 9
     LDA.b #$3C                              ;$00A22C |
     STA.w $13D3                             ;$00A22E | then set the pause timer
@@ -4642,13 +4642,13 @@ CODE_00A6B6:
     STZ $72
     STY $76                                 ;$00A6B8 |
     STY $89                                 ;$00A6BA |
-    LDX.b #$0A                              ;$00A6BC |
+    LDX.b #!AniEnterCastle_0A               ;$00A6BC |
     LDY.b #$00                              ;$00A6BE |
     LDA.w CarryYoshiLevels_0DC1             ;$00A6C0 |
     BEQ CODE_00A6C7                         ;$00A6C3 |
     LDY.b #$0F                              ;$00A6C5 |
 CODE_00A6C7:
-    STX $71
+    STX.b PlayerAnimation_71
     STY $88                                 ;$00A6C9 |
     RTS                                     ;$00A6CB |
 
@@ -4683,8 +4683,8 @@ CODE_00A6E0:
 CODE_00A704:
     LDA.w YoshiHeavenFlag_1B95
     BEQ Return00A715                        ;$00A707 |
-    LDA.b #$08                              ;$00A709 |
-    STA $71                                 ;$00A70B |
+    LDA.b #!AniYoshiHeaven_08               ;$00A709 |
+    STA.b PlayerAnimation_71                ;$00A70B |
     LDA.b #$A0                              ;$00A70D |
     STA $96                                 ;$00A70F |
     LDA.b #$90                              ;$00A711 |
@@ -4838,7 +4838,7 @@ DMA_transition_screen:                      ;        \
 CODE_00A82D:
     LDY.b #$0F
     JSL CODE_00BA28                         ;$00A82F |
-    LDA.w $1425                             ;$00A833 |
+    LDA.w BonusGameFlag_1425                ;$00A833 |
     REP #$30                                ;$00A836 |
     BEQ CODE_00A842                         ;$00A838 |
     LDA $00                                 ;$00A83A |
@@ -7378,9 +7378,9 @@ timers_and_animation_00C47E:
     LDA.b Frame_14                          ;$00C513 |
     AND.b #$03                              ;$00C515 |
     BNE .skip_timers_00C569                 ;$00C517 |
-    LDA.w $1425                             ;$00C519 | Process various timers only when $14 is multiple of 4
+    LDA.w BonusGameFlag_1425                ;$00C519 | Process various timers only when $14 is multiple of 4
     BEQ .skip_bonus_timer                   ;$00C51C |
-    LDA.w $14AB                             ;$00C51E |
+    LDA.w BonusTimer_14AB                   ;$00C51E |
     CMP.b #$44                              ;$00C521 |
     BNE +                                   ;$00C523 |
     LDY.b #$14                              ;$00C525 |
@@ -7444,7 +7444,7 @@ Return00C592:
     RTS
 
 execute_player_animation_00C593:
-    LDA $71                                 ;$00C593 \ Execute animation code.
+    LDA.b PlayerAnimation_71                ;$00C593 \ Execute animation code.
     JSL execute_pointer                     ;$00C595 /
 
 animation_pointers:
@@ -7725,7 +7725,7 @@ CODE_00C827:
     CMP.w DATA_00C7F9,Y                     ;$00C831 |
     SEP #$20                                ;$00C834 |
     BPL CODE_00C845                         ;$00C836 |
-    STZ $71                                 ;$00C838 |
+    STZ.b PlayerAnimation_71                ;$00C838 |
     TYA                                     ;$00C83A |
     BNE CODE_00C845                         ;$00C83B |
     INY                                     ;$00C83D |
@@ -7935,10 +7935,10 @@ CODE_00C9C2:
     LSR                                     ;$00C9DE |
 CODE_00C9DF:
     LDY.b #$0C
-    LDX.w $1425                             ;$00C9E1 |
+    LDX.w BonusGameFlag_1425                ;$00C9E1 |
     BEQ CODE_00C9F8                         ;$00C9E4 |
     LDX.b #$FF                              ;$00C9E6 |
-    STX.w $1425                             ;$00C9E8 |
+    STX.w BonusGameFlag_1425                ;$00C9E8 |
     LDX.b #$F0                              ;$00C9EB |
     STX.w $0DB0                             ;$00C9ED |
     STZ.w $1493                             ;$00C9F0 |
@@ -8901,8 +8901,8 @@ mushroom_animation:
 .set_powerup
     INC.b Powerup_19                        ;$00D156 \ Set the player as big.
 reset_animation:                            ;        |
-    LDA.b #$00                              ;$00D158 |\ Reset the player animation,
-    STA $71                                 ;$00D15A | |
+    LDA.b #!AniDefault_00                   ;$00D158 |\ Reset the player animation,
+    STA.b PlayerAnimation_71                ;$00D15A | |
     STZ.b SpriteLock_9D                     ;$00D15C |/ and clear the lock sprites flag.
 return_00D15E:                              ;        |
     RTS                                     ;$00D15E /
@@ -11309,8 +11309,8 @@ normal_collision:
     LDA.b #$0F                              ;$00EC10 |\ Play the door sound,
     STA.w SPCIO3_1DFC                       ;$00EC12 | |
     JSR go_to_sublevel                      ;$00EC15 | | go to the sublevel,
-    LDA.b #$0D                              ;$00EC18 | |
-    STA $71                                 ;$00EC1A | | set the door animation,
+    LDA.b #!AniDoor_0D                      ;$00EC18 | |
+    STA.b PlayerAnimation_71                ;$00EC1A | | set the door animation,
     JSR disable_controls                    ;$00EC1C |/ and disable controls.
     BRA .skip_center                        ;$00EC1F /
 
@@ -12408,7 +12408,7 @@ CODE_00F3D9:
     ASL                                     ;$00F3DB |
     CLC                                     ;$00F3DC |
     ADC.b #$20                              ;$00F3DD |
-    LDY.b #$05                              ;$00F3DF |
+    LDY.b #!AniEnterHPipe_05                ;$00F3DF |
     BRA CODE_00F40A                         ;$00F3E1 |
 
 DATA_00F3E3:
@@ -12437,7 +12437,7 @@ CODE_00F3E9:
     BEQ CODE_00F408                         ;$00F404 |
     LDA.b #$30                              ;$00F406 |
 CODE_00F408:
-    LDY.b #$06
+    LDY.b #!AniEnterVPipe_06
 CODE_00F40A:
     STA $88
     LDA.b byetudlrHold_15                   ;$00F40C |
@@ -12461,7 +12461,7 @@ CODE_00F40A:
 CODE_00F430:
     INX
     STX.w SpriteInPipeMode_1419             ;$00F431 |
-    STY $71                                 ;$00F434 |
+    STY.b PlayerAnimation_71                ;$00F434 |
     JSR disable_controls                    ;$00F436 |
     LDA.b #$04                              ;$00F439 |
     STA.w SPCIO0_1DF9                       ;$00F43B |
@@ -12701,7 +12701,7 @@ check_y_position:
     RTS                                     ;        /
 
 HurtMario:
-    LDA $71
+    LDA.b PlayerAnimation_71
     BNE Return00F628                        ;$00F5B9 |
     LDA.w $1497                             ;$00F5BB |
     ORA.w StarTimer_1490                    ;$00F5BE |
@@ -12735,8 +12735,8 @@ PowerDown:
     LDY.b #$04
     STY.w SPCIO0_1DF9                       ;$00F5F5 |
     JSL ReleaseItembox028008                ;$00F5F8 |
-    LDA.b #$01                              ;$00F5FC |
-    STA $71                                 ;$00F5FE |
+    LDA.b #!AniHurt_01                      ;$00F5FC |
+    STA.b PlayerAnimation_71                ;$00F5FE |
     STZ.b Powerup_19                        ;$00F600 |
     LDA.b #$2F                              ;$00F602 |
     BRA CODE_00F61D                         ;$00F604 |
@@ -12749,8 +12749,8 @@ kill_player_no_speed:                       ;        |
     STA.w SPCIO2_1DFB                       ;$00F60C |/
     LDA.b #$FF                              ;$00F60F |
     STA.w MusicBackup_0DDA                  ;$00F611 |
-    LDA.b #$09                              ;$00F614 |\ Set the player death animation.
-    STA $71                                 ;$00F616 |/
+    LDA.b #!AniDeath_09                     ;$00F614 |\ Set the player death animation.
+    STA.b PlayerAnimation_71                ;$00F616 |/
     STZ.w $140D                             ;$00F618 | Disable spin jumping.
     LDA.b #$30                              ;$00F61B |\
 CODE_00F61D:                                ;        | | Set the player animation timer

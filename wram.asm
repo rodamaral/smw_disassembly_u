@@ -544,20 +544,20 @@ Map16HighPtr_6E: skip 3
 ; Current player animation that blocks player input
 PlayerAnimation_71: skip 1
 ; Valid values
-!PlayerAni_Default = 0
-!PlayerAni_IFrames = 1
-!PlayerAni_Growing = 2
-!PlayerAni_GetCape = 3
-!PlayerAni_GetFire = 4
-!PlayerAni_EnterHPipe = 5
-!PlayerAni_EnterVPipe = 6
-!PlayerAni_CannonPipe = 7
-!PlayerAni_YoshiHeaven = 8
-!PlayerAni_Death = 9
-!PlayerAni_EnterCastle = 10
-!PlayerAni_Frozen = 11
-!PlayerAni_CastleCutscene = 12
-!PlayerAni_Door = 13
+!AniDefault_00 = 0
+!AniHurt_01 = 1
+!AniGrowing_02 = 2
+!AniGetCape_03 = 3
+!AniGetFire_04 = 4
+!AniEnterHPipe_05 = 5
+!AniEnterVPipe_06 = 6
+!AniCannonPipe_07 = 7
+!AniYoshiHeaven_08 = 8
+!AniDeath_09 = 9
+!AniEnterCastle_0A = 10
+!AniFrozen_0B = 11
+!AniCastleCutscene_0C = 12
+!AniDoor_0D = 13
 
 ; === $7E0072 ===
 ; 1 byte
@@ -1526,7 +1526,7 @@ OneUpCheckpoints: skip 1
 DragonCoinsShown: skip 1
 SwitchPalacePressed: skip 1
 DisplayBonusStars: skip 1
-BonusGameActivate: skip 1
+BonusGameFlag_1425: skip 1
 MessageBoxTrigger_1426: skip 1
 ClownCarImage: skip 1
 ClownCarPropeller: skip 1
@@ -1642,7 +1642,7 @@ ReznorBridgeTimer: skip 1
 EmptyTimer14A8: skip 1
 GroundPoundTimer: skip 1
 YoshiWingGrabTimer: skip 1
-BonusFinishTimer: skip 1
+BonusTimer_14AB: skip 1
 ; 7E14AC unused
 skip 1
 TimersStart_14AD:

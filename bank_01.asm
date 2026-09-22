@@ -4356,8 +4356,8 @@ CODE_019F9B:
 CODE_019FBB:
     STY.w $13F3
 CODE_019FBE:
-    LDA $71
-    CMP.b #$01                              ;$019FC0 |
+    LDA.b PlayerAnimation_71
+    CMP.b #!AniHurt_01                      ;$019FC0 |
     BCC CODE_019FCA                         ;$019FC2 |
 CODE_019FC4:
     STZ.w $13F3
@@ -4378,8 +4378,8 @@ CODE_019FCA:
 
 CODE_019FE0:
     JSR CODE_019140
-    LDA $71                                 ;$019FE3 |
-    CMP.b #$01                              ;$019FE5 |
+    LDA.b PlayerAnimation_71                ;$019FE3 |
+    CMP.b #!AniHurt_01                      ;$019FE5 |
     BCC CODE_019FF4                         ;$019FE7 |
     LDA.w SpriteInPipeMode_1419             ;$019FE9 |
     BNE CODE_019FF4                         ;$019FEC |
@@ -5549,8 +5549,8 @@ ProcessInteract:
     CMP.b #$C0                              ;$01A80B |
     BCS ReturnNoContact                     ;$01A80D |
 CODE_01A80F:
-    LDA $71
-    CMP.b #$01                              ;$01A811 |
+    LDA.b PlayerAnimation_71
+    CMP.b #!AniHurt_01                      ;$01A811 |
     BCS ReturnNoContact                     ;$01A813 |
     LDA.b #$00                              ;$01A815 |
     BIT.w $0D9B                             ;$01A817 |
@@ -7901,8 +7901,8 @@ CODE_01B844:
 CODE_01B852:
     LDA.w $15C4,X
     BNE Return01B8B1                        ;$01B855 |
-    LDA $71                                 ;$01B857 |
-    CMP.b #$01                              ;$01B859 |
+    LDA.b PlayerAnimation_71                ;$01B857 |
+    CMP.b #!AniHurt_01                      ;$01B859 |
     BCS Return01B8B1                        ;$01B85B |
     JSR CODE_01B8FF                         ;$01B85D |
     BCC Return01B8B1                        ;$01B860 |
@@ -9711,8 +9711,8 @@ touched_powerup_01C537:
     RTS                                     ;$01C560 |
 
 GiveMarioMushroom:
-    LDA.b #$02
-    STA $71                                 ;$01C563 |
+    LDA.b #!AniGrowing_02
+    STA.b PlayerAnimation_71                ;$01C563 |
     LDA.b #$2F                              ;$01C565 |
     STA.w $1496,Y                           ;$01C567 |
     STA.b SpriteLock_9D                     ;$01C56A |
@@ -9757,8 +9757,8 @@ CODE_01C5AE:
     LDA $81
     ORA $7F                                 ;$01C5B0 |
     BNE Return01C5EB                        ;$01C5B2 |
-    LDA.b #$03                              ;$01C5B4 |
-    STA $71                                 ;$01C5B6 |
+    LDA.b #!AniGetCape_03                   ;$01C5B4 |
+    STA.b PlayerAnimation_71                ;$01C5B6 |
     LDA.b #$18                              ;$01C5B8 |
     STA.w $1496                             ;$01C5BA |
     LDY.b #$03                              ;$01C5BD |
@@ -9791,8 +9791,8 @@ GiveMarioFire:
     LDA.b #$20
     STA.w CyclePaletteTimer_149B            ;$01C5EE |
     STA.b SpriteLock_9D                     ;$01C5F1 |
-    LDA.b #$04                              ;$01C5F3 |
-    STA $71                                 ;$01C5F5 |
+    LDA.b #!AniGetFire_04                   ;$01C5F3 |
+    STA.b PlayerAnimation_71                ;$01C5F5 |
     LDA.b #$03                              ;$01C5F7 |
     STA.b Powerup_19                        ;$01C5F9 |
     JMP CODE_01C56F                         ;$01C5FB |
@@ -13379,7 +13379,7 @@ CODE_01E035:
     STA.w $1920                             ;$01E041 |
     BNE CODE_01E04C                         ;$01E044 |
     LDA.b #$58                              ;$01E046 |
-    STA.w $14AB                             ;$01E048 |
+    STA.w BonusTimer_14AB                   ;$01E048 |
     INY                                     ;$01E04B |
 CODE_01E04C:
     STY.w SPCIO3_1DFC
@@ -15994,8 +15994,8 @@ retracting_tongue_01F332:
     BEQ .skip_yoshi_wings_01F3F7            ;$01F3E2 |
     CMP.b #$02                              ;$01F3E4 | if swallowing Yoshi Wings
     BNE +                                   ;$01F3E6 |\
-    LDA.b #$08                              ;$01F3E8 || if swallowing Wings with sparkles
-    STA $71                                 ;$01F3EA || Warp to Yoshi Wings game
+    LDA.b #!AniYoshiHeaven_08               ;$01F3E8 || if swallowing Wings with sparkles
+    STA.b PlayerAnimation_71                ;$01F3EA || Warp to Yoshi Wings game
     LDA.b #$03                              ;$01F3EC || SFX for collecting wings
     STA.w SPCIO3_1DFC                       ;$01F3EE |/
 +   JSR give_yoshi_wings_01F6CD             ;$01F3F1 | REMARK: $C2 = 01 would give wings for 1 frame without warping to the Sky Room
@@ -16376,8 +16376,8 @@ yoshi_sprites_interaction_01F622:
     BEQ return_01F6DC                       ;$01F6BE |/
     CMP.b #$02                              ;$01F6C0 | REMARK: $C2 = 01 would give wings for 1 frame without warping to the Sky Room
     BNE give_yoshi_wings_01F6CD             ;$01F6C2 |\
-    LDA.b #$08                              ;$01F6C4 || Warp to Yoshi Wings game
-    STA $71                                 ;$01F6C6 ||
+    LDA.b #!AniYoshiHeaven_08               ;$01F6C4 || Warp to Yoshi Wings game
+    STA.b PlayerAnimation_71                ;$01F6C6 ||
     LDA.b #$03                              ;$01F6C8 || SFX for collecting wings
     STA.w SPCIO3_1DFC                       ;$01F6CA |/
 give_yoshi_wings_01F6CD:
@@ -17187,8 +17187,8 @@ Return01FC61:
     RTS
 
 CODE_01FC62:
-    LDA $71
-    CMP.b #$01                              ;$01FC64 |
+    LDA.b PlayerAnimation_71
+    CMP.b #!AniHurt_01                      ;$01FC64 |
     BCS Return01FC61                        ;$01FC66 |
     LDA.w $160E,X                           ;$01FC68 |
     BNE Return01FC61                        ;$01FC6B |
