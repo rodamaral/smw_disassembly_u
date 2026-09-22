@@ -4135,7 +4135,7 @@ GM14_main_level_00A1DA:
     LDA.b byetudlrHold_15
     AND.b #$20                              ;$00A25D |
     BEQ .Return00A289                       ;$00A25F | if not holding select, return to main loop
-    LDY.w $13BF                             ;$00A261 | if holding select, try to exit the level if beaten
+    LDY.w Translevel_13BF                   ;$00A261 | if holding select, try to exit the level if beaten
     LDA.w $1EA2,Y                           ;$00A264 |
     BPL .Return00A289                       ;$00A267 |
     LDA.w $0DD5                             ;$00A269 |
@@ -7952,7 +7952,7 @@ CODE_00C9FE:
     LDA.w $13C6                             ;$00CA01 |
     BEQ CODE_00CA25                         ;$00CA04 |
     LDX.b #$08                              ;$00CA06 |
-    LDA.w $13BF                             ;$00CA08 |
+    LDA.w Translevel_13BF                   ;$00CA08 |
     CMP.b #$13                              ;$00CA0B |
     BNE CODE_00CA12                         ;$00CA0D |
     INC.w $0DD5                             ;$00CA0F |
@@ -12377,12 +12377,12 @@ CODE_00F38A:
     RTL                                     ;$00F3B1 |
 
 get_level_bit_flag:
-    LDA.w $13BF                             ;$00F3B2 \ Load the current level,
+    LDA.w Translevel_13BF                   ;$00F3B2 \ Load the current level,
     LSR                                     ;$00F3B5 |
     LSR                                     ;$00F3B6 |
     LSR                                     ;$00F3B7 | and divide by 8 for the index to the level bit flag table.
     TAY                                     ;$00F3B8 |
-    LDA.w $13BF                             ;$00F3B9 | Load the current level,
+    LDA.w Translevel_13BF                   ;$00F3B9 | Load the current level,
     AND.b #$07                              ;$00F3BC |
     TAX                                     ;$00F3BE |
     LDA.l level_bit_masks,X                 ;$00F3BF | and get the bit mask for the level bit flag table.

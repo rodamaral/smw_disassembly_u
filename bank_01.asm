@@ -14045,7 +14045,7 @@ CODE_01E51E:
     BEQ CODE_01E52D                         ;$01E520 |
     CMP.b #$32                              ;$01E522 |
     BNE CODE_01E542                         ;$01E524 |
-    LDA.w $13BF                             ;$01E526 |
+    LDA.w Translevel_13BF                   ;$01E526 |
     CMP.b #$31                              ;$01E529 |
     BNE CODE_01E542                         ;$01E52B |
 CODE_01E52D:
@@ -14110,7 +14110,7 @@ CODE_01E598:
     BEQ CODE_01E5A7                         ;$01E59A |
     CMP.b #$32                              ;$01E59C |
     BNE CODE_01E5B6                         ;$01E59E |
-    LDA.w $13BF                             ;$01E5A0 |
+    LDA.w Translevel_13BF                   ;$01E5A0 |
     CMP.b #$31                              ;$01E5A3 |
     BNE CODE_01E5B6                         ;$01E5A5 |
 CODE_01E5A7:

@@ -3002,7 +3002,7 @@ CODE_05B1A5:
 CODE_05B1AF:
     CPY.w MessageBoxTrigger_1426
     BNE CODE_05B1B9                         ;$05B1B2 |
-    CMP.w $13BF                             ;$05B1B4 |
+    CMP.w Translevel_13BF                   ;$05B1B4 |
     BEQ CODE_05B1BC                         ;$05B1B7 |
 CODE_05B1B9:
     DEX
@@ -6440,7 +6440,7 @@ CODE_05D83E:
 CODE_05D899:
     SEP #$20
     LDA.l $7ED000,X                         ;$05D89B |
-    STA.w $13BF                             ;$05D89F |
+    STA.w Translevel_13BF                   ;$05D89F |
 CODE_05D8A2:
     CMP.b #$25
     BCC CODE_05D8A9                         ;$05D8A4 |
@@ -6587,11 +6587,11 @@ CODE_05D9B8:
     LSR                                     ;$05D9C2 |
     STA.w $13CD                             ;$05D9C3 |
     STZ.w $13CE                             ;$05D9C6 |
-    LDY.w $13BF                             ;$05D9C9 |
+    LDY.w Translevel_13BF                   ;$05D9C9 |
     LDA.w DATA_05D608,Y                     ;$05D9CC |
     STA.w $1DEA                             ;$05D9CF |
     SEP #$10                                ;$05D9D2 |
-    LDX.w $13BF                             ;$05D9D4 |
+    LDX.w Translevel_13BF                   ;$05D9D4 |
     LDA.w $1EA2,X                           ;$05D9D7 |
     AND.b #$40                              ;$05D9DA |
     BEQ CODE_05D9EC                         ;$05D9DC |
@@ -6630,7 +6630,7 @@ CODE_05DA12:
     STA.w $1412                             ;$05DA14 |
 CODE_05DA17:
     SEP #$30
-    LDA.w $13BF                             ;$05DA19 |
+    LDA.w Translevel_13BF                   ;$05DA19 |
     CMP.b #$52                              ;$05DA1C |
     BCC CODE_05DA24                         ;$05DA1E |
     LDX.b #$03                              ;$05DA20 |
@@ -6656,7 +6656,7 @@ CODE_05DA38:
     BNE CODE_05DA35                         ;$05DA40 |
     LDA.w $141F                             ;$05DA42 |
     BNE CODE_05DA35                         ;$05DA45 |
-    LDA.w $13BF                             ;$05DA47 |
+    LDA.w Translevel_13BF                   ;$05DA47 |
     CMP.b #$31                              ;$05DA4A |
     BEQ CODE_05DA5E                         ;$05DA4C |
     CMP.b #$32                              ;$05DA4E |
@@ -6727,7 +6727,7 @@ CODE_05DAD7:
     BEQ CODE_05DAEB                         ;$05DADA |
     LDA.w BonusGameFlag_1425                ;$05DADC |
     BNE CODE_05DAEB                         ;$05DADF |
-    LDA.w $13BF                             ;$05DAE1 |
+    LDA.w Translevel_13BF                   ;$05DAE1 |
     CMP.b #$24                              ;$05DAE4 |
     BNE CODE_05DAEB                         ;$05DAE6 |
     JSR CODE_05DAEF                         ;$05DAE8 |

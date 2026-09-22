@@ -1277,7 +1277,7 @@ CODE_048DBD:
     AND.w #$FF00                            ;$048DCA |
     BEQ CODE_048DDF                         ;$048DCD |
     BMI CODE_048DDF                         ;$048DCF |
-    LDA.w $13BF                             ;$048DD1 |
+    LDA.w Translevel_13BF                   ;$048DD1 |
     AND.w #$00FF                            ;$048DD4 |
     CMP.w #$0018                            ;$048DD7 |
     BNE CODE_048DDF                         ;$048DDA |
@@ -1318,7 +1318,7 @@ CODE_048DDF:
     BNE CODE_048E38                         ;$048E20 |
     LDY.w #$0014                            ;$048E22 |
 CODE_048E25:
-    LDA.w $13BF
+    LDA.w Translevel_13BF
     AND.w #$00FF                            ;$048E28 |
     CMP.w DATA_048D74,Y                     ;$048E2B |
     BEQ CODE_048E38                         ;$048E2E |
@@ -6172,7 +6172,7 @@ CODE_04E640:
     STA.w $1B83                             ;$04E654 |
     LDA.b #$28                              ;$04E657 |
     STA.w $1B84                             ;$04E659 |
-    LDA.w $13BF                             ;$04E65C |
+    LDA.w Translevel_13BF                   ;$04E65C |
     CMP.b #$18                              ;$04E65F |
     BNE CODE_04E668                         ;$04E661 |
     LDA.b #$FF                              ;$04E663 |

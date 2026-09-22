@@ -1421,7 +1421,7 @@ BooRingOffscreen_0FBA: skip 2
 BooRingLoadIndex_0FBC: skip 2
 Map16Pointers_0FBE: skip 1024
 ItemMemorySetting_13BE: skip 1
-TranslevelNo_13BF: skip 2
+Translevel_13BF: skip 2
 OverworldLayer1Tile_13C1: skip 2
 CurrentSubmap_13C3: skip 2
 MoonCounter_13C5: skip 1

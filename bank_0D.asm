@@ -1477,12 +1477,12 @@ CODE_0DA57F:
     BCC CODE_0DA5B1                         ;$0DA583 |
     CPX.b #$1D                              ;$0DA585 |
     BCS CODE_0DA5B1                         ;$0DA587 |
-    LDA.w $13BF                             ;$0DA589 |
+    LDA.w Translevel_13BF                   ;$0DA589 |
     LSR                                     ;$0DA58C |
     LSR                                     ;$0DA58D |
     LSR                                     ;$0DA58E |
     TAY                                     ;$0DA58F |
-    LDA.w $13BF                             ;$0DA590 |
+    LDA.w Translevel_13BF                   ;$0DA590 |
     AND.b #$07                              ;$0DA593 |
     TAX                                     ;$0DA595 |
     LDA $00                                 ;$0DA596 |
@@ -1630,7 +1630,7 @@ CODE_0DA673:
     RTS                                     ;$0DA68D |
 
 CODE_0DA68E:
-    LDX.w $13BF
+    LDX.w Translevel_13BF
     LDA.l $001EA2,X                         ;$0DA691 |
     AND.b #$40                              ;$0DA695 |
     BNE Return0DA6B0                        ;$0DA697 |
@@ -3380,12 +3380,12 @@ Return0DB2C9:
     RTS
 
 CODE_0DB2CA:
-    LDA.w $13BF
+    LDA.w Translevel_13BF
     LSR                                     ;$0DB2CD |
     LSR                                     ;$0DB2CE |
     LSR                                     ;$0DB2CF |
     TAY                                     ;$0DB2D0 |
-    LDA.w $13BF                             ;$0DB2D1 |
+    LDA.w Translevel_13BF                   ;$0DB2D1 |
     AND.b #$07                              ;$0DB2D4 |
     TAX                                     ;$0DB2D6 |
     LDA.w $1F2F,Y                           ;$0DB2D7 |
