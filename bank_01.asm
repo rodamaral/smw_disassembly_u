@@ -14233,7 +14233,7 @@ CODE_01E664:
     BCS CODE_01E6AE                         ;$01E688 |
     STZ.w $1471                             ;$01E68A |
     LDY.b #$B0                              ;$01E68D |
-    LDA $17                                 ;$01E68F |
+    LDA.b axlr0000Hold_17                   ;$01E68F |
     BPL CODE_01E69A                         ;$01E691 |
     LDA.b #$01                              ;$01E693 |
     STA.w $140D                             ;$01E695 |
@@ -15177,7 +15177,7 @@ CODE_01ED70:
 CODE_01ED95:
     LDA.w $13F3
     BNE CODE_01ED9E                         ;$01ED98 |
-    BIT $18                                 ;$01ED9A |
+    BIT.b axlr0000Frame_18                  ;$01ED9A |
     BPL Return01EDCB                        ;$01ED9C |
 CODE_01ED9E:
     LDA.b #$02

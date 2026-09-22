@@ -1677,7 +1677,7 @@ CODE_049132:
     CMP.b #$56                              ;$04913D |
     BEQ CODE_049165                         ;$04913F |
 OW_Player_Update:
-    LDA $17
+    LDA.b axlr0000Hold_17
     AND.b #$30                              ;$049143 |
     CMP.b #$30                              ;$049145 |
     BNE OWPU_NoLR                           ;$049147 |
@@ -1686,7 +1686,7 @@ OW_Player_Update:
     BEQ OWPU_EnterLevel                     ;$04914E |
 OWPU_NoLR:
     LDA.b byetudlrFrame_16
-    ORA $18                                 ;$049152 |
+    ORA.b axlr0000Frame_18                  ;$049152 |
     AND.b #$C0                              ;$049154 |
     BNE OWPU_ABXY                           ;$049156 |
     BRL CODE_0491E9                         ;$049158 |

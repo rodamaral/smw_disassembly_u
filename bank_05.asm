@@ -2967,10 +2967,10 @@ CODE_05B16E:
     EOR.b byetudlrFrame_16                  ;$05B174 |
     AND.b #$F0                              ;$05B176 |
     BEQ CODE_05B186                         ;$05B178 |
-    LDA $17                                 ;$05B17A |
+    LDA.b axlr0000Hold_17                   ;$05B17A |
     AND.b #$C0                              ;$05B17C |
     BEQ CODE_05B18E                         ;$05B17E |
-    EOR $18                                 ;$05B180 |
+    EOR.b axlr0000Frame_18                  ;$05B180 |
     AND.b #$C0                              ;$05B182 |
     BNE CODE_05B18E                         ;$05B184 |
 CODE_05B186:

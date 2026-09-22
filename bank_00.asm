@@ -804,13 +804,13 @@ update_controllers:                         ;        \
     ORA.w $0DA2,X                           ;$0086AD | | 
     STA.b byetudlrHold_15                   ;$0086B0 |/
     LDA.w $0DA4,X                           ;$0086B2 |\ Update $17 to current button press low byte
-    STA $17                                 ;$0086B5 |/
+    STA.b axlr0000Hold_17                   ;$0086B5 |/
     LDA.w $0DA8,X                           ;$0086B7 |\ Update $16 t0 current frame press high byte
     AND.b #$40                              ;$0086BA | | Share bit 6 with X/Y
     ORA.w $0DA6,X                           ;$0086BC | | 
     STA.b byetudlrFrame_16                  ;$0086BF |/
     LDA.w $0DA8,X                           ;$0086C1 |\ Update $18 to current frame press low byte
-    STA $18                                 ;$0086C4 |/
+    STA.b axlr0000Frame_18                  ;$0086C4 |/
     RTS                                     ;$0086C6 /
 
 CODE_0086C7:
@@ -2431,7 +2431,7 @@ GM1B_credits_castle_main_0094FD:
     LDA.w $13C6                             ;$009501 |
     CMP.b #$08                              ;$009504 |
     BEQ CODE_009557                         ;$009506 |
-    LDA $17                                 ;$009508 |
+    LDA.b axlr0000Hold_17                   ;$009508 |
     AND.b #$00                              ;$00950A |
     CMP.b #$30                              ;$00950C |
     BNE CODE_009529                         ;$00950E |
@@ -3139,7 +3139,7 @@ CODE_009AD0:
     LDA.b byetudlrFrame_16                  ;$009AD9 |
     AND.b #$90                              ;$009ADB |
     BNE CODE_009AE3                         ;$009ADD |
-    LDA $18                                 ;$009ADF |
+    LDA.b axlr0000Frame_18                  ;$009ADF |
     BPL CODE_009AEA                         ;$009AE1 |
 CODE_009AE3:
     LDA.b #$01
@@ -3187,7 +3187,7 @@ GM09_title_file_erase_009B1A:
     LDY.b #$60                              ;$009B1F |
     JSR CODE_009D30                         ;$009B21 |
     LDA.b byetudlrFrame_16                  ;$009B24 |
-    ORA $18                                 ;$009B26 |
+    ORA.b axlr0000Frame_18                  ;$009B26 |
     AND.b #$40                              ;$009B28 |
     BEQ CODE_009B38                         ;$009B2A |
 CODE_009B2C:
@@ -3400,7 +3400,7 @@ CODE_009CB0:
     JMP CODE_009417                         ;$009CBB |
 
 CODE_009CBE:
-    LDA $17
+    LDA.b axlr0000Hold_17
     AND.b #$C0                              ;$009CC0 |
     BNE Return009CCA                        ;$009CC2 |
     LDA.b byetudlrHold_15                   ;$009CC4 |
@@ -3588,7 +3588,7 @@ CODE_009DF7:
 
 GM0A_title_player_select_009DFA:
     LDA.b byetudlrFrame_16
-    ORA $18                                 ;$009DFC |
+    ORA.b axlr0000Frame_18                  ;$009DFC |
     AND.b #$40                              ;$009DFE |
     BEQ CODE_009E08                         ;$009E00 |
     DEC.w $0100                             ;$009E02 |
@@ -4092,7 +4092,7 @@ GM14_main_level_00A1DA:
     TRB.b byetudlrHold_15                   ;$00A209 || clear hold down
     LDA.b #$40                              ;$00A20B ||
     TRB.b byetudlrFrame_16                  ;$00A20D || clear X/Y press
-    TRB $18                                 ;$00A20F |/
+    TRB.b axlr0000Frame_18                  ;$00A20F |/
 +   LDA.w $13D3                             ;$00A211 |
     BEQ .able_to_toggle_pause_00A21B        ;$00A214 |
     DEC.w $13D3                             ;$00A216 | if unable to (un)pause
@@ -7760,7 +7760,7 @@ CODE_00C889:
 CODE_00C88D:
     LDX $88
     LDA.b byetudlrFrame_16                  ;$00C88F |
-    ORA $18                                 ;$00C891 |
+    ORA.b axlr0000Frame_18                  ;$00C891 |
     JSR disable_controls                    ;$00C893 |
     BMI CODE_00C8FB                         ;$00C896 |
     STZ.w $13DE                             ;$00C898 |
@@ -7780,7 +7780,7 @@ CODE_00C8A8:
     CMP.w DATA_00C848-2,X                   ;$00C8B3 |
     BEQ CODE_00C8BC                         ;$00C8B6 |
     LDY.b #$80                              ;$00C8B8 |
-    STY $18                                 ;$00C8BA |
+    STY.b axlr0000Frame_18                  ;$00C8BA |
 CODE_00C8BC:
     ASL
     BPL CODE_00C8D1                         ;$00C8BD |
@@ -8199,10 +8199,10 @@ free_roaming_speeds:
     dw $FFFE,$FFFA
 
 no_animation:                               ;        \
-    LDA $17                                 ;$00CC68 |\ If L isn't held, don't cycle the debug action.
+    LDA.b axlr0000Hold_17                   ;$00CC68 |\ If L isn't held, don't cycle the debug action.
     AND.b #$20                              ;$00CC6A | |
     BEQ .no_cycle                           ;$00CC6C |/
-    LDA $18                                 ;$00CC6E |\ If A isn't pressed, don't cycle the debug action.
+    LDA.b axlr0000Frame_18                  ;$00CC6E |\ If A isn't pressed, don't cycle the debug action.
     CMP.b #$80                              ;$00CC70 | |
     BNE .no_cycle                           ;$00CC72 |/
     INC.w $1E01                             ;$00CC74 | Increase the debug action.
@@ -8417,11 +8417,11 @@ screen_scrolling:
     BRA CODE_00CE48                         ;$00CDF4 |
 
 CODE_00CDF6:
-    LDA $17
+    LDA.b axlr0000Hold_17
     AND.b #$CF                              ;$00CDF8 |
     ORA.b byetudlrHold_15                   ;$00CDFA |
     BNE CODE_00CE49                         ;$00CDFC |
-    LDA $17                                 ;$00CDFE |
+    LDA.b axlr0000Hold_17                   ;$00CDFE |
     AND.b #$30                              ;$00CE00 |
     BEQ CODE_00CE49                         ;$00CE02 |
     CMP.b #$30                              ;$00CE04 |
@@ -9260,7 +9260,7 @@ CODE_00D60B:
     AND.b #$08                              ;$00D614 |
     BNE CODE_00D61E                         ;$00D616 |
     LDA.b byetudlrFrame_16                  ;$00D618 |
-    ORA $18                                 ;$00D61A |
+    ORA.b axlr0000Frame_18                  ;$00D61A |
     BMI CODE_00D630                         ;$00D61C |
 CODE_00D61E:
     LDA $73
@@ -9283,7 +9283,7 @@ CODE_00D637:
     LSR                                     ;$00D638 |
     AND.b #$FE                              ;$00D639 |
     TAX                                     ;$00D63B |
-    LDA $18                                 ;$00D63C |
+    LDA.b axlr0000Frame_18                  ;$00D63C |
     BPL CODE_00D65E                         ;$00D63E |
     LDA.w $148F                             ;$00D640 |
     BNE CODE_00D65E                         ;$00D643 |
@@ -9779,7 +9779,7 @@ water_physics:
     LDA $72                                 ;$00D99A |
     BNE CODE_00D9AF                         ;$00D99C |
     LDA.b byetudlrFrame_16                  ;$00D99E |
-    ORA $18                                 ;$00D9A0 |
+    ORA.b axlr0000Frame_18                  ;$00D9A0 |
     BPL CODE_00D9AF                         ;$00D9A2 |
     LDA.b #$0B                              ;$00D9A4 |
     STA $72                                 ;$00D9A6 |
@@ -9830,7 +9830,7 @@ CODE_00D9DD:
 
 CODE_00D9EB:
     LDA.b byetudlrFrame_16
-    ORA $18                                 ;$00D9ED |
+    ORA.b axlr0000Frame_18                  ;$00D9ED |
     BPL CODE_00DA0B                         ;$00D9EF |
     LDA.w $13FA                             ;$00D9F1 |
     BNE CODE_00DA0B                         ;$00D9F4 |
@@ -11074,7 +11074,7 @@ CODE_00EA75:
     AND.b #$88                              ;$00EA7A |
     CMP.b #$88                              ;$00EA7C |
     BNE CODE_00EA62                         ;$00EA7E |
-    LDA $17                                 ;$00EA80 |
+    LDA.b axlr0000Hold_17                   ;$00EA80 |
     BPL CODE_00EA92                         ;$00EA82 |
     LDA.w $148F                             ;$00EA84 |
     BNE CODE_00EA92                         ;$00EA87 |
@@ -12767,8 +12767,8 @@ CODE_00F629:
 disable_controls:
     STZ.b byetudlrHold_15
     STZ.b byetudlrFrame_16                  ;$00F62F |
-    STZ $17                                 ;$00F631 |
-    STZ $18                                 ;$00F633 |
+    STZ.b axlr0000Hold_17                   ;$00F631 |
+    STZ.b axlr0000Frame_18                  ;$00F633 |
     RTS                                     ;$00F635 |
 
 CODE_00F636:

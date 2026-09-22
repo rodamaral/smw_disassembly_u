@@ -5129,7 +5129,7 @@ CODE_0CCFDE:
     ORA.w $144D                             ;$0CCFE1 |
     BNE Return0CCFF6                        ;$0CCFE4 |
     LDA.b byetudlrFrame_16                  ;$0CCFE6 |
-    ORA $18                                 ;$0CCFE8 |
+    ORA.b axlr0000Frame_18                  ;$0CCFE8 |
     AND.b #$C0                              ;$0CCFEA |
     BEQ Return0CCFF6                        ;$0CCFEC |
     STZ.w $1442                             ;$0CCFEE |
