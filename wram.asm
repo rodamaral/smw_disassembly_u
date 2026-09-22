@@ -1424,225 +1424,225 @@ BooRingYPosHigh: skip 2
 BooRingOffscreen: skip 2
 BooRingLoadIndex: skip 2
 Map16Pointers: skip 1024
-ItemMemorySetting: skip 1
-TranslevelNo: skip 2
-OverworldLayer1Tile: skip 2
-CurrentSubmap: skip 2
-MoonCounter: skip 1
-CutsceneID: skip 1
-YoshiColor: skip 1
+ItemMemorySetting_13BE: skip 1
+TranslevelNo_13BF: skip 2
+OverworldLayer1Tile_13C1: skip 2
+CurrentSubmap_13C3: skip 2
+MoonCounter_13C5: skip 1
+CutsceneID_13C6: skip 1
+YoshiColor_13C7: skip 1
 ; 7E13C8 unused
 skip 1
-ShowContinueEnd: skip 1
-ShowSavePrompt: skip 1
-UnusedStarCounter: skip 1
-CoinAdder: skip 1
-DisableMidway: skip 1
-MidwayFlag: skip 1
-SkipMidwayCastleIntro: skip 1
-StructureCrushTile: skip 1
-StructureCrushIndex: skip 1
-SwitchPalaceColor: skip 1
+ShowContinueEnd_13C9: skip 1
+ShowSavePrompt_13CA: skip 1
+UnusedStarCounter_13CB: skip 1
+CoinAdder_13CC: skip 1
+DisableMidway_13CD: skip 1
+MidwayFlag_13CE: skip 1
+SkipMidwayCastleIntro_13CF: skip 1
+StructureCrushTile_13D0: skip 1
+StructureCrushIndex_13D1: skip 1
+SwitchPalaceColor_13D2: skip 1
 RamLevelReset_13D3:
 PauseTimer_13D3: skip 1
 PauseFlag_13D4: skip 1
-Layer3ScrollType: skip 1
-DrumrollTimer: skip 1
-IntroMarchYPosSpx: skip 2
-OverworldProcess: skip 1
-PlayerXPosSpx: skip 1
-PlayerWalkingPose: skip 1
-PlayerYPosSpx: skip 1 ; unused
-PlayerTurningPose: skip 1
-PlayerOverworldPose: skip 1
-PlayerCapePose: skip 1
+Layer3ScrollType_13D5: skip 1
+DrumrollTimer_13D6: skip 1
+IntroMarchYPosSpx_13D7: skip 2
+OverworldProcess_13D9: skip 1
+PlayerXPosSpx_13DA: skip 1
+PlayerWalkingPose_13DB: skip 1
+PlayerYPosSpx_13DC: skip 1 ; unused
+PlayerTurningPose_13DD: skip 1
+PlayerOverworldPose_13DE: skip 1
+PlayerCapePose_13DF: skip 1
 PlayerPose_13E0: skip 1
-SlopeType: skip 1
-SpinjumpFireball: skip 1
+SlopeType_13E1: skip 1
+SpinjumpFireball_13E2: skip 1
 WallrunType_13E3: skip 1
-PlayerPMeter: skip 1
-PlayerPoseLenTimer: skip 1
+PlayerPMeter_13E4: skip 1
+PlayerPoseLenTimer_13E5: skip 1
 ; 7E13E6 - 7E13E7 unused
 skip 2
-CapeInteracts: skip 1
-CapeInteractionXPos: skip 2
-CapeInteractionYPos: skip 2
-PlayerSlopePose: skip 1
-CurrentSlope: skip 1
-PlayerIsOnGround: skip 1
-NetDoorDirIndex: skip 1
-VerticalScrollEnabled: skip 1
+CapeInteracts_13E8: skip 1
+CapeInteractionXPos_13E9: skip 2
+CapeInteractionYPos_13EB: skip 2
+PlayerSlopePose_13ED: skip 1
+CurrentSlope_13EE: skip 1
+PlayerIsOnGround_13EF: skip 1
+NetDoorDirIndex_13F0: skip 1
+VerticalScrollEnabled_13F1: skip 1
 ; 7E13F2 unused
 skip 1
-PBalloonInflating: skip 1
-BonusRoomBlocks: skip 5
-PlayerBehindNet: skip 1
-PlayerCanJumpWater: skip 1
+PBalloonInflating_13F3: skip 1
+BonusRoomBlocks_13F4: skip 5
+PlayerBehindNet_13F9: skip 1
+PlayerCanJumpWater_13FA: skip 1
 PlayerIsFrozen_13FB: skip 1
-ActiveBoss: skip 1
-CameraIsScrolling: skip 1
-CameraScrollDir: skip 1
-CameraScrollPlayerDir: skip 1
-CameraProperMove: skip 1
-CameraScrollTimer: skip 1
-NoteBlockActive: skip 1
+ActiveBoss_13FC: skip 1
+CameraIsScrolling_13FD: skip 1
+CameraScrollDir_13FE: skip 1
+CameraScrollPlayerDir_13FF: skip 1
+CameraProperMove_1400: skip 1
+CameraScrollTimer_1401: skip 1
+NoteBlockActive_1402: skip 1
 
 ; === $7E1403 ===
 ; 1 byte
 ; which layer 3 tide setting is enabled
-Layer3TideSetting: skip 1
+Layer3TideSetting_1403: skip 1
 ; Valid values
 !Tide_UpAndDown = 1
 !Tide_Stationary = 2
 
-ScreenScrollAtWill: skip 1
-DrawYoshiInPipe: skip 1
-BouncingOnBoard: skip 1
-FlightPhase: skip 1
-NextFlightPhase: skip 1
-MaxStageOfFlight: skip 1
+ScreenScrollAtWill_1404: skip 1
+DrawYoshiInPipe_1405: skip 1
+BouncingOnBoard_1406: skip 1
+FlightPhase_1407: skip 1
+NextFlightPhase_1408: skip 1
+MaxStageOfFlight_1409: skip 1
 Empty_140A: skip 1
 ; 7E140B - 7E140C unused
 skip 2
-SpinJumpFlag: skip 1
-Layer2Touched: skip 1
-ReznorOAMIndex: skip 1
+SpinJumpFlag_140D: skip 1
+Layer2Touched_140E: skip 1
+ReznorOAMIndex_140F: skip 1
 YoshiHasWingsGfx_1410: skip 1
-HorizLayer1Setting: skip 1
-VertLayer1Setting: skip 1
-HorizLayer2Setting: skip 1
-VertLayer2Setting: skip 1
+HorizLayer1Setting_1411: skip 1
+VertLayer1Setting_1412: skip 1
+HorizLayer2Setting_1413: skip 1
+VertLayer2Setting_1414: skip 1
 ; 7E1415 - 7E1416 unused
 skip 2
-BackgroundVertOffset: skip 2
+BackgroundVertOffset_1407: skip 2
 SpriteInPipeMode_1419: skip 1
-SublevelCount: skip 1
-DidPlayBonusGame: skip 1
-SecretGoalTape: skip 1
-ShowMarioStart: skip 1
+SublevelCount_140A: skip 1
+DidPlayBonusGame_140B: skip 1
+SecretGoalTape_140C: skip 1
+ShowMarioStart_140D: skip 1
 YoshiHasWings_141E: skip 1
-DisableNoYoshiIntro: skip 1
-DragonCoinsCollected: skip 1
-OneUpCheckpoints: skip 1
-DragonCoinsShown: skip 1
-SwitchPalacePressed: skip 1
-DisplayBonusStars: skip 1
+DisableNoYoshiIntro_140F: skip 1
+DragonCoinsCollected_1420: skip 1
+OneUpCheckpoints_1421: skip 1
+DragonCoinsShown_1422: skip 1
+SwitchPalacePressed_1423: skip 1
+DisplayBonusStars_1424: skip 1
 BonusGameFlag_1425: skip 1
 MessageBoxTrigger_1426: skip 1
-ClownCarImage: skip 1
-ClownCarPropeller: skip 1
-BowserPalette: skip 1
-CameraMoveTrigger: skip 2
-CameraLeftBuffer: skip 2
-CameraRightBuffer: skip 2
-SolidTileStart: skip 1
-SolidTileEnd: skip 1
-DirectCoinInit: skip 1
-SpotlightSize: skip 1
-KeyholeTimer: skip 1
-KeyholeDirection: skip 1
-KeyholeXPos: skip 2
-KeyholeYPos: skip 2
-UploadMarioStart: skip 1
-DeathMessage: skip 1
-GameOverAnimation: skip 1
-GameOverTimer: skip 1
-Layer1ScrollCmd: skip 1
-Layer2ScrollCmd: skip 1
-Layer1ScrollBits: skip 1
-Layer2ScrollBits: skip 1
-Layer1ScrollType: skip 1
-CutsceneTextTimer:
-SelectedStartingZone:
-Layer2ScrollType: skip 1
-Layer1ScrollTimer: skip 1
-Layer2ScrollTimer: skip 1
-Layer1ScrollXSpeed: skip 2
-Layer1ScrollYSpeed: skip 2
-Layer2ScrollXSpeed: skip 2
-Layer2ScrollYSpeed: skip 2
-Layer1ScrollXPosUpd: skip 2
-Layer1ScrollYPosUpd: skip 2
-Layer2ScrollXPosUpd: skip 2
-Layer2ScrollYPosUpd: skip 2
-ScrollLayerIndex: skip 1
-CreditsJumpingYoshi: skip 1
-Layer3ScrollXSpeed: skip 2
-Layer3ScrollYSpeed: skip 2
-Layer3ScrollXPosUpd: skip 2
+ClownCarImage_1427: skip 1
+ClownCarPropeller_1428: skip 1
+BowserPalette_1429: skip 1
+CameraMoveTrigger_142A: skip 2
+CameraLeftBuffer_142C: skip 2
+CameraRightBuffer_142E: skip 2
+SolidTileStart_1430: skip 1
+SolidTileEnd_1431: skip 1
+DirectCoinInit_1432: skip 1
+SpotlightSize_1433: skip 1
+KeyholeTimer_1434: skip 1
+KeyholeDirection_1435: skip 1
+KeyholeXPos_1436: skip 2
+KeyholeYPos_1438: skip 2
+UploadMarioStart_143A: skip 1
+DeathMessage_143B: skip 1
+GameOverAnimation_143C: skip 1
+GameOverTimer_143D: skip 1
+Layer1ScrollCmd_143E: skip 1
+Layer2ScrollCmd_143F: skip 1
+Layer1ScrollBits_1440: skip 1
+Layer2ScrollBits_1441: skip 1
+Layer1ScrollType_1442: skip 1
+CutsceneTextTimer_1443:
+SelectedStartingZone_1443:
+Layer2ScrollType_1443: skip 1
+Layer1ScrollTimer_1444: skip 1
+Layer2ScrollTimer_1445: skip 1
+Layer1ScrollXSpeed_1446: skip 2
+Layer1ScrollYSpeed_1448: skip 2
+Layer2ScrollXSpeed_144A: skip 2
+Layer2ScrollYSpeed_144C: skip 2
+Layer1ScrollXPosUpd_144E: skip 2
+Layer1ScrollYPosUpd_1450: skip 2
+Layer2ScrollXPosUpd_1452: skip 2
+Layer2ScrollYPosUpd_1454: skip 2
+ScrollLayerIndex_1456: skip 1
+CreditsJumpingYoshi_1457: skip 1
+Layer3ScrollXSpeed_1458: skip 2
+Layer3ScrollYSpeed_145A: skip 2
+Layer3ScrollXPosUpd_145C: skip 2
 ; 7E145E - 7E145F unused
 skip 2
-Layer3ScroolDir: skip 1
+Layer3ScroolDir_1460: skip 1
 ; 7E1461 unused
 skip 1
-NextLayer1XPos: skip 2
-NextLayer1YPos: skip 2
-NextLayer2XPos: skip 2
-NextLayer2YPos: skip 2
-Layer3HorizOffset: skip 2
+NextLayer1XPos_1462: skip 2
+NextLayer1YPos_1464: skip 2
+NextLayer2XPos_1466: skip 2
+NextLayer2YPos_1468: skip 2
+Layer3HorizOffset_146A: skip 2
 ; 7E146C - 7E146F unused
 skip 4
-CarryingFlag: skip 1
-StandOnSolidSprite: skip 1
-LightTopWinOpenPos: skip 1
+CarryingFlag_1470: skip 1
+StandOnSolidSprite_1471: skip 1
+LightTopWinOpenPos_1472: skip 1
 ; 7E1473 unused
 skip 1
-LightTopWinClosePos: skip 1
+LightTopWinClosePos_1474: skip 1
 ; 7E1475 unused
 skip 1
-LightBotWinOpenPos: skip 1
+LightBotWinOpenPos_1476: skip 1
 ; 7E1477 unused
 skip 1
-LightBotWinClosePos: skip 1
+LightBotWinClosePos_1478: skip 1
 ; 7E1479 unused
 skip 1
-LightWinOpenCalc: skip 1
+LightWinOpenCalc_147A: skip 1
 ; 7E147B unused
 skip 1
-LightWinCloseCalc: skip 1
+LightWinCloseCalc_147C: skip 1
 ; 7E147D unused
 skip 1
-LightWinOpenMove: skip 1
-LightWinCloseMove: skip 1
-LightLeftWidth: skip 1
-LightRightWidth: skip 1
-LightSkipInit: skip 1
-LightMoveDir: skip 1
-LightLeftRelPos: skip 1
-LightRightRelPos: skip 1
-LightExists: skip 1
+LightWinOpenMove_147E: skip 1
+LightWinCloseMove_147F: skip 1
+LightLeftWidth_1480: skip 1
+LightRightWidth_1481: skip 1
+LightSkipInit_1482: skip 1
+LightMoveDir_1483: skip 1
+LightLeftRelPos_1484: skip 1
+LightRightRelPos_1485: skip 1
+LightExists_1486: skip 1
 ; 7E1487 - 7E148A unused
 skip 4
-RNGCalc: skip 2
-RandomNumber: skip 2
-IsCarryingItem: skip 1
+RNGCalc_148B: skip 2
+RandomNumber_148D: skip 2
+IsCarryingItem_148F: skip 1
 StarTimer_1490: skip 1
-SpriteXMovement: skip 1
-PlayerPeaceSign: skip 1
+SpriteXMovement_1491: skip 1
+PlayerPeaceSign_1492: skip 1
 EndLevelTimer_1493: skip 1
-ColorFadeDir: skip 1
-ColorFadeTimer: skip 1
-PlayerAniTimer: skip 1
-IFrameTimer: skip 1
+ColorFadeDir_1494: skip 1
+ColorFadeTimer_1495: skip 1
+PlayerAniTimer_1496: skip 1
+IFrameTimer_1497: skip 1
 PickUpItemTimer_1498: skip 1
-FaceScreenTimer: skip 1
-KickingTimer: skip 1
+FaceScreenTimer_1499: skip 1
+KickingTimer_149A: skip 1
 CyclePaletteTimer_149B: skip 1
-ShootFireTimer: skip 1
-NetDoorTimer: skip 1
-PunchNetTimer: skip 1
-TakeoffTimer: skip 1
-RunTakeoffTimer: skip 1
-SkidTurnTimer: skip 1
-CapeAniTimer: skip 1
-YoshiTongueTimer: skip 1
-CapePumpTimer: skip 1
-CapeFloatTimer: skip 1
-CapeSpinTimer: skip 1
-ReznorBridgeTimer: skip 1
-EmptyTimer14A8: skip 1
-GroundPoundTimer: skip 1
-YoshiWingGrabTimer: skip 1
+ShootFireTimer_149C: skip 1
+NetDoorTimer_149D: skip 1
+PunchNetTimer_149E: skip 1
+TakeoffTimer_149F: skip 1
+RunTakeoffTimer_14A0: skip 1
+SkidTurnTimer_14A1: skip 1
+CapeAniTimer_14A2: skip 1
+YoshiTongueTimer_14A3: skip 1
+CapePumpTimer_14A4: skip 1
+CapeFloatTimer_14A5: skip 1
+CapeSpinTimer_14A6: skip 1
+ReznorBridgeTimer_14A7: skip 1
+EmptyTimer14A8_14A8: skip 1
+GroundPoundTimer_14A9: skip 1
+YoshiWingGrabTimer_14AA: skip 1
 BonusTimer_14AB: skip 1
 ; 7E14AC unused
 skip 1
@@ -1653,36 +1653,36 @@ OnOffSwitch_14AF: skip 1
 LakituCloudTempXPos_14B0:
 IggyLarryRotCenterX_14B0:
 BrSwingCenterXPos_14B0:
-BowserWaitTimer_14B0: skip 1
-BowserAttackTimer: skip 1
-LakituCloudTempYPos:
-IggyLarryRotCenterY:
-BrSwingCenterYPos:
-BowserFlyawayCounter: skip 1
-ClownCarTeardropPos: skip 1
-IggyLarryPlatIntXPos:
-BrSwingXDist:
-BowserMusicIndex: skip 1
-BowserHurtState: skip 1
-IggyLarryPlatIntYPos:
-BrSwingYDist:
-BowserSteelieTimer: skip 1
-BowserFireXPos: skip 1
-IggyLarryTempXPos:
-BrSwingPlatXPos:
-BowserAttackType: skip 2
-IggyLarryTempYPos:
-BrSwingPlatYPos: skip 2
-BrSwingRadiusX: skip 2
+BowserWaitTimer_14B1: skip 1
+BowserAttackTimer_14B2: skip 1
+LakituCloudTempYPos_14B2:
+IggyLarryRotCenterY_14B2:
+BrSwingCenterYPos_14B2:
+BowserFlyawayCounter_14B2: skip 1
+ClownCarTeardropPos_14B3: skip 1
+IggyLarryPlatIntXPos_14B4:
+BrSwingXDist_14B4:
+BowserMusicIndex_14B4: skip 1
+BowserHurtState_14B5: skip 1
+IggyLarryPlatIntYPos_14B6:
+BrSwingYDist_14B6:
+BowserSteelieTimer_14B6: skip 1
+BowserFireXPos_14B7: skip 1
+IggyLarryTempXPos_14B8:
+BrSwingPlatXPos_14B8:
+BowserAttackType_14B8: skip 2
+IggyLarryTempYPos_14BA:
+BrSwingPlatYPos_14BA: skip 2
+BrSwingRadiusX_14BC: skip 2
 ; 7E14BE unused
 skip 1
-BrSwingRadiusY: skip 2
+BrSwingRadiusY_14BF: skip 2
 ; 7E14C1 unused
 skip 1
-BrSwingSine: skip 2
+BrSwingSine_14C2: skip 2
 ; 7E14C4 unused
 skip 1
-BrSwingCosine: skip 2
+BrSwingCosine_14C5: skip 2
 ; 7E14C7 unused
 skip 1
 SpriteStatus_14C8: skip 12
@@ -1736,391 +1736,387 @@ SpriteInterIndex_1695: skip 1
 ; 7E1696 unused
 skip 1
 SpriteStompCounter_1697: skip 1
-MinorSpriteProcIndex: skip 1
-BounceSpriteNumber: skip 4
-BounceSpriteInit: skip 4
-BounceSpriteYPosLow: skip 4
-BounceSpriteXPosLow: skip 4
-BounceSpriteYPosHigh: skip 4
-BounceSpriteXPosHigh: skip 4
-BounceSpriteYSpeed: skip 4
-BounceSpriteXSpeed: skip 4
-BounceSpriteXPosSpx: skip 4
-BounceSpriteYPosSpx: skip 4 ; unused
-BounceSpriteTile: skip 4
-BounceSpriteTimer: skip 4
-BounceSpriteFlags: skip 4
-QuakeSpriteNumber: skip 4
-QuakeSpriteXPosLow: skip 4
-QuakeSpriteXPosHigh: skip 4
-QuakeSpriteYPosLow: skip 4
-QuakeSpriteYPosHigh: skip 4
-ScoreSpriteNumber: skip 6
-ScoreSpriteYPosLow: skip 6
-ScoreSpriteXPosLow: skip 6
-ScoreSpriteXPosHigh: skip 6
-ScoreSpriteYPosHigh: skip 6
-ScoreSpriteTimer: skip 6
-ScoreSpriteLayer: skip 6
-ExtSpriteNumber: skip 10
-ExtSpriteYPosLow: skip 10
-ExtSpriteXPosLow: skip 10
-ExtSpriteYPosHigh: skip 10
-ExtSpriteXPosHigh: skip 10
-ExtSpriteYSpeed: skip 10
-ExtSpriteXSpeed: skip 10
-ExtSpriteYPosSpx: skip 10
-ExtSpriteXPosSpx: skip 10
+MinorSpriteProcIndex_1698: skip 1
+BounceSpriteNumber_1699: skip 4
+BounceSpriteInit_169D: skip 4
+BounceSpriteYPosLow_16A1: skip 4
+BounceSpriteXPosLow_16A5: skip 4
+BounceSpriteYPosHigh_16A9: skip 4
+BounceSpriteXPosHigh_16AD: skip 4
+BounceSpriteYSpeed_16B1: skip 4
+BounceSpriteXSpeed_16B5: skip 4
+BounceSpriteXPosSpx_16B9: skip 4
+BounceSpriteYPosSpx_16BD: skip 4 ; unused
+BounceSpriteTile_16C1: skip 4
+BounceSpriteTimer_16C5: skip 4
+BounceSpriteFlags_16C9: skip 4
+QuakeSpriteNumber_16CD: skip 4
+QuakeSpriteXPosLow_16D1: skip 4
+QuakeSpriteXPosHigh_16D5: skip 4
+QuakeSpriteYPosLow_16D9: skip 4
+QuakeSpriteYPosHigh_16DD: skip 4
+ScoreSpriteNumber_16E1: skip 6
+ScoreSpriteYPosLow_16E7: skip 6
+ScoreSpriteXPosLow_16ED: skip 6
+ScoreSpriteXPosHigh_16F3: skip 6
+ScoreSpriteYPosHigh_16F9: skip 6
+ScoreSpriteTimer_16FF: skip 6
+ScoreSpriteLayer_1705: skip 6
+ExtSpriteNumber_170B: skip 10
+ExtSpriteYPosLow_1715: skip 10
+ExtSpriteXPosLow_171F: skip 10
+ExtSpriteYPosHigh_1729: skip 10
+ExtSpriteXPosHigh_1733: skip 10
+ExtSpriteYSpeed_173D: skip 10
+ExtSpriteXSpeed_1747: skip 10
+ExtSpriteYPosSpx_1751: skip 10
+ExtSpriteXPosSpx_175B: skip 10
 ExtSpriteMisc_1765: skip 10
 ExtSpriteMisc_176F: skip 10
-ExtSpritePriority: skip 10
-ShooterNumber: skip 8
-ShooterYPosLow: skip 8
-ShooterYPosHigh: skip 8
-ShooterXPosLow: skip 8
-ShooterXPosHigh: skip 8
-ShooterTimer: skip 8
-ShooterLoadIndex: skip 8
-LoadingLevelNumber: skip 1
-Layer1DYPos: skip 1
-Layer1DXPos: skip 1
-Layer2DYPos: skip 1
-Layer2DXPos: skip 1
-SmokeSpriteNumber: skip 4
-SmokeSpriteYPos: skip 4
-SmokeSpriteXPos: skip 4
-SmokeSpriteTimer: skip 4
-CoinSpriteExists: skip 4
-CoinSpriteYPosLow: skip 4
-CoinSpriteYSpeed: skip 4
-CoinSpriteYPosSpx: skip 4
-CoinSpriteXPosLow: skip 4
-CoinSpriteLayer: skip 4
-CoinSpriteYPosHigh: skip 4
-CoinsPriteXPosHigh: skip 4
-MinExtSpriteNumber: skip 12
-MinExtSpriteYPosLow: skip 12
-MinExtSpriteXPosLow: skip 12
-MinExtSpriteYPosHigh: skip 12
-MinExtSpriteYSpeed: skip 12
-MinExtSpriteXSpeed: skip 12
-MinExtSpriteYPosSpx: skip 12
-MinExtSpriteXPosSpx: skip 12
-MinExtSpriteTimer: skip 12
-PlayerDisableObjInt: skip 1
-MinExtSpriteSlotIdx: skip 1
-TileGenerateTrackA: skip 1
-SprMap16TouchVertLow: skip 1
-SprMap16TouchHorizLow: skip 1
-SpriteToOverwrite: skip 1
-SprMap16TouchHorizHigh: skip 1
-SmokeSpriteSlotIdx: skip 1
+ExtSpritePriority_1779: skip 10
+ShooterNumber_1783: skip 8
+ShooterYPosLow_178B: skip 8
+ShooterYPosHigh_1793: skip 8
+ShooterXPosLow_179B: skip 8
+ShooterXPosHigh_17A3: skip 8
+ShooterTimer_17AB: skip 8
+ShooterLoadIndex_17B3: skip 8
+LoadingLevelNumber_17BB: skip 1
+Layer1DYPos_17BC: skip 1
+Layer1DXPos_17BD: skip 1
+Layer2DYPos_17BE: skip 1
+Layer2DXPos_17BF: skip 1
+SmokeSpriteNumber_17C0: skip 4
+SmokeSpriteYPos_17C4: skip 4
+SmokeSpriteXPos_17C8: skip 4
+SmokeSpriteTimer_17CC: skip 4
+CoinSpriteExists_17D0: skip 4
+CoinSpriteYPosLow_17D4: skip 4
+CoinSpriteYSpeed_17D8: skip 4
+CoinSpriteYPosSpx_17DC: skip 4
+CoinSpriteXPosLow_17E0: skip 4
+CoinSpriteLayer_17E4: skip 4
+CoinSpriteYPosHigh_17E8: skip 4
+CoinsPriteXPosHigh_17EC: skip 4
+MinExtSpriteNumber_17F0: skip 12
+MinExtSpriteYPosLow_17FC: skip 12
+MinExtSpriteXPosLow_1808: skip 12
+MinExtSpriteYPosHigh_1814: skip 12
+MinExtSpriteYSpeed_1820: skip 12
+MinExtSpriteXSpeed_182C: skip 12
+MinExtSpriteYPosSpx_1838: skip 12
+MinExtSpriteXPosSpx_1844: skip 12
+MinExtSpriteTimer_1850: skip 12
+PlayerDisableObjInt_185C: skip 1
+MinExtSpriteSlotIdx_185D: skip 1
+TileGenerateTrackA_185E: skip 1
+SprMap16TouchVertLow_185F: skip 1
+SprMap16TouchHorizLow_1860: skip 1
+SpriteToOverwrite_1861: skip 1
+SprMap16TouchHorizHigh_1862: skip 1
+SmokeSpriteSlotIdx_1863: skip 1
 ; 7E1864 unused
 skip 1
-CoinSpriteSlotIdx: skip 1
-BrSwingAngleParity: skip 2
-Map16TileHittable: skip 1
+CoinSpriteSlotIdx_1865: skip 1
+BrSwingAngleParity_1866: skip 2
+Map16TileHittable_1868: skip 1
 ; 7E1869 - 7E186A unused
 skip 2
-MulticoinTimer: skip 1
-SpriteOffscreenVert: skip 12
-NetDoorPlayerXOffset: skip 1
+MulticoinTimer_186B: skip 1
+SpriteOffscreenVert_186C: skip 12
+NetDoorPlayerXOffset_1878: skip 1
 ; 7E1879 unused
 skip 1
 RidingYoshi_187A: skip 1
 SpriteMisc_187B: skip 12
-ScreenShakeTimer: skip 1
-ScreenShakeYOffset: skip 2
+ScreenShakeTimer_1887: skip 1
+ScreenShakeYOffset_1888: skip 2
 Empty_188A: skip 1
 PlayerYOffset_188B: skip 1
-BossBGSpriteUpdate: skip 1
-BossBGSpriteXCalc: skip 1
+BossBGSpriteUpdate_188C: skip 1
+BossBGSpriteXCalc_188D: skip 1
 ; 7E188E unused
 skip 1
-BonusGameComplete: skip 1
-BonusGame1UpCount: skip 1
-PBalloonTimer: skip 1
-ClusterSpriteNumber: skip 20
+BonusGameComplete_188F: skip 1
+BonusGame1UpCount_1890: skip 1
+PBalloonTimer_1891: skip 1
+ClusterSpriteNumber_1892: skip 20
 Empty_18A6: skip 1
-Map16TileDestroy: skip 1
-BossPillarFalling: skip 2
-BossPillarYPos: skip 2
-YoshiSwallowTimer: skip 1
-YoshiWalkingTimer: skip 1
-YoshiStartEatTimer: skip 1
-YoshiDuckTimer: skip 1
-YoshiXPos: skip 2
-YoshiYPos: skip 2
+Map16TileDestroy_18A7: skip 1
+BossPillarFalling_18A8: skip 2
+BossPillarYPos_18AA: skip 2
+YoshiSwallowTimer_18AC: skip 1
+YoshiWalkingTimer_18AD: skip 1
+YoshiStartEatTimer_18AE: skip 1
+YoshiDuckTimer_18AF: skip 1
+YoshiXPos_18B0: skip 2
+YoshiYPos_18B2: skip 2
 ; 7E18B4 unused
 skip 1
-StandingOnCage: skip 1
-TileGenerateTrackB: skip 1
+StandingOnCage_18B5: skip 1
+TileGenerateTrackB_18B6: skip 1
 ; 7E18B7 unused
 skip 1
-ActivateClusterSprite: skip 1
-CurrentGenerator: skip 1
-BooRingIndex: skip 1
+ActivateClusterSprite_18B8: skip 1
+CurrentGenerator_18B9: skip 1
+BooRingIndex_18BA: skip 1
 ; 7E18BB unused
 skip 1
-SkullRaftSpeed: skip 1
-PlayerStunnedTimer: skip 1
-PlayerClimbingRope: skip 1
-SpriteWillAppear: skip 1
-SpriteRespawnTimer: skip 1
-SpriteRespawnNumber: skip 1
-PlayerInCloud: skip 1
-SpriteRespawnYPos: skip 2
+SkullRaftSpeed_18BC: skip 1
+PlayerStunnedTimer_18BD: skip 1
+PlayerClimbingRope_18BE: skip 1
+SpriteWillAppear_18BF: skip 1
+SpriteRespawnTimer_18C0: skip 1
+SpriteRespawnNumber_18C1: skip 1
+PlayerInCloud_18C2: skip 1
+SpriteRespawnYPos_18C3: skip 2
 ; 7E18C5 - 7E18CC unused
 skip 8
-BounceSpriteSlotIdx: skip 1
-TurnBlockSpinTimer: skip 4
-StarKillCounter: skip 1
-PlayerSparkleTimer: skip 1
-RedBerriesEaten: skip 1
-PinkBerriesEaten: skip 1
-EatenBerryType: skip 1
-SprMap16TouchVertHigh: skip 1
+BounceSpriteSlotIdx_18CD: skip 1
+TurnBlockSpinTimer_18CE: skip 4
+StarKillCounter_18D2: skip 1
+PlayerSparkleTimer_18D3: skip 1
+RedBerriesEaten_18D4: skip 1
+PinkBerriesEaten_18D5: skip 1
+EatenBerryType_18D6: skip 1
+SprMap16TouchVertHigh_18D7: skip 1
 ; 7E18D8 unused
 skip 1
-NoYoshiIntroTimer: skip 1
+NoYoshiIntroTimer_18D9: skip 1
 YoshiEggSprite_18DA: skip 1
 Empty_18DB: skip 1
-PlayerDuckingOnYoshi: skip 1
-SilverCoinsCollected: skip 1
+PlayerDuckingOnYoshi_18DC: skip 1
+SilverCoinsCollected_18DD: skip 1
 EggLaidTimer_18DE: skip 1
-CurrentYoshiSlot: skip 1
-LakituCloudTimer: skip 1
-LakituCloudSlot: skip 1
-YoshiIsLoose: skip 1
-GameCloudCoinCount: skip 1
-GivePlayerLives: skip 1
-GiveLivesTimer: skip 1
+CurrentYoshiSlot_18DF: skip 1
+LakituCloudTimer_18E0: skip 1
+LakituCloudSlot_18E1: skip 1
+YoshiIsLoose_18E2: skip 1
+GameCloudCoinCount_18E3: skip 1
+GivePlayerLives_18E4: skip 1
+GiveLivesTimer_18E5: skip 1
 ; 7E18E6 unused
 skip 1
 YoshiCanStomp_18E7: skip 1
 YoshiGrowingTimer_18E8: skip 1
-SmokeSpriteSlotFull: skip 1
-MinExtSpriteXPosHigh: skip 12
+SmokeSpriteSlotFull_18E9: skip 1
+MinExtSpriteXPosHigh_18EA: skip 12
 ; 7E18F6 unused
 skip 1
-ScoreSpriteSlotIdx: skip 1
-BounceSpriteIntTimer: skip 4
-ExtSpriteSlotIdx: skip 1
-ChuckIsWhistling: skip 1
-DiagonalBulletTimer: skip 1
-ShooterSlotIdx: skip 1
-BonusStarsGained: skip 1
-BounceSpriteYXPPCCCT: skip 4
-IggyLarryPlatTilt: skip 1
-IggyLarryPlatWait: skip 1
-IggyLarryPlatPhase: skip 1
+ScoreSpriteSlotIdx_18F7: skip 1
+BounceSpriteIntTimer_18F8: skip 4
+ExtSpriteSlotIdx_18FC: skip 1
+ChuckIsWhistling_18FD: skip 1
+DiagonalBulletTimer_18FE: skip 1
+ShooterSlotIdx_18FF: skip 1
+BonusStarsGained_1900: skip 1
+BounceSpriteYXPPCCCT_1901: skip 4
+IggyLarryPlatTilt_1905: skip 1
+IggyLarryPlatWait_1906: skip 1
+IggyLarryPlatPhase_1907: skip 1
 ; 7E1908 unused
 skip 1
-BlockSnakeActive: skip 1
-BooCloudTimer: skip 1
-BooTransparency: skip 1
+BlockSnakeActive_19009: skip 1
+BooCloudTimer_190A: skip 1
+BooTransparency_190B: skip 1
 DirectCoinTimer_190C: skip 1
-FinalCutscene: skip 1
-SpriteBuoyancy: skip 1
-SpriteTweakerF: skip 12
+FinalCutscene_190D: skip 1
+SpriteBuoyancy_190E: skip 1
+SpriteTweakerF_190F: skip 12
 Empty_191B: skip 1
-YoshiHasKey: skip 1
-SumoClustOverwrite: skip 1
-BigSwitchPressTimer: skip 1
+YoshiHasKey_191C: skip 1
+SumoClustOverwrite_191D: skip 1
+BigSwitchPressTimer_191E: skip 1
 ; 7E191F unused
 skip 1
-BonusOneUpsRemain: skip 1
-FinalMessageTimer: skip 2
+BonusOneUpsRemain_1920: skip 1
+FinalMessageTimer_1921: skip 2
 ; 7E1923 - 7E1924 unused
 skip 2
-LevelModeSetting: skip 1
+LevelModeSetting_1925: skip 1
 ; 7E1926 - 7E1927 unused
 skip 2
-LevelLoadObject: skip 1
+LevelLoadObject_1928: skip 1
 ; 7E1929 unused
 skip 1
-LevelEntranceType: skip 1
-SpriteTileset: skip 1
+LevelEntranceType_192A: skip 1
+SpriteTileset_192B: skip 1
 ; 7E192C unused
 skip 1
-ForegroundPalette: skip 1
-SpritePalette: skip 1
-BackAreaColor: skip 1
-BackgroundPalette: skip 1
-ObjectTileset: skip 1
+ForegroundPalette_192D: skip 1
+SpritePalette_192E: skip 1
+BackAreaColor_192F: skip 1
+BackgroundPalette_1930: skip 1
+ObjectTileset_1931: skip 1
 Empty_1932: skip 1
-LayerProcessing: skip 2
-MarioStartFlag: skip 1
+LayerProcessing_1933: skip 2
+MarioStartFlag_1935: skip 1
 ; 7E1936 - 7E1937 unused
 skip 2
-SpriteLoadStatus: skip 128
-ExitTableLow: skip 32
-ExitTableHigh: skip 32
-ItemMemoryTable: skip 384
-HardcodedPathIsUsed: skip 2
-HardcodedPathIndex: skip 2
-Layer1PosSpx: skip 2
-OverworldTightPath: skip 1
+SpriteLoadStatus_1938: skip 128
+ExitTableLow_19B8: skip 32
+ExitTableHigh_19D8: skip 32
+ItemMemoryTable_19F8: skip 384
+HardcodedPathIsUsed_1B78: skip 2
+HardcodedPathIndex_1B7A: skip 2
+Layer1PosSpx_1B7C: skip 2
+OverworldTightPath_1B7E: skip 1
 ; 7E1B7F unused
 skip 1
-OverworldClimbing: skip 2
-OverworldEventXPos: skip 1
-OverworldEventYPos: skip 1
-OverworldEventSize: skip 2
-OverworldEventProcess: skip 1
-OverworldPromptProcess: skip 1
-MessageBoxExpand: skip 1
-MessageBoxTimer: skip 1
-OWPromptArrowDir: skip 1
-OWPromptArrowTimer: skip 1
-OWTransitionFlag: skip 1
-OWTransitionXCalc: skip 2
-OWTransitionYCalc: skip 2
-BlinkCursorTimer: skip 1
-BlinkCursorPos: skip 1
-UseSecondaryExit: skip 1
-DisableBonusSprite: skip 1
+OverworldClimbing_1B80: skip 2
+OverworldEventXPos_1B82: skip 1
+OverworldEventYPos_1B83: skip 1
+OverworldEventSize_1B84: skip 2
+OverworldEventProcess_1B86: skip 1
+OverworldPromptProcess_1B87: skip 1
+MessageBoxExpand_1B88: skip 1
+MessageBoxTimer_1B89: skip 1
+OWPromptArrowDir_1B8A: skip 1
+OWPromptArrowTimer_1B8B: skip 1
+OWTransitionFlag_1B8C: skip 1
+OWTransitionXCalc_1B8D: skip 2
+OWTransitionYCalc_1B8F: skip 2
+BlinkCursorTimer_1B91: skip 1
+BlinkCursorPos_1B92: skip 1
+UseSecondaryExit_1B93: skip 1
+DisableBonusSprite_1B94: skip 1
 YoshiHeavenFlag_1B95: skip 1
-SideExitEnabled: skip 1
+SideExitEnabled_1B96: skip 1
 Empty_1B97: skip 2
-ShowPeaceSign: skip 1
-BGFastScrollActive: skip 1
-RemoveYoshiFlag: skip 1
-EnteringStarWarp: skip 1
-Layer3TideTimer: skip 1
-SwapOverworldMusic: skip 1
-ReznorBridgeCount: skip 1
-OverworldEarthquake: skip 1
-LevelLoadObjectTile: skip 1
-Mode7TileIndex: skip 1
-Mode7GfxBuffer: skip 15
-GfxBppConvertBuffer: skip 10
-GfxBppConvertFlag: skip 39
-Layer3Setting: skip 1
-Layer1VramAddr: skip 2
-Layer1VramBuffer: skip 256
-Layer2VramAddr: skip 2
-Layer2VramBuffer: skip 256
-OWSubmapSwapProcess: skip 1
-CreditsScreenNumber: skip 1
-OverworldEvent: skip 1
-EventTileIndex: skip 2
-EventLength: skip 2
+ShowPeaceSign_1B99: skip 1
+BGFastScrollActive_1B9A: skip 1
+RemoveYoshiFlag_1B9B: skip 1
+EnteringStarWarp_1B9C: skip 1
+Layer3TideTimer_1B9D: skip 1
+SwapOverworldMusic_1B9E: skip 1
+ReznorBridgeCount_1B9F: skip 1
+OverworldEarthquake_1BA0: skip 1
+LevelLoadObjectTile_1BA1: skip 1
+Mode7TileIndex_1BA2: skip 1
+Mode7GfxBuffer_1BA3: skip 15
+GfxBppConvertBuffer_1BB2: skip 10
+GfxBppConvertFlag_1BBC: skip 39
+Layer3Setting_1BE3: skip 1
+Layer1VramAddr_1BE4: skip 2
+Layer1VramBuffer_1BE6: skip 256
+Layer2VramAddr_1CE6: skip 2
+Layer2VramBuffer_1CE8: skip 256
+OWSubmapSwapProcess_1DE8: skip 1
+CreditsScreenNumber_1DE9: skip 1
+OverworldEvent_1DEA: skip 1
+EventTileIndex_1DEB: skip 2
+EventLength_1DED: skip 2
 ; 7E1DEF unused
 skip 1
-OverworldFreeCamXPos: skip 2
-OverworldFreeCamYPos: skip 2
-TitleInputIndex: skip 1
-VariousPromptTimer: skip 1
-StarWarpIndex: skip 1
-StarWarpLaunchSpeed: skip 1
-StarWarpLaunchTimer: skip 1
+OverworldFreeCamXPos_1DF0: skip 2
+OverworldFreeCamYPos_1DF2: skip 2
+TitleInputIndex_1DF4: skip 1
+VariousPromptTimer_1DF5: skip 1
+StarWarpIndex_1DF6: skip 1
+StarWarpLaunchSpeed_1DF7: skip 1
+StarWarpLaunchTimer_1DF8: skip 1
 SPCIO0_1DF9: skip 1
 SPCIO1_1DFA: skip 1
 SPCIO2_1DFB: skip 1
 SPCIO3_1DFC: skip 1
 Empty_1DFD: skip 2
-LastUsedMusic: skip 1
+LastUsedMusic_1DFF: skip 1
 ; 7E1E00 unused
 skip 1
-DebugFreeRoam: skip 1
-ClusterSpriteYPosLow: skip 20
-ClusterSpriteXPosLow: skip 20
-ClusterSpriteYPosHigh: skip 20
-ClusterSpriteXPosHigh: skip 20
+DebugFreeRoam_1E01: skip 1
+ClusterSpriteYPosLow_1E02: skip 20
+ClusterSpriteXPosLow_1E16: skip 20
+ClusterSpriteYPosHigh_1E2A: skip 20
+ClusterSpriteXPosHigh_1E3E: skip 20
 ClusterSpriteMisc_1E52: skip 20
 ClusterSpriteMisc_1E66: skip 20
 ClusterSpriteMisc_1E7A: skip 20
 ClusterSpriteMisc_1E8E: skip 20
-OWLevelTileSettings: skip 96
-OWEventsActivated: skip 15
+OWLevelTileSettings_1EA2: skip 96
+OWEventsActivated_1F02: skip 15
 OWPlayerSubmap_1F11: skip 2
-OWPlayerAnimation: skip 4
-OWPlayerXPos: skip 2
-OWPlayerYPos: skip 6
-OWPlayerXPosPtr: skip 2
-OWPlayerYPosPtr: skip 6
-SwitchBlockFlags: skip 4
+OWPlayerAnimation_1F13: skip 4
+OWPlayerXPos_1F17: skip 2
+OWPlayerYPos_1F19: skip 6
+OWPlayerXPosPtr_1F1F: skip 2
+OWPlayerYPosPtr_1F21: skip 6
+SwitchBlockFlags_1F27: skip 4
 ; 7E1F2B - 7E1F2D unused
 skip 3
-ExitsCompleted: skip 1
-AllDragonCoinsCollected: skip 12
+ExitsCompleted_1F2E: skip 1
+AllDragonCoinsCollected_1F2F: skip 12
 ; 7E1F3B unused
 skip 1
-Checkpoint1upCollected: skip 12
+Checkpoint1upCollected_1F3C: skip 12
 ; 7E1F48 unused
 skip 1
-SaveDataBuffer: skip 96
-SaveDataBufferEvents: skip 15
-SaveDataBufferSubmap: skip 2
-SaveDataBufferAni: skip 4
-SaveDataBufferXPos: skip 2
-SaveDataBufferYPos: skip 6
-SaveDataBufferXPosPtr: skip 2
-SaveDataBufferYPosPtr: skip 6
-SaveDataBufferSwitches: skip 4
+SaveDataBuffer_1F49:         skip 96
+SaveDataBufferEvents_1FA9:   skip 15
+SaveDataBufferSubmap_1FB8:   skip 2
+SaveDataBufferAni_1FBA:      skip 4
+SaveDataBufferXPos_1FBE:     skip 2
+SaveDataBufferYPos_1FC0:     skip 6
+SaveDataBufferXPosPtr_1FC6:  skip 2
+SaveDataBufferYPosPtr_1FC8:  skip 6
+SaveDataBufferSwitches_1FCE: skip 4
 ; 7E1FD2 - 7E1FD4 unused
 skip 3
-SaveDataBufferExits: skip 1
+SaveDataBufferExits_1FD5: skip 1
 SpriteMisc_1FD6: skip 12
 SpriteMisc_1FE2: skip 12
-MoonCollected: skip 12
+MoonCollected_1FEE: skip 12
 ; 7E1FFA unused
 skip 1
-LightningFlashIndex: skip 1
-LightningWaitTimer: skip 1
-LightningTimer: skip 1
-CreditsUpdateBG: skip 1
+LightningFlashIndex_1FFB: skip 1
+LightningWaitTimer_1FFC: skip 1
+LightningTimer_1FFD: skip 1
+CreditsUpdateBG_1FFE: skip 1
 ; 7E1FFF unused
 skip 1
 
-ORG $7E2000
-
-NonMirroredWRAM:
-MarioGraphics: skip 23808
-AnimatedTiles: skip 15360
-Layer2TilemapLow:
-SwitchAniXPosHigh: skip 40
-SwitchAniYPosHigh: skip 40
-SwitchAniZPosHigh: skip 40
-SwitchAniXPosLow: skip 40
-SwitchAniYPosLow: skip 40
-SwitchAniZPosLow: skip 40
-SwitchAniXSpeed: skip 40
-SwitchAniYSpeed: skip 40
-SwitchAniZSpeed: skip 40
-SwitchAniXSpx: skip 40
-SwitchAniYSpx: skip 40 ; unused?
-SwitchAniZSpx: skip 40 ; unused?
+NonMirroredWRAM_2000:
+MarioGraphics_200: skip 23808
+AnimatedTiles_7D00: skip 15360
+Layer2TilemapLow_B900:
+SwitchAniXPosHigh_B900: skip 40
+SwitchAniYPosHigh_B928: skip 40
+SwitchAniZPosHigh_B970: skip 40
+SwitchAniXPosLow_B978:  skip 40
+SwitchAniYPosLow_B9A0:  skip 40
+SwitchAniZPosLow_B9C8:  skip 40
+SwitchAniXSpeed_B9F0:   skip 40
+SwitchAniYSpeed_BA18:   skip 40
+SwitchAniZSpeed_BA40:   skip 40
+SwitchAniXSpx_BA68:     skip 40
+SwitchAniYSpx_BA90:     skip 40 ; unused?
+SwitchAniZSpx_BAB8:     skip 40 ; unused?
 skip 544
-Layer2TilemapHigh: skip 1024
+Layer2TilemapHigh_BD00: skip 1024
 ; 7EC100 - 7EC67F unused
 skip 1408
-Mode7BossTilemap: skip 96
+Mode7BossTilemap_C680: skip 96
 ; 7EC6E0 - 7EC7FF unused
 skip 288
-Map16TilesLow: skip 2048
-OWLayer1Translevel: skip 2048
-OWLayer2Directions: skip 3072
-OWLayer1VramBuffer: skip 7168
+Map16TilesLow_C800: skip 2048
+OWLayer1Translevel_D000: skip 2048
+OWLayer2Directions_D800: skip 3072
+OWLayer1VramBuffer_E400: skip 7168
 
 ORG $7F0000
 
-OWEventTilemap: skip 3328
+OWEventTilemap_7F0000: skip 3328
 ; 7F0D00 - 7F3FFF unused
 skip 13056
-OWLayer2Tilemap: skip 16384
+OWLayer2Tilemap_7F: skip 16384
 OAM_reset_7F8000: skip 387
 ; 7F8183 - 7F837A unused
 skip 504
-DynStripeImgSize: skip 2
-DynamicStripeImage:
+DynStripeImgSize_7F837B: skip 2
+DynamicStripeImage_7F837D: skip 784
 ; 7F868D - 7F977A unused
-
-ORG $7F977B
-
-MarioStartGraphics: skip 768
-WigglerTable: skip 512
+skip 4334
+MarioStartGraphics_7F977B: skip 768
+WigglerTable_7F9A7B: skip 512
 ; 7F9C7B - 7FC7FF unused
 skip 11141
-Map16TilesHigh: skip 14336
+Map16TilesHigh_7FC800: skip 14336
