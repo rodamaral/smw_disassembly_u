@@ -1164,7 +1164,7 @@ Return038904:
     RTS
 
 CODE_038905:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$038907 |
     BNE CODE_038915                         ;$038909 |
     LDA $AA,X                               ;$03890B |
@@ -1173,7 +1173,7 @@ CODE_038905:
     BNE CODE_038915                         ;$038911 |
     INC $C2,X                               ;$038913 |
 CODE_038915:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$038917 |
     BNE CODE_03892B                         ;$038919 |
     LDY.w SpriteDir_157C,X                  ;$03891B |
@@ -1193,7 +1193,7 @@ CODE_03892B:
     RTS                                     ;$038935 |
 
 CODE_038936:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$038938 |
     BNE CODE_038952                         ;$03893A |
     LDA.w $151C,X                           ;$03893C |
@@ -1273,7 +1273,7 @@ CODE_0389BD:
     LDY.b #$D0                              ;$0389CA |
 CODE_0389CC:
     STY $AA,X
-    LDA $13                                 ;$0389CE |
+    LDA.b Frame_13                          ;$0389CE |
     AND.b #$01                              ;$0389D0 |
     BNE Return0389FE                        ;$0389D2 |
     LDA.w $15B8,X                           ;$0389D4 |
@@ -1309,7 +1309,7 @@ Return0389FE:
 CODE_0389FF:
     LDA $B6,X
     BEQ Return038A20                        ;$038A01 |
-    LDA $13                                 ;$038A03 |
+    LDA.b Frame_13                          ;$038A03 |
     AND.b #$03                              ;$038A05 |
     BNE Return038A20                        ;$038A07 |
     LDA.b #$04                              ;$038A09 |
@@ -1428,7 +1428,7 @@ CODE_038ACB:
     TXA
     ASL                                     ;$038ACC |
     ASL                                     ;$038ACD |
-    ADC $13                                 ;$038ACE |
+    ADC.b Frame_13                          ;$038ACE |
     AND.b #$7F                              ;$038AD0 |
     BNE Return038B24                        ;$038AD2 |
     JSL FindFreeSprSlot                     ;$038AD4 |
@@ -1789,7 +1789,7 @@ TimedLift:
     LDA.b SpriteLock_9D                     ;$038DBE |
     BNE Return038DEF                        ;$038DC0 |
     JSR SubOffscreen0Bnk3                   ;$038DC2 |
-    LDA $13                                 ;$038DC5 |
+    LDA.b Frame_13                          ;$038DC5 |
     AND.b #$00                              ;$038DC7 |
     BNE CODE_038DD7                         ;$038DC9 |
     LDA $C2,X                               ;$038DCB |
@@ -2195,7 +2195,7 @@ CODE_039086:
     ASL                                     ;$039088 |
     ASL                                     ;$039089 |
     ASL                                     ;$03908A |
-    ADC $13                                 ;$03908B |
+    ADC.b Frame_13                          ;$03908B |
     AND.b #$3F                              ;$03908D |
     ORA.w $15AC,X                           ;$03908F |
     BNE CODE_039099                         ;$039092 |
@@ -2215,7 +2215,7 @@ CODE_0390A2:
     ADC.w FishinBooAccelX,Y                 ;$0390AA |
     STA $B6,X                               ;$0390AD |
 CODE_0390AF:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$0390B1 |
     BNE CODE_0390C9                         ;$0390B3 |
     LDA $C2,X                               ;$0390B5 |
@@ -2476,7 +2476,7 @@ CreateEatBlock:
     LDA.w $1909                             ;$0392A9 |
     CMP.b #$FF                              ;$0392AC |
     BEQ CODE_0392C0                         ;$0392AE |
-    LDA $13                                 ;$0392B0 |
+    LDA.b Frame_13                          ;$0392B0 |
     AND.b #$03                              ;$0392B2 |
     ORA.b SpriteLock_9D                     ;$0392B4 |
     BNE CODE_0392BD                         ;$0392B6 |
@@ -3039,7 +3039,7 @@ Fishbone:
     ASL                                     ;$03970A |
     ASL                                     ;$03970B |
     ASL                                     ;$03970C |
-    ADC $13                                 ;$03970D |
+    ADC.b Frame_13                          ;$03970D |
     AND.b #$7F                              ;$03970F |
     BNE CODE_039720                         ;$039711 |
     JSL GetRand                             ;$039713 |
@@ -3472,7 +3472,7 @@ CODE_0399D7:
     JMP DrawReznor                          ;$0399F2 |
 
 ReznorAlive:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$00                              ;$0399F7 |
     ORA.w $15AC,X                           ;$0399F9 |
     BNE NoSetRznrFireTime                   ;$0399FC |
@@ -3930,7 +3930,7 @@ CODE_039D66:
     CMP.b #$6E                              ;$039D7C |
     BEQ Return039D9D                        ;$039D7E |
     TXA                                     ;$039D80 |
-    EOR $13                                 ;$039D81 |
+    EOR.b Frame_13                          ;$039D81 |
     AND.b #$03                              ;$039D83 |
     BNE Return039D9D                        ;$039D85 |
     JSR DinoFlameClipping                   ;$039D87 |
@@ -4291,7 +4291,7 @@ CODE_039FEF:
 CODE_03A002:
     JSL UpdateXPosNoGrvty
     JSL UpdateYPosNoGrvty                   ;$03A006 |
-    LDA $13                                 ;$03A00A |
+    LDA.b Frame_13                          ;$03A00A |
     AND.b #$00                              ;$03A00C |
     BNE CODE_03A012                         ;$03A00E |
     INC $AA,X                               ;$03A010 |
@@ -4755,12 +4755,12 @@ CODE_03A2E1:
     JSR CODE_03A661
     LDA.w $14B0                             ;$03A2E4 |
     BEQ CODE_03A2F2                         ;$03A2E7 |
-    LDA $13                                 ;$03A2E9 |
+    LDA.b Frame_13                          ;$03A2E9 |
     AND.b #$03                              ;$03A2EB |
     BNE CODE_03A2F2                         ;$03A2ED |
     DEC.w $14B0                             ;$03A2EF |
 CODE_03A2F2:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$7F                              ;$03A2F4 |
     BNE CODE_03A305                         ;$03A2F6 |
     JSL GetRand                             ;$03A2F8 |
@@ -4975,10 +4975,10 @@ Return03A4D1:
 
 CODE_03A4D2:
     LDY.b #$00
-    LDA $13                                 ;$03A4D4 |
+    LDA.b Frame_13                          ;$03A4D4 |
     AND.b #$E0                              ;$03A4D6 |
     BNE CODE_03A4E6                         ;$03A4D8 |
-    LDA $13                                 ;$03A4DA |
+    LDA.b Frame_13                          ;$03A4DA |
     AND.b #$18                              ;$03A4DC |
     LSR                                     ;$03A4DE |
     LSR                                     ;$03A4DF |
@@ -4995,7 +4995,7 @@ DATA_03A4EB:
     db $80,$00
 
 CODE_03A4ED:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$1F                              ;$03A4EF |
     BNE Return03A4FC                        ;$03A4F1 |
     JSR SubHorzPosBnk3                      ;$03A4F3 |
@@ -5185,7 +5185,7 @@ CODE_03A6A5:
     CMP.b #$40                              ;$03A6A8 |
     BCS CODE_03A6B6                         ;$03A6AA |
 CODE_03A6AC:
-    LDA $13
+    LDA.b Frame_13
     LDY.b #$10                              ;$03A6AE |
     AND.b #$04                              ;$03A6B0 |
     BEQ CODE_03A6B6                         ;$03A6B2 |
@@ -5283,7 +5283,7 @@ CODE_03A731:
     LDY.w $1528,X
     CPY.b #$02                              ;$03A734 |
     BCS CODE_03A74F                         ;$03A736 |
-    LDA $13                                 ;$03A738 |
+    LDA.b Frame_13                          ;$03A738 |
     AND.w DATA_03A723,Y                     ;$03A73A |
     BNE CODE_03A74F                         ;$03A73D |
     LDA $B6,X                               ;$03A73F |
@@ -5297,7 +5297,7 @@ CODE_03A74F:
     LDY.w $1534,X
     CPY.b #$02                              ;$03A752 |
     BCS CODE_03A76D                         ;$03A754 |
-    LDA $13                                 ;$03A756 |
+    LDA.b Frame_13                          ;$03A756 |
     AND.w DATA_03A72B,Y                     ;$03A758 |
     BNE CODE_03A76D                         ;$03A75B |
     LDA $AA,X                               ;$03A75D |
@@ -5311,7 +5311,7 @@ CODE_03A76D:
     LDY.w $14B2
     CPY.b #$02                              ;$03A770 |
     BEQ CODE_03A794                         ;$03A772 |
-    LDA $13                                 ;$03A774 |
+    LDA.b Frame_13                          ;$03A774 |
     AND.w DATA_03A72F,Y                     ;$03A776 |
     BNE CODE_03A78D                         ;$03A779 |
     LDA $38                                 ;$03A77B |
@@ -5367,7 +5367,7 @@ CODE_03A7AD:
 CODE_03A7DF:
     CMP.b #$60
     BCS Return03A840                        ;$03A7E1 |
-    LDA $13                                 ;$03A7E3 |
+    LDA.b Frame_13                          ;$03A7E3 |
     AND.b #$1F                              ;$03A7E5 |
     BNE Return03A840                        ;$03A7E7 |
     LDY.b #$07                              ;$03A7E9 |
@@ -5433,7 +5433,7 @@ CODE_03A84B:
     BEQ CODE_03A858                         ;$03A854 |
     DEC $B6,X                               ;$03A856 |
 CODE_03A858:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$03A85A |
     BNE Return03A86D                        ;$03A85C |
     INC $38                                 ;$03A85E |
@@ -5707,7 +5707,7 @@ CODE_03AB21:
     JSR CODE_03A4FD
     JSR CODE_03A4D2                         ;$03AB24 |
     JSR CODE_03A4ED                         ;$03AB27 |
-    LDA $13                                 ;$03AB2A |
+    LDA.b Frame_13                          ;$03AB2A |
     AND.b #$00                              ;$03AB2C |
     BNE CODE_03AB4B                         ;$03AB2E |
     LDY.b #$00                              ;$03AB30 |
@@ -5856,7 +5856,7 @@ CODE_03AC22:
     LDA $37                                 ;$03AC36 |
     ADC.b #$00                              ;$03AC38 |
     STA $37                                 ;$03AC3A |
-    LDA $13                                 ;$03AC3C |
+    LDA.b Frame_13                          ;$03AC3C |
     AND.b #$03                              ;$03AC3E |
     BNE Return03AC4C                        ;$03AC40 |
     LDA $38                                 ;$03AC42 |
@@ -5919,7 +5919,7 @@ PrincessPeach:
     SEC                                     ;$03ACA0 |
     SBC $1C                                 ;$03ACA1 |
     STA $01                                 ;$03ACA3 |
-    LDA $13                                 ;$03ACA5 |
+    LDA.b Frame_13                          ;$03ACA5 |
     AND.b #$7F                              ;$03ACA7 |
     BNE CODE_03ACB8                         ;$03ACA9 |
     JSL GetRand                             ;$03ACAB |
@@ -6020,7 +6020,7 @@ CODE_03AD4B:
     STA.w $1540,X                           ;$03AD5E |
     INC $C2,X                               ;$03AD61 |
 CODE_03AD63:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$03AD65 |
     BNE Return03AD73                        ;$03AD67 |
     LDY.b #$0B                              ;$03AD69 |
@@ -7440,7 +7440,7 @@ CODE_03B85F:
     LDA.w $167A,X                           ;$03B878 |
     AND.b #$04                              ;$03B87B |
     BNE Return03B8C2                        ;$03B87D |
-    LDA $13                                 ;$03B87F |
+    LDA.b Frame_13                          ;$03B87F |
     AND.b #$01                              ;$03B881 |
     ORA $03                                 ;$03B883 |
     STA $01                                 ;$03B885 |
@@ -7482,7 +7482,7 @@ VerticalLevelBnk3:
     LDA.w $167A,X
     AND.b #$04                              ;$03B8C6 |
     BNE Return03B8C2                        ;$03B8C8 |
-    LDA $13                                 ;$03B8CA |
+    LDA.b Frame_13                          ;$03B8CA |
     LSR                                     ;$03B8CC |
     BCS Return03B8C2                        ;$03B8CD |
     AND.b #$01                              ;$03B8CF |
@@ -7906,7 +7906,7 @@ CODE_03C11E:
     BEQ CODE_03C12D                         ;$03C128 |
     DEC.w $1906                             ;$03C12A |
 CODE_03C12D:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$03C12F |
     ORA.w $1906                             ;$03C131 |
     BNE Return03C175                        ;$03C134 |
@@ -8379,7 +8379,7 @@ CODE_03C4A5:
     LDX.b #$08                              ;$03C4B5 |
     AND.b #$01                              ;$03C4B7 |
     BEQ CODE_03C4C1                         ;$03C4B9 |
-    LDA $13                                 ;$03C4BB |
+    LDA.b Frame_13                          ;$03C4BB |
     LSR                                     ;$03C4BD |
     AND.b #$07                              ;$03C4BE |
     TAX                                     ;$03C4C0 |
@@ -8474,7 +8474,7 @@ CODE_03C54D:
     AND.b #$01                              ;$03C56D |
     STA.w $1483                             ;$03C56F |
 CODE_03C572:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$03C574 |
     BNE Return03C4F9                        ;$03C576 |
     LDY.b #$00                              ;$03C578 |
@@ -8841,7 +8841,7 @@ DATA_03C8F1:
     db $02,$02,$02,$02,$02,$02,$02,$02
 
 CODE_03C941:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$03C943 |
     BNE CODE_03C949                         ;$03C945 |
     INC $AA,X                               ;$03C947 |
@@ -8869,7 +8869,7 @@ DATA_03C969:
 
 CODE_03C96D:
     TXA
-    EOR $13                                 ;$03C96E |
+    EOR.b Frame_13                          ;$03C96E |
     AND.b #$03                              ;$03C970 |
     BNE Return03C9B8                        ;$03C972 |
     JSR GetDrawInfoBnk3                     ;$03C974 |
@@ -8882,7 +8882,7 @@ CODE_03C96D:
     PHX                                     ;$03C986 |
     LDA.w $1534,X                           ;$03C987 |
     TAX                                     ;$03C98A |
-    LDA $13                                 ;$03C98B |
+    LDA.b Frame_13                          ;$03C98B |
     LSR                                     ;$03C98D |
     LSR                                     ;$03C98E |
     AND.b #$02                              ;$03C98F |
@@ -8890,11 +8890,11 @@ CODE_03C96D:
     ADC.w DATA_03C969,X                     ;$03C992 |
     STA.w $0302,Y                           ;$03C995 |
     PLX                                     ;$03C998 |
-    LDA $13                                 ;$03C999 |
+    LDA.b Frame_13                          ;$03C999 |
     ASL                                     ;$03C99B |
     AND.b #$0E                              ;$03C99C |
     STA $02                                 ;$03C99E |
-    LDA $13                                 ;$03C9A0 |
+    LDA.b Frame_13                          ;$03C9A0 |
     ASL                                     ;$03C9A2 |
     ASL                                     ;$03C9A3 |
     ASL                                     ;$03C9A4 |
@@ -8923,7 +8923,7 @@ DATA_03C9E1:
 
 CODE_03C9E9:
     TXA
-    EOR $13                                 ;$03C9EA |
+    EOR.b Frame_13                          ;$03C9EA |
     STA $05                                 ;$03C9EC |
     LDA.w $1570,X                           ;$03C9EE |
     STA $06                                 ;$03C9F1 |

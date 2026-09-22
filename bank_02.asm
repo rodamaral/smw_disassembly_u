@@ -148,7 +148,7 @@ CODE_0280ED:
     STA.w $0301,Y                           ;$028110 |
     LDA.b #$BC                              ;$028113 |
     STA.w $0302,Y                           ;$028115 |
-    LDA $13                                 ;$028118 |
+    LDA.b Frame_13                          ;$028118 |
     LSR                                     ;$02811A |
     LSR                                     ;$02811B |
     AND.b #$03                              ;$02811C |
@@ -1411,7 +1411,7 @@ minor_sprites_and_loading_028AB1:
     LSR                                     ;$028AE1 |
     LSR                                     ;$028AE2 |
     TAY                                     ;$028AE3 |
-    LDA $13                                 ;$028AE4 |
+    LDA.b Frame_13                          ;$028AE4 |
     AND.w DATA_028AA9,Y                     ;$028AE6 |
     BRA .try_spawn_star_sparkles            ;$028AE9 |
 
@@ -1439,7 +1439,7 @@ minor_sprites_and_loading_028AB1:
     JSR load_sprites_from_level_02A7FC      ;$028B1D |
     LDA.w $18C0                             ;$028B20 |\ 
     BEQ +                                   ;$028B23 || Handle sprites that respawn (e.g. Lakitu)
-    LDA $13                                 ;$028B25 ||\ 
+    LDA.b Frame_13                          ;$028B25 ||\ 
     AND.b #$01                              ;$028B27 |||
     ORA.b SpriteLock_9D                     ;$028B29 ||| Only respawn the sprite if:
     ORA.w $18BF                             ;$028B2B ||| - On an even frame
@@ -1588,7 +1588,7 @@ ADDR_028C23:
     STA.w $182C,X
     JSR CODE_02B5BC                         ;$028C26 |
     TXA                                     ;$028C29 |
-    EOR $13                                 ;$028C2A |
+    EOR.b Frame_13                          ;$028C2A |
     AND.b #$03                              ;$028C2C |
     BNE Return028C60                        ;$028C2E |
     LDY.b #$0B                              ;$028C30 |
@@ -1763,7 +1763,7 @@ CODE_028D75:
     LSR                                     ;$028D7B |
     LSR                                     ;$028D7C |
     STA $02                                 ;$028D7D |
-    LDA $13                                 ;$028D7F |
+    LDA.b Frame_13                          ;$028D7F |
     LSR                                     ;$028D81 |
     LDA $02                                 ;$028D82 |
     BCC CODE_028D89                         ;$028D84 |
@@ -2047,7 +2047,7 @@ CODE_028F87:
 CODE_028F8B:
     LDA.b SpriteLock_9D
     BNE CODE_028FCA                         ;$028F8D |
-    LDA $13                                 ;$028F8F |
+    LDA.b Frame_13                          ;$028F8F |
     AND.b #$03                              ;$028F91 |
     BEQ CODE_028FAB                         ;$028F93 |
     LDY.b #$00                              ;$028F95 |
@@ -2073,7 +2073,7 @@ CODE_028FB3:
     TYA                                     ;$028FBA |
     ADC.w $1814,X                           ;$028FBB |
     STA.w $1814,X                           ;$028FBE |
-    LDA $13                                 ;$028FC1 |
+    LDA.b Frame_13                          ;$028FC1 |
     AND.b #$03                              ;$028FC3 |
     BNE CODE_028FCA                         ;$028FC5 |
     INC.w $1820,X                           ;$028FC7 |
@@ -2114,7 +2114,7 @@ CODE_028FDD:
     STA.w $0202,Y                           ;$02900E |
     PLA                                     ;$029011 |
     BEQ CODE_029018                         ;$029012 |
-    LDA $13                                 ;$029014 |
+    LDA.b Frame_13                          ;$029014 |
     AND.b #$0E                              ;$029016 |
 CODE_029018:
     EOR.w DATA_028B8C,X
@@ -2773,7 +2773,7 @@ cape_spin_interactions_0294F5:
     LDA.w $13E8
     BEQ Return02950A                        ;$0294F8 |
     STA $0E                                 ;$0294FA |
-    LDA $13                                 ;$0294FC |
+    LDA.b Frame_13                          ;$0294FC |
     LSR                                     ;$0294FE |
     BCC +                                   ;$0294FF |
     JSR CODE_0293AE                         ;$029501 |
@@ -2813,7 +2813,7 @@ DATA_02953E:
     db $02,$0E
 
 CapeLayerInteraction029540:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$029542 |
     TAY                                     ;$029544 |
     LDA $0F                                 ;$029545 |
@@ -3700,7 +3700,7 @@ CODE_029BA5:
     JSR CODE_02A3F6                         ;$029BA9 |
     JSR CODE_02B554                         ;$029BAC |
     JSR CODE_02B560                         ;$029BAF |
-    LDA $13                                 ;$029BB2 |
+    LDA.b Frame_13                          ;$029BB2 |
     AND.b #$03                              ;$029BB4 |
     BNE CODE_029BC2                         ;$029BB6 |
     LDA.w $173D,X                           ;$029BB8 |
@@ -3714,7 +3714,7 @@ CODE_029BC2:
     ASL                                     ;$029BC8 |
     ASL                                     ;$029BC9 |
     ASL                                     ;$029BCA |
-    ADC $13                                 ;$029BCB |
+    ADC.b Frame_13                          ;$029BCB |
     LDY.b #$08                              ;$029BCD |
     AND.b #$08                              ;$029BCF |
     BNE CODE_029BD5                         ;$029BD1 |
@@ -3840,7 +3840,7 @@ SpinJumpStars:
     LSR                                     ;$029C9F |
     LSR                                     ;$029CA0 |
     TAY                                     ;$029CA1 |
-    LDA $13                                 ;$029CA2 |
+    LDA.b Frame_13                          ;$029CA2 |
     AND.w DATA_029CB0,Y                     ;$029CA4 |
     BNE Return029CAF                        ;$029CA7 |
     JSR CODE_02B554                         ;$029CA9 |
@@ -4168,7 +4168,7 @@ WaterBubble:
     DEC.w $1729,X                           ;$029F05 |
 CODE_029F08:
     TXA
-    EOR $13                                 ;$029F09 |
+    EOR.b Frame_13                          ;$029F09 |
     LSR                                     ;$029F0B |
     BCS CODE_029F2A                         ;$029F0C | presumably, draw gfx???
     JSR CODE_02A56E                         ;$029F0E | process mechanics
@@ -4396,7 +4396,7 @@ ADDR_02A0A9:
 
 ProcessFireball:
     TXA
-    EOR $13                                 ;$02A0AD |
+    EOR.b Frame_13                          ;$02A0AD |
     AND.b #$03                              ;$02A0AF |
     BNE Return02A0A8                        ;$02A0B1 |
     PHX                                     ;$02A0B3 |
@@ -4623,7 +4623,7 @@ Baseball:
     BNE CODE_02A26A                         ;$02A256 |
     JSR CODE_02B554                         ;$02A258 |
     INC.w $1765,X                           ;$02A25B |
-    LDA $13                                 ;$02A25E |
+    LDA.b Frame_13                          ;$02A25E |
     AND.b #$01                              ;$02A260 |
     BNE CODE_02A267                         ;$02A262 |
     INC.w $1765,X                           ;$02A264 |
@@ -5330,7 +5330,7 @@ DATA_02A7F9:
     db $FF,$00,$01
 
 load_sprites_from_level_02A7FC:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$02A7FE |
     BNE Return02A84B                        ;$02A800 |
 CODE_02A802:
@@ -6219,7 +6219,7 @@ CODE_02AE38:
     LSR                                     ;$02AE3D |
     LSR                                     ;$02AE3E |
     TAY                                     ;$02AE3F |
-    LDA $13                                 ;$02AE40 |
+    LDA.b Frame_13                          ;$02AE40 |
     AND.w PointSpeedY,Y                     ;$02AE42 |
     BNE CODE_02AE5B                         ;$02AE45 |
     LDA.w $16E7,X                           ;$02AE47 |
@@ -6956,7 +6956,7 @@ CODE_02B38D:
     LDY.w $17AB,X                           ;$02B395 |
     BEQ CODE_02B3A4                         ;$02B398 |
     PHA                                     ;$02B39A |
-    LDA $13                                 ;$02B39B |
+    LDA.b Frame_13                          ;$02B39B |
     LSR                                     ;$02B39D |
     BCC CODE_02B3A3                         ;$02B39E |
     DEC.w $17AB,X                           ;$02B3A0 |
@@ -7524,7 +7524,7 @@ CODE_02B7AC:
     LDY.b #$09
 CODE_02B7AE:
     TYA
-    EOR $13                                 ;$02B7AF |
+    EOR.b Frame_13                          ;$02B7AF |
     LSR                                     ;$02B7B1 |
     BCS CODE_02B7D2                         ;$02B7B2 |
     LDA.w SpriteStatus_14C8,Y               ;$02B7B4 |
@@ -7680,7 +7680,7 @@ TorpedoAccel:
     db $01,$FF
 
 CODE_02B8BC:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$02B8BE |
     BNE CODE_02B8D2                         ;$02B8C0 |
     LDY.w SpriteDir_157C,X                  ;$02B8C2 |
@@ -7695,7 +7695,7 @@ CODE_02B8D2:
     JSR UpdateYPosNoGrvtyB1                 ;$02B8D5 |
     LDA $AA,X                               ;$02B8D8 |
     BEQ CODE_02B8E4                         ;$02B8DA |
-    LDA $13                                 ;$02B8DC |
+    LDA.b Frame_13                          ;$02B8DC |
     AND.b #$01                              ;$02B8DE |
     BNE CODE_02B8E4                         ;$02B8E0 |
     DEC $AA,X                               ;$02B8E2 |
@@ -8095,7 +8095,7 @@ CODE_02BBB5:
     INC $AA,X
 CODE_02BBB7:
     TXA
-    EOR $13                                 ;$02BBB8 |
+    EOR.b Frame_13                          ;$02BBB8 |
     LSR                                     ;$02BBBA |
     BCC CODE_02BBC1                         ;$02BBBB |
     JSL CODE_019138                         ;$02BBBD |
@@ -8711,7 +8711,7 @@ RipVanFishPtrs:
 CODE_02C02E:
     LDA.b #$02
     STA $AA,X                               ;$02C030 |
-    LDA $13                                 ;$02C032 |
+    LDA.b Frame_13                          ;$02C032 |
     AND.b #$03                              ;$02C034 |
     BNE CODE_02C044                         ;$02C036 |
     LDA $B6,X                               ;$02C038 |
@@ -8762,13 +8762,13 @@ CODE_02C085:
     RTL                                     ;$02C089 |
 
 CODE_02C08A:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$02C08C |
     BNE CODE_02C095                         ;$02C08E |
     DEC.w $151C,X                           ;$02C090 |
     BEQ CODE_02C0CA                         ;$02C093 |
 CODE_02C095:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$02C097 |
     BNE CODE_02C0BB                         ;$02C099 |
     JSR CODE_02D4FA                         ;$02C09B |
@@ -9239,7 +9239,7 @@ CODE_02C3CB:
     STA.w $1540,X                           ;$02C3E1 |
     INC.w $1534,X                           ;$02C3E4 |
 CODE_02C3E7:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$02C3E9 |
     BNE CODE_02C3F5                         ;$02C3EB |
     LDA.w $1540,X                           ;$02C3ED |
@@ -9369,7 +9369,7 @@ CODE_02C4BD:
     ASL                                     ;$02C4C1 |
     ASL                                     ;$02C4C2 |
     ASL                                     ;$02C4C3 |
-    ADC $13                                 ;$02C4C4 |
+    ADC.b Frame_13                          ;$02C4C4 |
     AND.b #$7F                              ;$02C4C6 |
     CMP.b #$00                              ;$02C4C8 |
     BNE CODE_02C4D5                         ;$02C4CA |
@@ -9550,7 +9550,7 @@ CODE_02C602:
 CODE_02C618:
     LDA.b #$03
     STA.w $1602,X                           ;$02C61A |
-    LDA $13                                 ;$02C61D |
+    LDA.b Frame_13                          ;$02C61D |
     AND.b #$3F                              ;$02C61F |
     BNE Return02C627                        ;$02C621 |
     LDA.b #$E0                              ;$02C623 |
@@ -9686,7 +9686,7 @@ CODE_02C70E:
     LDA.w DATA_02C69F,Y
     STA $B6,X                               ;$02C711 |
 CODE_02C713:
-    LDA $13
+    LDA.b Frame_13
     LDY.w $187B,X                           ;$02C715 |
     BNE CODE_02C71B                         ;$02C718 |
     LSR                                     ;$02C71A |
@@ -10858,7 +10858,7 @@ CODE_02D027:
     AND.b #$04                              ;$02D049 |
     BNE Return02D090                        ;$02D04B |
 CODE_02D04D:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$02D04F |
     ORA $03                                 ;$02D051 |
     STA $01                                 ;$02D053 |
@@ -10900,7 +10900,7 @@ VerticalLevelBnk2:
     LDA.w $167A,X
     AND.b #$04                              ;$02D094 |
     BNE Return02D090                        ;$02D096 |
-    LDA $13                                 ;$02D098 |
+    LDA.b Frame_13                          ;$02D098 |
     LSR                                     ;$02D09A |
     BCS Return02D090                        ;$02D09B |
     AND.b #$01                              ;$02D09D |
@@ -12103,7 +12103,7 @@ CODE_02D8F6:
 CODE_02D904:
     LDA.b SpriteLock_9D
     BNE Return02D977                        ;$02D906 |
-    LDA $13                                 ;$02D908 |
+    LDA.b Frame_13                          ;$02D908 |
     AND.b #$01                              ;$02D90A |
     BNE CODE_02D91D                         ;$02D90C |
     DEC.w $1534,X                           ;$02D90E |
@@ -12125,7 +12125,7 @@ CODE_02D91D:
     LDY.w SpriteDir_157C,X                  ;$02D934 |
     LDA.w BubbleSprGfxProp2,Y               ;$02D937 |
     STA $B6,X                               ;$02D93A |
-    LDA $13                                 ;$02D93C |
+    LDA.b Frame_13                          ;$02D93C |
     AND.b #$01                              ;$02D93E |
     BNE CODE_02D958                         ;$02D940 |
     LDA.w $151C,X                           ;$02D942 |
@@ -12300,7 +12300,7 @@ CODE_02DA6E:
     LDY.w CurrentPlayer_0DB3                ;$02DA79 |
     LDA.w OWPlayerSubmap_1F11,Y             ;$02DA7C |
     TAY                                     ;$02DA7F |
-    LDA $13                                 ;$02DA80 |
+    LDA.b Frame_13                          ;$02DA80 |
     AND.b #$03                              ;$02DA82 |
     BEQ CODE_02DA89                         ;$02DA84 |
     INC.w $1570,X                           ;$02DA86 |
@@ -12473,7 +12473,7 @@ CODE_02DB9E:
     LDA.b SpriteLock_9D
     BNE Return02DC0E                        ;$02DBA0 |
     JSR SubOffscreen1Bnk2                   ;$02DBA2 |
-    LDA $13                                 ;$02DBA5 |
+    LDA.b Frame_13                          ;$02DBA5 |
     AND.b #$01                              ;$02DBA7 |
     BNE CODE_02DBD7                         ;$02DBA9 |
     LDA.w $1534,X                           ;$02DBAB |
@@ -13371,7 +13371,7 @@ CODE_02E259:
     STA $64                                 ;$02E260 |
     LDA.b SpriteLock_9D                     ;$02E262 |
     BNE CODE_02E2DE                         ;$02E264 |
-    LDA $13                                 ;$02E266 |
+    LDA.b Frame_13                          ;$02E266 |
     AND.b #$03                              ;$02E268 |
     BNE CODE_02E288                         ;$02E26A |
     DEC.w DirectCoinTimer_190C              ;$02E26C |
@@ -13480,7 +13480,7 @@ CODE_02E311:
     LDA.w DATA_02E30B,Y                     ;$02E322 |
     STA $B6,X                               ;$02E325 |
     JSR UpdateXPosNoGrvtyB1                 ;$02E327 |
-    LDA $13                                 ;$02E32A |
+    LDA.b Frame_13                          ;$02E32A |
     AND.b #$03                              ;$02E32C |
     BNE CODE_02E344                         ;$02E32E |
     LDA $C2,X                               ;$02E330 |
@@ -13854,7 +13854,7 @@ CODE_02E5F9:
     CPY.w $15E9
     BEQ CODE_02E633                         ;$02E5FC |
     TYA                                     ;$02E5FE |
-    EOR $13                                 ;$02E5FF |
+    EOR.b Frame_13                          ;$02E5FF |
     AND.b #$03                              ;$02E601 |
     BNE CODE_02E633                         ;$02E603 |
     LDA.w SpriteStatus_14C8,Y               ;$02E605 |
@@ -14122,7 +14122,7 @@ CODE_02E7C9:
     CMP.b #$08                              ;$02E7D7 |
     BCS Return02E82C                        ;$02E7D9 |
     LDY.b #$00                              ;$02E7DB |
-    LDA $13                                 ;$02E7DD |
+    LDA.b Frame_13                          ;$02E7DD |
     LSR                                     ;$02E7DF |
     JSR CODE_02EB3D                         ;$02E7E0 |
     JSR SubOffscreen0Bnk2                   ;$02E7E3 |
@@ -14374,7 +14374,7 @@ CODE_02E9A2:
     CMP.b #$50
     BCS Return02E9B3                        ;$02E9A4 |
     LDY.b #$00                              ;$02E9A6 |
-    LDA $13                                 ;$02E9A8 |
+    LDA.b Frame_13                          ;$02E9A8 |
     AND.b #$20                              ;$02E9AA |
     BEQ CODE_02E9AF                         ;$02E9AC |
     INY                                     ;$02E9AE |
@@ -14482,7 +14482,7 @@ CODE_02EA50:
     TYA
     CMP.w $160E,X                           ;$02EA51 |
     BEQ CODE_02EA86                         ;$02EA54 |
-    EOR $13                                 ;$02EA56 |
+    EOR.b Frame_13                          ;$02EA56 |
     LSR                                     ;$02EA58 |
     BCS CODE_02EA86                         ;$02EA59 |
     CPY.w $15E9                             ;$02EA5B |
@@ -14632,7 +14632,7 @@ CODE_02EB49:
     LDA.w DATA_02EB2F,Y                     ;$02EB63 |
     STA $B6,X                               ;$02EB66 |
     JSR CODE_02EBF8                         ;$02EB68 |
-    LDA $13                                 ;$02EB6B |
+    LDA.b Frame_13                          ;$02EB6B |
     AND.b #$01                              ;$02EB6D |
     BNE Return02EB7C                        ;$02EB6F |
     LDA $AA,X                               ;$02EB71 |
@@ -14660,7 +14660,7 @@ DATA_02EB8B:
     db $01,$FF
 
 CODE_02EB8D:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$00                              ;$02EB8F |
     STA $01                                 ;$02EB91 |
     STZ $00                                 ;$02EB93 |
@@ -14682,7 +14682,7 @@ CODE_02EBAB:
     BEQ CODE_02EBCA                         ;$02EBB3 |
 CODE_02EBB5:
     LDY.b #$00
-    LDA $13                                 ;$02EBB7 |
+    LDA.b Frame_13                          ;$02EBB7 |
     AND.b #$04                              ;$02EBB9 |
     BEQ CODE_02EBBE                         ;$02EBBB |
     INY                                     ;$02EBBD |
@@ -14727,7 +14727,7 @@ CODE_02EBE7:
     STA $AA,X                               ;$02EBF6 |
 CODE_02EBF8:
     LDY.b #$02
-    LDA $13                                 ;$02EBFA |
+    LDA.b Frame_13                          ;$02EBFA |
     AND.b #$04                              ;$02EBFC |
     BEQ CODE_02EC01                         ;$02EBFE |
     INY                                     ;$02EC00 |
@@ -15954,7 +15954,7 @@ CODE_02F4EB:
     STA.w $0301,Y                           ;$02F4FC |
     LDA.b #$B8                              ;$02F4FF |
     STA.w $0305,Y                           ;$02F501 |
-    LDA $13                                 ;$02F504 |
+    LDA.b Frame_13                          ;$02F504 |
     AND.b #$03                              ;$02F506 |
     BNE CODE_02F516                         ;$02F508 |
     PHY                                     ;$02F50A |
@@ -16601,7 +16601,7 @@ DATA_02F9AA:
 
 CODE_02F9AE:
     TXA
-    EOR $13                                 ;$02F9AF |
+    EOR.b Frame_13                          ;$02F9AF |
     AND.b #$03                              ;$02F9B1 |
     BNE Return02F9FE                        ;$02F9B3 |
     LDA.w $0F4A,X                           ;$02F9B5 |
@@ -16658,7 +16658,7 @@ CODE_02FA16:
     JSL GetRand                             ;$02FA1A |
     AND.b #$07                              ;$02FA1E |
     TAY                                     ;$02FA20 |
-    LDA $13                                 ;$02FA21 |
+    LDA.b Frame_13                          ;$02FA21 |
     AND.w DATA_02FA02,Y                     ;$02FA23 |
     BNE CODE_02FA2B                         ;$02FA26 |
     INC.w $0F4A,X                           ;$02FA28 |
@@ -16856,7 +16856,7 @@ CODE_02FB9E:
     JSR CODE_02FC8D                         ;$02FBAD |
 CODE_02FBB0:
     TXA
-    EOR $13                                 ;$02FBB1 |
+    EOR.b Frame_13                          ;$02FBB1 |
     AND.b #$03                              ;$02FBB3 |
     BNE Return02FBBA                        ;$02FBB5 |
     JSR CODE_02FE71                         ;$02FBB7 |
@@ -16878,7 +16878,7 @@ CODE_02FBC7:
     JMP CODE_02FC41                         ;$02FBCB |
 
 CODE_02FBCE:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$02FBD0 |
     ORA.b SpriteLock_9D                     ;$02FBD2 |
     BNE CODE_02FC3E                         ;$02FBD4 |
@@ -16950,7 +16950,7 @@ CODE_02FC55:
     JSR CODE_02FF98                         ;$02FC5E |
     JSR CODE_02FFA3                         ;$02FC61 |
     TXA                                     ;$02FC64 |
-    EOR $13                                 ;$02FC65 |
+    EOR.b Frame_13                          ;$02FC65 |
     AND.b #$03                              ;$02FC67 |
     BNE CODE_02FC78                         ;$02FC69 |
     JSR CODE_02FE71                         ;$02FC6B |
@@ -17021,7 +17021,7 @@ CODE_02FCE2:
     BEQ CODE_02FD46                         ;$02FCEB |
     LDA.w $0F9A,X                           ;$02FCED |
     BNE CODE_02FD1A                         ;$02FCF0 |
-    LDA $13                                 ;$02FCF2 |
+    LDA.b Frame_13                          ;$02FCF2 |
     AND.b #$01                              ;$02FCF4 |
     BNE CODE_02FD1A                         ;$02FCF6 |
     LDA.w $0F4A,X                           ;$02FCF8 |
@@ -17041,7 +17041,7 @@ CODE_02FCE2:
 CODE_02FD1A:
     JSR CODE_02FF98
     TXA                                     ;$02FD1D |
-    EOR $13                                 ;$02FD1E |
+    EOR.b Frame_13                          ;$02FD1E |
     AND.b #$03                              ;$02FD20 |
     BNE CODE_02FD46                         ;$02FD22 |
     STZ $00                                 ;$02FD24 |
@@ -17050,7 +17050,7 @@ CODE_02FD1A:
     ASL                                     ;$02FD29 |
     ASL                                     ;$02FD2A |
     ASL                                     ;$02FD2B |
-    ADC $13                                 ;$02FD2C |
+    ADC.b Frame_13                          ;$02FD2C |
     AND.b #$40                              ;$02FD2E |
     BEQ CODE_02FD36                         ;$02FD30 |
     LDY.b #$FF                              ;$02FD32 |
@@ -17150,7 +17150,7 @@ CODE_02FDCC:
     STZ.w $1E52,X                           ;$02FDDD |
 CODE_02FDE0:
     TXA
-    EOR $13                                 ;$02FDE1 |
+    EOR.b Frame_13                          ;$02FDE1 |
     LSR                                     ;$02FDE3 |
     BCC CODE_02FE48                         ;$02FDE4 |
     LDA.w $1E52,X                           ;$02FDE6 |
@@ -17290,7 +17290,7 @@ DATA_02FECB:
     ADC.b #$00                              ;$02FEDC |
     CMP.b #$02                              ;$02FEDE |
     BPL ADDR_02FF0E                         ;$02FEE0 |
-    LDA $13                                 ;$02FEE2 |
+    LDA.b Frame_13                          ;$02FEE2 |
     AND.b #$01                              ;$02FEE4 |
     STA $01                                 ;$02FEE6 |
     TAY                                     ;$02FEE8 |
@@ -17325,7 +17325,7 @@ Return02FF1D:
     RTS
 
 ADDR_02FF1E:
-    LDA $13
+    LDA.b Frame_13
     LSR                                     ;$02FF20 |
     BCS Return02FF1D                        ;$02FF21 |
     AND.b #$01                              ;$02FF23 |

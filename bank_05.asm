@@ -2934,7 +2934,7 @@ CODE_05B132:
     BEQ CODE_05B16E                         ;$05B138 |
     LDA.w $1DF5                             ;$05B13A |
     BEQ CODE_05B16E                         ;$05B13D |
-    LDA $13                                 ;$05B13F |
+    LDA.b Frame_13                          ;$05B13F |
     AND.b #$03                              ;$05B141 |
     BNE CODE_05B18E                         ;$05B143 |
     DEC.w $1DF5                             ;$05B145 |
@@ -2987,7 +2987,7 @@ CODE_05B191:
     BEQ CODE_05B1A3                         ;$05B197 |
     JSR CODE_05B31B                         ;$05B199 |
     LDA.b #$09                              ;$05B19C |
-    STA $12                                 ;$05B19E |
+    STA.b StripeImage_12                    ;$05B19E |
 CODE_05B1A0:
     JMP CODE_05B250
 
@@ -5909,7 +5909,7 @@ CODE_05CF05:
     LDX.w $1900
     BEQ CODE_05CF36                         ;$05CF08 |
     SEP #$20                                ;$05CF0A |
-    LDA $13                                 ;$05CF0C |
+    LDA.b Frame_13                          ;$05CF0C |
     AND.b #$03                              ;$05CF0E |
     BNE CODE_05CF34                         ;$05CF10 |
     LDX.w CurrentPlayer_0DB3                ;$05CF12 |

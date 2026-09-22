@@ -49,7 +49,7 @@ reset_start:
     LDA.b LagFlag_10                        ;$00806B \ Main wait loop
     BEQ .game_loop                          ;$00806D | $10 is set in NMI to $00
     CLI                                     ;$00806F | Enable interrupts
-    INC $13                                 ;$008070 | Increment frame counter
+    INC.b Frame_13                          ;$008070 | Increment frame counter
     JSR run_game_mode                       ;$008072 | Run the game
     STZ.b LagFlag_10                        ;$008075 | Clear $10
     BRA .game_loop                          ;$008077 / Back to the wait loop
@@ -707,7 +707,7 @@ stripe_images:
     dl DATA_0CBD02                          ;$0CBD02
 
 _load_stripe_image_:                        ;        \
-    LDY $12                                 ;$0085D2 | Load the stripe index pointer
+    LDY.b StripeImage_12                    ;$0085D2 | Load the stripe index pointer
     LDA.w stripe_images,Y                   ;$0085D4 |\ Load and store the low byte
     STA $00                                 ;$0085D7 |/
     LDA.w stripe_images+1,Y                 ;$0085D9 |\ Load and store the high byte
@@ -715,14 +715,14 @@ _load_stripe_image_:                        ;        \
     LDA.w stripe_images+2,Y                 ;$0085DE |\ Load and store the bank byte
     STA $02                                 ;$0085E1 |/
     JSR DMA_stripe_image                    ;$0085E3 | DMA the actual stripe image
-    LDA $12                                 ;$0085E6 |
+    LDA.b StripeImage_12                    ;$0085E6 |
     BNE .skip_RAM_clear                     ;$0085E8 |
     STA.l $7F837B                           ;$0085EA |\ Set the stripe RAM index to #$0000
     STA.l $7F837C                           ;$0085EE |/
     DEC A                                   ;$0085F2 |\ Set as "end of data"
     STA.l $7F837D                           ;$0085F3 |/
 .skip_RAM_clear                             ;        |
-    STZ $12                                 ;$0085F7 | Clear the stripe index
+    STZ.b StripeImage_12                    ;$0085F7 | Clear the stripe index
     RTS                                     ;$0085F9 / Done loading stripe image data
 
 CODE_0085FA:
@@ -1917,7 +1917,7 @@ CODE_00908E:
     STA $00                                 ;$009098 |
     CPY.b #$03                              ;$00909A |
     BNE CODE_0090AB                         ;$00909C |
-    LDA $13                                 ;$00909E |
+    LDA.b Frame_13                          ;$00909E |
     LSR                                     ;$0090A0 |
     AND.b #$03                              ;$0090A1 |
     PHY                                     ;$0090A3 |
@@ -2383,7 +2383,7 @@ GM19_credits_castle_load_009468:
     BNE CODE_0094B2                         ;$009494 |
     JSR CODE_00955E                         ;$009496 |
     LDA.b #$D2                              ;$009499 |
-    STA $12                                 ;$00949B |
+    STA.b StripeImage_12                    ;$00949B |
     JSR _load_stripe_image_                 ;$00949D |
     JSR upload_music_bank_3                 ;$0094A0 |
     JSL CODE_0C93DD                         ;$0094A3 |
@@ -2396,10 +2396,10 @@ CODE_0094B2:
     LDA.b #$15
     STA.w SPCIO2_1DFB                       ;$0094B4 |
     LDA.w DATA_009460,X                     ;$0094B7 |
-    STA $12                                 ;$0094BA |
+    STA.b StripeImage_12                    ;$0094BA |
     JSR _load_stripe_image_                 ;$0094BC |
     LDA.b #$CF                              ;$0094BF |
-    STA $12                                 ;$0094C1 |
+    STA.b StripeImage_12                    ;$0094C1 |
     JSR _load_stripe_image_                 ;$0094C3 |
     REP #$20                                ;$0094C6 |
     LDA.w #$0090                            ;$0094C8 |
@@ -2604,7 +2604,7 @@ CODE_009660:
     BPL CODE_009660                         ;$009673 |
     JSR CODE_00922F                         ;$009675 |
     LDA.b #$D5                              ;$009678 |
-    STA $12                                 ;$00967A |
+    STA.b StripeImage_12                    ;$00967A |
     JSR _load_stripe_image_                 ;$00967C |
     JSL CODE_0CAADF                         ;$00967F |
     JSR consolidate_OAM_008494              ;$009683 |
@@ -3105,7 +3105,7 @@ GM04_title_load_2_009A8B:
     STZ.w $0F31                             ;$009A91 |
     JSR CODE_0085FA                         ;$009A94 |
     LDA.b #$03                              ;$009A97 |
-    STA $12                                 ;$009A99 |
+    STA.b StripeImage_12                    ;$009A99 |
     JSR _load_stripe_image_                 ;$009A9B |
     JSR CODE_00ADA6                         ;$009A9E |
     JSR CODE_00922F                         ;$009AA1 |
@@ -3997,7 +3997,7 @@ CODE_00A11B:
     JSR CODE_00AD25                         ;$00A14D |
     JSR CODE_00922F                         ;$00A150 |
     LDA.b #$06                              ;$00A153 |
-    STA $12                                 ;$00A155 |
+    STA.b StripeImage_12                    ;$00A155 |
     JSR _load_stripe_image_                 ;$00A157 |
     JSL CODE_05DBF2                         ;$00A15A |
     JSR _load_stripe_image_                 ;$00A15E |
@@ -4126,7 +4126,7 @@ GM14_main_level_00A1DA:
     BVS +                                   ;$00A24C |
     LDA.w $0DA3                             ;$00A24E |
     BPL .level_paused_00A25B                ;$00A251 |
-    LDA $13                                 ;$00A253 |
+    LDA.b Frame_13                          ;$00A253 |
     AND.b #$0F                              ;$00A255 |
     BNE .level_paused_00A25B                ;$00A257 |
 +   BRA .level_unpaused_00A28A               ;$00A259 |
@@ -5595,7 +5595,7 @@ DATA_00AEF7:
 
 CODE_00AF17:
     LDY.w $1493
-    LDA $13                                 ;$00AF1A |
+    LDA.b Frame_13                          ;$00AF1A |
     LSR                                     ;$00AF1C |
     BCC CODE_00AF25                         ;$00AF1D |
     DEY                                     ;$00AF1F |
@@ -5610,7 +5610,7 @@ CODE_00AF25:
     STA $3E                                 ;$00AF2F |
     JSL CODE_05CBFF                         ;$00AF31 |
 CODE_00AF35:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$00AF37 |
     BNE Return00AFA2                        ;$00AF39 |
     LDA.w $1495                             ;$00AF3B |
@@ -7856,7 +7856,7 @@ CODE_00C944:
 CODE_00C948:
     LDY.b #$01
     STY.b SpriteLock_9D                     ;$00C94A |
-    LDA $13                                 ;$00C94C |
+    LDA.b Frame_13                          ;$00C94C |
     LSR                                     ;$00C94E |
     BCC Return00C96A                        ;$00C94F |
     DEC.w $1493                             ;$00C951 |
@@ -8810,7 +8810,7 @@ death_animation:
     STZ.b Powerup_19                        ;$00D0B6 \ Clear the player's powerup.
     LDA.b #$3E                              ;$00D0B8 |\ Set the death pose.
     STA.w PlayerPose_13E0                   ;$00D0BA |/
-    LDA $13                                 ;$00D0BD |\
+    LDA.b Frame_13                          ;$00D0BD |\
     AND.b #$03                              ;$00D0BF | | Every four frames,
     BNE .no_decrement                       ;$00D0C1 | |
     DEC.w $1496                             ;$00D0C3 | | decrease the player animation timer.
@@ -8854,7 +8854,7 @@ death_animation:
     STZ $7B                                 ;$00D10C | Clear the player's X speed,
     JSR apply_player_speeds                 ;$00D10E | apply the player's X and Y speeds,
     JSR CODE_00D92E                         ;$00D111 | update the player's gravity,
-    LDA $13                                 ;$00D114 |\
+    LDA.b Frame_13                          ;$00D114 |\
     LSR                                     ;$00D116 | |
     LSR                                     ;$00D117 | | and flip the player's direction every four frames.
     AND.b #$01                              ;$00D118 | |
@@ -10476,7 +10476,7 @@ draw_mario_and_yoshi_00E2BD:
     AND.b #$03                              ;$00E2DC |
     BNE +                                   ;$00E2DE |
     DEC.w StarTimer_1490                    ;$00E2E0 |
-+   LDA $13                                 ;$00E2E3 |
++   LDA.b Frame_13                          ;$00E2E3 |
     CPY.b #$1E                              ;$00E2E5 |
     BCC .CODE_00E30A                        ;$00E2E7 |
     BNE .CODE_00E30C                        ;$00E2E9 |
@@ -10493,7 +10493,7 @@ draw_mario_and_yoshi_00E2BD:
     LDX.b #$0E                              ;$00E303 |
 +   STX.w SPCIO2_1DFB                       ;$00E305 |
 .CODE_00E308:
-    LDA $13                                 ;$00E308 |
+    LDA.b Frame_13                          ;$00E308 |
 .CODE_00E30A:
     LSR                                     ;$00E30A |
     LSR                                     ;$00E30B |
@@ -11850,7 +11850,7 @@ CODE_00EFBC:
     ASL                                     ;$00EFCB |
     TAX                                     ;$00EFCC |
 CODE_00EFCD:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$00EFCF |
     BNE Return00EFE7                        ;$00EFD1 |
     REP #$20                                ;$00EFD3 |
@@ -12156,7 +12156,7 @@ CODE_00F226:
     LDA.b #$02                              ;$00F22E |
 CODE_00F230:
     EOR.b #$03
-    AND $13                                 ;$00F232 |
+    AND.b Frame_13                          ;$00F232 |
     BNE CODE_00F220                         ;$00F234 |
 CODE_00F236:
     LDA.b #$2A
@@ -13868,7 +13868,7 @@ CODE_00FE16:
     JMP CODE_00FE0A                         ;$00FE47 |
 
 CODE_00FE4A:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$00FE4C |
     ORA $72                                 ;$00FE4E |
     ORA $7F                                 ;$00FE50 |

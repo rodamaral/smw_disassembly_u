@@ -74,7 +74,7 @@ CODE_0480D0:
     RTS                                     ;$0480DF |
 
 OW_Tile_Animation:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$0480E2 |
     BNE CODE_048101                         ;$0480E4 |
     LDX.b #$1F                              ;$0480E6 |
@@ -95,13 +95,13 @@ CODE_0480FE:
     DEX
     BPL CODE_0480E8                         ;$0480FF |
 CODE_048101:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$048103 |
     BNE CODE_04810C                         ;$048105 |
     LDX.b #$20                              ;$048107 |
     JSR CODE_048172                         ;$048109 |
 CODE_04810C:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$04810E |
     BNE CODE_048123                         ;$048110 |
     LDX.b #$1F                              ;$048112 |
@@ -126,7 +126,7 @@ CODE_04812C:
     LDX.w #$0070                            ;$048136 |
 CODE_048139:
     TXA
-    AND $13                                 ;$04813A |
+    AND.b Frame_13                          ;$04813A |
     LSR                                     ;$04813C |
     LSR                                     ;$04813D |
     CPX.w #$0038                            ;$04813E |
@@ -431,7 +431,7 @@ CODE_04839A:
     LSR                                     ;$0483B1 |
     JSR CODE_048415                         ;$0483B2 |
     LDY.b #$15                              ;$0483B5 |
-    LDA $13                                 ;$0483B7 |
+    LDA.b Frame_13                          ;$0483B7 |
     AND.b #$18                              ;$0483B9 |
     BNE CODE_0483BF                         ;$0483BB |
 CODE_0483BD:
@@ -456,7 +456,7 @@ CODE_0483D6:
     LSR                                     ;$0483D9 |
     LSR                                     ;$0483DA |
     TAY                                     ;$0483DB |
-    LDA $13                                 ;$0483DC |
+    LDA.b Frame_13                          ;$0483DC |
     AND.w DATA_048231,Y                     ;$0483DE |
     BNE CODE_0483F3                         ;$0483E1 |
     LDA $1A                                 ;$0483E3 |
@@ -982,7 +982,7 @@ CODE_048962:
     ASL                                     ;$04896A |
     ASL                                     ;$04896B |
     STA $00                                 ;$04896C |
-    LDA $13                                 ;$04896E |
+    LDA.b Frame_13                          ;$04896E |
     AND.w #$0018                            ;$048970 |
     CLC                                     ;$048973 |
     ADC $00                                 ;$048974 |
@@ -1006,7 +1006,7 @@ CODE_04898B:
     LDA.w $13D9                             ;$048990 |
     CMP.w #$000B                            ;$048993 |
     BNE CODE_0489A7                         ;$048996 |
-    LDA $13                                 ;$048998 |
+    LDA.b Frame_13                          ;$048998 |
     AND.w #$000C                            ;$04899A |
     LSR                                     ;$04899D |
     LSR                                     ;$04899E |
@@ -1160,7 +1160,7 @@ CODE_048CE6:
     ASL                                     ;$048CF1 |
     ASL                                     ;$048CF2 |
     STA $00                                 ;$048CF3 |
-    LDA $13                                 ;$048CF5 |
+    LDA.b Frame_13                          ;$048CF5 |
     AND.w #$0008                            ;$048CF7 |
     ASL                                     ;$048CFA |
     CLC                                     ;$048CFB |
@@ -1171,7 +1171,7 @@ CODE_048CE6:
     LDA.w $13D9                             ;$048D04 |
     CMP.w #$000B                            ;$048D07 |
     BNE CODE_048D1B                         ;$048D0A |
-    LDA $13                                 ;$048D0C |
+    LDA.b Frame_13                          ;$048D0C |
     AND.w #$000C                            ;$048D0E |
     LSR                                     ;$048D11 |
     LSR                                     ;$048D12 |
@@ -3145,7 +3145,7 @@ CODE_049E52:
     BRA CODE_049E69                         ;$049E61 |
 
 CODE_049E63:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$049E65 |
     BNE CODE_049E78                         ;$049E67 |
 CODE_049E69:
@@ -7480,7 +7480,7 @@ CODE_04F420:
     CMP.b #$07                              ;$04F435 |
     BNE CODE_04F43D                         ;$04F437 |
     LDY.b #$1E                              ;$04F439 |
-    STY $12                                 ;$04F43B |
+    STY.b StripeImage_12                    ;$04F43B |
 CODE_04F43D:
     DEC A
     AND.b #$03                              ;$04F43E |
@@ -7783,7 +7783,7 @@ CODE_04F708:
     BNE CODE_04F76E                         ;$04F70D |
     LDY.w $1FFB                             ;$04F70F |
     BNE CODE_04F73B                         ;$04F712 |
-    LDA $13                                 ;$04F714 |
+    LDA.b Frame_13                          ;$04F714 |
     LSR                                     ;$04F716 |
     BCC CODE_04F76E                         ;$04F717 |
     DEC.w $1FFC                             ;$04F719 |
@@ -8265,7 +8265,7 @@ CODE_04FAAF:
     XBA
     TYA                                     ;$04FAB0 |
     LDY.b #$4A                              ;$04FAB1 |
-    AND $13                                 ;$04FAB3 |
+    AND.b Frame_13                          ;$04FAB3 |
     BEQ CODE_04FAB9                         ;$04FAB5 |
     LDY.b #$48                              ;$04FAB7 |
 CODE_04FAB9:
@@ -8508,7 +8508,7 @@ CODE_04FC46:
     STA.w $0E45,X                           ;$04FC60 |
     LDA.w DATA_04FC23,Y                     ;$04FC63 |
     STA.w $0E75,X                           ;$04FC66 |
-    LDA $13                                 ;$04FC69 |
+    LDA.b Frame_13                          ;$04FC69 |
     AND.b #$0F                              ;$04FC6B |
     BNE CODE_04FC7C                         ;$04FC6D |
     LDA.w $0DF5,X                           ;$04FC6F |
@@ -8521,7 +8521,7 @@ CODE_04FC79:
 CODE_04FC7C:
     LDA.b #$03
     STA $04                                 ;$04FC7E |
-    LDA $13                                 ;$04FC80 |
+    LDA.b Frame_13                          ;$04FC80 |
     STA $06                                 ;$04FC82 |
     STZ $07                                 ;$04FC84 |
     LDY.w DATA_04F843,X                     ;$04FC86 |
@@ -8587,7 +8587,7 @@ CODE_04FCE1:
     STA $05                                 ;$04FCEA |
     LDY.w DATA_04F843,X                     ;$04FCEC |
 CODE_04FCEF:
-    LDA $13
+    LDA.b Frame_13
     LSR                                     ;$04FCF1 |
     AND.b #$06                              ;$04FCF2 |
     ORA.b #$30                              ;$04FCF4 |
@@ -8781,7 +8781,7 @@ Return04FE5A:
     RTS
 
 CODE_04FE5B:
-    LDA $13
+    LDA.b Frame_13
     CLC                                     ;$04FE5D |
     ADC.w DATA_04F833,X                     ;$04FE5E |
     RTS                                     ;$04FE61 |

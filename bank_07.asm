@@ -4322,7 +4322,7 @@ CODE_07F200:
 CODE_07F22A:
     STA.w $0202,Y
     PLX                                     ;$07F22D |
-    LDA $13                                 ;$07F22E |
+    LDA.b Frame_13                          ;$07F22E |
     LSR                                     ;$07F230 |
     AND.b #$0E                              ;$07F231 |
     ORA.b #$30                              ;$07F233 |

@@ -2271,7 +2271,7 @@ CODE_0CA6B0:
     STA $01                                 ;$0CA6F8 |
     LDA.b #$9F                              ;$0CA6FA |
     STA $02                                 ;$0CA6FC |
-    LDA $13                                 ;$0CA6FE |
+    LDA.b Frame_13                          ;$0CA6FE |
     AND.b #$08                              ;$0CA700 |
     LSR                                     ;$0CA702 |
     LSR                                     ;$0CA703 |
@@ -3016,7 +3016,7 @@ CODE_0CADF6:
     ADC.w $1DE9                             ;$0CAE00 |
     CLC                                     ;$0CAE03 |
     ADC.b #$D8                              ;$0CAE04 |
-    STA $12                                 ;$0CAE06 |
+    STA.b StripeImage_12                    ;$0CAE06 |
     PHY                                     ;$0CAE08 |
     PHX                                     ;$0CAE09 |
     JSL load_stripe_image                   ;$0CAE0A |
@@ -4223,7 +4223,7 @@ CODE_0CC94E:
     ADC $00                                 ;$0CC976 |
     CLC                                     ;$0CC978 |
     ADC.b #$21                              ;$0CC979 |
-    STA $12                                 ;$0CC97B |
+    STA.b StripeImage_12                    ;$0CC97B |
 Return0CC97D:
     RTS
 
@@ -4238,7 +4238,7 @@ CODE_0CC97E:
     RTL                                     ;$0CC98B |
 
 CODE_0CC98C:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$0CC98E |
     BNE CODE_0CC99A                         ;$0CC990 |
     LDA.w $144D                             ;$0CC992 |
@@ -4648,7 +4648,7 @@ DATA_0CCC4D:
     db $93,$73,$FF,$7F
 
 CODE_0CCC51:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$02                              ;$0CCC53 |
     TAX                                     ;$0CCC55 |
     REP #$20                                ;$0CCC56 |
@@ -4823,7 +4823,7 @@ CODE_0CCD94:
 CODE_0CCD9E:
     BRL CODE_0CCE2A
 CODE_0CCDA1:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$0CCDA3 |
     BNE CODE_0CCDB9                         ;$0CCDA5 |
     LDA.w $1447                             ;$0CCDA7 |
@@ -4970,7 +4970,7 @@ CODE_0CCEAB:
     STA.w $0200,X                           ;$0CCEAF |
     LDA.w $0B43                             ;$0CCEB2 |
     STA.w $0201,X                           ;$0CCEB5 |
-    LDA $13                                 ;$0CCEB8 |
+    LDA.b Frame_13                          ;$0CCEB8 |
     AND.b #$06                              ;$0CCEBA |
     LSR                                     ;$0CCEBC |
     TAY                                     ;$0CCEBD |
@@ -4996,7 +4996,7 @@ CODE_0CCEE2:
     LDA.w $1440
     CMP.b #$02                              ;$0CCEE5 |
     BCS CODE_0CCF0F                         ;$0CCEE7 |
-    LDA $13                                 ;$0CCEE9 |
+    LDA.b Frame_13                          ;$0CCEE9 |
     AND.b #$01                              ;$0CCEEB |
     BEQ CODE_0CCEF7                         ;$0CCEED |
     LDA.w $1440                             ;$0CCEEF |
@@ -5346,7 +5346,7 @@ Return0CD16E:
     RTS
 
 CODE_0CD16F:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$02                              ;$0CD171 |
     BEQ CODE_0CD183                         ;$0CD173 |
     REP #$20                                ;$0CD175 |
@@ -5468,7 +5468,7 @@ Return0CD282:
 
 CODE_0CD283:
     REP #$20
-    LDA $13                                 ;$0CD285 |
+    LDA.b Frame_13                          ;$0CD285 |
     AND.w #$0001                            ;$0CD287 |
     BEQ CODE_0CD290                         ;$0CD28A |
     INC $1A                                 ;$0CD28C |
@@ -5610,7 +5610,7 @@ CODE_0CD3A6:
     DEC A                                   ;$0CD3A9 |
     CMP.b #$E7                              ;$0CD3AA |
     BCS Return0CD3F3                        ;$0CD3AC |
-    LDA $13                                 ;$0CD3AE |
+    LDA.b Frame_13                          ;$0CD3AE |
     AND.b #$01                              ;$0CD3B0 |
     BNE Return0CD3F3                        ;$0CD3B2 |
     LDX.b #$0E                              ;$0CD3B4 |
@@ -5633,7 +5633,7 @@ CODE_0CD3B6:
     CLC                                     ;$0CD3DB |
     ADC.b #$20                              ;$0CD3DC |
     STA.w $0B41,X                           ;$0CD3DE |
-    LDA $13                                 ;$0CD3E1 |
+    LDA.b Frame_13                          ;$0CD3E1 |
     AND.b #$02                              ;$0CD3E3 |
     BNE Return0CD3F3                        ;$0CD3E5 |
     LDA.b #$07                              ;$0CD3E7 |
@@ -5689,7 +5689,7 @@ CODE_0CD429:
     LDA.w $0B41,Y                           ;$0CD438 |
     STA.w $0201,X                           ;$0CD43B |
     PHY                                     ;$0CD43E |
-    LDA $13                                 ;$0CD43F |
+    LDA.b Frame_13                          ;$0CD43F |
     AND.b #$02                              ;$0CD441 |
     LSR                                     ;$0CD443 |
     TAY                                     ;$0CD444 |
@@ -6136,7 +6136,7 @@ CODE_0CD7A9:
     BEQ CODE_0CD7C9                         ;$0CD7AA |
     LSR                                     ;$0CD7AC |
     BCS CODE_0CD7C9                         ;$0CD7AD |
-    LDA $13                                 ;$0CD7AF |
+    LDA.b Frame_13                          ;$0CD7AF |
     AND.b #$04                              ;$0CD7B1 |
     BEQ CODE_0CD7BA                         ;$0CD7B3 |
     LDA.b #$39                              ;$0CD7B5 |

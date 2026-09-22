@@ -74,7 +74,7 @@ InvertAccum:
 CODE_01804E:
     LDA.w $1588,X
     BEQ Return018072                        ;$018051 |
-    LDA $13                                 ;$018053 |
+    LDA.b Frame_13                          ;$018053 |
     AND.b #$03                              ;$018055 |
     ORA $86                                 ;$018057 |
     BNE Return018072                        ;$018059 |
@@ -1112,7 +1112,7 @@ GoalSphere:
     JSR SubSprGfx2Entry1
     LDA.b SpriteLock_9D                     ;$018766 |
     BNE Return018788                        ;$018768 |
-    LDA $13                                 ;$01876A |
+    LDA.b Frame_13                          ;$01876A |
     AND.b #$1F                              ;$01876C |
     ORA.b SpriteLock_9D                     ;$01876E |
     JSR CODE_01B152                         ;$018770 |
@@ -1351,7 +1351,7 @@ MovingLedge:
 
 JumpOverShells:
     TXA
-    EOR $13                                 ;$018899 |
+    EOR.b Frame_13                          ;$018899 |
     AND.b #$03                              ;$01889B |
     BNE Return0188AB                        ;$01889D |
     LDY.b #$09                              ;$01889F |
@@ -2650,7 +2650,7 @@ CODE_01926F:
     LDA $B6,X                               ;$019277 |
     ORA.w $15AC,X                           ;$019279 |
     BNE CODE_019288                         ;$01927C |
-    LDA $13                                 ;$01927E |
+    LDA.b Frame_13                          ;$01927E |
     JSR CODE_01928E                         ;$019280 |
 Return019283:
     RTS
@@ -2845,7 +2845,7 @@ CODE_0193B8:
     CPY.b #$0D                              ;$0193D5 |
     BNE CODE_019405                         ;$0193D7 |
 CODE_0193D9:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$0193DB |
     BNE CODE_019405                         ;$0193DD |
     JSR IsTouchingObjSide                   ;$0193DF |
@@ -3240,7 +3240,7 @@ SetNormalStatus:
     RTS                                     ;$0196D6 |
 
 IncrmntStunTimer:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$0196D9 |
     BNE Return0196E0                        ;$0196DB |
     INC.w $1540,X                           ;$0196DD |
@@ -3522,7 +3522,7 @@ CODE_0198F6:
     BEQ CODE_0198FD                         ;$0198F9 |
     STZ $AA,X                               ;$0198FB |
 CODE_0198FD:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$0198FF |
     BNE CODE_01990D                         ;$019901 |
     LDA.w $15F6,X                           ;$019903 |
@@ -4341,7 +4341,7 @@ CODE_019F9B:
     LDA $9E,X
     CMP.b #$7D                              ;$019F9D |
     BNE CODE_019FE0                         ;$019F9F |
-    LDA $13                                 ;$019FA1 |
+    LDA.b Frame_13                          ;$019FA1 |
     AND.b #$03                              ;$019FA3 |
     BNE CODE_019FBE                         ;$019FA5 |
     DEC.w $1891                             ;$019FA7 |
@@ -4978,7 +4978,7 @@ SubSprSprInteract:
     TXA
     BEQ Return01A40A                        ;$01A40E |
     TAY                                     ;$01A410 |
-    EOR $13                                 ;$01A411 |
+    EOR.b Frame_13                          ;$01A411 |
     LSR                                     ;$01A413 |
     BCC Return01A40A                        ;$01A414 |
     DEX                                     ;$01A416 |
@@ -5527,7 +5527,7 @@ MarioSprInteractRt:
     AND.b #$20                              ;$01A7E7 |
     BNE ProcessInteract                     ;$01A7E9 |
     TXA                                     ;$01A7EB |
-    EOR $13                                 ;$01A7EC |
+    EOR.b Frame_13                          ;$01A7EC |
     AND.b #$01                              ;$01A7EE |
     ORA.w $15A0,X                           ;$01A7F0 |
     BEQ ProcessInteract                     ;$01A7F3 |
@@ -6166,7 +6166,7 @@ CODE_01AC33:
     LDA.w $167A,X                           ;$01AC4C |
     AND.b #$04                              ;$01AC4F |
     BNE Return01ACA4                        ;$01AC51 |
-    LDA $13                                 ;$01AC53 |
+    LDA.b Frame_13                          ;$01AC53 |
     AND.b #$01                              ;$01AC55 |
     ORA $03                                 ;$01AC57 |
     STA $01                                 ;$01AC59 |
@@ -6215,7 +6215,7 @@ VerticalLevel:
     LDA.w $167A,X
     AND.b #$04                              ;$01ACA8 |
     BNE Return01ACA4                        ;$01ACAA |
-    LDA $13                                 ;$01ACAC |
+    LDA.b Frame_13                          ;$01ACAC |
     LSR                                     ;$01ACAE |
     BCS Return01ACA4                        ;$01ACAF |
     LDA.b SpriteXPosLow_E4,X                ;$01ACB1 |
@@ -6224,7 +6224,7 @@ VerticalLevel:
     SBC.b #$00                              ;$01ACB8 |
     CMP.b #$02                              ;$01ACBA |
     BCS OffScrEraseSprite                   ;$01ACBC |
-    LDA $13                                 ;$01ACBE |
+    LDA.b Frame_13                          ;$01ACBE |
     LSR                                     ;$01ACC0 |
     AND.b #$01                              ;$01ACC1 |
     STA $01                                 ;$01ACC3 |
@@ -6357,7 +6357,7 @@ CODE_01AD80:
     JSR CODE_019E95                         ;$01AD94 |
     LDA.b SpriteLock_9D                     ;$01AD97 |
     BNE CODE_01ADF8                         ;$01AD99 |
-    LDA $13                                 ;$01AD9B |
+    LDA.b Frame_13                          ;$01AD9B |
     AND.b #$01                              ;$01AD9D |
     BNE CODE_01ADB7                         ;$01AD9F |
     LDA.w $1594,X                           ;$01ADA1 |
@@ -6377,7 +6377,7 @@ CODE_01ADB7:
     BEQ CODE_01ADE8                         ;$01ADBE |
     LDA.w $1540,X                           ;$01ADC0 |
     BNE CODE_01ADE6                         ;$01ADC3 |
-    LDA $13                                 ;$01ADC5 |
+    LDA.b Frame_13                          ;$01ADC5 |
     AND.b #$03                              ;$01ADC7 |
     BNE CODE_01ADE6                         ;$01ADC9 |
     LDA.w $1534,X                           ;$01ADCB |
@@ -6758,7 +6758,7 @@ CODE_01B054:
     JSL CODE_0284BC                         ;$01B05E |
 CODE_01B062:
     JSL GetRand
-    ADC $13                                 ;$01B066 |
+    ADC.b Frame_13                          ;$01B066 |
     AND.b #$07                              ;$01B068 |
     TAY                                     ;$01B06A |
     LDA.w DATA_01B029,Y                     ;$01B06B |
@@ -6869,7 +6869,7 @@ kick_kill_sprite_01B12A:
     RTS                                     ;$01B14D |
 
 CODE_01B14E:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$01B150 |
 CODE_01B152:
     ORA.w $186C,X
@@ -6950,7 +6950,7 @@ JumpingFish:
 
 CODE_01B1DE:
     DEC $AA,X
-    LDA $13                                 ;$01B1E0 |
+    LDA.b Frame_13                          ;$01B1E0 |
     AND.b #$03                              ;$01B1E2 |
     BNE CODE_01B1E8                         ;$01B1E4 |
     DEC $AA,X                               ;$01B1E6 |
@@ -7558,7 +7558,7 @@ CODE_01B603:
     STA $AA,X                               ;$01B60E |
 CODE_01B610:
     LDA.b #$01
-    AND $13                                 ;$01B612 |
+    AND.b Frame_13                          ;$01B612 |
     BNE CODE_01B64E                         ;$01B614 |
     LDA $AA,X                               ;$01B616 |
     BEQ CODE_01B624                         ;$01B618 |
@@ -8474,7 +8474,7 @@ CODE_01BC3F:
     JSL GetRand                             ;$01BC71 |
     ADC.w $148E                             ;$01BC75 |
     ADC $7B                                 ;$01BC78 |
-    ADC $13                                 ;$01BC7A |
+    ADC.b Frame_13                          ;$01BC7A |
     LDY.b #$78                              ;$01BC7C |
     CMP.b #$35                              ;$01BC7E |
     BEQ StoreSpriteNum                      ;$01BC80 |
@@ -8509,7 +8509,7 @@ CODE_01BCB9:
 
 CODE_01BCBD:
     JSR SubSprSprPMarioSpr
-    LDA $13                                 ;$01BCC0 |
+    LDA.b Frame_13                          ;$01BCC0 |
     LSR                                     ;$01BCC2 |
     LSR                                     ;$01BCC3 |
     AND.b #$03                              ;$01BCC4 |
@@ -9257,7 +9257,7 @@ BalloonKeyFlyObjs:
     RTS                                     ;$01C21C |
 
 CODE_01C21D:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$01C21F |
     BNE CODE_01C239                         ;$01C221 |
     LDA.w $151C,X                           ;$01C223 |
@@ -9297,7 +9297,7 @@ CODE_01C262:
     LDA $C2,X
     CMP.b #$02                              ;$01C264 |
     BNE CODE_01C27C                         ;$01C266 |
-    LDA $13                                 ;$01C268 |
+    LDA.b Frame_13                          ;$01C268 |
     AND.b #$03                              ;$01C26A |
     BNE CODE_01C271                         ;$01C26C |
     JSR CODE_01B14E                         ;$01C26E |
@@ -9549,7 +9549,7 @@ ADDR_01C41E:
 CODE_01C42C:
     JSR SubUpdateSprPos
 CODE_01C42F:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$03                              ;$01C431 |
     BEQ CODE_01C437                         ;$01C433 |
     DEC $AA,X                               ;$01C435 |
@@ -9887,7 +9887,7 @@ CODE_01C69A:
 PowerUpGfxRt:
     CMP.b #$76
     BNE NoFlashingPal                       ;$01C6A3 |
-    LDA $13                                 ;$01C6A5 |
+    LDA.b Frame_13                          ;$01C6A5 |
     LSR                                     ;$01C6A7 |
     AND.b #$03                              ;$01C6A8 |
     PHY                                     ;$01C6AA |
@@ -10007,7 +10007,7 @@ BrownChainedPlat:
     JSR SubOffscreen2Bnk1
     LDA.b SpriteLock_9D                     ;$01C776 |
     BNE CODE_01C795                         ;$01C778 |
-    LDA $13                                 ;$01C77A |
+    LDA.b Frame_13                          ;$01C77A |
     AND.b #$03                              ;$01C77C |
     ORA.w $1602,X                           ;$01C77E |
     BNE CODE_01C795                         ;$01C781 |
@@ -10420,7 +10420,7 @@ CODE_01CA6E:
     LDA.b #!Hide_AllStar_FF                 ;$01CA75 |
     STA.b PlayerHiddenTiles_78              ;$01CA77 |
 CODE_01CA79:
-    LDA $13
+    LDA.b Frame_13
     LSR                                     ;$01CA7B |
     BCC Return01CA9B                        ;$01CA7C |
     LDA.w $151C,X                           ;$01CA7E |
@@ -11075,7 +11075,7 @@ CODE_01CF1C:
 CODE_01CF2F:
     JSR SubSprXPosNoGrvty
     JSR SubSprYPosNoGrvty                   ;$01CF32 |
-    LDA $13                                 ;$01CF35 |
+    LDA.b Frame_13                          ;$01CF35 |
     LSR                                     ;$01CF37 |
     BCS CODE_01CF44                         ;$01CF38 |
     LDA $AA,X                               ;$01CF3A |
@@ -11900,7 +11900,7 @@ CODE_01D505:
     BNE CODE_01D558                         ;$01D507 |
     LDA.w $1540,X                           ;$01D509 |
     BNE CODE_01D558                         ;$01D50C |
-    LDA $13                                 ;$01D50E |
+    LDA.b Frame_13                          ;$01D50E |
     LSR                                     ;$01D510 |
     BCC CODE_01D51A                         ;$01D511 |
     INC.b SpriteYPosLow_D8,X                ;$01D513 |
@@ -11909,7 +11909,7 @@ CODE_01D505:
 CODE_01D51A:
     LDA.w $151C,X
     BNE CODE_01D558                         ;$01D51D |
-    LDA $13                                 ;$01D51F |
+    LDA.b Frame_13                          ;$01D51F |
     LSR                                     ;$01D521 |
     BCC CODE_01D53A                         ;$01D522 |
     LDA $C2,X                               ;$01D524 |
@@ -12080,7 +12080,7 @@ CODE_01D68C:
 
 CODE_01D693:
     TXA
-    EOR $13                                 ;$01D694 |
+    EOR.b Frame_13                          ;$01D694 |
     LSR                                     ;$01D696 |
     BCC CODE_01D6B5                         ;$01D697 |
     JSR CODE_019140                         ;$01D699 |
@@ -12179,7 +12179,7 @@ LineRopePChainsaw:
     STA $01                                 ;$01D735 |
     JSR CODE_018063                         ;$01D737 |
 LineGrinder:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$07                              ;$01D73C |
     ORA.w $1626,X                           ;$01D73E |
     ORA.b SpriteLock_9D                     ;$01D741 |
@@ -12215,7 +12215,7 @@ CODE_01D768:
     INC.w $1534,X                           ;$01D777 |
     LDA.w $187B,X                           ;$01D77A |
     BEQ CODE_01D787                         ;$01D77D |
-    LDA $13                                 ;$01D77F |
+    LDA.b Frame_13                          ;$01D77F |
     LSR                                     ;$01D781 |
     BCC CODE_01D787                         ;$01D782 |
     INC.w $1534,X                           ;$01D784 |
@@ -12235,7 +12235,7 @@ CODE_01D792:
     BEQ CODE_01D7AD                         ;$01D79C |
     LDA.w $187B,X                           ;$01D79E |
     BEQ Return01D7AF                        ;$01D7A1 |
-    LDA $13                                 ;$01D7A3 |
+    LDA.b Frame_13                          ;$01D7A3 |
     LSR                                     ;$01D7A5 |
     BCC Return01D7AF                        ;$01D7A6 |
     DEC.w $1570,X                           ;$01D7A8 |
@@ -12791,7 +12791,7 @@ Grinder:
     BNE Return01DB95                        ;$01DB64 |
     LDA.b SpriteLock_9D                     ;$01DB66 |
     BNE Return01DB95                        ;$01DB68 |
-    LDA $13                                 ;$01DB6A |
+    LDA.b Frame_13                          ;$01DB6A |
     AND.b #$03                              ;$01DB6C |
     BNE CODE_01DB75                         ;$01DB6E |
     LDA.b #$04                              ;$01DB70 |
@@ -13070,7 +13070,7 @@ CODE_01DDD6:
     STA.w SpriteDir_157C,X                  ;$01DDE0 |
     TXA                                     ;$01DDE3 |
     CLC                                     ;$01DDE4 |
-    ADC $13                                 ;$01DDE5 |
+    ADC.b Frame_13                          ;$01DDE5 |
     AND.b #$07                              ;$01DDE7 |
     STA.w $1570,X                           ;$01DDE9 |
     DEX                                     ;$01DDEC |
@@ -13078,7 +13078,7 @@ CODE_01DDD6:
     STZ.w $188F                             ;$01DDEF |
     STZ.w $1890                             ;$01DDF2 |
     JSL GetRand                             ;$01DDF5 |
-    EOR $13                                 ;$01DDF9 |
+    EOR.b Frame_13                          ;$01DDF9 |
     ADC $14                                 ;$01DDFB |
     AND.b #$07                              ;$01DDFD |
     TAY                                     ;$01DDFF |
@@ -13522,7 +13522,7 @@ CODE_01E151:
     ASL                                     ;$01E152 |
     ASL                                     ;$01E153 |
     CLC                                     ;$01E154 |
-    ADC $13                                 ;$01E155 |
+    ADC.b Frame_13                          ;$01E155 |
     LDY.b #$F0                              ;$01E157 |
     AND.b #$04                              ;$01E159 |
     BEQ CODE_01E15F                         ;$01E15B |
@@ -13669,7 +13669,7 @@ CODE_01E23A:
     RTS                                     ;$01E269 |
 
 CODE_01E26A:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$3F                              ;$01E26C |
     BNE CODE_01E27B                         ;$01E26E |
     LDA.w $1890                             ;$01E270 |
@@ -14093,7 +14093,7 @@ CODE_01E57B:
     LDA $9E,X
     CMP.b #$31                              ;$01E57D |
     BNE CODE_01E598                         ;$01E57F |
-    LDA $13                                 ;$01E581 |
+    LDA.b Frame_13                          ;$01E581 |
     LSR                                     ;$01E583 |
     BCC CODE_01E589                         ;$01E584 |
     INC.w $1528,X                           ;$01E586 |
@@ -14659,7 +14659,7 @@ CODE_01E9B8:
     EOR.b #$01                              ;$01E9BA |
     TAY                                     ;$01E9BC |
 CODE_01E9BD:
-    LDA $13
+    LDA.b Frame_13
     AND.b #$01                              ;$01E9BF |
     BNE CODE_01E9E6                         ;$01E9C1 |
     LDA $B6,X                               ;$01E9C3 |
@@ -14697,7 +14697,7 @@ CODE_01E9F9:
     STA $B6,X                               ;$01E9FD |
     JSR SubSprYPosNoGrvty                   ;$01E9FF |
     LDY.w $160E,X                           ;$01EA02 |
-    LDA $13                                 ;$01EA05 |
+    LDA.b Frame_13                          ;$01EA05 |
     AND.b #$7F                              ;$01EA07 |
     ORA.w $151C,Y                           ;$01EA09 |
     BNE Return01EA16                        ;$01EA0C |
@@ -14871,7 +14871,7 @@ draw_yoshi_01EA70:
     LDA.w SpriteInPipeMode_1419             ;$01EB33 || 
     CMP.b #$01                              ;$01EB36 ||
     BNE +                                   ;$01EB38 ||\ if entering an horizontal pipe
-    LDA $13                                 ;$01EB3A |||
+    LDA.b Frame_13                          ;$01EB3A |||
     AND.b #$08                              ;$01EB3C |||
     LSR                                     ;$01EB3E |||
     LSR                                     ;$01EB3F |||
@@ -16740,7 +16740,7 @@ CODE_01F92F:
     BEQ CODE_01F948                         ;$01F945 |
     INC A                                   ;$01F947 |
 CODE_01F948:
-    AND $13
+    AND.b Frame_13
     BNE CODE_01F96F                         ;$01F94A |
     INC.w $1570,X                           ;$01F94C |
     LDA.w $1570,X                           ;$01F94F |
@@ -16786,7 +16786,7 @@ CODE_01F97F:
     STA.w $1602,X                           ;$01F986 |
 CODE_01F989:
     STZ.w $1570,X
-    LDA $13                                 ;$01F98C |
+    LDA.b Frame_13                          ;$01F98C |
     AND.b #$07                              ;$01F98E |
     BNE CODE_01F9C8                         ;$01F990 |
     JSR SubHorizPos                         ;$01F992 |
@@ -17045,7 +17045,7 @@ CODE_01FB6E:
 
 CODE_01FB7B:
     JSR SubSprXPosNoGrvty
-    LDA $13                                 ;$01FB7E |
+    LDA.b Frame_13                          ;$01FB7E |
     AND.b #$1F                              ;$01FB80 |
     ORA.w $1564,X                           ;$01FB82 |
     BNE CODE_01FB99                         ;$01FB85 |
