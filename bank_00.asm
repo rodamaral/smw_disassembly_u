@@ -44,14 +44,14 @@ reset_start:
     JSR setup_window_HDMA                   ;$008061 | Set up HDMA for window settings
     LDA.b #$03                              ;$008064 |\ Set up OAM registers( 8x8 and 16x16)
     STA.w $2101                             ;$008066 |/
-    INC $10                                 ;$008069 /
+    INC.b LagFlag_10                        ;$008069 /
 .game_loop:
-    LDA $10                                 ;$00806B \ Main wait loop
+    LDA.b LagFlag_10                        ;$00806B \ Main wait loop
     BEQ .game_loop                          ;$00806D | $10 is set in NMI to $00
     CLI                                     ;$00806F | Enable interrupts
     INC $13                                 ;$008070 | Increment frame counter
     JSR run_game_mode                       ;$008072 | Run the game
-    STZ $10                                 ;$008075 | Clear $10
+    STZ.b LagFlag_10                        ;$008075 | Clear $10
     BRA .game_loop                          ;$008077 / Back to the wait loop
 
 SPC_upload_loop:
@@ -243,14 +243,14 @@ NMI_start:                                  ;        \
     STA.w $2131                             ;$0081D2 |/
     LDA.b #$09                              ;$0081D5 |\ Mode 1 with layer 3 priority
     STA.w $2105                             ;$0081D7 |/
-    LDA $10                                 ;$0081DA |\ If the game is not lagging skip to regular NMI
+    LDA.b LagFlag_10                        ;$0081DA |\ If the game is not lagging skip to regular NMI
     BEQ .no_lag                             ;$0081DC |/
     LDA.w $0D9B                             ;$0081DE |\ Check if we are in a regular level
     LSR                                     ;$0081E1 | |
     BEQ .lagging_level_NMI                  ;$0081E2 | |
     JMP .lagging_OW_NMI                     ;$0081E4 |/ Otherwise process as the OW
 .no_lag                                     ;        |
-    INC $10                                 ;$0081E7 | Allow the game loop to run after NMI
+    INC.b LagFlag_10                        ;$0081E7 | Allow the game loop to run after NMI
     JSR upload_palette                      ;$0081E9 | Upload special and normal palettes
     LDA.w $0D9B                             ;$0081EC |\ Separate the current level mode
     LSR                                     ;$0081EF |/
@@ -355,9 +355,9 @@ NMI_start:                                  ;        \
     RTI                                     ;$0082C3 / Return from NMI
 
 .mode_7_NMI                                 ;        \ 
-    LDA $10                                 ;$0082C4 |\ if mode 7 is lagging branch
+    LDA.b LagFlag_10                        ;$0082C4 |\ if mode 7 is lagging branch
     BNE .lagging_mode_7_NMI                 ;$0082C6 | |
-    INC $10                                 ;$0082C8 |/ Otherwise increment the lag counter
+    INC.b LagFlag_10                        ;$0082C8 |/ Otherwise increment the lag counter
     LDA.w $143A                             ;$0082CA |\ Check if the transition screens need DMAed
     BEQ .skip_mode_7_transition_DMA         ;$0082CD |/
     JSR DMA_transition_screen               ;$0082CF | DMA start/bonus/game over/time up transition screens
