@@ -802,7 +802,7 @@ update_controllers:                         ;        \
     LDA.w $0DA4,X                           ;$0086A8 |\ Update $15 t0 current button press high byte
     AND.b #$C0                              ;$0086AB | | Share bit 6 with X/Y
     ORA.w $0DA2,X                           ;$0086AD | | 
-    STA $15                                 ;$0086B0 |/
+    STA.b byetudlrHold_15                   ;$0086B0 |/
     LDA.w $0DA4,X                           ;$0086B2 |\ Update $17 to current button press low byte
     STA $17                                 ;$0086B5 |/
     LDA.w $0DA8,X                           ;$0086B7 |\ Update $16 t0 current frame press high byte
@@ -2435,7 +2435,7 @@ GM1B_credits_castle_main_0094FD:
     AND.b #$00                              ;$00950A |
     CMP.b #$30                              ;$00950C |
     BNE CODE_009529                         ;$00950E |
-    LDA $15                                 ;$009510 |
+    LDA.b byetudlrHold_15                   ;$009510 |
     AND.b #$08                              ;$009512 |
     BEQ ADDR_009523                         ;$009514 |
     LDA.w $13C6                             ;$009516 |
@@ -3378,7 +3378,7 @@ CODE_009C8B:
 
 CODE_009C8F:
     AND.b #$DF
-    STA $15                                 ;$009C91 |
+    STA.b byetudlrHold_15                   ;$009C91 |
     CMP.w $9C1D,X                           ;$009C93 |
     BNE +                                   ;$009C96 |
     AND.b #$9F                              ;$009C98 |
@@ -3403,7 +3403,7 @@ CODE_009CBE:
     LDA $17
     AND.b #$C0                              ;$009CC0 |
     BNE Return009CCA                        ;$009CC2 |
-    LDA $15                                 ;$009CC4 |
+    LDA.b byetudlrHold_15                   ;$009CC4 |
     AND.b #$F0                              ;$009CC6 |
     BNE Return009CCA                        ;$009CC8 |
 Return009CCA:
@@ -4089,7 +4089,7 @@ GM14_main_level_00A1DA:
     ORA.w $1493                             ;$00A202 |
     BEQ +                                   ;$00A205 |\
     LDA.b #$04                              ;$00A207 || if not able to move free:
-    TRB $15                                 ;$00A209 || clear hold down
+    TRB.b byetudlrHold_15                   ;$00A209 || clear hold down
     LDA.b #$40                              ;$00A20B ||
     TRB $16                                 ;$00A20D || clear X/Y press
     TRB $18                                 ;$00A20F |/
@@ -4132,7 +4132,7 @@ GM14_main_level_00A1DA:
 +   BRA .level_unpaused_00A28A               ;$00A259 |
 
 .level_paused_00A25B:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$20                              ;$00A25D |
     BEQ .Return00A289                       ;$00A25F | if not holding select, return to main loop
     LDY.w $13BF                             ;$00A261 | if holding select, try to exit the level if beaten
@@ -4146,7 +4146,7 @@ GM14_main_level_00A1DA:
 
 .unreachable_cheat:
     LDA.b #$01                              ;$00A274 |
-    BIT $15                                 ;$00A276 |
+    BIT.b byetudlrHold_15                   ;$00A276 |
     BPL +                                   ;$00A278 |
     INC A                                   ;$00A27A |
 +   STA.w $13CE                             ;$00A27B |
@@ -7418,7 +7418,7 @@ timers_and_animation_00C47E:
     LDA $16                                 ;$00C56C |
     AND.b #$20                              ;$00C56E |
     BEQ .restore_noteblock_down_00C58F      ;$00C570 |
-    LDA $15                                 ;$00C572 |
+    LDA.b byetudlrHold_15                   ;$00C572 |
     AND.b #$08                              ;$00C574 |
     BRA .try_release_itembox_00C585         ;$00C576 |
 
@@ -7611,7 +7611,7 @@ CODE_00C777:
     TAY                                     ;$00C778 |
     AND.b #$20                              ;$00C779 |
     BNE CODE_00C789                         ;$00C77B |
-    STY $15                                 ;$00C77D |
+    STY.b byetudlrHold_15                   ;$00C77D |
     TYA                                     ;$00C77F |
     AND.b #$BF                              ;$00C780 |
     STA $16                                 ;$00C782 |
@@ -7776,7 +7776,7 @@ CODE_00C8A8:
     CMP.b #$FF                              ;$00C8AB |
     BEQ CODE_00C8FB                         ;$00C8AD |
     AND.b #$DF                              ;$00C8AF |
-    STA $15                                 ;$00C8B1 |
+    STA.b byetudlrHold_15                   ;$00C8B1 |
     CMP.w DATA_00C848-2,X                   ;$00C8B3 |
     BEQ CODE_00C8BC                         ;$00C8B6 |
     LDY.b #$80                              ;$00C8B8 |
@@ -7884,7 +7884,7 @@ CODE_00C96B:
     BCC CODE_00C984                         ;$00C978 |
     LDA.b #$01                              ;$00C97A |
     STA $76                                 ;$00C97C |
-    STA $15                                 ;$00C97E |
+    STA.b byetudlrHold_15                   ;$00C97E |
     LDA.b #$05                              ;$00C980 |
     STA $7B                                 ;$00C982 |
 CODE_00C984:
@@ -7922,7 +7922,7 @@ Return00C9C1:
 CODE_00C9C2:
     JSR CODE_00CA44
     LDA.b #$01                              ;$00C9C5 |
-    STA $15                                 ;$00C9C7 |
+    STA.b byetudlrHold_15                   ;$00C9C7 |
     JSR no_special_collision                ;$00C9C9 |
     LDA.w $1433                             ;$00C9CC |
     BNE Return00CA30                        ;$00C9CF |
@@ -8218,17 +8218,17 @@ no_animation:                               ;        \
     BEQ .instant_run                        ;$00CC87 |/ do instant running.
     LDA.b #$FF                              ;$00CC89 |\ Make the player invincible.
     STA.w $1497                             ;$00CC8B |/
-    LDA $15                                 ;$00CC8E |\
+    LDA.b byetudlrHold_15                   ;$00CC8E |\
     AND.b #$03                              ;$00CC90 | | Isolate the left and right controller flags,
     ASL                                     ;$00CC92 | |
     ASL                                     ;$00CC93 | | multiply by two,
     LDX.b #$00                              ;$00CC94 | | and run free roaming with the X position.
     JSR .free_roam                          ;$00CC96 |/
-    LDA $15                                 ;$00CC99 |\ Isolate the up and down controller flags,
+    LDA.b byetudlrHold_15                   ;$00CC99 |\ Isolate the up and down controller flags,
     AND.b #$0C                              ;$00CC9B | |
     LDX.b #$02                              ;$00CC9D |/ and run free roaming with the Y position.
 .free_roam                                  ;        |
-    BIT $15                                 ;$00CC9F |\ If X or Y is pressed,
+    BIT.b byetudlrHold_15                   ;$00CC9F |\ If X or Y is pressed,
     BVC .not_fast                           ;$00CCA1 | | increase the speed.
     ORA.b #$02                              ;$00CCA3 | |
 .not_fast                                   ;        | |
@@ -8328,7 +8328,7 @@ CODE_00CD39:                                ;        |
     AND.b #$1B                              ;$00CD58 |
     CMP.b #$1B                              ;$00CD5A |
     BNE CODE_00CD79                         ;$00CD5C |
-    LDA $15                                 ;$00CD5E |
+    LDA.b byetudlrHold_15                   ;$00CD5E |
     AND.b #$0C                              ;$00CD60 |
     BEQ CODE_00CD79                         ;$00CD62 |
     LDY $72                                 ;$00CD64 |
@@ -8419,7 +8419,7 @@ screen_scrolling:
 CODE_00CDF6:
     LDA $17
     AND.b #$CF                              ;$00CDF8 |
-    ORA $15                                 ;$00CDFA |
+    ORA.b byetudlrHold_15                   ;$00CDFA |
     BNE CODE_00CE49                         ;$00CDFC |
     LDA $17                                 ;$00CDFE |
     AND.b #$30                              ;$00CE00 |
@@ -8674,7 +8674,7 @@ MarioAnimNoAbs1:
     TAX
     BNE CODE_00CFD4                         ;$00CFC4 |
     XBA                                     ;$00CFC6 |
-    LDA $15                                 ;$00CFC7 |
+    LDA.b byetudlrHold_15                   ;$00CFC7 |
     AND.b #$08                              ;$00CFC9 |
     BEQ CODE_00D002                         ;$00CFCB |
     LDA.b #$03                              ;$00CFCD |
@@ -8684,7 +8684,7 @@ MarioAnimNoAbs1:
 CODE_00CFD4:
     LDA $86
     BEQ CODE_00CFE3                         ;$00CFD6 |
-    LDA $15                                 ;$00CFD8 |
+    LDA.b byetudlrHold_15                   ;$00CFD8 |
     AND.b #$03                              ;$00CFDA |
     BEQ CODE_00D003                         ;$00CFDC |
     LDA.b #$68                              ;$00CFDE |
@@ -9028,7 +9028,7 @@ CODE_00D22A:
     STA.w PlayerPose_13E0
 CODE_00D22D:
     LDA.b #$40
-    STA $15                                 ;$00D22F |
+    STA.b byetudlrHold_15                   ;$00D22F |
     LDA.b #$02                              ;$00D231 |
     STA.w $13F9                             ;$00D233 |
     LDA $89                                 ;$00D236 |
@@ -9247,7 +9247,7 @@ CODE_00D5F9:
     STZ $73
     LDA.w $13ED                             ;$00D5FB |
     BNE CODE_00D60B                         ;$00D5FE |
-    LDA $15                                 ;$00D600 |
+    LDA.b byetudlrHold_15                   ;$00D600 |
     AND.b #$04                              ;$00D602 |
     BEQ CODE_00D60B                         ;$00D604 |
     STA $73                                 ;$00D606 |
@@ -9321,7 +9321,7 @@ CODE_00D67D:
 CODE_00D682:
     LDA.w $13ED
     BMI CODE_00D692                         ;$00D685 |
-    LDA $15                                 ;$00D687 |
+    LDA.b byetudlrHold_15                   ;$00D687 |
     AND.b #$03                              ;$00D689 |
     BNE CODE_00D6B1                         ;$00D68B |
 CODE_00D68D:
@@ -9403,7 +9403,7 @@ CODE_00D70E:
     TAX                                     ;$00D712 |
 CODE_00D713:
     LDY.b #$00
-    BIT $15                                 ;$00D715 |
+    BIT.b byetudlrHold_15                   ;$00D715 |
     BVC CODE_00D737                         ;$00D717 |
     INX                                     ;$00D719 |
     INX                                     ;$00D71A |
@@ -9564,7 +9564,7 @@ CODE_00D82B:
     LDX.b #$03                              ;$00D832 |
     LDY $7D                                 ;$00D834 |
     BMI CODE_00D856                         ;$00D836 |
-    LDA $15                                 ;$00D838 |
+    LDA.b byetudlrHold_15                   ;$00D838 |
     AND.b #$03                              ;$00D83A |
     TAY                                     ;$00D83C |
     BNE CODE_00D849                         ;$00D83D |
@@ -9587,7 +9587,7 @@ CODE_00D856:
     LDA.w $14A4
     BNE CODE_00D87E                         ;$00D859 |
 CODE_00D85B:
-    BIT $15
+    BIT.b byetudlrHold_15
     BVS CODE_00D861                         ;$00D85D |
     LDX.b #$04                              ;$00D85F |
 CODE_00D861:
@@ -9704,7 +9704,7 @@ CODE_00D924:
     BEQ CODE_00D930                         ;$00D926 |
 CODE_00D928:
     LDY.b #$01
-    LDA $15                                 ;$00D92A |
+    LDA.b byetudlrHold_15                   ;$00D92A |
     BMI CODE_00D930                         ;$00D92C |
 CODE_00D92E:
     LDY.b #$00
@@ -9788,7 +9788,7 @@ water_physics:
     BRA CODE_00D9B5                         ;$00D9AD |
 
 CODE_00D9AF:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$04                              ;$00D9B1 |
     BEQ CODE_00D9BD                         ;$00D9B3 |
 CODE_00D9B5:
@@ -9822,7 +9822,7 @@ CODE_00D9D7:
 CODE_00D9DD:
     STA $7D
     LDY.b #$80                              ;$00D9DF |
-    LDA $15                                 ;$00D9E1 |
+    LDA.b byetudlrHold_15                   ;$00D9E1 |
     AND.b #$03                              ;$00D9E3 |
     BNE CODE_00DA48                         ;$00D9E5 |
     LDA $76                                 ;$00D9E7 |
@@ -9853,7 +9853,7 @@ CODE_00DA0B:
     INY                                     ;$00DA11 |
     INY                                     ;$00DA12 |
 CODE_00DA13:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$0C                              ;$00DA15 |
     LSR                                     ;$00DA17 |
     LSR                                     ;$00DA18 |
@@ -9873,7 +9873,7 @@ CODE_00DA2D:
     STA $7D
     LDA $72                                 ;$00DA2F |
     BNE CODE_00DA40                         ;$00DA31 |
-    LDA $15                                 ;$00DA33 |
+    LDA.b byetudlrHold_15                   ;$00DA33 |
     AND.b #$04                              ;$00DA35 |
     BEQ CODE_00DA40                         ;$00DA37 |
     STZ.w $13E8                             ;$00DA39 |
@@ -9881,7 +9881,7 @@ CODE_00DA2D:
     BRA CODE_00DA69                         ;$00DA3E |
 
 CODE_00DA40:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$03                              ;$00DA42 |
     BEQ CODE_00DA69                         ;$00DA44 |
 CODE_00DA46:
@@ -10093,7 +10093,7 @@ CODE_00DBAC:
 CODE_00DBCA:
     LDA.w ClimbingImgs,X
     STA.w PlayerPose_13E0                   ;$00DBCD |
-    LDA $15                                 ;$00DBD0 |
+    LDA.b byetudlrHold_15                   ;$00DBD0 |
     AND.b #$03                              ;$00DBD2 |
     BEQ CODE_00DBF2                         ;$00DBD4 |
     LSR                                     ;$00DBD6 |
@@ -10114,7 +10114,7 @@ CODE_00DBE8:
     LDA.w DATA_00DAB7,X                     ;$00DBED |
     STA $7B                                 ;$00DBF0 |
 CODE_00DBF2:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$0C                              ;$00DBF4 |
     BEQ CODE_00DC16                         ;$00DBF6 |
     AND.b #$08                              ;$00DBF8 |
@@ -11070,7 +11070,7 @@ CODE_00EA65:
     STA $7D                                 ;$00EA73 |
 CODE_00EA75:
     INC.w $13FA
-    LDA $15                                 ;$00EA78 |
+    LDA.b byetudlrHold_15                   ;$00EA78 |
     AND.b #$88                              ;$00EA7A |
     CMP.b #$88                              ;$00EA7C |
     BNE CODE_00EA62                         ;$00EA7E |
@@ -11728,7 +11728,7 @@ CODE_00EEE1:
     BEQ CODE_00EF02                         ;$00EEED |
 CODE_00EEEF:
     STA.w $13EE
-    LDA $15                                 ;$00EEF2 |
+    LDA.b byetudlrHold_15                   ;$00EEF2 |
     AND.b #$04                              ;$00EEF4 |
     BEQ CODE_00EF05                         ;$00EEF6 |
     LDA.w $148F                             ;$00EEF8 |
@@ -12440,7 +12440,7 @@ CODE_00F408:
     LDY.b #$06
 CODE_00F40A:
     STA $88
-    LDA $15                                 ;$00F40C |
+    LDA.b byetudlrHold_15                   ;$00F40C |
     AND.w DATA_00F3E5,X                     ;$00F40E |
     BEQ CODE_00F43E                         ;$00F411 |
     STA.b SpriteLock_9D                     ;$00F413 |
@@ -12765,7 +12765,7 @@ Return00F628:                               ;        |
 CODE_00F629:
     JSL kill_player
 disable_controls:
-    STZ $15
+    STZ.b byetudlrHold_15
     STZ $16                                 ;$00F62F |
     STZ $17                                 ;$00F631 |
     STZ $18                                 ;$00F633 |
@@ -13677,7 +13677,7 @@ CODE_00FCF5:
 
 CODE_00FD08:
     LDY.b #$3F
-    LDA $15                                 ;$00FD0A |
+    LDA.b byetudlrHold_15                   ;$00FD0A |
     AND.b #$83                              ;$00FD0C | release Water Bubble twice as often when holding B, A, left or right
     BNE CODE_00FD12                         ;$00FD0E |
     LDY.b #$7F                              ;$00FD10 |
@@ -13875,7 +13875,7 @@ CODE_00FE4A:
     ORA $81                                 ;$00FE52 |
     ORA.b SpriteLock_9D                                 ;$00FE54 |
     BNE Return00FE71                        ;$00FE56 |
-    LDA $15                                 ;$00FE58 |
+    LDA.b byetudlrHold_15                   ;$00FE58 |
     AND.b #$04                              ;$00FE5A |
     BEQ CODE_00FE67                         ;$00FE5C |
     LDA $7B                                 ;$00FE5E |

@@ -10521,7 +10521,7 @@ PeaBouncerMain:
     LDA.w $1534,X                           ;$02CDD5 |
     BEQ CODE_02CDF1                         ;$02CDD8 |
     DEC.w $1534,X                           ;$02CDDA |
-    BIT $15                                 ;$02CDDD |
+    BIT.b byetudlrHold_15                   ;$02CDDD |
     BPL CODE_02CDF1                         ;$02CDDF |
     STZ.w $1534,X                           ;$02CDE1 |
     LDY.w $151C,X                           ;$02CDE4 |
@@ -11106,7 +11106,7 @@ DATA_02D211:
     db $FF,$10,$F0
 
 CODE_02D214:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$03                              ;$02D216 |
     BNE CODE_02D228                         ;$02D218 |
 CODE_02D21A:
@@ -11144,7 +11144,7 @@ CODE_02D247:
     LDA $9E,X                               ;$02D249 |
     CMP.b #$87                              ;$02D24B |
     BNE CODE_02D25F                         ;$02D24D |
-    LDA $15                                 ;$02D24F |
+    LDA.b byetudlrHold_15                   ;$02D24F |
     AND.b #$0C                              ;$02D251 |
     BEQ CODE_02D26F                         ;$02D253 |
     LDY.b #$10                              ;$02D255 |
@@ -11155,7 +11155,7 @@ CODE_02D247:
 
 CODE_02D25F:
     LDY.b #$F8
-    LDA $15                                 ;$02D261 |
+    LDA.b byetudlrHold_15                   ;$02D261 |
     AND.b #$0C                              ;$02D263 |
     BEQ CODE_02D26F                         ;$02D265 |
     LDY.b #$F0                              ;$02D267 |
@@ -13396,7 +13396,7 @@ CODE_02E288:
     STA $AA,X                               ;$02E292 |
     JSR UpdateYPosNoGrvtyB1                 ;$02E294 |
     JSR UpdateXPosNoGrvtyB1                 ;$02E297 |
-    LDA $15                                 ;$02E29A |
+    LDA.b byetudlrHold_15                   ;$02E29A |
     AND.b #$0F                              ;$02E29C |
     BEQ CODE_02E2B0                         ;$02E29E |
     TAY                                     ;$02E2A0 |

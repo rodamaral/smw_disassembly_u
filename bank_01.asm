@@ -4400,7 +4400,7 @@ CODE_01A002:
     JSR SubSprSprInteract                   ;$01A005 |
     LDA.w SpriteInPipeMode_1419             ;$01A008 |
     BNE CODE_01A011                         ;$01A00B |
-    BIT $15                                 ;$01A00D |
+    BIT.b byetudlrHold_15                   ;$01A00D |
     BVC CODE_01A015                         ;$01A00F |
 CODE_01A011:
     JSR CODE_01A0B1
@@ -4420,19 +4420,19 @@ CODE_01A026:
     STY $AA,X
     LDA.b #$09                              ;$01A028 |
     STA.w SpriteStatus_14C8,X               ;$01A02A |
-    LDA $15                                 ;$01A02D |
+    LDA.b byetudlrHold_15                   ;$01A02D |
     AND.b #$08                              ;$01A02F |
     BNE CODE_01A068                         ;$01A031 |
     LDA $9E,X                               ;$01A033 |
     CMP.b #$15                              ;$01A035 |
     BCS CODE_01A041                         ;$01A037 |
-    LDA $15                                 ;$01A039 |
+    LDA.b byetudlrHold_15                   ;$01A039 |
     AND.b #$04                              ;$01A03B |
     BEQ CODE_01A079                         ;$01A03D |
     BRA CODE_01A047                         ;$01A03F |
 
 CODE_01A041:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$03                              ;$01A043 |
     BNE CODE_01A079                         ;$01A045 |
 CODE_01A047:
@@ -5848,7 +5848,7 @@ BoostMarioSpeed:
     LDA $74
     BNE Return01AA41                        ;$01AA35 |
     LDA.b #$D0                              ;$01AA37 |
-    BIT $15                                 ;$01AA39 |
+    BIT.b byetudlrHold_15                   ;$01AA39 |
     BPL CODE_01AA3F                         ;$01AA3B |
     LDA.b #$A8                              ;$01AA3D |
 CODE_01AA3F:
@@ -5868,7 +5868,7 @@ CODE_01AA42:
     JMP CODE_01A924                         ;$01AA55 |
 
 CODE_01AA58:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$40                              ;$01AA5A |
     BEQ CODE_01AA74                         ;$01AA5C |
     LDA.w $1470                             ;$01AA5E |
@@ -12605,7 +12605,7 @@ CODE_01DA0A:
     BNE Return01DA8F                        ;$01DA1F |
     LDA.w $18BE                             ;$01DA21 |
     BNE CODE_01DA2F                         ;$01DA24 |
-    LDA $15                                 ;$01DA26 |
+    LDA.b byetudlrHold_15                   ;$01DA26 |
     AND.b #$08                              ;$01DA28 |
     BEQ Return01DA8F                        ;$01DA2A |
     STA.w $18BE                             ;$01DA2C |
@@ -14240,7 +14240,7 @@ CODE_01E664:
     BRA CODE_01E69E                         ;$01E698 |
 
 CODE_01E69A:
-    LDA $15
+    LDA.b byetudlrHold_15
     BPL CODE_01E6A7                         ;$01E69C |
 CODE_01E69E:
     LDA.b #$0B
@@ -14272,7 +14272,7 @@ CODE_01E6B0:
     BRA CODE_01E6F0                         ;$01E6CC |
 
 CODE_01E6CE:
-    BIT $15
+    BIT.b byetudlrHold_15
     BVC CODE_01E6E2                         ;$01E6D0 |
     LDA.w $1470                             ;$01E6D2 |
     ORA.w RidingYoshi_187A                  ;$01E6D5 |
@@ -15162,7 +15162,7 @@ CODE_01ED70:
     CMP.b #$01                              ;$01ED72 |
     BNE Return01EDCB                        ;$01ED74 |
     JSR yoshi_sprites_interaction_01F622    ;$01ED76 |
-    LDA $15                                 ;$01ED79 |
+    LDA.b byetudlrHold_15                   ;$01ED79 |
     AND.b #$03                              ;$01ED7B |
     BEQ CODE_01ED95                         ;$01ED7D |
     DEC A                                   ;$01ED7F |

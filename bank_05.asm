@@ -2961,7 +2961,7 @@ CODE_05B165:
     RTL                                     ;$05B16D |
 
 CODE_05B16E:
-    LDA $15
+    LDA.b byetudlrHold_15
     AND.b #$F0                              ;$05B170 |
     BEQ CODE_05B18E                         ;$05B172 |
     EOR $16                                 ;$05B174 |

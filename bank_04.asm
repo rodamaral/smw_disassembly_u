@@ -420,12 +420,12 @@ CODE_04839A:
     LDA.w $13D4
     BEQ CODE_0483C3                         ;$04839D |
     LDX.b #$00                              ;$04839F |
-    LDA $15                                 ;$0483A1 |
+    LDA.b byetudlrHold_15                   ;$0483A1 |
     AND.b #$03                              ;$0483A3 |
     ASL                                     ;$0483A5 |
     JSR CODE_048415                         ;$0483A6 |
     LDX.b #$02                              ;$0483A9 |
-    LDA $15                                 ;$0483AB |
+    LDA.b byetudlrHold_15                   ;$0483AB |
     AND.b #$0C                              ;$0483AD |
     ORA.b #$10                              ;$0483AF |
     LSR                                     ;$0483B1 |
