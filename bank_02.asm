@@ -1196,7 +1196,7 @@ CODE_028967:
     LDA.b #$0E
     STA.w $1DFB                             ;$028969 |
     INC.w $1432                             ;$02896C |
-    STZ.w $190C                             ;$02896F |
+    STZ.w DirectCoinTimer_190C              ;$02896F |
 CODE_028972:
     LDA $9A
     STA.b SpriteXPosLow_E4,X                ;$028974 |
@@ -13374,10 +13374,10 @@ CODE_02E259:
     LDA $13                                 ;$02E266 |
     AND.b #$03                              ;$02E268 |
     BNE CODE_02E288                         ;$02E26A |
-    DEC.w $190C                             ;$02E26C |
+    DEC.w DirectCoinTimer_190C              ;$02E26C |
     BNE CODE_02E288                         ;$02E26F |
 CODE_02E271:
-    STZ.w $190C
+    STZ.w DirectCoinTimer_190C
     STZ.w SpriteStatus_14C8,X               ;$02E274 |
     LDA.w BlueSwitchTimer_14AD              ;$02E277 |
     ORA.w SilverSwitchTimer_14AE            ;$02E27A |

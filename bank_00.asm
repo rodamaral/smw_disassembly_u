@@ -4582,7 +4582,7 @@ DATA_00A625:
 CODE_00A635:
     LDA.w BlueSwitchTimer_14AD
     ORA.w SilverSwitchTimer_14AE            ;$00A638 |
-    ORA.w $190C                             ;$00A63B |
+    ORA.w DirectCoinTimer_190C              ;$00A63B |
     BNE CODE_00A64A                         ;$00A63E |
     LDA.w StarTimer_1490                    ;$00A640 |
     BEQ CODE_00A660                         ;$00A643 |
@@ -4596,7 +4596,7 @@ CODE_00A64F:
     STA.w MusicBackup_0DDA                  ;$00A651 |
     STZ.w BlueSwitchTimer_14AD              ;$00A654 |
     STZ.w SilverSwitchTimer_14AE            ;$00A657 |
-    STZ.w $190C                             ;$00A65A |
+    STZ.w DirectCoinTimer_190C              ;$00A65A |
     STZ.w StarTimer_1490                    ;$00A65D |
 CODE_00A660:
     LDA.w $13F4
@@ -7398,7 +7398,7 @@ timers_and_animation_00C47E:
     BMI +                                   ;$00C541 |
     CPY.b #$01                              ;$00C543 |
     BNE +                                   ;$00C545 |
-    LDY.w $190C                             ;$00C547 |
+    LDY.w DirectCoinTimer_190C              ;$00C547 |
     BNE +                                   ;$00C54A |
     STA.w $1DFB                             ;$00C54C |
 +   CMP.b #$FF                              ;$00C54F |
@@ -10488,7 +10488,7 @@ draw_mario_and_yoshi_00E2BD:
     TAX                                     ;$00E2F7 |
     LDA.w BlueSwitchTimer_14AD              ;$00E2F8 |
     ORA.w SilverSwitchTimer_14AE            ;$00E2FB |
-    ORA.w $190C                             ;$00E2FE |
+    ORA.w DirectCoinTimer_190C              ;$00E2FE |
     BEQ +                                   ;$00E301 |
     LDX.b #$0E                              ;$00E303 |
 +   STX.w $1DFB                             ;$00E305 |

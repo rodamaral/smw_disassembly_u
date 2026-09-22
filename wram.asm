@@ -1917,7 +1917,7 @@ skip 1
 BlockSnakeActive: skip 1
 BooCloudTimer: skip 1
 BooTransparency: skip 1
-DirectCoinTimer: skip 1
+DirectCoinTimer_190C: skip 1
 FinalCutscene: skip 1
 SpriteBuoyancy: skip 1
 SpriteTweakerF: skip 12
