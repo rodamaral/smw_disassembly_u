@@ -1362,7 +1362,7 @@ OverworldDestXPos_0DC7: skip 2
 OverworldDestYPos_0DC9: skip 6
 OWPlayerSpeed_0DCF: skip 4
 OWPlayerDirection_0DD3: skip 2
-OWLevelExitMode_0DD5: skip 1
+LevelExitMode_0DD5: skip 1
 PlayerTurnOW_0DD6: skip 2
 PlayerSwitching_0DD8: skip 1
 ; 7E0DD9 unused

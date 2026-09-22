@@ -3628,7 +3628,7 @@ CODE_009E26:
     SEP #$20                                ;$009E54 |
     STZ.w $0F36                             ;$009E56 |
     STZ.w $0F39                             ;$009E59 |
-    STZ.w $0DD5                             ;$009E5C |
+    STZ.w LevelExitMode_0DD5                ;$009E5C |
     STZ.w CurrentPlayer_0DB3                ;$009E5F |
 CODE_009E62:
     JSR KeepModeActive
@@ -4138,7 +4138,7 @@ GM14_main_level_00A1DA:
     LDY.w Translevel_13BF                   ;$00A261 | if holding select, try to exit the level if beaten
     LDA.w OWLevelSettings_1EA2,Y            ;$00A264 |
     BPL .Return00A289                       ;$00A267 |
-    LDA.w $0DD5                             ;$00A269 |
+    LDA.w LevelExitMode_0DD5                ;$00A269 |
     BEQ +                                   ;$00A26C |
     BPL .Return00A289                       ;$00A26E | if level was just beaten and activated an OW event, do nothing
 +   LDA.b #$80                              ;$00A270 |
@@ -4151,7 +4151,7 @@ GM14_main_level_00A1DA:
     INC A                                   ;$00A27A |
 +   STA.w $13CE                             ;$00A27B |
 .skip_cheat_00A27E:
-    STA.w $0DD5
+    STA.w LevelExitMode_0DD5
     INC.w $1DE9                             ;$00A281 |
     LDA.b #$0B                              ;$00A284 |
     STA.w $0100                             ;$00A286 | Fade out to Overworld
@@ -7948,14 +7948,14 @@ CODE_00C9F8:
     STZ.w $0DAE
     STZ.w $0DAF                             ;$00C9FB |
 CODE_00C9FE:
-    STA.w $0DD5
+    STA.w LevelExitMode_0DD5
     LDA.w $13C6                             ;$00CA01 |
     BEQ CODE_00CA25                         ;$00CA04 |
     LDX.b #$08                              ;$00CA06 |
     LDA.w Translevel_13BF                   ;$00CA08 |
     CMP.b #$13                              ;$00CA0B |
     BNE CODE_00CA12                         ;$00CA0D |
-    INC.w $0DD5                             ;$00CA0F |
+    INC.w LevelExitMode_0DD5                ;$00CA0F |
 CODE_00CA12:
     CMP.b #$31
     BEQ CODE_00CA20                         ;$00CA14 |
@@ -8818,7 +8818,7 @@ death_animation:
     LDA.w $1496                             ;$00D0C6 |\ If it's not zero,
     BNE .not_done                           ;$00D0C9 |/ keep letting the player fall.
     LDA.b #$80                              ;$00D0CB |\ Exit the level without events occuring.
-    STA.w $0DD5                             ;$00D0CD |/
+    STA.w LevelExitMode_0DD5                ;$00D0CD |/
     LDA.w $1B9B                             ;$00D0D0 |\ If yoshi has not been left behind,
     BNE .keep_yoshi                         ;$00D0D3 | |
     STZ.w CarryYoshiLevels_0DC1             ;$00D0D5 | | get rid of him.

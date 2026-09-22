@@ -1389,7 +1389,7 @@ CODE_048E9E:
     TAX                                     ;$048EAA |
     STZ.w $0DF5,X                           ;$048EAB |
     LDA.w $0EF6                             ;$048EAE |
-    LDX.w $0DD5                             ;$048EB1 |
+    LDX.w LevelExitMode_0DD5                ;$048EB1 |
     BPL ADDR_048ECD                         ;$048EB4 |
     ASL                                     ;$048EB6 |
     TAX                                     ;$048EB7 |
@@ -1410,7 +1410,7 @@ ADDR_048ECD:
     BRA CODE_048EE1                         ;$048ED7 |
 
 ADDR_048ED9:
-    LDA.w $0DD5
+    LDA.w LevelExitMode_0DD5
     BMI CODE_048EE1                         ;$048EDC |
     STZ.w $0DE5,X                           ;$048EDE |
 CODE_048EE1:
@@ -1460,7 +1460,7 @@ CODE_048F13:
     SEP #$20                                ;$048F33 |
     LDA.w $13CE                             ;$048F35 |
     BEQ CODE_048F56                         ;$048F38 |
-    LDA.w $0DD5                             ;$048F3A |
+    LDA.w LevelExitMode_0DD5                ;$048F3A |
     BEQ CODE_048F56                         ;$048F3D |
     BPL CODE_048F5F                         ;$048F3F |
     REP #$20                                ;$048F41 |
@@ -1536,7 +1536,7 @@ CODE_048F96:
     TAY                                     ;$048FD5 |
     LDA.w $1FB8,X                           ;$048FD6 |
     STA.w $1FB8,Y                           ;$048FD9 |
-    LDA.w $0DD5                             ;$048FDC |
+    LDA.w LevelExitMode_0DD5                ;$048FDC |
     CMP.b #$E0                              ;$048FDF |
     BNE CODE_048FFB                         ;$048FE1 |
     DEC.w $0DB1                             ;$048FE3 |
@@ -1663,7 +1663,7 @@ CODE_049120:
     STZ.w $0DD8
     LDY.w $0EF7                             ;$049123 |
     BMI OWPU_NotOnPipe                      ;$049126 |
-    LDA.w $0DD5                             ;$049128 |
+    LDA.w LevelExitMode_0DD5                ;$049128 |
     BMI CODE_049132                         ;$04912B |
     BEQ CODE_049132                         ;$04912D |
     BRL CODE_0491E9                         ;$04912F |
@@ -1717,7 +1717,7 @@ OWPU_IsOnPipe:
     BNE OWPU_IsOnPipeRTS                    ;$04918B |
 CODE_04918D:
     INC.w $1B9C
-    STZ.w $0DD5                             ;$049190 |
+    STZ.w LevelExitMode_0DD5                ;$049190 |
     LDA.b #$0B                              ;$049193 |
     STA.w $0100                             ;$049195 |
 OWPU_IsOnPipeRTS:
@@ -1783,7 +1783,7 @@ CODE_0491E9:
     TAX                                     ;$049209 |
     JSR OW_TilePos_Calc                     ;$04920A |
     SEP #$20                                ;$04920D |
-    LDX.w $0DD5                             ;$04920F |
+    LDX.w LevelExitMode_0DD5                ;$04920F |
     BEQ OWPU_NotAutoWalk                    ;$049212 |
     DEX                                     ;$049214 |
     LDA.w DATA_049060,X                     ;$049215 |
@@ -1823,7 +1823,7 @@ CODE_04924E:
 
 OWPU_NotAutoWalk:
     SEP #$30
-    STZ.w $0DD5                             ;$04925C |
+    STZ.w LevelExitMode_0DD5                ;$04925C |
     LDA.b byetudlrPress_16                  ;$04925F |
     AND.b #$0F                              ;$049261 |
     BEQ CODE_04926E                         ;$049263 |
@@ -1971,7 +1971,7 @@ CODE_049374:
     BRL CODE_049315                         ;$049377 |
 CODE_04937A:
     SEP #$20
-    STZ.w $0DD5                             ;$04937C |
+    STZ.w LevelExitMode_0DD5                ;$04937C |
     REP #$20                                ;$04937F |
     JMP CODE_049411                         ;$049381 |
 
@@ -2707,7 +2707,7 @@ DATA_0498FB:
     db $08,$00,$04,$00,$02,$00,$01,$00
 
 CODE_049903:
-    LDX.w $0DD5
+    LDX.w LevelExitMode_0DD5
     BEQ Return0498C5                        ;$049906 |
     BMI Return0498C5                        ;$049908 |
     DEX                                     ;$04990A |
@@ -3059,12 +3059,12 @@ CODE_049D9A:
     TAX                                     ;$049DA4 |
     LDA.w $0DB4,X                           ;$049DA5 |
     BMI CODE_049DAF                         ;$049DA8 |
-    LDA.w $0DD5                             ;$049DAA |
+    LDA.w LevelExitMode_0DD5                ;$049DAA |
     BNE CODE_049DBC                         ;$049DAD |
 CODE_049DAF:
     LDA.b #$03
     STA.w $13D9                             ;$049DB1 |
-    STZ.w $0DD5                             ;$049DB4 |
+    STZ.w LevelExitMode_0DD5                ;$049DB4 |
     REP #$30                                ;$049DB7 |
     JMP CODE_049831                         ;$049DB9 |
 
@@ -3073,7 +3073,7 @@ CODE_049DBC:
     BPL CODE_049DCC                         ;$049DBF |
     LDA.b #$02                              ;$049DC1 |
     STA.w $0DB1                             ;$049DC3 |
-    STZ.w $0DD5                             ;$049DC6 |
+    STZ.w LevelExitMode_0DD5                ;$049DC6 |
     INC.w $13D9                             ;$049DC9 |
 CODE_049DCC:
     REP #$30
@@ -6114,7 +6114,7 @@ DATA_04E5E6:
     db $58,$59,$5D,$63,$77,$79,$7E,$80
 
 CODE_04E5EE:
-    LDA.w $0DD5
+    LDA.w LevelExitMode_0DD5
     CMP.b #$02                              ;$04E5F1 |
     BNE CODE_04E5F8                         ;$04E5F3 |
     INC.w $1DEA                             ;$04E5F5 |
@@ -6143,7 +6143,7 @@ CODE_04E61C:
     BNE CODE_04E632                         ;$04E622 |
     INC.w $13D9                             ;$04E624 |
     LDA.b #$E0                              ;$04E627 |
-    STA.w $0DD5                             ;$04E629 |
+    STA.w LevelExitMode_0DD5                ;$04E629 |
     LDA.b #$0F                              ;$04E62C |
     STA.w $0DB1                             ;$04E62E |
     RTS                                     ;$04E631 |
@@ -6154,7 +6154,7 @@ CODE_04E632:
     LDA.b #$05                              ;$04E635 |
     STA.w $13D9                             ;$04E637 |
     LDA.b #$80                              ;$04E63A |
-    STA.w $0DD5                             ;$04E63C |
+    STA.w LevelExitMode_0DD5                ;$04E63C |
     RTS                                     ;$04E63F |
 
 CODE_04E640:

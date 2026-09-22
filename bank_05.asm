@@ -2955,7 +2955,7 @@ side_exit_level:
     STZ.w OverworldOverride_0109            ;$05B160 |
     LDA.b #$00                              ;$05B163 |
 CODE_05B165:
-    STA.w $0DD5
+    STA.w LevelExitMode_0DD5
     LDA.b #$0B                              ;$05B168 |
     STA.w $0100                             ;$05B16A |
     RTL                                     ;$05B16D |
