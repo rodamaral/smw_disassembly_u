@@ -4581,7 +4581,7 @@ DATA_00A625:
 
 CODE_00A635:
     LDA.w BlueSwitchTimer_14AD
-    ORA.w $14AE                             ;$00A638 |
+    ORA.w SilverSwitchTimer_14AE            ;$00A638 |
     ORA.w $190C                             ;$00A63B |
     BNE CODE_00A64A                         ;$00A63E |
     LDA.w StarTimer_1490                    ;$00A640 |
@@ -4595,7 +4595,7 @@ CODE_00A64F:
     ORA.b #$40
     STA.w MusicBackup_0DDA                  ;$00A651 |
     STZ.w BlueSwitchTimer_14AD              ;$00A654 |
-    STZ.w $14AE                             ;$00A657 |
+    STZ.w SilverSwitchTimer_14AE            ;$00A657 |
     STZ.w $190C                             ;$00A65A |
     STZ.w StarTimer_1490                    ;$00A65D |
 CODE_00A660:
@@ -7391,9 +7391,9 @@ timers_and_animation_00C47E:
     STY.w $0100                             ;$00C530 |
 .skip_bonus_timer:
     LDY.w BlueSwitchTimer_14AD              ;$00C533 |
-    CPY.w $14AE                             ;$00C536 |
+    CPY.w SilverSwitchTimer_14AE            ;$00C536 |
     BCS +                                   ;$00C539 | get the max between the Blue and Silver P-Switch timers
-    LDY.w $14AE                             ;$00C53B |
+    LDY.w SilverSwitchTimer_14AE            ;$00C53B |
 +   LDA.w MusicBackup_0DDA                  ;$00C53E |
     BMI +                                   ;$00C541 |
     CPY.b #$01                              ;$00C543 |
@@ -10487,7 +10487,7 @@ draw_mario_and_yoshi_00E2BD:
     STA.w MusicBackup_0DDA                  ;$00E2F4 |
     TAX                                     ;$00E2F7 |
     LDA.w BlueSwitchTimer_14AD              ;$00E2F8 |
-    ORA.w $14AE                             ;$00E2FB |
+    ORA.w SilverSwitchTimer_14AE            ;$00E2FB |
     ORA.w $190C                             ;$00E2FE |
     BEQ +                                   ;$00E301 |
     LDX.b #$0E                              ;$00E303 |
@@ -12668,7 +12668,7 @@ conditional_map16:
 .not_132
     CPY.b #$2F                              ;$00F584 \ If it's a muncher
     BNE .return                             ;$00F586 |
-    LDY.w $14AE                             ;$00F588 | and the silver P-switch is active,
+    LDY.w SilverSwitchTimer_14AE            ;$00F588 | and the silver P-switch is active,
     BEQ .return                             ;$00F58B |
 .act_like_coin                              ;        |
     LDY.b #$2B                              ;$00F58D |

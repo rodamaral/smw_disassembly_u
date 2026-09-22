@@ -14723,7 +14723,7 @@ CODE_01EA21:
     BMI Return01EA6F                        ;$01EA25 |
     LDA.b #$08                              ;$01EA27 |
     STA.w SpriteStatus_14C8,Y               ;$01EA29 |
-    LDA.w $14AE                             ;$01EA2C |
+    LDA.w SilverSwitchTimer_14AE            ;$01EA2C |
     CMP.b #$01                              ;$01EA2F |
     LDA.b #$14                              ;$01EA31 |
     BCC CODE_01EA37                         ;$01EA33 |

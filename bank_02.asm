@@ -5591,7 +5591,7 @@ CODE_02A996:
     PLY                                     ;$02A998 |
     LDA $02                                 ;$02A999 |
     STA.w $161A,X                           ;$02A99B |
-    LDA.w $14AE                             ;$02A99E |
+    LDA.w SilverSwitchTimer_14AE            ;$02A99E |
     BEQ CODE_02A9C9                         ;$02A9A1 |
     PHX                                     ;$02A9A3 |
     LDA $9E,X                               ;$02A9A4 |
@@ -13380,7 +13380,7 @@ CODE_02E271:
     STZ.w $190C
     STZ.w SpriteStatus_14C8,X               ;$02E274 |
     LDA.w BlueSwitchTimer_14AD              ;$02E277 |
-    ORA.w $14AE                             ;$02E27A |
+    ORA.w SilverSwitchTimer_14AE            ;$02E27A |
     BNE Return02E287                        ;$02E27D |
     LDA.w MusicBackup_0DDA                  ;$02E27F |
     BMI Return02E287                        ;$02E282 |
