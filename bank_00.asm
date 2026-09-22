@@ -297,22 +297,22 @@ NMI_start:                                  ;        \
 .regular_OW_bypass                          ;        |
     JSR update_controllers                  ;$008243 | Run the controller update routine
 .lagging_level_NMI                          ;        |
-    LDA $1A                                 ;$008246 |\ Set layer 1 X position from mirrors
+    LDA.b Layer1XPos_1A                     ;$008246 |\ Set layer 1 X position from mirrors
     STA.w $210D                             ;$008248 | | $210D is a write twice register 
     LDA $1B                                 ;$00824B | |
     STA.w $210D                             ;$00824D |/
-    LDA $1C                                 ;$008250 |\ Set layer 1 Y position from mirrors
+    LDA.b Layer1YPos_1C                     ;$008250 |\ Set layer 1 Y position from mirrors
     CLC                                     ;$008252 | | 
     ADC.w $1888                             ;$008253 | | $1888/9 are used as relative Y offsets
     STA.w $210E                             ;$008256 | | $210E is a write twice register
     LDA $1D                                 ;$008259 | |
     ADC.w $1889                             ;$00825B | |
     STA.w $210E                             ;$00825E |/
-    LDA $1E                                 ;$008261 |\ Set layer 2 X position from mirrors
+    LDA.b Layer2XPos_1E                     ;$008261 |\ Set layer 2 X position from mirrors
     STA.w $210F                             ;$008263 | | $210F is a write twice register 
     LDA $1F                                 ;$008266 | |
     STA.w $210F                             ;$008268 |/
-    LDA $20                                 ;$00826B |\ Set layer 2 Y position from mirrors
+    LDA.b Layer2YPos_20                     ;$00826B |\ Set layer 2 Y position from mirrors
     STA.w $2110                             ;$00826D | | $2110 is a write twice register 
     LDA $21                                 ;$008270 | |
     STA.w $2110                             ;$008272 |/
@@ -455,11 +455,11 @@ IRQ_NMI_return:                             ;        |
     STA.w $4200                             ;$00838C | Store interrupt enabled flags
     LDY.b #$1F                              ;$00838F |\ wait for H-Blank to occur 
     JSR wait_for_hblank                     ;$008391 |/
-    LDA $22                                 ;$008394 |\ Set layer 3 X position
+    LDA.b Layer3XPos_22                     ;$008394 |\ Set layer 3 X position
     STA.w $2111                             ;$008396 | |
     LDA $23                                 ;$008399 | |
     STA.w $2111                             ;$00839B |/
-    LDA $24                                 ;$00839E |\ Set layer 3 Y position
+    LDA.b Layer3YPos_24                     ;$00839E |\ Set layer 3 Y position
     STA.w $2112                             ;$0083A0 | |
     LDA $25                                 ;$0083A3 | |
     STA.w $2112                             ;$0083A5 |/
@@ -529,11 +529,11 @@ mode_7_static_BG_scroll:                    ;        \
     STA.w $2107                             ;$008418 |/
     LDA.b #$07                              ;$00841B |\ set layer 1 base character address to $7000
     STA.w $210B                             ;$00841D |/
-    LDA $1A                                 ;$008420 |\ Set layer 1 X position.
+    LDA.b Layer1XPos_1A                     ;$008420 |\ Set layer 1 X position.
     STA.w $210D                             ;$008422 | |
     LDA $1B                                 ;$008425 | |
     STA.w $210D                             ;$008427 |/
-    LDA $1C                                 ;$00842A |\ Set relative layer 1 Y position.
+    LDA.b Layer1YPos_1C                     ;$00842A |\ Set relative layer 1 Y position.
     CLC                                     ;$00842C | |
     ADC.w $1888                             ;$00842D | | Add in the relative amount.
     STA.w $210E                             ;$008430 | |
@@ -2453,21 +2453,21 @@ ADDR_009523:
 CODE_009529:
     JSL CODE_0CC97E
     REP #$20                                ;$00952D |
-    LDA $1A                                 ;$00952F |
+    LDA.b Layer1XPos_1A                     ;$00952F |
     PHA                                     ;$009531 |
-    LDA $1C                                 ;$009532 |
+    LDA.b Layer1YPos_1C                     ;$009532 |
     PHA                                     ;$009534 |
-    LDA $1E                                 ;$009535 |
-    STA $1A                                 ;$009537 |
-    LDA $20                                 ;$009539 |
-    STA $1C                                 ;$00953B |
+    LDA.b Layer2XPos_1E                     ;$009535 |
+    STA.b Layer1XPos_1A                     ;$009537 |
+    LDA.b Layer2YPos_20                     ;$009539 |
+    STA.b Layer1YPos_1C                     ;$00953B |
     SEP #$20                                ;$00953D |
     JSL draw_mario_and_yoshi_00E2BD         ;$00953F |
     REP #$20                                ;$009543 |
     PLA                                     ;$009545 |
-    STA $1C                                 ;$009546 |
+    STA.b Layer1YPos_1C                     ;$009546 |
     PLA                                     ;$009548 |
-    STA $1A                                 ;$009549 |
+    STA.b Layer1XPos_1A                     ;$009549 |
     SEP #$20                                ;$00954B |
     LDA.b #$0C                              ;$00954D |
     STA $71                                 ;$00954F |
@@ -2809,10 +2809,10 @@ load_boss_room_0097BC:
     STA $94                                 ;$009811 |
     LDA.w #$FFD0                            ;$009813 |
     STA $96                                 ;$009816 |
-    STZ $1A                                 ;$009818 |
+    STZ.b Layer1XPos_1A                     ;$009818 |
     STZ.w $1462                             ;$00981A |
     LDA.w #$FF90                            ;$00981D |
-    STA $1C                                 ;$009820 |
+    STA.b Layer1YPos_1C                     ;$009820 |
     STA.w $1464                             ;$009822 |
     LDA.w #$0080                            ;$009825 |
     STA $2A                                 ;$009828 |
@@ -2931,9 +2931,9 @@ CODE_009925:
     REP #$20                                ;$009927 |
     LDA.w #$0020                            ;$009929 |
     STA $94                                 ;$00992C |
-    STZ $1A                                 ;$00992E |
+    STZ.b Layer1XPos_1A                     ;$00992E |
     STZ.w $1462                             ;$009930 |
-    STZ $1C                                 ;$009933 |
+    STZ.b Layer1YPos_1C                     ;$009933 |
     STZ.w $1464                             ;$009935 |
     LDA.w #$0080                            ;$009938 |
     STA $2A                                 ;$00993B |
@@ -3818,7 +3818,7 @@ load_layer3_009FB8:
     PLP                                     ;$009FDB |
     BEQ +                                   ;$009FDC |
     LDA.b #$40                              ;$009FDE |
-+   STA $24                                 ;$009FE0 |
++   STA.b Layer3YPos_24                     ;$009FE0 |
     STZ $25                                 ;$009FE2 |
     JSL CODE_05BC72                         ;$009FE4 |
     BRA CODE_00A01B                         ;$009FE8 |
@@ -3834,9 +3834,9 @@ CODE_009FEA:
     BNE CODE_00A01F                         ;$009FF8 |
 CODE_009FFA:
     REP #$20
-    LDA $1A                                 ;$009FFC |
+    LDA.b Layer1XPos_1A                     ;$009FFC |
     LSR                                     ;$009FFE |
-    STA $22                                 ;$009FFF |
+    STA.b Layer3XPos_22                     ;$009FFF |
     SEP #$20                                ;$00A001 |
     LDA.b #$C0                              ;$00A003 |
     BRA CODE_00A017                         ;$00A005 |
@@ -3852,7 +3852,7 @@ CODE_00A012:
     INC.w $13D5
     LDA.b #$D0                              ;$00A015 |
 CODE_00A017:
-    STA $24
+    STA.b Layer3YPos_24
     STZ $25                                 ;$00A019 |
 CODE_00A01B:
     LDA.b #$04
@@ -3985,11 +3985,11 @@ CODE_00A11B:
     TAX                                     ;$00A131 |
     REP #$20                                ;$00A132 |
     LDA.w DATA_00A06B,X                     ;$00A134 |
-    STA $1A                                 ;$00A137 |
-    STA $1E                                 ;$00A139 |
+    STA.b Layer1XPos_1A                     ;$00A137 |
+    STA.b Layer2XPos_1E                     ;$00A139 |
     LDA.w DATA_00A079,X                     ;$00A13B |
-    STA $1C                                 ;$00A13E |
-    STA $20                                 ;$00A140 |
+    STA.b Layer1YPos_1C                     ;$00A13E |
+    STA.b Layer2YPos_20                     ;$00A140 |
     SEP #$20                                ;$00A142 |
     JSR UploadSpriteGFX                     ;$00A144 |
     LDY.b #$14                              ;$00A147 |
@@ -4171,7 +4171,7 @@ GM14_main_level_00A1DA:
     JSL process_level_mode_setting_0586F1   ;$00A2A1 |
     JSL update_animated_tile_gfx_05BB39     ;$00A2A5 |
 .common_level_logic:
-    LDA $1C
+    LDA.b Layer1YPos_1C
     PHA                                     ;$00A2AB | push layer 1 positions
     LDA $1D                                 ;$00A2AC |
     PHA                                     ;$00A2AE |
@@ -4185,8 +4185,8 @@ GM14_main_level_00A1DA:
     LDA.w GrndShakeDispYLo,Y                ;$00A2C0 ||
     STA.w $1888                             ;$00A2C3 ||
     CLC                                     ;$00A2C6 ||
-    ADC $1C                                 ;$00A2C7 ||
-    STA $1C                                 ;$00A2C9 ||
+    ADC.b Layer1YPos_1C                     ;$00A2C7 ||
+    STA.b Layer1YPos_1C                     ;$00A2C9 ||
     LDA.w GrndShakeDispYHi,Y                ;$00A2CB ||
     STA.w $1889                             ;$00A2CE ||
     ADC $1D                                 ;$00A2D1 ||
@@ -4200,7 +4200,7 @@ GM14_main_level_00A1DA:
     PLA                                     ;$00A2EA | pull layer 1 positions
     STA $1D                                 ;$00A2EB |
     PLA                                     ;$00A2ED |
-    STA $1C                                 ;$00A2EE |
+    STA.b Layer1YPos_1C                     ;$00A2EE |
     JMP consolidate_OAM_008494              ;$00A2F0 |
 
 mirror_player_position_00A2F3:
@@ -4653,7 +4653,7 @@ CODE_00A6C7:
     RTS                                     ;$00A6CB |
 
 CODE_00A6CC:
-    LDA $1C
+    LDA.b Layer1YPos_1C
     CMP.b #$C0                              ;$00A6CE |
     BEQ CODE_00A6D5                         ;$00A6D0 |
     INC.w $13F1                             ;$00A6D2 |
@@ -4770,13 +4770,13 @@ CODE_00A796:
     BEQ CODE_00A7B9                         ;$00A79B |
     DEY                                     ;$00A79D |
     BNE CODE_00A7A7                         ;$00A79E |
-    LDA $20                                 ;$00A7A0 |
+    LDA.b Layer2YPos_20                     ;$00A7A0 |
     SEC                                     ;$00A7A2 |
-    SBC $1C                                 ;$00A7A3 |
+    SBC.b Layer1YPos_1C                     ;$00A7A3 |
     BRA CODE_00A7B6                         ;$00A7A5 |
 
 CODE_00A7A7:
-    LDA $1C
+    LDA.b Layer1YPos_1C
     LSR                                     ;$00A7A9 |
     DEY                                     ;$00A7AA |
     BEQ CODE_00A7AF                         ;$00A7AB |
@@ -4786,7 +4786,7 @@ CODE_00A7AF:
     EOR.w #$FFFF
     INC A                                   ;$00A7B2 |
     CLC                                     ;$00A7B3 |
-    ADC $20                                 ;$00A7B4 |
+    ADC.b Layer2YPos_20                     ;$00A7B4 |
 CODE_00A7B6:
     STA.w $1417
 CODE_00A7B9:
@@ -6715,33 +6715,33 @@ CODE_00BF57:
     LDA $09                                 ;$00BF7A |
     AND.w #$0001                            ;$00BF7C |
     BNE CODE_00BF9B                         ;$00BF7F |
-    LDA $1A                                 ;$00BF81 |
+    LDA.b Layer1XPos_1A                     ;$00BF81 |
     SEC                                     ;$00BF83 |
     SBC.w #$0080                            ;$00BF84 |
     TAX                                     ;$00BF87 |
-    LDY $1C                                 ;$00BF88 |
+    LDY.b Layer1YPos_1C                     ;$00BF88 |
     LDA.w $1933                             ;$00BF8A |
     BEQ CODE_00BFB2                         ;$00BF8D |
-    LDX $1E                                 ;$00BF8F |
-    LDA $20                                 ;$00BF91 |
+    LDX.b Layer2XPos_1E                     ;$00BF8F |
+    LDA.b Layer2YPos_20                     ;$00BF91 |
     SEC                                     ;$00BF93 |
     SBC.w #$0080                            ;$00BF94 |
     TAY                                     ;$00BF97 |
     JMP CODE_00BFB2                         ;$00BF98 |
 
 CODE_00BF9B:
-    LDX $1A
-    LDA $1C                                 ;$00BF9D |
+    LDX.b Layer1XPos_1A
+    LDA.b Layer1YPos_1C                     ;$00BF9D |
     SEC                                     ;$00BF9F |
     SBC.w #$0080                            ;$00BFA0 |
     TAY                                     ;$00BFA3 |
     LDA.w $1933                             ;$00BFA4 |
     BEQ CODE_00BFB2                         ;$00BFA7 |
-    LDA $1E                                 ;$00BFA9 |
+    LDA.b Layer2XPos_1E                     ;$00BFA9 |
     SEC                                     ;$00BFAB |
     SBC.w #$0080                            ;$00BFAC |
     TAX                                     ;$00BFAF |
-    LDY $20                                 ;$00BFB0 |
+    LDY.b Layer2YPos_20                     ;$00BFB0 |
 CODE_00BFB2:
     STX $08
     STY $0A                                 ;$00BFB4 |
@@ -7349,13 +7349,13 @@ timers_and_animation_00C47E:
     SEP #$20                                ;$00C4DD |
     LDA.w $1436                             ;$00C4DF |
     SEC                                     ;$00C4E2 |
-    SBC $1A                                 ;$00C4E3 |
+    SBC.b Layer1XPos_1A                     ;$00C4E3 |
     CLC                                     ;$00C4E5 |
     ADC.b #$04                              ;$00C4E6 |
     STA $00                                 ;$00C4E8 |
     LDA.w $1438                             ;$00C4EA |
     SEC                                     ;$00C4ED |
-    SBC $1C                                 ;$00C4EE |
+    SBC.b Layer1YPos_1C                     ;$00C4EE |
     CLC                                     ;$00C4F0 |
     ADC.b #$10                              ;$00C4F1 |
     STA $01                                 ;$00C4F3 |
@@ -7540,14 +7540,14 @@ castle_destroy_animation:
     BCC CODE_00C73F                         ;$00C6FE |
     CPY.b #$60                              ;$00C700 |
     BCC CODE_00C71C                         ;$00C702 |
-    LDY $1C                                 ;$00C704 |
+    LDY.b Layer1YPos_1C                     ;$00C704 |
     BEQ CODE_00C73F                         ;$00C706 |
     CLC                                     ;$00C708 |
-    ADC $1C                                 ;$00C709 |
+    ADC.b Layer1YPos_1C                     ;$00C709 |
     CMP.b #$1C                              ;$00C70B |
     BMI CODE_00C73F                         ;$00C70D |
     SEC                                     ;$00C70F |
-    SBC $1C                                 ;$00C710 |
+    SBC.b Layer1YPos_1C                     ;$00C710 |
     LDX.b #$D0                              ;$00C712 |
     LDY $76                                 ;$00C714 |
     BEQ CODE_00C730                         ;$00C716 |
@@ -8452,7 +8452,7 @@ CODE_00CE33:
     REP #$20
     XBA                                     ;$00CE35 |
     AND.w #$FF00                            ;$00CE36 |
-    CMP $1A                                 ;$00CE39 |
+    CMP.b Layer1XPos_1A                     ;$00CE39 |
     SEP #$20                                ;$00CE3B |
     BEQ CODE_00CE44                         ;$00CE3D |
     LDY.b #$0E                              ;$00CE3F |
@@ -10532,7 +10532,7 @@ draw_mario_and_yoshi_00E2BD:
 .CODE_00E33E:
     REP #$20
     LDA $94                                 ;$00E340 |
-    SBC $1A                                 ;$00E342 |
+    SBC.b Layer1XPos_1A                     ;$00E342 |
     STA $7E                                 ;$00E344 |
     LDA.w PlayerYOffset_188B                ;$00E346 |
     AND.w #$00FF                            ;$00E349 |
@@ -10548,7 +10548,7 @@ draw_mario_and_yoshi_00E2BD:
     CPX.b #$0A
     BCS +                                   ;$00E35B |
     CPY.w $13DB                             ;$00E35D |
-+   SBC $1C                                 ;$00E360 |
++   SBC.b Layer1YPos_1C                     ;$00E360 |
     CPX.b #$1C                              ;$00E362 |
     BNE +                                   ;$00E364 |
     ADC.w #$0001                            ;$00E366 |
@@ -10562,7 +10562,7 @@ draw_mario_and_yoshi_00E2BD:
     TAY                                     ;$00E375 |
     LDA.w DATA_00E292,Y                     ;$00E376 |
     AND.w $1497                             ;$00E379 |
-    ORA.b SpriteLock_9D                                 ;$00E37C |
+    ORA.b SpriteLock_9D                     ;$00E37C |
     ORA.w PlayerIsFrozen_13FB               ;$00E37E |
     BNE .CODE_00E385                        ;$00E381 |
     PLB                                     ;$00E383 |
@@ -10914,22 +10914,22 @@ level_collision:
     REP #$20                                ;$00E951 |\
     LDA $94                                 ;$00E953 | | Offset the player's X position by
     CLC                                     ;$00E955 | |
-    ADC $26                                 ;$00E956 | | layer 2's relative X position to layer 1.
+    ADC.b LayerXDiff_26                     ;$00E956 | | layer 2's relative X position to layer 1.
     STA $94                                 ;$00E958 | |
     LDA $96                                 ;$00E95A | | Offset the player's Y position by
     CLC                                     ;$00E95C | |
-    ADC $28                                 ;$00E95D | | layer 2's relative Y position to layer 1.
+    ADC.b LayerYDiff_28                     ;$00E95D | | layer 2's relative Y position to layer 1.
     STA $96                                 ;$00E95F | |
     SEP #$20                                ;$00E961 |/
     JSR layer_collision                     ;$00E963 | Process layer 2 collision.
     REP #$20                                ;$00E966 |\
     LDA $94                                 ;$00E968 | | Restore the player's previous X position.
     SEC                                     ;$00E96A | |
-    SBC $26                                 ;$00E96B | |
+    SBC.b LayerXDiff_26                     ;$00E96B | |
     STA $94                                 ;$00E96D | |
     LDA $96                                 ;$00E96F | | Restore the player's previous Y position.
     SEC                                     ;$00E971 | |
-    SBC $28                                 ;$00E972 | |
+    SBC.b LayerYDiff_28                     ;$00E972 | |
     STA $96                                 ;$00E974 | |
     SEP #$20                                ;$00E976 |/
 .no_layer2_collision                        ;        |
@@ -12682,7 +12682,7 @@ check_y_position:
     REP #$20                                ;$00F595 \
     LDA.w #$FF80                            ;$00F597 |\ If the player is more than 32 pixels above the
     CLC                                     ;$00F59A | | Y position of layer 1,
-    ADC $1C                                 ;$00F59B | |
+    ADC.b Layer1YPos_1C                     ;$00F59B | |
     CMP $96                                 ;$00F59D | |
     BMI .below_y_position_limit             ;$00F59F | |
     STA $96                                 ;$00F5A1 | | keep the player at that level.
@@ -12865,13 +12865,13 @@ update_screen_position_00F6DB:
     ADC.w #$0018                            ;$00F6EB |
     STA.w $142E                             ;$00F6EE |
     LDA.w $1462                             ;$00F6F1 |
-    STA $1A                                 ;$00F6F4 |
+    STA.b Layer1XPos_1A                     ;$00F6F4 |
     LDA.w $1464                             ;$00F6F6 |
-    STA $1C                                 ;$00F6F9 |
+    STA.b Layer1YPos_1C                     ;$00F6F9 |
     LDA.w $1466                             ;$00F6FB |
-    STA $1E                                 ;$00F6FE |
+    STA.b Layer2XPos_1E                     ;$00F6FE |
     LDA.w $1468                             ;$00F700 |
-    STA $20                                 ;$00F703 |
+    STA.b Layer2YPos_20                     ;$00F703 |
     LDA $5B                                 ;$00F705 |
     LSR                                     ;$00F707 |
     BCC +                                   ;$00F708 | if horizontal layer 1
@@ -12883,7 +12883,7 @@ update_screen_position_00F6DB:
     LDY.b #$02                              ;$00F718 |
     LDA $94                                 ;$00F71A |
     SEC                                     ;$00F71C |
-    SBC $1A                                 ;$00F71D |
+    SBC.b Layer1XPos_1A                     ;$00F71D |
     STA $00                                 ;$00F71F |
     CMP.w $142A                             ;$00F721 |
     BPL +                                   ;$00F724 |
@@ -12899,19 +12899,19 @@ update_screen_position_00F6DB:
     JSR CODE_00F8AB                         ;$00F739 |
     LDA $02                                 ;$00F73C |
     CLC                                     ;$00F73E |
-    ADC $1A                                 ;$00F73F |
+    ADC.b Layer1XPos_1A                     ;$00F73F |
     BPL +                                   ;$00F741 |
     LDA.w #$0000                            ;$00F743 |
-+   STA $1A                                 ;$00F746 |
++   STA.b Layer1XPos_1A                     ;$00F746 |
     LDA $5E                                 ;$00F748 |
     DEC A                                   ;$00F74A |
     XBA                                     ;$00F74B |
     AND.w #$FF00                            ;$00F74C |
     BPL +                                   ;$00F74F |
     LDA.w #$0080                            ;$00F751 |
-+   CMP $1A                                 ;$00F754 |
++   CMP.b Layer1XPos_1A                     ;$00F754 |
     BPL .CODE_00F75A                        ;$00F756 |
-    STA $1A                                 ;$00F758 |
+    STA.b Layer1XPos_1A                     ;$00F758 |
 .CODE_00F75A:
     BRA .CODE_00F79D
 
@@ -12926,7 +12926,7 @@ update_screen_position_00F6DB:
     LDY.b #$00                              ;$00F76B |
     LDA $94                                 ;$00F76D |
     SEC                                     ;$00F76F |
-    SBC $1A                                 ;$00F770 |
+    SBC.b Layer1XPos_1A                     ;$00F770 |
     STA $00                                 ;$00F772 |
     CMP.w $142A                             ;$00F774 |
     BMI +                                   ;$00F777 |
@@ -12939,7 +12939,7 @@ update_screen_position_00F6DB:
     JSR CODE_00F8AB                         ;$00F786 |
     LDA $02                                 ;$00F789 |
     CLC                                     ;$00F78B |
-    ADC $1A                                 ;$00F78C |
+    ADC.b Layer1XPos_1A                     ;$00F78C |
     BPL .CODE_00F793                        ;$00F78E |
     LDA.w #$0000                            ;$00F790 |
 .CODE_00F793:
@@ -12947,20 +12947,20 @@ update_screen_position_00F6DB:
     BMI .CODE_00F79B                        ;$00F796 |
     LDA.w #$0100                            ;$00F798 |
 .CODE_00F79B:
-    STA $1A
+    STA.b Layer1XPos_1A
 .CODE_00F79D:
     LDY.w $1413
     BEQ .CODE_00F7AA                        ;$00F7A0 |
-    LDA $1A                                 ;$00F7A2 |
+    LDA.b Layer1XPos_1A                     ;$00F7A2 |
     DEY                                     ;$00F7A4 |
     BEQ .CODE_00F7A8                        ;$00F7A5 |
     LSR                                     ;$00F7A7 |
 .CODE_00F7A8:
-    STA $1E
+    STA.b Layer2XPos_1E
 .CODE_00F7AA:
     LDY.w $1414
     BEQ .CODE_00F7C2                        ;$00F7AD |
-    LDA $1C                                 ;$00F7AF |
+    LDA.b Layer1YPos_1C                     ;$00F7AF |
     DEY                                     ;$00F7B1 |
     BEQ .CODE_00F7BC                        ;$00F7B2 |
     LSR                                     ;$00F7B4 |
@@ -12973,22 +12973,22 @@ update_screen_position_00F6DB:
 .CODE_00F7BC:
     CLC
     ADC.w $1417                             ;$00F7BD |
-    STA $20                                 ;$00F7C0 |
+    STA.b Layer2YPos_20                     ;$00F7C0 |
 .CODE_00F7C2:
     SEP #$20
-    LDA $1A                                 ;$00F7C4 |
+    LDA.b Layer1XPos_1A                     ;$00F7C4 |
     SEC                                     ;$00F7C6 |
     SBC.w $1462                             ;$00F7C7 |
     STA.w $17BD                             ;$00F7CA |
-    LDA $1C                                 ;$00F7CD |
+    LDA.b Layer1YPos_1C                     ;$00F7CD |
     SEC                                     ;$00F7CF |
     SBC.w $1464                             ;$00F7D0 |
     STA.w $17BC                             ;$00F7D3 |
-    LDA $1E                                 ;$00F7D6 |
+    LDA.b Layer2XPos_1E                     ;$00F7D6 |
     SEC                                     ;$00F7D8 |
     SBC.w $1466                             ;$00F7D9 |
     STA.w $17BF                             ;$00F7DC |
-    LDA $20                                 ;$00F7DF |
+    LDA.b Layer2YPos_20                     ;$00F7DF |
     SEC                                     ;$00F7E1 |
     SBC.w $1468                             ;$00F7E2 |
     STA.w $17BE                             ;$00F7E5 |
@@ -13008,7 +13008,7 @@ ProcessVerticalScroll00F7F4:
     LDY.b #$00                              ;$00F7FC |
     LDA $96                                 ;$00F7FE |
     SEC                                     ;$00F800 |
-    SBC $1C                                 ;$00F801 |
+    SBC.b Layer1YPos_1C                     ;$00F801 |
     STA $00                                 ;$00F803 |
     CMP.w #$0070                            ;$00F805 |
     BMI +                                   ;$00F808 |
@@ -13082,15 +13082,15 @@ ProcessVerticalScroll00F7F4:
     BCS +                                   ;$00F88D |
     LDA.w DATA_00F6A7,Y                     ;$00F88F |
 +   CLC                                     ;$00F892 |
-    ADC $1C                                 ;$00F893 |
+    ADC.b Layer1YPos_1C                     ;$00F893 |
     CMP.w DATA_00F6AD,Y                     ;$00F895 |
     BPL +                                   ;$00F898 |
     LDA.w DATA_00F6AD,Y                     ;$00F89A |
-+   STA $1C                                 ;$00F89D |
++   STA.b Layer1YPos_1C                     ;$00F89D |
     LDA $04                                 ;$00F89F |
-    CMP $1C                                 ;$00F8A1 |
+    CMP.b Layer1YPos_1C                     ;$00F8A1 |
     BPL .Return00F8AA                       ;$00F8A3 |
-    STA $1C                                 ;$00F8A5 |
+    STA.b Layer1YPos_1C                     ;$00F8A5 |
     STZ.w $13F1                             ;$00F8A7 |
 .Return00F8AA:
     RTS
@@ -13577,7 +13577,7 @@ ADDR_00FC25:
     STA.w $15F6,Y                           ;$00FC42 |
     LDA.w RidingYoshi_187A                  ;$00FC45 |
     BNE Return00FC72                        ;$00FC48 |
-    LDA $1A                                 ;$00FC4A |
+    LDA.b Layer1XPos_1A                     ;$00FC4A |
     SEC                                     ;$00FC4C |
     SBC.b #$10                              ;$00FC4D |
     STA.w SpriteXPosLow_E4,y                ;$00FC4F |
@@ -13684,7 +13684,7 @@ CODE_00FD08:
 CODE_00FD12:
     TYA
     AND.b Frame_14                          ;$00FD13 |
-    ORA.b SpriteLock_9D                                 ;$00FD15 |
+    ORA.b SpriteLock_9D                     ;$00FD15 |
     BNE Return00FD23                        ;$00FD17 |
     LDX.b #$07                              ;$00FD19 |
 CODE_00FD1B:
@@ -13752,12 +13752,12 @@ smoke_sparkle:
     BEQ CODE_00FD97                         ;$00FD81 |
     LDA $9A                                 ;$00FD83 |
     SEC                                     ;$00FD85 |
-    SBC $26                                 ;$00FD86 |
+    SBC.b LayerXDiff_26                     ;$00FD86 |
     AND.b #$F0                              ;$00FD88 |
     STA.w $17C8,Y                           ;$00FD8A |
     LDA $98                                 ;$00FD8D |
     SEC                                     ;$00FD8F |
-    SBC $28                                 ;$00FD90 |
+    SBC.b LayerYDiff_28                     ;$00FD90 |
     AND.b #$F0                              ;$00FD92 |
     STA.w $17C4,Y                           ;$00FD94 |
 CODE_00FD97:
@@ -13873,7 +13873,7 @@ CODE_00FE4A:
     ORA $72                                 ;$00FE4E |
     ORA $7F                                 ;$00FE50 |
     ORA $81                                 ;$00FE52 |
-    ORA.b SpriteLock_9D                                 ;$00FE54 |
+    ORA.b SpriteLock_9D                     ;$00FE54 |
     BNE Return00FE71                        ;$00FE56 |
     LDA.b byetudlrHold_15                   ;$00FE58 |
     AND.b #$04                              ;$00FE5A |
@@ -14004,24 +14004,24 @@ ADDR_00FF32:
     LDA.b SpriteXPosLow_E4,X                ;$00FF36 |
     REP #$20                                ;$00FF38 |
     SEC                                     ;$00FF3A |
-    SBC $1A                                 ;$00FF3B |
+    SBC.b Layer1XPos_1A                     ;$00FF3B |
     STA $00                                 ;$00FF3D |
     LDA.w #$0030                            ;$00FF3F |
     SEC                                     ;$00FF42 |
     SBC $00                                 ;$00FF43 |
-    STA $22                                 ;$00FF45 |
+    STA.b Layer3XPos_22                     ;$00FF45 |
     SEP #$20                                ;$00FF47 |
     LDA.w SpriteYPosHigh_14D4,X             ;$00FF49 |
     XBA                                     ;$00FF4C |
     LDA.b SpriteYPosLow_D8,X                ;$00FF4D |
     REP #$20                                ;$00FF4F |
     SEC                                     ;$00FF51 |
-    SBC $1C                                 ;$00FF52 |
+    SBC.b Layer1YPos_1C                     ;$00FF52 |
     STA $00                                 ;$00FF54 |
     LDA.w #$0100                            ;$00FF56 |
     SEC                                     ;$00FF59 |
     SBC $00                                 ;$00FF5A |
-    STA $24                                 ;$00FF5C |
+    STA.b Layer3YPos_24                     ;$00FF5C |
     SEP #$20                                ;$00FF5E |
     RTL                                     ;$00FF60 |
 
@@ -14037,7 +14037,7 @@ CODE_00FF61:
 CODE_00FF73:
     LDA.w #$0100
 CODE_00FF76:
-    STA $22
+    STA.b Layer3XPos_22
     SEP #$20                                ;$00FF78 |
     LDA.w SpriteYPosHigh_14D4,X             ;$00FF7A |
     XBA                                     ;$00FF7D |
@@ -14049,7 +14049,7 @@ CODE_00FF76:
     SBC $00                                 ;$00FF88 |
     CLC                                     ;$00FF8A |
     ADC.w $1888                             ;$00FF8B |
-    STA $24                                 ;$00FF8E |
+    STA.b Layer3YPos_24                     ;$00FF8E |
     SEP #$20                                ;$00FF90 |
     RTL                                     ;$00FF92 |
 

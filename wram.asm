@@ -167,13 +167,13 @@ Layer3YPos_24: skip 2
 ; 2 bytes
 ; the horizontal difference between the two interactive layers
 ; the difference between layer 1 and layer 2 or 3 depending on the level mode
-Layer23XRelPos_26: skip 2
+LayerXDiff_26: skip 2
 
 ; === $7E0028 ===
 ; 2 bytes
 ; the vertical difference between the two interactive layers
 ; the difference between layer 1 and layer 2 or 3 depending on the level mode
-Layer23YRelPos_28: skip 2
+LayerYDiff_28: skip 2
 
 ; === $7E002A ===
 ; 2 bytes

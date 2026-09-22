@@ -2362,7 +2362,7 @@ CODE_019014:
     JSR SubOffscreen0Bnk1
     LDA.b SpriteYPosLow_D8,X                ;$019017 |
     SEC                                     ;$019019 |
-    SBC $1C                                 ;$01901A |
+    SBC.b Layer1YPos_1C                     ;$01901A |
     CMP.b #$F0                              ;$01901C |
     BCC CODE_019023                         ;$01901E |
     STZ.w SpriteStatus_14C8,X               ;$019020 |
@@ -2510,14 +2510,14 @@ CODE_019140:
     INC.w $185E                             ;$01915C |
     LDA.b SpriteXPosLow_E4,X                ;$01915F |
     CLC                                     ;$019161 |
-    ADC $26                                 ;$019162 |
+    ADC.b LayerXDiff_26                     ;$019162 |
     STA.b SpriteXPosLow_E4,X                ;$019164 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019166 |
     ADC $27                                 ;$019169 |
     STA.w SpriteXPosHigh_14E0,X             ;$01916B |
     LDA.b SpriteYPosLow_D8,X                ;$01916E |
     CLC                                     ;$019170 |
-    ADC $28                                 ;$019171 |
+    ADC.b LayerYDiff_28                     ;$019171 |
     STA.b SpriteYPosLow_D8,X                ;$019173 |
     LDA.w SpriteYPosHigh_14D4,X             ;$019175 |
     ADC $29                                 ;$019178 |
@@ -2525,14 +2525,14 @@ CODE_019140:
     JSR CODE_019211                         ;$01917D |
     LDA.b SpriteXPosLow_E4,X                ;$019180 |
     SEC                                     ;$019182 |
-    SBC $26                                 ;$019183 |
+    SBC.b LayerXDiff_26                     ;$019183 |
     STA.b SpriteXPosLow_E4,X                ;$019185 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019187 |
     SBC $27                                 ;$01918A |
     STA.w SpriteXPosHigh_14E0,X             ;$01918C |
     LDA.b SpriteYPosLow_D8,X                ;$01918F |
     SEC                                     ;$019191 |
-    SBC $28                                 ;$019192 |
+    SBC.b LayerYDiff_28                     ;$019192 |
     STA.b SpriteYPosLow_D8,X                ;$019194 |
     LDA.w SpriteYPosHigh_14D4,X             ;$019196 |
     SBC $29                                 ;$019199 |
@@ -3621,7 +3621,7 @@ CODE_01999E:
     BNE CODE_0199D2                         ;$0199A9 |
     LDA.b SpriteXPosLow_E4,X                ;$0199AB |
     SEC                                     ;$0199AD |
-    SBC $1A                                 ;$0199AE |
+    SBC.b Layer1XPos_1A                     ;$0199AE |
     CLC                                     ;$0199B0 |
     ADC.b #$14                              ;$0199B1 |
     CMP.b #$1C                              ;$0199B3 |
@@ -4165,14 +4165,14 @@ CODE_019E37:
     PHA                                     ;$019E61 |
     LDA $00                                 ;$019E62 |
     SEC                                     ;$019E64 |
-    SBC $1A                                 ;$019E65 |
+    SBC.b Layer1XPos_1A                     ;$019E65 |
     STA.w $0300,Y                           ;$019E67 |
     PLA                                     ;$019E6A |
     SBC $1B                                 ;$019E6B |
     BNE CODE_019E93                         ;$019E6D |
     LDA $01                                 ;$019E6F |
     SEC                                     ;$019E71 |
-    SBC $1C                                 ;$019E72 |
+    SBC.b Layer1YPos_1C                     ;$019E72 |
     CLC                                     ;$019E74 |
     ADC.w KoopaWingDispY,X                  ;$019E75 |
     STA.w $0301,Y                           ;$019E78 |
@@ -4585,18 +4585,18 @@ CODE_01A14D:
     JMP SubSprGfx2Entry0                    ;$01A14F |
 
 StunMechaKoopa:
-    LDA $1A
+    LDA.b Layer1XPos_1A
     PHA                                     ;$01A154 |
     LDA.w $1540,X                           ;$01A155 |
     CMP.b #$30                              ;$01A158 |
     BCS CODE_01A162                         ;$01A15A |
     AND.b #$01                              ;$01A15C |
-    EOR $1A                                 ;$01A15E |
-    STA $1A                                 ;$01A160 |
+    EOR.b Layer1XPos_1A                     ;$01A15E |
+    STA.b Layer1XPos_1A                     ;$01A160 |
 CODE_01A162:
     JSL CODE_03B307
     PLA                                     ;$01A166 |
-    STA $1A                                 ;$01A167 |
+    STA.b Layer1XPos_1A                     ;$01A167 |
 CODE_01A169:
     LDA.w $14C8,X
     CMP.b #$0B                              ;$01A16C |
@@ -4878,7 +4878,7 @@ get_draw_info_bnk1_01A365:
     STZ.w $186C,X
     STZ.w $15A0,X                           ;$01A368 | reset offscreen flags
     LDA.b SpriteXPosLow_E4,X                ;$01A36B |
-    CMP $1A                                 ;$01A36D |
+    CMP.b Layer1XPos_1A                     ;$01A36D |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A36F |
     SBC $1B                                 ;$01A372 |
     BEQ +                                   ;$01A374 |
@@ -4888,7 +4888,7 @@ get_draw_info_bnk1_01A365:
     LDA.b SpriteXPosLow_E4,X                ;$01A37D |
     REP #$20                                ;$01A37F |
     SEC                                     ;$01A381 |
-    SBC $1A                                 ;$01A382 |
+    SBC.b Layer1XPos_1A                     ;$01A382 |
     CLC                                     ;$01A384 |
     ADC.w #$0040                            ;$01A385 |
     CMP.w #$0180                            ;$01A388 |
@@ -4910,7 +4910,7 @@ get_draw_info_bnk1_01A365:
     CLC                                     ;$01A3A8 |
     ADC.w DATA_01A361,Y                     ;$01A3A9 |
     PHP                                     ;$01A3AC |
-    CMP $1C                                 ;$01A3AD |
+    CMP.b Layer1YPos_1C                     ;$01A3AD |
     ROL $00                                 ;$01A3AF |
     PLP                                     ;$01A3B1 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01A3B2 |
@@ -4932,11 +4932,11 @@ get_draw_info_bnk1_01A365:
     LDY.w $15EA,X
     LDA.b SpriteXPosLow_E4,X                ;$01A3D0 |
     SEC                                     ;$01A3D2 |
-    SBC $1A                                 ;$01A3D3 |
+    SBC.b Layer1XPos_1A                     ;$01A3D3 |
     STA $00                                 ;$01A3D5 |
     LDA.b SpriteYPosLow_D8,X                ;$01A3D7 |
     SEC                                     ;$01A3D9 |
-    SBC $1C                                 ;$01A3DA |
+    SBC.b Layer1YPos_1C                     ;$01A3DA |
     STA $01                                 ;$01A3DC |
     RTS                                     ;$01A3DE |
 
@@ -6171,7 +6171,7 @@ CODE_01AC33:
     ORA $03                                 ;$01AC57 |
     STA $01                                 ;$01AC59 |
     TAY                                     ;$01AC5B |
-    LDA $1A                                 ;$01AC5C |
+    LDA.b Layer1XPos_1A                     ;$01AC5C |
     CLC                                     ;$01AC5E |
     ADC.w SpriteOffScreen3,Y                ;$01AC5F |
     ROL $00                                 ;$01AC62 |
@@ -6236,7 +6236,7 @@ VerticalLevel:
     CMP.b #$24                              ;$01ACCE |
     BEQ Return01ACA4                        ;$01ACD0 |
 CODE_01ACD2:
-    LDA $1C
+    LDA.b Layer1YPos_1C
     CLC                                     ;$01ACD4 |
     ADC.w SpriteOffScreen1,Y                ;$01ACD5 |
     ROL $00                                 ;$01ACD8 |
@@ -6890,7 +6890,7 @@ CODE_01B167:
     ADC.w SpriteXPosHigh_14E0,X             ;$01B16D |
     PHA                                     ;$01B170 |
     LDA $02                                 ;$01B171 |
-    CMP $1A                                 ;$01B173 |
+    CMP.b Layer1XPos_1A                     ;$01B173 |
     PLA                                     ;$01B175 |
     SBC $1B                                 ;$01B176 |
     BNE Return01B191                        ;$01B178 |
@@ -7105,7 +7105,7 @@ CODE_01B2DF:
     STA $01                                 ;$01B2E5 |
     LDA.b SpriteYPosLow_D8,X                ;$01B2E7 |
     SEC                                     ;$01B2E9 |
-    SBC $1C                                 ;$01B2EA |
+    SBC.b Layer1YPos_1C                     ;$01B2EA |
     STA.w $0301,Y                           ;$01B2EC |
     STA.w $0305,Y                           ;$01B2EF |
     STA.w $0309,Y                           ;$01B2F2 |
@@ -7117,7 +7117,7 @@ CODE_01B2FF:
     LDX.w $15E9
     LDA.b SpriteXPosLow_E4,X                ;$01B302 |
     SEC                                     ;$01B304 |
-    SBC $1A                                 ;$01B305 |
+    SBC.b Layer1XPos_1A                     ;$01B305 |
     STA.w $0300,Y                           ;$01B307 |
     CLC                                     ;$01B30A |
     ADC.b #$10                              ;$01B30B |
@@ -7198,7 +7198,7 @@ CODE_01B3A2:
     PLY                                     ;$01B3A4 |
     LDA.b SpriteYPosLow_D8,X                ;$01B3A5 |
     SEC                                     ;$01B3A7 |
-    SBC $1C                                 ;$01B3A8 |
+    SBC.b Layer1YPos_1C                     ;$01B3A8 |
     STA.w $0301,Y                           ;$01B3AA |
     STA.w $0309,Y                           ;$01B3AD |
     STA.w $0311,Y                           ;$01B3B0 |
@@ -7236,7 +7236,7 @@ CODE_01B3EF:
     PHA
     LDA.b SpriteXPosLow_E4,X                ;$01B3F0 |
     SEC                                     ;$01B3F2 |
-    SBC $1A                                 ;$01B3F3 |
+    SBC.b Layer1XPos_1A                     ;$01B3F3 |
     PLX                                     ;$01B3F5 |
 CODE_01B3F6:
     STA.w $0300,Y
@@ -7302,7 +7302,7 @@ CODE_01B457:
     BCC CODE_01B4B2                         ;$01B45A |
     LDA.b SpriteYPosLow_D8,X                ;$01B45C |
     SEC                                     ;$01B45E |
-    SBC $1C                                 ;$01B45F |
+    SBC.b Layer1YPos_1C                     ;$01B45F |
     STA $00                                 ;$01B461 |
     LDA $80                                 ;$01B463 |
     CLC                                     ;$01B465 |
@@ -7726,7 +7726,7 @@ CODE_01B710:
     LDY.w $15EA,X                           ;$01B72A |
     LDA.b SpriteYPosLow_D8,X                ;$01B72D |
     SEC                                     ;$01B72F |
-    SBC $1C                                 ;$01B730 |
+    SBC.b Layer1YPos_1C                     ;$01B730 |
     STA.w $0311,Y                           ;$01B732 |
     PHA                                     ;$01B735 |
     PHA                                     ;$01B736 |
@@ -7748,7 +7748,7 @@ CODE_01B710:
     STA.w $0305,Y                           ;$01B750 |
     LDA.b SpriteXPosLow_E4,X                ;$01B753 |
     SEC                                     ;$01B755 |
-    SBC $1A                                 ;$01B756 |
+    SBC.b Layer1XPos_1A                     ;$01B756 |
     STA.w $0310,Y                           ;$01B758 |
     PHA                                     ;$01B75B |
     PHA                                     ;$01B75C |
@@ -7811,14 +7811,14 @@ FinishOAMWriteRt:
     LDA.b SpriteYPosLow_D8,X                ;$01B7C2 |
     STA $00                                 ;$01B7C4 |
     SEC                                     ;$01B7C6 |
-    SBC $1C                                 ;$01B7C7 |
+    SBC.b Layer1YPos_1C                     ;$01B7C7 |
     STA $06                                 ;$01B7C9 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01B7CB |
     STA $01                                 ;$01B7CE |
     LDA.b SpriteXPosLow_E4,X                ;$01B7D0 |
     STA $02                                 ;$01B7D2 |
     SEC                                     ;$01B7D4 |
-    SBC $1A                                 ;$01B7D5 |
+    SBC.b Layer1XPos_1A                     ;$01B7D5 |
     STA $07                                 ;$01B7D7 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01B7D9 |
     STA $03                                 ;$01B7DC |
@@ -7891,7 +7891,7 @@ CODE_01B844:
     REP #$20
     LDA $04                                 ;$01B846 |
     SEC                                     ;$01B848 |
-    SBC $1A                                 ;$01B849 |
+    SBC.b Layer1XPos_1A                     ;$01B849 |
     CMP.w #$0100                            ;$01B84B |
     SEP #$20                                ;$01B84E |
     RTS                                     ;$01B850 |
@@ -7908,7 +7908,7 @@ CODE_01B852:
     BCC Return01B8B1                        ;$01B860 |
     LDA.b SpriteYPosLow_D8,X                ;$01B862 |
     SEC                                     ;$01B864 |
-    SBC $1C                                 ;$01B865 |
+    SBC.b Layer1YPos_1C                     ;$01B865 |
     STA $02                                 ;$01B867 |
     SEC                                     ;$01B869 |
     SBC $0D                                 ;$01B86A |
@@ -7985,7 +7985,7 @@ ADDR_01B8D5:
     LDY.b #$00                              ;$01B8DC |
     LDA.b SpriteXPosLow_E4,X                ;$01B8DE |
     SEC                                     ;$01B8E0 |
-    SBC $1A                                 ;$01B8E1 |
+    SBC.b Layer1XPos_1A                     ;$01B8E1 |
     CMP $7E                                 ;$01B8E3 |
     BCC ADDR_01B8EF                         ;$01B8E5 |
     LDA $00                                 ;$01B8E7 |
@@ -8309,11 +8309,11 @@ CODE_01BB33:
     TAY                                     ;$01BB3A |
     LDA.b SpriteXPosLow_E4,X                ;$01BB3B |
     SEC                                     ;$01BB3D |
-    SBC $1A                                 ;$01BB3E |
+    SBC.b Layer1XPos_1A                     ;$01BB3E |
     STA $00                                 ;$01BB40 |
     LDA.b SpriteYPosLow_D8,X                ;$01BB42 |
     SEC                                     ;$01BB44 |
-    SBC $1C                                 ;$01BB45 |
+    SBC.b Layer1YPos_1C                     ;$01BB45 |
     STA $01                                 ;$01BB47 |
     LDA.w $1540,X                           ;$01BB49 |
     LSR                                     ;$01BB4C |
@@ -8520,7 +8520,7 @@ CODE_01BCBD:
     JSR SubOffscreen0Bnk1                   ;$01BCD0 |
     LDA.b SpriteYPosLow_D8,X                ;$01BCD3 |
     SEC                                     ;$01BCD5 |
-    SBC $1C                                 ;$01BCD6 |
+    SBC.b Layer1YPos_1C                     ;$01BCD6 |
     CMP.b #$E0                              ;$01BCD8 |
     BCC Return01BCDF                        ;$01BCDA |
     STZ.w SpriteStatus_14C8,X               ;$01BCDC |
@@ -8688,7 +8688,7 @@ CODE_01BDFB:
     CMP.b #$D1                              ;$01BE0C |
     BCS Return01BE5E                        ;$01BE0E |
     CLC                                     ;$01BE10 |
-    ADC $1C                                 ;$01BE11 |
+    ADC.b Layer1YPos_1C                     ;$01BE11 |
     AND.b #$F0                              ;$01BE13 |
     STA.b SpriteYPosLow_D8,X                ;$01BE15 |
     LDA $1D                                 ;$01BE17 |
@@ -8696,7 +8696,7 @@ CODE_01BDFB:
     STA.w SpriteYPosHigh_14D4,X             ;$01BE1B |
     JSL GetRand                             ;$01BE1E |
     CLC                                     ;$01BE22 |
-    ADC $1A                                 ;$01BE23 |
+    ADC.b Layer1XPos_1A                     ;$01BE23 |
     AND.b #$F0                              ;$01BE25 |
     STA.b SpriteXPosLow_E4,X                ;$01BE27 |
     LDA $1B                                 ;$01BE29 |
@@ -8801,12 +8801,12 @@ CODE_01BECE:
     CLC                                     ;$01BEDA |
     ADC.w DATA_01BE6C,Y                     ;$01BEDB |
     SEC                                     ;$01BEDE |
-    SBC $1A                                 ;$01BEDF |
+    SBC.b Layer1XPos_1A                     ;$01BEDF |
     LDY.w $15EA,X                           ;$01BEE1 |
     STA.w $0308,Y                           ;$01BEE4 |
     LDA.b SpriteYPosLow_D8,X                ;$01BEE7 |
     SEC                                     ;$01BEE9 |
-    SBC $1C                                 ;$01BEEA |
+    SBC.b Layer1YPos_1C                     ;$01BEEA |
     CLC                                     ;$01BEEC |
     ADC.b #$10                              ;$01BEED |
     STA.w $0309,Y                           ;$01BEEF |
@@ -10050,13 +10050,13 @@ CODE_01C795:
     LDY.w $15EA,X                           ;$01C7CE |
     LDA.w $14BA                             ;$01C7D1 |
     SEC                                     ;$01C7D4 |
-    SBC $1C                                 ;$01C7D5 |
+    SBC.b Layer1YPos_1C                     ;$01C7D5 |
     SEC                                     ;$01C7D7 |
     SBC.b #$08                              ;$01C7D8 |
     STA.w $0301,Y                           ;$01C7DA |
     LDA.w $14B8                             ;$01C7DD |
     SEC                                     ;$01C7E0 |
-    SBC $1A                                 ;$01C7E1 |
+    SBC.b Layer1XPos_1A                     ;$01C7E1 |
     SEC                                     ;$01C7E3 |
     SBC.b #$08                              ;$01C7E4 |
     STA.w $0300,Y                           ;$01C7E6 |
@@ -10113,14 +10113,14 @@ CODE_01C82F:
     INY                                     ;$01C853 |
     LDA.w $14B2                             ;$01C854 |
     SEC                                     ;$01C857 |
-    SBC $1C                                 ;$01C858 |
+    SBC.b Layer1YPos_1C                     ;$01C858 |
     SEC                                     ;$01C85A |
     SBC.b #$08                              ;$01C85B |
     STA $0A                                 ;$01C85D |
     STA.w $0301,Y                           ;$01C85F |
     LDA.w $14B0                             ;$01C862 |
     SEC                                     ;$01C865 |
-    SBC $1A                                 ;$01C866 |
+    SBC.b Layer1XPos_1A                     ;$01C866 |
     SEC                                     ;$01C868 |
     SBC.b #$08                              ;$01C869 |
     STA $0B                                 ;$01C86B |
@@ -10192,13 +10192,13 @@ CODE_01C8D5:
     INY                                     ;$01C8DA |
     LDA.w $14BA                             ;$01C8DB |
     SEC                                     ;$01C8DE |
-    SBC $1C                                 ;$01C8DF |
+    SBC.b Layer1YPos_1C                     ;$01C8DF |
     SEC                                     ;$01C8E1 |
     SBC.b #$10                              ;$01C8E2 |
     STA.w $0301,Y                           ;$01C8E4 |
     LDA.w $14B8                             ;$01C8E7 |
     SEC                                     ;$01C8EA |
-    SBC $1A                                 ;$01C8EB |
+    SBC.b Layer1XPos_1A                     ;$01C8EB |
     CLC                                     ;$01C8ED |
     ADC.w DATA_01C9B7,X                     ;$01C8EE |
     STA.w $0300,Y                           ;$01C8F1 |
@@ -10321,7 +10321,7 @@ CODE_01C9BF:
     ADC.w #$0010                            ;$01C9C5 |
     STA $09                                 ;$01C9C8 |
     SEC                                     ;$01C9CA |
-    SBC $1C                                 ;$01C9CB |
+    SBC.b Layer1YPos_1C                     ;$01C9CB |
     CMP.w #$0100                            ;$01C9CD |
     PLA                                     ;$01C9D0 |
     STA $09                                 ;$01C9D1 |
@@ -10353,7 +10353,7 @@ CODE_01C9EC:
     LDA.w $14B8                             ;$01C9F0 |
     REP #$20                                ;$01C9F3 |
     SEC                                     ;$01C9F5 |
-    SBC $1A                                 ;$01C9F6 |
+    SBC.b Layer1XPos_1A                     ;$01C9F6 |
     CLC                                     ;$01C9F8 |
     ADC.w #$0010                            ;$01C9F9 |
     CMP.w #$0120                            ;$01C9FC |
@@ -10370,7 +10370,7 @@ CODE_01C9EC:
     STA.w $160E,X                           ;$01CA15 |
     LDA.w $14BA                             ;$01CA18 |
     SEC                                     ;$01CA1B |
-    SBC $1C                                 ;$01CA1C |
+    SBC.b Layer1YPos_1C                     ;$01CA1C |
     STA $03                                 ;$01CA1E |
     SEC                                     ;$01CA20 |
     SBC.b #$08                              ;$01CA21 |
@@ -10920,7 +10920,7 @@ CODE_01CE1E:
     RTS                                     ;$01CE33 |
 
 CODE_01CE34:
-    LDA $1A
+    LDA.b Layer1XPos_1A
     CMP.b #$7E                              ;$01CE36 |
     BCC Return01CE3D                        ;$01CE38 |
     INC.w $151C,X                           ;$01CE3A |
@@ -13144,7 +13144,7 @@ CODE_01DE69:
     CLC
     ADC.b SpriteYPosLow_D8,X                ;$01DE6A |
     SEC                                     ;$01DE6C |
-    SBC $1C                                 ;$01DE6D |
+    SBC.b Layer1YPos_1C                     ;$01DE6D |
     CMP $80                                 ;$01DE6F |
     BCS CODE_01DE8C                         ;$01DE71 |
     LDA.b #$10                              ;$01DE73 |
@@ -13238,7 +13238,7 @@ CODE_01DF19:
     LDY.w $15EA,X                           ;$01DF23 |
     LDA.b SpriteXPosLow_E4,X                ;$01DF26 |
     SEC                                     ;$01DF28 |
-    SBC $1A                                 ;$01DF29 |
+    SBC.b Layer1XPos_1A                     ;$01DF29 |
     STA.w $0310,Y                           ;$01DF2B |
     STA.w $0300,Y                           ;$01DF2E |
     STA.w $0308,Y                           ;$01DF31 |
@@ -13265,7 +13265,7 @@ CODE_01DF4E:
     SEC                                     ;$01DF51 |
     SBC $00                                 ;$01DF52 |
     SEC                                     ;$01DF54 |
-    SBC $1C                                 ;$01DF55 |
+    SBC.b Layer1YPos_1C                     ;$01DF55 |
     STA.w $0311,Y                           ;$01DF57 |
     PLP                                     ;$01DF5A |
     BCS CODE_01DF6C                         ;$01DF5B |
@@ -15539,11 +15539,11 @@ process_yoshi_head_01EF18:
     BNE .return_01F0A0                      ;$01F063 |
     LDA.b SpriteXPosLow_E4,X                ;$01F065 | set remaining OAM
     SEC                                     ;$01F067 |
-    SBC $1A                                 ;$01F068 |
+    SBC.b Layer1XPos_1A                     ;$01F068 |
     STA $00                                 ;$01F06A |
     LDA.b SpriteYPosLow_D8,X                ;$01F06C |
     SEC                                     ;$01F06E |
-    SBC $1C                                 ;$01F06F |
+    SBC.b Layer1YPos_1C                     ;$01F06F |
     STA $01                                 ;$01F071 |
     PHX                                     ;$01F073 |
     LDX $02                                 ;$01F074 |
@@ -16020,7 +16020,7 @@ draw_yoshi_tongue_01F3FE:
     CLC                                     ;$01F412 |
     ADC.b SpriteYPosLow_D8,X                ;$01F413 |
     SEC                                     ;$01F415 |
-    SBC $1C                                 ;$01F416 |
+    SBC.b Layer1YPos_1C                     ;$01F416 |
     STA $01                                 ;$01F418 |
     LDA.w SpriteDir_157C,X                  ;$01F41A |
     BNE +                                   ;$01F41D |
@@ -16032,7 +16032,7 @@ draw_yoshi_tongue_01F3FE:
     STA $0D                                 ;$01F427 |
     LDA.b SpriteXPosLow_E4,X                ;$01F429 |
     SEC                                     ;$01F42B |
-    SBC $1A                                 ;$01F42C |
+    SBC.b Layer1XPos_1A                     ;$01F42C |
     CLC                                     ;$01F42E |
     ADC $0D                                 ;$01F42F |
     STA $00                                 ;$01F431 |
@@ -17281,12 +17281,12 @@ CODE_01FD0C:
     BNE CODE_01FD4A                         ;$01FD14 |
     LDA.w $171F,Y                           ;$01FD16 |
     SEC                                     ;$01FD19 |
-    SBC $1A                                 ;$01FD1A |
+    SBC.b Layer1XPos_1A                     ;$01FD1A |
     STA $04                                 ;$01FD1C |
     STZ $0A                                 ;$01FD1E |
     LDA.w $1715,Y                           ;$01FD20 |
     SEC                                     ;$01FD23 |
-    SBC $1C                                 ;$01FD24 |
+    SBC.b Layer1YPos_1C                     ;$01FD24 |
     STA $05                                 ;$01FD26 |
     STZ $0B                                 ;$01FD28 |
     LDA.b #$08                              ;$01FD2A |

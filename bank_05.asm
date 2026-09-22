@@ -803,7 +803,7 @@ process_level_mode_setting_0586F1:
     LDA $55                                 ;$058701 |
     AND.w #$00FF                            ;$058703 |
     TAX                                     ;$058706 |
-    LDA $1A                                 ;$058707 |
+    LDA.b Layer1XPos_1A                     ;$058707 |
     AND.w #$FFF0                            ;$058709 |
     CMP $4D,X                               ;$05870C |
     BEQ .CODE_058737                        ;$05870E |
@@ -814,7 +814,7 @@ process_level_mode_setting_0586F1:
     LDA $55                                 ;$058715 |
     AND.w #$00FF                            ;$058717 |
     TAX                                     ;$05871A |
-    LDA $1C                                 ;$05871B |
+    LDA.b Layer1YPos_1C                     ;$05871B |
     AND.w #$FFF0                            ;$05871D |
     CMP $4D,X                               ;$058720 |
     BEQ .CODE_058737                        ;$058722 |
@@ -837,7 +837,7 @@ process_level_mode_setting_0586F1:
     LDA $56                                 ;$058741 |
     AND.w #$00FF                            ;$058743 |
     TAX                                     ;$058746 |
-    LDA $1E                                 ;$058747 |
+    LDA.b Layer2XPos_1E                     ;$058747 |
     AND.w #$FFF0                            ;$058749 |
     CMP $51,X                               ;$05874C |
     BEQ .return_058774                      ;$05874E |
@@ -847,7 +847,7 @@ process_level_mode_setting_0586F1:
     LDA $56                                 ;$058755 |
     AND.w #$00FF                            ;$058757 |
     TAX                                     ;$05875A |
-    LDA $20                                 ;$05875B |
+    LDA.b Layer2YPos_20                     ;$05875B |
     AND.w #$FFF0                            ;$05875D |
     CMP $51,X                               ;$058760 |
     BEQ .return_058774                      ;$058762 |
@@ -873,7 +873,7 @@ set_map16_for_VRAM_upload_05877E:
     AND.b #$01                              ;$058783 |
     BNE .horizontal_layer_1_0587CB          ;$058785 |
     REP #$20                                ;$058787 | Vertical Layer 1
-    LDA $1A                                 ;$058789 |
+    LDA.b Layer1XPos_1A                     ;$058789 |
     LSR                                     ;$05878B |
     LSR                                     ;$05878C |
     LSR                                     ;$05878D |
@@ -913,7 +913,7 @@ set_map16_for_VRAM_upload_05877E:
 
 .horizontal_layer_1_0587CB:
     REP #$20
-    LDA $1C                                 ;$0587CD |
+    LDA.b Layer1YPos_1C                     ;$0587CD |
     LSR                                     ;$0587CF |
     LSR                                     ;$0587D0 |
     LSR                                     ;$0587D1 |
@@ -932,7 +932,7 @@ set_map16_for_VRAM_upload_05877E:
     AND.b #$02                              ;$0587E5 |
     BNE .horizontal_layer_2_058802          ;$0587E7 |
     REP #$20                                ;$0587E9 | Vertical layer 2
-    LDA $1E                                 ;$0587EB |
+    LDA.b Layer2XPos_1E                     ;$0587EB |
     LSR                                     ;$0587ED |
     LSR                                     ;$0587EE |
     LSR                                     ;$0587EF |
@@ -949,7 +949,7 @@ set_map16_for_VRAM_upload_05877E:
 
 .horizontal_layer_2_058802:
     REP #$20
-    LDA $20                                 ;$058804 |
+    LDA.b Layer2YPos_20                     ;$058804 |
     LSR                                     ;$058806 |
     LSR                                     ;$058807 |
     LSR                                     ;$058808 |
@@ -3080,9 +3080,9 @@ CODE_05B218:
     SEP #$30                                ;$05B241 |
     LDA.b #$01                              ;$05B243 |
     STA.w $13D5                             ;$05B245 |
-    STZ $22                                 ;$05B248 |
+    STZ.b Layer3XPos_22                     ;$05B248 |
     STZ $23                                 ;$05B24A |
-    STZ $24                                 ;$05B24C |
+    STZ.b Layer3YPos_24                     ;$05B24C |
     STZ $25                                 ;$05B24E |
 CODE_05B250:
     LDX.w $1B88
@@ -3607,19 +3607,19 @@ scroll_commands_and_layer_3_05BC00:
     JSR set_current_tide_offsets_05BC4A     ;$05BC09 |
     LDA.w $1462                             ;$05BC0C | calculate how much layers have moved this frame
     SEC                                     ;$05BC0F |
-    SBC $1A                                 ;$05BC10 |
+    SBC.b Layer1XPos_1A                     ;$05BC10 |
     CLC                                     ;$05BC12 |
     ADC.w $17BD                             ;$05BC13 |
     STA.w $17BD                             ;$05BC16 |
     LDA.w $1464                             ;$05BC19 |
     SEC                                     ;$05BC1C |
-    SBC $1C                                 ;$05BC1D |
+    SBC.b Layer1YPos_1C                     ;$05BC1D |
     CLC                                     ;$05BC1F |
     ADC.w $17BC                             ;$05BC20 |
     STA.w $17BC                             ;$05BC23 |
     LDA.w $1466                             ;$05BC26 |
     SEC                                     ;$05BC29 |
-    SBC $1E                                 ;$05BC2A |
+    SBC.b Layer2XPos_1E                     ;$05BC2A |
     LDY.w $143F                             ;$05BC2C |
     DEY                                     ;$05BC2F |
     BNE +                                   ;$05BC30 |
@@ -3627,7 +3627,7 @@ scroll_commands_and_layer_3_05BC00:
 +   STA.w $17BF                             ;$05BC33 |
     LDA.w $1468                             ;$05BC36 |
     SEC                                     ;$05BC39 |
-    SBC $20                                 ;$05BC3A |
+    SBC.b Layer2YPos_20                     ;$05BC3A |
     STA.w $17BE                             ;$05BC3C |
     LDA.w $13D5                             ;$05BC3F |
     BNE +                                   ;$05BC42 |
@@ -3645,20 +3645,20 @@ set_current_tide_offsets_05BC4A:
     LDA.w $1466                             ;$05BC51 |
     SEC                                     ;$05BC54 |
     SBC.w $1462                             ;$05BC55 |
-    STA $26                                 ;$05BC58 |
+    STA.b LayerXDiff_26                     ;$05BC58 |
     LDA.w $1468                             ;$05BC5A |
     BRA .CODE_05BC69                        ;$05BC5D |
 
 .CODE_05BC5F:
-    LDA $22
+    LDA.b Layer3XPos_22
     SEC                                     ;$05BC61 |
     SBC.w $1462                             ;$05BC62 |
-    STA $26                                 ;$05BC65 |
-    LDA $24                                 ;$05BC67 |
+    STA.b LayerXDiff_26                     ;$05BC65 |
+    LDA.b Layer3YPos_24                     ;$05BC67 |
 .CODE_05BC69:
     SEC
     SBC.w $1464                             ;$05BC6A |
-    STA $28                                 ;$05BC6D |
+    STA.b LayerYDiff_28                     ;$05BC6D |
     SEP #$20                                ;$05BC6F |
     RTS                                     ;$05BC71 |
 
@@ -3953,8 +3953,8 @@ reset_layer3_05BE8A:
     STZ.w $1458                             ;$05BE95 |
     STZ.w $145A                             ;$05BE98 |
     STZ.w $145C                             ;$05BE9B |
-    LDA $1C                                 ;$05BE9E |
-    STA $24                                 ;$05BEA0 |
+    LDA.b Layer1YPos_1C                     ;$05BE9E |
+    STA.b Layer3YPos_24                     ;$05BEA0 |
     SEP #$20                                ;$05BEA2 |
     PLB                                     ;$05BEA4 |
     RTL                                     ;$05BEA5 |
@@ -3969,9 +3969,9 @@ CODE_05BEA6:
     STA.w $143E                             ;$05BEB3 |
     LDA.w DATA_05CA42,Y                     ;$05BEB6 |
     STA.w $1440                             ;$05BEB9 |
-    STZ $1A                                 ;$05BEBC |
+    STZ.b Layer1XPos_1A                     ;$05BEBC |
     STZ.w $1462                             ;$05BEBE |
-    STZ $1E                                 ;$05BEC1 |
+    STZ.b Layer2XPos_1E                     ;$05BEC1 |
     STZ.w $1466                             ;$05BEC3 |
 CODE_05BEC6:
     REP #$20
@@ -4070,15 +4070,15 @@ CODE_05BF6A:
     JSR CODE_05C95B                         ;$05BF8A |
     REP #$20                                ;$05BF8D |
     LDA.w $1468                             ;$05BF8F |
-    STA $20                                 ;$05BF92 |
+    STA.b Layer2YPos_20                     ;$05BF92 |
     JMP CODE_05C32B                         ;$05BF94 |
 
 ADDR_05BF97:
     STZ.w $1411
     REP #$20                                ;$05BF9A |
-    STZ $1A                                 ;$05BF9C |
+    STZ.b Layer1XPos_1A                     ;$05BF9C |
     STZ.w $1462                             ;$05BF9E |
-    STZ $1E                                 ;$05BFA1 |
+    STZ.b Layer2XPos_1E                     ;$05BFA1 |
     STZ.w $1466                             ;$05BFA3 |
     LDA.w #$0600                            ;$05BFA6 |
     STA.w $143E                             ;$05BFA9 |
@@ -4092,10 +4092,10 @@ ADDR_05BF97:
 ADDR_05BFBA:
     STZ.w $1411
     REP #$20                                ;$05BFBD |
-    STZ $1E                                 ;$05BFBF |
+    STZ.b Layer2XPos_1E                     ;$05BFBF |
     STZ.w $1466                             ;$05BFC1 |
     LDA.w #$03C0                            ;$05BFC4 |
-    STA $20                                 ;$05BFC7 |
+    STA.b Layer2YPos_20                     ;$05BFC7 |
     STA.w $1468                             ;$05BFC9 |
     STZ.w $1440                             ;$05BFCC |
     LDA.w #$0005                            ;$05BFCF |
@@ -4363,10 +4363,10 @@ CODE_05C198:
     REP #$20                                ;$05C19B |
     LDA.w $1466                             ;$05C19D |
     STA.w $1462                             ;$05C1A0 |
-    LDA $20                                 ;$05C1A3 |
+    LDA.b Layer2YPos_20                     ;$05C1A3 |
     CLC                                     ;$05C1A5 |
     ADC.w $1888                             ;$05C1A6 |
-    STA $20                                 ;$05C1A9 |
+    STA.b Layer2YPos_20                     ;$05C1A9 |
     SEP #$20                                ;$05C1AB |
     RTS                                     ;$05C1AD |
 
@@ -4702,9 +4702,9 @@ process_layer_3_05C40C:
     BEQ +                                   ;$05C41B |
     CPY.b #$03                              ;$05C41D |
     BNE ++                                  ;$05C41F |
-+   LDA $1A                                 ;$05C421 |
++   LDA.b Layer1XPos_1A                     ;$05C421 |
     LSR                                     ;$05C423 |
-    STA $22                                 ;$05C424 |
+    STA.b Layer3XPos_22                     ;$05C424 |
     BRA .CODE_05C491                        ;$05C426 |
 ++  LDY.w SpriteLock_9D                     ;$05C428 |
     BNE .CODE_05C48D                        ;$05C42B |
@@ -4740,21 +4740,21 @@ process_layer_3_05C40C:
     ORA.w #$00FF                            ;$05C46D |
 +   XBA                                     ;$05C470 |
     CLC                                     ;$05C471 |
-    ADC $22                                 ;$05C472 |
-    STA $22                                 ;$05C474 |
+    ADC.b Layer3XPos_22                     ;$05C472 |
+    STA.b Layer3XPos_22                     ;$05C474 |
     LDA.w $17BD                             ;$05C476 |
     AND.w #$00FF                            ;$05C479 |
     CMP.w #$0080                            ;$05C47C |
     BCC +                                   ;$05C47F |
     ORA.w #$FF00                            ;$05C481 |
 +   STA $00                                 ;$05C484 |
-    LDA $22                                 ;$05C486 |
+    LDA.b Layer3XPos_22                     ;$05C486 |
     CLC                                     ;$05C488 |
     ADC $00                                 ;$05C489 |
-    STA $22                                 ;$05C48B |
+    STA.b Layer3XPos_22                     ;$05C48B |
 .CODE_05C48D:
-    LDA $1C                                 ;$05C48D |
-    STA $24                                 ;$05C48F |
+    LDA.b Layer1YPos_1C                     ;$05C48D |
+    STA.b Layer3YPos_24                     ;$05C48F |
 .CODE_05C491:
     SEP #$20                                ;$05C491 |
     RTS                                     ;$05C493 |
@@ -4780,7 +4780,7 @@ process_layer_3_05C40C:
 +   LDA.b #$4B                              ;$05C4BB |
     STA.w $1B9D                             ;$05C4BD |
 .CODE_05C4C0:
-    LDA $24
+    LDA.b Layer3YPos_24
     CMP.w DATA_05C40A,Y                     ;$05C4C2 |
     BNE +                                   ;$05C4C5 |
     TYA                                     ;$05C4C7 |
@@ -4803,13 +4803,13 @@ process_layer_3_05C40C:
     PLP                                     ;$05C4E3 |
     BPL +                                   ;$05C4E4 |
     ORA.b #$F0                              ;$05C4E6 |
-+   ADC $24                                 ;$05C4E8 |
-    STA $24                                 ;$05C4EA |
++   ADC.b Layer3YPos_24                     ;$05C4E8 |
+    STA.b Layer3YPos_24                     ;$05C4EA |
 .CODE_05C4EC:
-    LDA $22
+    LDA.b Layer3XPos_22
     SEC                                     ;$05C4EE |
     ADC.w $17BD                             ;$05C4EF |
-    STA $22                                 ;$05C4F2 |
+    STA.b Layer3XPos_22                     ;$05C4F2 |
     LDA.b #$01                              ;$05C4F4 |
     STA $23                                 ;$05C4F6 |
     RTS                                     ;$05C4F8 |
@@ -5091,7 +5091,7 @@ ADDR_05C6EE:
     LDY.b #$02                              ;$05C70F |
 ADDR_05C711:
     STA.w $1466
-    STA $1E                                 ;$05C714 |
+    STA.b Layer2XPos_1E                     ;$05C714 |
     STY $5B                                 ;$05C716 |
     JMP CODE_05C32B                         ;$05C718 |
 
@@ -5609,8 +5609,8 @@ CODE_05CC84:
     LDA.b #$08                              ;$05CC89 |
     TSB $3E                                 ;$05CC8B |
     REP #$30                                ;$05CC8D |
-    STZ $22                                 ;$05CC8F |
-    STZ $24                                 ;$05CC91 |
+    STZ.b Layer3XPos_22                     ;$05CC8F |
+    STZ.b Layer3YPos_24                     ;$05CC91 |
     LDY.w #$004A                            ;$05CC93 |
     TYA                                     ;$05CC96 |
     CLC                                     ;$05CC97 |
@@ -6359,7 +6359,7 @@ CODE_05D7D2:
     LSR                                     ;$05D805 |
     TAX                                     ;$05D806 |
     LDA.l DATA_05D708,X                     ;$05D807 |
-    STA $1C                                 ;$05D80B |
+    STA.b Layer1YPos_1C                     ;$05D80B |
     LDA $00                                 ;$05D80D |
     LSR                                     ;$05D80F |
     LSR                                     ;$05D810 |
@@ -6369,7 +6369,7 @@ CODE_05D7D2:
     LSR                                     ;$05D814 |
     TAX                                     ;$05D815 |
     LDA.l DATA_05D70C,X                     ;$05D816 |
-    STA $20                                 ;$05D81A |
+    STA.b Layer2YPos_20                     ;$05D81A |
     LDA.w DATA_05FC00,Y                     ;$05D81C |
     STA $01                                 ;$05D81F |
     LSR                                     ;$05D821 |
@@ -6394,8 +6394,8 @@ CODE_05D83E:
     LDA.w OverworldOverride_0109            ;$05D842 |
     BNE CODE_05D8A2                         ;$05D845 |
     REP #$30                                ;$05D847 |
-    STZ $1A                                 ;$05D849 |
-    STZ $1E                                 ;$05D84B |
+    STZ.b Layer1XPos_1A                     ;$05D849 |
+    STZ.b Layer2XPos_1E                     ;$05D84B |
     LDX.w $0DD6                             ;$05D84D |
     LDA.w $1F1F,X                           ;$05D850 |
     AND.w #$000F                            ;$05D853 |
@@ -6555,14 +6555,14 @@ CODE_05D8B7:
     AND.b #$03                              ;$05D986 |
     TAX                                     ;$05D988 |
     LDA.l DATA_05D70C,X                     ;$05D989 |
-    STA $20                                 ;$05D98D |
+    STA.b Layer2YPos_20                     ;$05D98D |
     LDA $02                                 ;$05D98F |
     AND.b #$0C                              ;$05D991 |
     LSR                                     ;$05D993 |
     LSR                                     ;$05D994 |
     TAX                                     ;$05D995 |
     LDA.l DATA_05D708,X                     ;$05D996 |
-    STA $1C                                 ;$05D99A |
+    STA.b Layer1YPos_1C                     ;$05D99A |
     LDA.w DATA_05F600,Y                     ;$05D99C |
     STA $01                                 ;$05D99F |
 CODE_05D9A1:
@@ -6680,8 +6680,8 @@ CODE_05DA60:
     STA $94                                 ;$05DA71 |
     STZ $95                                 ;$05DA73 |
     LDA.b #$C0                              ;$05DA75 |
-    STA $1C                                 ;$05DA77 |
-    STA $20                                 ;$05DA79 |
+    STA.b Layer1YPos_1C                     ;$05DA77 |
+    STA.b Layer2YPos_20                     ;$05DA79 |
     STZ.w $192A                             ;$05DA7B |
     LDA.b #$EE                              ;$05DA7E |
     STA $CE                                 ;$05DA80 |

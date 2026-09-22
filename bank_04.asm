@@ -275,7 +275,7 @@ CODE_04829E:
     REP #$20
     LDA.w $1DF2                             ;$0482A0 |
     SEC                                     ;$0482A3 |
-    SBC $1C                                 ;$0482A4 |
+    SBC.b Layer1YPos_1C                     ;$0482A4 |
     STA $01                                 ;$0482A6 |
     BPL CODE_0482AE                         ;$0482A8 |
     EOR.w #$FFFF                            ;$0482AA |
@@ -287,7 +287,7 @@ CODE_0482AE:
     REP #$20                                ;$0482B3 |
     LDA.w $1DF0                             ;$0482B5 |
     SEC                                     ;$0482B8 |
-    SBC $1A                                 ;$0482B9 |
+    SBC.b Layer1XPos_1A                     ;$0482B9 |
     STA $00                                 ;$0482BB |
     BPL CODE_0482C3                         ;$0482BD |
     EOR.w #$FFFF                            ;$0482BF |
@@ -306,11 +306,11 @@ CODE_0482D1:
     BCS CODE_0482ED                         ;$0482D3 |
     REP #$20                                ;$0482D5 |
     LDA.w $1DF0                             ;$0482D7 |
-    STA $1A                                 ;$0482DA |
-    STA $1E                                 ;$0482DC |
+    STA.b Layer1XPos_1A                     ;$0482DA |
+    STA.b Layer2XPos_1E                     ;$0482DC |
     LDA.w $1DF2                             ;$0482DE |
-    STA $1C                                 ;$0482E1 |
-    STA $20                                 ;$0482E3 |
+    STA.b Layer1YPos_1C                     ;$0482E1 |
+    STA.b Layer2YPos_20                     ;$0482E3 |
     SEP #$20                                ;$0482E5 |
     STZ.w $13D4                             ;$0482E7 |
     JMP CODE_0483BD                         ;$0482EA |
@@ -411,9 +411,9 @@ CODE_048375:
     LSR                                     ;$048389 |
     BNE CODE_04839A                         ;$04838A |
     REP #$20                                ;$04838C |
-    LDA $1A                                 ;$04838E |
+    LDA.b Layer1XPos_1A                     ;$04838E |
     STA.w $1DF0                             ;$048390 |
-    LDA $1C                                 ;$048393 |
+    LDA.b Layer1YPos_1C                     ;$048393 |
     STA.w $1DF2                             ;$048395 |
     SEP #$20                                ;$048398 |
 CODE_04839A:
@@ -459,14 +459,14 @@ CODE_0483D6:
     LDA.b Frame_13                          ;$0483DC |
     AND.w DATA_048231,Y                     ;$0483DE |
     BNE CODE_0483F3                         ;$0483E1 |
-    LDA $1A                                 ;$0483E3 |
+    LDA.b Layer1XPos_1A                     ;$0483E3 |
     EOR.b #$01                              ;$0483E5 |
-    STA $1A                                 ;$0483E7 |
-    STA $1E                                 ;$0483E9 |
-    LDA $1C                                 ;$0483EB |
+    STA.b Layer1XPos_1A                     ;$0483E7 |
+    STA.b Layer2XPos_1E                     ;$0483E9 |
+    LDA.b Layer1YPos_1C                     ;$0483EB |
     EOR.b #$01                              ;$0483ED |
-    STA $1C                                 ;$0483EF |
-    STA $20                                 ;$0483F1 |
+    STA.b Layer1YPos_1C                     ;$0483EF |
+    STA.b Layer2YPos_20                     ;$0483F1 |
 CODE_0483F3:
     CPX.b #$80
     BCS CODE_0483FE                         ;$0483F5 |
@@ -631,11 +631,11 @@ CODE_0485A7:
     REP #$20
     LDA.w #$001E                            ;$0485A9 |
     CLC                                     ;$0485AC |
-    ADC $1A                                 ;$0485AD |
+    ADC.b Layer1XPos_1A                     ;$0485AD |
     STA $94                                 ;$0485AF |
     LDA.w #$0006                            ;$0485B1 |
     CLC                                     ;$0485B4 |
-    ADC $1C                                 ;$0485B5 |
+    ADC.b Layer1YPos_1C                     ;$0485B5 |
     STA $96                                 ;$0485B7 |
     SEP #$20                                ;$0485B9 |
     LDA.b #$08                              ;$0485BB |
@@ -706,14 +706,14 @@ CODE_04862E:
     LDX.w $0DD6                             ;$048630 |
     LDA.w $1F17,X                           ;$048633 |
     SEC                                     ;$048636 |
-    SBC $1A                                 ;$048637 |
+    SBC.b Layer1XPos_1A                     ;$048637 |
     CMP.w #$0100                            ;$048639 |
     BCS CODE_04864D                         ;$04863C |
     STA $00                                 ;$04863E |
     STA $08                                 ;$048640 |
     LDA.w $1F19,X                           ;$048642 |
     SEC                                     ;$048645 |
-    SBC $1C                                 ;$048646 |
+    SBC.b Layer1YPos_1C                     ;$048646 |
     CMP.w #$0100                            ;$048648 |
     BCC CODE_048650                         ;$04864B |
 CODE_04864D:
@@ -726,14 +726,14 @@ CODE_048650:
     TAX                                     ;$048658 |
     LDA.w $1F17,X                           ;$048659 |
     SEC                                     ;$04865C |
-    SBC $1A                                 ;$04865D |
+    SBC.b Layer1XPos_1A                     ;$04865D |
     CMP.w #$0100                            ;$04865F |
     BCS CODE_048673                         ;$048662 |
     STA $04                                 ;$048664 |
     STA $0C                                 ;$048666 |
     LDA.w $1F19,X                           ;$048668 |
     SEC                                     ;$04866B |
-    SBC $1C                                 ;$04866C |
+    SBC.b Layer1YPos_1C                     ;$04866C |
     CMP.w #$0100                            ;$04866E |
     BCC CODE_048676                         ;$048671 |
 CODE_048673:
@@ -2883,11 +2883,11 @@ CODE_049AB0:
     ASL                                     ;$049AB2 |
     TAY                                     ;$049AB3 |
     LDA.w DATA_049A0C,Y                     ;$049AB4 |
-    STA $1A                                 ;$049AB7 |
-    STA $1E                                 ;$049AB9 |
+    STA.b Layer1XPos_1A                     ;$049AB7 |
+    STA.b Layer2XPos_1E                     ;$049AB9 |
     LDA.w DATA_049A0E,Y                     ;$049ABB |
-    STA $1C                                 ;$049ABE |
-    STA $20                                 ;$049AC0 |
+    STA.b Layer1YPos_1C                     ;$049ABE |
+    STA.b Layer2YPos_20                     ;$049AC0 |
     SEP #$30                                ;$049AC2 |
     RTS                                     ;$049AC4 |
 
@@ -3166,7 +3166,7 @@ CODE_049E78:
     SBC $00                                 ;$049E89 |
     STA.w $1F19,X                           ;$049E8B |
     SEC                                     ;$049E8E |
-    SBC $1C                                 ;$049E8F |
+    SBC.b Layer1YPos_1C                     ;$049E8F |
     BMI CODE_049E96                         ;$049E91 |
 CODE_049E93:
     SEP #$20
@@ -5012,7 +5012,7 @@ DATA_04D678:
 
 CODE_04D6E9:
     REP #$30
-    STZ $1C                                 ;$04D6EB |
+    STZ.b Layer1YPos_1C                     ;$04D6EB |
     LDA.w #$FFFF                            ;$04D6ED |
     STA $4D                                 ;$04D6F0 |
     STA $4F                                 ;$04D6F2 |
@@ -5029,20 +5029,20 @@ CODE_04D6E9:
     LDA.w #$0020                            ;$04D70A |
     STA $47                                 ;$04D70D |
     LDA.w #$0200                            ;$04D70F |
-    STA $1C                                 ;$04D712 |
+    STA.b Layer1YPos_1C                     ;$04D712 |
 .CODE_04D714:
     JSL execute_level_mode_setting_05881A   ;$04D714 |
     JSL generic_layer_1_and_2_upload        ;$04D718 |
     REP #$30                                ;$04D71C |
     INC $47                                 ;$04D71E |
-    LDA $1C                                 ;$04D720 |
+    LDA.b Layer1YPos_1C                     ;$04D720 |
     CLC                                     ;$04D722 |
     ADC.w #$0010                            ;$04D723 |
-    STA $1C                                 ;$04D726 |
+    STA.b Layer1YPos_1C                     ;$04D726 |
     AND.w #$01FF                            ;$04D728 |
     BNE .CODE_04D714                        ;$04D72B |
-    LDA $20                                 ;$04D72D |
-    STA $1C                                 ;$04D72F |
+    LDA.b Layer2YPos_20                     ;$04D72D |
+    STA.b Layer1YPos_1C                     ;$04D72F |
     STZ $47                                 ;$04D731 |
     STZ.w $1925                             ;$04D733 |
     STZ $5B                                 ;$04D736 |
@@ -6864,11 +6864,11 @@ CODE_04EC34:
 CODE_04EC67:
     LDA.w $1B82
     SEC                                     ;$04EC6A |
-    SBC $1E                                 ;$04EC6B |
+    SBC.b Layer2XPos_1E                     ;$04EC6B |
     STA $00                                 ;$04EC6D |
     LDA.w $1B83                             ;$04EC6F |
     CLC                                     ;$04EC72 |
-    SBC $20                                 ;$04EC73 |
+    SBC.b Layer2YPos_20                     ;$04EC73 |
     STA $01                                 ;$04EC75 |
     RTS                                     ;$04EC77 |
 
@@ -7840,7 +7840,7 @@ CODE_04F770:
     ASL                                     ;$04F787 |
     TAY                                     ;$04F788 |
     REP #$20                                ;$04F789 |
-    LDA $1A                                 ;$04F78B |
+    LDA.b Layer1XPos_1A                     ;$04F78B |
     CLC                                     ;$04F78D |
     ADC.w DATA_04F6D8,Y                     ;$04F78E |
     SEP #$20                                ;$04F791 |
@@ -7848,7 +7848,7 @@ CODE_04F770:
     XBA                                     ;$04F796 |
     STA.w $0E65,X                           ;$04F797 |
     REP #$20                                ;$04F79A |
-    LDA $1C                                 ;$04F79C |
+    LDA.b Layer1YPos_1C                     ;$04F79C |
     CLC                                     ;$04F79E |
     ADC.w DATA_04F6E8,Y                     ;$04F79F |
     SEP #$20                                ;$04F7A2 |

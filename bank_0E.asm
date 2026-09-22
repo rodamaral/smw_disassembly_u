@@ -515,7 +515,7 @@ CODE_0876:
     dec $0384
     bne CODE_08D3                           ;$0879 |
 CODE_087B:
-    incw $1A
+    incw.b Layer1XPos_1A
 CODE_087D:
     mov x, #$00
     mov a, ($1A+x)                          ;$087F |

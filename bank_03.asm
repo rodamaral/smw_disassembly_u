@@ -1765,11 +1765,11 @@ CODE_038D93:
     LDA.w $1558,X
     LSR                                     ;$038D96 |
     TAY                                     ;$038D97 |
-    LDA $1C                                 ;$038D98 |
+    LDA.b Layer1YPos_1C                     ;$038D98 |
     PHA                                     ;$038D9A |
     CLC                                     ;$038D9B |
     ADC.w DATA_038D66,Y                     ;$038D9C |
-    STA $1C                                 ;$038D9F |
+    STA.b Layer1YPos_1C                     ;$038D9F |
     LDA $1D                                 ;$038DA1 |
     PHA                                     ;$038DA3 |
     ADC.b #$00                              ;$038DA4 |
@@ -1781,7 +1781,7 @@ CODE_038D93:
     PLA                                     ;$038DB4 |
     STA $1D                                 ;$038DB5 |
     PLA                                     ;$038DB7 |
-    STA $1C                                 ;$038DB8 |
+    STA.b Layer1YPos_1C                     ;$038DB8 |
     RTS                                     ;$038DBA |
 
 TimedLift:
@@ -4891,7 +4891,7 @@ CODE_03A441:
     STZ $B6,X                               ;$03A454 |
     LDA.b SpriteYPosLow_D8,X                ;$03A456 |
     SEC                                     ;$03A458 |
-    SBC $1C                                 ;$03A459 |
+    SBC.b Layer1YPos_1C                     ;$03A459 |
     CMP.b #$10                              ;$03A45B |
     BNE Return03A464                        ;$03A45D |
     LDA.b #$A4                              ;$03A45F |
@@ -5598,7 +5598,7 @@ CODE_03AA6E:
     CLC                                     ;$03AA70 |
     ADC.b #$04                              ;$03AA71 |
     SEC                                     ;$03AA73 |
-    SBC $1A                                 ;$03AA74 |
+    SBC.b Layer1XPos_1A                     ;$03AA74 |
     STA $00                                 ;$03AA76 |
     LDA.b SpriteYPosLow_D8,X                ;$03AA78 |
     CLC                                     ;$03AA7A |
@@ -5606,7 +5606,7 @@ CODE_03AA6E:
     SEC                                     ;$03AA7D |
     SBC $02                                 ;$03AA7E |
     SEC                                     ;$03AA80 |
-    SBC $1C                                 ;$03AA81 |
+    SBC.b Layer1YPos_1C                     ;$03AA81 |
     STA $01                                 ;$03AA83 |
     CPY.b #$08                              ;$03AA85 |
     BCC CODE_03AAC6                         ;$03AA87 |
@@ -5913,11 +5913,11 @@ BlushTiles:
 PrincessPeach:
     LDA.b SpriteXPosLow_E4,X
     SEC                                     ;$03AC99 |
-    SBC $1A                                 ;$03AC9A |
+    SBC.b Layer1XPos_1A                     ;$03AC9A |
     STA $00                                 ;$03AC9C |
     LDA.b SpriteYPosLow_D8,X                ;$03AC9E |
     SEC                                     ;$03ACA0 |
-    SBC $1C                                 ;$03ACA1 |
+    SBC.b Layer1YPos_1C                     ;$03ACA1 |
     STA $01                                 ;$03ACA3 |
     LDA.b Frame_13                          ;$03ACA5 |
     AND.b #$7F                              ;$03ACA7 |
@@ -6977,11 +6977,11 @@ BowserSceneGfx:
 CODE_03B4BF:
     LDA.b #$C0
     SEC                                     ;$03B4C1 |
-    SBC $1C                                 ;$03B4C2 |
+    SBC.b Layer1YPos_1C                     ;$03B4C2 |
     STA.w $0301,Y                           ;$03B4C4 |
     LDA $01                                 ;$03B4C7 |
     SEC                                     ;$03B4C9 |
-    SBC $1A                                 ;$03B4CA |
+    SBC.b Layer1XPos_1A                     ;$03B4CA |
     STA.w $0300,Y                           ;$03B4CC |
     CLC                                     ;$03B4CF |
     ADC.b #$10                              ;$03B4D0 |
@@ -7012,11 +7012,11 @@ CODE_03B4BF:
 CODE_03B4FA:
     LDA.w BowserRoofPosX,X
     SEC                                     ;$03B4FD |
-    SBC $1A                                 ;$03B4FE |
+    SBC.b Layer1XPos_1A                     ;$03B4FE |
     STA.w $0200,Y                           ;$03B500 |
     LDA.w BowserRoofPosY,X                  ;$03B503 |
     SEC                                     ;$03B506 |
-    SBC $1C                                 ;$03B507 |
+    SBC.b Layer1YPos_1C                     ;$03B507 |
     STA.w $0201,Y                           ;$03B509 |
     LDA.b #$08                              ;$03B50C |
     CPX.b #$06                              ;$03B50E |
@@ -7048,11 +7048,11 @@ CODE_03B532:
 CODE_03B534:
     LDA.w BowserRoofPosX,X
     SEC                                     ;$03B537 |
-    SBC $1A                                 ;$03B538 |
+    SBC.b Layer1XPos_1A                     ;$03B538 |
     STA.w $0300,Y                           ;$03B53A |
     LDA.w BowserRoofPosY,X                  ;$03B53D |
     SEC                                     ;$03B540 |
-    SBC $1C                                 ;$03B541 |
+    SBC.b Layer1YPos_1C                     ;$03B541 |
     STA.w $0301,Y                           ;$03B543 |
     LDA.b #$08                              ;$03B546 |
     CPX.b #$06                              ;$03B548 |
@@ -7281,7 +7281,7 @@ GetDrawInfoBnk3:
     STZ.w $186C,X
     STZ.w $15A0,X                           ;$03B763 |
     LDA.b SpriteXPosLow_E4,X                ;$03B766 |
-    CMP $1A                                 ;$03B768 |
+    CMP.b Layer1XPos_1A                     ;$03B768 |
     LDA.w SpriteXPosHigh_14E0,X             ;$03B76A |
     SBC $1B                                 ;$03B76D |
     BEQ CODE_03B774                         ;$03B76F |
@@ -7292,7 +7292,7 @@ CODE_03B774:
     LDA.b SpriteXPosLow_E4,X                ;$03B778 |
     REP #$20                                ;$03B77A |
     SEC                                     ;$03B77C |
-    SBC $1A                                 ;$03B77D |
+    SBC.b Layer1XPos_1A                     ;$03B77D |
     CLC                                     ;$03B77F |
     ADC.w #$0040                            ;$03B780 |
     CMP.w #$0180                            ;$03B783 |
@@ -7311,7 +7311,7 @@ CODE_03B79A:
     CLC                                     ;$03B79C |
     ADC.w DATA_03B75C,Y                     ;$03B79D |
     PHP                                     ;$03B7A0 |
-    CMP $1C                                 ;$03B7A1 |
+    CMP.b Layer1YPos_1C                     ;$03B7A1 |
     ROL $00                                 ;$03B7A3 |
     PLP                                     ;$03B7A5 |
     LDA.w SpriteYPosHigh_14D4,X             ;$03B7A6 |
@@ -7328,11 +7328,11 @@ CODE_03B7BA:
     LDY.w $15EA,X                           ;$03B7BD |
     LDA.b SpriteXPosLow_E4,X                ;$03B7C0 |
     SEC                                     ;$03B7C2 |
-    SBC $1A                                 ;$03B7C3 |
+    SBC.b Layer1XPos_1A                     ;$03B7C3 |
     STA $00                                 ;$03B7C5 |
     LDA.b SpriteYPosLow_D8,X                ;$03B7C7 |
     SEC                                     ;$03B7C9 |
-    SBC $1C                                 ;$03B7CA |
+    SBC.b Layer1YPos_1C                     ;$03B7CA |
     STA $01                                 ;$03B7CC |
     RTS                                     ;$03B7CE |
 
@@ -7445,7 +7445,7 @@ CODE_03B85F:
     ORA $03                                 ;$03B883 |
     STA $01                                 ;$03B885 |
     TAY                                     ;$03B887 |
-    LDA $1A                                 ;$03B888 |
+    LDA.b Layer1XPos_1A                     ;$03B888 |
     CLC                                     ;$03B88A |
     ADC.w DATA_03B83F,Y                     ;$03B88B |
     ROL $00                                 ;$03B88E |
@@ -7488,7 +7488,7 @@ VerticalLevelBnk3:
     AND.b #$01                              ;$03B8CF |
     STA $01                                 ;$03B8D1 |
     TAY                                     ;$03B8D3 |
-    LDA $1C                                 ;$03B8D4 |
+    LDA.b Layer1YPos_1C                     ;$03B8D4 |
     CLC                                     ;$03B8D6 |
     ADC.w DATA_03B83B,Y                     ;$03B8D7 |
     ROL $00                                 ;$03B8DA |
@@ -8016,11 +8016,11 @@ CODE_03C22B:
     LDA.w $1558,X
     LSR                                     ;$03C22E |
     TAY                                     ;$03C22F |
-    LDA $1C                                 ;$03C230 |
+    LDA.b Layer1YPos_1C                     ;$03C230 |
     PHA                                     ;$03C232 |
     CLC                                     ;$03C233 |
     ADC.w DATA_03C1EC,Y                     ;$03C234 |
-    STA $1C                                 ;$03C237 |
+    STA.b Layer1YPos_1C                     ;$03C237 |
     LDA $1D                                 ;$03C239 |
     PHA                                     ;$03C23B |
     ADC.b #$00                              ;$03C23C |
@@ -8035,7 +8035,7 @@ CODE_03C22B:
     PLA                                     ;$03C254 |
     STA $1D                                 ;$03C255 |
     PLA                                     ;$03C257 |
-    STA $1C                                 ;$03C258 |
+    STA.b Layer1YPos_1C                     ;$03C258 |
     RTS                                     ;$03C25A |
 
 ChainsawMotorTiles:
@@ -8682,7 +8682,7 @@ CODE_03C7D0:
     STA.w SpriteXPosHigh_14E0,Y             ;$03C7DC |
     LDA.b #$A8                              ;$03C7DF |
     CLC                                     ;$03C7E1 |
-    ADC $1C                                 ;$03C7E2 |
+    ADC.b Layer1YPos_1C                     ;$03C7E2 |
     STA.w SpriteYPosLow_D8,Y                ;$03C7E4 |
     LDA $1D                                 ;$03C7E7 |
     ADC.b #$00                              ;$03C7E9 |
@@ -8933,7 +8933,7 @@ CODE_03C9E9:
     STA $08                                 ;$03C9FA |
     LDA.b SpriteYPosLow_D8,X                ;$03C9FC |
     SEC                                     ;$03C9FE |
-    SBC $1C                                 ;$03C9FF |
+    SBC.b Layer1YPos_1C                     ;$03C9FF |
     STA $09                                 ;$03CA01 |
     LDA.w $1534,X                           ;$03CA03 |
     STA $0A                                 ;$03CA06 |
@@ -10034,7 +10034,7 @@ CODE_03D76C:
     REP #$20
     LDA $9A                                 ;$03D76E |
     SEC                                     ;$03D770 |
-    SBC $1A                                 ;$03D771 |
+    SBC.b Layer1XPos_1A                     ;$03D771 |
     CMP.w #$0100                            ;$03D773 |
     SEP #$20                                ;$03D776 |
     BCS Return03D77E                        ;$03D778 |
