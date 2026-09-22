@@ -2043,7 +2043,7 @@ CODE_12BD:
     mov a, DATA_12D9+y                      ;$12C9 |
     bra CODE_12D2                           ;$12CC |
 CODE_12CE:
-    lsr $16
+    lsr.b byetudlrFrame_16
     ror a                                   ;$12D0 |
     inc x                                   ;$12D1 |
 CODE_12D2:

@@ -5128,7 +5128,7 @@ CODE_0CCFDE:
     LDA.w $1443
     ORA.w $144D                             ;$0CCFE1 |
     BNE Return0CCFF6                        ;$0CCFE4 |
-    LDA $16                                 ;$0CCFE6 |
+    LDA.b byetudlrFrame_16                  ;$0CCFE6 |
     ORA $18                                 ;$0CCFE8 |
     AND.b #$C0                              ;$0CCFEA |
     BEQ Return0CCFF6                        ;$0CCFEC |

@@ -2964,7 +2964,7 @@ CODE_05B16E:
     LDA.b byetudlrHold_15
     AND.b #$F0                              ;$05B170 |
     BEQ CODE_05B18E                         ;$05B172 |
-    EOR $16                                 ;$05B174 |
+    EOR.b byetudlrFrame_16                  ;$05B174 |
     AND.b #$F0                              ;$05B176 |
     BEQ CODE_05B186                         ;$05B178 |
     LDA $17                                 ;$05B17A |

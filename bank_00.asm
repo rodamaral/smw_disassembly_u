@@ -808,7 +808,7 @@ update_controllers:                         ;        \
     LDA.w $0DA8,X                           ;$0086B7 |\ Update $16 t0 current frame press high byte
     AND.b #$40                              ;$0086BA | | Share bit 6 with X/Y
     ORA.w $0DA6,X                           ;$0086BC | | 
-    STA $16                                 ;$0086BF |/
+    STA.b byetudlrFrame_16                  ;$0086BF |/
     LDA.w $0DA8,X                           ;$0086C1 |\ Update $18 to current frame press low byte
     STA $18                                 ;$0086C4 |/
     RTS                                     ;$0086C6 /
@@ -3136,7 +3136,7 @@ CODE_009AD0:
     INC.w $1B91
     JSR CODE_009E82                         ;$009AD3 |
     LDX.w $1B92                             ;$009AD6 |
-    LDA $16                                 ;$009AD9 |
+    LDA.b byetudlrFrame_16                  ;$009AD9 |
     AND.b #$90                              ;$009ADB |
     BNE CODE_009AE3                         ;$009ADD |
     LDA $18                                 ;$009ADF |
@@ -3149,12 +3149,12 @@ CODE_009AE3:
 CODE_009AEA:
     PLA
     PLA                                     ;$009AEB |
-    LDA $16                                 ;$009AEC |
+    LDA.b byetudlrFrame_16                  ;$009AEC |
     AND.b #$20                              ;$009AEE |
     LSR                                     ;$009AF0 |
     LSR                                     ;$009AF1 |
     LSR                                     ;$009AF2 |
-    ORA $16                                 ;$009AF3 |
+    ORA.b byetudlrFrame_16                  ;$009AF3 |
     AND.b #$0C                              ;$009AF5 |
     BEQ Return009B16                        ;$009AF7 |
     LDY.b #$06                              ;$009AF9 |
@@ -3186,7 +3186,7 @@ GM09_title_file_erase_009B1A:
     LDA.w #$39C9                            ;$009B1C |
     LDY.b #$60                              ;$009B1F |
     JSR CODE_009D30                         ;$009B21 |
-    LDA $16                                 ;$009B24 |
+    LDA.b byetudlrFrame_16                  ;$009B24 |
     ORA $18                                 ;$009B26 |
     AND.b #$40                              ;$009B28 |
     BEQ CODE_009B38                         ;$009B2A |
@@ -3382,7 +3382,7 @@ CODE_009C8F:
     CMP.w $9C1D,X                           ;$009C93 |
     BNE +                                   ;$009C96 |
     AND.b #$9F                              ;$009C98 |
-+   STA $16                                 ;$009C9A |
++   STA.b byetudlrFrame_16                  ;$009C9A |
     JMP GM14_main_level_00A1DA              ;$009C9C |
 
 CODE_009C9F:
@@ -3587,7 +3587,7 @@ CODE_009DF7:
     RTS                                     ;$009DF9 |
 
 GM0A_title_player_select_009DFA:
-    LDA $16
+    LDA.b byetudlrFrame_16
     ORA $18                                 ;$009DFC |
     AND.b #$40                              ;$009DFE |
     BEQ CODE_009E08                         ;$009E00 |
@@ -4091,7 +4091,7 @@ GM14_main_level_00A1DA:
     LDA.b #$04                              ;$00A207 || if not able to move free:
     TRB.b byetudlrHold_15                   ;$00A209 || clear hold down
     LDA.b #$40                              ;$00A20B ||
-    TRB $16                                 ;$00A20D || clear X/Y press
+    TRB.b byetudlrFrame_16                  ;$00A20D || clear X/Y press
     TRB $18                                 ;$00A20F |/
 +   LDA.w $13D3                             ;$00A211 |
     BEQ .able_to_toggle_pause_00A21B        ;$00A214 |
@@ -4099,7 +4099,7 @@ GM14_main_level_00A1DA:
     BRA .handle_paused_status_00A242        ;$00A219 |
 
 .able_to_toggle_pause_00A21B:
-    LDA $16                                 ;$00A21B | able to pause
+    LDA.b byetudlrFrame_16                  ;$00A21B | able to pause
     AND.b #$10                              ;$00A21D |
     BEQ .handle_paused_status_00A242        ;$00A21F |
     LDA.w $1493                             ;$00A221 | if pressed Start
@@ -7415,7 +7415,7 @@ timers_and_animation_00C47E:
     BNE -                                   ;$00C567 |
 .skip_timers_00C569:
     JSR execute_player_animation_00C593     ;$00C569 |
-    LDA $16                                 ;$00C56C |
+    LDA.b byetudlrFrame_16                  ;$00C56C |
     AND.b #$20                              ;$00C56E |
     BEQ .restore_noteblock_down_00C58F      ;$00C570 |
     LDA.b byetudlrHold_15                   ;$00C572 |
@@ -7614,7 +7614,7 @@ CODE_00C777:
     STY.b byetudlrHold_15                   ;$00C77D |
     TYA                                     ;$00C77F |
     AND.b #$BF                              ;$00C780 |
-    STA $16                                 ;$00C782 |
+    STA.b byetudlrFrame_16                  ;$00C782 |
     JSR CODE_00CD39                         ;$00C784 |
     BRA CODE_00C7F6                         ;$00C787 |
 
@@ -7759,7 +7759,7 @@ CODE_00C889:
     JSL CODE_02F584
 CODE_00C88D:
     LDX $88
-    LDA $16                                 ;$00C88F |
+    LDA.b byetudlrFrame_16                  ;$00C88F |
     ORA $18                                 ;$00C891 |
     JSR disable_controls                    ;$00C893 |
     BMI CODE_00C8FB                         ;$00C896 |
@@ -8396,7 +8396,7 @@ set_yoshi_pose:                             ;        \
     LDA.w YoshiHasWings_141E                ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
     CMP.b #$01                              ;$00CDCC | |
     BNE return_00CDDC                       ;$00CDCE |/
-    BIT $16                                 ;$00CDD0 |\ and X or Y is tapped,
+    BIT.b byetudlrFrame_16                  ;$00CDD0 |\ and X or Y is tapped,
     BVC return_00CDDC                       ;$00CDD2 |/
     LDA.b #$08                              ;$00CDD4 |\
     STA.w $18DB                             ;$00CDD6 |/
@@ -8765,7 +8765,7 @@ powerup_physics:                            ;        \
     LDA.b Powerup_19                        ;$00D062 |\ If the player is caped,
     CMP.b #$02                              ;$00D064 |/
     BNE .not_caped                          ;$00D066 |
-    BIT $16                                 ;$00D068 |\ and X or Y are tapped,
+    BIT.b byetudlrFrame_16                  ;$00D068 |\ and X or Y are tapped,
     BVC .return                             ;$00D06A |/
     LDA $73                                 ;$00D06C |\ and the player is neither ducking,
     ORA.w RidingYoshi_187A                  ;$00D06E | | nor on Yoshi,
@@ -8783,7 +8783,7 @@ powerup_physics:                            ;        \
     LDA $73                                 ;$00D085 |\ and not on Yoshi,
     ORA.w RidingYoshi_187A                  ;$00D087 | |
     BNE .return                             ;$00D08A |/
-    BIT $16                                 ;$00D08C |\ and X or Y are tapped,
+    BIT.b byetudlrFrame_16                  ;$00D08C |\ and X or Y are tapped,
     BVS .shoot_fireball                     ;$00D08E |/ shoot a fireball.
     LDA.w $140D                             ;$00D090 |\ If the player is spinjumping,
     BEQ .return                             ;$00D093 |/
@@ -9259,7 +9259,7 @@ CODE_00D60B:
     LDA $77                                 ;$00D612 |
     AND.b #$08                              ;$00D614 |
     BNE CODE_00D61E                         ;$00D616 |
-    LDA $16                                 ;$00D618 |
+    LDA.b byetudlrFrame_16                  ;$00D618 |
     ORA $18                                 ;$00D61A |
     BMI CODE_00D630                         ;$00D61C |
 CODE_00D61E:
@@ -9354,7 +9354,7 @@ CODE_00D6B1:
     BEQ CODE_00D6D5                         ;$00D6B9 |
     CMP $76                                 ;$00D6BB |
     BEQ CODE_00D6C3                         ;$00D6BD |
-    LDY $16                                 ;$00D6BF |
+    LDY.b byetudlrFrame_16                  ;$00D6BF |
     BPL CODE_00D68D                         ;$00D6C1 |
 CODE_00D6C3:
     LDX $76
@@ -9778,7 +9778,7 @@ water_physics:
     BEQ CODE_00D9EB                         ;$00D998 |
     LDA $72                                 ;$00D99A |
     BNE CODE_00D9AF                         ;$00D99C |
-    LDA $16                                 ;$00D99E |
+    LDA.b byetudlrFrame_16                  ;$00D99E |
     ORA $18                                 ;$00D9A0 |
     BPL CODE_00D9AF                         ;$00D9A2 |
     LDA.b #$0B                              ;$00D9A4 |
@@ -9829,7 +9829,7 @@ CODE_00D9DD:
     BRA CODE_00DA46                         ;$00D9E9 |
 
 CODE_00D9EB:
-    LDA $16
+    LDA.b byetudlrFrame_16
     ORA $18                                 ;$00D9ED |
     BPL CODE_00DA0B                         ;$00D9EF |
     LDA.w $13FA                             ;$00D9F1 |
@@ -10064,7 +10064,7 @@ CODE_00DB92:
 
 CODE_00DB96:
     LDY $75
-    BIT $16                                 ;$00DB98 |
+    BIT.b byetudlrFrame_16                  ;$00DB98 |
     BPL CODE_00DBAC                         ;$00DB9A |
     LDA.b #$0B                              ;$00DB9C |
     STA $72                                 ;$00DB9E |
@@ -11303,7 +11303,7 @@ normal_collision:
 .castle_door                                ;        | |
     LDA $8F                                 ;$00EC06 | | or if the player isn't on the ground,
     BNE .skip_center                        ;$00EC08 | |
-    LDA $16                                 ;$00EC0A | | or if the player isn't pressing up,
+    LDA.b byetudlrFrame_16                  ;$00EC0A | | or if the player isn't pressing up,
     AND.b #$08                              ;$00EC0C | |
     BEQ .skip_center                        ;$00EC0E |/ don't let him use the door.
     LDA.b #$0F                              ;$00EC10 |\ Play the door sound,
@@ -12190,7 +12190,7 @@ CODE_00F261:
 process_throw_block:
     CPY.b #$2E                              ;$00F267 \ If the tile's not a throw block,
     BNE .return                             ;$00F269 | return.
-    BIT $16                                 ;$00F26B |\ If the player didn't press X or Y,
+    BIT.b byetudlrFrame_16                  ;$00F26B |\ If the player didn't press X or Y,
     BVC .return                             ;$00F26D |/ return.
     LDA.w $148F                             ;$00F26F |\ If the player is already carrying something
     ORA.w RidingYoshi_187A                  ;$00F272 | | or on Yoshi,
@@ -12766,7 +12766,7 @@ CODE_00F629:
     JSL kill_player
 disable_controls:
     STZ.b byetudlrHold_15
-    STZ $16                                 ;$00F62F |
+    STZ.b byetudlrFrame_16                  ;$00F62F |
     STZ $17                                 ;$00F631 |
     STZ $18                                 ;$00F633 |
     RTS                                     ;$00F635 |

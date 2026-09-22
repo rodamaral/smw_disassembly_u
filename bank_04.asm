@@ -403,7 +403,7 @@ CODE_048375:
     LDX.w CurrentPlayer_0DB3
     LDA.w OWPlayerSubmap_1F11,X             ;$048378 |
     BNE CODE_04839A                         ;$04837B |
-    LDA $16                                 ;$04837D |
+    LDA.b byetudlrFrame_16                  ;$04837D |
     AND.b #$10                              ;$04837F |
     BEQ CODE_04839A                         ;$048381 |
     INC.w $13D4                             ;$048383 |
@@ -1668,7 +1668,7 @@ CODE_049120:
     BEQ CODE_049132                         ;$04912D |
     BRL CODE_0491E9                         ;$04912F |
 CODE_049132:
-    LDA $16
+    LDA.b byetudlrFrame_16
     AND.b #$20                              ;$049134 |
     BRA OW_Player_Update                    ;$049136 |
 
@@ -1685,7 +1685,7 @@ OW_Player_Update:
     CMP.b #$81                              ;$04914C |
     BEQ OWPU_EnterLevel                     ;$04914E |
 OWPU_NoLR:
-    LDA $16
+    LDA.b byetudlrFrame_16
     ORA $18                                 ;$049152 |
     AND.b #$C0                              ;$049154 |
     BNE OWPU_ABXY                           ;$049156 |
@@ -1824,7 +1824,7 @@ CODE_04924E:
 OWPU_NotAutoWalk:
     SEP #$30
     STZ.w $0DD5                             ;$04925C |
-    LDA $16                                 ;$04925F |
+    LDA.b byetudlrFrame_16                  ;$04925F |
     AND.b #$0F                              ;$049261 |
     BEQ CODE_04926E                         ;$049263 |
     LDX.w $13C1                             ;$049265 |
