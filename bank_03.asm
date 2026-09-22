@@ -187,7 +187,7 @@ CODE_038140:
     LDA.w DATA_038102,Y                     ;$038144 |
     STA.w $1602,X                           ;$038147 |
 CODE_03814A:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$07                              ;$03814C |
     BNE CODE_038166                         ;$03814E |
     LDA.w $151C,X                           ;$038150 |
@@ -201,7 +201,7 @@ CODE_03814A:
     BNE CODE_038166                         ;$038161 |
     INC.w $151C,X                           ;$038163 |
 CODE_038166:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$07                              ;$038168 |
     BNE CODE_038182                         ;$03816A |
     LDA.w $1528,X                           ;$03816C |
@@ -579,7 +579,7 @@ BlurpAccelY:
 Blurp:
     JSL GenericSprGfxRt2
     LDY.w $15EA,X                           ;$0384CE |
-    LDA.w $14                               ;$0384D1 |
+    LDA.w Frame_14                          ;$0384D1 |
     LSR                                     ;$0384D4 |
     LSR                                     ;$0384D5 |
     LSR                                     ;$0384D6 |
@@ -604,7 +604,7 @@ CODE_0384F5:
     LDA.b SpriteLock_9D
     BNE Return03852A                        ;$0384F7 |
     JSR SubOffscreen0Bnk3                   ;$0384F9 |
-    LDA $14                                 ;$0384FC |
+    LDA.b Frame_14                          ;$0384FC |
     AND.b #$03                              ;$0384FE |
     BNE CODE_038516                         ;$038500 |
     LDA $C2,X                               ;$038502 |
@@ -645,7 +645,7 @@ PorcuPuffer:
     JSR SubHorzPosBnk3                      ;$038544 |
     TYA                                     ;$038547 |
     STA.w SpriteDir_157C,X                  ;$038548 |
-    LDA $14                                 ;$03854B |
+    LDA.b Frame_14                          ;$03854B |
     AND.b #$03                              ;$03854D |
     BNE CODE_03855E                         ;$03854F |
     LDA $B6,X                               ;$038551 |
@@ -690,7 +690,7 @@ PocruPufferGfxProp:
 
 CODE_0385A3:
     JSR GetDrawInfoBnk3
-    LDA $14                                 ;$0385A6 |
+    LDA.b Frame_14                          ;$0385A6 |
     AND.b #$04                              ;$0385A8 |
     STA $03                                 ;$0385AA |
     LDA.w SpriteDir_157C,X                  ;$0385AC |
@@ -825,7 +825,7 @@ ForestPlatTileSize:
 CODE_0386A8:
     JSR GetDrawInfoBnk3
     LDY.w $15EA,X                           ;$0386AB |
-    LDA $14                                 ;$0386AE |
+    LDA.b Frame_14                          ;$0386AE |
     LSR                                     ;$0386B0 |
     AND.b #$04                              ;$0386B1 |
     BEQ CODE_0386B6                         ;$0386B3 |
@@ -1046,7 +1046,7 @@ MegaMoleGfxRt:
     JSR GetDrawInfoBnk3
     LDA.w $151C,X                           ;$038842 |
     STA $02                                 ;$038845 |
-    LDA $14                                 ;$038847 |
+    LDA.b Frame_14                          ;$038847 |
     LSR                                     ;$038849 |
     LSR                                     ;$03884A |
     NOP                                     ;$03884B |
@@ -1184,7 +1184,7 @@ CODE_038915:
     ADC.w DATA_0388E2,Y                     ;$038926 |
     STA $B6,X                               ;$038929 |
 CODE_03892B:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$04                              ;$03892D |
     LSR                                     ;$03892F |
     LSR                                     ;$038930 |
@@ -1990,7 +1990,7 @@ StatueFireballGfx:
     LDA.w SpriteDir_157C,X                  ;$038F1E |
     ASL                                     ;$038F21 |
     STA $02                                 ;$038F22 |
-    LDA $14                                 ;$038F24 |
+    LDA.b Frame_14                          ;$038F24 |
     LSR                                     ;$038F26 |
     AND.b #$03                              ;$038F27 |
     ASL                                     ;$038F29 |
@@ -2050,7 +2050,7 @@ CODE_038F81:
     STA.w SpriteDir_157C,X
     JSL GenericSprGfxRt2                    ;$038F84 |
     LDY.w $15EA,X                           ;$038F88 |
-    LDA $14                                 ;$038F8B |
+    LDA.b Frame_14                          ;$038F8B |
     LSR                                     ;$038F8D |
     LSR                                     ;$038F8E |
     LSR                                     ;$038F8F |
@@ -2073,7 +2073,7 @@ CODE_038FA4:
     LDA.b SpriteLock_9D                     ;$038FAB |
     BNE Return038FF1                        ;$038FAD |
     TXA                                     ;$038FAF |
-    EOR $14                                 ;$038FB0 |
+    EOR.b Frame_14                          ;$038FB0 |
     AND.b #$07                              ;$038FB2 |
     ORA.w $186C,X                           ;$038FB4 |
     BNE CODE_038FC2                         ;$038FB7 |
@@ -2108,7 +2108,7 @@ Return038FF1:
 
 CODE_038FF2:
     JSL GenericSprGfxRt2
-    LDA $14                                 ;$038FF6 |
+    LDA.b Frame_14                          ;$038FF6 |
     LSR                                     ;$038FF8 |
     LSR                                     ;$038FF9 |
     LDA.b #$04                              ;$038FFA |
@@ -2329,7 +2329,7 @@ CODE_039191:
     LDA.w FishinBooTiles1,X                 ;$03919C |
     CPX.b #$09                              ;$03919F |
     BNE CODE_0391B4                         ;$0391A1 |
-    LDA $14                                 ;$0391A3 |
+    LDA.b Frame_14                          ;$0391A3 |
     LSR                                     ;$0391A5 |
     LSR                                     ;$0391A6 |
     PHX                                     ;$0391A7 |
@@ -2376,7 +2376,7 @@ CODE_0391DC:
     INY                                     ;$0391E9 |
     DEX                                     ;$0391EA |
     BPL CODE_039191                         ;$0391EB |
-    LDA $14                                 ;$0391ED |
+    LDA.b Frame_14                          ;$0391ED |
     LSR                                     ;$0391EF |
     LSR                                     ;$0391F0 |
     LSR                                     ;$0391F1 |
@@ -3489,7 +3489,7 @@ NoSetRznrFireTime:
     ASL                                     ;$039A12 |
     ASL                                     ;$039A13 |
     ASL                                     ;$039A14 |
-    ADC $14                                 ;$039A15 |
+    ADC.b Frame_14                          ;$039A15 |
     AND.b #$3F                              ;$039A17 |
     ORA.w $1558,X                           ;$039A19 |
     ORA.w $15AC,X                           ;$039A1C |
@@ -3852,7 +3852,7 @@ CODE_039CC8:
     ASL                                     ;$039CCA |
     ASL                                     ;$039CCB |
     ASL                                     ;$039CCC |
-    ADC $14                                 ;$039CCD |
+    ADC.b Frame_14                          ;$039CCD |
     AND.b #$3F                              ;$039CCF |
     BNE CODE_039CDA                         ;$039CD1 |
     JSR SubHorzPosBnk3                      ;$039CD3 |
@@ -4089,7 +4089,7 @@ CODE_039EA9:
     LDA.w $1602,X                           ;$039EAE |
     STA $04                                 ;$039EB1 |
     PHX                                     ;$039EB3 |
-    LDA $14                                 ;$039EB4 |
+    LDA.b Frame_14                          ;$039EB4 |
     AND.b #$02                              ;$039EB6 |
     ASL                                     ;$039EB8 |
     ASL                                     ;$039EB9 |
@@ -4709,7 +4709,7 @@ CODE_03A279:
     ADC.b #$1E                              ;$03A289 |
     ORA.w SpriteDir_157C,X                  ;$03A28B |
     STA.w $1BA2                             ;$03A28E |
-    LDA $14                                 ;$03A291 |
+    LDA.b Frame_14                          ;$03A291 |
     LSR                                     ;$03A293 |
     AND.b #$03                              ;$03A294 |
     STA.w $1428                             ;$03A296 |
@@ -5628,7 +5628,7 @@ CODE_03AA6E:
     STA.w $02A2                             ;$03AAA8 |
     LDA.b #$22                              ;$03AAAB |
     STA.w $02A6                             ;$03AAAD |
-    LDA $14                                 ;$03AAB0 |
+    LDA.b Frame_14                          ;$03AAB0 |
     LSR                                     ;$03AAB2 |
     AND.b #$06                              ;$03AAB3 |
     INC A                                   ;$03AAB5 |
@@ -6086,7 +6086,7 @@ DATA_03ADD9:
     db $08,$F8,$F8,$08
 
 CODE_03ADDD:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$08                              ;$03ADDF |
     BNE CODE_03ADE8                         ;$03ADE1 |
     LDA.b #$08                              ;$03ADE3 |
@@ -6261,7 +6261,7 @@ CODE_03AF59:
     JSR GetDrawInfoBnk3
     LDA.w SpriteDir_157C,X                  ;$03AF5C |
     STA $04                                 ;$03AF5F |
-    LDA $14                                 ;$03AF61 |
+    LDA.b Frame_14                          ;$03AF61 |
     LSR                                     ;$03AF63 |
     LSR                                     ;$03AF64 |
     AND.b #$07                              ;$03AF65 |
@@ -7782,7 +7782,7 @@ CODE_03C02F:
     LDA.w $009E,y                           ;$03C041 |
     CMP.b #$81                              ;$03C044 |
     BNE CODE_03C054                         ;$03C046 |
-    LDA $14                                 ;$03C048 |
+    LDA.b Frame_14                          ;$03C048 |
     LSR                                     ;$03C04A |
     LSR                                     ;$03C04B |
     LSR                                     ;$03C04C |
@@ -7864,7 +7864,7 @@ CODE_03C0D3:
     ORA.b #$09                              ;$03C0E6 |
     STA.w $0303,Y                           ;$03C0E8 |
     PHX                                     ;$03C0EB |
-    LDA $14                                 ;$03C0EC |
+    LDA.b Frame_14                          ;$03C0EC |
     LSR                                     ;$03C0EE |
     LSR                                     ;$03C0EF |
     LSR                                     ;$03C0F0 |
@@ -8067,7 +8067,7 @@ ChainsawGfx:
     LDA.w DATA_03C261,X                     ;$03C27A |
     STA $04                                 ;$03C27D |
     PLX                                     ;$03C27F |
-    LDA $14                                 ;$03C280 |
+    LDA.b Frame_14                          ;$03C280 |
     AND.b #$02                              ;$03C282 |
     STA $02                                 ;$03C284 |
     LDA $00                                 ;$03C286 |
@@ -8088,7 +8088,7 @@ ChainsawGfx:
     CLC                                     ;$03C2A5 |
     ADC $03                                 ;$03C2A6 |
     STA.w $0309,Y                           ;$03C2A8 |
-    LDA $14                                 ;$03C2AB |
+    LDA.b Frame_14                          ;$03C2AB |
     LSR                                     ;$03C2AD |
     LSR                                     ;$03C2AE |
     AND.b #$03                              ;$03C2AF |
@@ -9471,7 +9471,7 @@ CODE_03CE2F:
     LDY.b #$29                              ;$03CE33 |
     STY.w SPCIO3_1DFC                       ;$03CE35 |
 CODE_03CE38:
-    LDA $14
+    LDA.b Frame_14
     LSR                                     ;$03CE3A |
     LSR                                     ;$03CE3B |
     AND.b #$01                              ;$03CE3C |
@@ -10660,7 +10660,7 @@ CODE_03DFCC:
     BRA CODE_03E031                         ;$03DFEE |
 
 CODE_03DFF0:
-    LDA $14
+    LDA.b Frame_14
     LSR                                     ;$03DFF2 |
     BCC CODE_03E036                         ;$03DFF3 |
     DEC.w $1FFC                             ;$03DFF5 |

@@ -3449,7 +3449,7 @@ CODE_019862:
     STA.w $0305,Y                           ;$01987C |
     PHY                                     ;$01987F |
     LDY.b #$64                              ;$019880 |
-    LDA $14                                 ;$019882 |
+    LDA.b Frame_14                          ;$019882 |
     AND.b #$F8                              ;$019884 |
     BNE CODE_01988A                         ;$019886 |
     LDY.b #$4D                              ;$019888 |
@@ -3702,7 +3702,7 @@ ShellGfxProp:
 CODE_019A2A:
     LDA $C2,X
     STA.w $1558,X                           ;$019A2C |
-    LDA $14                                 ;$019A2F |
+    LDA.b Frame_14                          ;$019A2F |
     LSR                                     ;$019A31 |
     LSR                                     ;$019A32 |
     AND.b #$03                              ;$019A33 |
@@ -4564,7 +4564,7 @@ CODE_01A11A:
     RTS                                     ;$01A12E |
 
 StunGoomba:
-    LDA $14
+    LDA.b Frame_14
     LSR                                     ;$01A131 |
     LSR                                     ;$01A132 |
     LDY.w $1540,X                           ;$01A133 |
@@ -4744,7 +4744,7 @@ StunBabyYoshi:
     STA $AA,X                               ;$01A26B |
 CODE_01A26D:
     LDY.b #$00
-    LDA $14                                 ;$01A26F |
+    LDA.b Frame_14                          ;$01A26F |
     AND.b #$18                              ;$01A271 |
     BNE CODE_01A277                         ;$01A273 |
     LDY.b #$03                              ;$01A275 |
@@ -4771,7 +4771,7 @@ CODE_01A288:
     LDA.w $009E,y                           ;$01A29A |
     CMP.b #$81                              ;$01A29D |
     BNE CODE_01A2AD                         ;$01A29F |
-    LDA $14                                 ;$01A2A1 |
+    LDA.b Frame_14                          ;$01A2A1 |
     LSR                                     ;$01A2A3 |
     LSR                                     ;$01A2A4 |
     LSR                                     ;$01A2A5 |
@@ -7621,7 +7621,7 @@ CODE_01B66C:
     CLC                                     ;$01B677 |
     ADC.w DATA_01B65E,X                     ;$01B678 |
     STA.w $0301,Y                           ;$01B67B |
-    LDA $14                                 ;$01B67E |
+    LDA.b Frame_14                          ;$01B67E |
     LSR                                     ;$01B680 |
     LSR                                     ;$01B681 |
     AND.b #$04                              ;$01B682 |
@@ -8533,7 +8533,7 @@ MagiKoopasMagicDisp:
 
 MagiKoopasMagicGfx:
     JSR get_draw_info_bnk1_01A365
-    LDA $14                                 ;$01BCF3 |
+    LDA.b Frame_14                          ;$01BCF3 |
     LSR                                     ;$01BCF5 |
     AND.b #$0F                              ;$01BCF6 |
     STA $03                                 ;$01BCF8 |
@@ -9180,7 +9180,7 @@ GrowingVine:
 CODE_01C191:
     JSR SubSprGfx2Entry1
     LDY.w $15EA,X                           ;$01C194 |
-    LDA $14                                 ;$01C197 |
+    LDA.b Frame_14                          ;$01C197 |
     LSR                                     ;$01C199 |
     LSR                                     ;$01C19A |
     LSR                                     ;$01C19B |
@@ -9302,7 +9302,7 @@ CODE_01C262:
     BNE CODE_01C271                         ;$01C26C |
     JSR CODE_01B14E                         ;$01C26E |
 CODE_01C271:
-    LDA $14
+    LDA.b Frame_14
     LSR                                     ;$01C273 |
     AND.b #$0E                              ;$01C274 |
     EOR.w $15F6,X                           ;$01C276 |
@@ -9425,7 +9425,7 @@ EatenBerryGfxProp:
     db $02,$02,$04,$06
 
 FireFlower:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$08                              ;$01C34B |
     LSR                                     ;$01C34D |
     LSR                                     ;$01C34E |
@@ -9459,7 +9459,7 @@ CODE_01C371:
     STA $AA,X                               ;$01C382 |
     JSR SubSprYPosNoGrvty                   ;$01C384 |
 CODE_01C387:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$0C                              ;$01C389 |
     BNE CODE_01C3AB                         ;$01C38B |
     PLA                                     ;$01C38D |
@@ -9848,7 +9848,7 @@ CoinSprGfxSub:
     STA.w $0303,Y                           ;$01C65C |
     TXA                                     ;$01C65F |
     CLC                                     ;$01C660 |
-    ADC $14                                 ;$01C661 |
+    ADC.b Frame_14                          ;$01C661 |
     LSR                                     ;$01C663 |
     LSR                                     ;$01C664 |
     AND.b #$03                              ;$01C665 |
@@ -11033,7 +11033,7 @@ CODE_01CEDC:
     STA $B6,X                               ;$01CEEA |
 CODE_01CEEC:
     JSR SubSprXPosNoGrvty
-    LDA $14                                 ;$01CEEF |
+    LDA.b Frame_14                          ;$01CEEF |
     LSR                                     ;$01CEF1 |
     LSR                                     ;$01CEF2 |
     AND.b #$03                              ;$01CEF3 |
@@ -11130,7 +11130,7 @@ CODE_01CF7D:
     BCC CODE_01CF9E                         ;$01CF8C |
     BEQ CODE_01CFC6                         ;$01CF8E |
     LDY.b #$06                              ;$01CF90 |
-    LDA $14                                 ;$01CF92 |
+    LDA.b Frame_14                          ;$01CF92 |
     AND.b #$04                              ;$01CF94 |
     BEQ CODE_01CF99                         ;$01CF96 |
     INY                                     ;$01CF98 |
@@ -11358,7 +11358,7 @@ DATA_01D142:
     db $00,$01,$02,$01
 
 CODE_01D146:
-    LDA $14
+    LDA.b Frame_14
     LSR                                     ;$01D148 |
     LDY.w $1626,X                           ;$01D149 |
     CPY.b #$02                              ;$01D14C |
@@ -11850,7 +11850,7 @@ CODE_01D4A8:
     CLC                                     ;$01D4B1 |
     ADC.w DATA_01D442,X                     ;$01D4B2 |
     STA.w $0300,Y                           ;$01D4B5 |
-    LDA $14                                 ;$01D4B8 |
+    LDA.b Frame_14                          ;$01D4B8 |
     LSR                                     ;$01D4BA |
     LSR                                     ;$01D4BB |
     ROR                                     ;$01D4BC |
@@ -12162,7 +12162,7 @@ LineRopePChainsaw:
     TXA
     ASL                                     ;$01D71A |
     ASL                                     ;$01D71B |
-    EOR $14                                 ;$01D71C |
+    EOR.b Frame_14                          ;$01D71C |
     STA $02                                 ;$01D71E |
     AND.b #$07                              ;$01D720 |
     ORA.b SpriteLock_9D                     ;$01D722 |
@@ -12835,7 +12835,7 @@ CODE_01DBA8:
     CLC                                     ;$01DBB3 |
     ADC.w DATA_01DB9A,X                     ;$01DBB4 |
     STA.w $0301,Y                           ;$01DBB7 |
-    LDA $14                                 ;$01DBBA |
+    LDA.b Frame_14                          ;$01DBBA |
     AND.b #$02                              ;$01DBBC |
     ORA.b #$6C                              ;$01DBBE |
     STA.w $0302,Y                           ;$01DBC0 |
@@ -12863,7 +12863,7 @@ CODE_01DBD4:
     SBC.b #$08                              ;$01DBE7 |
     STA.w $0301,Y                           ;$01DBE9 |
     PHX                                     ;$01DBEC |
-    LDA $14                                 ;$01DBED |
+    LDA.b Frame_14                          ;$01DBED |
     LSR                                     ;$01DBEF |
     LSR                                     ;$01DBF0 |
     AND.b #$01                              ;$01DBF1 |
@@ -12896,7 +12896,7 @@ CODE_01DC11:
     CLC                                     ;$01DC1C |
     ADC.w DATA_01DC3F,X                     ;$01DC1D |
     STA.w $0301,Y                           ;$01DC20 |
-    LDA $14                                 ;$01DC23 |
+    LDA.b Frame_14                          ;$01DC23 |
     AND.b #$02                              ;$01DC25 |
     ORA.b #$6C                              ;$01DC27 |
     STA.w $0302,Y                           ;$01DC29 |
@@ -12939,7 +12939,7 @@ CODE_01DC54:
     TXA                                     ;$01DC65 |
     ASL                                     ;$01DC66 |
     ASL                                     ;$01DC67 |
-    EOR $14                                 ;$01DC68 |
+    EOR.b Frame_14                          ;$01DC68 |
     LSR                                     ;$01DC6A |
     LSR                                     ;$01DC6B |
     LSR                                     ;$01DC6C |
@@ -13079,7 +13079,7 @@ CODE_01DDD6:
     STZ.w $1890                             ;$01DDF2 |
     JSL GetRand                             ;$01DDF5 |
     EOR.b Frame_13                          ;$01DDF9 |
-    ADC $14                                 ;$01DDFB |
+    ADC.b Frame_14                          ;$01DDFB |
     AND.b #$07                              ;$01DDFD |
     TAY                                     ;$01DDFF |
     LDA.w DATA_01DE21,Y                     ;$01DE00 |
@@ -13123,7 +13123,7 @@ Return01DE40:
 CODE_01DE41:
     LDA $C2,X
     BNE CODE_01DE8C                         ;$01DE43 |
-    LDA $14                                 ;$01DE45 |
+    LDA.b Frame_14                          ;$01DE45 |
     AND.b #$03                              ;$01DE47 |
     BNE CODE_01DE58                         ;$01DE49 |
     INC.w $1570,X                           ;$01DE4B |
@@ -13477,7 +13477,7 @@ CODE_01E103:
 
 CODE_01E106:
     JSR SubSprYPosNoGrvty
-    LDA $14                                 ;$01E109 |
+    LDA.b Frame_14                          ;$01E109 |
     AND.b #$07                              ;$01E10B |
     ORA $C2,X                               ;$01E10D |
     BNE CODE_01E115                         ;$01E10F |
@@ -13539,7 +13539,7 @@ CODE_01E16D:
     JSR SubSprGfx2Entry1
     LDY.w $15EA,X                           ;$01E170 |
     PHX                                     ;$01E173 |
-    LDA $14                                 ;$01E174 |
+    LDA.b Frame_14                          ;$01E174 |
     AND.b #$0C                              ;$01E176 |
     LSR                                     ;$01E178 |
     ADC.w $15E9                             ;$01E179 |
@@ -13778,7 +13778,7 @@ CODE_01E343:
     LDA $9E,X
     CMP.b #$4D                              ;$01E345 |
     BNE CODE_01E363                         ;$01E347 |
-    LDA $14                                 ;$01E349 |
+    LDA.b Frame_14                          ;$01E349 |
     LSR                                     ;$01E34B |
     LSR                                     ;$01E34C |
     LSR                                     ;$01E34D |
@@ -13798,7 +13798,7 @@ DATA_01E361:
     db $00,$05
 
 CODE_01E363:
-    LDA $14
+    LDA.b Frame_14
     ASL                                     ;$01E365 |
     ASL                                     ;$01E366 |
     AND.b #$C0                              ;$01E367 |
@@ -14381,7 +14381,7 @@ CODE_01E7A8:
 NoCloudGfx:
     LDY.w $18E0
     BEQ CODE_01E7C5                         ;$01E7AE |
-    LDA $14                                 ;$01E7B0 |
+    LDA.b Frame_14                          ;$01E7B0 |
     AND.b #$03                              ;$01E7B2 |
     BNE CODE_01E7C5                         ;$01E7B4 |
     LDA.w $18E0                             ;$01E7B6 |
@@ -14467,7 +14467,7 @@ CODE_01E840:
     CLC                                     ;$01E84F |
     ADC.b #$03                              ;$01E850 |
     STA $7D                                 ;$01E852 |
-    LDA $14                                 ;$01E854 |
+    LDA.b Frame_14                          ;$01E854 |
     LSR                                     ;$01E856 |
     LSR                                     ;$01E857 |
     LSR                                     ;$01E858 |
@@ -14508,7 +14508,7 @@ Return01E897:
 CODE_01E898:
     PHY
     JSR CODE_01E98D                         ;$01E899 |
-    LDA $14                                 ;$01E89C |
+    LDA.b Frame_14                          ;$01E89C |
     LSR                                     ;$01E89E |
     LSR                                     ;$01E89F |
     LSR                                     ;$01E8A0 |
@@ -14551,7 +14551,7 @@ CODE_01E8E2:
     STA.w $14B0                             ;$01E8ED |
     LDA $01                                 ;$01E8F0 |
     STA.w $14B2                             ;$01E8F2 |
-    LDA $14                                 ;$01E8F5 |
+    LDA.b Frame_14                          ;$01E8F5 |
     LSR                                     ;$01E8F7 |
     LSR                                     ;$01E8F8 |
     AND.b #$0C                              ;$01E8F9 |
@@ -15344,7 +15344,7 @@ handle_off_yoshi_01EE61:
     BRA .not_flying_01EF13                  ;$01EEFE |/
 
 .wings_flying_01EF00:
-    LDA $14
+    LDA.b Frame_14
     LSR                                     ;$01EF02 |
     LSR                                     ;$01EF03 |
     LDY $7D                                 ;$01EF04 | A = $14/4 Y = player Y speed
@@ -15442,7 +15442,7 @@ process_yoshi_head_01EF18:
     STA.w $0301,Y                           ;$01EFB5 |
 +   LDA $C2,X                               ;$01EFB8 |
     BNE .mounted_or_running_01EFC6          ;$01EFBA |
-    LDA $14                                 ;$01EFBC | when hopping,
+    LDA.b Frame_14                          ;$01EFBC | when hopping,
     AND.b #$30                              ;$01EFBE | open mouth during some frames
     BNE .treat_as_mounted_01EFDB            ;$01EFC0 |
     LDA.b #$2A                              ;$01EFC2 | 2A: open mouth
@@ -15454,7 +15454,7 @@ process_yoshi_head_01EF18:
     LDA.w $151C,X                           ;$01EFCA ||
     ORA.w $13C6                             ;$01EFCD ||
     BNE .treat_as_mounted_01EFDB            ;$01EFD0 || when yoshi is able to release the tongue just before being hurt
-    LDA $14                                 ;$01EFD2 ||
+    LDA.b Frame_14                          ;$01EFD2 ||
     AND.b #$10                              ;$01EFD4 ||
     BEQ .not_releasing_tongue_01EFFD        ;$01EFD6 ||
     BRA .close_eyes_01EFF8                  ;$01EFD8 |/
@@ -15487,7 +15487,7 @@ process_yoshi_head_01EF18:
     BEQ .no_sprite_in_mouth_01F00F          ;$01F003 |
     CPY.b #$26                              ;$01F005 |
     BCS .swallow_sprite_OAM_01F038          ;$01F007 |
-    LDA $14                                 ;$01F009 | about to swallow a sprite
+    LDA.b Frame_14                          ;$01F009 | about to swallow a sprite
     AND.b #$18                              ;$01F00B |
     BNE .swallow_sprite_OAM_01F038          ;$01F00D | show normal mouth during some frames
 .no_sprite_in_mouth_01F00F:
@@ -15698,7 +15698,7 @@ normal_mouth_01F14B:
     STA.w YoshiCanStomp_18E7                ;$01F19E ||/ set stomp flag accordingly
     PLY                                     ;$01F1A1 |/
 .try_swallow_sprite_01F1A2:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$03                              ;$01F1A4 |
     BNE .process_hitting_yoshi_01F1C6       ;$01F1A6 |\ every 4 frames
     LDA.w $18AC                             ;$01F1A8 || if Yoshi has a sprite in his mouth
@@ -16910,7 +16910,7 @@ IggysBall:
     LDA.w DATA_01FA4C,Y                     ;$01FA5E |
     STA $00                                 ;$01FA61 |
     LDY.w $15EA,X                           ;$01FA63 |
-    LDA $14                                 ;$01FA66 |
+    LDA.b Frame_14                          ;$01FA66 |
     LSR                                     ;$01FA68 |
     LSR                                     ;$01FA69 |
     AND.b #$03                              ;$01FA6A |
@@ -17536,7 +17536,7 @@ CODE_01FF5B:
     CLC                                     ;$01FF71 |
     ADC.b #$60                              ;$01FF72 |
     STA.w $0301,Y                           ;$01FF74 |
-    LDA $14                                 ;$01FF77 |
+    LDA.b Frame_14                          ;$01FF77 |
     LSR                                     ;$01FF79 |
     AND.b #$03                              ;$01FF7A |
     TAX                                     ;$01FF7C |

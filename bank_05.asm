@@ -3522,7 +3522,7 @@ update_animated_tile_gfx_05BB39:
     PHB                                     ;$05BB39 | AXY->8
     PHK                                     ;$05BB3A |
     PLB                                     ;$05BB3B |
-    LDA $14                                 ;$05BB3C |
+    LDA.b Frame_14                          ;$05BB3C |
     AND.b #$07                              ;$05BB3E |
     STA $00                                 ;$05BB40 |
     ASL                                     ;$05BB42 |
@@ -3531,7 +3531,7 @@ update_animated_tile_gfx_05BB39:
     ASL                                     ;$05BB46 |
     TAX                                     ;$05BB47 |
     REP #$20                                ;$05BB48 |
-    LDA $14                                 ;$05BB4A |
+    LDA.b Frame_14                          ;$05BB4A |
     AND.w #$0018                            ;$05BB4C |
     LSR                                     ;$05BB4F |
     LSR                                     ;$05BB50 |
@@ -4765,7 +4765,7 @@ process_layer_3_05C40C:
     LDA.w SpriteLock_9D                     ;$05C497 |
     BNE .CODE_05C4EC                        ;$05C49A |
     LDY.w $1460                             ;$05C49C |
-    LDA $14                                 ;$05C49F |
+    LDA.b Frame_14                          ;$05C49F |
     AND.b #$03                              ;$05C4A1 |
     BNE .CODE_05C4C0                        ;$05C4A3 |
     LDA.w $145A                             ;$05C4A5 |
@@ -5008,7 +5008,7 @@ ADDR_05C659:
     PHP                                     ;$05C66A |
     LDA.w $1464                             ;$05C66B |
     EOR.w #$8D01                            ;$05C66E |
-    STZ $14                                 ;$05C671 |
+    STZ.b Frame_14                          ;$05C671 |
     RTS                                     ;$05C673 |
 
 ADDR_05C674:

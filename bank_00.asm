@@ -2515,7 +2515,7 @@ GM1D_ending_yoshi_load_009583:
 GM1F_ending_yoshi_main_0095AB:
     JSL OAM_reset_7F8000
     JSL CODE_0C939A                         ;$0095AF |
-    INC $14                                 ;$0095B3 |
+    INC.b Frame_14                          ;$0095B3 |
     JSL update_animated_tile_gfx_05BB39     ;$0095B5 |
     JMP consolidate_OAM_008494              ;$0095B9 |
 
@@ -2871,7 +2871,7 @@ DMA_mode_7_animations:                      ;        \
     LDA.w $0D9B                             ;$0098A9 |\ If we are at bowser skip uploading lava tiles
     LSR                                     ;$0098AC | |
     BCS .bowser                             ;$0098AD |/
-    LDA $14                                 ;$0098AF |\ Get the animation index relative
+    LDA.b Frame_14                          ;$0098AF |\ Get the animation index relative
     LSR                                     ;$0098B1 | | To the frame counter
     LSR                                     ;$0098B2 | | ($14 >> 2) & #$06
     AND.b #$06                              ;$0098B3 | |
@@ -4052,7 +4052,7 @@ CODE_00A1B5:
 
 GM0E_overworld_main_00A1BE:
     JSR SetUp0DA0GM4
-    INC $14                                 ;$00A1C1 |
+    INC.b Frame_14                          ;$00A1C1 |
     JSL OAM_reset_7F8000                    ;$00A1C3 |
     JSL GameMode_0E_Prim                    ;$00A1C7 |
     JMP consolidate_OAM_008494              ;$00A1CB |
@@ -4334,7 +4334,7 @@ animate_yellow_level_tile:                  ;        |
     STZ $00                                 ;$00A41C | Clear the palette offset
 animate_red_level_tile:                     ;        |
     STA.w $2121                             ;$00A41E | Store the color address
-    LDA $14                                 ;$00A421 |\ Use the frame counter to cycle the colors
+    LDA.b Frame_14                          ;$00A421 |\ Use the frame counter to cycle the colors
     AND.b #$1C                              ;$00A423 | | 
     LSR                                     ;$00A425 | | (($14) & #$1C) >> 1  (0 to 14 decimal)
     ADC $00                                 ;$00A426 | | Add the palette offset
@@ -4557,11 +4557,11 @@ GM12_level_load_2_00A59C:
 
 CODE_00A5F9:
     LDA.b #$E7
-    TRB $14                                 ;$00A5FB |
+    TRB.b Frame_14                          ;$00A5FB |
 -   JSL update_animated_tile_gfx_05BB39     ;$00A6Fd |
     JSR DMA_animated_level_tiles            ;$00A601 |
-    INC $14                                 ;$00A604 |
-    LDA $14                                 ;$00A606 |
+    INC.b Frame_14                          ;$00A604 |
+    LDA.b Frame_14                          ;$00A606 |
     AND.b #$07                              ;$00A608 |
     BNE -                                   ;$00A60A |
     RTS                                     ;$00A60C |
@@ -7368,14 +7368,14 @@ timers_and_animation_00C47E:
 .CODE_00C500:
     LDA.b SpriteLock_9D
     BNE .skip_timers_00C569                 ;$00C502 |
-    INC $14                                 ;$00C504 |
+    INC.b Frame_14                          ;$00C504 |
     LDX.b #$13                              ;$00C506 |
 -   LDA.w $1495,X                           ;$00C508 | decrement $1495-$14A8 every frame
     BEQ +                                   ;$00C50B |
     DEC.w $1495,X                           ;$00C50D |
 +   DEX                                     ;$00C510 |
     BNE -                                   ;$00C511 |
-    LDA $14                                 ;$00C513 |
+    LDA.b Frame_14                          ;$00C513 |
     AND.b #$03                              ;$00C515 |
     BNE .skip_timers_00C569                 ;$00C517 |
     LDA.w $1425                             ;$00C519 | Process various timers only when $14 is multiple of 4
@@ -8578,7 +8578,7 @@ lbl14A2Not0:
     ORA.w $14A6                             ;$00CF19 |
     BEQ CODE_00CF4E                         ;$00CF1C |
     STZ $73                                 ;$00CF1E |
-    LDA $14                                 ;$00CF20 |
+    LDA.b Frame_14                          ;$00CF20 |
     AND.b #$06                              ;$00CF22 |
     TAX                                     ;$00CF24 |
     TAY                                     ;$00CF25 |
@@ -9802,7 +9802,7 @@ CODE_00D9BD:
     LDA.w $13FA                             ;$00D9BE |
     BNE CODE_00D9CC                         ;$00D9C1 |
     DEY                                     ;$00D9C3 |
-    LDA $14                                 ;$00D9C4 |
+    LDA.b Frame_14                          ;$00D9C4 |
     AND.b #$03                              ;$00D9C6 |
     BNE CODE_00D9CC                         ;$00D9C8 |
     DEY                                     ;$00D9CA |
@@ -9847,7 +9847,7 @@ CODE_00DA06:
     SBC.b #$20                              ;$00DA08 |
     TAY                                     ;$00DA0A |
 CODE_00DA0B:
-    LDA $14
+    LDA.b Frame_14
     AND.b #$03                              ;$00DA0D |
     BNE CODE_00DA13                         ;$00DA0F |
     INY                                     ;$00DA11 |
@@ -10472,7 +10472,7 @@ draw_mario_and_yoshi_00E2BD:
     LDA.b PlayerHiddenTiles_78              ;$00E2D4 |
     CMP.b #!Hide_AllStar_FF                 ;$00E2D6 |
     BEQ +                                   ;$00E2D8 |
-    LDA $14                                 ;$00E2DA |
+    LDA.b Frame_14                          ;$00E2DA |
     AND.b #$03                              ;$00E2DC |
     BNE +                                   ;$00E2DE |
     DEC.w StarTimer_1490                    ;$00E2E0 |
@@ -13683,7 +13683,7 @@ CODE_00FD08:
     LDY.b #$7F                              ;$00FD10 |
 CODE_00FD12:
     TYA
-    AND $14                                 ;$00FD13 |
+    AND.b Frame_14                          ;$00FD13 |
     ORA.b SpriteLock_9D                                 ;$00FD15 |
     BNE Return00FD23                        ;$00FD17 |
     LDX.b #$07                              ;$00FD19 |
