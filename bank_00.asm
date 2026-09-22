@@ -305,7 +305,7 @@ NMI_start:                                  ;        \
     CLC                                     ;$008252 | | 
     ADC.w $1888                             ;$008253 | | $1888/9 are used as relative Y offsets
     STA.w $210E                             ;$008256 | | $210E is a write twice register
-    LDA $1D                                 ;$008259 | |
+    LDA.b Layer1YPos_1C+1                   ;$008259 | |
     ADC.w $1889                             ;$00825B | |
     STA.w $210E                             ;$00825E |/
     LDA.b Layer2XPos_1E                     ;$008261 |\ Set layer 2 X position from mirrors
@@ -537,7 +537,7 @@ mode_7_static_BG_scroll:                    ;        \
     CLC                                     ;$00842C | |
     ADC.w $1888                             ;$00842D | | Add in the relative amount.
     STA.w $210E                             ;$008430 | |
-    LDA $1D                                 ;$008433 | |
+    LDA.b Layer1YPos_1C+1                   ;$008433 | |
     STA.w $210E                             ;$008435 |/
     RTS                                     ;$008438 /
 
@@ -4173,7 +4173,7 @@ GM14_main_level_00A1DA:
 .common_level_logic:
     LDA.b Layer1YPos_1C
     PHA                                     ;$00A2AB | push layer 1 positions
-    LDA $1D                                 ;$00A2AC |
+    LDA.b Layer1YPos_1C+1                   ;$00A2AC |
     PHA                                     ;$00A2AE |
     STZ.w $1888                             ;$00A2AF |
     STZ.w $1889                             ;$00A2B2 |
@@ -4189,8 +4189,8 @@ GM14_main_level_00A1DA:
     STA.b Layer1YPos_1C                     ;$00A2C9 ||
     LDA.w GrndShakeDispYHi,Y                ;$00A2CB ||
     STA.w $1889                             ;$00A2CE ||
-    ADC $1D                                 ;$00A2D1 ||
-    STA $1D                                 ;$00A2D3 |/
+    ADC.b Layer1YPos_1C+1                   ;$00A2D1 ||
+    STA.b Layer1YPos_1C+1                   ;$00A2D3 |/
 +   JSR update_status_tileset_008E1A        ;$00A2D5 |
     JSL draw_mario_and_yoshi_00E2BD         ;$00A2D8 |
     JSR mirror_player_position_00A2F3       ;$00A2DC |
@@ -4198,7 +4198,7 @@ GM14_main_level_00A1DA:
     JSL standard_and_cluster_sprites_01808C ;$00A2E2 |
     JSL minor_sprites_and_loading_028AB1    ;$00A2E6 |
     PLA                                     ;$00A2EA | pull layer 1 positions
-    STA $1D                                 ;$00A2EB |
+    STA.b Layer1YPos_1C+1                   ;$00A2EB |
     PLA                                     ;$00A2ED |
     STA.b Layer1YPos_1C                     ;$00A2EE |
     JMP consolidate_OAM_008494              ;$00A2F0 |

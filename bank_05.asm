@@ -6514,7 +6514,7 @@ CODE_05D8B7:
     ROL                                     ;$05D92F |
     ROL                                     ;$05D930 |
     STA.w $1BE3                             ;$05D931 |
-    STZ $1D                                 ;$05D934 |
+    STZ.b Layer1YPos_1C+1                   ;$05D934 |
     STZ $21                                 ;$05D936 |
     LDA.w DATA_05F600,Y                     ;$05D938 |
     AND.b #$80                              ;$05D93B |
@@ -6619,7 +6619,7 @@ CODE_05D9EC:
 CODE_05DA01:
     LDA $01
     STA $97                                 ;$05DA03 |
-    STA $1D                                 ;$05DA05 |
+    STA.b Layer1YPos_1C+1                   ;$05DA05 |
     SEP #$10                                ;$05DA07 |
     LDY.w $1414                             ;$05DA09 |
     CPY.b #$03                              ;$05DA0C |

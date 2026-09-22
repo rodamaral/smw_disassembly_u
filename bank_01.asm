@@ -4916,7 +4916,7 @@ get_draw_info_bnk1_01A365:
     LDA.w SpriteYPosHigh_14D4,X             ;$01A3B2 |
     ADC.b #$00                              ;$01A3B5 |
     LSR $00                                 ;$01A3B7 |
-    SBC $1D                                 ;$01A3B9 |
+    SBC.b Layer1YPos_1C+1                   ;$01A3B9 |
     BEQ +                                   ;$01A3BB |\
     LDA.w $186C,X                           ;$01A3BD ||
     ORA.w DATA_01A363,Y                     ;$01A3C0 || set vertical offscreen flag
@@ -6242,7 +6242,7 @@ CODE_01ACD2:
     ROL $00                                 ;$01ACD8 |
     CMP.b SpriteYPosLow_D8,X                ;$01ACDA |
     PHP                                     ;$01ACDC |
-    LDA.w $1D                               ;$01ACDD |
+    LDA.w Layer1YPos_1C+1                   ;$01ACDD |
     LSR $00                                 ;$01ACE0 |
     ADC.w SpriteOffScreen2,Y                ;$01ACE2 |
     PLP                                     ;$01ACE5 |
@@ -8691,7 +8691,7 @@ CODE_01BDFB:
     ADC.b Layer1YPos_1C                     ;$01BE11 |
     AND.b #$F0                              ;$01BE13 |
     STA.b SpriteYPosLow_D8,X                ;$01BE15 |
-    LDA $1D                                 ;$01BE17 |
+    LDA.b Layer1YPos_1C+1                   ;$01BE17 |
     ADC.b #$00                              ;$01BE19 |
     STA.w SpriteYPosHigh_14D4,X             ;$01BE1B |
     JSL GetRand                             ;$01BE1E |

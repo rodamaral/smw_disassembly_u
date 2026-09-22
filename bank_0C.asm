@@ -4768,7 +4768,7 @@ CODE_0CCD23:
 
 CODE_0CCD31:
     STA.w $0B41,X
-    LDA $1D                                 ;$0CCD34 |
+    LDA.b Layer1YPos_1C+1                   ;$0CCD34 |
     STA.w $0B5F,X                           ;$0CCD36 |
     LDA.b #$F0                              ;$0CCD39 |
     STA.w $0B05,X                           ;$0CCD3B |
@@ -4776,7 +4776,7 @@ CODE_0CCD31:
     JSR CODE_0CD283                         ;$0CCD41 |
     SEP #$20                                ;$0CCD44 |
     LDA.w $0B5F,X                           ;$0CCD46 |
-    STA $1D                                 ;$0CCD49 |
+    STA.b Layer1YPos_1C+1                   ;$0CCD49 |
     LDA.w $0B41,X                           ;$0CCD4B |
     STA.b Layer1YPos_1C                     ;$0CCD4E |
     CMP.b #$FD                              ;$0CCD50 |
@@ -4838,7 +4838,7 @@ CODE_0CCDB9:
     LDX.b #$00
     LDA.b Layer1YPos_1C                     ;$0CCDBB |
     STA.w $0B41,X                           ;$0CCDBD |
-    LDA $1D                                 ;$0CCDC0 |
+    LDA.b Layer1YPos_1C+1                   ;$0CCDC0 |
     STA.w $0B5F,X                           ;$0CCDC2 |
     LDA.w $1447                             ;$0CCDC5 |
     STA.w $0B05,X                           ;$0CCDC8 |
@@ -4851,7 +4851,7 @@ CODE_0CCDD7:
     JSR CODE_0CD283
 CODE_0CCDDA:
     LDA.w $0B5F,X
-    STA $1D                                 ;$0CCDDD |
+    STA.b Layer1YPos_1C+1                   ;$0CCDDD |
     LDA.w $0B41,X                           ;$0CCDDF |
     STA.b Layer1YPos_1C                     ;$0CCDE2 |
     BEQ CODE_0CCDEF                         ;$0CCDE4 |
@@ -5276,7 +5276,7 @@ CODE_0CD0D2:
     LDX.b #$00                              ;$0CD0D9 |
     LDA.b Layer1YPos_1C                     ;$0CD0DB |
     STA.w $0B41,X                           ;$0CD0DD |
-    LDA $1D                                 ;$0CD0E0 |
+    LDA.b Layer1YPos_1C+1                   ;$0CD0E0 |
     STA.w $0B5F,X                           ;$0CD0E2 |
     LDA.b #$08                              ;$0CD0E5 |
     STA.w $0B05,X                           ;$0CD0E7 |
@@ -5293,7 +5293,7 @@ CODE_0CD0D2:
 CODE_0CD100:
     STA.b Layer1YPos_1C
     LDA.w $0B5F,X                           ;$0CD102 |
-    STA $1D                                 ;$0CD105 |
+    STA.b Layer1YPos_1C+1                   ;$0CD105 |
 Return0CD107:
     RTS
 
@@ -5322,7 +5322,7 @@ CODE_0CD133:
     LDX.b #$00
     LDA.b Layer1YPos_1C                     ;$0CD135 |
     STA.w $0B41,X                           ;$0CD137 |
-    LDA $1D                                 ;$0CD13A |
+    LDA.b Layer1YPos_1C+1                   ;$0CD13A |
     STA.w $0B5F,X                           ;$0CD13C |
     LDA.b Layer1XPos_1A                     ;$0CD13F |
     STA.w $0B50,X                           ;$0CD141 |
@@ -5337,7 +5337,7 @@ CODE_0CD133:
     LDA.w $0B41,X                           ;$0CD15A |
     STA.b Layer1YPos_1C                     ;$0CD15D |
     LDA.w $0B5F,X                           ;$0CD15F |
-    STA $1D                                 ;$0CD162 |
+    STA.b Layer1YPos_1C+1                   ;$0CD162 |
     LDA.w $0B50,X                           ;$0CD164 |
     STA.b Layer1XPos_1A                     ;$0CD167 |
     LDA.w $0B6E,X                           ;$0CD169 |

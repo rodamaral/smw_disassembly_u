@@ -1770,16 +1770,16 @@ CODE_038D93:
     CLC                                     ;$038D9B |
     ADC.w DATA_038D66,Y                     ;$038D9C |
     STA.b Layer1YPos_1C                     ;$038D9F |
-    LDA $1D                                 ;$038DA1 |
+    LDA.b Layer1YPos_1C+1                   ;$038DA1 |
     PHA                                     ;$038DA3 |
     ADC.b #$00                              ;$038DA4 |
-    STA $1D                                 ;$038DA6 |
+    STA.b Layer1YPos_1C+1                   ;$038DA6 |
     JSL GenericSprGfxRt2                    ;$038DA8 |
     LDY.w $15EA,X                           ;$038DAC |
     LDA.b #$C0                              ;$038DAF |
     STA.w $0302,Y                           ;$038DB1 |
     PLA                                     ;$038DB4 |
-    STA $1D                                 ;$038DB5 |
+    STA.b Layer1YPos_1C+1                   ;$038DB5 |
     PLA                                     ;$038DB7 |
     STA.b Layer1YPos_1C                     ;$038DB8 |
     RTS                                     ;$038DBA |
@@ -7317,7 +7317,7 @@ CODE_03B79A:
     LDA.w SpriteYPosHigh_14D4,X             ;$03B7A6 |
     ADC.b #$00                              ;$03B7A9 |
     LSR $00                                 ;$03B7AB |
-    SBC $1D                                 ;$03B7AD |
+    SBC.b Layer1YPos_1C+1                   ;$03B7AD |
     BEQ CODE_03B7BA                         ;$03B7AF |
     LDA.w $186C,X                           ;$03B7B1 |
     ORA.w DATA_03B75E,Y                     ;$03B7B4 |
@@ -7494,7 +7494,7 @@ VerticalLevelBnk3:
     ROL $00                                 ;$03B8DA |
     CMP.b SpriteYPosLow_D8,X                ;$03B8DC |
     PHP                                     ;$03B8DE |
-    LDA.w $1D                               ;$03B8DF |
+    LDA.w Layer1YPos_1C+1                   ;$03B8DF |
     LSR $00                                 ;$03B8E2 |
     ADC.w DATA_03B83D,Y                     ;$03B8E4 |
     PLP                                     ;$03B8E7 |
@@ -8021,10 +8021,10 @@ CODE_03C22B:
     CLC                                     ;$03C233 |
     ADC.w DATA_03C1EC,Y                     ;$03C234 |
     STA.b Layer1YPos_1C                     ;$03C237 |
-    LDA $1D                                 ;$03C239 |
+    LDA.b Layer1YPos_1C+1                   ;$03C239 |
     PHA                                     ;$03C23B |
     ADC.b #$00                              ;$03C23C |
-    STA $1D                                 ;$03C23E |
+    STA.b Layer1YPos_1C+1                   ;$03C23E |
     JSL GenericSprGfxRt2                    ;$03C240 |
     LDY.w $15EA,X                           ;$03C244 |
     LDA.b #$2A                              ;$03C247 |
@@ -8033,7 +8033,7 @@ CODE_03C22B:
     AND.b #$BF                              ;$03C24F |
     STA.w $0303,Y                           ;$03C251 |
     PLA                                     ;$03C254 |
-    STA $1D                                 ;$03C255 |
+    STA.b Layer1YPos_1C+1                   ;$03C255 |
     PLA                                     ;$03C257 |
     STA.b Layer1YPos_1C                     ;$03C258 |
     RTS                                     ;$03C25A |
@@ -8684,7 +8684,7 @@ CODE_03C7D0:
     CLC                                     ;$03C7E1 |
     ADC.b Layer1YPos_1C                     ;$03C7E2 |
     STA.w SpriteYPosLow_D8,Y                ;$03C7E4 |
-    LDA $1D                                 ;$03C7E7 |
+    LDA.b Layer1YPos_1C+1                   ;$03C7E7 |
     ADC.b #$00                              ;$03C7E9 |
     STA.w SpriteYPosHigh_14D4,Y             ;$03C7EB |
     PHX                                     ;$03C7EE |
