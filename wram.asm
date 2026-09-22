@@ -1454,7 +1454,7 @@ PlayerYPosSpx: skip 1 ; unused
 PlayerTurningPose: skip 1
 PlayerOverworldPose: skip 1
 PlayerCapePose: skip 1
-PlayerPose: skip 1
+PlayerPose_13E0: skip 1
 SlopeType: skip 1
 SpinjumpFireball: skip 1
 WallrunningType: skip 1

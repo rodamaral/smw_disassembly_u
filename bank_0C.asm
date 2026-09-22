@@ -1640,7 +1640,7 @@ CODE_0CA1F6:
     BNE CODE_0CA24F                         ;$0CA205 |
     STZ.w $18E2                             ;$0CA207 |
     LDA.b #$0F                              ;$0CA20A |
-    STA.w $13E0                             ;$0CA20C |
+    STA.w PlayerPose_13E0                   ;$0CA20C |
     JSR CODE_0CA764                         ;$0CA20F |
     JSR CODE_0CA7B4                         ;$0CA212 |
     LDA.w $1442                             ;$0CA215 |
@@ -2246,7 +2246,7 @@ CODE_0CA6B0:
     STA $97                                 ;$0CA6BF |
     STZ.w $18E2                             ;$0CA6C1 |
     LDA.b #$26                              ;$0CA6C4 |
-    STA.w $13E0                             ;$0CA6C6 |
+    STA.w PlayerPose_13E0                   ;$0CA6C6 |
     JSR CODE_0CA764                         ;$0CA6C9 |
     JSR CODE_0CA7B4                         ;$0CA6CC |
     LDY.w $1458                             ;$0CA6CF |
@@ -5954,7 +5954,7 @@ CODE_0CD674:
     ADC.b #$03                              ;$0CD677 |
     TAX                                     ;$0CD679 |
     LDA.w $D5D6,X                           ;$0CD67A |
-    STA.w $13E0                             ;$0CD67D |
+    STA.w PlayerPose_13E0                   ;$0CD67D |
 CODE_0CD680:
     LDY.b #$00
     LDA.w DATA_0CD5E9,X                     ;$0CD682 |
@@ -6095,7 +6095,7 @@ CODE_0CD759:
     BCC CODE_0CD764                         ;$0CD760 |
     LDY.b #$38                              ;$0CD762 |
 CODE_0CD764:
-    STY.w $13E0
+    STY.w PlayerPose_13E0
     LDY.b #$00                              ;$0CD767 |
     DEC A                                   ;$0CD769 |
     STA $00                                 ;$0CD76A |
@@ -6140,7 +6140,7 @@ CODE_0CD7A9:
     AND.b #$04                              ;$0CD7B1 |
     BEQ CODE_0CD7BA                         ;$0CD7B3 |
     LDA.b #$39                              ;$0CD7B5 |
-    STA.w $13E0                             ;$0CD7B7 |
+    STA.w PlayerPose_13E0                   ;$0CD7B7 |
 CODE_0CD7BA:
     LDA $94
     CMP.w DATA_0CD6E5,X                     ;$0CD7BC |

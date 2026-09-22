@@ -7681,7 +7681,7 @@ CODE_00C7DF:
 CODE_00C7E9:
     TAY
     LDA.w $C5DA,Y                           ;$00C7EA |
-    STA.w $13E0                             ;$00C7ED |
+    STA.w PlayerPose_13E0                   ;$00C7ED |
     STZ.w $148F                             ;$00C7F0 |
     JSR aerial_physics                      ;$00C7F3 |
 CODE_00C7F6:
@@ -7984,7 +7984,7 @@ SetMarioPeaceImg:
     BEQ CODE_00CA3A                         ;$00CA36 |
     LDA.b #$14                              ;$00CA38 |
 CODE_00CA3A:
-    STA.w $13E0
+    STA.w PlayerPose_13E0
     RTS                                     ;$00CA3D |
 
 CODE_00CA3E:
@@ -8261,7 +8261,7 @@ no_animation:                               ;        \
     DEC.w $18BD                             ;$00CCD5 | Decrease the freeze timer.
     STZ $7B                                 ;$00CCD8 | Freeze the player's X position.
     LDA.b #$0F                              ;$00CCDA |\ Make the player face the screen.
-    STA.w $13E0                             ;$00CCDC |/
+    STA.w PlayerPose_13E0                   ;$00CCDC |/
 .return                                     ;        |
     RTS                                     ;$00CCDF /
 
@@ -8371,7 +8371,7 @@ CODE_00CD9D:
     STY.w $13F3                             ;$00CDA0 |
     LDA.b #$0F                              ;$00CDA3 |
 CODE_00CDA5:
-    STA.w $13E0                             ;$00CDA5 |
+    STA.w PlayerPose_13E0                   ;$00CDA5 |
     RTS                                     ;$00CDA8 |
 
 yoshi_poses:
@@ -8392,7 +8392,7 @@ set_yoshi_pose:                             ;        \
     BEQ .set_pose                           ;$00CDC2 | |
     LDA.b #$1D                              ;$00CDC4 | | use pose $1D.
 .set_pose                                   ;        | |
-    STA.w $13E0                             ;$00CDC6 |/ set the player's pose.
+    STA.w PlayerPose_13E0                   ;$00CDC6 |/ set the player's pose.
     LDA.w YoshiHasWings_141E                ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
     CMP.b #$01                              ;$00CDCC | |
     BNE return_00CDDC                       ;$00CDCE |/
@@ -8736,7 +8736,7 @@ CODE_00D01A:
     CLC                                     ;$00D02D |
     ADC.b #$11                              ;$00D02E |
 MarioAnimNo45:
-    STA.w $13E0
+    STA.w PlayerPose_13E0
     RTL                                     ;$00D033 |
 
 DATA_00D034:
@@ -8809,7 +8809,7 @@ DATA_00D0AE:
 death_animation:
     STZ.b Powerup_19                        ;$00D0B6 \ Clear the player's powerup.
     LDA.b #$3E                              ;$00D0B8 |\ Set the death pose.
-    STA.w $13E0                             ;$00D0BA |/
+    STA.w PlayerPose_13E0                   ;$00D0BA |/
     LDA $13                                 ;$00D0BD |\
     AND.b #$03                              ;$00D0BF | | Every four frames,
     BNE .no_decrement                       ;$00D0C1 | |
@@ -8874,7 +8874,7 @@ hurt_animation:
 set_growing_poses:                          ;        | |
     TAY                                     ;$00D130 | |
     LDA.w growing_hurt_poses,Y              ;$00D131 | | and set the player's pose based on the timer
-    STA.w $13E0                             ;$00D134 |/ and the sequence of hurt poses.
+    STA.w PlayerPose_13E0                   ;$00D134 |/ and the sequence of hurt poses.
 decrement_animation_timer:                  ;        |
     LDA.w $1496                             ;$00D137 |\ If the animation timer is nonzero,
     BEQ .return                             ;$00D13A | |
@@ -8926,7 +8926,7 @@ flower_animation:                           ;        \
     LDA.w $13ED                             ;$00D17C | |
     AND.b #$7F                              ;$00D17F | |
     STA.w $13ED                             ;$00D181 | | stop cape-sliding on the ground,
-    STZ.w $13E0                             ;$00D184 |/ and reset the player's pose.
+    STZ.w PlayerPose_13E0                   ;$00D184 |/ and reset the player's pose.
 CODE_00D187:                                ;        |
     DEC.w CyclePaletteTimer_149B            ;$00D187 |\ Decrease the palette cycle timer.
     BEQ reset_animation                     ;$00D18A |/ If it's zero, reset the animation.
@@ -8953,7 +8953,7 @@ horizontal_pipe_animation:
     LDA.w RidingYoshi_187A                  ;$00D1A8 |
     BEQ CODE_00D1B2                         ;$00D1AB |
     LDA.b #$29                              ;$00D1AD |
-    STA.w $13E0                             ;$00D1AF |
+    STA.w PlayerPose_13E0                   ;$00D1AF |
 CODE_00D1B2:
     REP #$20
     LDA $96                                 ;$00D1B4 |
@@ -9025,7 +9025,7 @@ CODE_00D220:
 CODE_00D228:
     LDA.b #$21
 CODE_00D22A:
-    STA.w $13E0
+    STA.w PlayerPose_13E0
 CODE_00D22D:
     LDA.b #$40
     STA $15                                 ;$00D22F |
@@ -9947,7 +9947,7 @@ CODE_00DA9F:
     BEQ CODE_00DAA5                         ;$00DAA2 |
     INC A                                   ;$00DAA4 |
 CODE_00DAA5:
-    STA.w $13E0
+    STA.w PlayerPose_13E0
     RTS                                     ;$00DAA8 |
 
 CODE_00DAA9:
@@ -10059,7 +10059,7 @@ CODE_00DB7D:
     JSR CODE_00D044                         ;$00DB8C |
     LDA.w ClimbPunchingImgs,X               ;$00DB8F |
 CODE_00DB92:
-    STA.w $13E0
+    STA.w PlayerPose_13E0
     RTS                                     ;$00DB95 |
 
 CODE_00DB96:
@@ -10092,7 +10092,7 @@ CODE_00DBAC:
     STA.w $149E                             ;$00DBC7 |
 CODE_00DBCA:
     LDA.w ClimbingImgs,X
-    STA.w $13E0                             ;$00DBCD |
+    STA.w PlayerPose_13E0                   ;$00DBCD |
     LDA $15                                 ;$00DBD0 |
     AND.b #$03                              ;$00DBD2 |
     BEQ CODE_00DBF2                         ;$00DBD4 |
@@ -10516,7 +10516,7 @@ draw_mario_and_yoshi_00E2BD:
     LDA.w DATA_00E2A2,Y                     ;$00E31E |
     STA.w PlayerPalPtr_0D82                 ;$00E321 |
     SEP #$20                                ;$00E324 |
-    LDX.w $13E0                             ;$00E326 |
+    LDX.w PlayerPose_13E0                   ;$00E326 |
     LDA.b #$05                              ;$00E329 |
     CMP.w $13E3                             ;$00E32B |
     BCS .CODE_00E33E                        ;$00E32E |
@@ -10585,7 +10585,7 @@ draw_mario_and_yoshi_00E2BD:
     LDA.w DATA_00DD32,Y                     ;$00E39F |
     STA $05                                 ;$00E3A2 |
     LDY.b Powerup_19                        ;$00E3A4 |
-    LDA.w $13E0                             ;$00E3A6 |
+    LDA.w PlayerPose_13E0                   ;$00E3A6 |
     CMP.b #$3D                              ;$00E3A9 |
     BCS +                                   ;$00E3AB |
     ADC.w TilesetIndex,Y                    ;$00E3AD |
@@ -10624,7 +10624,7 @@ draw_mario_and_yoshi_00E2BD:
     PHY                                     ;$00E401 |
     LDA.b #$2C                              ;$00E402 |
     STA $06                                 ;$00E404 |
-    LDX.w $13E0                             ;$00E406 |
+    LDX.w PlayerPose_13E0                   ;$00E406 |
     LDA.w DATA_00E18E,X                     ;$00E409 |
     TAX                                     ;$00E40C |
     LDA.w DATA_00E1D7,X                     ;$00E40D |
