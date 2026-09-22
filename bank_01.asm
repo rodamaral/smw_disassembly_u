@@ -10418,7 +10418,7 @@ CODE_01CA6E:
     LDA $16                                 ;$01CA71 |
     BMI CODE_01CA79                         ;$01CA73 |
     LDA.b #$FF                              ;$01CA75 |
-    STA $78                                 ;$01CA77 |
+    STA.b PlayerHiddenTiles_78              ;$01CA77 |
 CODE_01CA79:
     LDA $13
     LSR                                     ;$01CA7B |

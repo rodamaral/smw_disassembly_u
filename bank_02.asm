@@ -11815,7 +11815,7 @@ CODE_02D70B:
     JSL draw_mario_and_yoshi_00E2BD         ;$02D732 |
     PLX                                     ;$02D736 |
     LDA.b #$FF                              ;$02D737 |
-    STA $78                                 ;$02D739 |
+    STA.b PlayerHiddenTiles_78              ;$02D739 |
     BRA CODE_02D74B                         ;$02D73B |
 
 CODE_02D73D:

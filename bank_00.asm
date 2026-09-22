@@ -7302,7 +7302,7 @@ DATA_00C478:
     db $30,$33,$33,$30,$01,$00
 
 timers_and_animation_00C47E:
-    STZ $78
+    STZ.b PlayerHiddenTiles_78
     LDA.w $13CB                             ;$00C480 |
     BPL +                                   ;$00C483 |
     JSL CODE_01C580                         ;$00C485 | as $13CB was left off, this is normally unreachable
@@ -8909,7 +8909,7 @@ return_00D15E:                              ;        |
 
 cape_animation:
     LDA.b #$7F                              ;$00D15F \ Hide all of the player.
-    STA $78                                 ;$00D161 |
+    STA.b PlayerHiddenTiles_78              ;$00D161 |
     DEC.w $1496                             ;$00D163 |\ Decrement the animation timer.
     BNE return_00D15E                       ;$00D166 |/ If it's not zero, return.
     LDA.b Powerup_19                        ;$00D168 |\ If the player is small or big,
@@ -8987,7 +8987,7 @@ CODE_00D1DB:
 CODE_00D1ED:
     LDA.w DATA_00D193,Y
 CODE_00D1F0:
-    STA $78
+    STA.b PlayerHiddenTiles_78
     BRA CODE_00D22D                         ;$00D1F2 |
 
 CODE_00D1F4:
@@ -9041,7 +9041,7 @@ CODE_00D22D:
     BNE CODE_00D24E                         ;$00D243 |
     BCS CODE_00D24E                         ;$00D245 |
     LDA.b #$7F                              ;$00D247 |
-    STA $78                                 ;$00D249 |
+    STA.b PlayerHiddenTiles_78              ;$00D249 |
     INC.w $1405                             ;$00D24B |
 CODE_00D24E:
     LDA $7B
@@ -10461,7 +10461,7 @@ draw_mario_and_yoshi_00E2BD:
     PHB
     PHK                                     ;$00E2BE |
     PLB                                     ;$00E2BF |
-    LDA $78                                 ;$00E2C0 |
+    LDA.b PlayerHiddenTiles_78              ;$00E2C0 |
     CMP.b #$FF                              ;$00E2C2 |
     BEQ +                                   ;$00E2C4 |
     JSL draw_yoshi_01EA70                   ;$00E2C6 |
@@ -10469,7 +10469,7 @@ draw_mario_and_yoshi_00E2BD:
     BNE .CODE_00E308                        ;$00E2CD |
     LDY.w $1490                             ;$00E2CF |
     BEQ .CODE_00E314                        ;$00E2D2 |
-    LDA $78                                 ;$00E2D4 |
+    LDA.b PlayerHiddenTiles_78              ;$00E2D4 |
     CMP.b #$FF                              ;$00E2D6 |
     BEQ +                                   ;$00E2D8 |
     LDA $14                                 ;$00E2DA |
@@ -10654,7 +10654,7 @@ draw_mario_and_yoshi_00E2BD:
     STA $05                                 ;$00E43B |
     PLY                                     ;$00E43D |
     LDA.w DATA_00E1D4,X                     ;$00E43E |
-    TSB $78                                 ;$00E441 |
+    TSB.b PlayerHiddenTiles_78              ;$00E441 |
     BMI +                                   ;$00E443 |
     JSR CODE_00E45D                         ;$00E445 |
 +   LDX.w $13F9                             ;$00E448 |
@@ -10669,7 +10669,7 @@ draw_mario_and_yoshi_00E2BD:
     RTL                                     ;$00E45C |
 
 CODE_00E45D:
-    LSR $78
+    LSR.b PlayerHiddenTiles_78
     BCS CODE_00E49F                         ;$00E45F |
     LDX $06                                 ;$00E461 |
     LDA.w Mario8x8Tiles,X                   ;$00E463 |
