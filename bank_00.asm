@@ -334,7 +334,7 @@ NMI_start:                                  ;        \
     LDA.w $4211                             ;$008294 | Read to clear the IRQ flag
     STY.w $4209                             ;$008297 | Set the V timer low byte (generally #$24)
     STZ.w $420A                             ;$00829A | Clear the V timer high byte
-    STZ $11                                 ;$00829D | Set IRQ id flag to 0 (IRQ #1)
+    STZ.b IRQType_11                        ;$00829D | Set IRQ id flag to 0 (IRQ #1)
     LDA.b #$A1                              ;$00829F | Load Enable NMI, vertical IRQ, and autojoy enabled
 .NMI_return                                 ;        |
     STA.w $4200                             ;$0082A1 | Store NMI/IRQ/autojoy enabled status
@@ -481,7 +481,7 @@ EmptyHandler:                               ;        |
 mode_7_IRQ:                                 ;        \ 
     BIT.w $0D9B                             ;$0083DA |\ Platform bosses have only one IRQ
     BVC .platform_bosses                    ;$0083BD |/ So skip the differentiation code
-    LDY $11                                 ;$0083BF |\ If we are in the First IRQ branch
+    LDY.b IRQType_11                        ;$0083BF |\ If we are in the First IRQ branch
     BEQ .first_IRQ                          ;$0083C1 |/
     STA.w $4200                             ;$0083C3 | Store Interrupt flags
     LDY.b #$14                              ;$0083C6 |\ short wait for HBlank, use a short wait to
@@ -490,7 +490,7 @@ mode_7_IRQ:                                 ;        \
     BRA mode_7_IRQ_return                   ;$0083CE /
 
 .first_IRQ                                  ;        \ 
-    INC $11                                 ;$0083D0 | Set first IRQ as triggered
+    INC.b IRQType_11                        ;$0083D0 | Set first IRQ as triggered
     LDA.w $4211                             ;$0083D2 | Reread the IRQ flag, this is unneeded
     LDA.b #$AE                              ;$0083D5 |\ Offset the V timer based on the layer 1 relative
     SEC                                     ;$0083D7 | | Y position.
