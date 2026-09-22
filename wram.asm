@@ -1443,8 +1443,9 @@ SkipMidwayCastleIntro: skip 1
 StructureCrushTile: skip 1
 StructureCrushIndex: skip 1
 SwitchPalaceColor: skip 1
-PauseTimer: skip 1
-PauseFlag: skip 1
+RamLevelReset_13D3:
+PauseTimer_13D3: skip 1
+PauseFlag_13D4: skip 1
 Layer3ScrollType: skip 1
 DrumrollTimer: skip 1
 IntroMarchYPosSpx: skip 2

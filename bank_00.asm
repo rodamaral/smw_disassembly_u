@@ -4044,7 +4044,7 @@ CODE_00A1AD:
     BPL CODE_00A1AD                         ;$00A1B0 |
     LDX.w #$07CE                            ;$00A1B2 |
 CODE_00A1B5:
-    STZ.w $13D3,X
+    STZ.w RamLevelReset_13D3,X
     DEX                                     ;$00A1B8 |
     BPL CODE_00A1B5                         ;$00A1B9 |
     SEP #$10                                ;$00A1BB |
@@ -4093,9 +4093,9 @@ GM14_main_level_00A1DA:
     LDA.b #$40                              ;$00A20B ||
     TRB.b byetudlrPress_16                  ;$00A20D || clear X/Y press
     TRB.b axlr0000Press_18                  ;$00A20F |/
-+   LDA.w $13D3                             ;$00A211 |
++   LDA.w PauseTimer_13D3                   ;$00A211 |
     BEQ .able_to_toggle_pause_00A21B        ;$00A214 |
-    DEC.w $13D3                             ;$00A216 | if unable to (un)pause
+    DEC.w PauseTimer_13D3                   ;$00A216 | if unable to (un)pause
     BRA .handle_paused_status_00A242        ;$00A219 |
 
 .able_to_toggle_pause_00A21B:
@@ -4108,16 +4108,16 @@ GM14_main_level_00A1DA:
     CMP.b #!AniDeath_09                     ;$00A228 |
     BCS .handle_paused_status_00A242        ;$00A22A | and with pausable animation < 9
     LDA.b #$3C                              ;$00A22C |
-    STA.w $13D3                             ;$00A22E | then set the pause timer
+    STA.w PauseTimer_13D3                   ;$00A22E | then set the pause timer
     LDY.b #$12                              ;$00A231 |
-    LDA.w $13D4                             ;$00A233 | toggle pause flag
+    LDA.w PauseFlag_13D4                    ;$00A233 | toggle pause flag
     EOR.b #$01                              ;$00A236 |
-    STA.w $13D4                             ;$00A238 |
+    STA.w PauseFlag_13D4                    ;$00A238 |
     BEQ +                                   ;$00A23B |
     LDY.b #$11                              ;$00A23D |
 +   STY.w SPCIO0_1DF9                       ;$00A23F | play the (un)pause sound effect
 .handle_paused_status_00A242:
-    LDA.w $13D4
+    LDA.w PauseFlag_13D4
     BEQ .level_unpaused_00A28A              ;$00A245 |
     BRA .level_paused_00A25B                ;$00A247 |
 

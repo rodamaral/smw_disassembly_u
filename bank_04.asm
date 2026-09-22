@@ -266,7 +266,7 @@ CODE_04828F:
     JMP CODE_048413                         ;$048292 |
 
 CODE_048295:
-    LDA.w $13D4
+    LDA.w PauseFlag_13D4
     LSR                                     ;$048298 |
     BNE CODE_04829E                         ;$048299 |
     JMP CODE_048356                         ;$04829B |
@@ -312,7 +312,7 @@ CODE_0482D1:
     STA.b Layer1YPos_1C                     ;$0482E1 |
     STA.b Layer2YPos_20                     ;$0482E3 |
     SEP #$20                                ;$0482E5 |
-    STZ.w $13D4                             ;$0482E7 |
+    STZ.w PauseFlag_13D4                    ;$0482E7 |
     JMP CODE_0483BD                         ;$0482EA |
 
 CODE_0482ED:
@@ -406,8 +406,8 @@ CODE_048375:
     LDA.b byetudlrPress_16                  ;$04837D |
     AND.b #$10                              ;$04837F |
     BEQ CODE_04839A                         ;$048381 |
-    INC.w $13D4                             ;$048383 |
-    LDA.w $13D4                             ;$048386 |
+    INC.w PauseFlag_13D4                    ;$048383 |
+    LDA.w PauseFlag_13D4                    ;$048386 |
     LSR                                     ;$048389 |
     BNE CODE_04839A                         ;$04838A |
     REP #$20                                ;$04838C |
@@ -417,7 +417,7 @@ CODE_048375:
     STA.w $1DF2                             ;$048395 |
     SEP #$20                                ;$048398 |
 CODE_04839A:
-    LDA.w $13D4
+    LDA.w PauseFlag_13D4
     BEQ CODE_0483C3                         ;$04839D |
     LDX.b #$00                              ;$04839F |
     LDA.b byetudlrHold_15                   ;$0483A1 |
