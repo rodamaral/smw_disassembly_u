@@ -10415,7 +10415,7 @@ CODE_01CA64:
     STA $95                                 ;$01CA6C |
 CODE_01CA6E:
     JSR CODE_01C9E2
-    LDA.b byetudlrFrame_16                  ;$01CA71 |
+    LDA.b byetudlrPress_16                  ;$01CA71 |
     BMI CODE_01CA79                         ;$01CA73 |
     LDA.b #!Hide_AllStar_FF                 ;$01CA75 |
     STA.b PlayerHiddenTiles_78              ;$01CA77 |
@@ -12610,7 +12610,7 @@ CODE_01DA0A:
     BEQ Return01DA8F                        ;$01DA2A |
     STA.w $18BE                             ;$01DA2C |
 CODE_01DA2F:
-    BIT.b byetudlrFrame_16
+    BIT.b byetudlrPress_16
     BPL CODE_01DA3F                         ;$01DA31 |
     LDA.b #$B0                              ;$01DA33 |
     STA $7D                                 ;$01DA35 |
@@ -14494,7 +14494,7 @@ CODE_01E866:
     STZ.b PlayerInAir_72                    ;$01E87E |
     INC.w $1471                             ;$01E880 |
     INC.w $18C2                             ;$01E883 |
-    LDA.b byetudlrFrame_16                  ;$01E886 |
+    LDA.b byetudlrPress_16                  ;$01E886 |
     AND.b #$80                              ;$01E888 |
     BEQ Return01E897                        ;$01E88A |
     LDA.b #$C0                              ;$01E88C |
@@ -15177,7 +15177,7 @@ CODE_01ED70:
 CODE_01ED95:
     LDA.w $13F3
     BNE CODE_01ED9E                         ;$01ED98 |
-    BIT.b axlr0000Frame_18                  ;$01ED9A |
+    BIT.b axlr0000Press_18                  ;$01ED9A |
     BPL Return01EDCB                        ;$01ED9C |
 CODE_01ED9E:
     LDA.b #$02
@@ -15731,7 +15731,7 @@ normal_mouth_01F14B:
     LDA $C2,X
     CMP.b #$01                              ;$01F1E1 |
     BNE .return_01F1DE                      ;$01F1E3 |
-    BIT.b byetudlrFrame_16                  ;$01F1E5 |
+    BIT.b byetudlrPress_16                  ;$01F1E5 |
     BVC .return_01F1DE                      ;$01F1E7 | if pressed Y/X:
     LDA.w $18AC                             ;$01F1E9 |
     BNE .spit_sprite_on_mouth_01F1F1        ;$01F1EC |

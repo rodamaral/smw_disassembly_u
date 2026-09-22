@@ -74,7 +74,7 @@ byetudlrHold_15: skip 1
 ; ||+----- set if the select button is held this frame
 ; |+------ set if the Y button is held this frame
 ; +------- set if the B button is held this frame
-byetudlrFrame_16: skip 1
+byetudlrPress_16: skip 1
 ; Valid values
 !ButB = %10000000
 !ButY = %01000000
@@ -110,7 +110,7 @@ axlr0000Hold_17: skip 1
 ; ||+----- set if the L button is held this frame
 ; |+------ set if the X button is held this frame
 ; +------- set if the A button is held this frame
-axlr0000Frame_18: skip 1
+axlr0000Press_18: skip 1
 ; Valid values
 !ButA = %10000000
 !ButX = %01000000

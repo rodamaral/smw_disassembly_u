@@ -2964,13 +2964,13 @@ CODE_05B16E:
     LDA.b byetudlrHold_15
     AND.b #$F0                              ;$05B170 |
     BEQ CODE_05B18E                         ;$05B172 |
-    EOR.b byetudlrFrame_16                  ;$05B174 |
+    EOR.b byetudlrPress_16                  ;$05B174 |
     AND.b #$F0                              ;$05B176 |
     BEQ CODE_05B186                         ;$05B178 |
     LDA.b axlr0000Hold_17                   ;$05B17A |
     AND.b #$C0                              ;$05B17C |
     BEQ CODE_05B18E                         ;$05B17E |
-    EOR.b axlr0000Frame_18                  ;$05B180 |
+    EOR.b axlr0000Press_18                  ;$05B180 |
     AND.b #$C0                              ;$05B182 |
     BNE CODE_05B18E                         ;$05B184 |
 CODE_05B186:
