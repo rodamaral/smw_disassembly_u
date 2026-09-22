@@ -6592,7 +6592,7 @@ CODE_05D9B8:
     STA.w $1DEA                             ;$05D9CF |
     SEP #$10                                ;$05D9D2 |
     LDX.w Translevel_13BF                   ;$05D9D4 |
-    LDA.w $1EA2,X                           ;$05D9D7 |
+    LDA.w OWLevelSettings_1EA2,X            ;$05D9D7 |
     AND.b #$40                              ;$05D9DA |
     BEQ CODE_05D9EC                         ;$05D9DC |
     STA.w $13CF                             ;$05D9DE |

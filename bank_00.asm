@@ -4028,7 +4028,7 @@ CODE_00A195:
     LDX.w #$008C                            ;$00A197 |
 CODE_00A19A:
     LDA.w $1F49,X
-    STA.w $1EA2,X                           ;$00A19D |
+    STA.w OWLevelSettings_1EA2,X            ;$00A19D |
     DEX                                     ;$00A1A0 |
     BPL CODE_00A19A                         ;$00A1A1 |
     SEP #$10                                ;$00A1A3 |
@@ -4136,7 +4136,7 @@ GM14_main_level_00A1DA:
     AND.b #$20                              ;$00A25D |
     BEQ .Return00A289                       ;$00A25F | if not holding select, return to main loop
     LDY.w Translevel_13BF                   ;$00A261 | if holding select, try to exit the level if beaten
-    LDA.w $1EA2,Y                           ;$00A264 |
+    LDA.w OWLevelSettings_1EA2,Y            ;$00A264 |
     BPL .Return00A289                       ;$00A267 |
     LDA.w $0DD5                             ;$00A269 |
     BEQ +                                   ;$00A26C |

@@ -1313,7 +1313,7 @@ CODE_048DDF:
     LDA.l $7ED000,X                         ;$048E12 |
     AND.w #$00FF                            ;$048E16 |
     TAX                                     ;$048E19 |
-    LDA.w $1EA2,X                           ;$048E1A |
+    LDA.w OWLevelSettings_1EA2,X            ;$048E1A |
     AND.w #$0080                            ;$048E1D |
     BNE CODE_048E38                         ;$048E20 |
     LDY.w #$0014                            ;$048E22 |
@@ -1468,9 +1468,9 @@ CODE_048F13:
     LDA.l $7ED000,X                         ;$048F45 |
     AND.w #$00FF                            ;$048F49 |
     TAX                                     ;$048F4C |
-    LDA.w $1EA2,X                           ;$048F4D |
+    LDA.w OWLevelSettings_1EA2,X            ;$048F4D |
     ORA.w #$0040                            ;$048F50 |
-    STA.w $1EA2,X                           ;$048F53 |
+    STA.w OWLevelSettings_1EA2,X            ;$048F53 |
 CODE_048F56:
     SEP #$20
     LDA.b #$05                              ;$048F58 |
@@ -1483,10 +1483,10 @@ CODE_048F5F:
     LDA.l $7ED000,X                         ;$048F63 |
     AND.w #$00FF                            ;$048F67 |
     TAX                                     ;$048F6A |
-    LDA.w $1EA2,X                           ;$048F6B |
+    LDA.w OWLevelSettings_1EA2,X            ;$048F6B |
     ORA.w #$0080                            ;$048F6E |
     AND.w #$FFBF                            ;$048F71 |
-    STA.w $1EA2,X                           ;$048F74 |
+    STA.w OWLevelSettings_1EA2,X            ;$048F74 |
     INC.w $13D9                             ;$048F77 |
 CODE_048F7A:
     REP #$30
@@ -1598,7 +1598,7 @@ CODE_049037:
     BEQ CODE_049054                         ;$04903F |
     LDX.b #$5F                              ;$049041 |
 CODE_049043:
-    LDA.w $1EA2,X
+    LDA.w OWLevelSettings_1EA2,X
     STA.w $1F49,X                           ;$049046 |
     DEX                                     ;$049049 |
     BPL CODE_049043                         ;$04904A |
@@ -1861,7 +1861,7 @@ CODE_04928C:
     AND.w #$00FF                            ;$04929D |
     TAX                                     ;$0492A0 |
     PLA                                     ;$0492A1 |
-    AND.w $1EA2,X                           ;$0492A2 |
+    AND.w OWLevelSettings_1EA2,X            ;$0492A2 |
     AND.w #$000F                            ;$0492A5 |
     BNE CODE_0492AD                         ;$0492A8 |
     JMP CODE_049411                         ;$0492AA |
@@ -2399,8 +2399,8 @@ CODE_0496A5:
     AND.w #$00FF                            ;$0496C4 |
     TAX                                     ;$0496C7 |
     LDA.w DATA_04941E,Y                     ;$0496C8 |
-    ORA.w $1EA2,X                           ;$0496CB |
-    STA.w $1EA2,X                           ;$0496CE |
+    ORA.w OWLevelSettings_1EA2,X            ;$0496CB |
+    STA.w OWLevelSettings_1EA2,X            ;$0496CE |
     PLY                                     ;$0496D1 |
 CODE_0496D2:
     LDA.w $0DD6
@@ -2754,8 +2754,8 @@ CODE_049949:
     AND.w #$00FF                            ;$049954 |
     TAX                                     ;$049957 |
     LDA.w DATA_04941E,Y                     ;$049958 |
-    ORA.w $1EA2,X                           ;$04995B |
-    STA.w $1EA2,X                           ;$04995E |
+    ORA.w OWLevelSettings_1EA2,X            ;$04995B |
+    STA.w OWLevelSettings_1EA2,X            ;$04995E |
     SEP #$30                                ;$049961 |
     RTS                                     ;$049963 |
 
