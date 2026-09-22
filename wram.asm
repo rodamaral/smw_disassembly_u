@@ -1613,7 +1613,7 @@ skip 4
 RNGCalc: skip 2
 RandomNumber: skip 2
 IsCarryingItem: skip 1
-InvinsibilityTimer: skip 1
+StarTimer_1490: skip 1
 SpriteXMovement: skip 1
 PlayerPeaceSign: skip 1
 EndLevelTimer: skip 1

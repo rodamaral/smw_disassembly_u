@@ -5572,7 +5572,7 @@ DATA_01A839:
     db $F0,$10
 
 DefaultInteractR:
-    LDA.w $1490
+    LDA.w StarTimer_1490
     BEQ CODE_01A87E                         ;$01A83E |
     LDA.w $167A,X                           ;$01A840 |
     AND.b #$02                              ;$01A843 |
@@ -6826,7 +6826,7 @@ CODE_01B0EA:
     BCC CODE_01B10A                         ;$01B0F0 |
     LDA.w $164A,X                           ;$01B0F2 |
     BEQ CODE_01B107                         ;$01B0F5 |
-    LDA.w $1490                             ;$01B0F7 |
+    LDA.w StarTimer_1490                    ;$01B0F7 |
     BNE CODE_01B107                         ;$01B0FA |
     LDA.w RidingYoshi_187A                  ;$01B0FC |
     BNE CODE_01B10A                         ;$01B0FF |
@@ -9103,7 +9103,7 @@ CODE_01C0B4:
     STA.w $0DDA                             ;$01C0F6 |
     LDA.b #$FF                              ;$01C0F9 |
     STA.w $1493                             ;$01C0FB |
-    STZ.w $1490                             ;$01C0FE |
+    STZ.w StarTimer_1490                    ;$01C0FE |
     INC.w $1602,X                           ;$01C101 |
     JSR MarioSprInteractRt                  ;$01C104 |
     BCC CODE_01C125                         ;$01C107 |
@@ -9730,7 +9730,7 @@ CODE_01C57A:
 
 CODE_01C580:
     LDA.b #$FF
-    STA.w $1490                             ;$01C582 |
+    STA.w StarTimer_1490                    ;$01C582 |
     LDA.b #$0D                              ;$01C585 |
     STA.w $1DFB                             ;$01C587 |
     ASL.w $0DDA                             ;$01C58A |
@@ -16417,7 +16417,7 @@ maybe_hurt_yoshi_01F6DD:
     AND.b #$01                              ;$01F708 ||
     CMP $00                                 ;$01F70A ||
     BNE .return_01F74B                      ;$01F70C |/
-+   LDA.w $1490                             ;$01F70E |\
++   LDA.w StarTimer_1490                    ;$01F70E |\
     BNE .return_01F74B                      ;$01F711 |/ Return if has Star power
 ;hurt_yoshi:
     LDA.b #$10                              ;$01F713 |

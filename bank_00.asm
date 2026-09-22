@@ -4584,7 +4584,7 @@ CODE_00A635:
     ORA.w $14AE                             ;$00A638 |
     ORA.w $190C                             ;$00A63B |
     BNE CODE_00A64A                         ;$00A63E |
-    LDA.w $1490                             ;$00A640 |
+    LDA.w StarTimer_1490                    ;$00A640 |
     BEQ CODE_00A660                         ;$00A643 |
     LDA.w $0DDA                             ;$00A645 |
     BPL CODE_00A64F                         ;$00A648 |
@@ -4597,7 +4597,7 @@ CODE_00A64F:
     STZ.w $14AD                             ;$00A654 |
     STZ.w $14AE                             ;$00A657 |
     STZ.w $190C                             ;$00A65A |
-    STZ.w $1490                             ;$00A65D |
+    STZ.w StarTimer_1490                    ;$00A65D |
 CODE_00A660:
     LDA.w $13F4
     ORA.w $13F5                             ;$00A663 |
@@ -10467,7 +10467,7 @@ draw_mario_and_yoshi_00E2BD:
     JSL draw_yoshi_01EA70                   ;$00E2C6 |
 +   LDY.w CyclePaletteTimer_149B            ;$00E2CA |
     BNE .CODE_00E308                        ;$00E2CD |
-    LDY.w $1490                             ;$00E2CF |
+    LDY.w StarTimer_1490                    ;$00E2CF |
     BEQ .CODE_00E314                        ;$00E2D2 |
     LDA.b PlayerHiddenTiles_78              ;$00E2D4 |
     CMP.b #$FF                              ;$00E2D6 |
@@ -10475,7 +10475,7 @@ draw_mario_and_yoshi_00E2BD:
     LDA $14                                 ;$00E2DA |
     AND.b #$03                              ;$00E2DC |
     BNE +                                   ;$00E2DE |
-    DEC.w $1490                             ;$00E2E0 |
+    DEC.w StarTimer_1490                    ;$00E2E0 |
 +   LDA $13                                 ;$00E2E3 |
     CPY.b #$1E                              ;$00E2E5 |
     BCC .CODE_00E30A                        ;$00E2E7 |
@@ -12087,7 +12087,7 @@ CODE_00F1BA:
     BRA CODE_00F1D0                         ;$00F1C7 |
 
 CODE_00F1C9:
-    LDY.w $1490
+    LDY.w StarTimer_1490
     BNE CODE_00F1D0                         ;$00F1CC |
 CODE_00F1CE:
     LDA.b #$06
@@ -12704,7 +12704,7 @@ HurtMario:
     LDA $71
     BNE Return00F628                        ;$00F5B9 |
     LDA.w $1497                             ;$00F5BB |
-    ORA.w $1490                             ;$00F5BE |
+    ORA.w StarTimer_1490                    ;$00F5BE |
     ORA.w $1493                             ;$00F5C1 |
     BNE Return00F628                        ;$00F5C4 |
     STZ.w $18E3                             ;$00F5C6 |
@@ -13404,7 +13404,7 @@ DATA_00FAFB:
 
 LvlEndPowerUp:
     LDX $19
-    LDA.w $1490                             ;$00FB02 |
+    LDA.w StarTimer_1490                    ;$00FB02 |
     BEQ CODE_00FB09                         ;$00FB05 |
     LDX.b #$04                              ;$00FB07 |
 CODE_00FB09:

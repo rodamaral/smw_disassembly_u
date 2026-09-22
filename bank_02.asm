@@ -1401,7 +1401,7 @@ minor_sprites_and_loading_028AB1:
     STA.w $1DFC                             ;$028ACF |
     INC.w $0DBE                             ;$028AD2 |
 .process_starman_028AD5:
-    LDA.w $1490
+    LDA.w StarTimer_1490
     BEQ .process_star_sparkles_028AEB       ;$028AD8 |
     CMP.b #$08                              ;$028ADA |
     BCC .process_star_sparkles_028AEB       ;$028ADC |
@@ -4893,7 +4893,7 @@ Return02A468:
     RTS
 
 CODE_02A469:
-    LDA.w $1490
+    LDA.w StarTimer_1490
     BNE CODE_02A4B5                         ;$02A46C |
     LDA.w RidingYoshi_187A                  ;$02A46E |
     BEQ CODE_02A4AE                         ;$02A471 |
@@ -8667,7 +8667,7 @@ RipVanFishMain:
     PHA                                     ;$02BFDE |
     LDA $AA,X                               ;$02BFDF |
     PHA                                     ;$02BFE1 |
-    LDY.w $1490                             ;$02BFE2 |
+    LDY.w StarTimer_1490                    ;$02BFE2 |
     BEQ CODE_02BFF3                         ;$02BFE5 |
     EOR.b #$FF                              ;$02BFE7 |
     INC A                                   ;$02BFE9 |
@@ -9774,7 +9774,7 @@ CODE_02C79D:
     BNE Return02C80F                        ;$02C7A0 |
     JSL MarioSprInteract                    ;$02C7A2 |
     BCC Return02C80F                        ;$02C7A6 |
-    LDA.w $1490                             ;$02C7A8 |
+    LDA.w StarTimer_1490                    ;$02C7A8 |
     BEQ CODE_02C7C4                         ;$02C7AB |
     LDA.b #$D0                              ;$02C7AD |
     STA $AA,X                               ;$02C7AF |
@@ -15560,7 +15560,7 @@ CODE_02F247:
     ADC.b #$0C                              ;$02F249 |
     CMP.b #$18                              ;$02F24B |
     BCS CODE_02F29B                         ;$02F24D |
-    LDA.w $1490                             ;$02F24F |
+    LDA.w StarTimer_1490                    ;$02F24F |
     BNE ADDR_02F29D                         ;$02F252 |
     LDA.w SpritePlayerContact_154C,X        ;$02F254 |
     ORA $81                                 ;$02F257 |
@@ -16629,7 +16629,7 @@ CODE_02F9AE:
     JSL GetMarioClipping                    ;$02F9E6 |
     JSL CheckForContact                     ;$02F9EA |
     BCC Return02F9FE                        ;$02F9EE |
-    LDA.w $1490                             ;$02F9F0 |
+    LDA.w StarTimer_1490                    ;$02F9F0 |
     BNE ADDR_02F9A6                         ;$02F9F3 |
 CODE_02F9F5:
     LDA.w RidingYoshi_187A

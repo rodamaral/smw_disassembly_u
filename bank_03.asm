@@ -2839,7 +2839,7 @@ CODE_039581:
     JSL SprSprInteract
     JSL MarioSprInteract                    ;$039585 |
     BCC NoRexContact                        ;$039589 |
-    LDA.w $1490                             ;$03958B |
+    LDA.w StarTimer_1490                    ;$03958B |
     BNE RexStarKill                         ;$03958E |
     LDA.w SpritePlayerContact_154C,X        ;$039590 |
     BNE NoRexContact                        ;$039593 |
@@ -3937,7 +3937,7 @@ CODE_039D66:
     JSL GetMarioClipping                    ;$039D8A |
     JSL CheckForContact                     ;$039D8E |
     BCC Return039D9D                        ;$039D92 |
-    LDA.w $1490                             ;$039D94 |
+    LDA.w StarTimer_1490                    ;$039D94 |
     BNE Return039D9D                        ;$039D97 |
     JSL HurtMario                           ;$039D99 |
 Return039D9D:
