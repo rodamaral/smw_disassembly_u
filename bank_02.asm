@@ -2433,7 +2433,7 @@ CODE_029265:
     BPL CODE_02926F                         ;$02926C |
     ASL                                     ;$02926E |
 CODE_02926F:
-    AND $5B
+    AND.b ScreenMode_5B
     BEQ CODE_0292CA                         ;$029271 |
     LDA.w $16A1,X                           ;$029273 |
     SEC                                     ;$029276 |
@@ -2785,7 +2785,7 @@ Return02950A:
 CODE_02950B:
     STZ $0F
     JSR CapeLayerInteraction029540          ;$02950D |
-    LDA $5B                                 ;$029510 |
+    LDA.b ScreenMode_5B                     ;$029510 |
     BPL Return02953B                        ;$029512 | if there is collision with either Layer 2 or 3
     INC $0F                                 ;$029514 | calculate shifted cape position
     LDA.w $13E9                             ;$029516 |
@@ -2818,7 +2818,7 @@ CapeLayerInteraction029540:
     TAY                                     ;$029544 |
     LDA $0F                                 ;$029545 |
     INC A                                   ;$029547 |
-    AND $5B                                 ;$029548 |
+    AND.b ScreenMode_5B                     ;$029548 |
     BEQ CapeHorizontalLayer0295AE           ;$02954A |
     LDA.w $13EB                             ;$02954C | if vertical layer
     CLC                                     ;$02954F |
@@ -5058,7 +5058,7 @@ CODE_02A5BC:
     ROL $0E                                 ;$02A5BF |
     LDA.w $1693                             ;$02A5C1 | possibly reads uninit $1693
     STA $0C                                 ;$02A5C4 |
-    LDA $5B                                 ;$02A5C6 |
+    LDA.b ScreenMode_5B                     ;$02A5C6 |
     BPL CODE_02A60C                         ;$02A5C8 |
     INC $0F                                 ;$02A5CA |
     LDA.w $171F,X                           ;$02A5CC |
@@ -5099,7 +5099,7 @@ CODE_02A60C:
 CODE_02A611:
     LDA $0F
     INC A                                   ;$02A613 |
-    AND $5B                                 ;$02A614 |
+    AND.b ScreenMode_5B                     ;$02A614 |
     BEQ CODE_02A679                         ;$02A616 | actually process point collision
     LDA.w $1715,X                           ;$02A618 |
     CLC                                     ;$02A61B |
@@ -5335,7 +5335,7 @@ load_sprites_from_level_02A7FC:
     BNE Return02A84B                        ;$02A800 |
 CODE_02A802:
     LDY $55
-    LDA $5B                                 ;$02A804 |
+    LDA.b ScreenMode_5B                     ;$02A804 |
     LSR                                     ;$02A806 |
     BCC CODE_02A817                         ;$02A807 |
     LDA.b Layer1YPos_1C                     ;$02A809 |
@@ -5535,7 +5535,7 @@ CODE_02A936:
 
 CODE_02A93C:
     LDY $03
-    LDA $5B                                 ;$02A93E |
+    LDA.b ScreenMode_5B                     ;$02A93E |
     LSR                                     ;$02A940 |
     BCC CODE_02A95B                         ;$02A941 |
     LDA [$CE],Y                             ;$02A943 |
@@ -5867,7 +5867,7 @@ CODE_02AB9E:
     SEC                                     ;$02ABA2 |
     SBC.b #$C8                              ;$02ABA3 |
     STA.w $1783,X                           ;$02ABA5 |
-    LDA $5B                                 ;$02ABA8 |
+    LDA.b ScreenMode_5B                     ;$02ABA8 |
     LSR                                     ;$02ABAA |
     BCC CODE_02ABC7                         ;$02ABAB |
     LDA [$CE],Y                             ;$02ABAD |
@@ -5964,7 +5964,7 @@ CODE_02AC4D:
     RTS                                     ;$02AC5B |
 
 CODE_02AC5C:
-    LDA $5B
+    LDA.b ScreenMode_5B
     LSR                                     ;$02AC5E |
     BCC CODE_02ACA1                         ;$02AC5F |
     LDA $55                                 ;$02AC61 |
@@ -10841,8 +10841,8 @@ SubOffscreen0Bnk2:
 CODE_02D027:
     JSR IsSprOffScreenBnk2
     BEQ Return02D090                        ;$02D02A |
-    LDA $5B                                 ;$02D02C |
-    AND.b #$01                              ;$02D02E |
+    LDA.b ScreenMode_5B                     ;$02D02C |
+    AND.b #!Layer1Vert_01                   ;$02D02E |
     BNE VerticalLevelBnk2                   ;$02D030 |
     LDA $03                                 ;$02D032 |
     CMP.b #$04                              ;$02D034 |
@@ -17280,8 +17280,8 @@ DATA_02FEC9:
 DATA_02FECB:
     db $01,$FF
 
-    LDA $5B                                 ;$02FECD |
-    AND.b #$01                              ;$02FECF |
+    LDA.b ScreenMode_5B                     ;$02FECD |
+    AND.b #!Layer1Vert_01                   ;$02FECF |
     BNE ADDR_02FF1E                         ;$02FED1 |
     LDA.w $1E02,X                           ;$02FED3 |
     CLC                                     ;$02FED6 |

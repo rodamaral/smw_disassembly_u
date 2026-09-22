@@ -458,10 +458,11 @@ LvlLoadObjNo_5A: skip 1
 ; +------- set to enable interaction with Layer 2
 ScreenMode_5B: skip 1
 ; Valid values
-!ScrMode_Layer1Vert = %01
-!ScrMode_Layer2Vert = %10
-!ScrMode_DisableL1Int = %01000000
-!ScrMode_EnableL2Int = %10000000
+!Layer1Vert_01 = %01
+!Layer2Vert_02 = %10
+!Layer12Vert_03 = %11
+!DisableL1Int_40 = %01000000
+!EnableL2Int_80 = %10000000
 
 ; === $7E005C ===
 ; 1 byte

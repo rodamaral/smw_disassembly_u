@@ -7427,8 +7427,8 @@ SubOffscreen0Bnk3:
 CODE_03B85F:
     JSR IsSprOffScreenBnk3
     BEQ Return03B8C2                        ;$03B862 |
-    LDA $5B                                 ;$03B864 |
-    AND.b #$01                              ;$03B866 |
+    LDA.b ScreenMode_5B                     ;$03B864 |
+    AND.b #!Layer1Vert_01                   ;$03B866 |
     BNE VerticalLevelBnk3                   ;$03B868 |
     LDA.b SpriteYPosLow_D8,X                ;$03B86A |
     CLC                                     ;$03B86C |

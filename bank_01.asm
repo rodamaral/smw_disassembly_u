@@ -2505,7 +2505,7 @@ CODE_019140:
     STA.w $1695                             ;$01914F |
     STZ.w $164A,X                           ;$019152 |
     JSR CODE_019211                         ;$019155 |
-    LDA $5B                                 ;$019158 |
+    LDA.b ScreenMode_5B                     ;$019158 |
     BPL CODE_0191BE                         ;$01915A |
     INC.w $185E                             ;$01915C |
     LDA.b SpriteXPosLow_E4,X                ;$01915F |
@@ -2912,7 +2912,7 @@ CODE_019441:
 CODE_01944D:
     LDA.w $185E
     INC A                                   ;$019450 |
-    AND $5B                                 ;$019451 |
+    AND.b ScreenMode_5B                     ;$019451 |
     BEQ CODE_0194BF                         ;$019453 |
     LDA.b SpriteYPosLow_D8,X                ;$019455 |
     CLC                                     ;$019457 |
@@ -6153,8 +6153,8 @@ SubOffscreen0Bnk1:
 CODE_01AC33:
     JSR IsSprOffScreen
     BEQ Return01ACA4                        ;$01AC36 |
-    LDA $5B                                 ;$01AC38 |
-    AND.b #$01                              ;$01AC3A |
+    LDA.b ScreenMode_5B                     ;$01AC38 |
+    AND.b #!Layer1Vert_01                   ;$01AC3A |
     BNE VerticalLevel                       ;$01AC3C |
     LDA.b SpriteYPosLow_D8,X                ;$01AC3E |
     CLC                                     ;$01AC40 |
@@ -12493,8 +12493,8 @@ CODE_01D94D:
     PHA                                     ;$01D959 |
     ORA $06                                 ;$01D95A |
     PHA                                     ;$01D95C |
-    LDA $5B                                 ;$01D95D |
-    AND.b #$01                              ;$01D95F |
+    LDA.b ScreenMode_5B                     ;$01D95D |
+    AND.b #!Layer1Vert_01                   ;$01D95F |
     BEQ CODE_01D977                         ;$01D961 |
     PLA                                     ;$01D963 |
     LDX $01                                 ;$01D964 |

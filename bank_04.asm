@@ -5045,7 +5045,7 @@ CODE_04D6E9:
     STA.b Layer1YPos_1C                     ;$04D72F |
     STZ $47                                 ;$04D731 |
     STZ.w $1925                             ;$04D733 |
-    STZ $5B                                 ;$04D736 |
+    STZ.b ScreenMode_5B                     ;$04D736 |
     LDA.w #$FFFF                            ;$04D738 |
     STA $4D                                 ;$04D73B |
     STA $4F                                 ;$04D73D |
@@ -5495,8 +5495,8 @@ CODE_04DC09:
     STA.w $192B                             ;$04DC1E |
     LDA.b #$07                              ;$04DC21 |
     STA.w $1925                             ;$04DC23 |
-    LDA.b #$03                              ;$04DC26 |
-    STA $5B                                 ;$04DC28 |
+    LDA.b #!Layer12Vert_03                  ;$04DC26 |
+    STA.b ScreenMode_5B                     ;$04DC28 |
     REP #$10                                ;$04DC2A |
     LDX.w #$0000                            ;$04DC2C |
     TXA                                     ;$04DC2F |

@@ -523,7 +523,7 @@ CODE_0584E3:
     LDA.l SpecialLevTable,X                 ;$058519 |
     STA.w $0D9B                             ;$05851D |
     LDA.l VerticalTable,X                   ;$058520 |
-    STA $5B                                 ;$058524 |
+    STA.b ScreenMode_5B                     ;$058524 |
     LSR                                     ;$058526 |
     LDA.b LevelScreens_5D                   ;$058527 |
     LDX.b #$01                              ;$058529 |
@@ -683,7 +683,7 @@ LoadLevelData:
     LSR                                     ;$05862A |
     ORA $5A                                 ;$05862B |
     STA $5A                                 ;$05862D |
-    LDA $5B                                 ;$05862F |
+    LDA.b ScreenMode_5B                     ;$05862F |
     LDY.w $1933                             ;$058631 |
     BEQ CODE_058637                         ;$058634 |
     LSR                                     ;$058636 |
@@ -796,8 +796,8 @@ process_level_mode_setting_0586F1:
     REP #$30                                ;$0586F2 |
     JSR set_map16_for_VRAM_upload_05877E    ;$0586F4 |
     SEP #$20                                ;$0586F7 |
-    LDA $5B                                 ;$0586F9 |
-    AND.b #$01                              ;$0586FB |
+    LDA.b ScreenMode_5B                     ;$0586F9 |
+    AND.b #!Layer1Vert_01                   ;$0586FB |
     BNE .vertical_layer_1_058713            ;$0586FD |
     REP #$20                                ;$0586FF | Horizontal Layer 1
     LDA $55                                 ;$058701 |
@@ -830,8 +830,8 @@ process_level_mode_setting_0586F1:
 
 .CODE_058737:
     SEP #$20
-    LDA $5B                                 ;$058739 |
-    AND.b #$02                              ;$05873B |
+    LDA.b ScreenMode_5B                     ;$058739 |
+    AND.b #!Layer2Vert_02                   ;$05873B |
     BNE .CODE_058753                        ;$05873D |
     REP #$20                                ;$05873F |
     LDA $56                                 ;$058741 |
@@ -869,8 +869,8 @@ MAP16AppTable:
 set_map16_for_VRAM_upload_05877E:
     PHP
     SEP #$20                                ;$05877F |
-    LDA $5B                                 ;$058781 |
-    AND.b #$01                              ;$058783 |
+    LDA.b ScreenMode_5B                     ;$058781 |
+    AND.b #!Layer1Vert_01                   ;$058783 |
     BNE .horizontal_layer_1_0587CB          ;$058785 |
     REP #$20                                ;$058787 | Vertical Layer 1
     LDA.b Layer1XPos_1A                     ;$058789 |
@@ -928,8 +928,8 @@ set_map16_for_VRAM_upload_05877E:
     STA $47                                 ;$0587DF |
 .common_0587E1:
     SEP #$20
-    LDA $5B                                 ;$0587E3 |
-    AND.b #$02                              ;$0587E5 |
+    LDA.b ScreenMode_5B                     ;$0587E3 |
+    AND.b #!Layer2Vert_02                   ;$0587E5 |
     BNE .horizontal_layer_2_058802          ;$0587E7 |
     REP #$20                                ;$0587E9 | Vertical layer 2
     LDA.b Layer2XPos_1E                     ;$0587EB |
@@ -4238,7 +4238,7 @@ CODE_05C0BD:
 CODE_05C0CE:
     STA $06
 CODE_05C0D0:
-    LDA $5B
+    LDA.b ScreenMode_5B
     LSR                                     ;$05C0D2 |
     BCS CODE_05C0D7                         ;$05C0D3 |
     LDX $08                                 ;$05C0D5 |
@@ -5088,11 +5088,11 @@ ADDR_05C6EE:
     CMP.w #$0000                            ;$05C707 |
     BPL ADDR_05C711                         ;$05C70A |
     LDA.w #$0000                            ;$05C70C |
-    LDY.b #$02                              ;$05C70F |
+    LDY.b #!Layer2Vert_02                   ;$05C70F |
 ADDR_05C711:
     STA.w $1466
     STA.b Layer2XPos_1E                     ;$05C714 |
-    STY $5B                                 ;$05C716 |
+    STY.b ScreenMode_5B                     ;$05C716 |
     JMP CODE_05C32B                         ;$05C718 |
 
 DATA_05C71B:
@@ -6317,8 +6317,8 @@ CODE_05D7AB:
 
 CODE_05D7B3:
     LDX $95
-    LDA $5B                                 ;$05D7B5 |
-    AND.b #$01                              ;$05D7B7 |
+    LDA.b ScreenMode_5B                     ;$05D7B5 |
+    AND.b #!Layer1Vert_01                   ;$05D7B7 |
     BEQ CODE_05D7BD                         ;$05D7B9 |
     LDX $97                                 ;$05D7BB |
 CODE_05D7BD:
@@ -6526,7 +6526,7 @@ CODE_05D8B7:
     LSR                                     ;$05D947 |
     LSR                                     ;$05D948 |
     LSR                                     ;$05D949 |
-    STA $5B                                 ;$05D94A |
+    STA.b ScreenMode_5B                     ;$05D94A |
     LDA.w $1B93                             ;$05D94C |
     BNE CODE_05D9A1                         ;$05D94F |
     LDA.w DATA_05F000,Y                     ;$05D951 |
@@ -6566,8 +6566,8 @@ CODE_05D8B7:
     LDA.w DATA_05F600,Y                     ;$05D99C |
     STA $01                                 ;$05D99F |
 CODE_05D9A1:
-    LDA $5B
-    AND.b #$01                              ;$05D9A3 |
+    LDA.b ScreenMode_5B
+    AND.b #!Layer1Vert_01                   ;$05D9A3 |
     BEQ CODE_05D9B8                         ;$05D9A5 |
     LDY.w #$0000                            ;$05D9A7 |
     LDA [$65],Y                             ;$05D9AA |
@@ -6609,8 +6609,8 @@ CODE_05D9EC:
     LDA $01                                 ;$05D9EE |
     AND.b #$1F                              ;$05D9F0 |
     STA $01                                 ;$05D9F2 |
-    LDA $5B                                 ;$05D9F4 |
-    AND.b #$01                              ;$05D9F6 |
+    LDA.b ScreenMode_5B                     ;$05D9F4 |
+    AND.b #!Layer1Vert_01                   ;$05D9F6 |
     BNE CODE_05DA01                         ;$05D9F8 |
     LDA $01                                 ;$05D9FA |
     STA $95                                 ;$05D9FC |
@@ -6698,7 +6698,7 @@ CODE_05DA60:
     STZ.w $1413                             ;$05DA98 |
     STZ.w $1414                             ;$05DA9B |
     STZ.w $1411                             ;$05DA9E |
-    STZ $5B                                 ;$05DAA1 |
+    STZ.b ScreenMode_5B                     ;$05DAA1 |
     LDA.l DATA_05D78A,X                     ;$05DAA3 |
     STA.w $1BE3                             ;$05DAA7 |
     STX $00                                 ;$05DAAA |
@@ -6851,8 +6851,8 @@ CODE_05DBAC:
     LDY.b #$01                              ;$05DBB3 |
 CODE_05DBB5:
     LDX $95
-    LDA $5B                                 ;$05DBB7 |
-    AND.b #$01                              ;$05DBB9 |
+    LDA.b ScreenMode_5B                     ;$05DBB7 |
+    AND.b #!Layer1Vert_01                   ;$05DBB9 |
     BEQ CODE_05DBBF                         ;$05DBBB |
     LDX $97                                 ;$05DBBD |
 CODE_05DBBF:

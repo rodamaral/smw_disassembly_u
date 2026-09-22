@@ -951,8 +951,8 @@ generic_layer_1_and_2_upload:               ;        \
     JMP .layer_2_upload_check               ;$0087B4 / If not, jump to the layer 2 DMA check
 
 .layer_1_direction_check                    ;        \ 
-    LDA $5B                                 ;$0087B7 |\ If the layer 1 data is not vertical
-    AND.b #$01                              ;$0087B9 | | Branch and handle horizontal uploads
+    LDA.b ScreenMode_5B                     ;$0087B7 |\ If the layer 1 data is not vertical
+    AND.b #!Layer1Vert_01                   ;$0087B9 | | Branch and handle horizontal uploads
     BEQ .horizontal_layer_1_DMA             ;$0087BB |/
     JMP .vertical_layer_1                   ;$0087BD / Handle vertical layer 1 data (includes OW)
 
@@ -1092,8 +1092,8 @@ generic_layer_1_and_2_upload:               ;        \
     JMP .return                             ;$0088E7 / No more data to upload, return
 
 .layer_2_direction_check                    ;        \ 
-    LDA $5B                                 ;$0088EA |\ If the layer 2 data is not vertical
-    AND.b #$02                              ;$0088EC | | Branch and handle horizontal uploads
+    LDA.b ScreenMode_5B                     ;$0088EA |\ If the layer 2 data is not vertical
+    AND.b #!Layer2Vert_02                   ;$0088EC | | Branch and handle horizontal uploads
     BEQ .horizontal_layer_2_DMA             ;$0088EE |/
     JMP .vertical_layer_2                   ;$0088F0 / Handle vertical layer 2 data
 
@@ -3897,8 +3897,8 @@ CODE_00A050:
     CPX.w #$1B00                            ;$00A05F |
     BCC CODE_00A04A                         ;$00A062 |
     SEP #$30                                ;$00A064 |
-    LDA.b #$80                              ;$00A066 |
-    TSB $5B                                 ;$00A068 |
+    LDA.b #!EnableL2Int_80                  ;$00A066 |
+    TSB.b ScreenMode_5B                     ;$00A068 |
     RTS                                     ;$00A06A |
 
 DATA_00A06B:
@@ -6612,7 +6612,7 @@ CODE_00BEBE:
     STA $0E                                 ;$00BEC4 |
     LDA.w #$0000                            ;$00BEC6 |
     SEP #$20                                ;$00BEC9 |
-    LDA $5B                                 ;$00BECB |
+    LDA.b ScreenMode_5B                     ;$00BECB |
     STA $09                                 ;$00BECD |
     LDA.w $1933                             ;$00BECF |
     BEQ CODE_00BED6                         ;$00BED2 |
@@ -6919,7 +6919,7 @@ CODE_00C0C4:
     ASL                                     ;$00C0F9 |
     TAY                                     ;$00C0FA |
 CODE_00C0FB:
-    LDA $5B
+    LDA.b ScreenMode_5B
     STA $00                                 ;$00C0FD |
     LDA.w $1933                             ;$00C0FF |
     BEQ CODE_00C106                         ;$00C102 |
@@ -7032,7 +7032,7 @@ CODE_00C1AC:
     AND.w #$00FF                            ;$00C1DA |
     ASL                                     ;$00C1DD |
     TAY                                     ;$00C1DE |
-    LDA $5B                                 ;$00C1DF |
+    LDA.b ScreenMode_5B                     ;$00C1DF |
     STA $00                                 ;$00C1E1 |
     LDA.w $1933                             ;$00C1E3 |
     BEQ CODE_00C1EA                         ;$00C1E6 |
@@ -7835,7 +7835,7 @@ ending_level:
     STZ.w $18C2                             ;$00C918 |
     STZ.w $13DE                             ;$00C91B |
     STZ.w $13ED                             ;$00C91E |
-    LDA $5B                                 ;$00C921 |
+    LDA.b ScreenMode_5B                     ;$00C921 |
     LSR                                     ;$00C923 |
     BCS CODE_00C944                         ;$00C924 |
     LDA.w $13C6                             ;$00C926 |
@@ -10905,7 +10905,7 @@ level_collision:
     STZ.w $13EF                             ;$00E93D | |
     LDA.b PlayerInAir_72                    ;$00E940 | | and the in air flag.
     STA $8F                                 ;$00E942 |/
-    LDA $5B                                 ;$00E944 |\ If layer 2 isn't interactive,
+    LDA.b ScreenMode_5B                     ;$00E944 |\ If layer 2 isn't interactive,
     BPL .no_layer2_collision                ;$00E946 |/ skip to processing layer 1 collision.
     AND.b #$82                              ;$00E948 |\ Isolate the layer 2 collision flags.
     STA $8E                                 ;$00E94A |/
@@ -10934,7 +10934,7 @@ level_collision:
     SEP #$20                                ;$00E976 |/
 .no_layer2_collision                        ;        |
     ASL.w $13EF                             ;$00E978 |
-    LDA $5B                                 ;$00E97B |\ Isolate the layer 1 collision flags.
+    LDA.b ScreenMode_5B                     ;$00E97B |\ Isolate the layer 1 collision flags.
     AND.b #$41                              ;$00E97D | |
     STA $8E                                 ;$00E97F | |
     ASL                                     ;$00E981 | |
@@ -12872,7 +12872,7 @@ update_screen_position_00F6DB:
     STA.b Layer2XPos_1E                     ;$00F6FE |
     LDA.w $1468                             ;$00F700 |
     STA.b Layer2YPos_20                     ;$00F703 |
-    LDA $5B                                 ;$00F705 |
+    LDA.b ScreenMode_5B                     ;$00F705 |
     LSR                                     ;$00F707 |
     BCC +                                   ;$00F708 | if horizontal layer 1
     JMP .UpdateVerticalLevelScreen00F75C    ;$00F70A | if vertical layer 1
