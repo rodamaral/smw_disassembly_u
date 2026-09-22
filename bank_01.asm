@@ -5968,7 +5968,7 @@ CODE_01AB0C:
     ASL.w $15F6,X                           ;$01AB14 |
     LDY.w $151C,X                           ;$01AB17 |
     LDA.b #$B0                              ;$01AB1A |
-    STA.w $14AD,Y                           ;$01AB1C |
+    STA.w TimersStart_14AD,Y                ;$01AB1C |
     LDA.b #$20                              ;$01AB1F |
     STA.w $1887                             ;$01AB21 |
     CPY.b #$01                              ;$01AB24 |

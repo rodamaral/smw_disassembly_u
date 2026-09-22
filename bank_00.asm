@@ -4580,7 +4580,7 @@ DATA_00A625:
     db $40,$00,$00,$00,$00,$02,$00,$00
 
 CODE_00A635:
-    LDA.w $14AD
+    LDA.w BlueSwitchTimer_14AD
     ORA.w $14AE                             ;$00A638 |
     ORA.w $190C                             ;$00A63B |
     BNE CODE_00A64A                         ;$00A63E |
@@ -4594,7 +4594,7 @@ CODE_00A64A:
 CODE_00A64F:
     ORA.b #$40
     STA.w MusicBackup_0DDA                  ;$00A651 |
-    STZ.w $14AD                             ;$00A654 |
+    STZ.w BlueSwitchTimer_14AD              ;$00A654 |
     STZ.w $14AE                             ;$00A657 |
     STZ.w $190C                             ;$00A65A |
     STZ.w StarTimer_1490                    ;$00A65D |
@@ -7390,7 +7390,7 @@ timers_and_animation_00C47E:
     LDY.b #$0B                              ;$00C52E |
     STY.w $0100                             ;$00C530 |
 .skip_bonus_timer:
-    LDY.w $14AD                             ;$00C533 |
+    LDY.w BlueSwitchTimer_14AD              ;$00C533 |
     CPY.w $14AE                             ;$00C536 |
     BCS +                                   ;$00C539 | get the max between the Blue and Silver P-Switch timers
     LDY.w $14AE                             ;$00C53B |
@@ -10486,7 +10486,7 @@ draw_mario_and_yoshi_00E2BD:
     AND.b #$7F                              ;$00E2F2 |
     STA.w MusicBackup_0DDA                  ;$00E2F4 |
     TAX                                     ;$00E2F7 |
-    LDA.w $14AD                             ;$00E2F8 |
+    LDA.w BlueSwitchTimer_14AD              ;$00E2F8 |
     ORA.w $14AE                             ;$00E2FB |
     ORA.w $190C                             ;$00E2FE |
     BEQ +                                   ;$00E301 |
@@ -11288,7 +11288,7 @@ normal_collision:
     BEQ .lower_door                         ;$00EBEA |/
     CPY.b #$1F                              ;$00EBEC |\ If applicable, process upper half of a door.
     BEQ .upper_door                         ;$00EBEE |/
-    LDA.w $14AD                             ;$00EBF0 |\ If the blue P-switch is active,
+    LDA.w BlueSwitchTimer_14AD              ;$00EBF0 |\ If the blue P-switch is active,
     BEQ .process_center                     ;$00EBF3 | |
     CPY.b #$28                              ;$00EBF5 | | if applicable, process lower half of a P-switch door.
     BEQ .lower_door                         ;$00EBF7 | |
@@ -12304,7 +12304,7 @@ process_page_0_tiles_no_climb:
 
 .is_coin
     BNE .is_visible_coin                    ;$00F32B \ If the coin is invisible
-    LDA.w $14AD                             ;$00F32D | and the blue P-switch is inactive, stop.
+    LDA.w BlueSwitchTimer_14AD              ;$00F32D | and the blue P-switch is inactive, stop.
     BEQ return_00F376                       ;$00F330 |
 .is_visible_coin                            ;        |
     CPY.b #$2D                              ;$00F332 |
@@ -12631,7 +12631,7 @@ conditional_map16:
     LDY.w $1693                             ;$00F548 |
     CPY.b #$29                              ;$00F54B | If it's an invisible ? block
     BNE .not_029                            ;$00F54D | 
-    LDY.w $14AD                             ;$00F54F | and the blue P-switch is active,
+    LDY.w BlueSwitchTimer_14AD              ;$00F54F | and the blue P-switch is active,
     BEQ .return                             ;$00F552 |
     LDA.b #$24                              ;$00F554 |
     STA.w $1693                             ;$00F556 | act like a real ? block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = 129 e p-switch ativo, para Mario (pontos de interacao)
@@ -12650,7 +12650,7 @@ conditional_map16:
     BRA .act_like_used_block                ;$00F56A / and act like a used block.
 
 .is_02B
-    LDY.w $14AD                             ;$00F56C \ If it's a coin and the blue P-switch is active,
+    LDY.w BlueSwitchTimer_14AD              ;$00F56C \ If it's a coin and the blue P-switch is active,
     BEQ .return                             ;$00F56F |
 .act_like_used_block                        ;        |
     LDA.b #$32                              ;$00F571 |
@@ -12661,7 +12661,7 @@ conditional_map16:
     LDY.w $1693                             ;$00F577 \  ! $1693 does not get uninitialized value :(
     CPY.b #$32                              ;$00F57A | If it's a used block
     BNE .not_132                            ;$00F57C |
-    LDY.w $14AD                             ;$00F57E | and the blue P-switch is active,
+    LDY.w BlueSwitchTimer_14AD              ;$00F57E | and the blue P-switch is active,
     BNE .act_like_coin                      ;$00F581 | act like a coin.
     RTL                                     ;$00F583 /
 

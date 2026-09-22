@@ -13349,7 +13349,7 @@ CODE_02E22B:
     PHA                                     ;$02E235 |
     ADC.b #$00                              ;$02E236 |
     STA $1D                                 ;$02E238 |
-    LDA.w $14AD                             ;$02E23A |
+    LDA.w BlueSwitchTimer_14AD              ;$02E23A |
     BNE CODE_02E245                         ;$02E23D |
     JSL CoinSprGfx                          ;$02E23F |
     BRA CODE_02E259                         ;$02E243 |
@@ -13379,7 +13379,7 @@ CODE_02E259:
 CODE_02E271:
     STZ.w $190C
     STZ.w SpriteStatus_14C8,X               ;$02E274 |
-    LDA.w $14AD                             ;$02E277 |
+    LDA.w BlueSwitchTimer_14AD              ;$02E277 |
     ORA.w $14AE                             ;$02E27A |
     BNE Return02E287                        ;$02E27D |
     LDA.w MusicBackup_0DDA                  ;$02E27F |

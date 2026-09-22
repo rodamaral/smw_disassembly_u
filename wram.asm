@@ -1644,13 +1644,14 @@ YoshiWingGrabTimer: skip 1
 BonusFinishTimer: skip 1
 ; 7E14AC unused
 skip 1
-BluePSwitchTimer: skip 1
-SilverPSwitchTimer: skip 1
-OnOffSwitch: skip 1
-LakituCloudTempXPos:
-IggyLarryRotCenterX:
-BrSwingCenterXPos:
-BowserWaitTimer: skip 1
+TimersStart_14AD:
+BlueSwitchTimer_14AD: skip 1
+SilverSwitchTimer_14AE: skip 1
+OnOffSwitch_14AF: skip 1
+LakituCloudTempXPos_14B0:
+IggyLarryRotCenterX_14B0:
+BrSwingCenterXPos_14B0:
+BowserWaitTimer_14B0: skip 1
 BowserAttackTimer: skip 1
 LakituCloudTempYPos:
 IggyLarryRotCenterY:

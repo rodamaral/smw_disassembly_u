@@ -3553,7 +3553,7 @@ update_animated_tile_gfx_05BB39:
     DEX                                     ;$05BB71 |
     BNE .CODE_05BB81                        ;$05BB72 |
     LDX.w DATA_05B97D,Y                     ;$05BB74 |
-    LDY.w $14AD,X                           ;$05BB77 |
+    LDY.w TimersStart_14AD,X                ;$05BB77 |
     BEQ .CODE_05BB88                        ;$05BB7A |
     CLC                                     ;$05BB7C |
     ADC.b #$26                              ;$05BB7D |
