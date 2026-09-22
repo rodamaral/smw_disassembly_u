@@ -1289,7 +1289,7 @@ Gfx33DestAddrC: skip 2
 ; === $7E0D82 ===
 ; 2 bytes
 ; pointer to the player's palette (bank is $00)
-PlayerPalletePtr: skip 2
+PlayerPalPtr_0D82: skip 2
 
 ; === $7E0D84 ===
 ; 1 byte

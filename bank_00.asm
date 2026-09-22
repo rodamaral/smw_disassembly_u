@@ -4221,7 +4221,7 @@ dynamic_sprite_DMA:                         ;        \
     STY.w $2121                             ;$00A30B |/
     LDA.w #$2200                            ;$00A30E |\ DMA transfer mode 0, and DMA to address $2122
     STA.w $4320                             ;$00A311 |/
-    LDA.w $0D82                             ;$00A314 |\ Set the palette source addres using $0D82
+    LDA.w PlayerPalPtr_0D82                 ;$00A314 |\ Set the palette source addres using $0D82
     STA.w $4322                             ;$00A317 |/
     LDY.b #$00                              ;$00A31A |\ Source bank is #$00
     STY.w $4324                             ;$00A31C |/
@@ -5765,7 +5765,7 @@ CODE_00B03E:
     LDA.b #$00                              ;$00B048 |
     STA $02                                 ;$00B04A |
     REP #$30                                ;$00B04C |
-    LDA.w $0D82                             ;$00B04E |
+    LDA.w PlayerPalPtr_0D82                 ;$00B04E |
     STA $00                                 ;$00B051 |
     LDY.w #$0014                            ;$00B053 |
 CODE_00B056:
@@ -10514,7 +10514,7 @@ draw_mario_and_yoshi_00E2BD:
     TAY                                     ;$00E31B |
     REP #$20                                ;$00E31C |
     LDA.w DATA_00E2A2,Y                     ;$00E31E |
-    STA.w $0D82                             ;$00E321 |
+    STA.w PlayerPalPtr_0D82                 ;$00E321 |
     SEP #$20                                ;$00E324 |
     LDX.w $13E0                             ;$00E326 |
     LDA.b #$05                              ;$00E329 |
