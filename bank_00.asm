@@ -499,7 +499,7 @@ mode_7_IRQ:                                 ;        \
     STZ.w $420A                             ;$0083DE |/
     LDA.b #$A1                              ;$0083E1 | Load NMI, IRQ, and autojoy enabled
 .platform_bosses                            ;        |
-    LDY.w $1493                             ;$0083E3 |\ if the level isn't ending, run mode 7 scrolling
+    LDY.w EndLevelTimer_1493                ;$0083E3 |\ if the level isn't ending, run mode 7 scrolling
     BEQ mode_7_scroll                       ;$0083E6 |/
     LDY.w $1495                             ;$0083E8 |\ Also, if the fade timer is less than #$40
     CPY.b #$40                              ;$0083EB | | keep on setting the mode 7 scroll
@@ -1590,7 +1590,7 @@ DATA_008E07:
     db $C4,$B7,$C5
 
 update_status_tileset_008E1A:
-    LDA.w $1493                             ;$008E1A |\
+    LDA.w EndLevelTimer_1493                ;$008E1A |\
     ORA.b SpriteLock_9D                     ;$008E1D || Don't update the clock if:
     BNE .update_time_tilemap                ;$008E1F ||  - Ending a level
     LDA.w $0D9B                             ;$008E21 ||  - Game is frozen
@@ -4086,7 +4086,7 @@ GM14_main_level_00A1DA:
     LDA.b #!AniDoor_0D                      ;$00A1FC ||
     STA.b PlayerAnimation_71                ;$00A1FE |/
 +   ORA.b PlayerAnimation_71                ;$00A200 |
-    ORA.w $1493                             ;$00A202 |
+    ORA.w EndLevelTimer_1493                ;$00A202 |
     BEQ +                                   ;$00A205 |\
     LDA.b #$04                              ;$00A207 || if not able to move free:
     TRB.b byetudlrHold_15                   ;$00A209 || clear hold down
@@ -4102,7 +4102,7 @@ GM14_main_level_00A1DA:
     LDA.b byetudlrPress_16                  ;$00A21B | able to pause
     AND.b #$10                              ;$00A21D |
     BEQ .handle_paused_status_00A242        ;$00A21F |
-    LDA.w $1493                             ;$00A221 | if pressed Start
+    LDA.w EndLevelTimer_1493                ;$00A221 | if pressed Start
     BNE .handle_paused_status_00A242        ;$00A224 | and not ending the level
     LDA.b PlayerAnimation_71                ;$00A226 |
     CMP.b #!AniDeath_09                     ;$00A228 |
@@ -5594,13 +5594,13 @@ DATA_00AEF7:
     db $08,$00,$04,$00,$02,$00,$01,$00
 
 CODE_00AF17:
-    LDY.w $1493
+    LDY.w EndLevelTimer_1493
     LDA.b Frame_13                          ;$00AF1A |
     LSR                                     ;$00AF1C |
     BCC CODE_00AF25                         ;$00AF1D |
     DEY                                     ;$00AF1F |
     BEQ CODE_00AF25                         ;$00AF20 |
-    STY.w $1493                             ;$00AF22 |
+    STY.w EndLevelTimer_1493                ;$00AF22 |
 CODE_00AF25:
     CPY.b #$A0
     BCS CODE_00AF35                         ;$00AF27 |
@@ -5710,7 +5710,7 @@ CODE_00AFDF:
     AND $0E                                 ;$00AFEA |
     BEQ CODE_00AFF9                         ;$00AFEC |
     LDA.w DATA_00AE6B,Y                     ;$00AFEE |
-    BIT.w $1493                             ;$00AFF1 |
+    BIT.w EndLevelTimer_1493                ;$00AFF1 |
     BPL CODE_00AFF9                         ;$00AFF4 |
     LDA.w DATA_00AE71,Y                     ;$00AFF6 |
 CODE_00AFF9:
@@ -7466,7 +7466,7 @@ animation_pointers:
 UnknownAniB:
     STZ.w $13DE
     STZ.w $13ED                             ;$00C5B8 |
-    LDA.w $1493                             ;$00C5BB |
+    LDA.w EndLevelTimer_1493                ;$00C5BB |
     BEQ CODE_00C5CE                         ;$00C5BE |
     JSL CODE_0CAB13                         ;$00C5C0 |
     LDA.w $0100                             ;$00C5C4 |
@@ -7859,7 +7859,7 @@ CODE_00C948:
     LDA.b Frame_13                          ;$00C94C |
     LSR                                     ;$00C94E |
     BCC Return00C96A                        ;$00C94F |
-    DEC.w $1493                             ;$00C951 |
+    DEC.w EndLevelTimer_1493                ;$00C951 |
     BNE Return00C96A                        ;$00C954 |
     LDA.w $13D2                             ;$00C956 |
     BNE CODE_00C962                         ;$00C959 |
@@ -7879,7 +7879,7 @@ CODE_00C96B:
     JSR CODE_00AF17
     LDA.w $1B99                             ;$00C96E |
     BNE CODE_00C9AF                         ;$00C971 |
-    LDA.w $1493                             ;$00C973 |
+    LDA.w EndLevelTimer_1493                ;$00C973 |
     CMP.b #$28                              ;$00C976 |
     BCC CODE_00C984                         ;$00C978 |
     LDA.b #$01                              ;$00C97A |
@@ -7941,7 +7941,7 @@ CODE_00C9DF:
     STX.w BonusGameFlag_1425                ;$00C9E8 |
     LDX.b #$F0                              ;$00C9EB |
     STX.w $0DB0                             ;$00C9ED |
-    STZ.w $1493                             ;$00C9F0 |
+    STZ.w EndLevelTimer_1493                ;$00C9F0 |
     STZ.w MusicBackup_0DDA                  ;$00C9F3 |
     LDY.b #$10                              ;$00C9F6 |
 CODE_00C9F8:
@@ -8246,7 +8246,7 @@ no_animation:                               ;        \
     STA.w $13E4                             ;$00CCB5 | | Set the maximum dash time
     STA.w $149F                             ;$00CCB8 |/ and flying time.
 .skip_debug                                 ;        |
-    LDA.w $1493                             ;$00CCBB | If $1493 is non-zero,
+    LDA.w EndLevelTimer_1493                ;$00CCBB | If $1493 is non-zero,
     BEQ .not_ending_level                   ;$00CCBE |
     JMP ending_level                        ;$00CCC0 / run level ending code.
 
@@ -9470,7 +9470,7 @@ CODE_00D772:
     INY                                     ;$00D77A |
     INY                                     ;$00D77B |
 CODE_00D77C:
-    LDA.w $1493
+    LDA.w EndLevelTimer_1493
     ORA $72                                 ;$00D77F |
     REP #$20                                ;$00D781 |
     BNE CODE_00D78C                         ;$00D783 |
@@ -11709,7 +11709,7 @@ CODE_00EEAA:
     LDA.b #$FF                              ;$00EEC7 |
     STA.w MusicBackup_0DDA                  ;$00EEC9 |
     LDA.b #$08                              ;$00EECC |
-    STA.w $1493                             ;$00EECE |
+    STA.w EndLevelTimer_1493                ;$00EECE |
 CODE_00EED1:
     INC.w $13EF
     LDA $96                                 ;$00EED4 |
@@ -12705,7 +12705,7 @@ HurtMario:
     BNE Return00F628                        ;$00F5B9 |
     LDA.w $1497                             ;$00F5BB |
     ORA.w StarTimer_1490                    ;$00F5BE |
-    ORA.w $1493                             ;$00F5C1 |
+    ORA.w EndLevelTimer_1493                ;$00F5C1 |
     BNE Return00F628                        ;$00F5C4 |
     STZ.w $18E3                             ;$00F5C6 |
     LDA.w WallrunType_13E3                  ;$00F5C9 |

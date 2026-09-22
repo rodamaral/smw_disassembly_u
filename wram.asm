@@ -1618,7 +1618,7 @@ IsCarryingItem: skip 1
 StarTimer_1490: skip 1
 SpriteXMovement: skip 1
 PlayerPeaceSign: skip 1
-EndLevelTimer: skip 1
+EndLevelTimer_1493: skip 1
 ColorFadeDir: skip 1
 ColorFadeTimer: skip 1
 PlayerAniTimer: skip 1

@@ -78,7 +78,7 @@ BigBooBoss:
     BNE CODE_0380A2                         ;$038092 |
     INC.w $13C6                             ;$038094 |
     LDA.b #$FF                              ;$038097 |
-    STA.w $1493                             ;$038099 |
+    STA.w EndLevelTimer_1493                ;$038099 |
     LDA.b #$0B                              ;$03809C |
     STA.w SPCIO2_1DFB                       ;$03809E |
     RTS                                     ;$0380A1 |
@@ -3324,7 +3324,7 @@ ReznorSignCode:
     BNE CODE_039910                         ;$0398DC |
     DEC.w $13C6                             ;$0398DE |
     LDA.b #$FF                              ;$0398E1 |
-    STA.w $1493                             ;$0398E3 |
+    STA.w EndLevelTimer_1493                ;$0398E3 |
     LDA.b #$0B                              ;$0398E6 |
     STA.w SPCIO2_1DFB                       ;$0398E8 |
     RTS                                     ;$0398EB |
@@ -7900,7 +7900,7 @@ IggyPlatBounds:
 
 CODE_03C11E:
     LDA.b SpriteLock_9D
-    ORA.w $1493                             ;$03C120 |
+    ORA.w EndLevelTimer_1493                ;$03C120 |
     BNE Return03C175                        ;$03C123 |
     LDA.w $1906                             ;$03C125 |
     BEQ CODE_03C12D                         ;$03C128 |
@@ -8648,7 +8648,7 @@ CODE_03C796:
     BNE Return03C7A6                        ;$03C79C |
     INC.w $13C6                             ;$03C79E |
     LDA.b #$FF                              ;$03C7A1 |
-    STA.w $1493                             ;$03C7A3 |
+    STA.w EndLevelTimer_1493                ;$03C7A3 |
 Return03C7A6:
     RTS
 
@@ -9525,7 +9525,7 @@ CODE_03CE89:
     STZ.w SpriteStatus_14C8,X               ;$03CE8E |
     INC.w $13C6                             ;$03CE91 |
     LDA.b #$FF                              ;$03CE94 |
-    STA.w $1493                             ;$03CE96 |
+    STA.w EndLevelTimer_1493                ;$03CE96 |
     LDA.b #$0B                              ;$03CE99 |
     STA.w SPCIO2_1DFB                       ;$03CE9B |
 CODE_03CE9E:

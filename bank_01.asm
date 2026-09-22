@@ -1120,7 +1120,7 @@ GoalSphere:
     BCC Return018788                        ;$018776 |
     STZ.w SpriteStatus_14C8,X               ;$018778 |
     LDA.b #$FF                              ;$01877B |
-    STA.w $1493                             ;$01877D |
+    STA.w EndLevelTimer_1493                ;$01877D |
     STA.w MusicBackup_0DDA                  ;$018780 |
     LDA.b #$0B                              ;$018783 |
     STA.w SPCIO2_1DFB                       ;$018785 |
@@ -9102,7 +9102,7 @@ CODE_01C0B4:
     LDA.b #$FF                              ;$01C0F4 |
     STA.w MusicBackup_0DDA                  ;$01C0F6 |
     LDA.b #$FF                              ;$01C0F9 |
-    STA.w $1493                             ;$01C0FB |
+    STA.w EndLevelTimer_1493                ;$01C0FB |
     STZ.w StarTimer_1490                    ;$01C0FE |
     INC.w $1602,X                           ;$01C101 |
     JSR MarioSprInteractRt                  ;$01C104 |
@@ -11239,7 +11239,7 @@ CODE_01D043:
     LDA.w $1540,X
     BNE Return01D056                        ;$01D046 |
     INC.w $13C6                             ;$01D048 |
-    DEC.w $1493                             ;$01D04B |
+    DEC.w EndLevelTimer_1493                ;$01D04B |
     LDA.b #$0B                              ;$01D04E |
     STA.w SPCIO2_1DFB                       ;$01D050 |
     STZ.w SpriteStatus_14C8,X               ;$01D053 |
@@ -17002,7 +17002,7 @@ CODE_01FB1A:
     BNE Return01FB35                        ;$01FB23 |
     INC.w $13C6                             ;$01FB25 |
     LDA.b #$FF                              ;$01FB28 |
-    STA.w $1493                             ;$01FB2A |
+    STA.w EndLevelTimer_1493                ;$01FB2A |
     LDA.b #$0B                              ;$01FB2D |
     STA.w SPCIO2_1DFB                       ;$01FB2F |
     STZ.w SpriteStatus_14C8,X               ;$01FB32 |
