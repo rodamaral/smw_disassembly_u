@@ -1457,7 +1457,7 @@ PlayerCapePose: skip 1
 PlayerPose_13E0: skip 1
 SlopeType: skip 1
 SpinjumpFireball: skip 1
-WallrunningType: skip 1
+WallrunType_13E3: skip 1
 PlayerPMeter: skip 1
 PlayerPoseLenTimer: skip 1
 ; 7E13E6 - 7E13E7 unused
