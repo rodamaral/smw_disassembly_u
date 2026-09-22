@@ -158,7 +158,7 @@ start_SPC_upload:                           ;        \
     LDX.b #$03                              ;$008125 |\ 
 SPC_clear_loop:                             ;        | | Clear out all SPC I/O ports and mirrors
     STZ.w $2140,X                           ;$008127 | |
-    STZ.w $1DF9,X                           ;$00812A | |
+    STZ.w SPCIO0_1DF9,X                           ;$00812A | |
     STZ.w $1DFD,X                           ;$00812D | |
     DEX                                     ;$008130 | |
     BPL SPC_clear_loop                      ;$008131 |/
@@ -204,7 +204,7 @@ NMI_start:                                  ;        \
     PLB                                     ;$008173 |/
     SEP #$30                                ;$008174 | 8 bit A/X/Y
     LDA.w $4210                             ;$008176 | Read to clear the n flag
-    LDA.w $1DFB                             ;$008179 |\ If playing a sound in $1DFB branch to keep playing
+    LDA.w SPCIO2_1DFB                       ;$008179 |\ If playing a sound in $1DFB branch to keep playing
     BNE .keep_playing                       ;$00817C |/
     LDY.w $2142                             ;$00817E |\ Check if $1DFF matches the current playing sound
     CPY.w $1DFF                             ;$008181 | |
@@ -212,17 +212,17 @@ NMI_start:                                  ;        \
 .keep_playing                               ;        |
     STA.w $2142                             ;$008186 |\ Keep the current sound playing
     STA.w $1DFF                             ;$008189 | | Then mirror and clear $1DFB
-    STZ.w $1DFB                             ;$00818C |/
+    STZ.w SPCIO2_1DFB                       ;$00818C |/
 .sound_update                               ;        |
-    LDA.w $1DF9                             ;$00818F |\ Update the remaining sound ports and clear mirrors
+    LDA.w SPCIO0_1DF9                       ;$00818F |\ Update the remaining sound ports and clear mirrors
     STA.w $2140                             ;$008192 | |
-    LDA.w $1DFA                             ;$008195 | |
+    LDA.w SPCIO1_1DFA                       ;$008195 | |
     STA.w $2141                             ;$008198 | |
-    LDA.w $1DFC                             ;$00819B | |
+    LDA.w SPCIO3_1DFC                       ;$00819B | |
     STA.w $2143                             ;$00819E | |
-    STZ.w $1DF9                             ;$0081A1 | |
-    STZ.w $1DFA                             ;$0081A4 | |
-    STZ.w $1DFC                             ;$0081A7 |/
+    STZ.w SPCIO0_1DF9                       ;$0081A1 | |
+    STZ.w SPCIO1_1DFA                       ;$0081A4 | |
+    STZ.w SPCIO3_1DFC                       ;$0081A7 |/
     LDA.b #$80                              ;$0081AA |\ Force blank
     STA.w $2100                             ;$0081AC |/
     STZ.w $420C                             ;$0081AF | Disable HDMA
@@ -1620,7 +1620,7 @@ update_status_tileset_008E1A:
     CMP.b #$09                              ;$008E57 ||
     BNE +                                   ;$008E59 ||
     LDA.b #$FF                              ;$008E5B ||
-    STA.w $1DF9                             ;$008E5D |/
+    STA.w SPCIO0_1DF9                       ;$008E5D |/
 
 +   LDA.w $0F31                             ;$008E60 |\
     ORA.w $0F32                             ;$008E63 || Check if clock is 000
@@ -2281,7 +2281,7 @@ CODE_00939E:
     LDA.b #$AA                              ;$0093BB |
     STA.w $0400                             ;$0093BD |
     LDA.b #$01                              ;$0093C0 |
-    STA.w $1DFC                             ;$0093C2 |
+    STA.w SPCIO3_1DFC                       ;$0093C2 |
     LDA.b #$40                              ;$0093C5 |
     STA.w $1DF5                             ;$0093C7 |
 CODE_0093CA:
@@ -2394,7 +2394,7 @@ GM19_credits_castle_load_009468:
 
 CODE_0094B2:
     LDA.b #$15
-    STA.w $1DFB                             ;$0094B4 |
+    STA.w SPCIO2_1DFB                       ;$0094B4 |
     LDA.w DATA_009460,X                     ;$0094B7 |
     STA $12                                 ;$0094BA |
     JSR _load_stripe_image_                 ;$0094BC |
@@ -2644,7 +2644,7 @@ CODE_0096B8:
     BNE CODE_0096CB                         ;$0096C1 |
     JSR upload_music_bank_1                 ;$0096C3 |
     LDA.b #$01                              ;$0096C6 |
-    STA.w $1DFB                             ;$0096C8 |
+    STA.w SPCIO2_1DFB                       ;$0096C8 |
 CODE_0096CB:
     LDA.b #$EB
     LDY.b #$00                              ;$0096CD |
@@ -2694,7 +2694,7 @@ CODE_009728:
     BNE CODE_009738                         ;$009734 |
     LDA.b #$16                              ;$009736 |
 CODE_009738:
-    STA.w $1DFB
+    STA.w SPCIO2_1DFB
 CODE_00973B:
     AND.b #$BF
     STA.w MusicBackup_0DDA                  ;$00973D |
@@ -3143,7 +3143,7 @@ CODE_009AD0:
     BPL CODE_009AEA                         ;$009AE1 |
 CODE_009AE3:
     LDA.b #$01
-    STA.w $1DFC                             ;$009AE5 |
+    STA.w SPCIO3_1DFC                       ;$009AE5 |
     BRA CODE_009B11                         ;$009AE8 |
 
 CODE_009AEA:
@@ -3158,7 +3158,7 @@ CODE_009AEA:
     AND.b #$0C                              ;$009AF5 |
     BEQ Return009B16                        ;$009AF7 |
     LDY.b #$06                              ;$009AF9 |
-    STY.w $1DFC                             ;$009AFB |
+    STY.w SPCIO3_1DFC                       ;$009AFB |
     STZ.w $1B91                             ;$009AFE |
     LSR                                     ;$009B01 |
     LSR                                     ;$009B02 |
@@ -3280,9 +3280,9 @@ CODE_009BB0:
     JSR CODE_009AD0                         ;$009BB2 |
     TXA                                     ;$009BB5 |
     BNE CODE_009BC4                         ;$009BB6 |
-    STZ.w $1DFC                             ;$009BB8 |
+    STZ.w SPCIO3_1DFC                       ;$009BB8 |
     LDA.b #$05                              ;$009BBB |
-    STA.w $1DF9                             ;$009BBD |
+    STA.w SPCIO0_1DF9                       ;$009BBD |
     JSL CODE_009BC9                         ;$009BC0 |
 CODE_009BC4:
     JSL CODE_009C13
@@ -3602,7 +3602,7 @@ CODE_009E08:
     JSL CODE_04DAAD                         ;$009E13 |
 CODE_009E17:
     LDA.b #$80
-    STA.w $1DFB                             ;$009E19 |
+    STA.w SPCIO2_1DFB                       ;$009E19 |
     LDA.b #$FF                              ;$009E1C |
     STA.w $0DB5                             ;$009E1E |
     LDX.w $0DB2                             ;$009E21 |
@@ -4115,7 +4115,7 @@ GM14_main_level_00A1DA:
     STA.w $13D4                             ;$00A238 |
     BEQ +                                   ;$00A23B |
     LDY.b #$11                              ;$00A23D |
-+   STY.w $1DF9                             ;$00A23F | play the (un)pause sound effect
++   STY.w SPCIO0_1DF9                       ;$00A23F | play the (un)pause sound effect
 .handle_paused_status_00A242:
     LDA.w $13D4
     BEQ .level_unpaused_00A28A              ;$00A245 |
@@ -7384,7 +7384,7 @@ timers_and_animation_00C47E:
     CMP.b #$44                              ;$00C521 |
     BNE +                                   ;$00C523 |
     LDY.b #$14                              ;$00C525 |
-    STY.w $1DFB                             ;$00C527 |
+    STY.w SPCIO2_1DFB                       ;$00C527 |
 +   CMP.b #$01                              ;$00C52A |
     BNE .skip_bonus_timer                   ;$00C52C |
     LDY.b #$0B                              ;$00C52E |
@@ -7400,13 +7400,13 @@ timers_and_animation_00C47E:
     BNE +                                   ;$00C545 |
     LDY.w DirectCoinTimer_190C              ;$00C547 |
     BNE +                                   ;$00C54A |
-    STA.w $1DFB                             ;$00C54C |
+    STA.w SPCIO2_1DFB                       ;$00C54C |
 +   CMP.b #$FF                              ;$00C54F |
     BEQ +                                   ;$00C551 |
     CPY.b #$1E                              ;$00C553 |
     BNE +                                   ;$00C555 |
     LDA.b #$24                              ;$00C557 |
-    STA.w $1DFC                             ;$00C559 | P-Switch time running out
+    STA.w SPCIO3_1DFC                       ;$00C559 | P-Switch time running out
 +   LDX.b #$06                              ;$00C55C |
 -   LDA.w $14A8,X                           ;$00C55E |
     BEQ +                                   ;$00C561 |
@@ -7558,7 +7558,7 @@ CODE_00C71C:
     CMP.b #$4C
     BCC CODE_00C73F                         ;$00C71E |
     LDA.b #$1B                              ;$00C720 |
-    STA.w $1DFC                             ;$00C722 |
+    STA.w SPCIO3_1DFC                       ;$00C722 |
     INC.w $143E                             ;$00C725 |
     LDA.b #$4C                              ;$00C728 |
     LDY.b #$F4                              ;$00C72A |
@@ -7568,7 +7568,7 @@ CODE_00C72E:
 CODE_00C730:
     STX $7D
     LDX.b #$01                              ;$00C732 |
-    STX.w $1DF9                             ;$00C734 |
+    STX.w SPCIO0_1DF9                       ;$00C734 |
     BRA CODE_00C73D                         ;$00C737 |
 
 CODE_00C739:
@@ -7594,7 +7594,7 @@ CODE_00C73F:
     CMP.b #$2D                              ;$00C75B |
     BNE CODE_00C764                         ;$00C75D |
     LDA.b #$1E                              ;$00C75F |
-    STA.w $1DF9                             ;$00C761 |
+    STA.w SPCIO0_1DF9                       ;$00C761 |
 CODE_00C764:
     LDA.w DATA_00C5E8,X
     CMP.b #$FF                              ;$00C767 |
@@ -7628,7 +7628,7 @@ CODE_00C789:
     LDA.w PickUpItemTimer_1498              ;$00C793 |
     BEQ CODE_00C79D                         ;$00C796 |
     LDA.b #$09                              ;$00C798 |
-    STA.w $1DF9                             ;$00C79A |
+    STA.w SPCIO0_1DF9                       ;$00C79A |
 CODE_00C79D:
     INC.w $143E
     BRA CODE_00C7F6                         ;$00C7A0 |
@@ -7642,7 +7642,7 @@ CODE_00C7A9:
     DEC A
     BNE CODE_00C7B6                         ;$00C7AA |
     LDA.b #$0E                              ;$00C7AC |
-    STA.w $1DF9                             ;$00C7AE |
+    STA.w SPCIO0_1DF9                       ;$00C7AE |
     INC.w $1446                             ;$00C7B1 |
     BRA CODE_00C7F6                         ;$00C7B4 |
 
@@ -7666,7 +7666,7 @@ CODE_00C7CE:
     DEC A
     BNE CODE_00C7DF                         ;$00C7CF |
     LDA.b #$09                              ;$00C7D1 |
-    STA.w $1DFC                             ;$00C7D3 |
+    STA.w SPCIO3_1DFC                       ;$00C7D3 |
     LDA.b #$D8                              ;$00C7D6 |
     STA $7B                                 ;$00C7D8 |
     INC.w $143E                             ;$00C7DA |
@@ -7827,7 +7827,7 @@ CODE_00C90A:
     LDA.b #$01
     STA.w $1B9B                             ;$00C90C |
     LDA.b #$03                              ;$00C90F |
-    STA.w $1DFA                             ;$00C911 |
+    STA.w SPCIO1_1DFA                       ;$00C911 |
     RTS                                     ;$00C914 |
 
 ending_level:
@@ -7915,7 +7915,7 @@ CODE_00C9AF:
     DEC.w $1492                             ;$00C9B7 |
     BNE Return00C9C1                        ;$00C9BA |
     LDA.b #$11                              ;$00C9BC |
-    STA.w $1DFB                             ;$00C9BE |
+    STA.w SPCIO2_1DFB                       ;$00C9BE |
 Return00C9C1:
     RTS
 
@@ -8456,7 +8456,7 @@ CODE_00CE33:
     SEP #$20                                ;$00CE3B |
     BEQ CODE_00CE44                         ;$00CE3D |
     LDY.b #$0E                              ;$00CE3F |
-    STY.w $1DFC                             ;$00CE41 |
+    STY.w SPCIO3_1DFC                       ;$00CE41 |
 CODE_00CE44:
     TXA
     STA.w $13FE                             ;$00CE45 |
@@ -8774,7 +8774,7 @@ powerup_physics:                            ;        \
     LDA.b #$12                              ;$00D076 |\ then set the cape spin timer
     STA.w $14A6                             ;$00D078 |/
     LDA.b #$04                              ;$00D07B |\ and play the cape spin sound.
-    STA.w $1DFC                             ;$00D07D |/
+    STA.w SPCIO3_1DFC                       ;$00D07D |/
     RTS                                     ;$00D080 /
 
 .not_caped                                  ;        \
@@ -8826,7 +8826,7 @@ death_animation:
     DEC.w $0DBE                             ;$00D0D8 |\ Decrease the player's lives.
     BPL .not_game_over                      ;$00D0DB |/ If it's negative, show "GAME OVER"
     LDA.b #$0A                              ;$00D0DD |\ Play the game over music.
-    STA.w $1DFB                             ;$00D0DF |/
+    STA.w SPCIO2_1DFB                       ;$00D0DF |/
     LDX.b #$14                              ;$00D0E2 | Show the "GAME OVER" message.
     BRA .show_message                       ;$00D0E4 /
 
@@ -9048,7 +9048,7 @@ CODE_00D24E:
     ORA $7D                                 ;$00D250 |
     BNE CODE_00D259                         ;$00D252 |
     LDA.b #$04                              ;$00D254 |
-    STA.w $1DF9                             ;$00D256 |
+    STA.w SPCIO0_1DF9                       ;$00D256 |
 CODE_00D259:
     LDA.w pipe_x_speeds,Y
     STA $7B                                 ;$00D25C |
@@ -9095,7 +9095,7 @@ CODE_00D29D:
     BCC CODE_00D2AA                         ;$00D2A1 |
     BNE CODE_00D2B2                         ;$00D2A3 |
     LDA.b #$09                              ;$00D2A5 |
-    STA.w $1DFC                             ;$00D2A7 |
+    STA.w SPCIO3_1DFC                       ;$00D2A7 |
 CODE_00D2AA:
     STZ.w $13F9
     STZ.w SpriteInPipeMode_1419             ;$00D2AD |
@@ -9290,7 +9290,7 @@ CODE_00D637:
     INC A                                   ;$00D645 |
     STA.w $140D                             ;$00D646 |
     LDA.b #$04                              ;$00D649 |
-    STA.w $1DFC                             ;$00D64B |
+    STA.w SPCIO3_1DFC                       ;$00D64B |
     LDY $76                                 ;$00D64E |
     LDA.w DATA_00D5F0,Y                     ;$00D650 |
     STA.w $13E2                             ;$00D653 |
@@ -9301,7 +9301,7 @@ CODE_00D637:
 
 CODE_00D65E:
     LDA.b #$01
-    STA.w $1DFA                             ;$00D660 |
+    STA.w SPCIO1_1DFA                       ;$00D660 |
 CODE_00D663:
     LDA.w DATA_00D2BD,X
     STA $7D                                 ;$00D666 |
@@ -9628,7 +9628,7 @@ CODE_00D89A:
     LDA $7D                                 ;$00D8A4 |
     BMI CODE_00D8AF                         ;$00D8A6 |
     LDA.b #$09                              ;$00D8A8 |
-    STA.w $1DF9                             ;$00D8AA |
+    STA.w SPCIO0_1DF9                       ;$00D8AA |
     BRA CODE_00D8B9                         ;$00D8AD |
 
 CODE_00D8AF:
@@ -9952,7 +9952,7 @@ CODE_00DAA5:
 
 CODE_00DAA9:
     LDA.b #$0E
-    STA.w $1DF9                             ;$00DAAB |
+    STA.w SPCIO0_1DF9                       ;$00DAAB |
     LDA.w $1496                             ;$00DAAE |
     ORA.b #$10                              ;$00DAB1 |
     STA.w $1496                             ;$00DAB3 |
@@ -10071,7 +10071,7 @@ CODE_00DB96:
     LDA.w DATA_00DABB,Y                     ;$00DBA0 |
     STA $7D                                 ;$00DBA3 |
     LDA.b #$01                              ;$00DBA5 |
-    STA.w $1DFA                             ;$00DBA7 |
+    STA.w SPCIO1_1DFA                       ;$00DBA7 |
     BRA CODE_00DC00                         ;$00DBAA |
 
 CODE_00DBAC:
@@ -10079,7 +10079,7 @@ CODE_00DBAC:
     LDA $74                                 ;$00DBAE |
     BPL CODE_00DBCA                         ;$00DBB0 |
     LDA.b #$01                              ;$00DBB2 |
-    STA.w $1DF9                             ;$00DBB4 |
+    STA.w SPCIO0_1DF9                       ;$00DBB4 |
     STX.w $13F0                             ;$00DBB7 |
     LDA $94                                 ;$00DBBA |
     AND.b #$08                              ;$00DBBC |
@@ -10491,7 +10491,7 @@ draw_mario_and_yoshi_00E2BD:
     ORA.w DirectCoinTimer_190C              ;$00E2FE |
     BEQ +                                   ;$00E301 |
     LDX.b #$0E                              ;$00E303 |
-+   STX.w $1DFB                             ;$00E305 |
++   STX.w SPCIO2_1DFB                       ;$00E305 |
 .CODE_00E308:
     LDA $13                                 ;$00E308 |
 .CODE_00E30A:
@@ -11081,7 +11081,7 @@ CODE_00EA75:
     INC A                                   ;$00EA89 |
     STA.w $140D                             ;$00EA8A |
     LDA.b #$04                              ;$00EA8D |
-    STA.w $1DFC                             ;$00EA8F |
+    STA.w SPCIO3_1DFC                       ;$00EA8F |
 CODE_00EA92:
     LDA $77
     AND.b #$08                              ;$00EA94 |
@@ -11307,7 +11307,7 @@ normal_collision:
     AND.b #$08                              ;$00EC0C | |
     BEQ .skip_center                        ;$00EC0E |/ don't let him use the door.
     LDA.b #$0F                              ;$00EC10 |\ Play the door sound,
-    STA.w $1DFC                             ;$00EC12 | |
+    STA.w SPCIO3_1DFC                       ;$00EC12 | |
     JSR go_to_sublevel                      ;$00EC15 | | go to the sublevel,
     LDA.b #$0D                              ;$00EC18 | |
     STA $71                                 ;$00EC1A | | set the door animation,
@@ -11479,10 +11479,10 @@ CODE_00ED3B:
     LDA $7D
     BPL CODE_00ED4A                         ;$00ED3D |
     STZ $7D                                 ;$00ED3F |
-    LDA.w $1DF9                             ;$00ED41 |
+    LDA.w SPCIO0_1DF9                       ;$00ED41 |
     BNE CODE_00ED4A                         ;$00ED44 |
     INC A                                   ;$00ED46 |
-    STA.w $1DF9                             ;$00ED47 |
+    STA.w SPCIO0_1DF9                       ;$00ED47 |
 CODE_00ED4A:
     JSR process_collision_point
     BNE CODE_00ED52                         ;$00ED4D |
@@ -11705,7 +11705,7 @@ CODE_00EEAA:
     JSR FlatPalaceSwitch                    ;$00EEBE |
     PLY                                     ;$00EEC1 |
     LDA.b #$0C                              ;$00EEC2 |
-    STA.w $1DFB                             ;$00EEC4 |
+    STA.w SPCIO2_1DFB                       ;$00EEC4 |
     LDA.b #$FF                              ;$00EEC7 |
     STA.w MusicBackup_0DDA                  ;$00EEC9 |
     LDA.b #$08                              ;$00EECC |
@@ -11811,7 +11811,7 @@ CODE_00EF68:
     BEQ CODE_00EF95                         ;$00EF8A |
     JSL YoshiStompRoutine                   ;$00EF8C |
     LDA.b #$25                              ;$00EF90 |
-    STA.w $1DFC                             ;$00EF92 |
+    STA.w SPCIO3_1DFC                       ;$00EF92 |
 CODE_00EF95:
     STZ.w $1697
     RTS                                     ;$00EF98 |
@@ -11834,7 +11834,7 @@ CallGroundPound:
     BEQ Return00EFBB                        ;$00EFB0 |
     JSL GroundPound                         ;$00EFB2 |
     LDA.b #$09                              ;$00EFB6 |
-    STA.w $1DFC                             ;$00EFB8 |
+    STA.w SPCIO3_1DFC                       ;$00EFB8 |
 Return00EFBB:
     RTS
 
@@ -11906,7 +11906,7 @@ CODE_00F01B:
     LDA.w RidingYoshi_187A                  ;$00F01F |
     BEQ CODE_00F035                         ;$00F022 |
     LDA.b #$08                              ;$00F024 |
-    STA.w $1DFC                             ;$00F026 |
+    STA.w SPCIO3_1DFC                       ;$00F026 |
     LDA.b #$80                              ;$00F029 |
     STA $7D                                 ;$00F02B |
     STA.w $1406                             ;$00F02D |
@@ -12160,7 +12160,7 @@ CODE_00F230:
     BNE CODE_00F220                         ;$00F234 |
 CODE_00F236:
     LDA.b #$2A
-    STA.w $1DFC                             ;$00F238 |
+    STA.w SPCIO3_1DFC                       ;$00F238 |
     PHY                                     ;$00F23B |
     STZ $05                                 ;$00F23C |
     PHB                                     ;$00F23E |
@@ -12263,7 +12263,7 @@ process_page_0_tiles_no_swim:
     STA.b Powerup_19                        ;$00F2E6 | | make the player big if he isn't already,
 .already_big                                ;        |/
     LDA.b #$05                              ;$00F2E8 |\
-    STA.w $1DF9                             ;$00F2EA |/ and play the midway point sound.
+    STA.w SPCIO0_1DF9                       ;$00F2EA |/ and play the midway point sound.
     RTS                                     ;$00F2ED /
 
 .not_midway_point
@@ -12327,7 +12327,7 @@ process_page_0_tiles_no_climb:
     PLX                                     ;$00F357 |/
 .not_all_collected                          ;        |
     LDA.b #$1C                              ;$00F358 |\ Play the yoshi coin sound,
-    STA.w $1DF9                             ;$00F35A |/
+    STA.w SPCIO0_1DF9                       ;$00F35A |/
     LDA.b #$01                              ;$00F35D |
     JSL CODE_05B330                         ;$00F35F | give the player a coin,
     LDY.b #$18                              ;$00F363 |
@@ -12464,7 +12464,7 @@ CODE_00F430:
     STY $71                                 ;$00F434 |
     JSR disable_controls                    ;$00F436 |
     LDA.b #$04                              ;$00F439 |
-    STA.w $1DF9                             ;$00F43B |
+    STA.w SPCIO0_1DF9                       ;$00F43B |
 CODE_00F43E:
     PLX
 CODE_00F43F:
@@ -12724,7 +12724,7 @@ CODE_00F5D5:
     BEQ PowerDown                           ;$00F5E0 |
 CancelSoaring:
     LDY.b #$0F
-    STY.w $1DF9                             ;$00F5E4 |
+    STY.w SPCIO0_1DF9                       ;$00F5E4 |
     LDA.b #$01                              ;$00F5E7 |
     STA.w $140D                             ;$00F5E9 |
     LDA.b #$30                              ;$00F5EC |
@@ -12733,7 +12733,7 @@ CancelSoaring:
 
 PowerDown:
     LDY.b #$04
-    STY.w $1DF9                             ;$00F5F5 |
+    STY.w SPCIO0_1DF9                       ;$00F5F5 |
     JSL ReleaseItembox028008                ;$00F5F8 |
     LDA.b #$01                              ;$00F5FC |
     STA $71                                 ;$00F5FE |
@@ -12746,7 +12746,7 @@ kill_player:                                ;        \
     STA $7D                                 ;$00F608 |/
 kill_player_no_speed:                       ;        |
     LDA.b #$09                              ;$00F60A |\ Play the death music.
-    STA.w $1DFB                             ;$00F60C |/
+    STA.w SPCIO2_1DFB                       ;$00F60C |/
     LDA.b #$FF                              ;$00F60F |
     STA.w MusicBackup_0DDA                  ;$00F611 |
     LDA.b #$09                              ;$00F614 |\ Set the player death animation.
@@ -13150,7 +13150,7 @@ boss_room_collision:
     SEP #$20                                ;$00F915 |
     STZ $7D                                 ;$00F917 |
     LDA.b #$01                              ;$00F919 |
-    STA.w $1DF9                             ;$00F91B |
+    STA.w SPCIO0_1DF9                       ;$00F91B |
 CODE_00F91E:
     SEP #$20
     PLX                                     ;$00F920 |
@@ -13472,7 +13472,7 @@ CODE_00FB5F:
     LDA.b #$20                              ;$00FB78 |
     STA.w SpritePlayerContact_154C,Y        ;$00FB7A |
     LDA.b #$0C                              ;$00FB7D |
-    STA.w $1DF9                             ;$00FB7F |
+    STA.w SPCIO0_1DF9                       ;$00FB7F |
     LDX.b #$03                              ;$00FB82 |
 CODE_00FB84:
     LDA.w $17C0,X
@@ -13605,7 +13605,7 @@ ADDR_00FC73:
 
 CODE_00FC7A:
     LDA.b #$02
-    STA.w $1DFA                             ;$00FC7C |
+    STA.w SPCIO1_1DFA                       ;$00FC7C |
     LDX.b #$00                              ;$00FC7F |
     LDA.w $1B94                             ;$00FC81 |
     BNE CODE_00FC98                         ;$00FC84 |
@@ -13936,7 +13936,7 @@ shoot_fireball:
 
 .spawn_fireball                             ;        \
     LDA.b #$06                              ;$00FEB5 |\ Play the fireball shoot sound.
-    STA.w $1DFC                             ;$00FEB7 |/
+    STA.w SPCIO3_1DFC                       ;$00FEB7 |/
     LDA.b #$0A                              ;$00FEBA |\ Set the time to show the shooting pose.
     STA.w $149C                             ;$00FEBC |/
     LDA.b #$05                              ;$00FEBF |\ Set the extended sprite number.

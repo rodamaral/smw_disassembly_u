@@ -446,9 +446,9 @@ CODE_0483C3:
     CPX.b #$FE                              ;$0483C8 |
     BNE CODE_0483D6                         ;$0483CA |
     LDA.b #$21                              ;$0483CC |
-    STA.w $1DF9                             ;$0483CE |
+    STA.w SPCIO0_1DF9                       ;$0483CE |
     LDA.b #$08                              ;$0483D1 |
-    STA.w $1DFB                             ;$0483D3 |
+    STA.w SPCIO2_1DFB                       ;$0483D3 |
 CODE_0483D6:
     TXA
     LSR                                     ;$0483D7 |
@@ -477,7 +477,7 @@ CODE_0483FE:
     DEC.w $1BA0
     BNE CODE_04840D                         ;$048401 |
     LDA.b #$22                              ;$048403 |
-    STA.w $1DF9                             ;$048405 |
+    STA.w SPCIO0_1DF9                       ;$048405 |
     BRA CODE_04840D                         ;$048408 |
 
 CODE_04840A:
@@ -1335,7 +1335,7 @@ CODE_048E38:
     LDA.w OWPlayerSubmap_1F11,X             ;$048E3D |
     TAX                                     ;$048E40 |
     LDA.w DATA_048D8A,X                     ;$048E41 |
-    STA.w $1DFB                             ;$048E44 |
+    STA.w SPCIO2_1DFB                       ;$048E44 |
 CODE_048E47:
     PLB
     RTL                                     ;$048E48 |
@@ -1701,7 +1701,7 @@ CODE_049165:
     STZ.w $1DF7                             ;$04916A |
     STZ.w $1DF8                             ;$04916D |
     LDA.b #$0D                              ;$049170 |
-    STA.w $1DF9                             ;$049172 |
+    STA.w SPCIO0_1DF9                       ;$049172 |
     LDA.b #$0B                              ;$049175 |
     STA.w $13D9                             ;$049177 |
     JMP CODE_049E52                         ;$04917A |
@@ -1756,7 +1756,7 @@ CODE_0491B1:
     LDA.b #$02                              ;$0491DB |
     STA.w $0DB1                             ;$0491DD |
     LDA.b #$80                              ;$0491E0 |
-    STA.w $1DFB                             ;$0491E2 |
+    STA.w SPCIO2_1DFB                       ;$0491E2 |
     INC.w $0100                             ;$0491E5 |
     RTS                                     ;$0491E8 |
 
@@ -2379,7 +2379,7 @@ CODE_049687:
     CMP.w #$0082                            ;$04969A |
     BEQ CODE_0496A5                         ;$04969D |
     LDA.w #$0023                            ;$04969F |
-    STA.w $1DFC                             ;$0496A2 |
+    STA.w SPCIO3_1DFC                       ;$0496A2 |
 CODE_0496A5:
     NOP
     NOP                                     ;$0496A6 |
@@ -5473,7 +5473,7 @@ CODE_04DBF3:
     LDA.w OWPlayerSubmap_1F11,Y
     TAX                                     ;$04DBF6 |
     LDA.l DATA_04DBC8,X                     ;$04DBF7 |
-    STA.w $1DFB                             ;$04DBFB |
+    STA.w SPCIO2_1DFB                       ;$04DBFB |
     STZ.w $1B9E                             ;$04DBFE |
 Return04DC01:
     RTS
@@ -6182,7 +6182,7 @@ CODE_04E668:
     CMP.b #$02                              ;$04E66B |
     BEQ CODE_04E674                         ;$04E66D |
     LDA.b #$16                              ;$04E66F |
-    STA.w $1DFC                             ;$04E671 |
+    STA.w SPCIO3_1DFC                       ;$04E671 |
 CODE_04E674:
     SEP #$30
     RTS                                     ;$04E676 |
@@ -6310,7 +6310,7 @@ CODE_04E752:
     JSR CODE_04E496                         ;$04E75E |
     SEP #$30                                ;$04E761 |
     LDA.b #$15                              ;$04E763 |
-    STA.w $1DFC                             ;$04E765 |
+    STA.w SPCIO3_1DFC                       ;$04E765 |
     INC.w $1B86                             ;$04E768 |
     RTS                                     ;$04E76B |
 
@@ -6900,7 +6900,7 @@ CODE_04EC97:
 CODE_04ECA8:
     SEP #$30
     LDA.b #$01                              ;$04ECAA |
-    STA.w $1DFC                             ;$04ECAC |
+    STA.w SPCIO3_1DFC                       ;$04ECAC |
     INC.w $1B86                             ;$04ECAF |
     LDA.w $1DEA                             ;$04ECB2 |
     AND.b #$FF                              ;$04ECB5 |
@@ -7268,7 +7268,7 @@ CODE_04F29B:
     CPY.b #$08                              ;$04F2A0 |
     BCS CODE_04F30C                         ;$04F2A2 |
     LDA.b #$1C                              ;$04F2A4 |
-    STA.w $1DFC                             ;$04F2A6 |
+    STA.w SPCIO3_1DFC                       ;$04F2A6 |
     LDA.b #$07                              ;$04F2A9 |
     STA $00                                 ;$04F2AB |
     LDX.w $1436                             ;$04F2AD |
@@ -7448,7 +7448,7 @@ CODE_04F3FA:
 
 CODE_04F3FF:
     LDA.b #$22
-    STA.w $1DFC                             ;$04F401 |
+    STA.w SPCIO3_1DFC                       ;$04F401 |
     INC.w $1B87                             ;$04F404 |
 CODE_04F407:
     STZ $41
@@ -7610,7 +7610,7 @@ CODE_04F54B:
     STA.w $0DB4,Y                           ;$04F561 |
     DEC.w $0DB4,X                           ;$04F564 |
     LDA.b #$23                              ;$04F567 |
-    STA.w $1DFC                             ;$04F569 |
+    STA.w SPCIO3_1DFC                       ;$04F569 |
 CODE_04F56C:
     REP #$20
     LDA.w #$7848                            ;$04F56E |
@@ -7799,7 +7799,7 @@ CODE_04F708:
     LDA.b #$08                              ;$04F731 |
     STA.w $1FFD                             ;$04F733 |
     LDA.b #$18                              ;$04F736 |
-    STA.w $1DFC                             ;$04F738 |
+    STA.w SPCIO3_1DFC                       ;$04F738 |
 CODE_04F73B:
     DEC.w $1FFD
     BPL CODE_04F748                         ;$04F73E |
@@ -8234,7 +8234,7 @@ CODE_04FA3E:
     LDA.b #$24                              ;$04FA73 |
     STA.w $0EB5,X                           ;$04FA75 |
     LDA.b #$0E                              ;$04FA78 |
-    STA.w $1DF9                             ;$04FA7A |
+    STA.w SPCIO0_1DF9                       ;$04FA7A |
 CODE_04FA7D:
     LDA.b #$0F
     STA.w $0E25,X                           ;$04FA7F |

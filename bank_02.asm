@@ -10,7 +10,7 @@ ReleaseItembox028008:
     STZ.w $0DC2                             ;$02800E |
     PHA                                     ;$028011 |
     LDA.b #$0C                              ;$028012 |
-    STA.w $1DFC                             ;$028014 |
+    STA.w SPCIO3_1DFC                       ;$028014 |
     LDX.b #$0B                              ;$028017 |
 -   LDA.w SpriteStatus_14C8,X               ;$028019 |
     BEQ .SpawnSprite028042                  ;$02801C |
@@ -461,7 +461,7 @@ CODE_0283F8:
     LDA.b #$30                              ;$02840F |
     STA.w $1887                             ;$028411 |
     LDA.b #$09                              ;$028414 |
-    STA.w $1DFC                             ;$028416 |
+    STA.w SPCIO3_1DFC                       ;$028416 |
     CPX.b #$00                              ;$028419 |
     BNE CODE_02842A                         ;$02841B |
     LDA.w $18A9                             ;$02841D |
@@ -804,7 +804,7 @@ CODE_02867C:
     LDX.w $185D
 CODE_02867F:
     LDA.b #$07
-    STA.w $1DFC                             ;$028681 |
+    STA.w SPCIO3_1DFC                       ;$028681 |
     LDA.b #$01                              ;$028684 |
     STA.w $17F0,X                           ;$028686 |
     LDA $9A                                 ;$028689 |
@@ -1028,7 +1028,7 @@ CODE_028818:
     CMP.b #$05                              ;$02881A |
     BNE CODE_028823                         ;$02881C |
     LDX.b #$0B                              ;$02881E |
-    STX.w $1DF9                             ;$028820 |
+    STX.w SPCIO0_1DF9                       ;$028820 |
 CODE_028823:
     TAX
     LDA.w BlockBounce,X                     ;$028824 |
@@ -1181,7 +1181,7 @@ CODE_028937:
     BCC CODE_02894C                         ;$028949 |
     INY                                     ;$02894B |
 CODE_02894C:
-    STY.w $1DFC
+    STY.w SPCIO3_1DFC
     JSL InitSpriteTables                    ;$02894F |
     INC.w $15A0,X                           ;$028953 |
     LDA $9E,X                               ;$028956 |
@@ -1194,7 +1194,7 @@ CODE_02894C:
 
 CODE_028967:
     LDA.b #$0E
-    STA.w $1DFB                             ;$028969 |
+    STA.w SPCIO2_1DFB                       ;$028969 |
     INC.w $1432                             ;$02896C |
     STZ.w DirectCoinTimer_190C              ;$02896F |
 CODE_028972:
@@ -1398,7 +1398,7 @@ minor_sprites_and_loading_028AB1:
     STA.w $18E5                             ;$028ACA |
 .increment_lives_028ACD:
     LDA.b #$05
-    STA.w $1DFC                             ;$028ACF |
+    STA.w SPCIO3_1DFC                       ;$028ACF |
     INC.w $0DBE                             ;$028AD2 |
 .process_starman_028AD5:
     LDA.w StarTimer_1490
@@ -2306,14 +2306,14 @@ CODE_02915E:
     SBC.b #$00                              ;$029179 |
     STA $97                                 ;$02917B |
     LDA.b #$08                              ;$02917D |
-    STA.w $1DFC                             ;$02917F |
+    STA.w SPCIO3_1DFC                       ;$02917F |
 CODE_029182:
     JSR TileFromBounceSpr0
     LDY.w $1699,X                           ;$029185 |
     CPY.b #$06                              ;$029188 |
     BCC CODE_029199                         ;$02918A |
     LDA.b #$0B                              ;$02918C |
-    STA.w $1DF9                             ;$02918E |
+    STA.w SPCIO0_1DF9                       ;$02918E |
     LDA.w $14AF                             ;$029191 |
     EOR.b #$01                              ;$029194 |
     STA.w $14AF                             ;$029196 |
@@ -3742,7 +3742,7 @@ CODE_029BE4:
     LDA.b #$05
     STA.w $1887                             ;$029BE6 |
     LDA.b #$09                              ;$029BE9 |
-    STA.w $1DFC                             ;$029BEB |
+    STA.w SPCIO3_1DFC                       ;$029BEB |
     STZ $00                                 ;$029BEE |
     JSR CODE_029BF5                         ;$029BF0 |
     INC $00                                 ;$029BF3 |
@@ -4340,7 +4340,7 @@ CODE_02A042:
     JSR CODE_02A02C
 CODE_02A045:
     LDA.b #$01
-    STA.w $1DF9                             ;$02A047 |
+    STA.w SPCIO0_1DF9                       ;$02A047 |
     LDA.b #$0F                              ;$02A04A |
     JMP CODE_02A4E0                         ;$02A04C |
 
@@ -4438,7 +4438,7 @@ CODE_02A0EE:
     BCC FireRtNextSprite                    ;$02A104 |
 ChuckFireKill:
     LDA.b #$02
-    STA.w $1DF9                             ;$02A108 |
+    STA.w SPCIO0_1DF9                       ;$02A108 |
     LDA.b #$02                              ;$02A10B |
     STA.w SpriteStatus_14C8,X               ;$02A10D |
     LDA.b #$D0                              ;$02A110 |
@@ -4452,7 +4452,7 @@ ChuckFireKill:
 
 TurnSpriteToCoin:
     LDA.b #$03
-    STA.w $1DF9                             ;$02A126 |
+    STA.w SPCIO0_1DF9                       ;$02A126 |
     LDA.b #$21                              ;$02A129 |
     STA $9E,X                               ;$02A12B |
     LDA.b #$08                              ;$02A12D |
@@ -4903,9 +4903,9 @@ CODE_02A473:
     LDA.b #$10                              ;$02A477 |
     STA.w $163D,X                           ;$02A479 |
     LDA.b #$03                              ;$02A47C |
-    STA.w $1DFA                             ;$02A47E |
+    STA.w SPCIO1_1DFA                       ;$02A47E |
     LDA.b #$13                              ;$02A481 |
-    STA.w $1DFC                             ;$02A483 |
+    STA.w SPCIO3_1DFC                       ;$02A483 |
     LDA.b #$02                              ;$02A486 |
     STA $C1,X                               ;$02A488 |
     STZ.w RidingYoshi_187A                  ;$02A48A |
@@ -6499,7 +6499,7 @@ GenerateFire:
     BMI Return02B07B                        ;$02B040 |
     TYX                                     ;$02B042 |
     LDA.b #$17                              ;$02B043 |
-    STA.w $1DFC                             ;$02B045 |
+    STA.w SPCIO3_1DFC                       ;$02B045 |
     LDA.b #$08                              ;$02B048 |
     STA.w SpriteStatus_14C8,X               ;$02B04A |
     LDA.b #$B3                              ;$02B04D |
@@ -6532,7 +6532,7 @@ GenerateBullet:
     JSL FindFreeSlotLowPri                  ;$02B082 |
     BMI Return02B0C8                        ;$02B086 |
     LDA.b #$09                              ;$02B088 |
-    STA.w $1DFC                             ;$02B08A |
+    STA.w SPCIO3_1DFC                       ;$02B08A |
     TYX                                     ;$02B08D |
     LDA.b #$08                              ;$02B08E |
     STA.w SpriteStatus_14C8,X               ;$02B090 |
@@ -6579,7 +6579,7 @@ GenMultiBullets:
     BNE Return02B0F9                        ;$02B0DA |
     STZ.w $18FE                             ;$02B0DC |
     LDA.b #$09                              ;$02B0DF |
-    STA.w $1DFC                             ;$02B0E1 |
+    STA.w SPCIO3_1DFC                       ;$02B0E1 |
     LDY.w $18B9                             ;$02B0E4 |
     LDA.w CODE_02B0BD,Y                     ;$02B0E7 |
     LDX.w CODE_02B0BF,Y                     ;$02B0EA |
@@ -7094,7 +7094,7 @@ ShootBullet:
     JSL FindFreeSlotLowPri                  ;$02B4A1 |
     BMI Return02B4DD                        ;$02B4A5 |
     LDA.b #$09                              ;CODE_02B4A7
-    STA.w $1DFC                             ;$02B4A9 |
+    STA.w SPCIO3_1DFC                       ;$02B4A9 |
     LDA.b #$01                              ;$02B4AC |
     STA.w SpriteStatus_14C8,Y               ;$02B4AE |
     LDA.b #$1C                              ;$02B4B1 |
@@ -9185,7 +9185,7 @@ CODE_02C37B:
     AND.b #$3F                              ;$02C37D |
     BNE CODE_02C386                         ;$02C37F |
     LDA.b #$1E                              ;$02C381 |
-    STA.w $1DFC                             ;$02C383 |
+    STA.w SPCIO3_1DFC                       ;$02C383 |
 CODE_02C386:
     LDY.b #$03
     LDA $14                                 ;$02C388 |
@@ -9399,7 +9399,7 @@ CODE_02C4E3:
     LDA.w $1FE2,X                           ;$02C4F3 |
     BNE CODE_02C502                         ;$02C4F6 |
     LDA.b #$19                              ;$02C4F8 |
-    STA.w $1DFC                             ;$02C4FA |
+    STA.w SPCIO3_1DFC                       ;$02C4FA |
     LDA.b #$20                              ;$02C4FD |
     STA.w $1FE2,X                           ;$02C4FF |
 CODE_02C502:
@@ -9428,7 +9428,7 @@ CODE_02C504:
     INC.w $160E,X                           ;$02C533 |
 CODE_02C536:
     LDA.b #$08
-    STA.w $1DFC                             ;$02C538 |
+    STA.w SPCIO3_1DFC                       ;$02C538 |
 Return02C53B:
     RTS
 
@@ -9499,7 +9499,7 @@ CODE_02C5A7:
     LDA.b #$50                              ;$02C5A9 |
     STA.w $1540,X                           ;$02C5AB |
     LDA.b #$10                              ;$02C5AE |
-    STA.w $1DF9                             ;$02C5B0 |
+    STA.w SPCIO0_1DF9                       ;$02C5B0 |
     STZ.w $185E                             ;$02C5B3 |
     JSR CODE_02C5BC                         ;$02C5B6 |
     INC.w $185E                             ;$02C5B9 |
@@ -9641,7 +9641,7 @@ CODE_02C6A7:
     BRA CODE_02C6BA                         ;$02C6B3 |
 
     LDA.b #$24                              ;$02C6B5 |
-    STA.w $1DF9                             ;$02C6B7 |
+    STA.w SPCIO0_1DF9                       ;$02C6B7 |
 CODE_02C6BA:
     JSR CODE_02D50C
     LDA $0E                                 ;$02C6BD |
@@ -9678,7 +9678,7 @@ CODE_02C6EC:
     AND.b #$07                              ;$02C703 |
     BNE CODE_02C70C                         ;$02C705 |
     LDA.b #$01                              ;$02C707 |
-    STA.w $1DF9                             ;$02C709 |
+    STA.w SPCIO0_1DF9                       ;$02C709 |
 CODE_02C70C:
     INY
     INY                                     ;$02C70D |
@@ -9783,7 +9783,7 @@ CODE_02C7B1:
     LDA.b #$02                              ;$02C7B3 |
     STA.w SpriteStatus_14C8,X               ;$02C7B5 |
     LDA.b #$03                              ;$02C7B8 |
-    STA.w $1DF9                             ;$02C7BA |
+    STA.w SPCIO0_1DF9                       ;$02C7BA |
     LDA.b #$03                              ;$02C7BD |
     JSL GivePoints                          ;$02C7BF |
     RTS                                     ;$02C7C3 |
@@ -9796,7 +9796,7 @@ CODE_02C7C4:
     LDA.b #$05                              ;$02C7CD |
     STA.w $1564,X                           ;$02C7CF |
     LDA.b #$02                              ;$02C7D2 |
-    STA.w $1DF9                             ;$02C7D4 |
+    STA.w SPCIO0_1DF9                       ;$02C7D4 |
     JSL DisplayContactGfx                   ;$02C7D7 |
     JSL BoostMarioSpeed                     ;$02C7DB |
     STZ.w $163E,X                           ;$02C7DF |
@@ -9812,7 +9812,7 @@ CODE_02C7C4:
 
 CODE_02C7F6:
     LDA.b #$28
-    STA.w $1DFC                             ;$02C7F8 |
+    STA.w SPCIO3_1DFC                       ;$02C7F8 |
     LDA.b #$03                              ;$02C7FB |
     STA $C2,X                               ;$02C7FD |
     LDA.b #$03                              ;$02C7FF |
@@ -10528,7 +10528,7 @@ PeaBouncerMain:
     LDA.w DATA_02CDFF,Y                     ;$02CDE7 |
     STA $7D                                 ;$02CDEA |
     LDA.b #$08                              ;$02CDEC |
-    STA.w $1DFC                             ;$02CDEE |
+    STA.w SPCIO3_1DFC                       ;$02CDEE |
 CODE_02CDF1:
     LDA.w $1528,X
     JSL execute_pointer                     ;$02CDF4 |
@@ -11481,7 +11481,7 @@ CODE_02D465:
     LDA.b #$50                              ;$02D46F |
     STA.w $1887                             ;$02D471 |
     LDA.b #$09                              ;$02D474 |
-    STA.w $1DFC                             ;$02D476 |
+    STA.w SPCIO3_1DFC                       ;$02D476 |
     LDA.b #$30                              ;$02D479 |
     STA.w $1540,X                           ;$02D47B |
     INC $C2,X                               ;$02D47E |
@@ -12111,7 +12111,7 @@ CODE_02D904:
     CMP.b #$04                              ;$02D914 |
     BNE CODE_02D91D                         ;$02D916 |
     LDA.b #$19                              ;$02D918 |
-    STA.w $1DFC                             ;$02D91A |
+    STA.w SPCIO3_1DFC                       ;$02D91A |
 CODE_02D91D:
     LDA.w $1534,X
     DEC A                                   ;$02D920 |
@@ -12711,7 +12711,7 @@ CODE_02DD4B:
     LDA.b #$30                              ;$02DD5F |
     STA.w $1887                             ;$02DD61 |
     LDA.b #$09                              ;$02DD64 |
-    STA.w $1DFC                             ;$02DD66 |
+    STA.w SPCIO3_1DFC                       ;$02DD66 |
     PHY                                     ;$02DD69 |
     JSR GenSumoLightning                    ;$02DD6A |
     PLY                                     ;$02DD6D |
@@ -12870,7 +12870,7 @@ CODE_02DEB0:
     AND.b #$04                              ;$02DEC8 |
     BEQ CODE_02DEEA                         ;$02DECA |
     LDA.b #$17                              ;$02DECC |
-    STA.w $1DFC                             ;$02DECE |
+    STA.w SPCIO3_1DFC                       ;$02DECE |
     LDA.b #$22                              ;$02DED1 |
     STA.w $1540,X                           ;$02DED3 |
     LDA.w $15A0,X                           ;$02DED6 |
@@ -13384,7 +13384,7 @@ CODE_02E271:
     BNE Return02E287                        ;$02E27D |
     LDA.w MusicBackup_0DDA                  ;$02E27F |
     BMI Return02E287                        ;$02E282 |
-    STA.w $1DFB                             ;$02E284 |
+    STA.w SPCIO2_1DFB                       ;$02E284 |
 Return02E287:
     RTS
 
@@ -15574,7 +15574,7 @@ CODE_02F247:
     BMI CODE_02F296                         ;$02F269 |
 CODE_02F26B:
     LDA.b #$03
-    STA.w $1DF9                             ;$02F26D |
+    STA.w SPCIO0_1DF9                       ;$02F26D |
     JSL BoostMarioSpeed                     ;$02F270 |
     LDA.w $151C,X                           ;$02F274 |
     ORA.w $15D0,X                           ;$02F277 |
@@ -15614,7 +15614,7 @@ ADDR_02F2B5:
     CPY.b #$08                              ;$02F2BC |
     BCS Return02F2C6                        ;$02F2BE |
     LDA.w DATA_02D57F,Y                     ;$02F2C0 |
-    STA.w $1DF9                             ;$02F2C3 |
+    STA.w SPCIO0_1DF9                       ;$02F2C3 |
 Return02F2C6:
     RTS
 
@@ -16169,12 +16169,12 @@ CODE_02F676:
     CMP.b #$B0
     BNE CODE_02F67F                         ;$02F678 |
     LDY.b #$0F                              ;$02F67A |
-    STY.w $1DFC                             ;$02F67C |
+    STY.w SPCIO3_1DFC                       ;$02F67C |
 CODE_02F67F:
     CMP.b #$01
     BNE CODE_02F688                         ;$02F681 |
     LDY.b #$10                              ;$02F683 |
-    STY.w $1DFC                             ;$02F685 |
+    STY.w SPCIO3_1DFC                       ;$02F685 |
 CODE_02F688:
     CMP.b #$30
     BCC CODE_02F69A                         ;$02F68A |
@@ -16265,12 +16265,12 @@ CODE_02F761:
     CMP.b #$76
     BNE CODE_02F76A                         ;$02F763 |
     LDY.b #$0F                              ;$02F765 |
-    STY.w $1DFC                             ;$02F767 |
+    STY.w SPCIO3_1DFC                       ;$02F767 |
 CODE_02F76A:
     CMP.b #$08
     BNE CODE_02F773                         ;$02F76C |
     LDY.b #$10                              ;$02F76E |
-    STY.w $1DFC                             ;$02F770 |
+    STY.w SPCIO3_1DFC                       ;$02F770 |
 CODE_02F773:
     LSR
     LSR                                     ;$02F774 |

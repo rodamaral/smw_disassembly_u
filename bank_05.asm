@@ -3188,7 +3188,7 @@ CODE_05B31F:
 ADDR_05B329:
     PHA
     LDA.b #$01                              ;$05B32A |
-    STA.w $1DFC                             ;$05B32C |
+    STA.w SPCIO3_1DFC                       ;$05B32C |
     PLA                                     ;$05B32F |
 CODE_05B330:
     STA $00
@@ -3208,7 +3208,7 @@ CODE_05B345:
 CODE_05B34A:
     INC.w $13CC
     LDA.b #$01                              ;$05B34D |
-    STA.w $1DFC                             ;$05B34F |
+    STA.w SPCIO3_1DFC                       ;$05B34F |
     LDA.w $0DC0                             ;$05B352 |
     BEQ Return05B35A                        ;$05B355 |
     DEC.w $0DC0                             ;$05B357 |
@@ -5132,7 +5132,7 @@ CODE_05C74A:
     CPX.b #$00                              ;$05C759 |
     BNE CODE_05C769                         ;$05C75B |
     LDA.w #$0009                            ;$05C75D |
-    STA.w $1DFC                             ;$05C760 |
+    STA.w SPCIO3_1DFC                       ;$05C760 |
     LDA.w #$0020                            ;$05C763 |
     STA.w $1887                             ;$05C766 |
 CODE_05C769:
@@ -5383,7 +5383,7 @@ CODE_05C9A9:
     CMP.b #$36                              ;$05C9BD |
     BCC CODE_05C9CD                         ;$05C9BF |
     LDA.b #$09                              ;$05C9C1 |
-    STA.w $1DFC                             ;$05C9C3 |
+    STA.w SPCIO3_1DFC                       ;$05C9C3 |
     LDA.b #$20                              ;$05C9C6 |
     STA.w $1887                             ;$05C9C8 |
     LDA.b #$00                              ;$05C9CB |
@@ -5764,7 +5764,7 @@ CODE_05CDD5:
     STA.w $1424                             ;$05CDDD |
     INC.w $13D9                             ;$05CDE0 |
     LDA.b #$11                              ;$05CDE3 |
-    STA.w $1DFC                             ;$05CDE5 |
+    STA.w SPCIO3_1DFC                       ;$05CDE5 |
 Return05CDE8:
     RTS
 
@@ -5938,7 +5938,7 @@ CODE_05CF36:
     STX.w $13D6                             ;$05CF42 |
     INC.w $13D9                             ;$05CF45 |
     LDX.b #$12                              ;$05CF48 |
-    STX.w $1DFC                             ;$05CF4A |
+    STX.w SPCIO3_1DFC                       ;$05CF4A |
 CODE_05CF4D:
     LDY.b #$1E
     TYA                                     ;$05CF4F |

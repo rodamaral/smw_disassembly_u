@@ -723,7 +723,7 @@ CODE_0C9409:
     JSL DMA_credits_BG                      ;$0C943F |
     JSR CODE_0CA051                         ;$0C9443 |
     LDA.b #$09                              ;$0C9446 |
-    STA.w $1DFB                             ;$0C9448 |
+    STA.w SPCIO2_1DFB                       ;$0C9448 |
     RTL                                     ;$0C944B |
 
 CODE_0C944C:
@@ -1892,7 +1892,7 @@ CODE_0CA3C9:
     STA.w $1B89                             ;$0CA405 |
     STA.w $1928                             ;$0CA408 |
     LDA.b #$0A                              ;$0CA40B |
-    STA.w $1DFB                             ;$0CA40D |
+    STA.w SPCIO2_1DFB                       ;$0CA40D |
     LDX.b #$0D                              ;$0CA410 |
     LDY.b #$06                              ;$0CA412 |
 CODE_0CA414:
@@ -2096,7 +2096,7 @@ CODE_0CA53A:
     CMP.b #$08                              ;$0CA5AB |
     BEQ CODE_0CA5B6                         ;$0CA5AD |
     LDA.b #$0A                              ;$0CA5AF |
-    STA.w $1DFC                             ;$0CA5B1 |
+    STA.w SPCIO3_1DFC                       ;$0CA5B1 |
     BRA CODE_0CA5CB                         ;$0CA5B4 |
 
 CODE_0CA5B6:
@@ -2105,7 +2105,7 @@ CODE_0CA5B6:
     STA.w $0B52                             ;$0CA5BB |
     STZ.w $0B16                             ;$0CA5BE |
     LDA.b #$0B                              ;$0CA5C1 |
-    STA.w $1DFB                             ;$0CA5C3 |
+    STA.w SPCIO2_1DFB                       ;$0CA5C3 |
     INC.w $1442                             ;$0CA5C6 |
     BRA CODE_0CA5CE                         ;$0CA5C9 |
 
@@ -4793,7 +4793,7 @@ CODE_0CCD62:
     CMP.b #$C0                              ;$0CCD64 |
     BNE CODE_0CCD75                         ;$0CCD66 |
     LDA.b #$22                              ;$0CCD68 |
-    STA.w $1DF9                             ;$0CCD6A |
+    STA.w SPCIO0_1DF9                       ;$0CCD6A |
     JSR CODE_0CD1D0                         ;$0CCD6D |
     LDA.b #$08                              ;$0CCD70 |
     STA.w $0B06                             ;$0CCD72 |
@@ -5030,7 +5030,7 @@ CODE_0CCF0F:
     CPX.b #$01                              ;$0CCF28 |
     BNE CODE_0CCF31                         ;$0CCF2A |
     LDA.b #$08                              ;$0CCF2C |
-    STA.w $1DF9                             ;$0CCF2E |
+    STA.w SPCIO0_1DF9                       ;$0CCF2E |
 CODE_0CCF31:
     CPX.b #$06
     BNE CODE_0CCF38                         ;$0CCF33 |
@@ -5314,7 +5314,7 @@ CODE_0CD11E:
     LDA.b #$40                              ;$0CD125 |
     STA.w $143F                             ;$0CD127 |
     LDA.b #$1A                              ;$0CD12A |
-    STA.w $1DFC                             ;$0CD12C |
+    STA.w SPCIO3_1DFC                       ;$0CD12C |
     INC.w $1442                             ;$0CD12F |
     RTS                                     ;$0CD132 |
 
@@ -5482,7 +5482,7 @@ CODE_0CD292:
 
 CODE_0CD295:
     LDA.b #$1A
-    STA.w $1DFC                             ;$0CD297 |
+    STA.w SPCIO3_1DFC                       ;$0CD297 |
     LDA.b #$FF                              ;$0CD29A |
     STA.w $1440                             ;$0CD29C |
     LDA.b #$30                              ;$0CD29F |
@@ -5494,12 +5494,12 @@ CODE_0CD295:
     BRL CODE_0CCC51                         ;$0CD2AF |
 CODE_0CD2B2:
     LDA.b #$21
-    STA.w $1DF9                             ;$0CD2B4 |
+    STA.w SPCIO0_1DF9                       ;$0CD2B4 |
     JSR CODE_0CD31A                         ;$0CD2B7 |
     BRL CODE_0CCD23                         ;$0CD2BA |
 CODE_0CD2BD:
     LDA.b #$17
-    STA.w $1DFC                             ;$0CD2BF |
+    STA.w SPCIO3_1DFC                       ;$0CD2BF |
     LDA.b #$77                              ;$0CD2C2 |
     STA.w $0B43                             ;$0CD2C4 |
     STZ.w $1447                             ;$0CD2C7 |
@@ -5510,7 +5510,7 @@ CODE_0CD2D0:
     STA.w $143F                             ;$0CD2D2 |
     STZ.w $1440                             ;$0CD2D5 |
     LDA.b #$19                              ;$0CD2D8 |
-    STA.w $1DFC                             ;$0CD2DA |
+    STA.w SPCIO3_1DFC                       ;$0CD2DA |
     INC.w $1442                             ;$0CD2DD |
     JSR CODE_0CCBFA                         ;$0CD2E0 |
     BRL CODE_0CCF72                         ;$0CD2E3 |
@@ -5637,7 +5637,7 @@ CODE_0CD3B6:
     AND.b #$02                              ;$0CD3E3 |
     BNE Return0CD3F3                        ;$0CD3E5 |
     LDA.b #$07                              ;$0CD3E7 |
-    STA.w $1DFC                             ;$0CD3E9 |
+    STA.w SPCIO3_1DFC                       ;$0CD3E9 |
     BRA Return0CD3F3                        ;$0CD3EC |
 
 CODE_0CD3EE:
@@ -5904,7 +5904,7 @@ CODE_0CD5C9:
     LDA.b #$D0                              ;$0CD5CE |
     STA.w $144D                             ;$0CD5D0 |
     LDA.b #$13                              ;$0CD5D3 |
-    STA.w $1DFB                             ;$0CD5D5 |
+    STA.w SPCIO2_1DFB                       ;$0CD5D5 |
     RTS                                     ;$0CD5D8 |
 
 DATA_0CD5D9:
@@ -6163,7 +6163,7 @@ CODE_0CD7D4:
     LSR                                     ;$0CD7D5 |
     BCS Return0CD7DD                        ;$0CD7D6 |
     LDA.b #$0F                              ;$0CD7D8 |
-    STA.w $1DF9                             ;$0CD7DA |
+    STA.w SPCIO0_1DF9                       ;$0CD7DA |
 Return0CD7DD:
     RTS
 

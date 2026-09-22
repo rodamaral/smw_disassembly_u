@@ -2013,10 +2013,10 @@ VariousPromptTimer: skip 1
 StarWarpIndex: skip 1
 StarWarpLaunchSpeed: skip 1
 StarWarpLaunchTimer: skip 1
-SPCIO0: skip 1
-SPCIO1: skip 1
-SPCIO2: skip 1
-SPCIO3: skip 1
+SPCIO0_1DF9: skip 1
+SPCIO1_1DFA: skip 1
+SPCIO2_1DFB: skip 1
+SPCIO3_1DFC: skip 1
 Empty_1DFD: skip 2
 LastUsedMusic: skip 1
 ; 7E1E00 unused
