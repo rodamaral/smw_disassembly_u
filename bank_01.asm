@@ -1121,7 +1121,7 @@ GoalSphere:
     STZ.w SpriteStatus_14C8,X               ;$018778 |
     LDA.b #$FF                              ;$01877B |
     STA.w $1493                             ;$01877D |
-    STA.w $0DDA                             ;$018780 |
+    STA.w MusicBackup_0DDA                  ;$018780 |
     LDA.b #$0B                              ;$018783 |
     STA.w $1DFB                             ;$018785 |
 Return018788:
@@ -5957,7 +5957,7 @@ CODE_01AAE1:
     LSR.w $167A,X                           ;$01AAFA |
     LDA.b #$0B                              ;$01AAFD |
     STA.w $1DF9                             ;$01AAFF |
-    LDA.w $0DDA                             ;$01AB02 |
+    LDA.w MusicBackup_0DDA                  ;$01AB02 |
     BMI CODE_01AB0C                         ;$01AB05 |
     LDA.b #$0E                              ;$01AB07 |
     STA.w $1DFB                             ;$01AB09 |
@@ -9100,7 +9100,7 @@ CODE_01C0B4:
     LDA.b #$0C                              ;$01C0EF |
     STA.w $1DFB                             ;$01C0F1 |
     LDA.b #$FF                              ;$01C0F4 |
-    STA.w $0DDA                             ;$01C0F6 |
+    STA.w MusicBackup_0DDA                  ;$01C0F6 |
     LDA.b #$FF                              ;$01C0F9 |
     STA.w $1493                             ;$01C0FB |
     STZ.w StarTimer_1490                    ;$01C0FE |
@@ -9733,9 +9733,9 @@ CODE_01C580:
     STA.w StarTimer_1490                    ;$01C582 |
     LDA.b #$0D                              ;$01C585 |
     STA.w $1DFB                             ;$01C587 |
-    ASL.w $0DDA                             ;$01C58A |
+    ASL.w MusicBackup_0DDA                  ;$01C58A |
     SEC                                     ;$01C58D |
-    ROR.w $0DDA                             ;$01C58E |
+    ROR.w MusicBackup_0DDA                  ;$01C58E |
     RTL                                     ;$01C591 |
 
 GiveMarioStar:

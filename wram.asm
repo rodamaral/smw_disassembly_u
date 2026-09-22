@@ -1370,7 +1370,7 @@ PlayerTurnOW: skip 2
 PlayerSwitching: skip 1
 ; 7E0DD9 unused
 skip 1
-MusicBackup: skip 1
+MusicBackup_0DDA: skip 1
 ; 7E0DDB - 7E0DDD unused
 skip 3
 SaveFileDelete: skip 1

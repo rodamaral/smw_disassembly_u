@@ -554,15 +554,15 @@ LevelModeEven:
     AND.b #$07                              ;$05854E |
     TAX                                     ;$058550 |
     LDA.l LevelMusicTable,X                 ;$058551 |
-    LDX.w $0DDA                             ;$058555 |
+    LDX.w MusicBackup_0DDA                  ;$058555 |
     BPL CODE_05855C                         ;$058558 |
     ORA.b #$80                              ;$05855A |
 CODE_05855C:
-    CMP.w $0DDA
+    CMP.w MusicBackup_0DDA
     BNE CODE_058563                         ;$05855F |
     ORA.b #$40                              ;$058561 |
 CODE_058563:
-    STA.w $0DDA
+    STA.w MusicBackup_0DDA
     LDA $00                                 ;$058566 |
     AND.b #$80                              ;$058568 |
     LSR                                     ;$05856A |

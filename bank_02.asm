@@ -13382,7 +13382,7 @@ CODE_02E271:
     LDA.w $14AD                             ;$02E277 |
     ORA.w $14AE                             ;$02E27A |
     BNE Return02E287                        ;$02E27D |
-    LDA.w $0DDA                             ;$02E27F |
+    LDA.w MusicBackup_0DDA                  ;$02E27F |
     BMI Return02E287                        ;$02E282 |
     STA.w $1DFB                             ;$02E284 |
 Return02E287:

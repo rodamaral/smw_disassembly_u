@@ -2684,9 +2684,9 @@ CODE_0096FA:
     CMP.b #$E9                              ;$00971F |
     BNE CODE_009740                         ;$009721 |
     LDA.b #$13                              ;$009723 |
-    STA.w $0DDA                             ;$009725 |
+    STA.w MusicBackup_0DDA                  ;$009725 |
 CODE_009728:
-    LDA.w $0DDA
+    LDA.w MusicBackup_0DDA
     CMP.b #$40                              ;$00972B |
     BCS CODE_00973B                         ;$00972D |
     LDY.w $0D9B                             ;$00972F |
@@ -2697,7 +2697,7 @@ CODE_009738:
     STA.w $1DFB
 CODE_00973B:
     AND.b #$BF
-    STA.w $0DDA                             ;$00973D |
+    STA.w MusicBackup_0DDA                  ;$00973D |
 CODE_009740:
     STZ.w $0DAE
     STZ.w $0DAF                             ;$009743 |
@@ -3931,7 +3931,7 @@ GM0C_overworld_load_00A087:
     JSR CODE_0085FA
     JSR upload_music_bank_1                 ;$00A0B3 |
     JSR SetUpScreen                         ;$00A0B6 |
-    STZ.w $0DDA                             ;$00A0B9 |
+    STZ.w MusicBackup_0DDA                  ;$00A0B9 |
     LDX.w CurrentPlayer_0DB3                ;$00A0BC |
     LDA.w $0DBE                             ;$00A0BF |
     BPL .CODE_00A0C7                        ;$00A0C2 |
@@ -4586,14 +4586,14 @@ CODE_00A635:
     BNE CODE_00A64A                         ;$00A63E |
     LDA.w StarTimer_1490                    ;$00A640 |
     BEQ CODE_00A660                         ;$00A643 |
-    LDA.w $0DDA                             ;$00A645 |
+    LDA.w MusicBackup_0DDA                  ;$00A645 |
     BPL CODE_00A64F                         ;$00A648 |
 CODE_00A64A:
-    LDA.w $0DDA
+    LDA.w MusicBackup_0DDA
     AND.b #$7F                              ;$00A64D |
 CODE_00A64F:
     ORA.b #$40
-    STA.w $0DDA                             ;$00A651 |
+    STA.w MusicBackup_0DDA                  ;$00A651 |
     STZ.w $14AD                             ;$00A654 |
     STZ.w $14AE                             ;$00A657 |
     STZ.w $190C                             ;$00A65A |
@@ -4670,9 +4670,9 @@ CODE_00A6E0:
     STZ.b SpriteLock_9D                     ;$00A6E6 |
     LDA.w $1434                             ;$00A6E8 |
     BEQ CODE_00A704                         ;$00A6EB |
-    LDA.w $0DDA                             ;$00A6ED |
+    LDA.w MusicBackup_0DDA                  ;$00A6ED |
     ORA.b #$7F                              ;$00A6F0 |
-    STA.w $0DDA                             ;$00A6F2 |
+    STA.w MusicBackup_0DDA                  ;$00A6F2 |
     LDA $94                                 ;$00A6F5 |
     ORA.b #$04                              ;$00A6F7 |
     STA.w $1436                             ;$00A6F9 |
@@ -7394,7 +7394,7 @@ timers_and_animation_00C47E:
     CPY.w $14AE                             ;$00C536 |
     BCS +                                   ;$00C539 | get the max between the Blue and Silver P-Switch timers
     LDY.w $14AE                             ;$00C53B |
-+   LDA.w $0DDA                             ;$00C53E |
++   LDA.w MusicBackup_0DDA                  ;$00C53E |
     BMI +                                   ;$00C541 |
     CPY.b #$01                              ;$00C543 |
     BNE +                                   ;$00C545 |
@@ -7942,7 +7942,7 @@ CODE_00C9DF:
     LDX.b #$F0                              ;$00C9EB |
     STX.w $0DB0                             ;$00C9ED |
     STZ.w $1493                             ;$00C9F0 |
-    STZ.w $0DDA                             ;$00C9F3 |
+    STZ.w MusicBackup_0DDA                  ;$00C9F3 |
     LDY.b #$10                              ;$00C9F6 |
 CODE_00C9F8:
     STZ.w $0DAE
@@ -10480,11 +10480,11 @@ draw_mario_and_yoshi_00E2BD:
     CPY.b #$1E                              ;$00E2E5 |
     BCC .CODE_00E30A                        ;$00E2E7 |
     BNE .CODE_00E30C                        ;$00E2E9 |
-    LDA.w $0DDA                             ;$00E2EB |
+    LDA.w MusicBackup_0DDA                  ;$00E2EB |
     CMP.b #$FF                              ;$00E2EE |
     BEQ .CODE_00E308                        ;$00E2F0 |
     AND.b #$7F                              ;$00E2F2 |
-    STA.w $0DDA                             ;$00E2F4 |
+    STA.w MusicBackup_0DDA                  ;$00E2F4 |
     TAX                                     ;$00E2F7 |
     LDA.w $14AD                             ;$00E2F8 |
     ORA.w $14AE                             ;$00E2FB |
@@ -11707,7 +11707,7 @@ CODE_00EEAA:
     LDA.b #$0C                              ;$00EEC2 |
     STA.w $1DFB                             ;$00EEC4 |
     LDA.b #$FF                              ;$00EEC7 |
-    STA.w $0DDA                             ;$00EEC9 |
+    STA.w MusicBackup_0DDA                  ;$00EEC9 |
     LDA.b #$08                              ;$00EECC |
     STA.w $1493                             ;$00EECE |
 CODE_00EED1:
@@ -12748,7 +12748,7 @@ kill_player_no_speed:                       ;        |
     LDA.b #$09                              ;$00F60A |\ Play the death music.
     STA.w $1DFB                             ;$00F60C |/
     LDA.b #$FF                              ;$00F60F |
-    STA.w $0DDA                             ;$00F611 |
+    STA.w MusicBackup_0DDA                  ;$00F611 |
     LDA.b #$09                              ;$00F614 |\ Set the player death animation.
     STA $71                                 ;$00F616 |/
     STZ.w $140D                             ;$00F618 | Disable spin jumping.
