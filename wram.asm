@@ -637,14 +637,15 @@ PlayerBlockedDir_77: skip 1
 ; +------- don't decrement star timer (used with brown swinging platforms)
 PlayerHiddenTiles_78: skip 1
 ; Valid values
-!PlayerHide_None = %00000000
-!PlayerHide_Body = %00000011
-!PlayerHide_Extra = %00001100
-!PlayerHide_Cape = %00010000
-!PlayerHide_CapeX1 = %00100000
-!PlayerHide_CapeX2 = %01000000
-!PlayerHide_All = %01111111
-!PlayerHide_PauseStar = %10000000
+!Hide_None_00 = %00000000
+!Hide_Body_03 = %00000011
+!Hide_Extra_0C = %00001100
+!Hide_Cape_10 = %00010000
+!Hide_CapeX1_20 = %00100000
+!Hide_CapeX2_40 = %01000000
+!Hide_All_7F = %01111111
+!Hide_PauseStar_80 = %10000000
+!Hide_AllStar_FF = %11111111
 
 ; === $7E0079 ===
 ; 1 byte

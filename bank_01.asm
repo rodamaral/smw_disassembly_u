@@ -10417,7 +10417,7 @@ CODE_01CA6E:
     JSR CODE_01C9E2
     LDA $16                                 ;$01CA71 |
     BMI CODE_01CA79                         ;$01CA73 |
-    LDA.b #$FF                              ;$01CA75 |
+    LDA.b #!Hide_AllStar_FF                 ;$01CA75 |
     STA.b PlayerHiddenTiles_78              ;$01CA77 |
 CODE_01CA79:
     LDA $13

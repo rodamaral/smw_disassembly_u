@@ -8908,7 +8908,7 @@ return_00D15E:                              ;        |
     RTS                                     ;$00D15E /
 
 cape_animation:
-    LDA.b #$7F                              ;$00D15F \ Hide all of the player.
+    LDA.b #!Hide_All_7F                     ;$00D15F \ Hide all of the player.
     STA.b PlayerHiddenTiles_78              ;$00D161 |
     DEC.w $1496                             ;$00D163 |\ Decrement the animation timer.
     BNE return_00D15E                       ;$00D166 |/ If it's not zero, return.
@@ -9040,7 +9040,7 @@ CODE_00D22D:
     DEC $88                                 ;$00D241 |
     BNE CODE_00D24E                         ;$00D243 |
     BCS CODE_00D24E                         ;$00D245 |
-    LDA.b #$7F                              ;$00D247 |
+    LDA.b #!Hide_All_7F                     ;$00D247 |
     STA.b PlayerHiddenTiles_78              ;$00D249 |
     INC.w $1405                             ;$00D24B |
 CODE_00D24E:
@@ -10462,7 +10462,7 @@ draw_mario_and_yoshi_00E2BD:
     PHK                                     ;$00E2BE |
     PLB                                     ;$00E2BF |
     LDA.b PlayerHiddenTiles_78              ;$00E2C0 |
-    CMP.b #$FF                              ;$00E2C2 |
+    CMP.b #!Hide_AllStar_FF                 ;$00E2C2 |
     BEQ +                                   ;$00E2C4 |
     JSL draw_yoshi_01EA70                   ;$00E2C6 |
 +   LDY.w CyclePaletteTimer_149B            ;$00E2CA |
@@ -10470,7 +10470,7 @@ draw_mario_and_yoshi_00E2BD:
     LDY.w StarTimer_1490                    ;$00E2CF |
     BEQ .CODE_00E314                        ;$00E2D2 |
     LDA.b PlayerHiddenTiles_78              ;$00E2D4 |
-    CMP.b #$FF                              ;$00E2D6 |
+    CMP.b #!Hide_AllStar_FF                 ;$00E2D6 |
     BEQ +                                   ;$00E2D8 |
     LDA $14                                 ;$00E2DA |
     AND.b #$03                              ;$00E2DC |

@@ -11814,7 +11814,7 @@ CODE_02D70B:
     PHX                                     ;$02D731 |
     JSL draw_mario_and_yoshi_00E2BD         ;$02D732 |
     PLX                                     ;$02D736 |
-    LDA.b #$FF                              ;$02D737 |
+    LDA.b #!Hide_AllStar_FF                 ;$02D737 |
     STA.b PlayerHiddenTiles_78              ;$02D739 |
     BRA CODE_02D74B                         ;$02D73B |
 
