@@ -8928,7 +8928,7 @@ flower_animation:                           ;        \
     STA.w $13ED                             ;$00D181 | | stop cape-sliding on the ground,
     STZ.w $13E0                             ;$00D184 |/ and reset the player's pose.
 CODE_00D187:                                ;        |
-    DEC.w $149B                             ;$00D187 |\ Decrease the palette cycle timer.
+    DEC.w CyclePaletteTimer_149B            ;$00D187 |\ Decrease the palette cycle timer.
     BEQ reset_animation                     ;$00D18A |/ If it's zero, reset the animation.
     RTS                                     ;$00D18C /
 
@@ -10465,7 +10465,7 @@ draw_mario_and_yoshi_00E2BD:
     CMP.b #$FF                              ;$00E2C2 |
     BEQ +                                   ;$00E2C4 |
     JSL draw_yoshi_01EA70                   ;$00E2C6 |
-+   LDY.w $149B                             ;$00E2CA |
++   LDY.w CyclePaletteTimer_149B            ;$00E2CA |
     BNE .CODE_00E308                        ;$00E2CD |
     LDY.w $1490                             ;$00E2CF |
     BEQ .CODE_00E314                        ;$00E2D2 |

@@ -9789,7 +9789,7 @@ Return01C5EB:
 
 GiveMarioFire:
     LDA.b #$20
-    STA.w $149B                             ;$01C5EE |
+    STA.w CyclePaletteTimer_149B            ;$01C5EE |
     STA.b SpriteLock_9D                     ;$01C5F1 |
     LDA.b #$04                              ;$01C5F3 |
     STA $71                                 ;$01C5F5 |

@@ -1624,7 +1624,7 @@ IFrameTimer: skip 1
 PickUpItemTimer_1498: skip 1
 FaceScreenTimer: skip 1
 KickingTimer: skip 1
-CyclePaletteTimer: skip 1
+CyclePaletteTimer_149B: skip 1
 ShootFireTimer: skip 1
 NetDoorTimer: skip 1
 PunchNetTimer: skip 1
