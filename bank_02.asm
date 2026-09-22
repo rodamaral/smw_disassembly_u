@@ -2442,7 +2442,7 @@ CODE_02926F:
     STA $00                                 ;$02927B |
     LDA.w $16A9,X                           ;$02927D |
     SBC.b #$00                              ;$029280 |
-    CMP $5D                                 ;$029282 |
+    CMP.b LevelScreens_5D                   ;$029282 |
     BCS Return0292C9                        ;$029284 |
     STA $03                                 ;$029286 |
     AND.b #$10                              ;$029288 |
@@ -2495,7 +2495,7 @@ CODE_0292CA:
     LDA.w $16A5,X                           ;$0292DF |
     STA $01                                 ;$0292E2 |
     LDA.w $16AD,X                           ;$0292E4 |
-    CMP $5D                                 ;$0292E7 |
+    CMP.b LevelScreens_5D                   ;$0292E7 |
     BCS Return0292C9                        ;$0292E9 |
     STA $03                                 ;$0292EB |
     LDA $01                                 ;$0292ED |
@@ -2828,7 +2828,7 @@ CapeLayerInteraction029540:
     STA $98                                 ;$029557 |
     LDA.w $13EC                             ;$029559 |
     ADC.b #$00                              ;$02955C |
-    CMP $5D                                 ;$02955E |
+    CMP.b LevelScreens_5D                   ;$02955E |
     BCS Return0295AD                        ;$029560 |
     STA $03                                 ;$029562 |
     STA $99                                 ;$029564 |
@@ -2889,7 +2889,7 @@ CapeHorizontalLayer0295AE:
     STA $9A                                 ;$0295D1 |
     LDA.w $13EA                             ;$0295D3 |
     ADC.b #$00                              ;$0295D6 |
-    CMP $5D                                 ;$0295D8 |
+    CMP.b LevelScreens_5D                   ;$0295D8 |
     BCS Return0295AD                        ;$0295DA |
     STA $03                                 ;$0295DC |
     STA $9B                                 ;$0295DE |
@@ -5109,7 +5109,7 @@ CODE_02A611:
     STA $00                                 ;$02A622 |
     LDA.w $1729,X                           ;$02A624 |
     ADC.b #$00                              ;$02A627 |
-    CMP $5D                                 ;$02A629 |
+    CMP.b LevelScreens_5D                   ;$02A629 |
     BCS CODE_02A677                         ;$02A62B |
     STA $03                                 ;$02A62D |
     STA $99                                 ;$02A62F |
@@ -5176,7 +5176,7 @@ CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision
     STA $9A                                 ;$02A69F |
     LDA.w $1733,X                           ;$02A6A1 |
     ADC.b #$00                              ;$02A6A4 |
-    CMP $5D                                 ;$02A6A6 |
+    CMP.b LevelScreens_5D                   ;$02A6A6 |
     BCS CODE_02A677                         ;$02A6A8 |
     STA $03                                 ;$02A6AA |
     STA $9B                                 ;$02A6AC |
@@ -7866,7 +7866,7 @@ CODE_02B9FA:
     AND.b #$F0                              ;$02BA00 |
     STA $04                                 ;$02BA02 |
     LDA $09                                 ;$02BA04 |
-    CMP $5D                                 ;$02BA06 |
+    CMP.b LevelScreens_5D                   ;$02BA06 |
     BCS Return02BA47                        ;$02BA08 |
     STA $05                                 ;$02BA0A |
     LDA $00                                 ;$02BA0C |
@@ -7915,7 +7915,7 @@ CODE_02BA48:
     LDA $00                                 ;$02BA59 |
     STA $06                                 ;$02BA5B |
     LDA $08                                 ;$02BA5D |
-    CMP $5D                                 ;$02BA5F |
+    CMP.b LevelScreens_5D                   ;$02BA5F |
     BCS Return02BA47                        ;$02BA61 |
     STA $07                                 ;$02BA63 |
     LDA $06                                 ;$02BA65 |
@@ -10961,7 +10961,7 @@ try_eat_berry_tile_02D0E6:
     STA $00                                 ;$02D0F1 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02D0F3 |
     ADC.b #$00                              ;$02D0F6 |
-    CMP $5D                                 ;$02D0F8 |
+    CMP.b LevelScreens_5D                   ;$02D0F8 |
     BCS .return_02D148                      ;$02D0FA |
     STA $03                                 ;$02D0FC |
     AND.b #$10                              ;$02D0FE |
@@ -11023,7 +11023,7 @@ try_eat_berry_tile_02D0E6:
     STA.w $18B0                             ;$02D16E | Mouth X position, low
     LDA.w SpriteXPosHigh_14E0,X             ;$02D171 |
     ADC.w DATA_02D0D2,Y                     ;$02D174 |
-    CMP $5D                                 ;$02D177 |
+    CMP.b LevelScreens_5D                   ;$02D177 |
     BCS .return_02D148                      ;$02D179 | if Yoshi's X is beyond the number of screens, return
     STA.w $18B1                             ;$02D17B | Mouth X position, high
     STA $03                                 ;$02D17E |

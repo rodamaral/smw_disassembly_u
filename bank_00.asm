@@ -2674,7 +2674,7 @@ CODE_0096FA:
     JSR upload_level_music                  ;$009702 |
     JSR CODE_00A635                         ;$009705 |
     LDA.b #$20                              ;$009708 |
-    STA $5E                                 ;$00970A |
+    STA.b LastScreenHoriz_5E                ;$00970A |
     JSR CODE_00A796                         ;$00970C |
     INC.w $1404                             ;$00970F |
     JSL update_screen_position_00F6DB       ;$009712 |
@@ -8446,7 +8446,7 @@ ScrollScreen:
     LDA.b #$00                              ;$00CE2A |
     CPX.b #$02                              ;$00CE2C |
     BNE CODE_00CE33                         ;$00CE2E |
-    LDA $5E                                 ;$00CE30 |
+    LDA.b LastScreenHoriz_5E                ;$00CE30 |
     DEC A                                   ;$00CE32 |
 CODE_00CE33:
     REP #$20
@@ -12514,7 +12514,7 @@ collision:
     AND.b #$F0                              ;$00F47F |\
     STA $00                                 ;$00F481 | | Set the upper nybble of map16 table index.
     LDX $9B                                 ;$00F483 | |
-    CPX $5D                                 ;$00F485 | | If collision X > end of level,
+    CPX.b LevelScreens_5D                   ;$00F485 | | If collision X > end of level,
     BCS .air_tile                           ;$00F487 | | act like air.
     LDA $9A                                 ;$00F489 | | Get collision X,
     LSR                                     ;$00F48B | |
@@ -12541,7 +12541,7 @@ collision:
     CMP.b #$02                              ;$00F4A8 | If collision X > $0200,
     BCS .air_tile_2                         ;$00F4AA | act like air.
     LDX $99                                 ;$00F4AC |
-    CPX $5D                                 ;$00F4AE | If collision Y > end of level,
+    CPX.b LevelScreens_5D                   ;$00F4AE | If collision Y > end of level,
     BCS .air_tile_2                         ;$00F4B0 | act like air.
     LDA $98                                 ;$00F4B2 |\
     AND.b #$F0                              ;$00F4B4 | |
@@ -12903,7 +12903,7 @@ update_screen_position_00F6DB:
     BPL +                                   ;$00F741 |
     LDA.w #$0000                            ;$00F743 |
 +   STA.b Layer1XPos_1A                     ;$00F746 |
-    LDA $5E                                 ;$00F748 |
+    LDA.b LastScreenHoriz_5E                ;$00F748 |
     DEC A                                   ;$00F74A |
     XBA                                     ;$00F74B |
     AND.w #$FF00                            ;$00F74C |
@@ -12916,7 +12916,7 @@ update_screen_position_00F6DB:
     BRA .CODE_00F79D
 
 .UpdateVerticalLevelScreen00F75C:
-    LDA $5F
+    LDA.b LastScreenVert_5F
     DEC A                                   ;$00F75E |
     XBA                                     ;$00F75F |
     AND.w #$FF00                            ;$00F760 |

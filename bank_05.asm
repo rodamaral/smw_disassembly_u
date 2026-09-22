@@ -499,7 +499,7 @@ CODE_0584E3:
     TAX                                     ;$0584E7 |
     AND.b #$1F                              ;$0584E8 |
     INC A                                   ;$0584EA |
-    STA $5D                                 ;$0584EB |
+    STA.b LevelScreens_5D                   ;$0584EB |
     TXA                                     ;$0584ED |
     LSR                                     ;$0584EE |
     LSR                                     ;$0584EF |
@@ -525,14 +525,14 @@ CODE_0584E3:
     LDA.l VerticalTable,X                   ;$058520 |
     STA $5B                                 ;$058524 |
     LSR                                     ;$058526 |
-    LDA $5D                                 ;$058527 |
+    LDA.b LevelScreens_5D                   ;$058527 |
     LDX.b #$01                              ;$058529 |
     BCC LevelModeEven                       ;$05852B |
     TAX                                     ;$05852D |
     LDA.b #$01                              ;$05852E |
 LevelModeEven:
-    STA $5E
-    STX $5F                                 ;$058532 |
+    STA.b LastScreenHoriz_5E
+    STX.b LastScreenVert_5F                 ;$058532 |
     LDA [$65],Y                             ;$058534 |
     LSR                                     ;$058536 |
     LSR                                     ;$058537 |
@@ -5045,7 +5045,7 @@ ADDR_05C69E:
     INC A                                   ;$05C6B3 |
 ADDR_05C6B4:
     STA.w $1446
-    LDY $5E                                 ;$05C6B7 |
+    LDY.b LastScreenHoriz_5E                ;$05C6B7 |
     DEY                                     ;$05C6B9 |
     CPY.w $1463                             ;$05C6BA |
     BNE ADDR_05C6EC                         ;$05C6BD |
@@ -5078,7 +5078,7 @@ ADDR_05C6EE:
     SEP #$20                                ;$05C6F5 |
     LDA.w $1463                             ;$05C6F7 |
     SEC                                     ;$05C6FA |
-    SBC $5E                                 ;$05C6FB |
+    SBC.b LastScreenHoriz_5E                ;$05C6FB |
     INC A                                   ;$05C6FD |
     INC A                                   ;$05C6FE |
     XBA                                     ;$05C6FF |
@@ -5170,7 +5170,7 @@ CODE_05C787:
     INC A                                   ;$05C7A3 |
 CODE_05C7A4:
     STA.w $1446,X
-    LDA $5E                                 ;$05C7A7 |
+    LDA.b LastScreenHoriz_5E                ;$05C7A7 |
     DEC A                                   ;$05C7A9 |
     XBA                                     ;$05C7AA |
     AND.w #$FF00                            ;$05C7AB |
@@ -6574,7 +6574,7 @@ CODE_05D9A1:
     AND.b #$1F                              ;$05D9AC |
     STA $97                                 ;$05D9AE |
     INC A                                   ;$05D9B0 |
-    STA $5F                                 ;$05D9B1 |
+    STA.b LastScreenVert_5F                 ;$05D9B1 |
     LDA.b #$01                              ;$05D9B3 |
     STA.w $1412                             ;$05D9B5 |
 CODE_05D9B8:

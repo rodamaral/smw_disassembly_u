@@ -2922,7 +2922,7 @@ CODE_01944D:
     STA $00                                 ;$01945F |
     LDA.w SpriteYPosHigh_14D4,X             ;$019461 |
     ADC.b #$00                              ;$019464 |
-    CMP $5D                                 ;$019466 |
+    CMP.b LevelScreens_5D                   ;$019466 |
     BCS CODE_0194B4                         ;$019468 |
     STA $0D                                 ;$01946A |
     LDA.b SpriteXPosLow_E4,X                ;$01946C |
@@ -2992,7 +2992,7 @@ CODE_0194BF:
     ADC.b #$00                              ;$0194EA |
     STA $0B                                 ;$0194EC |
     BMI CODE_0194B4                         ;$0194EE |
-    CMP $5D                                 ;$0194F0 |
+    CMP.b LevelScreens_5D                   ;$0194F0 |
     BCS CODE_0194B4                         ;$0194F2 |
     LDA $01                                 ;$0194F4 |
     LSR                                     ;$0194F6 |

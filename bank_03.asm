@@ -10358,9 +10358,9 @@ CODE_03DD7D:
     STA $39                                 ;$03DD95 |
 CODE_03DD97:
     LDA.b #$FF
-    STA $5D                                 ;$03DD99 |
+    STA.b LevelScreens_5D                   ;$03DD99 |
     INC A                                   ;$03DD9B |
-    STA $5E                                 ;$03DD9C |
+    STA.b LastScreenHoriz_5E                ;$03DD9C |
     LDY.w $13FC                             ;$03DD9E |
     LDX.w DATA_03DD78,Y                     ;$03DDA1 |
     LDA.w KoopaPalPtrLo,Y                   ;$03DDA4 |

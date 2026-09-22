@@ -472,7 +472,7 @@ WRAM_00_5C: skip 1
 ; 1 byte
 ; Number of screens in a level
 ; Set to -1 during Ludwig and Reznor battles, which represents 1.5
-LevelScrLength_5D: skip 1
+LevelScreens_5D: skip 1
 
 ; === $7E005E ===
 ; 1 byte
