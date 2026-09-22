@@ -1,6 +1,8 @@
 ; incsrc "hardware_registers.asm"
 
 ORG $7E0000
+
+; scratch RAM
 skip 16
 
 ; === $7E0010 ===
@@ -951,11 +953,7 @@ SpriteXPosLow_E4: skip 12
 ; === $7E00F0 ===
 ; 16 bytes
 ; unused
-WRAM_00_F0:
-
-ORG $000100
-
-StackPage:
+skip 16
 
 ; === $7E0100 ===
 ; 1 byte
@@ -1030,8 +1028,7 @@ SaveFile_010A: skip 6
 CreditsLetterbox_0110: skip 1
 
 ; $7E0112 - $7E01FF used as stack
-
-ORG $0001FF
+skip 238
 
 ; === $7E01FF ===
 ; variable size
@@ -1043,23 +1040,23 @@ StackStart_01FF: skip 1
 ; 512 bytes
 ; a work RAM buffer of Object Attribute Memory (OAM)
 ; table 1: object position, tile, and attributes
-OAMMirror:
+OAMMirror_0200:
 
 ; === $7E0200 ===
 ; 128 objects
 ; the lower 8 bits of the object's X position on the screen
-OAMTileXPos: skip 1
+OAMTileXPos_0200: skip 1
 
 ; === $7E0201 ===
 ; 128 objects
 ; the 8 bits of the object's Y position on the screen
 ; $E0 is just off the bottom of the screen
-OAMTileYPos: skip 1
+OAMTileYPos_0201: skip 1
 
 ; === $7E0202 ===
 ; 128 objects
 ; the lower 8 bits of the tile number that the object uses
-OAMTileNo: skip 1
+OAMTileNo_0202: skip 1
 
 ; === $7E0203 ===
 ; 128 objects
@@ -1070,31 +1067,30 @@ OAMTileNo: skip 1
 ; ||++---- the priority that this object has against backgrounds
 ; |+------ the object is flipped horizontally
 ; +------- the object is flipped vertically
-OAMTileAttr: skip 1
-
-ORG $000400
+OAMTileAttr_0203: skip 1
+skip 508
 
 ; === $7E0400 ===
 ; 32 bytes
 ; a work RAM buffer of Object Attribute Memory (OAM)
 ; table 2: object high X position & size
-OAMTileBitSize: skip 32
+OAMTileBitSize_0400: skip 32
 
-; === $7E0400 ===
+; === $7E0420 ===
 ; 128 bytes
 ; expanded table of object attributes for OAM table 2
 ; one byte per object
 ; ------sx
 ;       |+ the higher 1 bit of the object's X position on the screen
 ;       +- the size of the object (big or small)
-OAMTileSize: skip 128
+OAMTileSize_0420: skip 128
 
 ; === $7E04A0 ===
 ; 480 bytes
 ; window left and right positions for each line
 ; 2 bytes per line
 ; last 32 lines are seldom used outside of the PAL release
-WindowTable:
+WindowTable_04A0:
 
 ; === $7E04A0 ===
 ; 10 bytes
@@ -1103,7 +1099,7 @@ WindowTable:
 ; first two entries are for the top half
 ; (split in two because it can be large)
 ; last entry for bottom half
-CreditsL1HDMATable: skip 10
+CreditsL1HDMATable_04A0: skip 10
 
 ; === $7E04AA ===
 ; 10 bytes
@@ -1112,7 +1108,7 @@ CreditsL1HDMATable: skip 10
 ; first two entries are for the top half
 ; (split in two because it can be large)
 ; last entry for bottom half
-CreditsL2HDMATable: skip 10
+CreditsL2HDMATable_04AA: skip 10
 
 ; === $7E04B4 ===
 ; 10 bytes
@@ -1121,12 +1117,12 @@ CreditsL2HDMATable: skip 10
 ; first two entries are for the top half
 ; (split in two because it can be large)
 ; last entry for bottom half
-CreditsL3HDMATable: skip 460
+CreditsL3HDMATable_04B4: skip 460
 
 ; === $7E0680 ===
 ; 1 byte
 ; which palette table to use
-PaletteIndexTable: skip 1
+PaletteIndexTable_0680: skip 1
 ; Valid values
 !PaletteTableUse_Dynamic = 0
 !PaletteTableUse_Copy = 3
@@ -1135,7 +1131,7 @@ PaletteIndexTable: skip 1
 ; === $7E0681 ===
 ; 1 byte
 ; the current size of the dynamic palette upload table
-DynPaletteIndex: skip 1
+DynPaletteIndex_0681: skip 1
 
 ; === $7E0682 ===
 ; 127 bytes
@@ -1144,148 +1140,148 @@ DynPaletteIndex: skip 1
 ; header byte 1 = number of bytes to upload in this entry
 ; header byte 2 = CGRAM word address to upload this entry
 ; data = the colors to upload
-DynPaletteTable: skip 127
+DynPaletteTable_0682: skip 127
 
 ; === $7E0701 ===
 ; 2 bytes
 ; the fixed color, commonly used for the background
 ; value buffer for PPU register $2132, COLDATA
-BackgroundColor: skip 2
+BackgroundColor_0701: skip 2
 
 ; === $7E0703 ===
 ; 512 bytes
 ; a work RAM buffer of the entirety of CGRAM
-MainPalette: skip 512
+MainPalette_0703: skip 512
 
 ; === $7E0903 ===
 ; 2 bytes
 ; copy of the background color
 ; used during level end palette fade in and out
-CopyBGColor: skip 2
+CopyBGColor_0903: skip 2
 
 ; === $7E0905 ===
 ; 496 bytes
 ; a copy of almost all of CGRAM, missing the last 8 colors
 ; used during level end palette fade in and out
 ; as well as overworld event tile fading animation
-CopyPalette: skip 496
+CopyPalette_0905: skip 496
 
 ; === $7E0AF5 ===
 ; 1 byte
 ; mostly unused
 ; cleared after a boss is beaten
-Empty0AF5: skip 1
+Empty_0AF5: skip 1
 
 ; === $7E0AF6 ===
 ; 352 bytes
 ; graphics buffer for animated tiles on the overworld
-GfxDecompOWAni:
+GfxDecompOWAni_0AF6:
 
 ; === $7E0AF6 ===
 ; 256 bytes
 ; tilemap for Iggy and Larry's rotating platform
-IggyLarryPlatInteract:
+IggyLarryPlatInteract_0AF6:
 
 ; === $7E0AF6 ===
 ; 15 bytes
 ; timer for sprites during credits and castle cutscenes
-CreditsSprTimer: skip 15
+CreditsSprTimer_0AF6: skip 15
 
 ; === $7E0B05 ===
 ; 15 bytes
 ; Y speed for sprites during credits and castle cutscenes
 ; upper 8 bits of 4.12 fixed point in pixels per frame
-CreditsSprYSpeed: skip 15
+CreditsSprYSpeed_0B05: skip 15
 
 ; === $7E0B14 ===
 ; 15 bytes
 ; X speed for sprites during credits and castle cutscenes
 ; upper 8 bits of 4.12 fixed point in pixels per frame
-CreditsSprXSpeed: skip 15
+CreditsSprXSpeed_0B14: skip 15
 
 ; === $7E0B23 ===
 ; 15 bytes
 ; Y speed fractional part for sprites during credits and castle cutscenes
 ; lower 8 bits of 4.12 fixed point in pixels per frame
-CreditsSprYSubSpd: skip 15
+CreditsSprYSubSpd_0B23: skip 15
 
 ; === $7E0B32 ===
 ; 15 bytes
 ; X speed fractional part for sprites during credits and castle cutscenes
 ; lower 8 bits of 4.12 fixed point in pixels per frame
-CreditsSprXSubSpd: skip 15
+CreditsSprXSubSpd_0B32: skip 15
 
 ; === $7E0B41 ===
 ; 15 bytes
 ; low byte of Y position for sprites during credits and castle cutscenes
-CreditsSprYPosLow: skip 15
+CreditsSprYPosLow_0B41: skip 15
 
 ; === $7E0B50 ===
 ; 15 bytes
 ; low byte of X position for sprites during credits and castle cutscenes
-CreditsSprXPosLow: skip 15
+CreditsSprXPosLow_0B50: skip 15
 
 ; === $7E0B5F ===
 ; 15 bytes
 ; high byte of Y position for sprites during credits and castle cutscenes
-CreditsSprYPosHigh: skip 15
+CreditsSprYPosHigh_0B5F: skip 15
 
 ; === $7E0B6E ===
 ; 15 bytes
 ; high byte of X position for sprites during credits and castle cutscenes
-CreditsSprXPosHigh: skip 15
+CreditsSprXPosHigh_0B6E: skip 15
 
 ; === $7E0B7D ===
 ; 15 bytes
 ; vertical acceleration for sprites during credits and castle cutscenes
-CastleCutExSprAccel: skip 15
+CastleCutExSprAccel_0B7D: skip 15
 
 ; === $7E0B8C ===
 ; 15 bytes
 ; flag to denote slot taken for sprites during credits and castle cutscenes
-CastleCutExSprSlot: skip 106
+CastleCutExSprSlot_0B8C: skip 106
 
 ; === $7E0BF6 ===
 ; 384 bytes
 ; graphics buffer for OBJ tiles $4A-$4F & $5A-$5F
 ; includes small pieces of Mario, springboard, sliding Koopa, et al
-GfxDecompSP1: skip 384
+GfxDecompSP1_0BF6: skip 384
 
 ; === $7E0D76 ===
 ; 2 bytes
 ; source address of the first of three
 ; animated 16x16 tiles uploaded this frame
-Gfx33SrcAddrA: skip 2
+Gfx33SrcAddrA_0D76: skip 2
 
 ; === $7E0D78 ===
 ; 2 bytes
 ; source address of the second of three
 ; animated 16x16 tiles uploaded this frame
-Gfx33SrcAddrB: skip 2
+Gfx33SrcAddrB_0D78: skip 2
 
 ; === $7E0D7A ===
 ; 2 bytes
 ; source address of the third of three
 ; animated 16x16 tiles uploaded this frame
-Gfx33SrcAddrC: skip 2
+Gfx33SrcAddrC_0D7A: skip 2
 
 ; === $7E0D7C ===
 ; 2 bytes
 ; destination VRAM address of the first of three
 ; animated 16x16 tiles uploaded this frame
-Gfx33DestAddrA: skip 2
+Gfx33DestAddrA_0D7C: skip 2
 
 ; === $7E0D7E ===
 ; 2 bytes
 ; destination VRAM address of the second of three
 ; animated 16x16 tiles uploaded this frame
-Gfx33DestAddrB: skip 2
+Gfx33DestAddrB_0D7E: skip 2
 
 ; === $7E0D80 ===
 ; 2 bytes
 ; destination VRAM address of the third of three
 ; animated 16x16 tiles uploaded this frame
-Gfx33DestAddrC: skip 2
+Gfx33DestAddrC_0D80: skip 2
 
 ; === $7E0D82 ===
 ; 2 bytes
@@ -1295,23 +1291,23 @@ PlayerPalPtr_0D82: skip 2
 ; === $7E0D84 ===
 ; 1 byte
 ; number of 8x8 tiles that make up the player
-PlayerGfxTileCount: skip 1
+PlayerGfxTileCount_0D84: skip 1
 
 ; === $7E0D85 ===
 ; 20 bytes
 ; 10 pointers to graphics that make up various parts of
 ; Mario, Yoshi, cape, and Podoboo
-DynGfxTilePtr: skip 20
+DynGfxTilePtr_0D85: skip 20
 
 ; === $7E0D99 ===
 ; 2 bytes
 ; pointer to graphics that make up parts of Mario (OBJ tile $7F)
-DynGfxTile7FPtr: skip 2
+DynGfxTile7FPtr_0D99: skip 2
 
 ; === $7E0D9A ===
 ; 1 byte
 ; flag to determine which NMI and IRQ code to run for various game modes
-IRQNMICommand: skip 1
+IRQNMICommand_0D9A: skip 1
 ; Valid values
 !IRQNMI_Standard = 0
 !IRQNMI_Cutscenes = 1
@@ -1326,104 +1322,104 @@ IRQNMICommand: skip 1
 WRAM_0D9C: skip 1
 
 
-ThroughMain: skip 1
-ThroughSub: skip 1
-HDMAEnable: skip 1
-ControllersPresent: skip 1
+ThroughMain_0D9D: skip 1
+ThroughSub_0D9E: skip 1
+HDMAEnable_0D9F: skip 1
+ControllersPresent_0DA0: skip 1
 ; 7E0DA1 unused
 skip 1
-byetudlrP1Hold: skip 1
-byetudlrP2Hold: skip 1
-axlr0000P1Hold: skip 1
-axlr0000P2Hold: skip 1
-byetudlrP1Frame: skip 1
-byetudlrP2Frame: skip 1
-axlr0000P1Frame: skip 1
-axlr0000P2Frame: skip 1
-byetudlrP1Mask: skip 1
-byetudlrP2Mask: skip 1
-axlr0000P1Mask: skip 1
-axlr0000P2Mask: skip 1
-Brightness: skip 1
-MosaicDirection: skip 1
-MosaicSize: skip 1
-KeepModeActive_TODO: skip 1 ; FIXME
-IsTwoPlayerGame: skip 1
+byetudlrP1Hold_0DA2: skip 1
+byetudlrP2Hold_0DA3: skip 1
+axlr0000P1Hold_0DA4: skip 1
+axlr0000P2Hold_0DA5: skip 1
+byetudlrP1Frame_0DA6: skip 1
+byetudlrP2Frame_0DA7: skip 1
+axlr0000P1Frame_0DA8: skip 1
+axlr0000P2Frame_0DA9: skip 1
+byetudlrP1Mask_0DAA: skip 1
+byetudlrP2Mask_0DAB: skip 1
+axlr0000P1Mask_0DAC: skip 1
+axlr0000P2Mask_0DAD: skip 1
+Brightness_0DAE: skip 1
+MosaicDirection_0DAF: skip 1
+MosaicSize_0DB0: skip 1
+KeepModeActive_0DB1: skip 1
+IsTwoPlayerGame_0DB2: skip 1
 CurrentPlayer_0DB3: skip 1
-SavedPlayerLives: skip 2
-SavedPlayerCoins: skip 2
-SavedPlayerPowerup: skip 2
-SavedPlayerYoshi: skip 2
-SavedPlayerItembox: skip 2
-PlayerLives: skip 1
-PlayerCoins: skip 1
-GreenStarBlockCoins: skip 1
+SavedPlayerLives_0DB4: skip 2
+SavedPlayerCoins_0DB6: skip 2
+SavedPlayerPowerup_0DB7: skip 2
+SavedPlayerYoshi_0DBA: skip 2
+SavedPlayerItembox_0DBC: skip 2
+PlayerLives_0DBE: skip 1
+PlayerCoins_0DBF: skip 1
+GreenStarBlockCoins_0DC0: skip 1
 CarryYoshiLevels_0DC1: skip 1
-PlayerItembox: skip 1
+PlayerItembox_0DC2: skip 1
 ; 7E0DC3 - 7E0DC6 unused
 skip 4
-OverworldDestXPos: skip 2
-OverworldDestYPos: skip 6
-OWPlayerSpeed: skip 4
-OWPlayerDirection: skip 2
-OWLevelExitMode: skip 1
-PlayerTurnOW: skip 2
-PlayerSwitching: skip 1
+OverworldDestXPos_0DC7: skip 2
+OverworldDestYPos_0DC9: skip 6
+OWPlayerSpeed_0DCF: skip 4
+OWPlayerDirection_0DD3: skip 2
+OWLevelExitMode_0DD5: skip 1
+PlayerTurnOW_0DD6: skip 2
+PlayerSwitching_0DD8: skip 1
 ; 7E0DD9 unused
 skip 1
 MusicBackup_0DDA: skip 1
 ; 7E0DDB - 7E0DDD unused
 skip 3
-SaveFileDelete: skip 1
-OWCloudOAMIndex: skip 1
-OWCloudYSpeed: skip 5
-OWSpriteNumber: skip 16
-OWSpriteMisc0DF5: skip 16
-OWSpriteMisc0E05: skip 16
-OWSpriteMisc0E15: skip 16
-OWSpriteMisc0E25: skip 16
-OWSpriteXPosLow: skip 16
-OWSpriteYPosLow: skip 16
-OWSpriteZPosLow: skip 16
-OWSpriteXPosHigh: skip 16
-OWSpriteYPosHigh: skip 16
-OWSpriteZPosHigh: skip 16 ; unused?
-OWSpriteXSpeed: skip 16
-OWSpriteYSpeed: skip 16
-OWSpriteZSpeed: skip 16
-OWSpriteXPosSpx: skip 16
-OWSpriteYPosSpx: skip 16 ; unused?
-OWSpriteZPosSpx: skip 16 ; unused?
-KoopaKidActive: skip 1
-KoopaKidTile: skip 1
-EnterLevelAuto: skip 1
+SaveFileDelete_0DDE: skip 1
+OWCloudOAMIndex_0DDF: skip 1
+OWCloudYSpeed_0DE0: skip 5
+OWSpriteNumber_0DE5: skip 16
+OWSpriteMisc_0DF5: skip 16
+OWSpriteMisc_0E05: skip 16
+OWSpriteMisc_0E15: skip 16
+OWSpriteMisc_0E25: skip 16
+OWSpriteXPosLow_0E35: skip 16
+OWSpriteYPosLow_0E45: skip 16
+OWSpriteZPosLow_0E55: skip 16
+OWSpriteXPosHigh_0E65: skip 16
+OWSpriteYPosHigh_0E75: skip 16
+OWSpriteZPosHigh_0E85: skip 16 ; unused?
+OWSpriteXSpeed_0E95: skip 16
+OWSpriteYSpeed_0EA5: skip 16
+OWSpriteZSpeed_0EB5: skip 16
+OWSpriteXPosSpx_0EC5: skip 16
+OWSpriteYPosSpx_0ED5: skip 16 ; unused?
+OWSpriteZPosSpx_0EE5: skip 16 ; unused?
+KoopaKidActive_0EF5: skip 1
+KoopaKidTile_0EF6: skip 1
+EnterLevelAuto_0EF7: skip 1
 YoshiSavedFlag_0EF8: skip 1
-StatusBar: skip 55
-InGameTimerFrames: skip 1
-InGameTimerHundreds: skip 1
-InGameTimerTens: skip 1
-InGameTimerOnes: skip 1
-PlayerScore: skip 6
+StatusBar_0EF9: skip 55
+InGameTimerFrames_0F30: skip 1
+InGameTimerHundreds_0F31: skip 1
+InGameTimerTens_0F32: skip 1
+InGameTimerOnes_0F33: skip 1
+PlayerScore_0F34: skip 6
 ; 7E0F3A - 7E0F3F unused
 skip 6
-ScoreIncrement: skip 2
+ScoreIncrement_0F40: skip 2
 ; 7E0F42 - 7E0F47 unused
 skip 6
-PlayerBonusStars: skip 2
-ClusterSpriteMisc0F4A: skip 20
-ClusterSpriteMisc0F5E: skip 20 ; unused
-ClusterSpriteMisc0F72: skip 20
-ClusterSpriteMisc0F86: skip 20
-ClusterSpriteMisc0F9A: skip 20
-BooRingAngleLow: skip 2
-BooRingAngleHigh: skip 2
-BooRingXPosLow: skip 2
-BooRingXPosHigh: skip 2
-BooRingYPosLow: skip 2
-BooRingYPosHigh: skip 2
-BooRingOffscreen: skip 2
-BooRingLoadIndex: skip 2
-Map16Pointers: skip 1024
+PlayerBonusStars_0F48: skip 2
+ClusterSpriteMisc_0F4A: skip 20
+ClusterSpriteMisc_0F5E: skip 20 ; unused
+ClusterSpriteMisc_0F72: skip 20
+ClusterSpriteMisc_0F86: skip 20
+ClusterSpriteMisc_0F9A: skip 20
+BooRingAngleLow_0FAE: skip 2
+BooRingAngleHigh_0FB0: skip 2
+BooRingXPosLow_0FB2: skip 2
+BooRingXPosHigh_0FB4: skip 2
+BooRingYPosLow_0FB6: skip 2
+BooRingYPosHigh_0FB8: skip 2
+BooRingOffscreen_0FBA: skip 2
+BooRingLoadIndex_0FBC: skip 2
+Map16Pointers_0FBE: skip 1024
 ItemMemorySetting_13BE: skip 1
 TranslevelNo_13BF: skip 2
 OverworldLayer1Tile_13C1: skip 2
