@@ -6119,7 +6119,7 @@ CODE_04E5EE:
     BNE CODE_04E5F8                         ;$04E5F3 |
     INC.w $1DEA                             ;$04E5F5 |
 CODE_04E5F8:
-    LDA.w $1DE9
+    LDA.w OWLoadEventFlag_1DE9
     BEQ CODE_04E61A                         ;$04E5FB |
     LDA.w $1DEA                             ;$04E5FD |
     CMP.b #$FF                              ;$04E600 |
@@ -6598,7 +6598,7 @@ CODE_04E9F9:
     ORA.l DATA_04E44B,X                     ;$04EA17 |
     STA.w $1F02,Y                           ;$04EA1B |
     INC.w $1F2E                             ;$04EA1E |
-    STZ.w $1DE9                             ;$04EA21 |
+    STZ.w OWLoadEventFlag_1DE9              ;$04EA21 |
 Return04EA24:
     RTS
 

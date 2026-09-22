@@ -2529,7 +2529,7 @@ GM23_ending_enemy_scene_0095C1:
     JSR SetUpScreen                         ;$0095C7 |
     JSL CODE_0CAD8C                         ;$0095CA |
     JSL CODE_05801E                         ;$0095CE |
-    LDA.w $1DE9                             ;$0095D2 |
+    LDA.w CreditsScreenNumber_1DE9          ;$0095D2 |
     CMP.b #$0A                              ;$0095D5 |
     BNE CODE_0095E0                         ;$0095D7 |
     LDA.b #$13                              ;$0095D9 |
@@ -2547,7 +2547,7 @@ CODE_0095E9:
     JSL CODE_05809E                         ;$0095EF |
     JSR CODE_00A5F9                         ;$0095F3 |
     JSL CODE_0CADF6                         ;$0095F6 |
-    LDA.w $1DE9                             ;$0095FA |
+    LDA.w CreditsScreenNumber_1DE9          ;$0095FA |
     CMP.b #$0C                              ;$0095FD |
     BNE CODE_009612                         ;$0095FF |
     LDX.b #$0B                              ;$009601 |
@@ -4152,7 +4152,7 @@ GM14_main_level_00A1DA:
 +   STA.w $13CE                             ;$00A27B |
 .skip_cheat_00A27E:
     STA.w LevelExitMode_0DD5
-    INC.w $1DE9                             ;$00A281 |
+    INC.w OWLoadEventFlag_1DE9              ;$00A281 |
     LDA.b #$0B                              ;$00A284 |
     STA.w $0100                             ;$00A286 | Fade out to Overworld
 .Return00A289:
@@ -7971,7 +7971,7 @@ CODE_00CA20:
     LDY.b #$18                              ;$00CA23 |
 CODE_00CA25:
     STY.w $0100
-    INC.w $1DE9                             ;$00CA28 |
+    INC.w OWLoadEventFlag_1DE9              ;$00CA28 |
 CODE_00CA2B:
     LDA.b #$01
     STA.w $13CE                             ;$00CA2D |

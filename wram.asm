@@ -1998,6 +1998,7 @@ Layer1VramBuffer_1BE6: skip 256
 Layer2VramAddr_1CE6: skip 2
 Layer2VramBuffer_1CE8: skip 256
 OWSubmapSwapProcess_1DE8: skip 1
+OWLoadEventFlag_1DE9:
 CreditsScreenNumber_1DE9: skip 1
 OverworldEvent_1DEA: skip 1
 EventTileIndex_1DEB: skip 2

@@ -2942,7 +2942,7 @@ CODE_05B132:
     LDA.w $13D2                             ;$05B14A |
     BEQ CODE_05B16E                         ;$05B14D |
     PLB                                     ;$05B14F |
-    INC.w $1DE9                             ;$05B150 |
+    INC.w OWLoadEventFlag_1DE9              ;$05B150 |
     LDA.b #$01                              ;$05B153 |
     STA.w $13CE                             ;$05B155 |
     BRA CODE_05B165                         ;$05B158 |

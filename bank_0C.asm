@@ -664,7 +664,7 @@ CODE_0C93AD:
     LDA.b #$23                              ;$0C93B5 |
     STA.w $0100                             ;$0C93B7 |
     LDA.b #$FF                              ;$0C93BA |
-    STA.w $1DE9                             ;$0C93BC |
+    STA.w CreditsScreenNumber_1DE9          ;$0C93BC |
 CODE_0C93BF:
     PLB
     RTL                                     ;$0C93C0 |
@@ -2964,9 +2964,9 @@ CODE_0CAD8C:
     PHB
     PHK                                     ;$0CAD8D |
     PLB                                     ;$0CAD8E |
-    INC.w $1DE9                             ;$0CAD8F |
+    INC.w CreditsScreenNumber_1DE9          ;$0CAD8F |
     LDX.b #$FF                              ;$0CAD92 |
-    LDA.w $1DE9                             ;$0CAD94 |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CAD94 |
     CMP.b #$0C                              ;$0CAD97 |
     BNE CODE_0CAD9D                         ;$0CAD99 |
     LDX.b #$0C                              ;$0CAD9B |
@@ -3008,12 +3008,12 @@ CODE_0CADF6:
     PHB
     PHK                                     ;$0CADF7 |
     PLB                                     ;$0CADF8 |
-    LDA.w $1DE9                             ;$0CADF9 |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CADF9 |
     TAY                                     ;$0CADFC |
     ASL                                     ;$0CADFD |
     TAX                                     ;$0CADFE |
     CLC                                     ;$0CADFF |
-    ADC.w $1DE9                             ;$0CAE00 |
+    ADC.w CreditsScreenNumber_1DE9          ;$0CAE00 |
     CLC                                     ;$0CAE03 |
     ADC.b #$D8                              ;$0CAE04 |
     STA.b StripeImage_12                    ;$0CAE06 |
@@ -3022,7 +3022,7 @@ CODE_0CADF6:
     JSL load_stripe_image                   ;$0CAE0A |
     LDA.w $1EEB                             ;$0CAE0E |
     BPL CODE_0CAE48                         ;$0CAE11 |
-    LDA.w $1DE9                             ;$0CAE13 |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CAE13 |
     ASL                                     ;$0CAE16 |
     TAY                                     ;$0CAE17 |
     LDA.w DATA_0CADDC,Y                     ;$0CAE18 |
@@ -3063,7 +3063,7 @@ CODE_0CAE48:
     REP #$20                                ;$0CAE65 |
     LDA.w DATA_0CADC2,X                     ;$0CAE67 |
     STA.b Layer2YPos_20                     ;$0CAE6A |
-    LDA.w $1DE9                             ;$0CAE6C |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CAE6C |
     AND.w #$00FF                            ;$0CAE6F |
     CMP.w #$000C                            ;$0CAE72 |
     BNE CODE_0CAE88                         ;$0CAE75 |
@@ -3095,7 +3095,7 @@ CODE_0CAEA3:
 
 CODE_0CAEAD:
     SEP #$20
-    LDA.w $1DE9                             ;$0CAEAF |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CAEAF |
     CMP.b #$0C                              ;$0CAEB2 |
     BNE CODE_0CAEBC                         ;$0CAEB4 |
     DEC.w $145B                             ;$0CAEB6 |
@@ -3133,7 +3133,7 @@ CODE_0CAEF8:
     LDA.w $145B
     BNE CODE_0CAF0C                         ;$0CAEFB |
     INC.w $0100                             ;$0CAEFD |
-    LDA.w $1DE9                             ;$0CAF00 |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CAF00 |
     CMP.b #$0C                              ;$0CAF03 |
     BEQ CODE_0CAF0C                         ;$0CAF05 |
     LDA.b #$22                              ;$0CAF07 |
@@ -3373,7 +3373,7 @@ CODE_0CB5BC:
     LDA.b #$00
     XBA                                     ;$0CB5BE |
     LDY.b #$20                              ;$0CB5BF |
-    LDA.w $1DE9                             ;$0CB5C1 |
+    LDA.w CreditsScreenNumber_1DE9          ;$0CB5C1 |
     CMP.b #$05                              ;$0CB5C4 |
     BNE CODE_0CB5CA                         ;$0CB5C6 |
     LDY.b #$30                              ;$0CB5C8 |
