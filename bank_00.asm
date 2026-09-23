@@ -6636,17 +6636,17 @@ CODE_00BEEC:
     ASL                                     ;$00BEF4 |
     TAX                                     ;$00BEF5 |
     LDA.l LoadBlkPtrs,X                     ;$00BEF6 |
-    STA $65                                 ;$00BEFA |
+    STA.b Layer1DataPtr_65                  ;$00BEFA |
     LDA.l LoadBlkPtrs+1,X                   ;$00BEFC |
-    STA $66                                 ;$00BF00 |
-    STZ $67                                 ;$00BF02 |
+    STA.b Layer1DataPtr_65+1                ;$00BF00 |
+    STZ.b Layer1DataPtr_65+2                ;$00BF02 |
     LDA.w $1925                             ;$00BF04 |
     ASL                                     ;$00BF07 |
     TAY                                     ;$00BF08 |
-    LDA [$65],Y                             ;$00BF09 |
+    LDA.b [Layer1DataPtr_65],Y              ;$00BF09 |
     STA $04                                 ;$00BF0B |
     INY                                     ;$00BF0D |
-    LDA [$65],Y                             ;$00BF0E |
+    LDA.b [Layer1DataPtr_65],Y              ;$00BF0E |
     STA $05                                 ;$00BF10 |
     STZ $06                                 ;$00BF12 |
     LDA $9B                                 ;$00BF14 |

@@ -1428,16 +1428,16 @@ PtrsLong0DA455:
 
 CODE_0DA512:
     LDY.b #$00
-    LDA [$65],Y                             ;$0DA514 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0DA514 |
     STA.b LvlLoadObjNo_5A                   ;$0DA516 |
     INY                                     ;$0DA518 |
     TYA                                     ;$0DA519 |
     CLC                                     ;$0DA51A |
-    ADC $65                                 ;$0DA51B |
-    STA $65                                 ;$0DA51D |
-    LDA $66                                 ;$0DA51F |
+    ADC.b Layer1DataPtr_65                  ;$0DA51B |
+    STA.b Layer1DataPtr_65                  ;$0DA51D |
+    LDA.b Layer1DataPtr_65+1                ;$0DA51F |
     ADC.b #$00                              ;$0DA521 |
-    STA $66                                 ;$0DA523 |
+    STA.b Layer1DataPtr_65+1                ;$0DA523 |
     LDA $0A                                 ;$0DA525 |
     AND.b #$1F                              ;$0DA527 |
     TAX                                     ;$0DA529 |

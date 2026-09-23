@@ -686,12 +686,12 @@ CODE_0C93E2:
     ASL                                     ;$0C93E8 |
     TAX                                     ;$0C93E9 |
     LDA.l DATA_0C93C1,X                     ;$0C93EA |
-    STA $68                                 ;$0C93EE |
+    STA.b Layer2DataPtr_68                  ;$0C93EE |
     LDA.l DATA_0C93CF,X                     ;$0C93F0 |
-    STA $65                                 ;$0C93F4 |
+    STA.b StaffRollLinePos_65               ;$0C93F4 |
     SEP #$20                                ;$0C93F6 |
     LDY.w #$0000                            ;$0C93F8 |
-    LDX $68                                 ;$0C93FB |
+    LDX.b Layer2DataPtr_68                  ;$0C93FB |
     CPX.w #$E8FE                            ;$0C93FD |
     BCC CODE_0C9405                         ;$0C9400 |
     LDY.w #$0001                            ;$0C9402 |
@@ -705,7 +705,7 @@ CODE_0C9409:
     CPX.w #$0200                            ;$0C9412 |
     BNE CODE_0C9409                         ;$0C9415 |
     LDA.b #$0C                              ;$0C9417 |
-    STA $6A                                 ;$0C9419 |
+    STA.b Layer2DataPtr_68+2                ;$0C9419 |
     LDX.w #$B900                            ;$0C941B |
     STX $0D                                 ;$0C941E |
     REP #$20                                ;$0C9420 |
@@ -716,9 +716,9 @@ CODE_0C9409:
     CMP.w #$0007                            ;$0C942E |
     BNE CODE_0C93E2                         ;$0C9431 |
     LDA.w #$5840                            ;$0C9433 |
-    STA $65                                 ;$0C9436 |
+    STA.b StaffRollLinePos_65               ;$0C9436 |
     SEP #$30                                ;$0C9438 |
-    STZ $67                                 ;$0C943A |
+    STZ.b StaffRollCurLine_67               ;$0C943A |
     STZ.w $1928                             ;$0C943C |
     JSL DMA_credits_BG                      ;$0C943F |
     JSR CODE_0CA051                         ;$0C9443 |
@@ -805,7 +805,7 @@ CODE_0C94C0:
     LDX.w #$BD00                            ;$0C94CF |
     STX $6E                                 ;$0C94D2 |
     LDA.b #$0D                              ;$0C94D4 |
-    STA $6A                                 ;$0C94D6 |
+    STA.b Layer2DataPtr_68+2                ;$0C94D6 |
     LDY.w #$00F0                            ;$0C94D8 |
     STY $04                                 ;$0C94DB |
     LDA.w $1928                             ;$0C94DD |
@@ -827,7 +827,7 @@ CODE_0C94EB:
     ASL                                     ;$0C94FB |
     TAX                                     ;$0C94FC |
     LDA.w $0FBE,X                           ;$0C94FD |
-    STA $68                                 ;$0C9500 |
+    STA.b Layer2DataPtr_68                  ;$0C9500 |
     LDY.w #$0000                            ;$0C9502 |
     LDA $00                                 ;$0C9505 |
     ASL                                     ;$0C9507 |
@@ -840,23 +840,23 @@ CODE_0C94EB:
     ASL                                     ;$0C9513 |
     ORA $06                                 ;$0C9514 |
     TAX                                     ;$0C9516 |
-    LDA [$68],Y                             ;$0C9517 |
-    AND $65                                 ;$0C9519 |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9517 |
+    AND.b Layer1DataPtr_65                  ;$0C9519 |
     STA.l $7F4000,X                         ;$0C951B |
     INY                                     ;$0C951F |
     INY                                     ;$0C9520 |
-    LDA [$68],Y                             ;$0C9521 |
-    AND $65                                 ;$0C9523 |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9521 |
+    AND.b Layer1DataPtr_65                  ;$0C9523 |
     STA.l $7F4040,X                         ;$0C9525 |
     INY                                     ;$0C9529 |
     INY                                     ;$0C952A |
-    LDA [$68],Y                             ;$0C952B |
-    AND $65                                 ;$0C952D |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C952B |
+    AND.b Layer1DataPtr_65                  ;$0C952D |
     STA.l $7F4002,X                         ;$0C952F |
     INY                                     ;$0C9533 |
     INY                                     ;$0C9534 |
-    LDA [$68],Y                             ;$0C9535 |
-    AND $65                                 ;$0C9537 |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9535 |
+    AND.b Layer1DataPtr_65                  ;$0C9537 |
     STA.l $7F4042,X                         ;$0C9539 |
     INC $00                                 ;$0C953D |
     INC $04                                 ;$0C953F |
@@ -1229,9 +1229,9 @@ CODE_0C9EB1:
     TAX                                     ;$0C9EB7 |
     LDY.w #$0000                            ;$0C9EB8 |
     SEP #$20                                ;$0C9EBB |
-    LDA $66                                 ;$0C9EBD |
+    LDA.b StaffRollLinePos_65+1             ;$0C9EBD |
     STA.l $7F837D,X                         ;$0C9EBF |
-    LDA $65                                 ;$0C9EC3 |
+    LDA.b StaffRollLinePos_65               ;$0C9EC3 |
     STA.l $7F837E,X                         ;$0C9EC5 |
     INX                                     ;$0C9EC9 |
     INX                                     ;$0C9ECA |
@@ -1246,14 +1246,14 @@ CODE_0C9ECB:
     DEX                                     ;$0C9EDB |
     TXA                                     ;$0C9EDC |
     STA.l $7F837B                           ;$0C9EDD |
-    LDA $67                                 ;$0C9EE1 |
+    LDA.b StaffRollCurLine_67               ;$0C9EE1 |
     AND.w #$00FF                            ;$0C9EE3 |
     ASL                                     ;$0C9EE6 |
     TAY                                     ;$0C9EE7 |
     LDA.w DATA_0C9D18,Y                     ;$0C9EE8 |
     TAY                                     ;$0C9EEB |
     SEP #$20                                ;$0C9EEC |
-    INC $67                                 ;$0C9EEE |
+    INC.b StaffRollCurLine_67               ;$0C9EEE |
     LDA.w DATA_0C95C7,Y                     ;$0C9EF0 |
     CMP.b #$FF                              ;$0C9EF3 |
     BEQ CODE_0C9F43                         ;$0C9EF5 |
@@ -1264,9 +1264,9 @@ CODE_0C9ECB:
     STZ $01                                 ;$0C9F01 |
     INY                                     ;$0C9F03 |
     INY                                     ;$0C9F04 |
-    LDA $66                                 ;$0C9F05 |
+    LDA.b StaffRollLinePos_65+1             ;$0C9F05 |
     STA.l $7F837D,X                         ;$0C9F07 |
-    LDA $65                                 ;$0C9F0B |
+    LDA.b StaffRollLinePos_65               ;$0C9F0B |
     CLC                                     ;$0C9F0D |
     ADC $02                                 ;$0C9F0E |
     STA.l $7F837E,X                         ;$0C9F10 |
@@ -1296,15 +1296,15 @@ CODE_0C9F26:
 CODE_0C9F43:
     REP #$20
     SEP #$10                                ;$0C9F45 |
-    LDA $65                                 ;$0C9F47 |
+    LDA.b Layer1DataPtr_65                  ;$0C9F47 |
     CLC                                     ;$0C9F49 |
     ADC.w #$0020                            ;$0C9F4A |
-    STA $65                                 ;$0C9F4D |
+    STA.b Layer1DataPtr_65                  ;$0C9F4D |
     AND.w #$03FF                            ;$0C9F4F |
     BNE Return0C9F5B                        ;$0C9F52 |
-    LDA $65                                 ;$0C9F54 |
+    LDA.b Layer1DataPtr_65                  ;$0C9F54 |
     EOR.w #$0C00                            ;$0C9F56 |
-    STA $65                                 ;$0C9F59 |
+    STA.b Layer1DataPtr_65                  ;$0C9F59 |
 Return0C9F5B:
     RTS
 
@@ -2974,13 +2974,13 @@ CODE_0CAD9D:
     ASL
     TAY                                     ;$0CAD9E |
     LDA.b #$0C                              ;$0CAD9F |
-    STA $67                                 ;$0CADA1 |
-    STX $6A                                 ;$0CADA3 |
+    STA.b StaffRollCurLine_67               ;$0CADA1 |
+    STX.b Layer2DataPtr_68+2                ;$0CADA3 |
     REP #$20                                ;$0CADA5 |
     LDA.w DATA_0CAD58,Y                     ;$0CADA7 |
-    STA $65                                 ;$0CADAA |
+    STA.b StaffRollLinePos_65               ;$0CADAA |
     LDA.w DATA_0CAD72,Y                     ;$0CADAC |
-    STA $68                                 ;$0CADAF |
+    STA.b Layer2DataPtr_68                  ;$0CADAF |
     SEP #$20                                ;$0CADB1 |
     PLB                                     ;$0CADB3 |
     RTL                                     ;$0CADB4 |

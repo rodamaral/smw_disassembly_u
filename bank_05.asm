@@ -19,12 +19,12 @@ CODE_058026:
     CPX.w #$0200                            ;$058031 |
     BNE CODE_058026                         ;$058034 |
     STZ.w $1928                             ;$058036 |
-    LDA $6A                                 ;$058039 |
+    LDA.b Layer2DataPtr_68+2                ;$058039 |
     CMP.b #$FF                              ;$05803B |
     BNE CODE_058074                         ;$05803D |
     REP #$10                                ;$05803F |
     LDY.w #$0000                            ;$058041 |
-    LDX $68                                 ;$058044 |
+    LDX.b Layer2DataPtr_68                  ;$058044 |
     CPX.w #$E8FE                            ;$058046 |
     BCC CODE_05804E                         ;$058049 |
     LDY.w #$0001                            ;$05804B |
@@ -38,7 +38,7 @@ CODE_058052:
     CPX.w #$0200                            ;$05805B |
     BNE CODE_058052                         ;$05805E |
     LDA.b #$0C                              ;$058060 |
-    STA $6A                                 ;$058062 |
+    STA.b Layer2DataPtr_68+2                ;$058062 |
     STZ.w $1932                             ;$058064 |
     STZ.w $1931                             ;$058067 |
     LDX.w #$B900                            ;$05806A |
@@ -416,7 +416,7 @@ LoadAgain:
     CMP.b #$10                              ;$0583C3 |
     BEQ LoadLevelDone                       ;$0583C5 |
     LDY.b #$00                              ;$0583C7 |
-    LDA [$65],Y                             ;$0583C9 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0583C9 |
     CMP.b #$FF                              ;$0583CB |
     BEQ LevLoadNotEmpty                     ;$0583CD |
     JSR LoadLevelData                       ;$0583CF |
@@ -440,15 +440,15 @@ LevLoadNotEmpty:
     LDA.w $1933                             ;$0583F4 |
     CMP.b #$02                              ;$0583F7 |
     BEQ LoadLevelDone                       ;$0583F9 |
-    LDA $68                                 ;$0583FB |
+    LDA.b Layer2DataPtr_68                  ;$0583FB |
     CLC                                     ;$0583FD |
     ADC.b #$05                              ;$0583FE |
-    STA $65                                 ;$058400 |
-    LDA $69                                 ;$058402 |
+    STA.b Layer1DataPtr_65                  ;$058400 |
+    LDA.b Layer2DataPtr_68+1                ;$058402 |
     ADC.b #$00                              ;$058404 |
-    STA $66                                 ;$058406 |
-    LDA $6A                                 ;$058408 |
-    STA $67                                 ;$05840A |
+    STA.b Layer1DataPtr_65+1                ;$058406 |
+    LDA.b Layer2DataPtr_68+2                ;$058408 |
+    STA.b Layer1DataPtr_65+2                ;$05840A |
     STZ.w $1928                             ;$05840C |
     JMP LoadAgain                           ;$05840F |
 
@@ -495,7 +495,7 @@ LevelMusicTable:
 
 CODE_0584E3:
     LDY.b #$00
-    LDA [$65],Y                             ;$0584E5 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0584E5 |
     TAX                                     ;$0584E7 |
     AND.b #$1F                              ;$0584E8 |
     INC A                                   ;$0584EA |
@@ -508,7 +508,7 @@ CODE_0584E3:
     LSR                                     ;$0584F2 |
     STA.w $1930                             ;$0584F3 |
     INY                                     ;$0584F6 |
-    LDA [$65],Y                             ;$0584F7 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0584F7 |
     AND.b #$1F                              ;$0584F9 |
     STA.w $1925                             ;$0584FB |
     TAX                                     ;$0584FE |
@@ -533,7 +533,7 @@ CODE_0584E3:
 LevelModeEven:
     STA.b LastScreenHoriz_5E
     STX.b LastScreenVert_5F                 ;$058532 |
-    LDA [$65],Y                             ;$058534 |
+    LDA.b [Layer1DataPtr_65],Y              ;$058534 |
     LSR                                     ;$058536 |
     LSR                                     ;$058537 |
     LSR                                     ;$058538 |
@@ -541,7 +541,7 @@ LevelModeEven:
     LSR                                     ;$05853A |
     STA.w $192F                             ;$05853B |
     INY                                     ;$05853E |
-    LDA [$65],Y                             ;$05853F |
+    LDA.b [Layer1DataPtr_65],Y              ;$05853F |
     STA $00                                 ;$058541 |
     TAX                                     ;$058543 |
     AND.b #$0F                              ;$058544 |
@@ -572,7 +572,7 @@ CODE_058563:
     ORA.b #$01                              ;$05856E |
     STA.b MainBGMode_3E                     ;$058570 |
     INY                                     ;$058572 |
-    LDA [$65],Y                             ;$058573 |
+    LDA.b [Layer1DataPtr_65],Y              ;$058573 |
     STA $00                                 ;$058575 |
     LSR                                     ;$058577 |
     LSR                                     ;$058578 |
@@ -598,17 +598,17 @@ CODE_058590:
     LSR                                     ;$05859D |
     STA.w $192E                             ;$05859E |
     INY                                     ;$0585A1 |
-    LDA [$65],Y                             ;$0585A2 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0585A2 |
     AND.b #$0F                              ;$0585A4 |
     STA.w $1931                             ;$0585A6 |
     STA.w $1932                             ;$0585A9 |
-    LDA [$65],Y                             ;$0585AC |
+    LDA.b [Layer1DataPtr_65],Y              ;$0585AC |
     AND.b #$C0                              ;$0585AE |
     ASL                                     ;$0585B0 |
     ROL                                     ;$0585B1 |
     ROL                                     ;$0585B2 |
     STA.w $13BE                             ;$0585B3 |
-    LDA [$65],Y                             ;$0585B6 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0585B6 |
     AND.b #$30                              ;$0585B8 |
     LSR                                     ;$0585BA |
     LSR                                     ;$0585BB |
@@ -620,13 +620,13 @@ CODE_058590:
     LDA.b #$00                              ;$0585C5 |
 HeaderVHscroll:
     STA.w $1412
-    LDA $65                                 ;$0585CA |
+    LDA.b Layer1DataPtr_65                  ;$0585CA |
     CLC                                     ;$0585CC |
     ADC.b #$05                              ;$0585CD |
-    STA $65                                 ;$0585CF |
-    LDA $66                                 ;$0585D1 |
+    STA.b Layer1DataPtr_65                  ;$0585CF |
+    LDA.b Layer1DataPtr_65+1                ;$0585D1 |
     ADC.b #$00                              ;$0585D3 |
-    STA $66                                 ;$0585D5 |
+    STA.b Layer1DataPtr_65+1                ;$0585D5 |
     RTS                                     ;$0585D7 |
 
 CODE_0585D8:
@@ -656,22 +656,22 @@ Return0585FE:
 LoadLevelData:
     SEP #$30
     LDY.b #$00                              ;$058601 |
-    LDA [$65],Y                             ;$058603 |
+    LDA.b [Layer1DataPtr_65],Y              ;$058603 |
     STA $0A                                 ;$058605 |
     INY                                     ;$058607 |
-    LDA [$65],Y                             ;$058608 |
+    LDA.b [Layer1DataPtr_65],Y              ;$058608 |
     STA $0B                                 ;$05860A |
     INY                                     ;$05860C |
-    LDA [$65],Y                             ;$05860D |
+    LDA.b [Layer1DataPtr_65],Y              ;$05860D |
     STA.b LvlLoadObjSize_59                 ;$05860F |
     INY                                     ;$058611 |
     TYA                                     ;$058612 |
     CLC                                     ;$058613 |
-    ADC $65                                 ;$058614 |
-    STA $65                                 ;$058616 |
-    LDA $66                                 ;$058618 |
+    ADC.b Layer1DataPtr_65                  ;$058614 |
+    STA.b Layer1DataPtr_65                  ;$058616 |
+    LDA.b Layer1DataPtr_65+1                ;$058618 |
     ADC.b #$00                              ;$05861A |
-    STA $66                                 ;$05861C |
+    STA.b Layer1DataPtr_65+1                ;$05861C |
     LDA $0B                                 ;$05861E |
     LSR                                     ;$058620 |
     LSR                                     ;$058621 |
@@ -773,7 +773,7 @@ LevLoadContinue:
     SEP #$20
     REP #$10                                ;$0586D4 |
     LDY.w #$0000                            ;$0586D6 |
-    LDA [$65],Y                             ;$0586D9 |
+    LDA.b [Layer1DataPtr_65],Y              ;$0586D9 |
     CMP.b #$FF                              ;$0586DB |
     BEQ LevelDataEnd                        ;$0586DD |
     JMP LoadLevelData                       ;$0586DF |
@@ -6463,17 +6463,17 @@ CODE_05D8B7:
     TAY                                     ;$05D8BF |
     SEP #$20                                ;$05D8C0 |
     LDA.w Layer1Ptrs,Y                      ;$05D8C2 |
-    STA $65                                 ;$05D8C5 |
+    STA.b Layer1DataPtr_65                  ;$05D8C5 |
     LDA.w Layer1Ptrs+1,Y                    ;$05D8C7 |
-    STA $66                                 ;$05D8CA |
+    STA.b Layer1DataPtr_65+1                ;$05D8CA |
     LDA.w Layer1Ptrs+2,Y                    ;$05D8CC |
-    STA $67                                 ;$05D8CF |
+    STA.b Layer1DataPtr_65+2                ;$05D8CF |
     LDA.w Layer2Ptrs,Y                      ;$05D8D1 |
-    STA $68                                 ;$05D8D4 |
+    STA.b Layer2DataPtr_68                  ;$05D8D4 |
     LDA.w Layer2Ptrs+1,Y                    ;$05D8D6 |
-    STA $69                                 ;$05D8D9 |
+    STA.b Layer2DataPtr_68+1                ;$05D8D9 |
     LDA.w Layer2Ptrs+2,Y                    ;$05D8DB |
-    STA $6A                                 ;$05D8DE |
+    STA.b Layer2DataPtr_68+2                ;$05D8DE |
     REP #$20                                ;$05D8E0 |
     LDA $0E                                 ;$05D8E2 |
     ASL                                     ;$05D8E4 |
@@ -6570,7 +6570,7 @@ CODE_05D9A1:
     AND.b #!Layer1Vert_01                   ;$05D9A3 |
     BEQ CODE_05D9B8                         ;$05D9A5 |
     LDY.w #$0000                            ;$05D9A7 |
-    LDA [$65],Y                             ;$05D9AA |
+    LDA.b [Layer1DataPtr_65],Y              ;$05D9AA |
     AND.b #$1F                              ;$05D9AC |
     STA.b PlayerYPos_96+1                   ;$05D9AE |
     INC A                                   ;$05D9B0 |
@@ -6639,7 +6639,7 @@ CODE_05DA17:
 CODE_05DA24:
     LDX.b #$04
     LDY.b #$04                              ;$05DA26 |
-    LDA [$65],Y                             ;$05DA28 |
+    LDA.b [Layer1DataPtr_65],Y              ;$05DA28 |
     AND.b #$0F                              ;$05DA2A |
 CODE_05DA2C:
     CMP.l DATA_05D760,X
@@ -6708,17 +6708,17 @@ CODE_05DA60:
     ADC $00                                 ;$05DAAF |
     TAY                                     ;$05DAB1 |
     LDA.w PtrsLong05D766,Y                  ;$05DAB2 |
-    STA $65                                 ;$05DAB5 |
+    STA.b Layer1DataPtr_65                  ;$05DAB5 |
     LDA.w PtrsLong05D766+1,Y                ;$05DAB7 |
-    STA $66                                 ;$05DABA |
+    STA.b Layer1DataPtr_65+1                ;$05DABA |
     LDA.w PtrsLong05D766+2,Y                ;$05DABC |
-    STA $67                                 ;$05DABF |
+    STA.b Layer1DataPtr_65+2                ;$05DABF |
     LDA.w PtrsLong05D778,Y                  ;$05DAC1 |
-    STA $68                                 ;$05DAC4 |
+    STA.b Layer2DataPtr_68                  ;$05DAC4 |
     LDA.w PtrsLong05D778+1,Y                ;$05DAC6 |
-    STA $69                                 ;$05DAC9 |
+    STA.b Layer2DataPtr_68+1                ;$05DAC9 |
     LDA.w PtrsLong05D778+2,Y                ;$05DACB |
-    STA $6A                                 ;$05DACE |
+    STA.b Layer2DataPtr_68+2                ;$05DACE |
 CODE_05DAD0:
     LDA.l DATA_05D760,X
     STA.w $1931                             ;$05DAD4 |
@@ -6739,7 +6739,7 @@ CODE_05DAEB:
 CODE_05DAEF:
     SEP #$30
     LDY.b #$04                              ;$05DAF1 |
-    LDA [$65],Y                             ;$05DAF3 |
+    LDA.b [Layer1DataPtr_65],Y              ;$05DAF3 |
     AND.b #$C0                              ;$05DAF5 |
     CLC                                     ;$05DAF7 |
     ROL                                     ;$05DAF8 |
@@ -6794,11 +6794,11 @@ CODE_05DB3E:
 CODE_05DB49:
     REP #$20
     LDA.l ChocIsld2Layer1,X                 ;$05DB4B |
-    STA $65                                 ;$05DB4F |
+    STA.b Layer1DataPtr_65                  ;$05DB4F |
     LDA.l ChocIsld2Sprites,X                ;$05DB51 |
     STA $CE                                 ;$05DB55 |
     LDA.l ChocIsld2Layer2,X                 ;$05DB57 |
-    STA $68                                 ;$05DB5B |
+    STA.b Layer2DataPtr_68                  ;$05DB5B |
     SEP #$20                                ;$05DB5D |
     LDA [$CE]                               ;$05DB5F |
     AND.b #$7F                              ;$05DB61 |

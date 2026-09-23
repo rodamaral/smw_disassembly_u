@@ -5570,9 +5570,9 @@ CODE_04DCB6:
     REP #$10                                ;$04DCB7 |
     SEP #$20                                ;$04DCB9 |
     LDX.w #$D000                            ;$04DCBB |
-    STX $65                                 ;$04DCBE |
+    STX.b Layer1DataPtr_65                  ;$04DCBE |
     LDA.b #$05                              ;$04DCC0 |
-    STA $67                                 ;$04DCC2 |
+    STA.b Layer1DataPtr_65+2                ;$04DCC2 |
     LDX.w #$0000                            ;$04DCC4 |
     STX $00                                 ;$04DCC7 |
     LDA.w $1DE8                             ;$04DCC9 |
@@ -5615,19 +5615,19 @@ CODE_04DCE8:
     AND.w #$0F80                            ;$04DD0D |
     ORA $02                                 ;$04DD10 |
     TAX                                     ;$04DD12 |
-    LDA [$65],Y                             ;$04DD13 |
+    LDA.b [Layer1DataPtr_65],Y              ;$04DD13 |
     STA.l $7EE400,X                         ;$04DD15 |
     INY                                     ;$04DD19 |
     INY                                     ;$04DD1A |
-    LDA [$65],Y                             ;$04DD1B |
+    LDA.b [Layer1DataPtr_65],Y              ;$04DD1B |
     STA.l $7EE440,X                         ;$04DD1D |
     INY                                     ;$04DD21 |
     INY                                     ;$04DD22 |
-    LDA [$65],Y                             ;$04DD23 |
+    LDA.b [Layer1DataPtr_65],Y              ;$04DD23 |
     STA.l $7EE402,X                         ;$04DD25 |
     INY                                     ;$04DD29 |
     INY                                     ;$04DD2A |
-    LDA [$65],Y                             ;$04DD2B |
+    LDA.b [Layer1DataPtr_65],Y              ;$04DD2B |
     STA.l $7EE442,X                         ;$04DD2D |
     SEP #$20                                ;$04DD31 |
     INC $00                                 ;$04DD33 |
