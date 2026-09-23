@@ -842,13 +842,13 @@ PlayerBlockXSide_93: skip 1
 ; 2 bytes
 ; horizontal position of the player within the level
 ; forward calculation for the next frame
-PlayerXPosNext_94: skip 2
+PlayerXPos_94: skip 2
 
 ; === $7E0096 ===
 ; 2 bytes
 ; vertical position of the player within the level
 ; forward calculation for the next frame
-PlayerYPosNext_96: skip 2
+PlayerYPos_96: skip 2
 
 ; === $7E0098 ===
 ; 2 bytes
@@ -926,12 +926,12 @@ SpriteDataPtr_CE: skip 3
 ; === $7E00D1 ===
 ; 2 bytes
 ; horizontal position of the player within the level
-PlayerXPosNow_D1: skip 2
+PlayerXPosMirror_D1: skip 2
 
 ; === $7E00D3 ===
 ; 2 bytes
 ; vertical position of the player within the level
-PlayerYPosNow_D3: skip 2
+PlayerYPosMirror_D3: skip 2
 
 ; === $7E00D5 ===
 ; 3 bytes

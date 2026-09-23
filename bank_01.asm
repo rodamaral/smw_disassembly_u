@@ -4437,11 +4437,11 @@ CODE_01A041:
     BNE CODE_01A079                         ;$01A045 |
 CODE_01A047:
     LDY $76
-    LDA $D1                                 ;$01A049 |
+    LDA.b PlayerXPosMirror_D1               ;$01A049 |
     CLC                                     ;$01A04B |
     ADC.w DATA_019F67,Y                     ;$01A04C |
     STA.b SpriteXPosLow_E4,X                ;$01A04F |
-    LDA $D2                                 ;$01A051 |
+    LDA.b PlayerXPosMirror_D1+1             ;$01A051 |
     ADC.w DATA_019F69,Y                     ;$01A053 |
     STA.w SpriteXPosHigh_14E0,X             ;$01A056 |
     JSR SubHorizPos                         ;$01A059 |
@@ -5625,7 +5625,7 @@ CODE_01A897:
     SEC                                     ;$01A89D |
     SBC $01                                 ;$01A89E |
     ROL $00                                 ;$01A8A0 |
-    CMP $D3                                 ;$01A8A2 |
+    CMP.b PlayerYPosMirror_D3               ;$01A8A2 |
     PHP                                     ;$01A8A4 |
     LSR $00                                 ;$01A8A5 |
     LDA $0B                                 ;$01A8A7 |
@@ -5921,7 +5921,7 @@ CODE_01AAB7:
     STZ.w SpritePlayerContact_154C,X
     LDA.b SpriteYPosLow_D8,X                ;$01AABA |
     SEC                                     ;$01AABC |
-    SBC $D3                                 ;$01AABD |
+    SBC.b PlayerYPosMirror_D3               ;$01AABD |
     CLC                                     ;$01AABF |
     ADC.b #$08                              ;$01AAC0 |
     CMP.b #$20                              ;$01AAC2 |
@@ -6290,11 +6290,11 @@ CODE_01AD26:
 
 SubHorizPos:
     LDY.b #$00
-    LDA $D1                                 ;$01AD32 |
+    LDA.b PlayerXPosMirror_D1               ;$01AD32 |
     SEC                                     ;$01AD34 |
     SBC.b SpriteXPosLow_E4,X                ;$01AD35 |
     STA $0F                                 ;$01AD37 |
-    LDA $D2                                 ;$01AD39 |
+    LDA.b PlayerXPosMirror_D1+1             ;$01AD39 |
     SBC.w SpriteXPosHigh_14E0,X             ;$01AD3B |
     BPL Return01AD41                        ;$01AD3E |
     INY                                     ;$01AD40 |
@@ -6303,7 +6303,7 @@ Return01AD41:
 
 CODE_01AD42:
     LDY.b #$00
-    LDA $D3                                 ;$01AD44 |
+    LDA.b PlayerYPosMirror_D3               ;$01AD44 |
     SEC                                     ;$01AD46 |
     SBC.b SpriteYPosLow_D8,X                ;$01AD47 |
     STA $0E                                 ;$01AD49 |
@@ -14132,7 +14132,7 @@ CODE_01E5BF:
 CODE_01E5C4:
     JSR MarioSprInteractRt
     BCC Return01E610                        ;$01E5C7 |
-    LDA $D3                                 ;$01E5C9 |
+    LDA.b PlayerYPosMirror_D3               ;$01E5C9 |
     CLC                                     ;$01E5CB |
     ADC.b #$14                              ;$01E5CC |
     CMP.b SpriteYPosLow_D8,X                ;$01E5CE |
@@ -14438,14 +14438,14 @@ CODE_01E804:
     LDA.b #$22                              ;$01E81B |
 CODE_01E81D:
     CLC
-    ADC $D3                                 ;$01E81E |
+    ADC.b PlayerYPosMirror_D3               ;$01E81E |
     STA.b SpriteYPosLow_D8,X                ;$01E820 |
     LDA $D4                                 ;$01E822 |
     ADC.b #$00                              ;$01E824 |
     STA.w SpriteYPosHigh_14D4,X             ;$01E826 |
-    LDA $D1                                 ;$01E829 |
+    LDA.b PlayerXPosMirror_D1               ;$01E829 |
     STA.b SpriteXPosLow_E4,X                ;$01E82B |
-    LDA $D2                                 ;$01E82D |
+    LDA.b PlayerXPosMirror_D1+1             ;$01E82D |
     STA.w SpriteXPosHigh_14E0,X             ;$01E82F |
     LDA.b #$10                              ;$01E832 |
     STA $AA,X                               ;$01E834 |
@@ -14480,11 +14480,11 @@ CODE_01E840:
     ADC.b #$08                              ;$01E863 |
     TAY                                     ;$01E865 |
 CODE_01E866:
-    LDA $D1
+    LDA.b PlayerXPosMirror_D1
     STA.b SpriteXPosLow_E4,X                ;$01E868 |
-    LDA $D2                                 ;$01E86A |
+    LDA.b PlayerXPosMirror_D1+1             ;$01E86A |
     STA.w SpriteXPosHigh_14E0,X             ;$01E86C |
-    LDA $D3                                 ;$01E86F |
+    LDA.b PlayerYPosMirror_D3               ;$01E86F |
     CLC                                     ;$01E871 |
     ADC.w DATA_01E793,Y                     ;$01E872 |
     STA.b SpriteYPosLow_D8,X                ;$01E875 |
@@ -15210,7 +15210,7 @@ adjust_player_y_on_yoshi_01EDCE:
     SEC                                     ;$01EDD0 |
     SBC.w .yoshi_offset_distance_01EDE2,Y   ;$01EDD1 |
     STA $96                                 ;$01EDD4 | Offset player accordingly
-    STA $D3                                 ;$01EDD6 | also change the old Y position
+    STA.b PlayerYPosMirror_D3               ;$01EDD6 | also change the old Y position
     LDA.w SpriteYPosHigh_14D4,X             ;$01EDD8 |
     SBC.b #$00                              ;$01EDDB |
     STA $97                                 ;$01EDDD |
@@ -16797,11 +16797,11 @@ CODE_01F989:
     ADC.w DATA_01EBB4,Y                     ;$01F99D |
     STA $B6,X                               ;$01F9A0 |
 CODE_01F9A2:
-    LDA $D3
+    LDA.b PlayerYPosMirror_D3
     PHA                                     ;$01F9A4 |
     SEC                                     ;$01F9A5 |
     SBC.w $18B6                             ;$01F9A6 |
-    STA $D3                                 ;$01F9A9 |
+    STA.b PlayerYPosMirror_D3               ;$01F9A9 |
     LDA $D4                                 ;$01F9AB |
     PHA                                     ;$01F9AD |
     SBC.b #$00                              ;$01F9AE |
@@ -16810,7 +16810,7 @@ CODE_01F9A2:
     PLA                                     ;$01F9B5 |
     STA $D4                                 ;$01F9B6 |
     PLA                                     ;$01F9B8 |
-    STA $D3                                 ;$01F9B9 |
+    STA.b PlayerYPosMirror_D3               ;$01F9B9 |
     LDA $AA,X                               ;$01F9BB |
     CMP.w DATA_01F8CF,Y                     ;$01F9BD |
     BEQ CODE_01F9C8                         ;$01F9C0 |

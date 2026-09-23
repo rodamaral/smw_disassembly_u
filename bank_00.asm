@@ -4206,9 +4206,9 @@ GM14_main_level_00A1DA:
 mirror_player_position_00A2F3:
     REP #$20
     LDA $94                                 ;$00A2F5 |
-    STA $D1                                 ;$00A2F7 |
+    STA.b PlayerXPosMirror_D1               ;$00A2F7 |
     LDA $96                                 ;$00A2F9 |
-    STA $D3                                 ;$00A2FB |
+    STA.b PlayerYPosMirror_D3               ;$00A2FB |
     SEP #$20                                ;$00A2FD |
     RTS                                     ;$00A2FF |
 
@@ -9072,7 +9072,7 @@ go_to_sublevel:
 
     LDA $96                                 ;$00D27C |
     SEC                                     ;$00D27E |
-    SBC $D3                                 ;$00D27F |
+    SBC.b PlayerYPosMirror_D3               ;$00D27F |
     CLC                                     ;$00D281 |
     ADC $88                                 ;$00D282 |
     STA $88                                 ;$00D284 |
