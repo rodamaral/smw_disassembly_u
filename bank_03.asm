@@ -5119,19 +5119,19 @@ CODE_03A619:
 CODE_03A61D:
     LDA.b #$08
     STA.w $14D0                             ;$03A61F |
-    LDA.b #$A1                              ;$03A622 |
-    STA $A6                                 ;$03A624 |
+    LDA.b #!BowserBall_A1                   ;$03A622 |
+    STA.b SpriteNumber_9E+8                 ;$03A624 | NOTE: hardcoded slot 8
     LDA.b SpriteXPosLow_E4,X                ;$03A626 |
     CLC                                     ;$03A628 |
     ADC.b #$08                              ;$03A629 |
-    STA $EC                                 ;$03A62B |
+    STA.b SpriteXPosLow_E4+8                ;$03A62B | NOTE: hardcoded slot 8
     LDA.w SpriteXPosHigh_14E0,X             ;$03A62D |
     ADC.b #$00                              ;$03A630 |
     STA.w $14E8                             ;$03A632 |
     LDA.b SpriteYPosLow_D8,X                ;$03A635 |
     CLC                                     ;$03A637 |
     ADC.b #$40                              ;$03A638 |
-    STA $E0                                 ;$03A63A |
+    STA.b SpriteYPosLow_D8+8                ;$03A63A | NOTE: hardcoded slot 8
     LDA.w SpriteYPosHigh_14D4,X             ;$03A63C |
     ADC.b #$00                              ;$03A63F |
     STA.w $14DC                             ;$03A641 |
@@ -5882,8 +5882,8 @@ CODE_03AC5A:
 CODE_03AC63:
     LDA.b #$08
     STA.w $14D0                             ;$03AC65 |
-    LDA.b #$7C                              ;$03AC68 |
-    STA $A6                                 ;$03AC6A |
+    LDA.b #!Peach_7C                        ;$03AC68 |
+    STA.b SpriteNumber_9E+8                 ;$03AC6A | NOTE: hardcoded slot 8
     LDA.b SpriteXPosLow_E4,X                ;$03AC6C |
     CLC                                     ;$03AC6E |
     ADC.b #$08                              ;$03AC6F |

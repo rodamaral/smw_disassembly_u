@@ -925,6 +925,10 @@ SpriteLock_9D: skip 1
 ; 12 bytes
 ; sprite ID table
 SpriteNumber_9E: skip 12
+; Valid values
+!Peach_7C = $7C
+!BowserBall_A1 = $A1
+!Reznor_A9 = $A9
 
 ; === $7E00AA ===
 ; 12 bytes

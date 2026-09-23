@@ -3053,8 +3053,8 @@ CODE_0296E3:
 CODE_0296F1:
     DEC.w $17CC,X
 CODE_0296F4:
-    LDA $A5
-    CMP.b #$A9                              ;$0296F6 |
+    LDA.b SpriteNumber_9E+7                 ;$0296F4 | NOTE: hardcoded slot 7
+    CMP.b #!Reznor_A9                       ;$0296F6 |
     BEQ CODE_02974A                         ;$0296F8 |
     LDA.w IRQNMICommand_0D9B                ;$0296FA |
     AND.b #$40                              ;$0296FD |
@@ -3371,8 +3371,8 @@ CODE_029941:
     BNE CODE_02994F                         ;$02994A |
     DEC.w $17C4,X                           ;$02994C |
 CODE_02994F:
-    LDA $A5
-    CMP.b #$A9                              ;$029951 |
+    LDA.b SpriteNumber_9E+7                 ;$029951 | NOTE: hardcoded slot 7
+    CMP.b #!Reznor_A9                       ;$029951 |
     BEQ CODE_02996C                         ;$029953 |
     LDA.w $140F                             ;$029955 |
     BNE CODE_02996C                         ;$029958 |
@@ -4324,8 +4324,8 @@ CODE_02A01B:
     STA.w $1733,X                           ;$02A026 |
     JSR CODE_02B560                         ;$02A029 |
 CODE_02A02C:
-    LDA $A5                                 ;$02A02C | WARNING: gets sprite id for slot 7 directly from sprite table, not from $9E
-    CMP.b #$A9                              ;$02A02E |
+    LDA.b SpriteNumber_9E+7                 ;$02A02C | NOTE: hardcoded slot 7
+    CMP.b #!Reznor_A9                       ;$02A02E |
     BEQ CODE_02A03B                         ;$02A030 |
     LDA.w IRQNMICommand_0D9B                ;$02A032 |
     BPL CODE_02A03B                         ;$02A035 |
