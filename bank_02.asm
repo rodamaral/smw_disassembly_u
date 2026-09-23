@@ -30,7 +30,7 @@ ReleaseItembox028008:
     LDA.w SpriteStatus_14C8,X               ;$028038 |
     CMP.b #$0B                              ;$02803B |
     BNE .SpawnSprite028042                  ;$02803D |
-    STZ.w $13F3                             ;$02803F |
+    STZ.w PBalloonFlag_13F3                 ;$02803F |
 .SpawnSprite028042:
     LDA.b #$08                              ;$028042 |
     STA.w SpriteStatus_14C8,X               ;$028044 |

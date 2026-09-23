@@ -1459,7 +1459,6 @@ PlayerCapePose_13DF: skip 1
 PlayerPose_13E0: skip 1
 SlopeType_13E1: skip 1
 SpinjumpFireball_13E2: skip 1
-WallrunType_13E3:
 WallRunFlag_13E3: skip 1
 PlayerPMeter_13E4: skip 1
 PlayerPoseLenTimer_13E5: skip 1
@@ -1475,7 +1474,7 @@ NetDoorDirIndex_13F0: skip 1
 VerticalScrollEnabled_13F1: skip 1
 ; 7E13F2 unused
 skip 1
-PBalloonInflating_13F3: skip 1
+PBalloonFlag_13F3: skip 1
 BonusRoomBlocks_13F4: skip 5
 PlayerBehindNet_13F9: skip 1
 PlayerCanJumpWater_13FA: skip 1
@@ -1865,7 +1864,7 @@ BooRingIndex_18BA: skip 1
 skip 1
 SkullRaftSpeed_18BC: skip 1
 PlayerStunnedTimer_18BD: skip 1
-PlayerClimbingRope_18BE: skip 1
+PlayerClimbFlag_18BE: skip 1
 SpriteWillAppear_18BF: skip 1
 SpriteRespawnTimer_18C0: skip 1
 SpriteRespawnNumber_18C1: skip 1

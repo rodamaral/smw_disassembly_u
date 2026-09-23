@@ -8312,9 +8312,9 @@ skip_standard_collision:                    ;        |
     JSR check_y_position                    ;$00CD36 | Check the player's Y position.
 CODE_00CD39:                                ;        |
     STZ.w PlayerTurningPose_13DD            ;$00CD39 | Clear the turning around pose.
-    LDY.w $13F3                             ;$00CD3C |\ If the player is still getting a P-balloon,
+    LDY.w PBalloonFlag_13F3                 ;$00CD3C |\ If the player is still getting a P-balloon,
     BNE p_balloon                           ;$00CD3F |/ run the inflation code.
-    LDA.w $18BE                             ;$00CD41 |\ If the player can climb on air,
+    LDA.w PlayerClimbFlag_18BE              ;$00CD41 |\ If the player can climb on air,
     BEQ .no_climb_on_air                    ;$00CD44 | |
     LDA.b #$1F                              ;$00CD46 | | set the climbing flag.
     STA $8B                                 ;$00CD48 |/
@@ -8368,7 +8368,7 @@ p_balloon:
 CODE_00CD9D:
     DEY
     BEQ CODE_00CDA5                         ;$00CD9E |
-    STY.w $13F3                             ;$00CDA0 |
+    STY.w PBalloonFlag_13F3                 ;$00CDA0 |
     LDA.b #$0F                              ;$00CDA3 |
 CODE_00CDA5:
     STA.w PlayerPose_13E0                   ;$00CDA5 |
@@ -8724,7 +8724,7 @@ CODE_00D014:
     BCC CODE_00D01A                         ;$00D016 |
     ADC.b #$03                              ;$00D018 |
 CODE_00D01A:
-    LDY.w WallrunType_13E3
+    LDY.w WallRunFlag_13E3
     BEQ MarioAnimNo45                       ;$00D01D |
     TYA                                     ;$00D01F |
     AND.b #$01                              ;$00D020 |
@@ -10155,7 +10155,7 @@ Return00DC2C:
 apply_player_speeds:                        ;        \
     LDA.b PlayerYSpeed_7D                   ;$00DC2D |\ Backup the Y speed.
     STA $8A                                 ;$00DC2F |/
-    LDA.w WallrunType_13E3                  ;$00DC31 |\ If the player is wall running,
+    LDA.w WallRunFlag_13E3                  ;$00DC31 |\ If the player is wall running,
     BEQ .not_wall_running                   ;$00DC34 |/
     LSR                                     ;$00DC36 |
     LDA.b PlayerXSpeed_7B                   ;$00DC37 | Load the player's X speed,
@@ -10518,9 +10518,9 @@ draw_mario_and_yoshi_00E2BD:
     SEP #$20                                ;$00E324 |
     LDX.w PlayerPose_13E0                   ;$00E326 |
     LDA.b #$05                              ;$00E329 |
-    CMP.w WallrunType_13E3                  ;$00E32B |
+    CMP.w WallRunFlag_13E3                  ;$00E32B |
     BCS .CODE_00E33E                        ;$00E32E |
-    LDA.w WallrunType_13E3                  ;$00E330 |
+    LDA.w WallRunFlag_13E3                  ;$00E330 |
     LDY.b Powerup_19                        ;$00E333 |
     BEQ .CODE_00E33B                        ;$00E335 |
     CPX.b #$13                              ;$00E337 |
@@ -11125,7 +11125,7 @@ layer_collision:
     LDA.b PlayerYPos_96                     ;$00EADB |
     AND.b #$0F                              ;$00EADD |
     STA $90                                 ;$00EADF |
-    LDA.w WallrunType_13E3                  ;$00EAE1 |
+    LDA.w WallRunFlag_13E3                  ;$00EAE1 |
     BNE .wall_running                       ;$00EAE4 |
     JMP normal_collision                    ;$00EAE6 |
 
@@ -11142,7 +11142,7 @@ layer_collision:
     ORA $73                                 ;$00EAFC |
     ORA.w RidingYoshi_187A                  ;$00EAFE |
     BNE walk_off_wall                       ;$00EB01 |
-    LDA.w WallrunType_13E3                  ;$00EB03 |
+    LDA.w WallRunFlag_13E3                  ;$00EB03 |
     CMP.b #$06                              ;$00EB06 |
     BCS .on_wall                            ;$00EB08 |
     LDX $90                                 ;$00EB0A |
@@ -11151,7 +11151,7 @@ layer_collision:
     CMP.b #$04                              ;$00EB10 |
     BCS stop_wall_running                   ;$00EB12 |
     ORA.b #$04                              ;$00EB14 |
-    STA.w WallrunType_13E3                  ;$00EB16 |
+    STA.w WallRunFlag_13E3                  ;$00EB16 |
 .solid_collision                            ;               |
     LDA.b PlayerXPos_94                     ;$00EB19 |
     AND.b #$F0                              ;$00EB1B |
@@ -11178,11 +11178,11 @@ layer_collision:
     JSR process_collision_point             ;$00EB37 |
     BNE .solid_collision                    ;$00EB3A |
     LDA.b #$02                              ;$00EB3C |
-    TRB.w WallrunType_13E3                  ;$00EB3E |
+    TRB.w WallRunFlag_13E3                  ;$00EB3E |
     RTS                                     ;$00EB41 |
 
 fall_off_wall:
-    LDA.w WallrunType_13E3                  ;$00EB42 |
+    LDA.w WallRunFlag_13E3                  ;$00EB42 |
     AND.b #$01                              ;$00EB45 |
     TAY                                     ;$00EB47 |
 walk_off_wall:                              ;               |
@@ -11210,7 +11210,7 @@ walk_off_wall:                              ;               |
     LDA.b #$E0                              ;$00EB6F |
     STA.b PlayerYSpeed_7D                   ;$00EB71 |
 stop_wall_running:
-    STZ.w WallrunType_13E3                  ;$00EB73 |
+    STZ.w WallRunFlag_13E3                  ;$00EB73 |
 .return
     RTS                                     ;$00EB76 |
 
@@ -11925,7 +11925,7 @@ CODE_00F035:
     BNE Return00F04C                        ;$00F045 |
     INX                                     ;$00F047 |
     INX                                     ;$00F048 |
-    STX.w WallrunType_13E3                  ;$00F049 |
+    STX.w WallRunFlag_13E3                  ;$00F049 |
 Return00F04C:
     RTS
 
@@ -12135,10 +12135,10 @@ CODE_00F1F9:
     LSR                                     ;$00F208 |
     LSR                                     ;$00F209 |
     TAX                                     ;$00F20A |
-    LDA.w $13F3,Y                           ;$00F20B |
+    LDA.w PBalloonFlag_13F3,Y               ;$00F20B |
     ORA.l DATA_00F0EC,X                     ;$00F20E |
-    LDX.w $13F3,Y                           ;$00F212 |
-    STA.w $13F3,Y                           ;$00F215 |
+    LDX.w PBalloonFlag_13F3,Y               ;$00F212 |
+    STA.w PBalloonFlag_13F3,Y               ;$00F215 |
     CMP.b #$FF                              ;$00F218 |
     BNE CODE_00F226                         ;$00F21A |
     LDA.b #$05                              ;$00F21C |
@@ -12171,7 +12171,7 @@ CODE_00F236:
     PLB                                     ;$00F247 |
     PLY                                     ;$00F248 |
     LDX.b #$07                              ;$00F249 |
-    LDA.w $13F3,Y                           ;$00F24B |
+    LDA.w PBalloonFlag_13F3,Y               ;$00F24B |
 CODE_00F24E:
     LSR
     BCS CODE_00F261                         ;$00F24F |
@@ -12708,7 +12708,7 @@ HurtMario:
     ORA.w EndLevelTimer_1493                ;$00F5C1 |
     BNE Return00F628                        ;$00F5C4 |
     STZ.w $18E3                             ;$00F5C6 |
-    LDA.w WallrunType_13E3                  ;$00F5C9 |
+    LDA.w WallRunFlag_13E3                  ;$00F5C9 |
     BEQ CODE_00F5D5                         ;$00F5CC |
     PHB                                     ;$00F5CE |
     PHK                                     ;$00F5CF |
@@ -13029,14 +13029,14 @@ ProcessVerticalScroll00F7F4:
     BRA .CODE_00F883                        ;$00F828 |
 .CODE_00F82A:
     SEP #$20
-    LDA.w WallrunType_13E3                  ;$00F82C |
+    LDA.w WallRunFlag_13E3                  ;$00F82C |
     CMP.b #$06                              ;$00F82F |
     BCS .CODE_00F845                        ;$00F831 |
     LDA.w YoshiHasWingsGfx_1410             ;$00F833 |
     LSR                                     ;$00F836 |
     ORA.w $149F                             ;$00F837 |
     ORA $74                                 ;$00F83A |
-    ORA.w $13F3                             ;$00F83C |
+    ORA.w PBalloonFlag_13F3                 ;$00F83C |
     ORA.w PlayerInCloud_18C2                ;$00F83F |
     ORA.w $1406                             ;$00F842 |
 .CODE_00F845:
@@ -13342,7 +13342,7 @@ FlatPalaceSwitch:
     RTS                                     ;$00FA7F |
 
 TriggerGoalTape:
-    STZ.w $13F3
+    STZ.w PBalloonFlag_13F3
     STZ.w $1891                             ;$00FA83 |
     STZ.w $18C0                             ;$00FA86 |
     STZ.w $18B9                             ;$00FA89 |

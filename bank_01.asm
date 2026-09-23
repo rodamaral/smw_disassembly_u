@@ -4354,13 +4354,13 @@ CODE_019F9B:
     BEQ CODE_019FBB                         ;$019FB7 |
     LDY.b #$09                              ;$019FB9 |
 CODE_019FBB:
-    STY.w $13F3
+    STY.w PBalloonFlag_13F3
 CODE_019FBE:
     LDA.b PlayerAnimation_71
     CMP.b #!AniHurt_01                      ;$019FC0 |
     BCC CODE_019FCA                         ;$019FC2 |
 CODE_019FC4:
-    STZ.w $13F3
+    STZ.w PBalloonFlag_13F3
     JMP OffScrEraseSprite                   ;$019FC7 |
 
 CODE_019FCA:
@@ -9372,7 +9372,7 @@ CODE_01C2E8:
     DEY
     BPL CODE_01C2D5                         ;$01C2E9 |
     LDA.b #$00                              ;$01C2EB |
-    LDY.w $13F3                             ;$01C2ED |
+    LDY.w PBalloonFlag_13F3                 ;$01C2ED |
     BNE CODE_01C2F4                         ;$01C2F0 |
     LDA.b #$0B                              ;$01C2F2 |
 CODE_01C2F4:
@@ -9382,7 +9382,7 @@ CODE_01C2F4:
     LDA.b PlayerXSpeed_7B                   ;$01C2FB |
     STA $B6,X                               ;$01C2FD |
     LDA.b #$09                              ;$01C2FF |
-    STA.w $13F3                             ;$01C301 |
+    STA.w PBalloonFlag_13F3                 ;$01C301 |
     LDA.b #$FF                              ;$01C304 |
     STA.w $1891                             ;$01C306 |
     LDA.b #$1E                              ;$01C309 |
@@ -12589,7 +12589,7 @@ CODE_01D9FE:
     LDA.w $163E,X
     BEQ Return01DA09                        ;$01DA01 |
     STZ.w $163E,X                           ;$01DA03 |
-    STZ.w $18BE                             ;$01DA06 |
+    STZ.w PlayerClimbFlag_18BE              ;$01DA06 |
 Return01DA09:
     RTS
 
@@ -12603,19 +12603,19 @@ CODE_01DA0A:
     STA.w $163E,X                           ;$01DA19 |
     LDA.w SpritePlayerContact_154C,X        ;$01DA1C |
     BNE Return01DA8F                        ;$01DA1F |
-    LDA.w $18BE                             ;$01DA21 |
+    LDA.w PlayerClimbFlag_18BE              ;$01DA21 |
     BNE CODE_01DA2F                         ;$01DA24 |
     LDA.b byetudlrHold_15                   ;$01DA26 |
     AND.b #$08                              ;$01DA28 |
     BEQ Return01DA8F                        ;$01DA2A |
-    STA.w $18BE                             ;$01DA2C |
+    STA.w PlayerClimbFlag_18BE              ;$01DA2C |
 CODE_01DA2F:
     BIT.b byetudlrPress_16
     BPL CODE_01DA3F                         ;$01DA31 |
     LDA.b #$B0                              ;$01DA33 |
     STA.b PlayerYSpeed_7D                   ;$01DA35 |
 CODE_01DA37:
-    STZ.w $18BE
+    STZ.w PlayerClimbFlag_18BE
     LDA.b #$10                              ;$01DA3A |
     STA.w SpritePlayerContact_154C,X        ;$01DA3C |
 CODE_01DA3F:
@@ -15175,7 +15175,7 @@ CODE_01ED70:
     LDA.b #$10                              ;$01ED90 |
     STA.w $15AC,X                           ;$01ED92 |
 CODE_01ED95:
-    LDA.w $13F3
+    LDA.w PBalloonFlag_13F3
     BNE CODE_01ED9E                         ;$01ED98 |
     BIT.b axlr0000Press_18                  ;$01ED9A |
     BPL Return01EDCB                        ;$01ED9C |
