@@ -127,8 +127,8 @@ CODE_0580EC:
     LDA.w #$FFFF                            ;$058119 |
     STA.b Layer1PrevTileUp_4D               ;$05811C |
     STA.b Layer1PrevTileDown_4F             ;$05811E |
-    STA $51                                 ;$058120 |
-    STA $53                                 ;$058122 |
+    STA.b Layer2PrevTileUp_51               ;$058120 |
+    STA.b Layer2PrevTileDown_53             ;$058122 |
     PLP                                     ;$058124 |
     RTL                                     ;$058125 |
 
@@ -839,7 +839,7 @@ process_level_mode_setting_0586F1:
     TAX                                     ;$058746 |
     LDA.b Layer2XPos_1E                     ;$058747 |
     AND.w #$FFF0                            ;$058749 |
-    CMP $51,X                               ;$05874C |
+    CMP.b Layer2PrevTileUp_51,X             ;$05874C |
     BEQ .return_058774                      ;$05874E |
     JMP .CODE_058764                        ;$058750 |
 .CODE_058753:
@@ -849,15 +849,15 @@ process_level_mode_setting_0586F1:
     TAX                                     ;$05875A |
     LDA.b Layer2YPos_20                     ;$05875B |
     AND.w #$FFF0                            ;$05875D |
-    CMP $51,X                               ;$058760 |
+    CMP.b Layer2PrevTileUp_51,X             ;$058760 |
     BEQ .return_058774                      ;$058762 |
 .CODE_058764:
-    STA $51,X
+    STA.b Layer2PrevTileUp_51,X
     TXA                                     ;$058766 |
     EOR.w #$0002                            ;$058767 |
     TAX                                     ;$05876A |
     LDA.w #$FFFF                            ;$05876B |
-    STA $51,X                               ;$05876E |
+    STA.b Layer2PrevTileUp_51,X             ;$05876E |
     JSL execute_level_mode_setting_058883   ;$058770 |
 .return_058774:
     PLP
