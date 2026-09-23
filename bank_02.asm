@@ -2287,7 +2287,7 @@ CODE_029143:
     STA.b PlayerYPos_96+1                   ;$029152 |
     LDA.b #$01                              ;$029154 |
     STA.w OnSolidSprite_1471                ;$029156 |
-    STA.w $1402                             ;$029159 |
+    STA.w NoteBlockActive_1402              ;$029159 |
     STZ.b PlayerYSpeed_7D                   ;$02915C |
 CODE_02915E:
     LDA.w $16C5,X
