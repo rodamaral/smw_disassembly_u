@@ -759,7 +759,7 @@ CODE_048676:
     SBC.b #$09                              ;$048694 |
     STA $03                                 ;$048696 |
     LDA.b #$03                              ;$048698 |
-    STA $8C                                 ;$04869A |
+    STA.b OWTileCount_8C                    ;$04869A |
     LDA $00                                 ;$04869C |
     STA $06                                 ;$04869E |
     STA $8A                                 ;$0486A0 |
@@ -805,7 +805,7 @@ CODE_0486C5:
     STZ.w $044D                             ;$0486F3 |
     STZ.w $044E                             ;$0486F6 |
     LDA.b #$03                              ;$0486F9 |
-    STA $8C                                 ;$0486FB |
+    STA.b OWTileCount_8C                    ;$0486FB |
     LDA.w OWPlayerSubmap_1F11               ;$0486FD |
     LDY.w $13D9                             ;$048700 |
     CPY.b #$0A                              ;$048703 |
@@ -1033,8 +1033,8 @@ CODE_0489A7:
     CLC                                     ;$0489C1 |
     ADC.b #$08                              ;$0489C2 |
     STA $8A                                 ;$0489C4 |
-    DEC $8C                                 ;$0489C6 |
-    LDA $8C                                 ;$0489C8 |
+    DEC.b OWTileCount_8C                    ;$0489C6 |
+    LDA.b OWTileCount_8C                    ;$0489C8 |
     AND.b #$01                              ;$0489CA |
     BEQ CODE_0489D9                         ;$0489CC |
     LDA $06                                 ;$0489CE |
@@ -1152,7 +1152,7 @@ DATA_048CDE:
 
 CODE_048CE6:
     LDA.b #$07
-    STA $8C                                 ;$048CE8 |
+    STA.b OWTileCount_8C                    ;$048CE8 |
     REP #$30                                ;$048CEA |
     LDA.w $1F13,Y                           ;$048CEC |
     ASL                                     ;$048CEF |
@@ -1231,7 +1231,7 @@ CODE_048D67:
     INX                                     ;$048D6C |
     INY                                     ;$048D6D |
     INY                                     ;$048D6E |
-    DEC $8C                                 ;$048D6F |
+    DEC.b OWTileCount_8C                    ;$048D6F |
     BPL CODE_048D1B                         ;$048D71 |
     RTS                                     ;$048D73 |
 

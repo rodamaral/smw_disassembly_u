@@ -6084,9 +6084,9 @@ DATA_00B726:
 CODE_00B888:
     REP #$10
     LDY.w #$BFC0                            ;$00B88A |
-    STY $8A                                 ;$00B88D |
+    STY.b GFXFilePtr_8A                     ;$00B88D |
     LDA.b #$08                              ;$00B88F |
-    STA $8C                                 ;$00B891 |
+    STA.b GFXFilePtr_8A+2                   ;$00B891 |
     LDY.w #$2000                            ;$00B893 |
     STY $00                                 ;$00B896 |
     LDA.b #$7E                              ;$00B898 |
@@ -6240,14 +6240,14 @@ CODE_00B96E:
     JMP CODE_00B8E3                         ;$00B980 |
 
 ReadByte:
-    LDA [$8A]
-    LDX $8A                                 ;$00B985 |
+    LDA.b [GFXFilePtr_8A]
+    LDX.b GFXFilePtr_8A                     ;$00B985 |
     INX                                     ;$00B987 |
     BNE CODE_00B98F                         ;$00B988 |
     LDX.w #$8000                            ;$00B98A |
-    INC $8C                                 ;$00B98D |
+    INC.b GFXFilePtr_8A+2                   ;$00B98D |
 CODE_00B98F:
-    STX $8A
+    STX.b GFXFilePtr_8A
     RTS                                     ;$00B991 |
 
 DATA_00B992:
@@ -10104,7 +10104,7 @@ CODE_00DBCA:
     BEQ CODE_00DBE8                         ;$00DBDE |
     LDA.b PlayerClimb_74                    ;$00DBE0 |
     BPL CODE_00DC00                         ;$00DBE2 |
-    CPX $8C                                 ;$00DBE4 |
+    CPX.b PlayerBlockXSide_8C               ;$00DBE4 |
     BEQ CODE_00DBF2                         ;$00DBE6 |
 CODE_00DBE8:
     TXA
@@ -12281,7 +12281,7 @@ process_page_0_tiles_no_swim:
 .not_center                                 ;        |/
     TSB.b InteractionPtsClimbable_8B        ;$00F302 | Set the climbing flag corresponding to the interaction point.
     LDA $93                                 ;$00F304 |
-    STA $8C                                 ;$00F306 |
+    STA.b PlayerBlockXSide_8C               ;$00F306 |
     RTS                                     ;$00F308 /
 
 process_page_0_tiles_no_climb:

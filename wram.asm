@@ -739,6 +739,8 @@ PlayerPipeAction_89:
 ; timer for no yoshi intro auto input (how long each input lasts)
 NoYoshiInputTimer_89: skip 1
 
+;;; TODO $8A:
+
 ; === $7E008A ===
 ; 1 byte
 ; temporary location for player Y speed
@@ -796,7 +798,12 @@ OWScreenYCurrentTile_8B: skip 1
 ; === $7E008C ===
 ; 1 byte
 ; which side of a block the current player interaction point is touching
-InteractionPtDirection_8C: skip 1
+PlayerBlockXSide_8C:
+
+; === $7E008C ===
+; 1 byte
+; Counter for tiles of the player's overworld sprite
+OWTileCount_8C: skip 1
 
 ; === $7E008D ===
 ; 3 bytes
