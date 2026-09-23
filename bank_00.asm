@@ -6656,14 +6656,14 @@ CODE_00BEEC:
     ADC $07                                 ;$00BF1A |
     TAY                                     ;$00BF1C |
     LDA [$04],Y                             ;$00BF1D |
-    STA $6B                                 ;$00BF1F |
+    STA.b Map16LowPtr_6B                    ;$00BF1F |
     STA $6E                                 ;$00BF21 |
     INY                                     ;$00BF23 |
     LDA [$04],Y                             ;$00BF24 |
-    STA $6C                                 ;$00BF26 |
+    STA.b Map16LowPtr_6B+1                  ;$00BF26 |
     STA $6F                                 ;$00BF28 |
     LDA.b #$7E                              ;$00BF2A |
-    STA $6D                                 ;$00BF2C |
+    STA.b Map16LowPtr_6B+2                  ;$00BF2C |
     INC A                                   ;$00BF2E |
     STA $70                                 ;$00BF2F |
     LDA $09                                 ;$00BF31 |
@@ -6874,7 +6874,7 @@ CODE_00C077:
     AND.b #$FE                              ;$00C096 |
     STA [$6E],Y                             ;$00C098 |
     LDA.l TileToGeneratePg0,X               ;$00C09A |
-    STA [$6B],Y                             ;$00C09E |
+    STA.b [Map16LowPtr_6B],Y                ;$00C09E |
     REP #$20                                ;$00C0A0 |
     AND.w #$00FF                            ;$00C0A2 |
     ASL                                     ;$00C0A5 |
@@ -6912,7 +6912,7 @@ CODE_00C0C4:
     ORA.b #$01                              ;$00C0E7 |
     STA [$6E],Y                             ;$00C0E9 |
     LDA.l TileToGeneratePg1,X               ;$00C0EB |
-    STA [$6B],Y                             ;$00C0EF |
+    STA.b [Map16LowPtr_6B],Y                ;$00C0EF |
     REP #$20                                ;$00C0F1 |
     AND.w #$00FF                            ;$00C0F3 |
     ORA.w #$0100                            ;$00C0F6 |
@@ -7019,7 +7019,7 @@ CODE_00C1AC:
     TAY                                     ;$00C1C3 |
     SEP #$20                                ;$00C1C4 |
     LDA.b #$25                              ;$00C1C6 |
-    STA [$6B],Y                             ;$00C1C8 |
+    STA.b [Map16LowPtr_6B],Y                ;$00C1C8 |
     REP #$20                                ;$00C1CA |
     TYA                                     ;$00C1CC |
     CLC                                     ;$00C1CD |
@@ -7027,7 +7027,7 @@ CODE_00C1AC:
     TAY                                     ;$00C1D1 |
     SEP #$20                                ;$00C1D2 |
     LDA.b #$25                              ;$00C1D4 |
-    STA [$6B],Y                             ;$00C1D6 |
+    STA.b [Map16LowPtr_6B],Y                ;$00C1D6 |
     REP #$20                                ;$00C1D8 |
     AND.w #$00FF                            ;$00C1DA |
     ASL                                     ;$00C1DD |
@@ -7237,10 +7237,10 @@ CODE_00C3D1:
     TAX                                     ;$00C3EA |
     SEP #$20                                ;$00C3EB |
     LDA.b #$25                              ;$00C3ED |
-    STA [$6B],Y                             ;$00C3EF |
+    STA.b [Map16LowPtr_6B],Y                ;$00C3EF |
     INY                                     ;$00C3F1 |
     LDA.b #$25                              ;$00C3F2 |
-    STA [$6B],Y                             ;$00C3F4 |
+    STA.b [Map16LowPtr_6B],Y                ;$00C3F4 |
     REP #$20                                ;$00C3F6 |
     TYA                                     ;$00C3F8 |
     CLC                                     ;$00C3F9 |
@@ -7248,10 +7248,10 @@ CODE_00C3D1:
     TAY                                     ;$00C3FD |
     SEP #$20                                ;$00C3FE |
     LDA.b #$25                              ;$00C400 |
-    STA [$6B],Y                             ;$00C402 |
+    STA.b [Map16LowPtr_6B],Y                ;$00C402 |
     DEY                                     ;$00C404 |
     LDA.b #$25                              ;$00C405 |
-    STA [$6B],Y                             ;$00C407 |
+    STA.b [Map16LowPtr_6B],Y                ;$00C407 |
     LDY.w #$0003                            ;$00C409 |
 CODE_00C40C:
     LDA $06

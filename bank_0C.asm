@@ -736,7 +736,7 @@ CODE_0C944C:
     STA $0F                                 ;$0C9459 |
 CODE_0C945B:
     LDY $03
-    LDA [$68],Y                             ;$0C945D |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C945D |
     STA $07                                 ;$0C945F |
     INY                                     ;$0C9461 |
     STY $03                                 ;$0C9462 |
@@ -745,7 +745,7 @@ CODE_0C945B:
     LDA $07                                 ;$0C9468 |
     AND.b #$7F                              ;$0C946A |
     STA $07                                 ;$0C946C |
-    LDA [$68],Y                             ;$0C946E |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C946E |
     INY                                     ;$0C9470 |
     STY $03                                 ;$0C9471 |
     LDY $05                                 ;$0C9473 |
@@ -759,7 +759,7 @@ CODE_0C9475:
 
 CODE_0C9480:
     LDY $03
-    LDA [$68],Y                             ;$0C9482 |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9482 |
     INY                                     ;$0C9484 |
     STY $03                                 ;$0C9485 |
     LDY $05                                 ;$0C9487 |
@@ -770,11 +770,11 @@ CODE_0C9480:
     BPL CODE_0C9480                         ;$0C9490 |
 CODE_0C9492:
     LDY $03
-    LDA [$68],Y                             ;$0C9494 |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9494 |
     CMP.b #$FF                              ;$0C9496 |
     BNE CODE_0C945B                         ;$0C9498 |
     INY                                     ;$0C949A |
-    LDA [$68],Y                             ;$0C949B |
+    LDA.b [Layer2DataPtr_68],Y              ;$0C949B |
     CMP.b #$FF                              ;$0C949D |
     BNE CODE_0C945B                         ;$0C949F |
     REP #$20                                ;$0C94A1 |
@@ -798,9 +798,9 @@ CODE_0C94C0:
     SEP #$20
     REP #$10                                ;$0C94C2 |
     LDX.w #$B900                            ;$0C94C4 |
-    STX $6B                                 ;$0C94C7 |
+    STX.b Map16LowPtr_6B                    ;$0C94C7 |
     LDA.b #$7E                              ;$0C94C9 |
-    STA $6D                                 ;$0C94CB |
+    STA.b Map16LowPtr_6B+2                  ;$0C94CB |
     STA $70                                 ;$0C94CD |
     LDX.w #$BD00                            ;$0C94CF |
     STX $6E                                 ;$0C94D2 |
@@ -818,7 +818,7 @@ CODE_0C94C0:
 CODE_0C94EB:
     SEP #$20
     LDY $04                                 ;$0C94ED |
-    LDA [$6B],Y                             ;$0C94EF |
+    LDA.b [Map16LowPtr_6B],Y                ;$0C94EF |
     STA $02                                 ;$0C94F1 |
     LDA [$6E],Y                             ;$0C94F3 |
     STA $03                                 ;$0C94F5 |

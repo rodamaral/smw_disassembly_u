@@ -145,7 +145,7 @@ CODE_058136:
     SEP #$20
     REP #$10                                ;$058138 |
     LDY $03                                 ;$05813A |
-    LDA [$68],Y                             ;$05813C |
+    LDA.b [Layer2DataPtr_68],Y              ;$05813C |
     STA $07                                 ;$05813E |
     INY                                     ;$058140 |
     REP #$20                                ;$058141 |
@@ -156,7 +156,7 @@ CODE_058136:
     LDA $07                                 ;$05814B |
     AND.b #$7F                              ;$05814D |
     STA $07                                 ;$05814F |
-    LDA [$68],Y                             ;$058151 |
+    LDA.b [Layer2DataPtr_68],Y              ;$058151 |
     INY                                     ;$058153 |
     REP #$20                                ;$058154 |
     STY $03                                 ;$058156 |
@@ -175,7 +175,7 @@ CODE_05816A:
     REP #$20
     LDY $03                                 ;$05816C |
     SEP #$20                                ;$05816E |
-    LDA [$68],Y                             ;$058170 |
+    LDA.b [Layer2DataPtr_68],Y              ;$058170 |
     INY                                     ;$058172 |
     REP #$20                                ;$058173 |
     STY $03                                 ;$058175 |
@@ -192,11 +192,11 @@ CODE_058188:
     REP #$20
     LDY $03                                 ;$05818A |
     SEP #$20                                ;$05818C |
-    LDA [$68],Y                             ;$05818E |
+    LDA.b [Layer2DataPtr_68],Y              ;$05818E |
     CMP.b #$FF                              ;$058190 |
     BNE CODE_058136                         ;$058192 |
     INY                                     ;$058194 |
-    LDA [$68],Y                             ;$058195 |
+    LDA.b [Layer2DataPtr_68],Y              ;$058195 |
     CMP.b #$FF                              ;$058197 |
     BNE CODE_058136                         ;$058199 |
     REP #$20                                ;$05819B |
@@ -743,23 +743,23 @@ CODE_05863E:
     ADC.w $1928                             ;$05869D |
     TAY                                     ;$0586A0 |
     LDA [$00],Y                             ;$0586A1 |
-    STA $6B                                 ;$0586A3 |
+    STA.b Map16LowPtr_6B                    ;$0586A3 |
     LDA [$0D],Y                             ;$0586A5 |
     STA $6E                                 ;$0586A7 |
     INY                                     ;$0586A9 |
     LDA [$00],Y                             ;$0586AA |
-    STA $6C                                 ;$0586AC |
+    STA.b Map16LowPtr_6B+1                  ;$0586AC |
     LDA [$0D],Y                             ;$0586AE |
     STA $6F                                 ;$0586B0 |
     INY                                     ;$0586B2 |
     LDA [$00],Y                             ;$0586B3 |
-    STA $6D                                 ;$0586B5 |
+    STA.b Map16LowPtr_6B+2                  ;$0586B5 |
     LDA [$0D],Y                             ;$0586B7 |
     STA $70                                 ;$0586B9 |
     LDA $0A                                 ;$0586BB |
     AND.b #$10                              ;$0586BD |
     BEQ LoadNoHiCoord                       ;$0586BF |
-    INC $6C                                 ;$0586C1 |
+    INC.b Map16LowPtr_6B+1                  ;$0586C1 |
     INC $6F                                 ;$0586C3 |
 LoadNoHiCoord:
     LDA.b LvlLoadObjNo_5A
@@ -1172,14 +1172,14 @@ CODE_058A10:
     ADC $00                                 ;$058A23 |
     TAY                                     ;$058A25 |
     LDA [$0A],Y                             ;$058A26 |
-    STA $6B                                 ;$058A28 |
+    STA.b Map16LowPtr_6B                    ;$058A28 |
     LDA [$0D],Y                             ;$058A2A |
     STA $6E                                 ;$058A2C |
     SEP #$20                                ;$058A2E |
     INY                                     ;$058A30 |
     INY                                     ;$058A31 |
     LDA [$0A],Y                             ;$058A32 |
-    STA $6D                                 ;$058A34 |
+    STA.b Map16LowPtr_6B+2                  ;$058A34 |
     LDA [$0D],Y                             ;$058A36 |
     STA $70                                 ;$058A38 |
     SEP #$10                                ;$058A3A |
@@ -1197,7 +1197,7 @@ CODE_058A47:
     LDX.w #$0000                            ;$058A52 |
 CODE_058A55:
     LDY $08
-    LDA [$6B],Y                             ;$058A57 |
+    LDA.b [Map16LowPtr_6B],Y                ;$058A57 |
     AND.w #$00FF                            ;$058A59 |
     STA $00                                 ;$058A5C |
     LDA [$6E],Y                             ;$058A5E |
@@ -1293,14 +1293,14 @@ CODE_058AD5:
     ADC $00                                 ;$058AFF |
     TAY                                     ;$058B01 |
     LDA [$0A],Y                             ;$058B02 |
-    STA $6B                                 ;$058B04 |
+    STA.b Map16LowPtr_6B                    ;$058B04 |
     LDA [$0D],Y                             ;$058B06 |
     STA $6E                                 ;$058B08 |
     SEP #$20                                ;$058B0A |
     INY                                     ;$058B0C |
     INY                                     ;$058B0D |
     LDA [$0A],Y                             ;$058B0E |
-    STA $6D                                 ;$058B10 |
+    STA.b Map16LowPtr_6B+2                  ;$058B10 |
     LDA [$0D],Y                             ;$058B12 |
     STA $70                                 ;$058B14 |
     SEP #$10                                ;$058B16 |
@@ -1322,7 +1322,7 @@ CODE_058B23:
     LDX.w #$0000                            ;$058B32 |
 CODE_058B35:
     LDY $08
-    LDA [$6B],Y                             ;$058B37 |
+    LDA.b [Map16LowPtr_6B],Y                ;$058B37 |
     AND.w #$00FF                            ;$058B39 |
     STA $00                                 ;$058B3C |
     LDA [$6E],Y                             ;$058B3E |
@@ -1423,14 +1423,14 @@ CODE_058BDE:
     ADC $00                                 ;$058BF1 |
     TAY                                     ;$058BF3 |
     LDA [$0A],Y                             ;$058BF4 |
-    STA $6B                                 ;$058BF6 |
+    STA.b Map16LowPtr_6B                    ;$058BF6 |
     LDA [$0D],Y                             ;$058BF8 |
     STA $6E                                 ;$058BFA |
     SEP #$20                                ;$058BFC |
     INY                                     ;$058BFE |
     INY                                     ;$058BFF |
     LDA [$0A],Y                             ;$058C00 |
-    STA $6D                                 ;$058C02 |
+    STA.b Map16LowPtr_6B+2                  ;$058C02 |
     LDA [$0D],Y                             ;$058C04 |
     STA $70                                 ;$058C06 |
     SEP #$10                                ;$058C08 |
@@ -1448,7 +1448,7 @@ CODE_058C15:
     LDX.w #$0000                            ;$058C20 |
 CODE_058C23:
     LDY $08
-    LDA [$6B],Y                             ;$058C25 |
+    LDA.b [Map16LowPtr_6B],Y                ;$058C25 |
     AND.w #$00FF                            ;$058C27 |
     STA $00                                 ;$058C2A |
     LDA [$6E],Y                             ;$058C2C |
@@ -1555,14 +1555,14 @@ CODE_058CBA:
     ADC $00                                 ;$058CE4 |
     TAY                                     ;$058CE6 |
     LDA [$0A],Y                             ;$058CE7 |
-    STA $6B                                 ;$058CE9 |
+    STA.b Map16LowPtr_6B                    ;$058CE9 |
     LDA [$0D],Y                             ;$058CEB |
     STA $6E                                 ;$058CED |
     SEP #$20                                ;$058CEF |
     INY                                     ;$058CF1 |
     INY                                     ;$058CF2 |
     LDA [$0A],Y                             ;$058CF3 |
-    STA $6D                                 ;$058CF5 |
+    STA.b Map16LowPtr_6B+2                  ;$058CF5 |
     LDA [$0D],Y                             ;$058CF7 |
     STA $70                                 ;$058CF9 |
     SEP #$10                                ;$058CFB |
@@ -1584,7 +1584,7 @@ CODE_058D08:
     LDX.w #$0000                            ;$058D17 |
 CODE_058D1A:
     LDY $08
-    LDA [$6B],Y                             ;$058D1C |
+    LDA.b [Map16LowPtr_6B],Y                ;$058D1C |
     AND.w #$00FF                            ;$058D1E |
     STA $00                                 ;$058D21 |
     LDA [$6E],Y                             ;$058D23 |
@@ -1653,7 +1653,7 @@ CODE_058D91:
     STA.w $1CE6                             ;$058D92 |
     REP #$20                                ;$058D95 |
     LDA.w #$B900                            ;$058D97 |
-    STA $6B                                 ;$058D9A |
+    STA.b Map16LowPtr_6B                    ;$058D9A |
     LDA.w #$BD00                            ;$058D9C |
     STA $6E                                 ;$058D9F |
     LDA.w #$9100                            ;$058DA1 |
@@ -1661,10 +1661,10 @@ CODE_058D91:
     LDA.w $1928                             ;$058DA6 |
     AND.w #$00F0                            ;$058DA9 |
     BEQ CODE_058DBE                         ;$058DAC |
-    LDA $6B                                 ;$058DAE |
+    LDA.b Map16LowPtr_6B                    ;$058DAE |
     CLC                                     ;$058DB0 |
     ADC.w #$01B0                            ;$058DB1 |
-    STA $6B                                 ;$058DB4 |
+    STA.b Map16LowPtr_6B                    ;$058DB4 |
     LDA $6E                                 ;$058DB6 |
     CLC                                     ;$058DB8 |
     ADC.w #$01B0                            ;$058DB9 |
@@ -1672,7 +1672,7 @@ CODE_058D91:
 CODE_058DBE:
     SEP #$20
     LDA.b #$7E                              ;$058DC0 |
-    STA $6D                                 ;$058DC2 |
+    STA.b Map16LowPtr_6B+2                  ;$058DC2 |
     LDA.b #$7E                              ;$058DC4 |
     STA $70                                 ;$058DC6 |
     LDY.b #$0D                              ;$058DC8 |
@@ -1684,7 +1684,7 @@ CODE_058DBE:
     LDX.w #$0000                            ;$058DD6 |
 CODE_058DD9:
     LDY $08
-    LDA [$6B],Y                             ;$058DDB |
+    LDA.b [Map16LowPtr_6B],Y                ;$058DDB |
     AND.w #$00FF                            ;$058DDD |
     STA $00                                 ;$058DE0 |
     LDA [$6E],Y                             ;$058DE2 |
