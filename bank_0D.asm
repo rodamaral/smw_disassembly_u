@@ -1657,10 +1657,10 @@ CODE_0DA6B1:
 CODE_0DA6BA:
     LDA $04
     STA.b Map16LowPtr_6B                    ;$0DA6BC |
-    STA $6E                                 ;$0DA6BE |
+    STA.b Map16HighPtr_6E                   ;$0DA6BE |
     LDA $05                                 ;$0DA6C0 |
     STA.b Map16LowPtr_6B+1                  ;$0DA6C2 |
-    STA $6F                                 ;$0DA6C4 |
+    STA.b Map16HighPtr_6E+1                 ;$0DA6C4 |
     LDA.w $1928                             ;$0DA6C6 |
     STA.w $1BA1                             ;$0DA6C9 |
     RTS                                     ;$0DA6CC |
@@ -1846,7 +1846,7 @@ CODE_0DA82A:
     CLC                                     ;$0DA836 |
     ADC.b #$02                              ;$0DA837 |
     STA.b Map16LowPtr_6B+1                  ;$0DA839 |
-    STA $6F                                 ;$0DA83B |
+    STA.b Map16HighPtr_6E+1                 ;$0DA83B |
 Return0DA83D:
     RTS
 
@@ -2021,11 +2021,11 @@ CODE_0DA95D:
     CLC                                     ;$0DA965 |
     ADC.b #$B0                              ;$0DA966 |
     STA.b Map16LowPtr_6B                    ;$0DA968 |
-    STA $6E                                 ;$0DA96A |
+    STA.b Map16HighPtr_6E                   ;$0DA96A |
     LDA.b Map16LowPtr_6B+1                  ;$0DA96C |
     ADC.b #$01                              ;$0DA96E |
     STA.b Map16LowPtr_6B+1                  ;$0DA970 |
-    STA $6F                                 ;$0DA972 |
+    STA.b Map16HighPtr_6E+1                 ;$0DA972 |
     INC.w $1BA1                             ;$0DA974 |
     LDA.b LevelLoadPos_57                   ;$0DA977 |
     AND.b #$F0                              ;$0DA979 |
@@ -2044,7 +2044,7 @@ CODE_0DA987:
     LDA $6C
     ADC.b #$00                              ;$0DA989 |
     STA.b Map16LowPtr_6B+1                  ;$0DA98B |
-    STA $6F                                 ;$0DA98D |
+    STA.b Map16HighPtr_6E+1                 ;$0DA98D |
     STA $05                                 ;$0DA98F |
 Return0DA991:
     RTS
@@ -2102,12 +2102,12 @@ CODE_0DA9D6:
     SEC                                     ;$0DA9D8 |
     SBC.b #$B0                              ;$0DA9D9 |
     STA.b Map16LowPtr_6B                    ;$0DA9DB |
-    STA $6E                                 ;$0DA9DD |
+    STA.b Map16HighPtr_6E                   ;$0DA9DD |
     STA $04                                 ;$0DA9DF |
     LDA.b Map16LowPtr_6B+1                  ;$0DA9E1 |
     SBC.b #$01                              ;$0DA9E3 |
     STA.b Map16LowPtr_6B+1                  ;$0DA9E5 |
-    STA $6F                                 ;$0DA9E7 |
+    STA.b Map16HighPtr_6E+1                 ;$0DA9E7 |
     STA $05                                 ;$0DA9E9 |
     DEC.w $1BA1                             ;$0DA9EB |
     RTS                                     ;$0DA9EE |
@@ -2117,24 +2117,24 @@ CODE_0DA9EF:
     CLC                                     ;$0DA9F1 |
     ADC.b #$B0                              ;$0DA9F2 |
     STA.b Map16LowPtr_6B                    ;$0DA9F4 |
-    STA $6E                                 ;$0DA9F6 |
+    STA.b Map16HighPtr_6E                   ;$0DA9F6 |
     STA $04                                 ;$0DA9F8 |
     LDA.b Map16LowPtr_6B+1                  ;$0DA9FA |
     ADC.b #$01                              ;$0DA9FC |
     STA.b Map16LowPtr_6B+1                  ;$0DA9FE |
-    STA $6F                                 ;$0DAA00 |
+    STA.b Map16HighPtr_6E+1                 ;$0DAA00 |
     STA $05                                 ;$0DAA02 |
     INC.w $1BA1                             ;$0DAA04 |
     RTS                                     ;$0DAA07 |
 
 Sta1To6ePointer:
     LDA.b #$01
-    STA [$6E],Y                             ;$0DAA0A |
+    STA.b [Map16HighPtr_6E],Y               ;$0DAA0A |
     RTS                                     ;$0DAA0C |
 
 StzTo6ePointer0080E7:
     LDA.b #$00
-    STA [$6E],Y                             ;$0DAA0F |
+    STA.b [Map16HighPtr_6E],Y               ;$0DAA0F |
     RTS                                     ;$0DAA11 |
 
 DATA_0DAA12:
@@ -2996,7 +2996,7 @@ CODE_0DAFDF:
     LDA $6C
     SBC.b #$00                              ;$0DAFE1 |
     STA.b Map16LowPtr_6B+1                  ;$0DAFE3 |
-    STA $6F                                 ;$0DAFE5 |
+    STA.b Map16HighPtr_6E+1                 ;$0DAFE5 |
     STA $05                                 ;$0DAFE7 |
     RTS                                     ;$0DAFE9 |
 
@@ -3318,7 +3318,7 @@ CODE_0DB24B:
     LDA.b Map16LowPtr_6B+1                  ;$0DB259 |
     ADC.b #$00                              ;$0DB25B |
     STA.b Map16LowPtr_6B+1                  ;$0DB25D |
-    STA $6F                                 ;$0DB25F |
+    STA.b Map16HighPtr_6E+1                 ;$0DB25F |
 CODE_0DB261:
     DEC $01
     BEQ CODE_0DB28F                         ;$0DB263 |
@@ -3341,7 +3341,7 @@ CODE_0DB275:
     LDA.b Map16LowPtr_6B+1                  ;$0DB283 |
     ADC.b #$00                              ;$0DB285 |
     STA.b Map16LowPtr_6B+1                  ;$0DB287 |
-    STA $6F                                 ;$0DB289 |
+    STA.b Map16HighPtr_6E+1                 ;$0DB289 |
 CODE_0DB28B:
     DEC $01
     BNE CODE_0DB265                         ;$0DB28D |
@@ -4551,11 +4551,11 @@ CODE_0DBB12:
     CLC                                     ;$0DBB18 |
     ADC.b #$B0                              ;$0DBB19 |
     STA.b Map16LowPtr_6B                    ;$0DBB1B |
-    STA $6E                                 ;$0DBB1D |
+    STA.b Map16HighPtr_6E                   ;$0DBB1D |
     LDA.b Map16LowPtr_6B+1                  ;$0DBB1F |
     ADC.b #$00                              ;$0DBB21 |
     STA.b Map16LowPtr_6B+1                  ;$0DBB23 |
-    STA $6F                                 ;$0DBB25 |
+    STA.b Map16HighPtr_6E+1                 ;$0DBB25 |
     DEC $0F                                 ;$0DBB27 |
     BPL CODE_0DBAE0                         ;$0DBB29 |
     RTS                                     ;$0DBB2B |
@@ -7142,7 +7142,7 @@ CODE_0DDDA7:
     LDA.b Map16LowPtr_6B+1                  ;$0DDDBA |
     ADC.b #$00                              ;$0DDDBC |
     STA.b Map16LowPtr_6B+1                  ;$0DDDBE |
-    STA $6F                                 ;$0DDDC0 |
+    STA.b Map16HighPtr_6E+1                 ;$0DDDC0 |
 CODE_0DDDC2:
     JSR Sta1To6ePointer
     LDA.b #$CB                              ;$0DDDC5 |
@@ -7155,7 +7155,7 @@ CODE_0DDDC2:
     LDA.b Map16LowPtr_6B+1                  ;$0DDDD0 |
     ADC.b #$00                              ;$0DDDD2 |
     STA.b Map16LowPtr_6B+1                  ;$0DDDD4 |
-    STA $6F                                 ;$0DDDD6 |
+    STA.b Map16HighPtr_6E+1                 ;$0DDDD6 |
 CODE_0DDDD8:
     JSR Sta1To6ePointer
     LDA.b #$F1                              ;$0DDDDB |
@@ -7168,7 +7168,7 @@ CODE_0DDDD8:
     LDA.b Map16LowPtr_6B+1                  ;$0DDDE6 |
     ADC.b #$00                              ;$0DDDE8 |
     STA.b Map16LowPtr_6B+1                  ;$0DDDEA |
-    STA $6F                                 ;$0DDDEC |
+    STA.b Map16HighPtr_6E+1                 ;$0DDDEC |
 CODE_0DDDEE:
     DEX
     DEX                                     ;$0DDDEF |
@@ -7186,7 +7186,7 @@ CODE_0DDDF3:
     LDA.b Map16LowPtr_6B+1                  ;$0DDE01 |
     ADC.b #$00                              ;$0DDE03 |
     STA.b Map16LowPtr_6B+1                  ;$0DDE05 |
-    STA $6F                                 ;$0DDE07 |
+    STA.b Map16HighPtr_6E+1                 ;$0DDE07 |
 CODE_0DDE09:
     DEX
     BPL CODE_0DDDF3                         ;$0DDE0A |
@@ -7244,7 +7244,7 @@ CODE_0DDE4A:
     LDA.b Map16LowPtr_6B+1                  ;$0DDE5D |
     ADC.b #$00                              ;$0DDE5F |
     STA.b Map16LowPtr_6B+1                  ;$0DDE61 |
-    STA $6F                                 ;$0DDE63 |
+    STA.b Map16HighPtr_6E+1                 ;$0DDE63 |
 CODE_0DDE65:
     JSR Sta1To6ePointer
     LDA.b #$CD                              ;$0DDE68 |
@@ -7257,7 +7257,7 @@ CODE_0DDE65:
     LDA.b Map16LowPtr_6B+1                  ;$0DDE73 |
     ADC.b #$00                              ;$0DDE75 |
     STA.b Map16LowPtr_6B+1                  ;$0DDE77 |
-    STA $6F                                 ;$0DDE79 |
+    STA.b Map16HighPtr_6E+1                 ;$0DDE79 |
 CODE_0DDE7B:
     JSR Sta1To6ePointer
     LDA.b #$F2                              ;$0DDE7E |
@@ -7270,7 +7270,7 @@ CODE_0DDE7B:
     LDA.b Map16LowPtr_6B+1                  ;$0DDE89 |
     ADC.b #$00                              ;$0DDE8B |
     STA.b Map16LowPtr_6B+1                  ;$0DDE8D |
-    STA $6F                                 ;$0DDE8F |
+    STA.b Map16HighPtr_6E+1                 ;$0DDE8F |
 CODE_0DDE91:
     DEX
     DEX                                     ;$0DDE92 |
@@ -7288,7 +7288,7 @@ CODE_0DDE96:
     LDA.b Map16LowPtr_6B+1                  ;$0DDEA4 |
     ADC.b #$00                              ;$0DDEA6 |
     STA.b Map16LowPtr_6B+1                  ;$0DDEA8 |
-    STA $6F                                 ;$0DDEAA |
+    STA.b Map16HighPtr_6E+1                 ;$0DDEAA |
 CODE_0DDEAC:
     DEX
     BPL CODE_0DDE96                         ;$0DDEAD |
@@ -7380,7 +7380,7 @@ CODE_0DDF6C:
     LDA.b #$00                              ;$0DDF70 |
     STA.b Map16LowPtr_6B                    ;$0DDF72 |
     STA $04                                 ;$0DDF74 |
-    STA $6E                                 ;$0DDF76 |
+    STA.b Map16HighPtr_6E                   ;$0DDF76 |
     LDA.b #$00                              ;$0DDF78 |
     STA $00                                 ;$0DDF7A |
     LDA.b #$07                              ;$0DDF7C |
@@ -7395,7 +7395,7 @@ CODE_0DDF80:
     LDA.l DATA_0DDEF2,X                     ;$0DDF8D |
     STA.b Map16LowPtr_6B+1                  ;$0DDF91 |
     STA $05                                 ;$0DDF93 |
-    STA $6F                                 ;$0DDF95 |
+    STA.b Map16HighPtr_6E+1                 ;$0DDF95 |
     LDA.b #$03                              ;$0DDF97 |
     STA $02                                 ;$0DDF99 |
     LDX.b #$00                              ;$0DDF9B |
@@ -7949,7 +7949,7 @@ ADDR_0DE977:
     CLC                                     ;$0DE983 |
     ADC.b #$01                              ;$0DE984 |
     STA.b Map16LowPtr_6B+1                  ;$0DE986 |
-    STA $6F                                 ;$0DE988 |
+    STA.b Map16HighPtr_6E+1                 ;$0DE988 |
     DEC $00                                 ;$0DE98A |
     BPL ADDR_0DE977                         ;$0DE98C |
     RTS                                     ;$0DE98E |
@@ -8599,7 +8599,7 @@ CODE_0DEF0F:
     CLC                                     ;$0DEF1A |
     ADC.b #$01                              ;$0DEF1B |
     STA.b Map16LowPtr_6B+1                  ;$0DEF1D |
-    STA $6F                                 ;$0DEF1F |
+    STA.b Map16HighPtr_6E+1                 ;$0DEF1F |
 CODE_0DEF21:
     DEX
     BNE CODE_0DEF0A                         ;$0DEF22 |

@@ -801,9 +801,9 @@ CODE_0C94C0:
     STX.b Map16LowPtr_6B                    ;$0C94C7 |
     LDA.b #$7E                              ;$0C94C9 |
     STA.b Map16LowPtr_6B+2                  ;$0C94CB |
-    STA $70                                 ;$0C94CD |
+    STA.b Map16HighPtr_6E+2                 ;$0C94CD |
     LDX.w #$BD00                            ;$0C94CF |
-    STX $6E                                 ;$0C94D2 |
+    STX.b Map16HighPtr_6E                   ;$0C94D2 |
     LDA.b #$0D                              ;$0C94D4 |
     STA.b Layer2DataPtr_68+2                ;$0C94D6 |
     LDY.w #$00F0                            ;$0C94D8 |
@@ -820,7 +820,7 @@ CODE_0C94EB:
     LDY $04                                 ;$0C94ED |
     LDA.b [Map16LowPtr_6B],Y                ;$0C94EF |
     STA $02                                 ;$0C94F1 |
-    LDA [$6E],Y                             ;$0C94F3 |
+    LDA.b [Map16HighPtr_6E],Y               ;$0C94F3 |
     STA $03                                 ;$0C94F5 |
     REP #$20                                ;$0C94F7 |
     LDA $02                                 ;$0C94F9 |

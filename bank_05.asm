@@ -745,22 +745,22 @@ CODE_05863E:
     LDA [$00],Y                             ;$0586A1 |
     STA.b Map16LowPtr_6B                    ;$0586A3 |
     LDA [$0D],Y                             ;$0586A5 |
-    STA $6E                                 ;$0586A7 |
+    STA.b Map16HighPtr_6E                   ;$0586A7 |
     INY                                     ;$0586A9 |
     LDA [$00],Y                             ;$0586AA |
     STA.b Map16LowPtr_6B+1                  ;$0586AC |
     LDA [$0D],Y                             ;$0586AE |
-    STA $6F                                 ;$0586B0 |
+    STA.b Map16HighPtr_6E+1                 ;$0586B0 |
     INY                                     ;$0586B2 |
     LDA [$00],Y                             ;$0586B3 |
     STA.b Map16LowPtr_6B+2                  ;$0586B5 |
     LDA [$0D],Y                             ;$0586B7 |
-    STA $70                                 ;$0586B9 |
+    STA.b Map16HighPtr_6E+2                 ;$0586B9 |
     LDA $0A                                 ;$0586BB |
     AND.b #$10                              ;$0586BD |
     BEQ LoadNoHiCoord                       ;$0586BF |
     INC.b Map16LowPtr_6B+1                  ;$0586C1 |
-    INC $6F                                 ;$0586C3 |
+    INC.b Map16HighPtr_6E+1                 ;$0586C3 |
 LoadNoHiCoord:
     LDA.b LvlLoadObjNo_5A
     BNE LevLoadJsrNrm                       ;$0586C7 |
@@ -1174,14 +1174,14 @@ CODE_058A10:
     LDA [$0A],Y                             ;$058A26 |
     STA.b Map16LowPtr_6B                    ;$058A28 |
     LDA [$0D],Y                             ;$058A2A |
-    STA $6E                                 ;$058A2C |
+    STA.b Map16HighPtr_6E                   ;$058A2C |
     SEP #$20                                ;$058A2E |
     INY                                     ;$058A30 |
     INY                                     ;$058A31 |
     LDA [$0A],Y                             ;$058A32 |
     STA.b Map16LowPtr_6B+2                  ;$058A34 |
     LDA [$0D],Y                             ;$058A36 |
-    STA $70                                 ;$058A38 |
+    STA.b Map16HighPtr_6E+2                 ;$058A38 |
     SEP #$10                                ;$058A3A |
     LDY.b #$0D                              ;$058A3C |
     LDA.w $1931                             ;$058A3E |
@@ -1200,7 +1200,7 @@ CODE_058A55:
     LDA.b [Map16LowPtr_6B],Y                ;$058A57 |
     AND.w #$00FF                            ;$058A59 |
     STA $00                                 ;$058A5C |
-    LDA [$6E],Y                             ;$058A5E |
+    LDA.b [Map16HighPtr_6E],Y               ;$058A5E |
     STA $01                                 ;$058A60 |
     LDA $00                                 ;$058A62 |
     ASL                                     ;$058A64 |
@@ -1295,14 +1295,14 @@ CODE_058AD5:
     LDA [$0A],Y                             ;$058B02 |
     STA.b Map16LowPtr_6B                    ;$058B04 |
     LDA [$0D],Y                             ;$058B06 |
-    STA $6E                                 ;$058B08 |
+    STA.b Map16HighPtr_6E                   ;$058B08 |
     SEP #$20                                ;$058B0A |
     INY                                     ;$058B0C |
     INY                                     ;$058B0D |
     LDA [$0A],Y                             ;$058B0E |
     STA.b Map16LowPtr_6B+2                  ;$058B10 |
     LDA [$0D],Y                             ;$058B12 |
-    STA $70                                 ;$058B14 |
+    STA.b Map16HighPtr_6E+2                 ;$058B14 |
     SEP #$10                                ;$058B16 |
     LDY.b #$0D                              ;$058B18 |
     LDA.w $1931                             ;$058B1A |
@@ -1325,7 +1325,7 @@ CODE_058B35:
     LDA.b [Map16LowPtr_6B],Y                ;$058B37 |
     AND.w #$00FF                            ;$058B39 |
     STA $00                                 ;$058B3C |
-    LDA [$6E],Y                             ;$058B3E |
+    LDA.b [Map16HighPtr_6E],Y               ;$058B3E |
     STA $01                                 ;$058B40 |
     LDA $00                                 ;$058B42 |
     ASL                                     ;$058B44 |
@@ -1425,14 +1425,14 @@ CODE_058BDE:
     LDA [$0A],Y                             ;$058BF4 |
     STA.b Map16LowPtr_6B                    ;$058BF6 |
     LDA [$0D],Y                             ;$058BF8 |
-    STA $6E                                 ;$058BFA |
+    STA.b Map16HighPtr_6E                   ;$058BFA |
     SEP #$20                                ;$058BFC |
     INY                                     ;$058BFE |
     INY                                     ;$058BFF |
     LDA [$0A],Y                             ;$058C00 |
     STA.b Map16LowPtr_6B+2                  ;$058C02 |
     LDA [$0D],Y                             ;$058C04 |
-    STA $70                                 ;$058C06 |
+    STA.b Map16HighPtr_6E+2                 ;$058C06 |
     SEP #$10                                ;$058C08 |
     LDY.b #$0D                              ;$058C0A |
     LDA.w $1931                             ;$058C0C |
@@ -1451,7 +1451,7 @@ CODE_058C23:
     LDA.b [Map16LowPtr_6B],Y                ;$058C25 |
     AND.w #$00FF                            ;$058C27 |
     STA $00                                 ;$058C2A |
-    LDA [$6E],Y                             ;$058C2C |
+    LDA.b [Map16HighPtr_6E],Y               ;$058C2C |
     STA $01                                 ;$058C2E |
     LDA $00                                 ;$058C30 |
     ASL                                     ;$058C32 |
@@ -1557,14 +1557,14 @@ CODE_058CBA:
     LDA [$0A],Y                             ;$058CE7 |
     STA.b Map16LowPtr_6B                    ;$058CE9 |
     LDA [$0D],Y                             ;$058CEB |
-    STA $6E                                 ;$058CED |
+    STA.b Map16HighPtr_6E                   ;$058CED |
     SEP #$20                                ;$058CEF |
     INY                                     ;$058CF1 |
     INY                                     ;$058CF2 |
     LDA [$0A],Y                             ;$058CF3 |
     STA.b Map16LowPtr_6B+2                  ;$058CF5 |
     LDA [$0D],Y                             ;$058CF7 |
-    STA $70                                 ;$058CF9 |
+    STA.b Map16HighPtr_6E+2                 ;$058CF9 |
     SEP #$10                                ;$058CFB |
     LDY.b #$0D                              ;$058CFD |
     LDA.w $1931                             ;$058CFF |
@@ -1587,7 +1587,7 @@ CODE_058D1A:
     LDA.b [Map16LowPtr_6B],Y                ;$058D1C |
     AND.w #$00FF                            ;$058D1E |
     STA $00                                 ;$058D21 |
-    LDA [$6E],Y                             ;$058D23 |
+    LDA.b [Map16HighPtr_6E],Y               ;$058D23 |
     STA $01                                 ;$058D25 |
     LDA $00                                 ;$058D27 |
     ASL                                     ;$058D29 |
@@ -1655,7 +1655,7 @@ CODE_058D91:
     LDA.w #$B900                            ;$058D97 |
     STA.b Map16LowPtr_6B                    ;$058D9A |
     LDA.w #$BD00                            ;$058D9C |
-    STA $6E                                 ;$058D9F |
+    STA.b Map16HighPtr_6E                   ;$058D9F |
     LDA.w #$9100                            ;$058DA1 |
     STA $0A                                 ;$058DA4 |
     LDA.w $1928                             ;$058DA6 |
@@ -1665,16 +1665,16 @@ CODE_058D91:
     CLC                                     ;$058DB0 |
     ADC.w #$01B0                            ;$058DB1 |
     STA.b Map16LowPtr_6B                    ;$058DB4 |
-    LDA $6E                                 ;$058DB6 |
+    LDA.b Map16HighPtr_6E                   ;$058DB6 |
     CLC                                     ;$058DB8 |
     ADC.w #$01B0                            ;$058DB9 |
-    STA $6E                                 ;$058DBC |
+    STA.b Map16HighPtr_6E                   ;$058DBC |
 CODE_058DBE:
     SEP #$20
     LDA.b #$7E                              ;$058DC0 |
     STA.b Map16LowPtr_6B+2                  ;$058DC2 |
     LDA.b #$7E                              ;$058DC4 |
-    STA $70                                 ;$058DC6 |
+    STA.b Map16HighPtr_6E+2                 ;$058DC6 |
     LDY.b #$0D                              ;$058DC8 |
     STY $0C                                 ;$058DCA |
     REP #$30                                ;$058DCC |
@@ -1687,7 +1687,7 @@ CODE_058DD9:
     LDA.b [Map16LowPtr_6B],Y                ;$058DDB |
     AND.w #$00FF                            ;$058DDD |
     STA $00                                 ;$058DE0 |
-    LDA [$6E],Y                             ;$058DE2 |
+    LDA.b [Map16HighPtr_6E],Y               ;$058DE2 |
     STA $01                                 ;$058DE4 |
     LDA $00                                 ;$058DE6 |
     ASL                                     ;$058DE8 |

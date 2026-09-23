@@ -4609,7 +4609,7 @@ CODE_00A660:
 CODE_00A674:
     LDX.b #$23
 CODE_00A676:
-    STZ $70,X
+    STZ.b Map16HighPtr_6E+2,X
     DEX                                     ;$00A678 |
     BNE CODE_00A676                         ;$00A679 |
     LDX.b #$37                              ;$00A67B |
@@ -6657,15 +6657,15 @@ CODE_00BEEC:
     TAY                                     ;$00BF1C |
     LDA [$04],Y                             ;$00BF1D |
     STA.b Map16LowPtr_6B                    ;$00BF1F |
-    STA $6E                                 ;$00BF21 |
+    STA.b Map16HighPtr_6E                   ;$00BF21 |
     INY                                     ;$00BF23 |
     LDA [$04],Y                             ;$00BF24 |
     STA.b Map16LowPtr_6B+1                  ;$00BF26 |
-    STA $6F                                 ;$00BF28 |
+    STA.b Map16HighPtr_6E+1                 ;$00BF28 |
     LDA.b #$7E                              ;$00BF2A |
     STA.b Map16LowPtr_6B+2                  ;$00BF2C |
     INC A                                   ;$00BF2E |
-    STA $70                                 ;$00BF2F |
+    STA.b Map16HighPtr_6E+2                 ;$00BF2F |
     LDA $09                                 ;$00BF31 |
     AND.b #$01                              ;$00BF33 |
     BEQ CODE_00BF41                         ;$00BF35 |
@@ -6870,9 +6870,9 @@ CODE_00C077:
     AND.w #$00FF                            ;$00C08E |
     TAX                                     ;$00C091 |
     SEP #$20                                ;$00C092 |
-    LDA [$6E],Y                             ;$00C094 |
+    LDA.b [Map16HighPtr_6E],Y               ;$00C094 |
     AND.b #$FE                              ;$00C096 |
-    STA [$6E],Y                             ;$00C098 |
+    STA.b [Map16HighPtr_6E],Y               ;$00C098 |
     LDA.l TileToGeneratePg0,X               ;$00C09A |
     STA.b [Map16LowPtr_6B],Y                ;$00C09E |
     REP #$20                                ;$00C0A0 |
@@ -6908,9 +6908,9 @@ CODE_00C0C4:
     AND.w #$00FF                            ;$00C0DF |
     TAX                                     ;$00C0E2 |
     SEP #$20                                ;$00C0E3 |
-    LDA [$6E],Y                             ;$00C0E5 |
+    LDA.b [Map16HighPtr_6E],Y               ;$00C0E5 |
     ORA.b #$01                              ;$00C0E7 |
-    STA [$6E],Y                             ;$00C0E9 |
+    STA.b [Map16HighPtr_6E],Y               ;$00C0E9 |
     LDA.l TileToGeneratePg1,X               ;$00C0EB |
     STA.b [Map16LowPtr_6B],Y                ;$00C0EF |
     REP #$20                                ;$00C0F1 |
