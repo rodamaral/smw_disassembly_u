@@ -639,7 +639,7 @@ CODE_0485A7:
     STA.b PlayerYPos_96                     ;$0485B7 |
     SEP #$20                                ;$0485B9 |
     LDA.b #$08                              ;$0485BB |
-    STA.w $7B                               ;$0485BD |
+    STA.w PlayerXSpeed_7B                   ;$0485BD |
     PHB                                     ;$0485C0 |
     LDA.b #$00                              ;$0485C1 |
     PHA                                     ;$0485C3 |

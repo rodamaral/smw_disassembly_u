@@ -1389,7 +1389,7 @@ CODE_0C9FEA:
     LDA.b #$01                              ;$0C9FF8 |
     STA.b Powerup_19                        ;$0C9FFA |
     LDA.b #$08                              ;$0C9FFC |
-    STA.w $7B                               ;$0C9FFE |
+    STA.w PlayerXSpeed_7B                   ;$0C9FFE |
     JSR CODE_0CA75A                         ;$0CA001 |
     LDA.b #$52                              ;$0CA004 |
     STA.b SpriteXPosLow_E4                  ;$0CA006 | WARN: unindexed table
@@ -1683,7 +1683,7 @@ CODE_0CA24F:
     LDA.b #$01                              ;$0CA261 |
     STA.b Powerup_19                        ;$0CA263 |
     LDA.b #$08                              ;$0CA265 |
-    STA.w $7B                               ;$0CA267 |
+    STA.w PlayerXSpeed_7B                   ;$0CA267 |
     JSR CODE_0CA75A                         ;$0CA26A |
     LDA.w $0B50                             ;$0CA26D |
     CLC                                     ;$0CA270 |
@@ -6213,7 +6213,7 @@ CODE_0CD818:
     LDY.b PlayerXPos_94                     ;$0CD82B |
     CPY.b #$40                              ;$0CD82D |
     BCS CODE_0CD858                         ;$0CD82F |
-    LDY $7B                                 ;$0CD831 |
+    LDY.b PlayerXSpeed_7B                   ;$0CD831 |
     BNE CODE_0CD858                         ;$0CD833 |
     LDA.b #$10                              ;$0CD835 |
     STA.w PickUpItemTimer_1498              ;$0CD837 |
@@ -6223,7 +6223,7 @@ CODE_0CD83D:
     CMP.b PlayerXPos_94                     ;$0CD83F |
     BCC CODE_0CD84C                         ;$0CD841 |
     STA.b PlayerXPos_94                     ;$0CD843 |
-    LDA $7B                                 ;$0CD845 |
+    LDA.b PlayerXSpeed_7B                   ;$0CD845 |
     BMI CODE_0CD84C                         ;$0CD847 |
 CODE_0CD849:
     INC.w $144A

@@ -995,13 +995,13 @@ CODE_0387D7:
     LDA $0E                                 ;$0387E0 |
     CMP.b #$D8                              ;$0387E2 |
     BPL MegaMoleContact                     ;$0387E4 |
-    LDA $7D                                 ;$0387E6 |
+    LDA.b PlayerYSpeed_7D                   ;$0387E6 |
     BMI Return03882A                        ;$0387E8 |
     LDA.b #$01                              ;$0387EA |
     STA.w OnSolidSprite_1471                ;$0387EC |
     LDA.b #$06                              ;$0387EF |
     STA.w SpritePlayerContact_154C,X        ;$0387F1 |
-    STZ $7D                                 ;$0387F4 |
+    STZ.b PlayerYSpeed_7D                   ;$0387F4 |
     LDA.b #$D6                              ;$0387F6 |
     LDY.w RidingYoshi_187A                  ;$0387F8 |
     BEQ MegaMoleNoYoshi                     ;$0387FB |
@@ -1603,7 +1603,7 @@ CODE_038C5A:
     JSL GetSpriteClippingA                  ;$038C6C |
     JSL CheckForContact                     ;$038C70 |
     BCC Return038CE3                        ;$038C74 |
-    LDA $7D                                 ;$038C76 |
+    LDA.b PlayerYSpeed_7D                   ;$038C76 |
     BMI Return038CE3                        ;$038C78 |
     LDA.b PlayerXPos_94                     ;$038C7A |
     SEC                                     ;$038C7C |
@@ -1650,7 +1650,7 @@ CODE_038CB2:
     PLP                                     ;$038CC5 |
     ADC.b #$00                              ;$038CC6 |
     STA.b PlayerYPos_96+1                   ;$038CC8 |
-    STZ $7D                                 ;$038CCA |
+    STZ.b PlayerYSpeed_7D                   ;$038CCA |
     LDA.b #$01                              ;$038CCC |
     STA.w OnSolidSprite_1471                ;$038CCE |
     LDY.b #$00                              ;$038CD1 |
@@ -2718,7 +2718,7 @@ CODE_03949F:
     LDA.b PlayerXPos_94+1                   ;$0394A7 |
     ADC.w DATA_039486,Y                     ;$0394A9 |
     STA.b PlayerXPos_94+1                   ;$0394AC |
-    STZ $7B                                 ;$0394AE |
+    STZ.b PlayerXSpeed_7B                   ;$0394AE |
 Return0394B0:
     RTS
 
@@ -2845,7 +2845,7 @@ CODE_039581:
     BNE NoRexContact                        ;$039593 |
     LDA.b #$08                              ;$039595 |
     STA.w SpritePlayerContact_154C,X        ;$039597 |
-    LDA $7D                                 ;$03959A |
+    LDA.b PlayerYSpeed_7D                   ;$03959A |
     CMP.b #$10                              ;$03959C |
     BMI RexWins                             ;$03959E |
 MarioBeatsRex:
@@ -3518,7 +3518,7 @@ NoSetRenrTurnTime:
     BMI HitReznor                           ;$039A4E |
     CMP.b #$F2                              ;$039A50 |
     BMI HitPlatSide                         ;$039A52 |
-    LDA $7D                                 ;$039A54 |
+    LDA.b PlayerYSpeed_7D                   ;$039A54 |
     BPL HitPlatSide                         ;$039A56 |
 HitPlatBottom:
     LDA.b #$29
@@ -3526,7 +3526,7 @@ HitPlatBottom:
     LDA.b #$0F                              ;$039A5D |
     STA.w $1564,X                           ;$039A5F |
     LDA.b #$10                              ;$039A62 |
-    STA $7D                                 ;$039A64 |
+    STA.b PlayerYSpeed_7D                   ;$039A64 |
     LDA.b #$01                              ;$039A66 |
     STA.w SPCIO0_1DF9                       ;$039A68 |
     BRA DrawReznor                          ;$039A6B |
@@ -3534,7 +3534,7 @@ HitPlatBottom:
 HitPlatSide:
     JSR SubHorzPosBnk3
     LDA.w ReboundSpeedX,Y                   ;$039A70 |
-    STA $7B                                 ;$039A73 |
+    STA.b PlayerXSpeed_7B                   ;$039A73 |
     BRA DrawReznor                          ;$039A75 |
 
 HitReznor:
@@ -5981,7 +5981,7 @@ CODE_03AD0C:
     STA.w $0460,Y                           ;$03AD15 |
 CODE_03AD18:
     STZ $B6,X
-    STZ $7B                                 ;$03AD1A |
+    STZ.b PlayerXSpeed_7B                   ;$03AD1A |
     LDA.b #$04                              ;$03AD1C |
     STA.w $1602,X                           ;$03AD1E |
     LDA $C2,X                               ;$03AD21 |
@@ -6111,7 +6111,7 @@ CODE_03ADFF:
     STA $B6,X                               ;$03AE02 |
     EOR.b #$FF                              ;$03AE04 |
     INC A                                   ;$03AE06 |
-    STA $7B                                 ;$03AE07 |
+    STA.b PlayerXSpeed_7B                   ;$03AE07 |
     TYA                                     ;$03AE09 |
     STA.w SpriteDir_157C,X                  ;$03AE0A |
     STA $76                                 ;$03AE0D |
@@ -6442,7 +6442,7 @@ CODE_03B078:
     JSL MarioSprInteract                    ;$03B098 |
     BCC CODE_03B0BD                         ;$03B09C |
     JSR CODE_03B0D6                         ;$03B09E |
-    STZ $7D                                 ;$03B0A1 |
+    STZ.b PlayerYSpeed_7D                   ;$03B0A1 |
     JSR SubHorzPosBnk3                      ;$03B0A3 |
     LDA.w $14B1                             ;$03B0A6 |
     ORA.w $14B6                             ;$03B0A9 |
@@ -6453,7 +6453,7 @@ CODE_03B078:
 CODE_03B0B3:
     LDA.w DATA_03B074,Y
 CODE_03B0B6:
-    STA $7B
+    STA.b PlayerXSpeed_7B
     LDA.b #$01                              ;$03B0B8 |
     STA.w SPCIO0_1DF9                       ;$03B0BA |
 CODE_03B0BD:
@@ -8160,7 +8160,7 @@ InvisMushroom:
     STA.w SpriteYPosHigh_14D4,X             ;$03C331 |
 PopupMushroom:
     LDA.b #$00
-    LDY $7B                                 ;$03C336 |
+    LDY.b PlayerXSpeed_7B                   ;$03C336 |
     BPL CODE_03C33B                         ;$03C338 |
     INC A                                   ;$03C33A |
 CODE_03C33B:
@@ -9537,7 +9537,7 @@ CODE_03CE9E:
 CODE_03CEA7:
     JSL MarioSprInteract
     BCC Return03CEF1                        ;$03CEAB |
-    LDA $7D                                 ;$03CEAD |
+    LDA.b PlayerYSpeed_7D                   ;$03CEAD |
     CMP.b #$10                              ;$03CEAF |
     BMI CODE_03CEED                         ;$03CEB1 |
     JSL DisplayContactGfx                   ;$03CEB3 |

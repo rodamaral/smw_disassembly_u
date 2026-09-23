@@ -659,14 +659,17 @@ WRAM_00_79: skip 1
 ; 4.12 fixed point player horizontal speed (pixels per frame)
 ; while all 16 bits are used for acceleration, only the
 ; upper 8 bits are used for position calculation
-PlayerXSpeed_7A: skip 2
+PlayerXSubpeed_7A:
+PlayerXSpeed_7A: skip 1
+PlayerXSpeed_7B: skip 1
 
 ; === $7E007C ===
 ; 2 bytes
 ; 4.12 fixed point player vertical speed (pixels per frame)
 ; while all 16 bits are used for acceleration, only the
 ; upper 8 bits are used for position calculation
-PlayerYSpeed_7C: skip 2
+Unused_7C: skip 1
+PlayerYSpeed_7D: skip 1
 
 ; === $7E007E ===
 ; 2 bytes
@@ -1880,7 +1883,7 @@ skip 1
 NoYoshiIntroTimer_18D9: skip 1
 YoshiEggSprite_18DA: skip 1
 Empty_18DB: skip 1
-PlayerDuckingOnYoshi_18DC: skip 1
+DuckingYoshi_18DC: skip 1
 SilverCoinsCollected_18DD: skip 1
 EggLaidTimer_18DE: skip 1
 YoshiSlot_18DF: skip 1

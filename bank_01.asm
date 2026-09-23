@@ -4447,7 +4447,7 @@ CODE_01A047:
     JSR SubHorizPos                         ;$01A059 |
     LDA.w DATA_019F99,Y                     ;$01A05C |
     CLC                                     ;$01A05F |
-    ADC $7B                                 ;$01A060 |
+    ADC.b PlayerXSpeed_7B                   ;$01A060 |
     STA $B6,X                               ;$01A062 |
     STZ $AA,X                               ;$01A064 |
     BRA CODE_01A0A6                         ;$01A066 |
@@ -4456,7 +4456,7 @@ CODE_01A068:
     JSL CODE_01AB6F
     LDA.b #$90                              ;$01A06C |
     STA $AA,X                               ;$01A06E |
-    LDA $7B                                 ;$01A070 |
+    LDA.b PlayerXSpeed_7B                   ;$01A070 |
     STA $B6,X                               ;$01A072 |
     ASL                                     ;$01A074 |
     ROR $B6,X                               ;$01A075 |
@@ -4476,9 +4476,9 @@ CODE_01A079:
 CODE_01A090:
     LDA.w ShellSpeedX,Y
     STA $B6,X                               ;$01A093 |
-    EOR $7B                                 ;$01A095 |
+    EOR.b PlayerXSpeed_7B                   ;$01A095 |
     BMI CODE_01A0A6                         ;$01A097 |
-    LDA $7B                                 ;$01A099 |
+    LDA.b PlayerXSpeed_7B                   ;$01A099 |
     STA $00                                 ;$01A09B |
     ASL $00                                 ;$01A09D |
     ROR                                     ;$01A09F |
@@ -5633,7 +5633,7 @@ CODE_01A897:
     PLP                                     ;$01A8AB |
     SBC $D4                                 ;$01A8AC |
     BMI CODE_01A8E6                         ;$01A8AE |
-    LDA $7D                                 ;$01A8B0 |
+    LDA.b PlayerYSpeed_7D                   ;$01A8B0 |
     BPL CODE_01A8C0                         ;$01A8B2 |
     LDA.w $190F,X                           ;$01A8B4 |
     AND.b #$10                              ;$01A8B7 |
@@ -5695,7 +5695,7 @@ CODE_01A91C:
 CODE_01A924:
     JSL DisplayContactGfx
     LDA.b #$F8                              ;$01A928 | Hurt sprite with spinjump or Yoshi stomp
-    STA $7D                                 ;$01A92A |
+    STA.b PlayerYSpeed_7D                   ;$01A92A |
     LDA.w RidingYoshi_187A                  ;$01A92C |
     BEQ CODE_01A935                         ;$01A92F |
     JSL BoostMarioSpeed                     ;$01A931 |
@@ -5717,7 +5717,7 @@ CODE_01A947:
     BEQ CODE_01A95A                         ;$01A956 |
     LDA.b #$E8                              ;$01A958 |
 CODE_01A95A:
-    STA $7B
+    STA.b PlayerXSpeed_7B
     RTS                                     ;$01A95C |
 
 CODE_01A95D:
@@ -5852,7 +5852,7 @@ BoostMarioSpeed:
     BPL CODE_01AA3F                         ;$01AA3B |
     LDA.b #$A8                              ;$01AA3D |
 CODE_01AA3F:
-    STA $7D
+    STA.b PlayerYSpeed_7D
 Return01AA41:
     RTL
 
@@ -5860,7 +5860,7 @@ CODE_01AA42:
     LDA.w $140D
     ORA.w RidingYoshi_187A                  ;$01AA45 |
     BEQ CODE_01AA58                         ;$01AA48 |
-    LDA $7D                                 ;$01AA4A |
+    LDA.b PlayerYSpeed_7D                   ;$01AA4A |
     BMI CODE_01AA58                         ;$01AA4C |
     LDA.w $1656,X                           ;$01AA4E |
     AND.b #$10                              ;$01AA51 |
@@ -5928,13 +5928,13 @@ CODE_01AAB7:
     BCC CODE_01AB31                         ;$01AAC4 |
     BPL CODE_01AACD                         ;$01AAC6 |
     LDA.b #$10                              ;$01AAC8 |
-    STA $7D                                 ;$01AACA |
+    STA.b PlayerYSpeed_7D                   ;$01AACA |
     RTS                                     ;$01AACC |
 
 CODE_01AACD:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BMI Return01AB2C                        ;$01AACF |
-    STZ $7D                                 ;$01AAD1 |
+    STZ.b PlayerYSpeed_7D                   ;$01AAD1 |
     STZ.b PlayerInAir_72                    ;$01AAD3 |
     INC.w OnSolidSprite_1471                ;$01AAD5 |
     LDA.b #$1F                              ;$01AAD8 |
@@ -5981,7 +5981,7 @@ DATA_01AB2D:
     db $01,$00,$FF,$FF
 
 CODE_01AB31:
-    STZ $7B
+    STZ.b PlayerXSpeed_7B
     JSR SubHorizPos                         ;$01AB33 |
     TYA                                     ;$01AB36 |
     ASL                                     ;$01AB37 |
@@ -7309,13 +7309,13 @@ CODE_01B457:
     ADC.b #$18                              ;$01B466 |
     CMP $00                                 ;$01B468 |
     BPL CODE_01B4B4                         ;$01B46A |
-    LDA $7D                                 ;$01B46C |
+    LDA.b PlayerYSpeed_7D                   ;$01B46C |
     BMI CODE_01B4B2                         ;$01B46E |
     LDA $77                                 ;$01B470 |
     AND.b #$08                              ;$01B472 |
     BNE CODE_01B4B2                         ;$01B474 |
     LDA.b #$10                              ;$01B476 |
-    STA $7D                                 ;$01B478 |
+    STA.b PlayerYSpeed_7D                   ;$01B478 |
     LDA.b #$01                              ;$01B47A |
     STA.w OnSolidSprite_1471                ;$01B47C |
     LDA.b #$1F                              ;$01B47F |
@@ -7373,10 +7373,10 @@ CODE_01B4CD:
     ADC $80                                 ;$01B4CE |
     CMP $00                                 ;$01B4D0 |
     BCC CODE_01B505                         ;$01B4D2 |
-    LDA $7D                                 ;$01B4D4 |
+    LDA.b PlayerYSpeed_7D                   ;$01B4D4 |
     BPL CODE_01B4F7                         ;$01B4D6 |
     LDA.b #$10                              ;$01B4D8 |
-    STA $7D                                 ;$01B4DA |
+    STA.b PlayerYSpeed_7D                   ;$01B4DA |
     LDA $9E,X                               ;$01B4DC |
     CMP.b #$83                              ;$01B4DE |
     BCC CODE_01B4F2                         ;$01B4E0 |
@@ -7428,7 +7428,7 @@ CODE_01B522:
     LDA.w DATA_01B4FF,Y                     ;$01B52A |
     ADC.w SpriteXPosHigh_14E0,X             ;$01B52D |
     STA.b PlayerXPos_94+1                   ;$01B530 |
-    STZ $7B                                 ;$01B532 |
+    STZ.b PlayerXSpeed_7B                   ;$01B532 |
     CLC                                     ;$01B534 |
     RTS                                     ;$01B535 |
 
@@ -7496,7 +7496,7 @@ CODE_01B5A1:
     SBC.b #$02                              ;$01B5A2 |
     STA $AA,X                               ;$01B5A4 |
 CODE_01B5A6:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     PHA                                     ;$01B5A8 |
     LDA $9E,X                               ;$01B5A9 |
     CMP.b #$A4                              ;$01B5AB |
@@ -7542,7 +7542,7 @@ CODE_01B5E7:
     BEQ CODE_01B610                         ;$01B5F0 |
     LDA.w $185E                             ;$01B5F2 |
     BNE CODE_01B610                         ;$01B5F5 |
-    LDA $7D                                 ;$01B5F7 |
+    LDA.b PlayerYSpeed_7D                   ;$01B5F7 |
     BPL CODE_01B610                         ;$01B5F9 |
     LDY.b #$08                              ;$01B5FB |
     LDA.b Powerup_19                        ;$01B5FD |
@@ -7918,9 +7918,9 @@ CODE_01B852:
     ADC.b #$18                              ;$01B871 |
     CMP $09                                 ;$01B873 |
     BCS ADDR_01B8B2                         ;$01B875 |
-    LDA $7D                                 ;$01B877 |
+    LDA.b PlayerYSpeed_7D                   ;$01B877 |
     BMI Return01B8B1                        ;$01B879 |
-    STZ $7D                                 ;$01B87B |
+    STZ.b PlayerYSpeed_7D                   ;$01B87B |
     LDA.b #$01                              ;$01B87D |
     STA.w OnSolidSprite_1471                ;$01B87F |
     LDA $0D                                 ;$01B882 |
@@ -7970,10 +7970,10 @@ ADDR_01B8C5:
     ADC $80                                 ;$01B8C6 |
     CMP $02                                 ;$01B8C8 |
     BCC ADDR_01B8D5                         ;$01B8CA |
-    LDA $7D                                 ;$01B8CC |
+    LDA.b PlayerYSpeed_7D                   ;$01B8CC |
     BPL Return01B8D4                        ;$01B8CE |
     LDA.b #$10                              ;$01B8D0 |
-    STA $7D                                 ;$01B8D2 |
+    STA.b PlayerYSpeed_7D                   ;$01B8D2 |
 Return01B8D4:
     RTS
 
@@ -8001,7 +8001,7 @@ ADDR_01B8EF:
     TYA                                     ;$01B8F6 |
     ADC.w SpriteXPosHigh_14E0,X             ;$01B8F7 |
     STA.b PlayerXPos_94+1                   ;$01B8FA |
-    STZ $7B                                 ;$01B8FC |
+    STZ.b PlayerXSpeed_7B                   ;$01B8FC |
     RTS                                     ;$01B8FE |
 
 CODE_01B8FF:
@@ -8473,7 +8473,7 @@ CODE_01BC3F:
     BCS CODE_01BCB9                         ;$01BC6F |
     JSL GetRand                             ;$01BC71 |
     ADC.w $148E                             ;$01BC75 |
-    ADC $7B                                 ;$01BC78 |
+    ADC.b PlayerXSpeed_7B                   ;$01BC78 |
     ADC.b Frame_13                          ;$01BC7A |
     LDY.b #$78                              ;$01BC7C |
     CMP.b #$35                              ;$01BC7E |
@@ -9338,12 +9338,12 @@ CODE_01C2A6:
 CODE_01C2AF:
     CMP.b #$80
     BNE CODE_01C2CE                         ;$01C2B1 |
-    LDA $7D                                 ;$01C2B3 |
+    LDA.b PlayerYSpeed_7D                   ;$01C2B3 |
     BMI Return01C2D2                        ;$01C2B5 |
     LDA.b #$09                              ;$01C2B7 |
     STA.w SpriteStatus_14C8,X               ;$01C2B9 |
     LDA.b #$D0                              ;$01C2BC |
-    STA $7D                                 ;$01C2BE |
+    STA.b PlayerYSpeed_7D                   ;$01C2BE |
     STZ $AA,X                               ;$01C2C0 |
     STZ.w $1540,X                           ;$01C2C2 |
     LDA.w $167A,X                           ;$01C2C5 |
@@ -9377,9 +9377,9 @@ CODE_01C2E8:
     LDA.b #$0B                              ;$01C2F2 |
 CODE_01C2F4:
     STA.w $14C8,X
-    LDA $7D                                 ;$01C2F7 |
+    LDA.b PlayerYSpeed_7D                   ;$01C2F7 |
     STA $AA,X                               ;$01C2F9 |
-    LDA $7B                                 ;$01C2FB |
+    LDA.b PlayerXSpeed_7B                   ;$01C2FB |
     STA $B6,X                               ;$01C2FD |
     LDA.b #$09                              ;$01C2FF |
     STA.w $13F3                             ;$01C301 |
@@ -10380,9 +10380,9 @@ CODE_01C9EC:
     ADC.b #$18                              ;$01CA28 |
     CMP $0E                                 ;$01CA2A |
     BCS Return01CA9B                        ;$01CA2C |
-    LDA $7D                                 ;$01CA2E |
+    LDA.b PlayerYSpeed_7D                   ;$01CA2E |
     BMI CODE_01C9E2                         ;$01CA30 |
-    STZ $7D                                 ;$01CA32 |
+    STZ.b PlayerYSpeed_7D                   ;$01CA32 |
     LDA.b #$03                              ;$01CA34 |
     STA.w OnSolidSprite_1471                ;$01CA36 |
     STA.w $1602,X                           ;$01CA39 |
@@ -10928,7 +10928,7 @@ Return01CE3D:
     RTS
 
 CODE_01CE3E:
-    STZ $7B
+    STZ.b PlayerXSpeed_7B
     JSR SubSprYPosNoGrvty                   ;$01CE40 |
     LDA $AA,X                               ;$01CE43 |
     CMP.b #$40                              ;$01CE45 |
@@ -11592,11 +11592,11 @@ CODE_01D2E3:
     LDA.w $1594,X                           ;$01D2EC |
     LSR                                     ;$01D2EF |
     BCS CODE_01D334                         ;$01D2F0 |
-    LDA $7D                                 ;$01D2F2 |
+    LDA.b PlayerYSpeed_7D                   ;$01D2F2 |
     BMI Return01D31D                        ;$01D2F4 |
     JSR CODE_01D351                         ;$01D2F6 |
     LDA.b #$D0                              ;$01D2F9 |
-    STA $7D                                 ;$01D2FB |
+    STA.b PlayerYSpeed_7D                   ;$01D2FB |
     LDA.b #$02                              ;$01D2FD |
     STA.w SPCIO0_1DF9                       ;$01D2FF |
     LDA.w $1602,X                           ;$01D302 |
@@ -11611,7 +11611,7 @@ ADDR_01D309:
     BMI ADDR_01D316                         ;$01D312 |
     LDY.b #$E0                              ;$01D314 |
 ADDR_01D316:
-    STY $7B
+    STY.b PlayerXSpeed_7B
 Return01D318:
     RTS
 
@@ -11623,25 +11623,25 @@ Return01D31D:
 ADDR_01D31E:
     LDA.b #$01
     STA.w SPCIO0_1DF9                       ;$01D320 |
-    LDA $7D                                 ;$01D323 |
+    LDA.b PlayerYSpeed_7D                   ;$01D323 |
     BPL ADDR_01D32C                         ;$01D325 |
     LDA.b #$10                              ;$01D327 |
-    STA $7D                                 ;$01D329 |
+    STA.b PlayerYSpeed_7D                   ;$01D329 |
     RTS                                     ;$01D32B |
 
 ADDR_01D32C:
     JSR ADDR_01D309
     LDA.b #$D0                              ;$01D32F |
-    STA $7D                                 ;$01D331 |
+    STA.b PlayerYSpeed_7D                   ;$01D331 |
     RTS                                     ;$01D333 |
 
 CODE_01D334:
     LDA.b #$01
     STA.w SPCIO0_1DF9                       ;$01D336 |
-    LDA $7D                                 ;$01D339 |
+    LDA.b PlayerYSpeed_7D                   ;$01D339 |
     BPL CODE_01D342                         ;$01D33B |
     LDA.b #$20                              ;$01D33D |
-    STA $7D                                 ;$01D33F |
+    STA.b PlayerYSpeed_7D                   ;$01D33F |
     RTS                                     ;$01D341 |
 
 CODE_01D342:
@@ -11650,9 +11650,9 @@ CODE_01D342:
     BPL CODE_01D34A                         ;$01D346 |
     LDY.b #$E0                              ;$01D348 |
 CODE_01D34A:
-    STY $7B
+    STY.b PlayerXSpeed_7B
     LDA.b #$B0                              ;$01D34C |
-    STA $7D                                 ;$01D34E |
+    STA.b PlayerYSpeed_7D                   ;$01D34E |
     RTS                                     ;$01D350 |
 
 CODE_01D351:
@@ -12613,7 +12613,7 @@ CODE_01DA2F:
     BIT.b byetudlrPress_16
     BPL CODE_01DA3F                         ;$01DA31 |
     LDA.b #$B0                              ;$01DA33 |
-    STA $7D                                 ;$01DA35 |
+    STA.b PlayerYSpeed_7D                   ;$01DA35 |
 CODE_01DA37:
     STZ.w $18BE
     LDA.b #$10                              ;$01DA3A |
@@ -13134,7 +13134,7 @@ CODE_01DE41:
 CODE_01DE58:
     JSR MarioSprInteractRt
     BCC CODE_01DE8C                         ;$01DE5B |
-    LDA $7D                                 ;$01DE5D |
+    LDA.b PlayerYSpeed_7D                   ;$01DE5D |
     BPL CODE_01DE8C                         ;$01DE5F |
     LDA.b #$F4                              ;$01DE61 |
     LDY.b Powerup_19                        ;$01DE63 |
@@ -13148,7 +13148,7 @@ CODE_01DE69:
     CMP $80                                 ;$01DE6F |
     BCS CODE_01DE8C                         ;$01DE71 |
     LDA.b #$10                              ;$01DE73 |
-    STA $7D                                 ;$01DE75 |
+    STA.b PlayerYSpeed_7D                   ;$01DE75 |
     LDA.b #$0B                              ;$01DE77 |
     STA.w SPCIO0_1DF9                       ;$01DE79 |
     INC $C2,X                               ;$01DE7C |
@@ -14139,7 +14139,7 @@ CODE_01E5C4:
     BPL CODE_01E604                         ;$01E5D0 |
     LDA.w $1697                             ;$01E5D2 |
     BNE CODE_01E5DB                         ;$01E5D5 |
-    LDA $7D                                 ;$01E5D7 |
+    LDA.b PlayerYSpeed_7D                   ;$01E5D7 |
     BMI CODE_01E604                         ;$01E5D9 |
 CODE_01E5DB:
     LDA $9E,X
@@ -14225,7 +14225,7 @@ CODE_01E664:
     SBC.b #$00                              ;$01E676 |
     STA.b PlayerYPos_96+1                   ;$01E678 |
     STZ.b PlayerInAir_72                    ;$01E67A |
-    STZ $7B                                 ;$01E67C |
+    STZ.b PlayerXSpeed_7B                   ;$01E67C |
     LDA.b #$02                              ;$01E67E |
     STA.w OnSolidSprite_1471                ;$01E680 |
     LDA.w $1540,X                           ;$01E683 |
@@ -14248,7 +14248,7 @@ CODE_01E69E:
     LDY.b #$80                              ;$01E6A2 |
     STY.w $1406                             ;$01E6A4 |
 CODE_01E6A7:
-    STY $7D
+    STY.b PlayerYSpeed_7D
     LDA.b #$08                              ;$01E6A9 |
     STA.w SPCIO3_1DFC                       ;$01E6AB |
 CODE_01E6AE:
@@ -14266,9 +14266,9 @@ CODE_01E6B0:
     CMP.b #$1C                              ;$01E6C0 |
     BCC CODE_01E6CE                         ;$01E6C2 |
     BPL CODE_01E6E7                         ;$01E6C4 |
-    LDA $7D                                 ;$01E6C6 |
+    LDA.b PlayerYSpeed_7D                   ;$01E6C6 |
     BPL CODE_01E6F0                         ;$01E6C8 |
-    STZ $7D                                 ;$01E6CA |
+    STZ.b PlayerYSpeed_7D                   ;$01E6CA |
     BRA CODE_01E6F0                         ;$01E6CC |
 
 CODE_01E6CE:
@@ -14285,7 +14285,7 @@ CODE_01E6E2:
     BRA CODE_01E6F0                         ;$01E6E5 |
 
 CODE_01E6E7:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BMI CODE_01E6F0                         ;$01E6E9 |
     LDA.b #$11                              ;$01E6EB |
     STA.w $1540,X                           ;$01E6ED |
@@ -14429,7 +14429,7 @@ CODE_01E804:
     BNE CODE_01E83D                         ;$01E807 |
     JSR ProcessInteract                     ;$01E809 |
     BCC CODE_01E83D                         ;$01E80C |
-    LDA $7D                                 ;$01E80E |
+    LDA.b PlayerYSpeed_7D                   ;$01E80E |
     BMI CODE_01E83D                         ;$01E810 |
     INC $C2,X                               ;$01E812 |
     LDA.b #$11                              ;$01E814 |
@@ -14450,7 +14450,7 @@ CODE_01E81D:
     LDA.b #$10                              ;$01E832 |
     STA $AA,X                               ;$01E834 |
     STA.w $151C,X                           ;$01E836 |
-    LDA $7B                                 ;$01E839 |
+    LDA.b PlayerXSpeed_7B                   ;$01E839 |
     STA $B6,X                               ;$01E83B |
 CODE_01E83D:
     JMP LakituCloudGfx
@@ -14466,7 +14466,7 @@ CODE_01E840:
     LDA $AA,X                               ;$01E84D |
     CLC                                     ;$01E84F |
     ADC.b #$03                              ;$01E850 |
-    STA $7D                                 ;$01E852 |
+    STA.b PlayerYSpeed_7D                   ;$01E852 |
     LDA.b Frame_14                          ;$01E854 |
     LSR                                     ;$01E856 |
     LSR                                     ;$01E857 |
@@ -14498,7 +14498,7 @@ CODE_01E866:
     AND.b #$80                              ;$01E888 |
     BEQ Return01E897                        ;$01E88A |
     LDA.b #$C0                              ;$01E88C |
-    STA $7D                                 ;$01E88E |
+    STA.b PlayerYSpeed_7D                   ;$01E88E |
     LDA.b #$10                              ;$01E890 |
     STA.w SpritePlayerContact_154C,X        ;$01E892 |
     STZ $C2,X                               ;$01E895 |
@@ -14782,7 +14782,7 @@ draw_yoshi_01EA70:
     JMP .growing_common_01EB48              ;$01EA97 |
 
 .not_growing_01EA9A:
-    STZ.w $18DC                             ;$01EA9A | reset Yoshi ducking status
+    STZ.w DuckingYoshi_18DC                 ;$01EA9A | reset Yoshi ducking status
     LDA $C2,X                               ;$01EA9D |
     CMP.b #$02                              ;$01EA9F |
     BCC .yoshi_running_01EAA7               ;$01EAA1 |
@@ -14791,7 +14791,7 @@ draw_yoshi_01EA70:
 
 .yoshi_running_01EAA7:
     LDY.b #$00
-    LDA $7B                                 ;$01EAA9 | player x speed
+    LDA.b PlayerXSpeed_7B                   ;$01EAA9 | player x speed
     BEQ .reset_animation_timer_01EADF       ;$01EAAB |
     BPL .set_running_animation_01EAB2       ;$01EAAD |
     EOR.b #$FF                              ;$01EAAF |
@@ -14826,7 +14826,7 @@ draw_yoshi_01EA70:
     LDA.b PlayerInAir_72
     BEQ +                                   ;$01EAE4 |
     LDY.b #$02                              ;$01EAE6 |
-    LDA $7D                                 ;$01EAE8 |
+    LDA.b PlayerYSpeed_7D                   ;$01EAE8 |
     BPL +                                   ;$01EAEA |
     LDY.b #$05                              ;$01EAEC |
     BRA +                                   ;$01EAEE |
@@ -14857,7 +14857,7 @@ draw_yoshi_01EA70:
     BEQ .player_in_air_01EB21               ;$01EB1A |
 .yoshi_squatting_01EB1C:
     LDY.b #$04
-    INC.w $18DC                             ;$01EB1E | set squatting
+    INC.w DuckingYoshi_18DC                 ;$01EB1E | set squatting
 .player_in_air_01EB21:
     LDA $C2,X
     CMP.b #$01                              ;$01EB23 |
@@ -15138,13 +15138,13 @@ CODE_01ED0C:
     LDA.w CarryingFlag_1470                 ;$01ED3C |
     ORA.w RidingYoshi_187A                  ;$01ED3F |
     BNE CODE_01ED70                         ;$01ED42 |
-    LDA $7D                                 ;$01ED44 |
+    LDA.b PlayerYSpeed_7D                   ;$01ED44 |
     BMI CODE_01ED70                         ;$01ED46 |
 SetOnYoshi:
     LDY.b #$01
     JSR adjust_player_y_on_yoshi_01EDCE     ;$01ED4A |
-    STZ $7B                                 ;$01ED4D |
-    STZ $7D                                 ;$01ED4F |
+    STZ.b PlayerXSpeed_7B                   ;$01ED4D |
+    STZ.b PlayerYSpeed_7D                   ;$01ED4F |
     LDA.b #$0C                              ;$01ED51 |
     STA.w $18AF                             ;$01ED53 |
     LDA.b #$01                              ;$01ED56 |
@@ -15170,7 +15170,7 @@ CODE_01ED70:
     BEQ CODE_01ED95                         ;$01ED83 |
     LDA.w $15AC,X                           ;$01ED85 |
     ORA.w $151C,X                           ;$01ED88 |
-    ORA.w $18DC                             ;$01ED8B |
+    ORA.w DuckingYoshi_18DC                 ;$01ED8B |
     BNE CODE_01ED95                         ;$01ED8E |
     LDA.b #$10                              ;$01ED90 |
     STA.w $15AC,X                           ;$01ED92 |
@@ -15186,17 +15186,17 @@ CODE_01ED9E:
     LDA.b #$03                              ;$01EDA5 |
     STA.w SPCIO1_1DFA                       ;$01EDA7 |
     STZ.w CarryYoshiLevels_0DC1             ;$01EDAA |
-    LDA $7B                                 ;$01EDAD |
+    LDA.b PlayerXSpeed_7B                   ;$01EDAD |
     STA $B6,X                               ;$01EDAF |
     LDA.b #$A0                              ;$01EDB1 |
     LDY.b PlayerInAir_72                    ;$01EDB3 |
     BNE CODE_01EDC1                         ;$01EDB5 |
     JSR SubHorizPos                         ;$01EDB7 |
     LDA.w DATA_01EBC0,Y                     ;$01EDBA |
-    STA $7B                                 ;$01EDBD |
+    STA.b PlayerXSpeed_7B                   ;$01EDBD |
     LDA.b #$C0                              ;$01EDBF |
 CODE_01EDC1:
-    STA $7D
+    STA.b PlayerYSpeed_7D
     STZ.w RidingYoshi_187A                  ;$01EDC3 |
     STZ $AA,X                               ;$01EDC6 |
     JSR adjust_player_y_off_yoshi_01EDCC    ;$01EDC8 |
@@ -15333,7 +15333,7 @@ handle_off_yoshi_01EE61:
     BEQ .not_flying_01EF13                  ;$01EEE9 | just draw the wings if not on Yoshi
     LDA.b PlayerInAir_72                    ;$01EEEB |
     BNE .wings_flying_01EF00                ;$01EEED |\
-    LDA $7B                                 ;$01EEEF ||
+    LDA.b PlayerXSpeed_7B                   ;$01EEEF ||
     BPL +                                   ;$01EEF1 ||
     EOR.b #$FF                              ;$01EEF3 ||
     INC A                                   ;$01EEF5 ||
@@ -15347,7 +15347,7 @@ handle_off_yoshi_01EE61:
     LDA.b Frame_14
     LSR                                     ;$01EF02 |
     LSR                                     ;$01EF03 |
-    LDY $7D                                 ;$01EF04 | A = $14/4 Y = player Y speed
+    LDY.b PlayerYSpeed_7D                   ;$01EF04 | A = $14/4 Y = player Y speed
     BMI +                                   ;$01EF06 |
     LSR                                     ;$01EF08 |
     LSR                                     ;$01EF09 |
@@ -15761,7 +15761,7 @@ normal_mouth_01F14B:
     STA.w $00C2,y                           ;$01F220 | reset sprite's phase
     STA.w $15D0,Y                           ;$01F223 |
     STA.w $1626,Y                           ;$01F226 |
-    LDA.w $18DC                             ;$01F229 |
+    LDA.w DuckingYoshi_18DC                 ;$01F229 |
     CMP.b #$01                              ;$01F22C |
     LDA.b #$0A                              ;$01F22E |
     BCC +                                   ;$01F230 |
@@ -15979,7 +15979,7 @@ retracting_tongue_01F332:
     STZ $C2,X                               ;$01F3C7 || NOTE: as the sprite was already deleted, the purpose of this line is unclear
     JSR try_give_powerup_or_coin_01C4BF     ;$01F3C9 ||
     PLX                                     ;$01F3CC ||
-    LDY.w $18DC                             ;$01F3CD ||
+    LDY.w DuckingYoshi_18DC                 ;$01F3CD ||
     LDA.w .DATA_01F3D9,Y                    ;$01F3D0 ||
     STA.w $1602,X                           ;$01F3D3 ||
     JMP handle_tongue_01F321                ;$01F3D6 || immediately try to swallow sprites again
@@ -16430,8 +16430,8 @@ maybe_hurt_yoshi_01F6DD:
     STA $C2,X                               ;$01F724 | make Yoshi run
     STZ.w RidingYoshi_187A                  ;$01F726 | unmount Yoshi
     LDA.b #$C0                              ;$01F729 | Y speed to give Mario when knocked off Yoshi by a standard sprite.
-    STA $7D                                 ;$01F72B |
-    STZ $7B                                 ;$01F72D | cancel Mario X speed
+    STA.b PlayerYSpeed_7D                   ;$01F72B |
+    STZ.b PlayerXSpeed_7B                   ;$01F72D | cancel Mario X speed
     JSR SubHorizPos                         ;$01F72F |
     LDA.w DATA_01EBBE,Y                     ;$01F732 |
     STA $B6,X                               ;$01F735 | Make Yoshi run away from Mario

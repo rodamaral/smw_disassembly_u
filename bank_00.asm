@@ -2843,7 +2843,7 @@ run_level_physics_009860:
     JSL draw_mario_and_yoshi_00E2BD
     JSR mirror_player_position_00A2F3       ;$009864 |
     JSR execute_player_animation_00C593     ;$009867 |
-    STZ $7D                                 ;$00986A |
+    STZ.b PlayerYSpeed_7D                   ;$00986A |
     JSL standard_and_cluster_sprites_01808C ;$00986C |
     JSL OAM_reset_7F8000                    ;$009870 |
     RTS                                     ;$009874 |
@@ -4688,7 +4688,7 @@ CODE_00A704:
     LDA.b #$A0                              ;$00A70D |
     STA.b PlayerYPos_96                     ;$00A70F |
     LDA.b #$90                              ;$00A711 |
-    STA $7D                                 ;$00A713 |
+    STA.b PlayerYSpeed_7D                   ;$00A713 |
 Return00A715:
     RTS
 
@@ -4739,7 +4739,7 @@ CODE_00A740:
 CODE_00A768:
     LDY.b #$1C
 CODE_00A76A:
-    STY $7D
+    STY.b PlayerYSpeed_7D
     JSR CODE_00A6C7                         ;$00A76C |
     LDA.w RidingYoshi_187A                  ;$00A76F |
     BEQ Return00A795                        ;$00A772 |
@@ -7530,7 +7530,7 @@ castle_destroy_animation:
     JSR disable_controls
     STZ.w $13DE                             ;$00C6EA |
     JSR apply_player_speeds                 ;$00C6ED |
-    LDA $7D                                 ;$00C6F0 |
+    LDA.b PlayerYSpeed_7D                   ;$00C6F0 |
     BMI CODE_00C73F                         ;$00C6F2 |
     LDA.b PlayerYPos_96                     ;$00C6F4 |
     CMP.b #$58                              ;$00C6F6 |
@@ -7564,9 +7564,9 @@ CODE_00C71C:
     LDY.b #$F4                              ;$00C72A |
     LDX.b #$C0                              ;$00C72C |
 CODE_00C72E:
-    STY $7B
+    STY.b PlayerXSpeed_7B
 CODE_00C730:
-    STX $7D
+    STX.b PlayerYSpeed_7D
     LDX.b #$01                              ;$00C732 |
     STX.w SPCIO0_1DF9                       ;$00C734 |
     BRA CODE_00C73D                         ;$00C737 |
@@ -7668,7 +7668,7 @@ CODE_00C7CE:
     LDA.b #$09                              ;$00C7D1 |
     STA.w SPCIO3_1DFC                       ;$00C7D3 |
     LDA.b #$D8                              ;$00C7D6 |
-    STA $7B                                 ;$00C7D8 |
+    STA.b PlayerXSpeed_7B                   ;$00C7D8 |
     INC.w $143E                             ;$00C7DA |
     BRA CODE_00C79D                         ;$00C7DD |
 
@@ -7697,26 +7697,26 @@ yoshi_wings_animation:
     LDA.b #$0B                              ;$00C800 |
     STA $72                                 ;$00C802 |
     JSR aerial_physics                      ;$00C804 |
-    LDA $7D                                 ;$00C807 |
+    LDA.b PlayerYSpeed_7D                   ;$00C807 |
     BPL CODE_00C80F                         ;$00C809 |
     CMP.b #$90                              ;$00C80B |
     BCC CODE_00C814                         ;$00C80D |
 CODE_00C80F:
     SEC
     SBC.b #$0D                              ;$00C810 |
-    STA $7D                                 ;$00C812 |
+    STA.b PlayerYSpeed_7D                   ;$00C812 |
 CODE_00C814:
     LDA.b #$02
-    LDY $7B                                 ;$00C816 |
+    LDY.b PlayerXSpeed_7B                   ;$00C816 |
     BEQ CODE_00C827                         ;$00C818 |
     BMI CODE_00C81E                         ;$00C81A |
     LDA.b #$FE                              ;$00C81C |
 CODE_00C81E:
     CLC
-    ADC $7B                                 ;$00C81F |
-    STA $7B                                 ;$00C821 |
+    ADC.b PlayerXSpeed_7B                   ;$00C81F |
+    STA.b PlayerXSpeed_7B                   ;$00C821 |
     BVC CODE_00C827                         ;$00C823 |
-    STZ $7B                                 ;$00C825 |
+    STZ.b PlayerXSpeed_7B                   ;$00C825 |
 CODE_00C827:
     JSR apply_player_speeds
     REP #$20                                ;$00C82A |
@@ -7886,13 +7886,13 @@ CODE_00C96B:
     STA $76                                 ;$00C97C |
     STA.b byetudlrHold_15                   ;$00C97E |
     LDA.b #$05                              ;$00C980 |
-    STA $7B                                 ;$00C982 |
+    STA.b PlayerXSpeed_7B                   ;$00C982 |
 CODE_00C984:
     LDA $72
     BEQ CODE_00C98B                         ;$00C986 |
     JSR CODE_00D76B                         ;$00C988 |
 CODE_00C98B:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     BNE CODE_00C9A4                         ;$00C98D |
     STZ.w $1411                             ;$00C98F |
     JSR CODE_00CA3E                         ;$00C992 |
@@ -8259,7 +8259,7 @@ no_animation:                               ;        \
     LDA.w $18BD                             ;$00CCD0 |\ If the player is not frozen,
     BEQ not_frozen_physics                  ;$00CCD3 |/ run regular physics.
     DEC.w $18BD                             ;$00CCD5 | Decrease the freeze timer.
-    STZ $7B                                 ;$00CCD8 | Freeze the player's X position.
+    STZ.b PlayerXSpeed_7B                   ;$00CCD8 | Freeze the player's X position.
     LDA.b #$0F                              ;$00CCDA |\ Make the player face the screen.
     STA.w PlayerPose_13E0                   ;$00CCDC |/
 .return                                     ;        |
@@ -8299,12 +8299,12 @@ not_frozen_physics:                         ;        \
     BRA skip_standard_collision             ;$00CD22 / 
 
 no_special_collision:                       ;        \
-    LDA $7D                                 ;$00CD24 |\ If the player is rising
+    LDA.b PlayerYSpeed_7D                   ;$00CD24 |\ If the player is rising
     BPL .no_hit_ceiling                     ;$00CD26 | |
     LDA $77                                 ;$00CD28 | |
     AND.b #$08                              ;$00CD2A | | and hit the ceiling,
     BEQ .no_hit_ceiling                     ;$00CD2C | |
-    STZ $7D                                 ;$00CD2E |/ clear his Y speed.
+    STZ.b PlayerYSpeed_7D                   ;$00CD2E |/ clear his Y speed.
 .no_hit_ceiling                             ;        |
     JSR apply_player_speeds                 ;$00CD30 | Apply the player's speeds.
     JSR level_collision                     ;$00CD33 | Apply standard level collision.
@@ -8511,7 +8511,7 @@ set_player_pose:
     LDA $72                                 ;$00CEB9 |
     BEQ MarioAnimAir                        ;$00CEBB |
     LDY.b #$04                              ;$00CEBD |
-    BIT $7D                                 ;$00CEBF |
+    BIT.b PlayerYSpeed_7D                   ;$00CEBF |
     BPL CODE_00CECD                         ;$00CEC1 |
     CMP.b #$0C                              ;$00CEC3 |
     BEQ CODE_00CEFD                         ;$00CEC5 |
@@ -8533,7 +8533,7 @@ CODE_00CED6:
     BRA CODE_00CF0A                         ;$00CEDC |
 
 MarioAnimAir:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     BNE CODE_00CEF0                         ;$00CEE0 |
     LDY.b #$08                              ;$00CEE2 |
 MrioNtInWtr:
@@ -8584,7 +8584,7 @@ lbl14A2Not0:
     TAY                                     ;$00CF25 |
     LDA $72                                 ;$00CF26 |
     BEQ CODE_00CF2F                         ;$00CF28 |
-    LDA $7D                                 ;$00CF2A |
+    LDA.b PlayerYSpeed_7D                   ;$00CF2A |
     BMI CODE_00CF2F                         ;$00CF2C |
     INY                                     ;$00CF2E |
 CODE_00CF2F:
@@ -8666,7 +8666,7 @@ CODE_00CFB7:
     LDA.w $13DD
     BNE CODE_00D01A                         ;$00CFBA |
 CODE_00CFBC:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     BPL MarioAnimNoAbs1                     ;$00CFBE |
     EOR.b #$FF                              ;$00CFC0 |
     INC A                                   ;$00CFC2 |
@@ -8851,7 +8851,7 @@ death_animation:
 .not_done
     CMP.b #$26                              ;$00D108 \ Keep the player still for a bit.
     BCS .return                             ;$00D10A |
-    STZ $7B                                 ;$00D10C | Clear the player's X speed,
+    STZ.b PlayerXSpeed_7B                   ;$00D10C | Clear the player's X speed,
     JSR apply_player_speeds                 ;$00D10E | apply the player's X and Y speeds,
     JSR CODE_00D92E                         ;$00D111 | update the player's gravity,
     LDA.b Frame_13                          ;$00D114 |\
@@ -9044,16 +9044,16 @@ CODE_00D22D:
     STA.b PlayerHiddenTiles_78              ;$00D249 |
     INC.w $1405                             ;$00D24B |
 CODE_00D24E:
-    LDA $7B
-    ORA $7D                                 ;$00D250 |
+    LDA.b PlayerXSpeed_7B
+    ORA.b PlayerYSpeed_7D                   ;$00D250 |
     BNE CODE_00D259                         ;$00D252 |
     LDA.b #$04                              ;$00D254 |
     STA.w SPCIO0_1DF9                       ;$00D256 |
 CODE_00D259:
     LDA.w pipe_x_speeds,Y
-    STA $7B                                 ;$00D25C |
+    STA.b PlayerXSpeed_7B                   ;$00D25C |
     LDA.w pipe_y_speeds,Y                   ;$00D25E |
-    STA $7D                                 ;$00D261 |
+    STA.b PlayerYSpeed_7D                   ;$00D261 |
     STZ $72                                 ;$00D263 |
     JMP apply_player_speeds                 ;$00D265 |
 
@@ -9102,9 +9102,9 @@ CODE_00D2AA:
     STZ.b SpriteLock_9D                     ;$00D2B0 |
 CODE_00D2B2:
     LDA.b #$40
-    STA $7B                                 ;$00D2B4 |
+    STA.b PlayerXSpeed_7B                   ;$00D2B4 |
     LDA.b #$C0                              ;$00D2B6 |
-    STA $7D                                 ;$00D2B8 |
+    STA.b PlayerYSpeed_7D                   ;$00D2B8 |
     JMP apply_player_speeds                 ;$00D2BA |
 
 DATA_00D2BD:
@@ -9265,7 +9265,7 @@ CODE_00D60B:
 CODE_00D61E:
     LDA $73
     BEQ CODE_00D682                         ;$00D620 |
-    LDA $7B                                 ;$00D622 |
+    LDA.b PlayerXSpeed_7B                   ;$00D622 |
     BEQ CODE_00D62D                         ;$00D624 |
     LDA $86                                 ;$00D626 |
     BNE CODE_00D62D                         ;$00D628 |
@@ -9274,7 +9274,7 @@ CODE_00D62D:
     JMP CODE_00D764
 
 CODE_00D630:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     BPL CODE_00D637                         ;$00D632 |
     EOR.b #$FF                              ;$00D634 |
     INC A                                   ;$00D636 |
@@ -9304,7 +9304,7 @@ CODE_00D65E:
     STA.w SPCIO1_1DFA                       ;$00D660 |
 CODE_00D663:
     LDA.w DATA_00D2BD,X
-    STA $7D                                 ;$00D666 |
+    STA.b PlayerYSpeed_7D                   ;$00D666 |
     LDA.b #$0B                              ;$00D668 |
     LDY.w $13E4                             ;$00D66A |
     CPY.b #$70                              ;$00D66D |
@@ -9385,7 +9385,7 @@ CODE_00D6EC:
     ASL                                     ;$00D6EF |
     ORA.w $13E1                             ;$00D6F0 |
     TAX                                     ;$00D6F3 |
-    LDA $7B                                 ;$00D6F4 |
+    LDA.b PlayerXSpeed_7B                   ;$00D6F4 |
     BEQ CODE_00D713                         ;$00D6F6 |
     EOR.w MarioAccel2,X                     ;$00D6F8 |
     BPL CODE_00D713                         ;$00D6FB |
@@ -9408,7 +9408,7 @@ CODE_00D713:
     INX                                     ;$00D719 |
     INX                                     ;$00D71A |
     INY                                     ;$00D71B |
-    LDA $7B                                 ;$00D71C |
+    LDA.b PlayerXSpeed_7B                   ;$00D71C |
     BPL CODE_00D723                         ;$00D71E |
     EOR.b #$FF                              ;$00D720 |
     INC A                                   ;$00D722 |
@@ -9434,7 +9434,7 @@ CODE_00D737:
     ORA $01                                 ;$00D73F |
     TAY                                     ;$00D741 |
 CODE_00D742:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     SEC                                     ;$00D744 |
     SBC.w DATA_00D535,Y                     ;$00D745 |
     BEQ CODE_00D76B                         ;$00D748 |
@@ -9449,7 +9449,7 @@ CODE_00D742:
     LDA.w DATA_00D43D,X                     ;$00D75C |
 CODE_00D75F:
     CLC
-    ADC $7A                                 ;$00D760 |
+    ADC.b PlayerXSubpeed_7A                 ;$00D760 |
     BRA CODE_00D7A0                         ;$00D762 |
 
 CODE_00D764:
@@ -9463,7 +9463,7 @@ CODE_00D76B:
     LSR                                     ;$00D770 |
     TAX                                     ;$00D771 |
 CODE_00D772:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     SEC                                     ;$00D774 |
     SBC.w DATA_00D5CA,X                     ;$00D775 |
     BPL CODE_00D77C                         ;$00D778 |
@@ -9481,15 +9481,15 @@ CODE_00D78C:
     LDA.w DATA_00D2CD,Y
 CODE_00D78F:
     CLC
-    ADC $7A                                 ;$00D790 |
-    STA $7A                                 ;$00D792 |
+    ADC.b PlayerXSpeed_7A                   ;$00D790 |
+    STA.b PlayerXSpeed_7A                   ;$00D792 |
     SEC                                     ;$00D794 |
     SBC.w DATA_00D5C9,X                     ;$00D795 |
     EOR.w DATA_00D2CD,Y                     ;$00D798 |
     BMI CODE_00D7A2                         ;$00D79B |
     LDA.w DATA_00D5C9,X                     ;$00D79D |
 CODE_00D7A0:
-    STA $7A
+    STA.b PlayerXSpeed_7A
 CODE_00D7A2:
     SEP #$20
 Return00D7A4:
@@ -9537,7 +9537,7 @@ CODE_00D7FF:
     LDX.b Powerup_19                        ;$00D802 |
     CPX.b #$02                              ;$00D804 |
     BNE CODE_00D811                         ;$00D806 |
-    LDA $7D                                 ;$00D808 |
+    LDA.b PlayerYSpeed_7D                   ;$00D808 |
     BMI CODE_00D811                         ;$00D80A |
     LDA.w $149F                             ;$00D80C |
     BNE CODE_00D814                         ;$00D80F |
@@ -9562,7 +9562,7 @@ CODE_00D82B:
     CPX.b #$04                              ;$00D82E |
     BEQ CODE_00D856                         ;$00D830 |
     LDX.b #$03                              ;$00D832 |
-    LDY $7D                                 ;$00D834 |
+    LDY.b PlayerYSpeed_7D                   ;$00D834 |
     BMI CODE_00D856                         ;$00D836 |
     LDA.b byetudlrHold_15                   ;$00D838 |
     AND.b #$03                              ;$00D83A |
@@ -9608,7 +9608,7 @@ CODE_00D87E:
     STX.w $1408
     LDY.w $1407                             ;$00D881 |
     BEQ CODE_00D8CD                         ;$00D884 |
-    LDA $7D                                 ;$00D886 |
+    LDA.b PlayerYSpeed_7D                   ;$00D886 |
     BPL CODE_00D892                         ;$00D888 |
     CMP.b #$C8                              ;$00D88A |
     BCS CODE_00D89A                         ;$00D88C |
@@ -9625,7 +9625,7 @@ CODE_00D89A:
     BNE CODE_00D8C6                         ;$00D89D |
     LDX.w $1409                             ;$00D89F |
     BEQ CODE_00D8C4                         ;$00D8A2 |
-    LDA $7D                                 ;$00D8A4 |
+    LDA.b PlayerYSpeed_7D                   ;$00D8A4 |
     BMI CODE_00D8AF                         ;$00D8A6 |
     LDA.b #$09                              ;$00D8A8 |
     STA.w SPCIO0_1DF9                       ;$00D8AA |
@@ -9634,11 +9634,11 @@ CODE_00D89A:
 CODE_00D8AF:
     CMP.w $1409
     BCS CODE_00D8B9                         ;$00D8B2 |
-    STX $7D                                 ;$00D8B4 |
+    STX.b PlayerYSpeed_7D                   ;$00D8B4 |
     STZ.w $1409                             ;$00D8B6 |
 CODE_00D8B9:
     LDX $76
-    LDA $7B                                 ;$00D8BB |
+    LDA.b PlayerXSpeed_7B                   ;$00D8BB |
     BEQ CODE_00D8C4                         ;$00D8BD |
     EOR.w DATA_00D535,X                     ;$00D8BF |
     BPL CODE_00D8C6                         ;$00D8C2 |
@@ -9688,7 +9688,7 @@ CODE_00D8FF:
     LDA.b #$10                              ;$00D908 |
     STA.w $14A5                             ;$00D90A |
 CODE_00D90D:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BPL CODE_00D91B                         ;$00D90F |
     LDX.w DATA_00D7B9,Y                     ;$00D911 |
     BPL CODE_00D924                         ;$00D914 |
@@ -9696,7 +9696,7 @@ CODE_00D90D:
     BCC CODE_00D924                         ;$00D919 |
 CODE_00D91B:
     LDA.w DATA_00D7B9,Y
-    CMP $7D                                 ;$00D91E |
+    CMP.b PlayerYSpeed_7D                   ;$00D91E |
     BEQ CODE_00D94C                         ;$00D920 |
     BMI CODE_00D94C                         ;$00D922 |
 CODE_00D924:
@@ -9709,7 +9709,7 @@ CODE_00D928:
 CODE_00D92E:
     LDY.b #$00
 CODE_00D930:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BMI CODE_00D948                         ;$00D932 |
     CMP.w DATA_00D7AF,Y                     ;$00D934 |
     BCC CODE_00D93C                         ;$00D937 |
@@ -9725,12 +9725,12 @@ CODE_00D948:
     CLC
     ADC.w DATA_00D7A5,Y                     ;$00D949 |
 CODE_00D94C:
-    STA $7D
+    STA.b PlayerYSpeed_7D
     RTS                                     ;$00D94E |
 
 CODE_00D94F:
     STZ.w $140A
-    LDA $7D                                 ;$00D952 |
+    LDA.b PlayerYSpeed_7D                   ;$00D952 |
     BPL CODE_00D958                         ;$00D954 |
     LDA.b #$00                              ;$00D956 |
 CODE_00D958:
@@ -9773,7 +9773,7 @@ water_physics:
     STZ $73                                 ;$00D98B |
     STZ.w $1407                             ;$00D98D |
     STZ.w $140D                             ;$00D990 |
-    LDY $7D                                 ;$00D993 |
+    LDY.b PlayerYSpeed_7D                   ;$00D993 |
     LDA.w CarryingFlagMirror_148F           ;$00D995 |
     BEQ CODE_00D9EB                         ;$00D998 |
     LDA $72                                 ;$00D99A |
@@ -9820,7 +9820,7 @@ CODE_00D9D7:
     BCS CODE_00D9DD                         ;$00D9D9 |
     LDA.b #$F0                              ;$00D9DB |
 CODE_00D9DD:
-    STA $7D
+    STA.b PlayerYSpeed_7D
     LDY.b #$80                              ;$00D9DF |
     LDA.b byetudlrHold_15                   ;$00D9E1 |
     AND.b #$03                              ;$00D9E3 |
@@ -9870,7 +9870,7 @@ CODE_00DA25:
     BCS CODE_00DA2D                         ;$00DA28 |
     LDA.w DATA_00D984,X                     ;$00DA2A |
 CODE_00DA2D:
-    STA $7D
+    STA.b PlayerYSpeed_7D
     LDA $72                                 ;$00DA2F |
     BNE CODE_00DA40                         ;$00DA31 |
     LDA.b byetudlrHold_15                   ;$00DA33 |
@@ -9991,7 +9991,7 @@ DATA_00DAF1:
 
 CODE_00DB17:
     STZ $72
-    STZ $7D                                 ;$00DB19 |
+    STZ.b PlayerYSpeed_7D                   ;$00DB19 |
     STZ.w $13DF                             ;$00DB1B |
     STZ.w $140D                             ;$00DB1E |
     LDY.w $149D                             ;$00DB21 |
@@ -10010,8 +10010,8 @@ CODE_00DB2E:
     EOR.b #$FF                              ;$00DB3B |
     INC A                                   ;$00DB3D |
 CODE_00DB3E:
-    STA $7B
-    STZ $7A                                 ;$00DB40 |
+    STA.b PlayerXSpeed_7B
+    STZ.b PlayerXSubpeed_7A                 ;$00DB40 |
     STZ.w $13DA                             ;$00DB42 |
 CODE_00DB45:
     TXA
@@ -10023,16 +10023,16 @@ CODE_00DB45:
     EOR.b #$80                              ;$00DB4F |
 CODE_00DB51:
     ASL
-    REP #$20                                ;$00DB52 |
+    REP #$20                                ;$00DB52 | A->16
     LDA.w DATA_00DAF1,X                     ;$00DB54 |
     BCS CODE_00DB5D                         ;$00DB57 |
     EOR.w #$FFFF                            ;$00DB59 |
     INC A                                   ;$00DB5C |
 CODE_00DB5D:
     CLC
-    ADC $7A                                 ;$00DB5E |
-    STA $7A                                 ;$00DB60 |
-    SEP #$20                                ;$00DB62 |
+    ADC.b PlayerXSpeed_7A                   ;$00DB5E |
+    STA.b PlayerXSpeed_7A                   ;$00DB60 |
+    SEP #$20                                ;$00DB62 | A->8
     TYA                                     ;$00DB64 |
     LSR                                     ;$00DB65 |
     AND.b #$0E                              ;$00DB66 |
@@ -10048,8 +10048,8 @@ CODE_00DB76:
     BRA CODE_00DB92                         ;$00DB7B |
 
 CODE_00DB7D:
-    STZ $7B
-    STZ $7A                                 ;$00DB7F |
+    STZ.b PlayerXSpeed_7B
+    STZ.b PlayerXSubpeed_7A                 ;$00DB7F |
     LDX.w $13F9                             ;$00DB81 |
     LDA.w $149E                             ;$00DB84 |
     BEQ CODE_00DB96                         ;$00DB87 |
@@ -10069,7 +10069,7 @@ CODE_00DB96:
     LDA.b #$0B                              ;$00DB9C |
     STA $72                                 ;$00DB9E |
     LDA.w DATA_00DABB,Y                     ;$00DBA0 |
-    STA $7D                                 ;$00DBA3 |
+    STA.b PlayerYSpeed_7D                   ;$00DBA3 |
     LDA.b #$01                              ;$00DBA5 |
     STA.w SPCIO1_1DFA                       ;$00DBA7 |
     BRA CODE_00DC00                         ;$00DBAA |
@@ -10112,7 +10112,7 @@ CODE_00DBE8:
     ORA $75                                 ;$00DBEA |
     TAX                                     ;$00DBEC |
     LDA.w DATA_00DAB7,X                     ;$00DBED |
-    STA $7B                                 ;$00DBF0 |
+    STA.b PlayerXSpeed_7B                   ;$00DBF0 |
 CODE_00DBF2:
     LDA.b byetudlrHold_15
     AND.b #$0C                              ;$00DBF4 |
@@ -10134,12 +10134,12 @@ CODE_00DC03:
 CODE_00DC0B:
     LDA $74
     BMI CODE_00DC11                         ;$00DC0D |
-    STZ $7B                                 ;$00DC0F |
+    STZ.b PlayerXSpeed_7B                   ;$00DC0F |
 CODE_00DC11:
     LDA.w DATA_00DAB7,Y
-    STA $7D                                 ;$00DC14 |
+    STA.b PlayerYSpeed_7D                   ;$00DC14 |
 CODE_00DC16:
-    ORA $7B
+    ORA.b PlayerXSpeed_7B
     BEQ Return00DC2C                        ;$00DC18 |
     LDA.w $1496                             ;$00DC1A |
     ORA.b #$08                              ;$00DC1D |
@@ -10153,24 +10153,24 @@ Return00DC2C:
     RTS
 
 apply_player_speeds:                        ;        \
-    LDA $7D                                 ;$00DC2D |\ Backup the Y speed.
+    LDA.b PlayerYSpeed_7D                   ;$00DC2D |\ Backup the Y speed.
     STA $8A                                 ;$00DC2F |/
     LDA.w WallrunType_13E3                  ;$00DC31 |\ If the player is wall running,
     BEQ .not_wall_running                   ;$00DC34 |/
     LSR                                     ;$00DC36 |
-    LDA $7B                                 ;$00DC37 | Load the player's X speed,
+    LDA.b PlayerXSpeed_7B                   ;$00DC37 | Load the player's X speed,
     BCC .no_flip_speed                      ;$00DC39 |
     EOR.b #$FF                              ;$00DC3B |\ flip it depending on the wall running direction,
     INC A                                   ;$00DC3D |/
 .no_flip_speed                              ;        |
-    STA $7D                                 ;$00DC3E | and set the player's Y speed.
+    STA.b PlayerYSpeed_7D                   ;$00DC3E | and set the player's Y speed.
 .not_wall_running                           ;        |
     LDX.b #$00                              ;$00DC40 |\ Apply the player's X speed.
     JSR .apply_speed                        ;$00DC42 |/
     LDX.b #$02                              ;$00DC45 |\ Apply the player's Y speed.
     JSR .apply_speed                        ;$00DC47 |/
     LDA $8A                                 ;$00DC4A |\ Restore the Y speed.
-    STA $7D                                 ;$00DC4C |/
+    STA.b PlayerYSpeed_7D                   ;$00DC4C |/
     RTS                                     ;$00DC4E /
 
 .apply_speed
@@ -10990,11 +10990,11 @@ CODE_00E9C8:
     SEP #$20                                ;$00E9E0 |
     STA $00                                 ;$00E9E2 |
     SEC                                     ;$00E9E4 |
-    SBC $7B                                 ;$00E9E5 |
+    SBC.b PlayerXSpeed_7B                   ;$00E9E5 |
     EOR.w DATA_00E90E,Y                     ;$00E9E7 |
     BMI CODE_00E9F6                         ;$00E9EA |
     LDA $00                                 ;$00E9EC |
-    STA $7B                                 ;$00E9EE |
+    STA.b PlayerXSpeed_7B                   ;$00E9EE |
     LDA.w $144E                             ;$00E9F0 |
     STA.w $13DA                             ;$00E9F3 |
 CODE_00E9F6:
@@ -11027,11 +11027,11 @@ CODE_00EA0D:
     BMI CODE_00EA34                         ;$00EA24 |
     LDA.b #$03                              ;$00EA26 |
     STA.w $13E5                             ;$00EA28 |
-    LDA $7B                                 ;$00EA2B |
+    LDA.b PlayerXSpeed_7B                   ;$00EA2B |
     EOR.w DATA_00E90D,Y                     ;$00EA2D |
     BPL CODE_00EA34                         ;$00EA30 |
 CODE_00EA32:
-    STZ $7B
+    STZ.b PlayerXSpeed_7B
 CODE_00EA34:
     LDA.w $13F9
     CMP.b #$01                              ;$00EA37 |
@@ -11047,12 +11047,12 @@ CODE_00EA42:
     BCC CODE_00EAA3                         ;$00EA4B |
     LDA $75                                 ;$00EA4D |
     BNE CODE_00EA65                         ;$00EA4F |
-    LDA $7D                                 ;$00EA51 |
+    LDA.b PlayerYSpeed_7D                   ;$00EA51 |
     BMI CODE_00EA65                         ;$00EA53 |
     LSR $8A                                 ;$00EA55 |
     BCC Return00EAA5                        ;$00EA57 |
     JSR CODE_00FDA5                         ;$00EA59 |
-    STZ $7D                                 ;$00EA5C |
+    STZ.b PlayerYSpeed_7D                   ;$00EA5C |
 CODE_00EA5E:
     LDA.b #$01
     STA $75                                 ;$00EA60 |
@@ -11065,9 +11065,9 @@ CODE_00EA65:
     LDA $75                                 ;$00EA69 |
     BEQ Return00EAA5                        ;$00EA6B |
     LDA.b #$FC                              ;$00EA6D |
-    CMP $7D                                 ;$00EA6F |
+    CMP.b PlayerYSpeed_7D                   ;$00EA6F |
     BMI CODE_00EA75                         ;$00EA71 |
-    STA $7D                                 ;$00EA73 |
+    STA.b PlayerYSpeed_7D                   ;$00EA73 |
 CODE_00EA75:
     INC.w $13FA
     LDA.b byetudlrHold_15                   ;$00EA78 |
@@ -11090,7 +11090,7 @@ CODE_00EA92:
     LDA.b #$0B                              ;$00EA9B |
     STA $72                                 ;$00EA9D |
     LDA.b #$AA                              ;$00EA9F |
-    STA $7D                                 ;$00EAA1 |
+    STA.b PlayerYSpeed_7D                   ;$00EAA1 |
 CODE_00EAA3:
     STZ $75
 Return00EAA5:
@@ -11132,7 +11132,7 @@ layer_collision:
 .wall_running
     AND.b #$01                              ;$00EAE9 |
     TAY                                     ;$00EAEB |
-    LDA $7B                                 ;$00EAEC |
+    LDA.b PlayerXSpeed_7B                   ;$00EAEC |
     SEC                                     ;$00EAEE |
     SBC.w DATA_00EAB9,Y                     ;$00EAEF |
     EOR.w DATA_00EAB9,Y                     ;$00EAF2 |
@@ -11187,7 +11187,7 @@ fall_off_wall:
     TAY                                     ;$00EB47 |
 walk_off_wall:                              ;               |
     LDA.w DATA_00EABB,Y                     ;$00EB48 |
-    STA $7B                                 ;$00EB4B |
+    STA.b PlayerXSpeed_7B                   ;$00EB4B |
     TYA                                     ;$00EB4D |
     ASL                                     ;$00EB4E |
     TAY                                     ;$00EB4F |
@@ -11208,7 +11208,7 @@ walk_off_wall:                              ;               |
     LDA.b #$24                              ;$00EB6B |
     STA $72                                 ;$00EB6D |
     LDA.b #$E0                              ;$00EB6F |
-    STA $7D                                 ;$00EB71 |
+    STA.b PlayerYSpeed_7D                   ;$00EB71 |
 stop_wall_running:
     STZ.w WallrunType_13E3                  ;$00EB73 |
 .return
@@ -11377,7 +11377,7 @@ normal_collision:
     BNE CODE_00ECB1                         ;$00EC8D |
     LDA.b #$02                              ;$00EC8F |
     JSR process_page_0_tiles                ;$00EC91 |
-    LDY $7D                                 ;$00EC94 |
+    LDY.b PlayerYSpeed_7D                   ;$00EC94 |
     BPL CODE_00ECA3                         ;$00EC96 |
     LDA.w $1693                             ;$00EC98 |
     CMP.b #$21                              ;$00EC9B |
@@ -11460,7 +11460,7 @@ CODE_00ED0F:
     AND.b #$FC                              ;$00ED1E |
     ORA.b #$09                              ;$00ED20 |
     STA $77                                 ;$00ED22 |
-    STZ $7B                                 ;$00ED24 |
+    STZ.b PlayerXSpeed_7B                   ;$00ED24 |
     BRA CODE_00ED3B                         ;$00ED26 |
 
 CODE_00ED28:
@@ -11476,9 +11476,9 @@ CODE_00ED37:
     LDA.b #$08
     TSB $77                                 ;$00ED39 |
 CODE_00ED3B:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BPL CODE_00ED4A                         ;$00ED3D |
-    STZ $7D                                 ;$00ED3F |
+    STZ.b PlayerYSpeed_7D                   ;$00ED3F |
     LDA.w SPCIO0_1DF9                       ;$00ED41 |
     BNE CODE_00ED4A                         ;$00ED44 |
     INC A                                   ;$00ED46 |
@@ -11587,7 +11587,7 @@ CODE_00EDF3:
     CPY.b #$6E
     BCS CODE_00EE1D                         ;$00EDF5 |
 CODE_00EDF7:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BMI Return00EE39                        ;$00EDF9 |
     LDA.w $1931                             ;$00EDFB |
     CMP.b #$03                              ;$00EDFE |
@@ -11610,7 +11610,7 @@ CODE_00EE11:
 CODE_00EE1D:
     LDA.w OnSolidSprite_1471
     BEQ CODE_00EE2D                         ;$00EE20 |
-    LDA $7D                                 ;$00EE22 |
+    LDA.b PlayerYSpeed_7D                   ;$00EE22 |
     BMI CODE_00EE2D                         ;$00EE24 |
     STZ $8E                                 ;$00EE26 |
     LDY.b #$20                              ;$00EE28 |
@@ -11670,7 +11670,7 @@ CODE_00EE7F:
 CODE_00EE83:
     LDY.b #$20
 CODE_00EE85:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     BPL CODE_00EE8F                         ;$00EE87 |
     LDA $8D                                 ;$00EE89 |
     CMP.b #$02                              ;$00EE8B |
@@ -11724,7 +11724,7 @@ CODE_00EEE1:
     BNE CODE_00EEEF                         ;$00EEE4 |
     LDX.w $13ED                             ;$00EEE6 |
     BEQ CODE_00EF05                         ;$00EEE9 |
-    LDX $7B                                 ;$00EEEB |
+    LDX.b PlayerXSpeed_7B                   ;$00EEEB |
     BEQ CODE_00EF02                         ;$00EEED |
 CODE_00EEEF:
     STA.w $13EE
@@ -11742,14 +11742,14 @@ CODE_00EF05:
     STX.w $13E1                             ;$00EF08 |
     CPY.b #$1C                              ;$00EF0B |
     BCS CODE_00EF38                         ;$00EF0D |
-    LDA $7B                                 ;$00EF0F |
+    LDA.b PlayerXSpeed_7B                   ;$00EF0F |
     BEQ CODE_00EF31                         ;$00EF11 |
     LDA.w DATA_00E53D,Y                     ;$00EF13 |
     BEQ CODE_00EF31                         ;$00EF16 |
-    EOR $7B                                 ;$00EF18 |
+    EOR.b PlayerXSpeed_7B                   ;$00EF18 |
     BPL CODE_00EF31                         ;$00EF1A |
     STX.w $13E5                             ;$00EF1C |
-    LDA $7B                                 ;$00EF1F |
+    LDA.b PlayerXSpeed_7B                   ;$00EF1F |
     BPL CODE_00EF26                         ;$00EF21 |
     EOR.b #$FF                              ;$00EF23 |
     INC A                                   ;$00EF25 |
@@ -11762,7 +11762,7 @@ CODE_00EF26:
 CODE_00EF2F:
     LDY.b #$20
 CODE_00EF31:
-    LDA $7D
+    LDA.b PlayerYSpeed_7D
     CMP.w DATA_00E4DA,Y                     ;$00EF33 |
     BCC CODE_00EF3B                         ;$00EF36 |
 CODE_00EF38:
@@ -11789,7 +11789,7 @@ CODE_00EF50:
     CLC                                     ;$00EF5D |
     ADC.b #$28                              ;$00EF5E |
 CODE_00EF60:
-    STA $7D
+    STA.b PlayerYSpeed_7D
     TAX                                     ;$00EF62 |
     BPL CODE_00EF68                         ;$00EF63 |
     INC.w $13EF                             ;$00EF65 |
@@ -11908,14 +11908,14 @@ CODE_00F01B:
     LDA.b #$08                              ;$00F024 |
     STA.w SPCIO3_1DFC                       ;$00F026 |
     LDA.b #$80                              ;$00F029 |
-    STA $7D                                 ;$00F02B |
+    STA.b PlayerYSpeed_7D                   ;$00F02B |
     STA.w $1406                             ;$00F02D |
     PLA                                     ;$00F030 |
     PLA                                     ;$00F031 |
     JMP CODE_00EE35                         ;$00F032 |
 
 CODE_00F035:
-    LDA $7B
+    LDA.b PlayerXSpeed_7B
     SEC                                     ;$00F037 |
     SBC.w DATA_00EAB9,X                     ;$00F038 |
     EOR.w DATA_00EAB9,X                     ;$00F03B |
@@ -12743,7 +12743,7 @@ PowerDown:
 
 kill_player:                                ;        \
     LDA.b #$90                              ;$00F606 |\ Throw the player up.
-    STA $7D                                 ;$00F608 |/
+    STA.b PlayerYSpeed_7D                   ;$00F608 |/
 kill_player_no_speed:                       ;        |
     LDA.b #$09                              ;$00F60A |\ Play the death music.
     STA.w SPCIO2_1DFB                       ;$00F60C |/
@@ -13139,7 +13139,7 @@ boss_room_collision:
     ASL                                     ;$00F900 |
     TAX                                     ;$00F901 |
     PHX                                     ;$00F902 |
-    LDY $7D                                 ;$00F903 |
+    LDY.b PlayerYSpeed_7D                   ;$00F903 |
     BPL CODE_00F91E                         ;$00F905 |
     REP #$20                                ;$00F907 |
     LDA.b PlayerYPos_96                     ;$00F909 |
@@ -13148,7 +13148,7 @@ boss_room_collision:
     LDA.w boss_ceiling_height,X             ;$00F910 |
     STA.b PlayerYPos_96                     ;$00F913 |
     SEP #$20                                ;$00F915 |
-    STZ $7D                                 ;$00F917 |
+    STZ.b PlayerYSpeed_7D                   ;$00F917 |
     LDA.b #$01                              ;$00F919 |
     STA.w SPCIO0_1DF9                       ;$00F91B |
 CODE_00F91E:
@@ -13181,7 +13181,7 @@ Return00F94D:
 
 CODE_00F94E:
     LDY.b #$00
-    LDA $7D                                 ;$00F950 |
+    LDA.b PlayerYSpeed_7D                   ;$00F950 |
     BPL CODE_00F957                         ;$00F952 |
     JMP CODE_00F997                         ;$00F954 |
 
@@ -13816,12 +13816,12 @@ CODE_00FDC3:
     STA.w $17F0,Y                           ;$00FDEA |
     LDA.b #$00                              ;$00FDED |
     STA.w $1850,Y                           ;$00FDEF |
-    LDA $7D                                 ;$00FDF2 |
+    LDA.b PlayerYSpeed_7D                   ;$00FDF2 |
     BMI Return00FE0D                        ;$00FDF4 |
-    STZ $7D                                 ;$00FDF6 |
+    STZ.b PlayerYSpeed_7D                   ;$00FDF6 |
     LDY $72                                 ;$00FDF8 |
     BEQ CODE_00FDFE                         ;$00FDFA |
-    STZ $7B                                 ;$00FDFC |
+    STZ.b PlayerXSpeed_7B                   ;$00FDFC |
 CODE_00FDFE:
     LDY.b #$03
     LDA.b Powerup_19                        ;$00FE00 |
@@ -13878,7 +13878,7 @@ CODE_00FE4A:
     LDA.b byetudlrHold_15                   ;$00FE58 |
     AND.b #$04                              ;$00FE5A |
     BEQ CODE_00FE67                         ;$00FE5C |
-    LDA $7B                                 ;$00FE5E |
+    LDA.b PlayerXSpeed_7B                   ;$00FE5E |
     CLC                                     ;$00FE60 |
     ADC.b #$08                              ;$00FE61 |
     CMP.b #$10                              ;$00FE63 |
@@ -13950,7 +13950,7 @@ shoot_fireball:
     BEQ .not_on_yoshi                       ;$00FED4 | | use the next two position offsets.
     INY                                     ;$00FED6 | |
     INY                                     ;$00FED7 |/
-    LDA.w $18DC                             ;$00FED8 |\ If also ducking while on Yoshi,
+    LDA.w DuckingYoshi_18DC                 ;$00FED8 |\ If also ducking while on Yoshi,
     BEQ .not_on_yoshi                       ;$00FEDB | | use the next two position offsets.
     INY                                     ;$00FEDD | |
     INY                                     ;$00FEDE |/
