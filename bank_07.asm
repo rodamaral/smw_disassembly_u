@@ -4575,7 +4575,7 @@ ZeroSpriteTables:
 LoadSpriteTables:
     PHY
     PHX                                     ;$07F78C |
-    LDA $9E,X                               ;$07F78D |
+    LDA.b SpriteNumber_9E,X                 ;$07F78D |
     TAX                                     ;$07F78F |
     LDA.l Sprite166EVals,X                  ;$07F790 |
     AND.b #$0F                              ;$07F794 |
@@ -4589,7 +4589,7 @@ LoadTweakerBytes:
     PHY
     PHX                                     ;$07F7A1 |
     TXY                                     ;$07F7A2 |
-    LDX $9E,Y                               ;$07F7A3 |
+    LDX.b SpriteNumber_9E,Y                 ;$07F7A3 |
     LDA.l Sprite1656Vals,X                  ;$07F7A5 |
     STA.w $1656,Y                           ;$07F7A9 |
     LDA.l Sprite1662Vals,X                  ;$07F7AC |

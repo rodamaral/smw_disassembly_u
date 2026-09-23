@@ -404,7 +404,7 @@ CODE_038398:
     RTL                                     ;$03839F |
 
 CODE_0383A0:
-    LDA $9E,X
+    LDA.b SpriteNumber_9E,X
     CMP.b #$37                              ;$0383A2 |
     BNE CODE_0383C2                         ;$0383A4 |
     LDA.b #$00                              ;$0383A6 |
@@ -1232,7 +1232,7 @@ CODE_038964:
     LDA.w SpriteDir_157C,X                  ;$038972 |
     PHA                                     ;$038975 |
     LDA.b #$02                              ;$038976 |
-    STA $9E,X                               ;$038978 |
+    STA.b SpriteNumber_9E,X                 ;$038978 |
     JSL InitSpriteTables                    ;$03897A |
     PLA                                     ;$03897E |
     STA.w SpriteDir_157C,X                  ;$03897F |
@@ -1588,7 +1588,7 @@ CODE_038C45:
     LDA.w DATA_038C2A,Y                     ;$038C4A |
     STA $B6,X                               ;$038C4D |
     LDA $B6,X                               ;$038C4F |
-    LDY $9E,X                               ;$038C51 |
+    LDY.b SpriteNumber_9E,X                 ;$038C51 |
     CPY.b #$B8                              ;$038C53 |
     BEQ CODE_038C5A                         ;$038C55 |
     EOR.b #$FF                              ;$038C57 |
@@ -1610,7 +1610,7 @@ CODE_038C5A:
     SBC.w $151C,X                           ;$038C7D |
     CLC                                     ;$038C80 |
     ADC.b #$1C                              ;$038C81 |
-    LDY $9E,X                               ;$038C83 |
+    LDY.b SpriteNumber_9E,X                 ;$038C83 |
     CPY.b #$B8                              ;$038C85 |
     BNE CODE_038C8C                         ;$038C87 |
     CLC                                     ;$038C89 |
@@ -1706,7 +1706,7 @@ DiagPlatGfxProp:
 CarrotTopLiftGfx:
     JSR GetDrawInfoBnk3
     PHX                                     ;$038D27 |
-    LDA $9E,X                               ;$038D28 |
+    LDA.b SpriteNumber_9E,X                 ;$038D28 |
     CMP.b #$B8                              ;$038D2A |
     LDX.b #$02                              ;$038D2C |
     STX $02                                 ;$038D2E |
@@ -2077,7 +2077,7 @@ CODE_038FA4:
     AND.b #$07                              ;$038FB2 |
     ORA.w $186C,X                           ;$038FB4 |
     BNE CODE_038FC2                         ;$038FB7 |
-    LDA $9E,X                               ;$038FB9 |
+    LDA.b SpriteNumber_9E,X                 ;$038FB9 |
     CMP.b #$B0                              ;$038FBB |
     BNE CODE_038FC2                         ;$038FBD |
     JSR CODE_039020                         ;$038FBF |
@@ -2588,7 +2588,7 @@ CODE_039387:
     RTS                                     ;$03938A |
 
 GenTileFromSpr1:
-    STA $9C
+    STA.b TileGenerate_9C
     LDA.b SpriteXPosLow_E4,X                ;$03938D |
     STA.b InteractionPtXPos_9A              ;$03938F |
     LDA.w SpriteXPosHigh_14E0,X             ;$039391 |
@@ -2737,7 +2737,7 @@ WoodSpikeGfxProp:
 WoodSpikeGfx:
     JSR GetDrawInfoBnk3
     STZ $02                                 ;$0394D2 |
-    LDA $9E,X                               ;$0394D4 |
+    LDA.b SpriteNumber_9E,X                 ;$0394D4 |
     CMP.b #$AD                              ;$0394D6 |
     BNE CODE_0394DE                         ;$0394D8 |
     LDA.b #$05                              ;$0394DA |
@@ -3764,7 +3764,7 @@ ReznorPlatGfxRt:
     RTS                                     ;$039C33 |
 
 InvisBlkPDinosMain:
-    LDA $9E,X
+    LDA.b SpriteNumber_9E,X
     CMP.b #$6D                              ;$039C36 |
     BNE DinoMainRt                          ;$039C38 |
     JSL InvisBlkMainRt                      ;$039C3A |
@@ -3837,7 +3837,7 @@ CODE_039CA8:
     BEQ CODE_039C89                         ;$039CAD |
     LDA.w $1540,X                           ;$039CAF |
     BNE CODE_039CC8                         ;$039CB2 |
-    LDA $9E,X                               ;$039CB4 |
+    LDA.b SpriteNumber_9E,X                 ;$039CB4 |
     CMP.b #$6E                              ;$039CB6 |
     BEQ CODE_039CC8                         ;$039CB8 |
     LDA.b #$FF                              ;$039CBA |
@@ -3862,7 +3862,7 @@ CODE_039CDA:
     LDA.b #$10
     STA $AA,X                               ;$039CDC |
     LDY.w SpriteDir_157C,X                  ;$039CDE |
-    LDA $9E,X                               ;$039CE1 |
+    LDA.b SpriteNumber_9E,X                 ;$039CE1 |
     CMP.b #$6E                              ;$039CE3 |
     BEQ CODE_039CE9                         ;$039CE5 |
     INY                                     ;$039CE7 |
@@ -3926,7 +3926,7 @@ CODE_039D66:
     LSR                                     ;$039D74 |
     STA.w $151C,X                           ;$039D75 |
     BNE Return039D9D                        ;$039D78 |
-    LDA $9E,X                               ;$039D7A |
+    LDA.b SpriteNumber_9E,X                 ;$039D7A |
     CMP.b #$6E                              ;$039D7C |
     BEQ Return039D9D                        ;$039D7E |
     TXA                                     ;$039D80 |
@@ -4036,7 +4036,7 @@ DinoGfxRt:
     STA $02                                 ;$039E4F |
     LDA.w $1602,X                           ;$039E51 |
     STA $04                                 ;$039E54 |
-    LDA $9E,X                               ;$039E56 |
+    LDA.b SpriteNumber_9E,X                 ;$039E56 |
     CMP.b #$6F                              ;$039E58 |
     BEQ CODE_039EA9                         ;$039E5A |
     PHX                                     ;$039E5C |
@@ -4439,7 +4439,7 @@ Bnk3CallSprMain:
     PHB
     PHK                                     ;$03A119 |
     PLB                                     ;$03A11A |
-    LDA $9E,X                               ;$03A11B |
+    LDA.b SpriteNumber_9E,X                 ;$03A11B |
     CMP.b #$C8                              ;$03A11D |
     BNE CODE_03A126                         ;$03A11F |
     JSR LightSwitch                         ;$03A121 |
@@ -4597,7 +4597,7 @@ CODE_03A1DE:
     RTL                                     ;$03A1E6 |
 
 CODE_03A1E7:
-    LDA $9E,X
+    LDA.b SpriteNumber_9E,X
     CMP.b #$B2                              ;$03A1E9 |
     BNE CODE_03A1F2                         ;$03A1EB |
     JSR FallingSpike                        ;$03A1ED |
@@ -7356,7 +7356,7 @@ CODE_03B7F8:
     LSR                                     ;$03B7FE |
     LSR                                     ;$03B7FF |
     TAY                                     ;$03B800 |
-    LDA $9E,X                               ;$03B801 |
+    LDA.b SpriteNumber_9E,X                 ;$03B801 |
     CMP.b #$A1                              ;$03B803 |
     BNE CODE_03B80C                         ;$03B805 |
     TYA                                     ;$03B807 |
@@ -7742,7 +7742,7 @@ DATA_03BA02:
     db $FF,$FF,$FF,$FF,$FF,$FF
 
 GenTileFromSpr2:
-    STA $9C
+    STA.b TileGenerate_9C
     LDA.b SpriteXPosLow_E4,X                ;$03C002 |
     SEC                                     ;$03C004 |
     SBC.b #$08                              ;$03C005 |
@@ -7799,7 +7799,7 @@ ADDR_03C05C:
     STZ.w $18AC
     STZ.w YoshiHasWings_141E                ;$03C05F |
     LDA.b #$35                              ;$03C062 |
-    STA.w $9E,X                             ;$03C064 |
+    STA.w SpriteNumber_9E,X                 ;$03C064 |
     LDA.b #$08                              ;$03C067 |
     STA.w SpriteStatus_14C8,X               ;$03C069 |
     LDA.b #$1F                              ;$03C06C |
@@ -8058,7 +8058,7 @@ CODE_03C263:
 ChainsawGfx:
     JSR GetDrawInfoBnk3
     PHX                                     ;$03C26E |
-    LDA $9E,X                               ;$03C26F |
+    LDA.b SpriteNumber_9E,X                 ;$03C26F |
     SEC                                     ;$03C271 |
     SBC.b #$65                              ;$03C272 |
     TAX                                     ;$03C274 |
@@ -8126,7 +8126,7 @@ Generate1Up:
     LDA.b #$08
     STA.w SpriteStatus_14C8,X               ;$03C2E8 |
     LDA.b #$78                              ;$03C2EB |
-    STA $9E,X                               ;$03C2ED |
+    STA.b SpriteNumber_9E,X                 ;$03C2ED |
     LDA.b PlayerXPos_94                     ;$03C2EF |
     STA.b SpriteXPosLow_E4,X                ;$03C2F1 |
     LDA.b PlayerXPos_94+1                   ;$03C2F3 |
@@ -8147,7 +8147,7 @@ InvisMushroom:
     JSL MarioSprInteract                    ;$03C312 |
     BCC Return03C347                        ;$03C316 |
     LDA.b #$74                              ;$03C318 |
-    STA $9E,X                               ;$03C31A |
+    STA.b SpriteNumber_9E,X                 ;$03C31A |
     JSL InitSpriteTables                    ;$03C31C |
     LDA.b #$20                              ;$03C320 |
     STA.w SpritePlayerContact_154C,X        ;$03C322 |
@@ -8251,7 +8251,7 @@ DATA_03C3D7:
     db $00,$00,$FF
 
 CODE_03C3DA:
-    LDA $9E,X
+    LDA.b SpriteNumber_9E,X
     CMP.b #$31                              ;$03C3DC |
     BEQ CODE_03C3AE                         ;$03C3DE |
     JSR GetDrawInfoBnk3                     ;$03C3E0 |

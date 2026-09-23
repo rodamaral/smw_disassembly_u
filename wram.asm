@@ -886,35 +886,35 @@ InteractionPtXPos_9A: skip 2
 ; === $7E009C ===
 ; 1 byte
 ; a Map16 tile to draw to the screen
-Map16TileGenerate_9C: skip 1
+TileGenerate_9C: skip 1
 ; Valid values
-!Map16Gen_CollectEmpty = 1 ; sets item memory
-!Map16Gen_Empty = 2
-!Map16Gen_Vine = 3
-!Map16Gen_Bush = 4
-!Map16Gen_TurningBlock = 5
-!Map16Gen_Coin = 6
-!Map16Gen_MushStalk = 7
-!Map16Gen_MoleHole = 8
-!Map16Gen_SolidEmpty = 9
-!Map16Gen_TurnMulticoin = 10
-!Map16Gen_QMulticoin = 11
-!Map16Gen_TurnBlock = 12
-!Map16Gen_UsedBlock = 13
-!Map16Gen_NoteBlock = 14
-!Map16Gen_NoteUnused = 15
-!Map16Gen_NoteAllSides = 16
-!Map16Gen_TurnBounce = 17
-!Map16Gen_Roulette = 18
-!Map16Gen_OnOff = 19
-!Map16Gen_PipeLeft = 20
-!Map16Gen_PipeRight = 21
-!Map16Gen_CollectUsed = 22 ; sets item memory
-!Map16Gen_CollectCorrect = 23 ; sets item memory
-!Map16Gen_CollectDragon = 24 ; sets item memory
-!Map16Gen_NetDoorEmpty = 25
-!Map16Gen_NetDoorClosed = 26
-!Map16Gen_FlatSwitch = 27
+!GenCollectEmpty = 1 ; sets item memory
+!GenEmpty = 2
+!GenVine = 3
+!GenBush = 4
+!GenTurningBlock = 5
+!GenCoin = 6
+!GenMushStalk = 7
+!GenMoleHole = 8
+!GenSolidEmpty = 9
+!GenTurnMulticoin = 10
+!GenQMulticoin = 11
+!GenTurnBlock = 12
+!GenUsedBlock = 13
+!GenNoteBlock = 14
+!GenNoteUnused = 15
+!GenNoteAllSides = 16
+!GenTurnBounce = 17
+!GenRoulette = 18
+!GenOnOff = 19
+!GenPipeLeft = 20
+!GenPipeRight = 21
+!GenCollectUsed = 22 ; sets item memory
+!GenCollectCorrect = 23 ; sets item memory
+!GenCollectDragon = 24 ; sets item memory
+!GenNetDoorEmpty = 25
+!GenNetDoorClosed = 26
+!GenFlatSwitch = 27
 
 ; === $7E009D ===
 ; 1 byte

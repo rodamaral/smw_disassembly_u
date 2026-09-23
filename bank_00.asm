@@ -13621,7 +13621,7 @@ CODE_00FC98:
     LDA.b #$08
     STA.w SpriteStatus_14C8,X               ;$00FC9A |
     LDA.b #$35                              ;$00FC9D |
-    STA $9E,X                               ;$00FC9F |
+    STA.b SpriteNumber_9E,X                 ;$00FC9F |
     LDA.b PlayerXPos_94                     ;$00FCA1 |
     STA.b SpriteXPosLow_E4,X                ;$00FCA3 |
     LDA.b PlayerXPos_94+1                   ;$00FCA5 |
