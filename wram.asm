@@ -124,10 +124,10 @@ axlr0000Press_18: skip 1
 ; the player's current powerup status
 Powerup_19: skip 1
 ; Valid values
-!Powerup_Small = 0
-!Powerup_Big = 1
-!Powerup_Cape = 2
-!Powerup_Flower = 3
+!PowerupSmall_00 = 0
+!PowerupBig_01 = 1
+!PowerupCape_02 = 2
+!PowerupFlower_03 = 3
 
 ; === $7E001A ===
 ; 2 bytes

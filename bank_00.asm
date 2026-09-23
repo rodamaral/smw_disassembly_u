@@ -2414,7 +2414,7 @@ CODE_0094D7:
     JSR CODE_00922F                         ;$0094DD |
     LDX.b #$0B                              ;$0094E0 |
 CODE_0094E2:
-    STZ $1A,X
+    STZ.b Layer1XPos_1A,X
     DEX                                     ;$0094E4 |
     BPL CODE_0094E2                         ;$0094E5 |
     LDA.b #!Priority2_20                    ;$0094E7 |
@@ -2667,7 +2667,7 @@ CODE_0096E9:
     JSL CODE_05D796                         ;$0096F4 |
     LDX.b #$07                              ;$0096F8 |
 CODE_0096FA:
-    LDA $1A,X
+    LDA.b Layer1XPos_1A,X
     STA.w $1462,X                           ;$0096FC |
     DEX                                     ;$0096FF |
     BPL CODE_0096FA                         ;$009700 |
@@ -4039,7 +4039,7 @@ Clear_1A_13D3:
     SEP #$20                                ;$00A1A8 |
     LDX.w #$00BD                            ;$00A1AA |
 CODE_00A1AD:
-    STZ $1A,X
+    STZ.b Layer1XPos_1A,X
     DEX                                     ;$00A1AF |
     BPL CODE_00A1AD                         ;$00A1B0 |
     LDX.w #$07CE                            ;$00A1B2 |
@@ -9660,7 +9660,7 @@ CODE_00D8CD:
     LDA.w YoshiHasWings_141E                ;$00D8D8 |
     LSR                                     ;$00D8DB |
     BEQ CODE_00D8E7                         ;$00D8DC |
-    LDY.b #$02                              ;$00D8DE |
+    LDY.b #!PowerupCape_02                  ;$00D8DE |
     CPY.b Powerup_19                        ;$00D8E0 |
     BEQ CODE_00D8E5                         ;$00D8E2 |
     INX                                     ;$00D8E4 |
@@ -9669,7 +9669,7 @@ CODE_00D8E5:
 
 CODE_00D8E7:
     LDA.b Powerup_19
-    CMP.b #$02                              ;$00D8E9 |
+    CMP.b #!PowerupCape_02                  ;$00D8E9 |
     BNE CODE_00D928                         ;$00D8EB |
     LDA.b PlayerInAir_72                    ;$00D8ED |
     CMP.b #$0C                              ;$00D8EF |
@@ -9683,8 +9683,8 @@ CODE_00D8FD:
 CODE_00D8FF:
     LDA.w $14A5
     BNE CODE_00D90D                         ;$00D902 |
-    LDA $15,X                               ;$00D904 |
-    BPL CODE_00D924                         ;$00D906 |
+    LDA.b byetudlrHold_15,X                 ;$00D904 | X = 0 with the cape
+    BPL CODE_00D924                         ;$00D906 | X = 1 mounted on Yoshi with wings
     LDA.b #$10                              ;$00D908 |
     STA.w $14A5                             ;$00D90A |
 CODE_00D90D:
@@ -12993,7 +12993,7 @@ update_screen_position_00F6DB:
     SBC.w $1468                             ;$00F7E2 |
     STA.w $17BE                             ;$00F7E5 |
     LDX.b #$07                              ;$00F7E8 |
--   LDA $1A,X                               ;$00F7EA |
+-   LDA.b Layer1XPos_1A,X                   ;$00F7EA |
     STA.w $1462,X                           ;$00F7EC |
     DEX                                     ;$00F7EF |
     BPL -                                   ;$00F7F0 |

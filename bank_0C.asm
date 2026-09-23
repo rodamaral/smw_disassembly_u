@@ -1317,11 +1317,11 @@ CODE_0C9F6A:
     LDX.b #$00                              ;$0C9F6C |
     LDA.w #$FF80                            ;$0C9F6E |
     STA.w $1446,X                           ;$0C9F71 |
-    LDA $1E,X                               ;$0C9F74 |
+    LDA.b Layer2XPos_1E,X                   ;$0C9F74 |
     STA $00,X                               ;$0C9F76 |
     JSR CODE_0C9FCB                         ;$0C9F78 |
     LDA $00,X                               ;$0C9F7B |
-    STA $1E,X                               ;$0C9F7D |
+    STA.b Layer2XPos_1E,X                   ;$0C9F7D |
     LDA.b Layer3YPos_24                     ;$0C9F7F |
     CMP.w #$0559                            ;$0C9F81 |
     BCS CODE_0C9FAC                         ;$0C9F84 |

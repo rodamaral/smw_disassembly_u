@@ -372,13 +372,13 @@ CODE_048320:
     ORA.b #$F0                              ;$04833F |
     DEY                                     ;$048341 |
 CODE_048342:
-    ADC $1A,X
-    STA $1A,X                               ;$048344 |
-    STA $1E,X                               ;$048346 |
+    ADC.b Layer1XPos_1A,X
+    STA.b Layer1XPos_1A,X                   ;$048344 |
+    STA.b Layer2XPos_1E,X                   ;$048346 |
     TYA                                     ;$048348 |
-    ADC $1B,X                               ;$048349 |
-    STA $1B,X                               ;$04834B |
-    STA $1F,X                               ;$04834D |
+    ADC.b Layer1XPos_1A+1,X                 ;$048349 |
+    STA.b Layer1XPos_1A+1,X                 ;$04834B |
+    STA.b Layer2XPos_1E+1,X                 ;$04834D |
     PLY                                     ;$04834F |
     DEY                                     ;$048350 |
     BPL CODE_048320                         ;$048351 |
@@ -493,7 +493,7 @@ CODE_048413:
 CODE_048415:
     TAY
     REP #$20                                ;$048416 |
-    LDA $1A,X                               ;$048418 |
+    LDA.b Layer1XPos_1A,X                   ;$048418 |
     CLC                                     ;$04841A |
     ADC.w DATA_048211,Y                     ;$04841B |
     PHA                                     ;$04841E |
@@ -503,8 +503,8 @@ CODE_048415:
     ASL                                     ;$048426 |
     PLA                                     ;$048427 |
     BCC CODE_04842E                         ;$048428 |
-    STA $1A,X                               ;$04842A |
-    STA $1E,X                               ;$04842C |
+    STA.b Layer1XPos_1A,X                   ;$04842A |
+    STA.b Layer2XPos_1E,X                   ;$04842C |
 CODE_04842E:
     SEP #$20
     RTS                                     ;$048430 |
@@ -2626,8 +2626,8 @@ CODE_049870:
     BCC CODE_049878                         ;$049873 |
     LDA.w DATA_04941A,Y                     ;$049875 |
 CODE_049878:
-    STA $1A,X
-    STA $1E,X                               ;$04987A |
+    STA.b Layer1XPos_1A,X
+    STA.b Layer2XPos_1E,X                   ;$04987A |
     DEY                                     ;$04987C |
     DEY                                     ;$04987D |
     DEX                                     ;$04987E |
