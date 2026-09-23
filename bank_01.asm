@@ -8681,7 +8681,7 @@ CODE_01BDFB:
     LDA.b SpriteLock_9D
     BNE Return01BE5E                        ;$01BDFD |
     LDY.b #$24                              ;$01BDFF |
-    STY $40                                 ;$01BE01 |
+    STY.b ColorSettings_40                  ;$01BE01 |
     LDA.w $1540,X                           ;$01BE03 |
     BNE Return01BE5E                        ;$01BE06 |
     JSL GetRand                             ;$01BE08 |
@@ -8748,7 +8748,7 @@ CODE_01BE6E:
     INC $C2,X                               ;$01BE80 |
 CODE_01BE82:
     LDY.b #$34
-    STY $40                                 ;$01BE84 |
+    STY.b ColorSettings_40                  ;$01BE84 |
 CODE_01BE86:
     CMP.b #$40
     BNE CODE_01BE96                         ;$01BE88 |
@@ -8982,7 +8982,7 @@ CODE_01C004:
     CMP.b #$09                              ;$01C014 |
     BNE CODE_01C01C                         ;$01C016 |
     LDY.b #$24                              ;$01C018 |
-    STY $40                                 ;$01C01A |
+    STY.b ColorSettings_40                  ;$01C01A |
 CODE_01C01C:
     CMP.b #$09
     BNE CODE_01C028                         ;$01C01E |

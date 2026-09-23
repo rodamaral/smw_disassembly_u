@@ -317,13 +317,13 @@ CODE_0381F5:
 
 CODE_038239:
     LDY.b #$24
-    STY $40                                 ;$03823B |
+    STY.b ColorSettings_40                  ;$03823B |
     LDA.w $190B                             ;$03823D |
     CMP.b #$08                              ;$038240 |
     DEC A                                   ;$038242 |
     BCS CODE_03824A                         ;$038243 |
     LDY.b #$34                              ;$038245 |
-    STY $40                                 ;$038247 |
+    STY.b ColorSettings_40                  ;$038247 |
     INC A                                   ;$038249 |
 CODE_03824A:
     ASL
@@ -8427,7 +8427,7 @@ CODE_03C4FA:
 CODE_03C500:
     JSR CODE_03C4A5
     LDA.b #$FF                              ;$03C503 |
-    STA $40                                 ;$03C505 |
+    STA.b ColorSettings_40                  ;$03C505 |
     LDA.b #$20                              ;$03C507 |
     STA.b ColorAddition_44                  ;$03C509 |
     LDA.b #$20                              ;$03C50B |

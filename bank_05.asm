@@ -76,7 +76,7 @@ CODE_05809E:
     STA $4D                                 ;$0580A9 |
     STA $4F                                 ;$0580AB |
     JSR set_map16_for_VRAM_upload_05877E    ;$0580AD |
-    LDA $45                                 ;$0580B0 |
+    LDA.b Layer1TileUp_45                   ;$0580B0 |
     STA $47                                 ;$0580B2 |
     LDA $49                                 ;$0580B4 |
     STA $4B                                 ;$0580B6 |
@@ -519,7 +519,7 @@ CODE_0584E3:
     LDA.l LevSubScrnTbl,X                   ;$05850C |
     STA.w $0D9E                             ;$058510 |
     LDA.l LevCGADSUBtable,X                 ;$058513 |
-    STA $40                                 ;$058517 |
+    STA.b ColorSettings_40                  ;$058517 |
     LDA.l SpecialLevTable,X                 ;$058519 |
     STA.w IRQNMICommand_0D9B                ;$05851D |
     LDA.l VerticalTable,X                   ;$058520 |
@@ -881,7 +881,7 @@ set_map16_for_VRAM_upload_05877E:
     TAY                                     ;$05878F |
     SEC                                     ;$058790 |
     SBC.w #$0008                            ;$058791 |
-    STA $45                                 ;$058794 |
+    STA.b Layer1TileUp_45                   ;$058794 |
     TYA                                     ;$058796 |
     CLC                                     ;$058797 |
     ADC.w #$0017                            ;$058798 |
@@ -889,7 +889,7 @@ set_map16_for_VRAM_upload_05877E:
     SEP #$30                                ;$05879D |
     LDA $55                                 ;$05879F |
     TAX                                     ;$0587A1 |
-    LDA $45,X                               ;$0587A2 |
+    LDA.b Layer1TileUp_45,X                 ;$0587A2 |
     LSR                                     ;$0587A4 |
     LSR                                     ;$0587A5 |
     LSR                                     ;$0587A6 |
@@ -921,7 +921,7 @@ set_map16_for_VRAM_upload_05877E:
     TAY                                     ;$0587D3 |
     SEC                                     ;$0587D4 |
     SBC.w #$0008                            ;$0587D5 |
-    STA $45                                 ;$0587D8 |
+    STA.b Layer1TileUp_45                   ;$0587D8 |
     TYA                                     ;$0587DA |
     CLC                                     ;$0587DB |
     ADC.w #$0017                            ;$0587DC |
@@ -1147,12 +1147,12 @@ CODE_0589CE:
     STA $0F                                 ;$0589F7 |
     LDA $55                                 ;$0589F9 |
     TAX                                     ;$0589FB |
-    LDA $45,X                               ;$0589FC |
+    LDA.b Layer1TileUp_45,X                 ;$0589FC |
     AND.b #$0F                              ;$0589FE |
     ASL                                     ;$058A00 |
     STA.w $1BE5                             ;$058A01 |
     LDY.w #$0020                            ;$058A04 |
-    LDA $45,X                               ;$058A07 |
+    LDA.b Layer1TileUp_45,X                 ;$058A07 |
     AND.b #$10                              ;$058A09 |
     BEQ CODE_058A10                         ;$058A0B |
     LDY.w #$0024                            ;$058A0D |
@@ -1160,7 +1160,7 @@ CODE_058A10:
     TYA
     STA.w $1BE4                             ;$058A11 |
     REP #$20                                ;$058A14 |
-    LDA $45,X                               ;$058A16 |
+    LDA.b Layer1TileUp_45,X                 ;$058A16 |
     AND.w #$01F0                            ;$058A18 |
     LSR                                     ;$058A1B |
     LSR                                     ;$058A1C |
@@ -1191,7 +1191,7 @@ CODE_058A10:
 CODE_058A47:
     STY $0C
     REP #$30                                ;$058A49 |
-    LDA $45,X                               ;$058A4B |
+    LDA.b Layer1TileUp_45,X                 ;$058A4B |
     AND.w #$000F                            ;$058A4D |
     STA $08                                 ;$058A50 |
     LDX.w #$0000                            ;$058A52 |
@@ -1258,20 +1258,20 @@ CODE_058A9B:
     LDA $55                                 ;$058AC6 |
     TAX                                     ;$058AC8 |
     LDY.w #$0020                            ;$058AC9 |
-    LDA $45,X                               ;$058ACC |
+    LDA.b Layer1TileUp_45,X                 ;$058ACC |
     AND.b #$10                              ;$058ACE |
     BEQ CODE_058AD5                         ;$058AD0 |
     LDY.w #$0028                            ;$058AD2 |
 CODE_058AD5:
     TYA
     STA $00                                 ;$058AD6 |
-    LDA $45,X                               ;$058AD8 |
+    LDA.b Layer1TileUp_45,X                 ;$058AD8 |
     LSR                                     ;$058ADA |
     LSR                                     ;$058ADB |
     AND.b #$03                              ;$058ADC |
     ORA $00                                 ;$058ADE |
     STA.w $1BE4                             ;$058AE0 |
-    LDA $45,X                               ;$058AE3 |
+    LDA.b Layer1TileUp_45,X                 ;$058AE3 |
     AND.b #$03                              ;$058AE5 |
     ASL                                     ;$058AE7 |
     ASL                                     ;$058AE8 |
@@ -1281,7 +1281,7 @@ CODE_058AD5:
     ASL                                     ;$058AEC |
     STA.w $1BE5                             ;$058AED |
     REP #$20                                ;$058AF0 |
-    LDA $45,X                               ;$058AF2 |
+    LDA.b Layer1TileUp_45,X                 ;$058AF2 |
     AND.w #$01F0                            ;$058AF4 |
     LSR                                     ;$058AF7 |
     LSR                                     ;$058AF8 |
@@ -1312,7 +1312,7 @@ CODE_058AD5:
 CODE_058B23:
     STY $0C
     REP #$30                                ;$058B25 |
-    LDA $45,X                               ;$058B27 |
+    LDA.b Layer1TileUp_45,X                 ;$058B27 |
     AND.w #$000F                            ;$058B29 |
     ASL                                     ;$058B2C |
     ASL                                     ;$058B2D |
@@ -2921,7 +2921,7 @@ CODE_05B10C:
     STZ.w MessageBoxTrigger_1426            ;$05B11D |
     STZ.w $1B88                             ;$05B120 |
     STZ.b Layer12Window_41                  ;$05B123 |
-    STZ $42                                 ;$05B125 |
+    STZ.b Layer34Window_42                  ;$05B125 |
     STZ.b OBJCWWindow_43                    ;$05B127 |
     STZ.w $0D9F                             ;$05B129 |
     LDA.b #$02                              ;$05B12C |
@@ -3118,7 +3118,7 @@ CODE_05B275:
     BEQ CODE_05B28E                         ;$05B28A |
     LDA.b #$20                              ;$05B28C |
 CODE_05B28E:
-    STA $43
+    STA.b OBJCWWindow_43
     LDA.b #$22                              ;$05B290 |
     STA.b ColorAddition_44                  ;$05B292 |
     LDA.b #$80                              ;$05B294 |

@@ -228,7 +228,7 @@ NMI_start:                                  ;        \
     STZ.w $420C                             ;$0081AF | Disable HDMA
     LDA.b Layer12Window_41                  ;$0081B2 |\ Update layer 1 and 2 window mask settings
     STA.w $2123                             ;$0081B4 |/
-    LDA $42                                 ;$0081B7 |\ Update layer 3 and 4 window mask settings
+    LDA.b Layer34Window_42                  ;$0081B7 |\ Update layer 3 and 4 window mask settings
     STA.w $2124                             ;$0081B9 |/
     LDA.b OBJCWWindow_43                    ;$0081BC |\ Update sprite and color window settings
     STA.w $2125                             ;$0081BE |/
@@ -238,7 +238,7 @@ NMI_start:                                  ;        \
     BPL .regular_level_NMI                  ;$0081C9 | |
     JMP .mode_7_NMI                         ;$0081CB |/ Otherwise go to mode 7 routines
 .regular_level_NMI                          ;        |
-    LDA $40                                 ;$0081CE |\ Set up color math on all layers in $40 but three
+    LDA.b ColorSettings_40                  ;$0081CE |\ Set up color math on all layers in $40 but three
     AND.b #$FB                              ;$0081D0 | |
     STA.w $2131                             ;$0081D2 |/
     LDA.b #$09                              ;$0081D5 |\ Mode 1 with layer 3 priority
@@ -466,7 +466,7 @@ IRQ_NMI_return:                             ;        |
 mode_7_IRQ_return:                          ;        |
     LDA.b MainBGMode_3E                     ;$0083A8 |\ Set the BG mode
     STA.w $2105                             ;$0083AA |/
-    LDA $40                                 ;$0083AD |\ Set any color math settings
+    LDA.b ColorSettings_40                  ;$0083AD |\ Set any color math settings
     STA.w $2131                             ;$0083AF |/
 IRQ_return:                                 ;        |
     REP #$30                                ;$0083B2 |\ Restore everything saved at the beginning of NMI
@@ -1291,7 +1291,7 @@ SetUpScreen:
     LDA.b #$04                              ;$008A93 |
     STA.w $210C                             ;$008A95 |
     STZ.b Layer12Window_41                  ;$008A98 |
-    STZ $42                                 ;$008A9A |
+    STZ.b Layer34Window_42                  ;$008A9A |
     STZ.b OBJCWWindow_43                    ;$008A9C |
     STZ.w $212A                             ;$008A9E |
     STZ.w $212B                             ;$008AA1 |
@@ -2311,7 +2311,7 @@ Mode04Finish:
 
 ScreenSettings:
     STA.w $2131
-    STA $40                                 ;$009400 |
+    STA.b ColorSettings_40                  ;$009400 |
     STX.w $212C                             ;$009402 |
     STY.w $212D                             ;$009405 |
     STZ.w $212E                             ;$009408 |
@@ -3115,7 +3115,7 @@ GM04_title_load_2_009A8B:
     LDA.b #$33                              ;$009AAD |
     STA.b Layer12Window_41                  ;$009AAF |
     LDA.b #$00                              ;$009AB1 |
-    STA $42                                 ;$009AB3 |
+    STA.b Layer34Window_42                  ;$009AB3 |
     LDA.b #$23                              ;$009AB5 |
     STA.b OBJCWWindow_43                    ;$009AB7 |
     LDA.b #$12                              ;$009AB9 |
@@ -3467,7 +3467,7 @@ CODE_009D29:
 
 CODE_009D30:
     STA.w $0701
-    STY $40                                 ;$009D33 |
+    STY.b ColorSettings_40                  ;$009D33 |
     SEP #$20                                ;$009D35 |
     RTS                                     ;$009D37 |
 
@@ -3856,7 +3856,7 @@ CODE_00A017:
     STZ.b Layer3YPos_24+1                   ;$00A019 |
 CODE_00A01B:
     LDA.b #$04
-    TRB $40                                 ;$00A01D |
+    TRB.b ColorSettings_40                  ;$00A01D |
 CODE_00A01F:
     LDA.w $1BE3
     BEQ Return00A044                        ;$00A022 |
@@ -5605,7 +5605,7 @@ CODE_00AF25:
     CPY.b #$A0
     BCS CODE_00AF35                         ;$00AF27 |
     LDA.b #$04                              ;$00AF29 |
-    TRB $40                                 ;$00AF2B |
+    TRB.b ColorSettings_40                  ;$00AF2B |
     LDA.b #$09                              ;$00AF2D |
     STA.b MainBGMode_3E                     ;$00AF2F |
     JSL CODE_05CBFF                         ;$00AF31 |
@@ -7337,7 +7337,7 @@ timers_and_animation_00C47E:
     LDA.b #$22                              ;$00C4C3 |
     STA.b Layer12Window_41                  ;$00C4C5 |
     LDA.b #$02                              ;$00C4C7 |
-    STA $42                                 ;$00C4C9 |
+    STA.b Layer34Window_42                  ;$00C4C9 |
     LDA.w DATA_00C478,X                     ;$00C4CB |
     STA.b OBJCWWindow_43                    ;$00C4CE |
     LDA.b #$12                              ;$00C4D0 |
@@ -8005,7 +8005,7 @@ CODE_00CA4A:
     STA.b Layer12Window_41                  ;$00CA54 |
     STA.b OBJCWWindow_43                    ;$00CA56 |
     LDA.b #$03                              ;$00CA58 |
-    STA $42                                 ;$00CA5A |
+    STA.b Layer34Window_42                  ;$00CA5A |
     LDA.b #$22                              ;$00CA5C |
     STA.b ColorAddition_44                  ;$00CA5E |
     RTS                                     ;$00CA60 |

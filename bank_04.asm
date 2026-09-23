@@ -5423,7 +5423,7 @@ CODE_04DB81:
     STA.b Layer12Window_41                  ;$04DB91 |
     LDA.b #$33                              ;$04DB93 |
 CODE_04DB95:
-    STA $43
+    STA.b OBJCWWindow_43
     LDA.b #$80                              ;$04DB97 |
     STA.w $0D9F                             ;$04DB99 |
     RTS                                     ;$04DB9C |
@@ -7452,7 +7452,7 @@ CODE_04F3FF:
     INC.w $1B87                             ;$04F404 |
 CODE_04F407:
     STZ.b Layer12Window_41
-    STZ $42                                 ;$04F409 |
+    STZ.b Layer34Window_42                  ;$04F409 |
     STZ.b OBJCWWindow_43                    ;$04F40B |
     STZ.w $0D9F                             ;$04F40D |
     RTS                                     ;$04F410 |

@@ -2791,7 +2791,7 @@ CODE_0CAB2F:
 CODE_0CAB39:
     LDA.b #$30
 CODE_0CAB3B:
-    STA $43
+    STA.b OBJCWWindow_43
     LDA.w $1B89                             ;$0CAB3D |
     CMP.w DATA_0CAB1D,X                     ;$0CAB40 |
     BNE CODE_0CAB64                         ;$0CAB43 |
