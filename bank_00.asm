@@ -3308,7 +3308,7 @@ CODE_009BDE:
     ADC $8A                                 ;$009BE6 |
     STA $8A                                 ;$009BE8 |
     BCC CODE_009BEE                         ;$009BEA |
-    INC $8B                                 ;$009BEC |
+    INC.b OWScreenYCurrentTile_8B           ;$009BEC |
 CODE_009BEE:
     INX
     INY                                     ;$009BEF |
@@ -3564,7 +3564,7 @@ CODE_009DD1:
     ADC $8A                                 ;$009DD6 |
     STA $8A                                 ;$009DD8 |
     BCC CODE_009DDE                         ;$009DDA |
-    INC $8B                                 ;$009DDC |
+    INC.b OWScreenYCurrentTile_8B           ;$009DDC |
 CODE_009DDE:
     INX
     DEY                                     ;$009DDF |
@@ -6283,11 +6283,11 @@ CODE_00BA28:
     PHK                                     ;$00BA2A |
     PLB                                     ;$00BA2B |
     LDA.w DATA_00B992,Y                     ;$00BA2C |
-    STA $8A                                 ;$00BA2F |
+    STA.b GFXFilePtr_8A                     ;$00BA2F |
     LDA.w DATA_00B9C4,Y                     ;$00BA31 |
-    STA $8B                                 ;$00BA34 |
+    STA.b GFXFilePtr_8A+1                   ;$00BA34 |
     LDA.w DATA_00B9F6,Y                     ;$00BA36 |
-    STA $8C                                 ;$00BA39 |
+    STA.b GFXFilePtr_8A+2                   ;$00BA39 |
     LDA.b #$00                              ;$00BA3B |
     STA $00                                 ;$00BA3D |
     LDA.b #$AD                              ;$00BA3F |
@@ -8317,14 +8317,14 @@ CODE_00CD39:                                ;        |
     LDA.w PlayerClimbFlag_18BE              ;$00CD41 |\ If the player can climb on air,
     BEQ .no_climb_on_air                    ;$00CD44 | |
     LDA.b #$1F                              ;$00CD46 | | set the climbing flag.
-    STA $8B                                 ;$00CD48 |/
+    STA.b InteractionPtsClimbable_8B        ;$00CD48 |/
 .no_climb_on_air                            ;        |
     LDA.b PlayerClimb_74                    ;$00CD4A |
     BNE CODE_00CD72                         ;$00CD4C |
     LDA.w CarryingFlagMirror_148F           ;$00CD4E |
     ORA.w RidingYoshi_187A                  ;$00CD51 |
     BNE CODE_00CD79                         ;$00CD54 |
-    LDA $8B                                 ;$00CD56 |
+    LDA.b InteractionPtsClimbable_8B        ;$00CD56 |
     AND.b #$1B                              ;$00CD58 |
     CMP.b #$1B                              ;$00CD5A |
     BNE CODE_00CD79                         ;$00CD5C |
@@ -8335,11 +8335,11 @@ CODE_00CD39:                                ;        |
     BNE CODE_00CD72                         ;$00CD66 |
     AND.b #$08                              ;$00CD68 |
     BNE CODE_00CD72                         ;$00CD6A |
-    LDA $8B                                 ;$00CD6C |
+    LDA.b InteractionPtsClimbable_8B        ;$00CD6C |
     AND.b #$04                              ;$00CD6E |
     BEQ CODE_00CD79                         ;$00CD70 |
 CODE_00CD72:
-    LDA $8B
+    LDA.b InteractionPtsClimbable_8B
     STA.b PlayerClimb_74                    ;$00CD74 |
     JMP CODE_00DB17                         ;$00CD76 |
 
@@ -10098,7 +10098,7 @@ CODE_00DBCA:
     BEQ CODE_00DBF2                         ;$00DBD4 |
     LSR                                     ;$00DBD6 |
     TAX                                     ;$00DBD7 |
-    LDA $8B                                 ;$00DBD8 |
+    LDA.b InteractionPtsClimbable_8B        ;$00DBD8 |
     AND.b #$18                              ;$00DBDA |
     CMP.b #$18                              ;$00DBDC |
     BEQ CODE_00DBE8                         ;$00DBDE |
@@ -10119,7 +10119,7 @@ CODE_00DBF2:
     BEQ CODE_00DC16                         ;$00DBF6 |
     AND.b #$08                              ;$00DBF8 |
     BNE CODE_00DC03                         ;$00DBFA |
-    LSR $8B                                 ;$00DBFC |
+    LSR.b InteractionPtsClimbable_8B        ;$00DBFC |
     BCS CODE_00DC0B                         ;$00DBFE |
 CODE_00DC00:
     STZ.b PlayerClimb_74
@@ -10128,7 +10128,7 @@ CODE_00DC00:
 CODE_00DC03:
     INY
     INY                                     ;$00DC04 |
-    LDA $8B                                 ;$00DC05 |
+    LDA.b InteractionPtsClimbable_8B        ;$00DC05 |
     AND.b #$02                              ;$00DC07 |
     BEQ CODE_00DC16                         ;$00DC09 |
 CODE_00DC0B:
@@ -11036,7 +11036,7 @@ CODE_00EA34:
     LDA.w $13F9
     CMP.b #$01                              ;$00EA37 |
     BNE CODE_00EA42                         ;$00EA39 |
-    LDA $8B                                 ;$00EA3B |
+    LDA.b InteractionPtsClimbable_8B        ;$00EA3B |
     BNE CODE_00EA42                         ;$00EA3D |
     STZ.w $13F9                             ;$00EA3F |
 CODE_00EA42:
@@ -11102,7 +11102,7 @@ reset_collision_flags:
     STZ.w $13E1                             ;$00EAAB |\ the type of slope that the player is on,
     STZ.w $13EE                             ;$00EAAE |/
     STZ $8A                                 ;$00EAB1 | the collision points' swimming flags,
-    STZ $8B                                 ;$00EAB3 | the collision points' climbing flags,
+    STZ.b InteractionPtsClimbable_8B        ;$00EAB3 | the collision points' climbing flags,
     STZ.w $140E                             ;$00EAB5 | and the layer 2 touched flag.
     RTS                                     ;$00EAB8 /
 
@@ -12279,7 +12279,7 @@ process_page_0_tiles_no_swim:
     BNE .not_center                         ;$00F2FE | | If interacting via the center body collision point,
     ORA.b #$18                              ;$00F300 | | set a different climbing flag.
 .not_center                                 ;        |/
-    TSB $8B                                 ;$00F302 | Set the climbing flag corresponding to the interaction point.
+    TSB.b InteractionPtsClimbable_8B        ;$00F302 | Set the climbing flag corresponding to the interaction point.
     LDA $93                                 ;$00F304 |
     STA $8C                                 ;$00F306 |
     RTS                                     ;$00F308 /

@@ -769,7 +769,13 @@ GraphicsCompPtr_8A:
 ;    ||+-- bottom collision
 ;    |+--- top horizontal collision
 ;    +---- bottom horizontal collision
-InteractionPtsInWater_8A: skip 1
+InteractionPtsInWater_8A:
+
+; === $7E008A ===
+; 1 byte
+; GFX file decompression
+; 24-bit pointer to the current position in the compressed data
+GFXFilePtr_8A: skip 1
 
 ; === $7E008B ===
 ; 1 byte
@@ -780,7 +786,12 @@ InteractionPtsInWater_8A: skip 1
 ;    ||+-- bottom collision
 ;    |+--- top horizontal collision
 ;    +---- bottom horizontal collision
-InteractionPtsClimbable_8B: skip 1
+InteractionPtsClimbable_8B:
+
+; === $7E008B ===
+; 1 byte
+; Onscreen Y position of the current tile for the player's overworld sprite
+OWScreenYCurrentTile_8B: skip 1
 
 ; === $7E008C ===
 ; 1 byte

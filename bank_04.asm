@@ -765,7 +765,7 @@ CODE_048676:
     STA $8A                                 ;$0486A0 |
     LDA $01                                 ;$0486A2 |
     STA $07                                 ;$0486A4 |
-    STA $8B                                 ;$0486A6 |
+    STA.b OWScreenYCurrentTile_8B           ;$0486A6 |
     LDA.w $0DD6                             ;$0486A8 |
     LSR                                     ;$0486AB |
     TAY                                     ;$0486AC |
@@ -777,10 +777,10 @@ CODE_048676:
     CMP.b #$0F                              ;$0486B8 |
     BCC CODE_0486C5                         ;$0486BA |
 CODE_0486BC:
-    LDA $8B
+    LDA.b OWScreenYCurrentTile_8B
     SEC                                     ;$0486BE |
     SBC.b #$05                              ;$0486BF |
-    STA $8B                                 ;$0486C1 |
+    STA.b OWScreenYCurrentTile_8B           ;$0486C1 |
     STA $07                                 ;$0486C3 |
 CODE_0486C5:
     REP #$30
@@ -819,7 +819,7 @@ CODE_048709:
     STA $8A                                 ;$048712 |
     LDA $03                                 ;$048714 |
     STA $07                                 ;$048716 |
-    STA $8B                                 ;$048718 |
+    STA.b OWScreenYCurrentTile_8B           ;$048718 |
     LDA.w $0DD6                             ;$04871A |
     LSR                                     ;$04871D |
     EOR.b #$02                              ;$04871E |
@@ -832,10 +832,10 @@ CODE_048709:
     CMP.b #$0F                              ;$04872C |
     BCC CODE_048739                         ;$04872E |
 CODE_048730:
-    LDA $8B
+    LDA.b OWScreenYCurrentTile_8B
     SEC                                     ;$048732 |
     SBC.b #$05                              ;$048733 |
-    STA $8B                                 ;$048735 |
+    STA.b OWScreenYCurrentTile_8B           ;$048735 |
     STA $07                                 ;$048737 |
 CODE_048739:
     REP #$30
@@ -880,7 +880,7 @@ CODE_048789:
     XBA                                     ;$04878F |
     LSR                                     ;$048790 |
     TAX                                     ;$048791 |
-    LDA.w CurrentPlayer_0DB3,X                           ;$048792 |
+    LDA.w CurrentPlayer_0DB3,X              ;$048792 |
     PLX                                     ;$048795 |
     AND.w #$FF00                            ;$048796 |
     BPL CODE_0487C7                         ;$048799 |
@@ -890,7 +890,7 @@ CODE_048789:
     CLC                                     ;$0487A2 |
     ADC.b #$08                              ;$0487A3 |
     STA.w $02B8,X                           ;$0487A5 |
-    LDA $8B                                 ;$0487A8 |
+    LDA.b OWScreenYCurrentTile_8B           ;$0487A8 |
     CLC                                     ;$0487AA |
     ADC.b #$F9                              ;$0487AB |
     STA.w $02B5,X                           ;$0487AD |
@@ -1039,10 +1039,10 @@ CODE_0489A7:
     BEQ CODE_0489D9                         ;$0489CC |
     LDA $06                                 ;$0489CE |
     STA $8A                                 ;$0489D0 |
-    LDA $8B                                 ;$0489D2 |
+    LDA.b OWScreenYCurrentTile_8B           ;$0489D2 |
     CLC                                     ;$0489D4 |
     ADC.b #$08                              ;$0489D5 |
-    STA $8B                                 ;$0489D7 |
+    STA.b OWScreenYCurrentTile_8B           ;$0489D7 |
 CODE_0489D9:
     LDA $8C
     BPL CODE_0489A7                         ;$0489DB |
@@ -1192,7 +1192,7 @@ CODE_048D1B:
     STA.w $029C,X                           ;$048D29 |
     LDA.w DATA_048C1E,Y                     ;$048D2C |
     CLC                                     ;$048D2F |
-    ADC $8B                                 ;$048D30 |
+    ADC.b OWScreenYCurrentTile_8B           ;$048D30 |
     STA.w $029D,X                           ;$048D32 |
     PLY                                     ;$048D35 |
     REP #$20                                ;$048D36 |
