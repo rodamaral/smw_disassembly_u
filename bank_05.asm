@@ -513,7 +513,7 @@ CODE_0584E3:
     STA.w $1925                             ;$0584FB |
     TAX                                     ;$0584FE |
     LDA.l LevXYPPCCCTtbl,X                  ;$0584FF |
-    STA.b SpriteProperties_64               ;$058503 |
+    STA.b SpriteYXPPCCCT_64                 ;$058503 |
     LDA.l LevMainScrnTbl,X                  ;$058505 |
     STA.w $0D9D                             ;$058509 |
     LDA.l LevSubScrnTbl,X                   ;$05850C |
@@ -5035,7 +5035,7 @@ ADDR_05C696:
 
 ADDR_05C69E:
     LDA.w #$8502
-    EOR.b SpriteProperties_64,X             ;$05C6A1 |
+    EOR.b SpriteYXPPCCCT_64,X             ;$05C6A1 | TODO: investigate index usage
     LSR $C2,X                               ;$05C6A3 |
     JSR $40AE                               ;$05C6A5 |
     TRB $D0                                 ;$05C6A8 |

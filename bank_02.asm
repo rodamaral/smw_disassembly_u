@@ -154,7 +154,7 @@ CODE_0280ED:
     AND.b #$03                              ;$02811C |
     SEC                                     ;$02811E |
     ROL                                     ;$02811F |
-    ORA.b SpriteProperties_64               ;$028120 |
+    ORA.b SpriteYXPPCCCT_64                 ;$028120 |
     STA.w $0303,Y                           ;$028122 |
     TYA                                     ;$028125 |
     LSR                                     ;$028126 |
@@ -1654,7 +1654,7 @@ ADDR_028C6E:
     LDA.w DATA_028C6A,X                     ;$028CA0 |
     STA.w $0202,Y                           ;$028CA3 |
     PLX                                     ;$028CA6 |
-    LDA.b SpriteProperties_64               ;$028CA7 |
+    LDA.b SpriteYXPPCCCT_64                 ;$028CA7 |
     ORA.b #$08                              ;$028CA9 |
     STA.w $0203,Y                           ;$028CAB |
     TYA                                     ;$028CAE |
@@ -1719,7 +1719,7 @@ CODE_028CFF:
     LSR                                     ;$028D2C |
     AND.b #$40                              ;$028D2D |
     EOR.b #$40                              ;$028D2F |
-    ORA.b SpriteProperties_64               ;$028D31 |
+    ORA.b SpriteYXPPCCCT_64                 ;$028D31 |
     ORA.b #$0F                              ;$028D33 |
     STA.w $0203,Y                           ;$028D35 |
     TYA                                     ;$028D38 |
@@ -1797,7 +1797,7 @@ CODE_028DB6:
     LDA.w WaterSplashTiles,X
     LDX.w $1698                             ;$028DB9 |
     STA.w $0202,Y                           ;$028DBC |
-    LDA.b SpriteProperties_64               ;$028DBF |
+    LDA.b SpriteYXPPCCCT_64                 ;$028DBF |
     ORA.b #$02                              ;$028DC1 |
     STA.w $0203,Y                           ;$028DC3 |
     TYA                                     ;$028DC6 |
@@ -1864,7 +1864,7 @@ CODE_028E20:
     CMP.b #$F0                              ;$028E3A |
     BCS CODE_028E76                         ;$028E3C |
     STA.w $0201,Y                           ;$028E3E |
-    LDA.b SpriteProperties_64               ;$028E41 |
+    LDA.b SpriteYXPPCCCT_64                 ;$028E41 |
     ORA.b #$03                              ;$028E43 |
     STA.w $0203,Y                           ;$028E45 |
     LDA.w $1850,X                           ;$028E48 |
@@ -1928,7 +1928,7 @@ CODE_028E7E:
     LDA.w $1850,X                           ;$028EB6 |
     AND.b #$C0                              ;$028EB9 |
     ORA.b #$03                              ;$028EBB |
-    ORA.b SpriteProperties_64               ;$028EBD |
+    ORA.b SpriteYXPPCCCT_64                 ;$028EBD |
     STA.w $0203,Y                           ;$028EBF |
     TYA                                     ;$028EC2 |
     LSR                                     ;$028EC3 |
@@ -1981,7 +1981,7 @@ CODE_028EE1:
 CODE_028F11:
     LDA.w StarSparkleTiles,X
     STA.w $0202,Y                           ;$028F14 |
-    LDA.b SpriteProperties_64               ;$028F17 |
+    LDA.b SpriteYXPPCCCT_64                 ;$028F17 |
     ORA.b #$06                              ;$028F19 |
     STA.w $0203,Y                           ;$028F1B |
     LDX.w $1698                             ;$028F1E |
@@ -2028,7 +2028,7 @@ CODE_028F4D:
     TAX                                     ;$028F6C |
     LDA.w LavaSplashTiles,X                 ;$028F6D |
     STA.w $0202,Y                           ;$028F70 |
-    LDA.b SpriteProperties_64               ;$028F73 |
+    LDA.b SpriteYXPPCCCT_64                 ;$028F73 |
     ORA.b #$05                              ;$028F75 |
     STA.w $0203,Y                           ;$028F77 |
     LDX.w $1698                             ;$028F7A |
@@ -2118,7 +2118,7 @@ CODE_028FDD:
     AND.b #$0E                              ;$029016 |
 CODE_029018:
     EOR.w DATA_028B8C,X
-    ORA.b SpriteProperties_64               ;$02901B |
+    ORA.b SpriteYXPPCCCT_64                 ;$02901B |
     STA.w $0203,Y                           ;$02901D |
     LDX.w $1698                             ;$029020 |
     TYA                                     ;$029023 |
@@ -2411,7 +2411,7 @@ CODE_029201:
     STA $00                                 ;$029241 |
     STA.w $0200,Y                           ;$029243 |
     LDA.w $1901,X                           ;$029246 |
-    ORA.b SpriteProperties_64               ;$029249 |
+    ORA.b SpriteYXPPCCCT_64                 ;$029249 |
     STA.w $0203,Y                           ;$02924B |
     LDA.w $1699,X                           ;$02924E |
     TAX                                     ;$029251 |
@@ -3082,7 +3082,7 @@ CODE_0296F4:
     ASL                                     ;$02972A |
     AND.b #$40                              ;$02972B |
 CODE_02972D:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     STA.w $0303,Y                           ;$02972F |
     LDA.w $17CC,X                           ;$029732 |
     PHY                                     ;$029735 |
@@ -3124,7 +3124,7 @@ CODE_02974A:
     ASL                                     ;$029773 |
     AND.b #$40                              ;$029774 |
 CODE_029776:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     STA.w $0203,Y                           ;$029778 |
     LDA.w $17CC,X                           ;$02977B |
     PHY                                     ;$02977E |
@@ -3189,7 +3189,7 @@ CODE_0297B2:
     ASL                                     ;$0297E8 |
     ASL                                     ;$0297E9 |
     AND.b #$40                              ;$0297EA |
-    ORA.b SpriteProperties_64               ;$0297EC |
+    ORA.b SpriteYXPPCCCT_64                 ;$0297EC |
     STA.w $0203,Y                           ;$0297EE |
     STA.w $0207,Y                           ;$0297F1 |
     EOR.b #$C0                              ;$0297F4 |
@@ -3254,7 +3254,7 @@ CODE_029838:
     ASL                                     ;$02986E |
     ASL                                     ;$02986F |
     AND.b #$40                              ;$029870 |
-    ORA.b SpriteProperties_64               ;$029872 |
+    ORA.b SpriteYXPPCCCT_64                 ;$029872 |
     STA.w $0303,Y                           ;$029874 |
     STA.w $0307,Y                           ;$029877 |
     EOR.b #$C0                              ;$02987A |
@@ -3397,7 +3397,7 @@ CODE_02996F:
     SEC                                     ;$02997B |
     SBC.b Layer1YPos_1C                     ;$02997C |
     STA.w $0201,Y                           ;$02997E |
-    LDA.b SpriteProperties_64               ;$029981 |
+    LDA.b SpriteYXPPCCCT_64                 ;$029981 |
     STA.w $0203,Y                           ;$029983 |
     LDA.w $17CC,X                           ;$029986 |
     LSR                                     ;$029989 |
@@ -3424,7 +3424,7 @@ CODE_02999F:
     SEC                                     ;$0299AE |
     SBC.b Layer1YPos_1C                     ;$0299AF |
     STA.w $0301,Y                           ;$0299B1 |
-    LDA.b SpriteProperties_64               ;$0299B4 |
+    LDA.b SpriteYXPPCCCT_64                 ;$0299B4 |
     STA.w $0303,Y                           ;$0299B6 |
     LDA.w $17CC,X                           ;$0299B9 |
     LSR                                     ;$0299BC |
@@ -3509,7 +3509,7 @@ CODE_029A08:
     LDA.b #$E8                              ;$029A4E |
     STA.w $0202,Y                           ;$029A50 |
     LDA.b #$04                              ;$029A53 |
-    ORA.b SpriteProperties_64               ;$029A55 |
+    ORA.b SpriteYXPPCCCT_64                 ;$029A55 |
     STA.w $0203,Y                           ;$029A57 |
     TYA                                     ;$029A5A |
     LSR                                     ;$029A5B |
@@ -3676,7 +3676,7 @@ CODE_029B76:
     BCS CODE_029BA5                         ;$029B7F |
     STA.w $0201,Y                           ;$029B81 |
     LDA.b #$09                              ;$029B84 |
-    ORA.b SpriteProperties_64               ;$029B86 |
+    ORA.b SpriteYXPPCCCT_64                 ;$029B86 |
     STA.w $0203,Y                           ;$029B88 |
     LDA.b Frame_14                          ;$029B8B |
     LSR                                     ;$029B8D |
@@ -3916,7 +3916,7 @@ CODE_029CF8:
     STA.w $0202,Y                           ;$029D31 |
     LDA.b #$0B                              ;$029D34 |
 CODE_029D36:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     STA.w $0203,Y                           ;$029D38 |
     TYA                                     ;$029D3B |
     LSR                                     ;$029D3C |
@@ -4135,7 +4135,7 @@ CODE_029E9D:
     TAX                                     ;$029ECB |
     LDA.w LavaSplashTiles2,X                ;$029ECC |
     STA.w $0202,Y                           ;$029ECF |
-    LDA.b SpriteProperties_64               ;$029ED2 |
+    LDA.b SpriteYXPPCCCT_64                 ;$029ED2 |
     ORA.b #$05                              ;$029ED4 |
     STA.w $0203,Y                           ;$029ED6 |
     TYA                                     ;$029ED9 |
@@ -4373,7 +4373,7 @@ ADDR_02A04F:
     STA.w $0302,Y                           ;$02A084 |
     LDA.w DATA_02A15F,X                     ;$02A087 |
     EOR $00                                 ;$02A08A |
-    ORA.b SpriteProperties_64               ;$02A08C |
+    ORA.b SpriteYXPPCCCT_64                 ;$02A08C |
     STA.w $0303,Y                           ;$02A08E |
     LDX $01                                 ;$02A091 |
     BEQ ADDR_02A09C                         ;$02A093 |
@@ -4562,7 +4562,7 @@ CODE_02A1A7:
     STA.w $0202,Y                           ;$02A1EC |
     LDA.w DATA_02A15F,X                     ;$02A1EF |
     EOR $00                                 ;$02A1F2 |
-    ORA.b SpriteProperties_64               ;$02A1F4 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02A1F4 |
     STA.w $0203,Y                           ;$02A1F6 |
     LDX $01                                 ;$02A1F9 |
     BEQ CODE_02A204                         ;$02A1FB |
@@ -4734,7 +4734,7 @@ CODE_02A317:
     LDA.w HammerGfxProp,X                   ;$02A32D |
     EOR $00                                 ;$02A330 |
     EOR.b #$40                              ;$02A332 |
-    ORA.b SpriteProperties_64               ;$02A334 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02A334 |
     STA.w $0203,Y                           ;$02A336 |
     TYA                                     ;$02A339 |
     LSR                                     ;$02A33A |
@@ -4793,7 +4793,7 @@ CODE_02A36C:
     AND.b #$03                              ;$02A396 |
     TAX                                     ;$02A398 |
     LDA.w DATA_02A34B,X                     ;$02A399 |
-    ORA.b SpriteProperties_64               ;$02A39C |
+    ORA.b SpriteYXPPCCCT_64                 ;$02A39C |
     STA.w $0203,Y                           ;$02A39E |
     TYA                                     ;$02A3A1 |
     LSR                                     ;$02A3A2 |
@@ -4833,7 +4833,7 @@ ADDR_02A3B1:
     AND.b #$03                              ;$02A3DE |
     TAX                                     ;$02A3E0 |
     LDA.w DATA_02A34B,X                     ;$02A3E1 |
-    ORA.b SpriteProperties_64               ;$02A3E4 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02A3E4 |
     STA.w $0303,Y                           ;$02A3E6 |
     LDX.w CurrentSprite_15E9                ;$02A3E9 |
     TYA                                     ;$02A3EC |
@@ -7505,7 +7505,7 @@ CODE_02B781:
 CODE_02B791:
     STA.w $0302,Y
     LDA.b #$05                              ;$02B794 |
-    ORA.b SpriteProperties_64               ;$02B796 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02B796 |
     STA.w $0303,Y                           ;$02B798 |
     INY                                     ;$02B79B |
     INY                                     ;$02B79C |
@@ -7649,16 +7649,16 @@ TorpedoTedMain:
     RTL                                     ;$02B889 |
 
 CODE_02B88A:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$02B88C |
     LDA.w $1540,X                           ;$02B88D |
     BEQ CODE_02B896                         ;$02B890 |
-    LDA.b #$10                              ;$02B892 |
-    STA.b SpriteProperties_64               ;$02B894 |
+    LDA.b #!Priority1_10                    ;$02B892 |
+    STA.b SpriteYXPPCCCT_64                 ;$02B894 |
 CODE_02B896:
     JSR TorpedoGfxRt
     PLA                                     ;$02B899 |
-    STA.b SpriteProperties_64               ;$02B89A |
+    STA.b SpriteYXPPCCCT_64                 ;$02B89A |
     LDA.b SpriteLock_9D                     ;$02B89C |
     BNE Return02B8B7                        ;$02B89E |
     JSR SubOffscreen0Bnk2                   ;$02B8A0 |
@@ -7725,7 +7725,7 @@ TorpedoGfxRt:
     STA.w $0305,Y                           ;$02B8FF |
     PHX                                     ;$02B902 |
     LDA.w $15F6,X                           ;$02B903 |
-    ORA.b SpriteProperties_64               ;$02B906 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02B906 |
     STA $02                                 ;$02B908 |
     LDA.w SpriteDir_157C,X                  ;$02B90A |
     TAX                                     ;$02B90D |
@@ -8057,7 +8057,7 @@ draw_yoshi_wings_02BB23:
     STA.w $0201,Y                           ;$02BB68 |
     LDA.l YoshiWingsTiles,X                 ;$02BB6B |
     STA.w $0202,Y                           ;$02BB6F |
-    LDA.b SpriteProperties_64               ;$02BB72 |
+    LDA.b SpriteYXPPCCCT_64                 ;$02BB72 |
     ORA.l YoshiWingsGfxProp,X               ;$02BB74 |
     STA.w $0203,Y                           ;$02BB78 |
     TYA                                     ;$02BB7B |
@@ -8209,7 +8209,7 @@ CODE_02BC4E:
     STA.w $030A,Y                           ;$02BC71 |
     PLX                                     ;$02BC74 |
     LDA.w $15F6,X                           ;$02BC75 |
-    ORA.b SpriteProperties_64               ;$02BC78 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02BC78 |
     PLP                                     ;$02BC7A |
     BCS CODE_02BC7F                         ;$02BC7B |
     ORA.b #$40                              ;$02BC7D |
@@ -8466,7 +8466,7 @@ CODE_02BE4E:
     LDA.b #$C8                              ;$02BE6A |
     STA.w $0302,Y                           ;$02BE6C |
     LDA.w DATA_02BE4C,X                     ;$02BE6F |
-    ORA.b SpriteProperties_64               ;$02BE72 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02BE72 |
     STA.w $0303,Y                           ;$02BE74 |
     PLX                                     ;$02BE77 |
     RTS                                     ;$02BE78 |
@@ -8527,7 +8527,7 @@ CODE_02BEC9:
     LDA.w HotheadTiles,X                    ;$02BEE0 |
     STA.w $0302,Y                           ;$02BEE3 |
     LDA.w DATA_02BE9D,X                     ;$02BEE6 |
-    ORA.b SpriteProperties_64               ;$02BEE9 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02BEE9 |
     STA.w $0303,Y                           ;$02BEEB |
     PLX                                     ;$02BEEE |
     INY                                     ;$02BEEF |
@@ -8573,7 +8573,7 @@ CODE_02BF13:
     LDA $02                                 ;$02BF35 |
     STA.w $0302,Y                           ;$02BF37 |
     LDA.b #$05                              ;$02BF3A |
-    ORA.b SpriteProperties_64               ;$02BF3C |
+    ORA.b SpriteYXPPCCCT_64                 ;$02BF3C |
     STA.w $0303,Y                           ;$02BF3E |
     PLX                                     ;$02BF41 |
     LDY.b #$00                              ;$02BF42 |
@@ -9896,7 +9896,7 @@ CODE_02C8AB:
     LDA.w SpriteDir_157C,X                  ;$02C8B6 |
     STA $03                                 ;$02C8B9 |
     LDA.w $15F6,X                           ;$02C8BB |
-    ORA.b SpriteProperties_64               ;$02C8BE |
+    ORA.b SpriteYXPPCCCT_64                 ;$02C8BE |
     STA $08                                 ;$02C8C0 |
     LDA.w $15EA,X                           ;$02C8C2 |
     STA $05                                 ;$02C8C5 |
@@ -10143,7 +10143,7 @@ CODE_02CAFC:
     STA.w $0305,Y                           ;$02CB27 |
     LDA.w ChuckGfxProp,X                    ;$02CB2A |
 CODE_02CB2D:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     STA.w $0303,Y                           ;$02CB2F |
     STA.w $0307,Y                           ;$02CB32 |
     TYA                                     ;$02CB35 |
@@ -10187,7 +10187,7 @@ CODE_02CB5E:
     LDA.b #$AD                              ;$02CB7B |
     STA.w $0302,Y                           ;$02CB7D |
     LDA.b #$09                              ;$02CB80 |
-    ORA.b SpriteProperties_64               ;$02CB82 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02CB82 |
     STA.w $0303,Y                           ;$02CB84 |
     TYA                                     ;$02CB87 |
     LSR                                     ;$02CB88 |
@@ -10247,7 +10247,7 @@ CODE_02CBB9:
     AND.b #$01                              ;$02CBD4 |
     TAX                                     ;$02CBD6 |
     LDA.w DigChuckTileProp,X                ;$02CBD7 |
-    ORA.b SpriteProperties_64               ;$02CBDA |
+    ORA.b SpriteYXPPCCCT_64                 ;$02CBDA |
     STA.w $0303,Y                           ;$02CBDC |
     LDX $02                                 ;$02CBDF |
     LDA $01                                 ;$02CBE1 |
@@ -10691,7 +10691,7 @@ CODE_02CF23:
     STA.w $0301,Y                           ;$02CF28 |
     LDA.b #$3D                              ;$02CF2B |
     STA.w $0302,Y                           ;$02CF2D |
-    LDA.b SpriteProperties_64               ;$02CF30 |
+    LDA.b SpriteYXPPCCCT_64                 ;$02CF30 |
     ORA.b #$0A                              ;$02CF32 |
     STA.w $0303,Y                           ;$02CF34 |
     LDX.w CurrentSprite_15E9                ;$02CF37 |
@@ -12073,7 +12073,7 @@ CODE_02D8BB:
     LDY.w $15EA,X                           ;$02D8CB |
     TAX                                     ;$02D8CE |
     LDA.w BubbleSprGfxProp1,X               ;$02D8CF |
-    ORA.b SpriteProperties_64               ;$02D8D2 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02D8D2 |
     STA.w $0303,Y                           ;$02D8D4 |
     LDA.b Frame_14                          ;$02D8D7 |
     ASL                                     ;$02D8D9 |
@@ -12239,14 +12239,14 @@ CODE_02D9F8:
     LDA.w BubbleTiles,X                     ;$02DA11 |
     STA.w $0302,Y                           ;$02DA14 |
     LDA.w BubbleGfxProp,X                   ;$02DA17 |
-    ORA.b SpriteProperties_64               ;$02DA1A |
+    ORA.b SpriteYXPPCCCT_64                 ;$02DA1A |
     STA.w $0303,Y                           ;$02DA1C |
     LDA $03                                 ;$02DA1F |
     CMP.b #$06                              ;$02DA21 |
     BCS CODE_02DA37                         ;$02DA23 |
     CMP.b #$03                              ;$02DA25 |
     LDA.b #$02                              ;$02DA27 |
-    ORA.b SpriteProperties_64               ;$02DA29 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02DA29 |
     STA.w $0303,Y                           ;$02DA2B |
     LDA.b #$64                              ;$02DA2E |
     BCS CODE_02DA34                         ;$02DA30 |
@@ -13153,10 +13153,10 @@ JumpingPiranhaMain:
 
 CODE_02E0CD:
     JSL LoadSpriteTables
-    LDA.b SpriteProperties_64               ;$02E0D1 |
+    LDA.b SpriteYXPPCCCT_64                 ;$02E0D1 |
     PHA                                     ;$02E0D3 |
-    LDA.b #$10                              ;$02E0D4 |
-    STA.b SpriteProperties_64               ;$02E0D6 |
+    LDA.b #!Priority1_10                    ;$02E0D4 |
+    STA.b SpriteYXPPCCCT_64                 ;$02E0D6 |
     LDA.w SpriteAnimationTimer_1570,X       ;$02E0D8 |
     AND.b #$08                              ;$02E0DB |
     LSR                                     ;$02E0DD |
@@ -13192,7 +13192,7 @@ CODE_02E0CD:
     PLA                                     ;$02E11C |
     STA.b SpriteYPosLow_D8,X                ;$02E11D |
     PLA                                     ;$02E11F |
-    STA.b SpriteProperties_64               ;$02E120 |
+    STA.b SpriteYXPPCCCT_64                 ;$02E120 |
     LDA.b SpriteLock_9D                     ;$02E122 |
     BNE Return02E158                        ;$02E124 |
     JSR SubOffscreen0Bnk2                   ;$02E126 |
@@ -13332,13 +13332,13 @@ DirectionCoinsMain:
     RTL                                     ;$02E21C |
 
 CODE_02E21D:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$02E21F |
     LDA.w $1540,X                           ;$02E220 |
     CMP.b #$30                              ;$02E223 |
     BCC CODE_02E22B                         ;$02E225 |
-    LDA.b #$10                              ;$02E227 |
-    STA.b SpriteProperties_64               ;$02E229 |
+    LDA.b #!Priority1_10                    ;$02E227 |
+    STA.b SpriteYXPPCCCT_64                 ;$02E229 |
 CODE_02E22B:
     LDA.b Layer1YPos_1C
     PHA                                     ;$02E22D |
@@ -13368,7 +13368,7 @@ CODE_02E259:
     PLA                                     ;$02E25C |
     STA.b Layer1YPos_1C                     ;$02E25D |
     PLA                                     ;$02E25F |
-    STA.b SpriteProperties_64               ;$02E260 |
+    STA.b SpriteYXPPCCCT_64                 ;$02E260 |
     LDA.b SpriteLock_9D                     ;$02E262 |
     BNE CODE_02E2DE                         ;$02E264 |
     LDA.b Frame_13                          ;$02E266 |
@@ -13800,7 +13800,7 @@ MushroomScaleGfx:
     STA.w $0302,Y                           ;$02E59A |
     STA.w $0306,Y                           ;$02E59D |
     LDA.w $15F6,X                           ;$02E5A0 |
-    ORA.b SpriteProperties_64               ;$02E5A3 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02E5A3 |
     STA.w $0303,Y                           ;$02E5A5 |
     ORA.b #$40                              ;$02E5A8 |
     STA.w $0307,Y                           ;$02E5AA |
@@ -14106,16 +14106,16 @@ ChucksRockMain:
     RTL                                     ;$02E7BC |
 
 CODE_02E7BD:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$02E7BF |
     LDA.w $1540,X                           ;$02E7C0 |
     BEQ CODE_02E7C9                         ;$02E7C3 |
-    LDA.b #$10                              ;$02E7C5 |
-    STA.b SpriteProperties_64               ;$02E7C7 |
+    LDA.b #!Priority1_10                    ;$02E7C5 |
+    STA.b SpriteYXPPCCCT_64                 ;$02E7C7 |
 CODE_02E7C9:
     JSL GenericSprGfxRt2
     PLA                                     ;$02E7CD |
-    STA.b SpriteProperties_64               ;$02E7CE |
+    STA.b SpriteYXPPCCCT_64                 ;$02E7CE |
     LDA.b SpriteLock_9D                     ;$02E7D0 |
     BNE Return02E82C                        ;$02E7D2 |
     LDA.w $1540,X                           ;$02E7D4 |
@@ -14294,7 +14294,7 @@ CODE_02E902:
     LDA.b #$A6                              ;$02E91E |
     STA.w $0306,Y                           ;$02E920 |
     LDA.w $15F6,X                           ;$02E923 |
-    ORA.b SpriteProperties_64               ;$02E926 |
+    ORA.b SpriteYXPPCCCT_64                 ;$02E926 |
     STA.w $0303,Y                           ;$02E928 |
     STA.w $0307,Y                           ;$02E92B |
 CODE_02E92E:
@@ -14845,7 +14845,7 @@ CODE_02ED4D:
     LDA.w DATA_02EC96,X
     ORA $05                                 ;$02ED50 |
 CODE_02ED52:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     BCS CODE_02ED5F                         ;$02ED54 |
     PHA                                     ;$02ED56 |
     TXA                                     ;$02ED57 |
@@ -15450,7 +15450,7 @@ CODE_02F178:
     STA.w $0302,Y
     PLX                                     ;$02F17B |
     LDA $07                                 ;$02F17C |
-    ORA.b SpriteProperties_64               ;$02F17E |
+    ORA.b SpriteYXPPCCCT_64                 ;$02F17E |
     LSR $02                                 ;$02F180 |
     BCS CODE_02F186                         ;$02F182 |
     ORA.b #$40                              ;$02F184 |
@@ -16575,7 +16575,7 @@ CODE_02F967:
     ASL                                     ;$02F989 |
     ASL                                     ;$02F98A |
     NOP                                     ;$02F98B |
-    ORA.b SpriteProperties_64               ;$02F98C |
+    ORA.b SpriteYXPPCCCT_64                 ;$02F98C |
     ORA.b #$05                              ;$02F98E |
     STA.w $0303,Y                           ;$02F990 |
 CODE_02F993:

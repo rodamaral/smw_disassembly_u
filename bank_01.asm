@@ -2125,7 +2125,7 @@ CODE_018E15:
     BCS CODE_018E49                         ;$018E45 |
     EOR.b #$40                              ;$018E47 |
 CODE_018E49:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     STA.w $0303,Y                           ;$018E4B |
     TYA                                     ;$018E4E |
     CLC                                     ;$018E4F |
@@ -2158,12 +2158,12 @@ PiranTimeInState:
 ClassicPiranhas:
     LDA.w $1594,X
     BNE CODE_018E9A                         ;$018E79 |
-    LDA.b SpriteProperties_64               ;$018E7B |
+    LDA.b SpriteYXPPCCCT_64                 ;$018E7B |
     PHA                                     ;$018E7D |
     LDA.w $15D0,X                           ;$018E7E |
     BNE CODE_018E87                         ;$018E81 |
-    LDA.b #$10                              ;$018E83 |
-    STA.b SpriteProperties_64               ;$018E85 |
+    LDA.b #!Priority1_10                    ;$018E83 |
+    STA.b SpriteYXPPCCCT_64                 ;$018E85 |
 CODE_018E87:
     JSR SubSprGfx1
     LDY.w $15EA,X                           ;$018E8A |
@@ -2172,7 +2172,7 @@ CODE_018E87:
     ORA.b #$0B                              ;$018E92 |
     STA.w $030B,Y                           ;$018E94 |
     PLA                                     ;$018E97 |
-    STA.b SpriteProperties_64               ;$018E98 |
+    STA.b SpriteYXPPCCCT_64                 ;$018E98 |
 CODE_018E9A:
     JSR SubOffscreen0Bnk1
     LDA.b SpriteLock_9D                     ;$018E9D |
@@ -3038,13 +3038,13 @@ YoshiShellSts9:
     LDA $C2,X                               ;$019542 |
     BEQ CODE_01956A                         ;$019544 |
 CODE_019546:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$019548 |
-    LDA.b #$10                              ;$019549 |
-    STA.b SpriteProperties_64               ;$01954B |
+    LDA.b #!Priority1_10                    ;$019549 |
+    STA.b SpriteYXPPCCCT_64                 ;$01954B |
     JSR SubSprGfx2Entry1                    ;$01954D |
     PLA                                     ;$019550 |
-    STA.b SpriteProperties_64               ;$019551 |
+    STA.b SpriteYXPPCCCT_64                 ;$019551 |
     RTS                                     ;$019553 |
 
 CODE_019554:
@@ -3458,7 +3458,7 @@ CODE_01988A:
     PLY                                     ;$01988B |
     STA.w $0302,Y                           ;$01988C |
     STA.w $0306,Y                           ;$01988F |
-    LDA.b SpriteProperties_64               ;$019892 |
+    LDA.b SpriteYXPPCCCT_64                 ;$019892 |
     STA.w $0303,Y                           ;$019894 |
     STA.w $0307,Y                           ;$019897 |
     TYA                                     ;$01989A |
@@ -3865,16 +3865,16 @@ CODE_019B44:
     ORA.b #$80                              ;$019B47 |
     STA.w $15F6,X                           ;$019B49 |
 CODE_019B4C:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$019B4E |
     LDY.w $1632,X                           ;$019B4F |
     BEQ CODE_019B56                         ;$019B52 |
-    LDA.b #$10                              ;$019B54 |
+    LDA.b #!Priority1_10                    ;$019B54 |
 CODE_019B56:
-    STA.b SpriteProperties_64
+    STA.b SpriteYXPPCCCT_64
     JSR SubSprGfx1                          ;$019B58 |
     PLA                                     ;$019B5B |
-    STA.b SpriteProperties_64               ;$019B5C |
+    STA.b SpriteYXPPCCCT_64                 ;$019B5C |
     RTS                                     ;$019B5E |
 
 CODE_019B5F:
@@ -3887,17 +3887,17 @@ CODE_019B64:
     LDA.b #$80                              ;$019B6A |
 CODE_019B6C:
     STA $00
-    LDA.b SpriteProperties_64               ;$019B6E |
+    LDA.b SpriteYXPPCCCT_64                 ;$019B6E |
     PHA                                     ;$019B70 |
     LDY.w $1632,X                           ;$019B71 |
     BEQ CODE_019B78                         ;$019B74 |
-    LDA.b #$10                              ;$019B76 |
+    LDA.b #!Priority1_10                    ;$019B76 |
 CODE_019B78:
-    STA.b SpriteProperties_64
+    STA.b SpriteYXPPCCCT_64
     LDA $00                                 ;$019B7A |
     JSR SubSprGfx2Entry0                    ;$019B7C |
     PLA                                     ;$019B7F |
-    STA.b SpriteProperties_64               ;$019B80 |
+    STA.b SpriteYXPPCCCT_64                 ;$019B80 |
     RTS                                     ;$019B82 |
 
 SprTilemap:
@@ -3976,7 +3976,7 @@ SubSprGfx0Entry1:
     ADC.w SprTilemapOffset,Y                ;$019D0B |
     STA $02                                 ;$019D0E |
     LDA.w $15F6,X                           ;$019D10 |
-    ORA.b SpriteProperties_64               ;$019D13 |
+    ORA.b SpriteYXPPCCCT_64                 ;$019D13 |
     STA $03                                 ;$019D15 |
     LDY.w $15EA,X                           ;$019D17 |
     LDA.b #$03                              ;$019D1A |
@@ -4072,7 +4072,7 @@ CODE_019DA9:
     BCS CODE_019DBE                         ;$019DBA |
     ORA.b #$40                              ;$019DBC |
 CODE_019DBE:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     STA.w $0303,Y                           ;$019DC0 |
     STA.w $0307,Y                           ;$019DC3 |
     TYA                                     ;$019DC6 |
@@ -4178,7 +4178,7 @@ CODE_019E37:
     STA.w $0301,Y                           ;$019E78 |
     LDA.w KoopaWingTiles,X                  ;$019E7B |
     STA.w $0302,Y                           ;$019E7E |
-    LDA.b SpriteProperties_64               ;$019E81 |
+    LDA.b SpriteYXPPCCCT_64                 ;$019E81 |
     ORA.w KoopaWingGfxProp,X                ;$019E83 |
     STA.w $0303,Y                           ;$019E86 |
     TYA                                     ;$019E89 |
@@ -4284,7 +4284,7 @@ CODE_019F0F:
     BCS +                                   ;$019F40 |
     EOR.b #$40                              ;$019F42 |
 +   ORA $04                                 ;$019F44 |
-    ORA.b SpriteProperties_64               ;$019F46 |
+    ORA.b SpriteYXPPCCCT_64                 ;$019F46 |
     STA.w $0303,Y                           ;$019F48 |
     TYA                                     ;$019F4B |
     LSR                                     ;$019F4C |
@@ -4322,16 +4322,16 @@ HandleSprCarried:
 CODE_019F83:
     STZ.w $15EA,X
 CODE_019F86:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$019F88 |
     LDA.w SpriteInPipeMode_1419             ;$019F89 |
     BEQ CODE_019F92                         ;$019F8C |
-    LDA.b #$10                              ;$019F8E |
-    STA.b SpriteProperties_64               ;$019F90 |
+    LDA.b #!Priority1_10                    ;$019F8E |
+    STA.b SpriteYXPPCCCT_64                 ;$019F90 |
 CODE_019F92:
     JSR CODE_01A187
     PLA                                     ;$019F95 |
-    STA.b SpriteProperties_64               ;$019F96 |
+    STA.b SpriteYXPPCCCT_64                 ;$019F96 |
     RTS                                     ;$019F98 |
 
 DATA_019F99:
@@ -6617,7 +6617,7 @@ CODE_01AF64:
     ADC.w ThwompDispY,X                     ;$01AF70 |
     STA.w $0301,Y                           ;$01AF73 |
     LDA.w ThwompGfxProp,X                   ;$01AF76 |
-    ORA.b SpriteProperties_64               ;$01AF79 |
+    ORA.b SpriteYXPPCCCT_64                 ;$01AF79 |
     STA.w $0303,Y                           ;$01AF7B |
     LDA.w ThwompTiles,X                     ;$01AF7E |
     CPX.b #$04                              ;$01AF81 |
@@ -7157,7 +7157,7 @@ CODE_01B344:
     LDA.b #$62                              ;$01B354 |
     STA.w $0312,Y                           ;$01B356 |
 CODE_01B359:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     ORA.w $15F6,X                           ;$01B35B |
     STA.w $0303,Y                           ;$01B35E |
     STA.w $0307,Y                           ;$01B361 |
@@ -7245,7 +7245,7 @@ CODE_01B3F6:
     PHA                                     ;$01B3FC |
     LDA.w DiagPlatTiles,X                   ;$01B3FD |
     STA.w $0302,Y                           ;$01B400 |
-    LDA.b SpriteProperties_64               ;$01B403 |
+    LDA.b SpriteYXPPCCCT_64                 ;$01B403 |
     ORA $03                                 ;$01B405 |
     PHX                                     ;$01B407 |
     LDX $01                                 ;$01B408 |
@@ -7777,7 +7777,7 @@ CODE_01B710:
     STA.w $0312,Y                           ;$01B785 |
     STA.w $030A,Y                           ;$01B788 |
     STA.w $0302,Y                           ;$01B78B |
-    LDA.b SpriteProperties_64               ;$01B78E |
+    LDA.b SpriteYXPPCCCT_64                 ;$01B78E |
     STA.w $030F,Y                           ;$01B790 |
     STA.w $0307,Y                           ;$01B793 |
     STA.w $030B,Y                           ;$01B796 |
@@ -8206,18 +8206,18 @@ CODE_01BA53:
     LSR                                     ;$01BA5D |
     LSR                                     ;$01BA5E |
     STA.w SpriteDir_157C,X                  ;$01BA5F |
-    LDA.b SpriteProperties_64               ;$01BA62 |
+    LDA.b SpriteYXPPCCCT_64                 ;$01BA62 |
     PHA                                     ;$01BA64 |
     LDA.w $1632,X                           ;$01BA65 |
     STA.w $1602,X                           ;$01BA68 |
     LDA.w $1632,X                           ;$01BA6B |
     BEQ CODE_01BA74                         ;$01BA6E |
-    LDA.b #$10                              ;$01BA70 |
-    STA.b SpriteProperties_64               ;$01BA72 |
+    LDA.b #!Priority1_10                    ;$01BA70 |
+    STA.b SpriteYXPPCCCT_64                 ;$01BA72 |
 CODE_01BA74:
     JSR SubSprGfx1
     PLA                                     ;$01BA77 |
-    STA.b SpriteProperties_64               ;$01BA78 |
+    STA.b SpriteYXPPCCCT_64                 ;$01BA78 |
     PLA                                     ;$01BA7A |
     STA.w SpriteDir_157C,X                  ;$01BA7B |
     RTS                                     ;$01BA7E |
@@ -8382,7 +8382,7 @@ CODE_01BBBD:
     LDY $03                                 ;$01BBCC |
     LDX.b #$08                              ;$01BBCE |
 CODE_01BBD0:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     ORA.b #$09                              ;$01BBD2 |
     CPX.b #$06                              ;$01BBD4 |
     BCS CODE_01BBDA                         ;$01BBD6 |
@@ -8601,7 +8601,7 @@ MagiKoopasMagicGfx:
     STA.w $0308,Y                           ;$01BD6E |
     LDX.w CurrentSprite_15E9                ;$01BD71 |
     LDA.w $15F6,X                           ;$01BD74 |
-    ORA.b SpriteProperties_64               ;$01BD77 |
+    ORA.b SpriteYXPPCCCT_64                 ;$01BD77 |
     STA.w $0303,Y                           ;$01BD79 |
     STA.w $0307,Y                           ;$01BD7C |
     STA.w $030B,Y                           ;$01BD7F |
@@ -8816,7 +8816,7 @@ CODE_01BECE:
     BCS CODE_01BEFC                         ;$01BEF8 |
     ORA.b #$40                              ;$01BEFA |
 CODE_01BEFC:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     ORA.w $15F6,X                           ;$01BEFE |
     STA.w $030B,Y                           ;$01BF01 |
     LDA.b #$99                              ;$01BF04 |
@@ -9170,13 +9170,13 @@ CODE_01C17F:
     RTS                                     ;$01C182 |
 
 GrowingVine:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$01C185 |
     LDA.w $1540,X                           ;$01C186 |
     CMP.b #$20                              ;$01C189 |
     BCC CODE_01C191                         ;$01C18B |
-    LDA.b #$10                              ;$01C18D |
-    STA.b SpriteProperties_64               ;$01C18F |
+    LDA.b #!Priority1_10                    ;$01C18D |
+    STA.b SpriteYXPPCCCT_64                 ;$01C18F |
 CODE_01C191:
     JSR SubSprGfx2Entry1
     LDY.w $15EA,X                           ;$01C194 |
@@ -9191,7 +9191,7 @@ CODE_01C191:
 CODE_01C1A3:
     STA.w $0302,Y
     PLA                                     ;$01C1A6 |
-    STA.b SpriteProperties_64               ;$01C1A7 |
+    STA.b SpriteYXPPCCCT_64                 ;$01C1A7 |
     LDA.b SpriteLock_9D                     ;$01C1A9 |
     BNE Return01C1ED                        ;$01C1AB |
     LDA.b #$F0                              ;$01C1AD |
@@ -9244,13 +9244,13 @@ BalloonKeyFlyObjs:
     BNE CODE_01C21D                         ;$01C201 |
     LDA.w $1540,X                           ;$01C203 |
     BEQ CODE_01C21D                         ;$01C206 |
-    LDA.b SpriteProperties_64               ;$01C208 |
+    LDA.b SpriteYXPPCCCT_64                 ;$01C208 |
     PHA                                     ;$01C20A |
-    LDA.b #$10                              ;$01C20B |
-    STA.b SpriteProperties_64               ;$01C20D |
+    LDA.b #!Priority1_10                    ;$01C20B |
+    STA.b SpriteYXPPCCCT_64                 ;$01C20D |
     JSR CODE_01C61A                         ;$01C20F |
     PLA                                     ;$01C212 |
-    STA.b SpriteProperties_64               ;$01C213 |
+    STA.b SpriteYXPPCCCT_64                 ;$01C213 |
     LDA.b #$F8                              ;$01C215 |
     STA $AA,X                               ;$01C217 |
     JSR SubSprYPosNoGrvty                   ;$01C219 |
@@ -9442,13 +9442,13 @@ DrawBerryGfx:
     PHX                                     ;$01C363 |
     LDX.w $18D6                             ;$01C364 |
     LDA.w EatenBerryGfxProp,X               ;$01C367 |
-    ORA.b SpriteProperties_64               ;$01C36A |
+    ORA.b SpriteYXPPCCCT_64                 ;$01C36A |
     STA.w $0303,Y                           ;$01C36C |
     PLX                                     ;$01C36F |
     RTS                                     ;$01C370 |
 
 CODE_01C371:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$01C373 |
     JSR CODE_01C4AC                         ;$01C374 |
     LDA.w $1534,X                           ;$01C377 |
@@ -9471,8 +9471,8 @@ CODE_01C38F:
     JSR CODE_019140                         ;$01C394 |
     LDA.w $1528,X                           ;$01C397 |
     BNE CODE_01C3A0                         ;$01C39A |
-    LDA.b #$10                              ;$01C39C |
-    STA.b SpriteProperties_64               ;$01C39E |
+    LDA.b #!Priority1_10                    ;$01C39C |
+    STA.b SpriteYXPPCCCT_64                 ;$01C39E |
 CODE_01C3A0:
     LDA.b SpriteLock_9D
     BNE CODE_01C3AB                         ;$01C3A2 |
@@ -9613,13 +9613,13 @@ CODE_01C49C:
     LDA.w $1632,X
     BEQ CODE_01C4A5                         ;$01C49F |
 CODE_01C4A1:
-    LDA.b #$10
-    STA.b SpriteProperties_64               ;$01C4A3 |
+    LDA.b #!Priority1_10
+    STA.b SpriteYXPPCCCT_64                 ;$01C4A3 |
 CODE_01C4A5:
     JSR CODE_01C61A
 CODE_01C4A8:
     PLA
-    STA.b SpriteProperties_64               ;$01C4A9 |
+    STA.b SpriteYXPPCCCT_64                 ;$01C4A9 |
 Return01C4AB:
     RTS
 
@@ -9844,7 +9844,7 @@ CoinSprGfxSub:
     LDA.b #$E8                              ;$01C652 |
     STA.w $0302,Y                           ;$01C654 |
     LDA.w $15F6,X                           ;$01C657 |
-    ORA.b SpriteProperties_64               ;$01C65A |
+    ORA.b SpriteYXPPCCCT_64                 ;$01C65A |
     STA.w $0303,Y                           ;$01C65C |
     TXA                                     ;$01C65F |
     CLC                                     ;$01C660 |
@@ -9907,7 +9907,7 @@ NoFlashingPal:
     BCS CODE_01C6C7                         ;$01C6C3 |
     ORA.b #$40                              ;$01C6C5 |
 CODE_01C6C7:
-    ORA.b SpriteProperties_64
+    ORA.b SpriteYXPPCCCT_64
     ORA.w $15F6,X                           ;$01C6C9 |
     EOR $0A                                 ;$01C6CC |
     STA.w $0303,Y                           ;$01C6CE |
@@ -12871,7 +12871,7 @@ CODE_01DBD4:
     LDA.b #$C8                              ;$01DBF4 |
     STA.w $0302,Y                           ;$01DBF6 |
     LDA.w DATA_01DC09,X                     ;$01DBF9 |
-    ORA.b SpriteProperties_64               ;$01DBFC |
+    ORA.b SpriteYXPPCCCT_64                 ;$01DBFC |
     STA.w $0303,Y                           ;$01DBFE |
     LDA.b #$00                              ;$01DC01 |
 CODE_01DC03:
@@ -13293,7 +13293,7 @@ CODE_01DF6C:
     LDA.b #$E4                              ;$01DF8C |
     STA.w $0312,Y                           ;$01DF8E |
     PLX                                     ;$01DF91 |
-    LDA.b SpriteProperties_64               ;$01DF92 |
+    LDA.b SpriteYXPPCCCT_64                 ;$01DF92 |
     ORA.w DATA_01DF07,X                     ;$01DF94 |
     STA.w $0303,Y                           ;$01DF97 |
     STA.w $0307,Y                           ;$01DF9A |
@@ -13549,7 +13549,7 @@ CODE_01E16D:
     LDA.w BowserFlameTiles,X                ;$01E180 |
     STA.w $0302,Y                           ;$01E183 |
     LDA.w DATA_01E194,X                     ;$01E186 |
-    ORA.b SpriteProperties_64               ;$01E189 |
+    ORA.b SpriteYXPPCCCT_64                 ;$01E189 |
     STA.w $0303,Y                           ;$01E18B |
     PLX                                     ;$01E18E |
     RTS                                     ;$01E18F |
@@ -13877,16 +13877,16 @@ CODE_01E3E9:
     RTS                                     ;$01E3EE |
 
 CODE_01E3EF:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$01E3F1 |
     LDA.w $1540,X                           ;$01E3F2 |
     BEQ CODE_01E3FB                         ;$01E3F5 |
-    LDA.b #$10                              ;$01E3F7 |
-    STA.b SpriteProperties_64               ;$01E3F9 |
+    LDA.b #!Priority1_10                    ;$01E3F7 |
+    STA.b SpriteYXPPCCCT_64                 ;$01E3F9 |
 CODE_01E3FB:
     JSR SubSprGfx2Entry1
     PLA                                     ;$01E3FE |
-    STA.b SpriteProperties_64               ;$01E3FF |
+    STA.b SpriteYXPPCCCT_64                 ;$01E3FF |
     LDA.b SpriteLock_9D                     ;$01E401 |
     BNE CODE_01E41C                         ;$01E403 |
     JSR SubSprSprPMarioSpr                  ;$01E405 |
@@ -14333,7 +14333,7 @@ CODE_01E73A:
     STA.w $0302,Y
     STA.w $0306,Y                           ;$01E73D |
     PLX                                     ;$01E740 |
-    LDA.b SpriteProperties_64               ;$01E741 |
+    LDA.b SpriteYXPPCCCT_64                 ;$01E741 |
     ORA.w $15F6,X                           ;$01E743 |
     STA.w $0303,Y                           ;$01E746 |
     ORA.b #$40                              ;$01E749 |
@@ -14585,7 +14585,7 @@ CODE_01E901:
     LDA.w CloudTiles,X                      ;$01E92F |
     STA.w $0302,Y                           ;$01E932 |
 CODE_01E935:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     STA.w $0303,Y                           ;$01E937 |
     INY                                     ;$01E93A |
     INY                                     ;$01E93B |
@@ -14916,7 +14916,7 @@ draw_yoshi_01EA70:
     EOR.b #$01                              ;$01EB93 ||
     STA $76                                 ;$01EB95 |/ make player face the same direction as Yoshi
 .not_mounted_01EB97:
-    LDA.b SpriteProperties_64
+    LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$01EB99 |
     LDA.w RidingYoshi_187A                  ;$01EB9A |
     BEQ +                                   ;$01EB9D |\ skip Yoshi physics if:
@@ -14924,12 +14924,12 @@ draw_yoshi_01EA70:
     BEQ +                                   ;$01EBA2 || - entering a pipe
     LDA.w $1405                             ;$01EBA4 || - about to warp to another room
     BNE .skip_yoshi_physics_01EBB0          ;$01EBA7 ||
-    LDA.b #$10                              ;$01EBA9 ||
-    STA.b SpriteProperties_64               ;$01EBAB ||
+    LDA.b #!Priority1_10                    ;$01EBA9 ||
+    STA.b SpriteYXPPCCCT_64                 ;$01EBAB ||
 +   JSR handle_off_yoshi_01EE61             ;$01EBAD |/
 .skip_yoshi_physics_01EBB0:
     PLA                                     ;$01EBB1 |
-    STA.b SpriteProperties_64               ;$01EBB1 |
+    STA.b SpriteYXPPCCCT_64                 ;$01EBB1 |
     RTS                                     ;$01EBB3 |
 
 DATA_01EBB4:
@@ -16091,7 +16091,7 @@ draw_yoshi_tongue_01F3FE:
     LDA.b #$09                              ;$01F493 |
     BCS +                                   ;$01F495 |
     ORA.b #$40                              ;$01F497 |
-+   ORA.b SpriteProperties_64               ;$01F499 |
++   ORA.b SpriteYXPPCCCT_64                 ;$01F499 |
     STA.w $0203,Y                           ;$01F49B |
     PHY                                     ;$01F49E |
     TYA                                     ;$01F49F |

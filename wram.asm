@@ -501,14 +501,14 @@ skip 4
 ; ||++---- object priority
 ; |+------ x flip
 ; +------- y flip
-SpriteProperties_64: skip 1
+SpriteYXPPCCCT_64: skip 1
 ; Valid values
-!OBJ_Priority0 = %000000
-!OBJ_Priority1 = %010000
-!OBJ_Priority2 = %100000
-!OBJ_Priority3 = %110000
-!OBJ_XFlip = %01000000
-!OBJ_YFlip = %10000000
+!Priority0_00 = %000000
+!Priority1_10 = %010000
+!Priority2_20 = %100000
+!Priority3_30 = %110000
+!XFlip_40 = %01000000
+!YFlip_80 = %10000000
 
 ; FIXME:
 ; === $7E0065 ===
