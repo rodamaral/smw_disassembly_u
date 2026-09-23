@@ -702,7 +702,7 @@ LevelIsSlippery_86: skip 1
 ; === $7E0087 ===
 ; 1 byte
 ; unused
-WRAM_00_87: skip 1
+skip 1
 
 ; === $7E0088 ===
 ; 1 byte

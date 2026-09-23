@@ -76,7 +76,7 @@ CODE_01804E:
     BEQ Return018072                        ;$018051 |
     LDA.b Frame_13                          ;$018053 |
     AND.b #$03                              ;$018055 |
-    ORA $86                                 ;$018057 |
+    ORA.b LevelIsSlippery_86                ;$018057 |
     BNE Return018072                        ;$018059 |
     LDA.b #$04                              ;$01805B |
     STA $00                                 ;$01805D |
@@ -1501,7 +1501,7 @@ CODE_0189B4:
 CODE_0189C0:
     JSR IsOnGround
     BEQ CODE_0189E6                         ;$0189C3 |
-    LDA $86                                 ;$0189C5 |
+    LDA.b LevelIsSlippery_86                ;$0189C5 |
     CMP.b #$01                              ;$0189C7 |
     LDA.b #$02                              ;$0189C9 |
     BCC CODE_0189CE                         ;$0189CB |
@@ -1568,7 +1568,7 @@ CODE_018A29:
 CODE_018A38:
     JSR IsOnGround
     BEQ CODE_018A62                         ;$018A3B |
-    LDA $86                                 ;$018A3D |
+    LDA.b LevelIsSlippery_86                ;$018A3D |
     CMP.b #$01                              ;$018A3F |
     LDA.b #$02                              ;$018A41 |
     BCC CODE_018A46                         ;$018A43 |
@@ -2598,7 +2598,7 @@ Return019210:
 CODE_019211:
     LDA.w $190E
     BEQ CODE_01925B                         ;$019214 |
-    LDA $85                                 ;$019216 |
+    LDA.b LevelIsWater_85                   ;$019216 |
     BNE CODE_019258                         ;$019218 |
     LDY.b #$3C                              ;$01921A |
     JSR CODE_01944D                         ;$01921C |
@@ -7304,7 +7304,7 @@ CODE_01B457:
     SEC                                     ;$01B45E |
     SBC.b Layer1YPos_1C                     ;$01B45F |
     STA $00                                 ;$01B461 |
-    LDA $80                                 ;$01B463 |
+    LDA.b PlayerYPosScrRel_80               ;$01B463 |
     CLC                                     ;$01B465 |
     ADC.b #$18                              ;$01B466 |
     CMP $00                                 ;$01B468 |
@@ -7370,7 +7370,7 @@ CODE_01B4C6:
     ADC.b #$08                              ;$01B4CB |
 CODE_01B4CD:
     CLC
-    ADC $80                                 ;$01B4CE |
+    ADC.b PlayerYPosScrRel_80               ;$01B4CE |
     CMP $00                                 ;$01B4D0 |
     BCC CODE_01B505                         ;$01B4D2 |
     LDA.b PlayerYSpeed_7D                   ;$01B4D4 |
@@ -7913,7 +7913,7 @@ CODE_01B852:
     SEC                                     ;$01B869 |
     SBC $0D                                 ;$01B86A |
     STA $09                                 ;$01B86C |
-    LDA $80                                 ;$01B86E |
+    LDA.b PlayerYPosScrRel_80               ;$01B86E |
     CLC                                     ;$01B870 |
     ADC.b #$18                              ;$01B871 |
     CMP $09                                 ;$01B873 |
@@ -7967,7 +7967,7 @@ ADDR_01B8C3:
     LDA.b #$08
 ADDR_01B8C5:
     CLC
-    ADC $80                                 ;$01B8C6 |
+    ADC.b PlayerYPosScrRel_80               ;$01B8C6 |
     CMP $02                                 ;$01B8C8 |
     BCC ADDR_01B8D5                         ;$01B8CA |
     LDA.b PlayerYSpeed_7D                   ;$01B8CC |
@@ -9754,7 +9754,7 @@ GiveMarioCape:
     RTS                                     ;$01C5AD |
 
 CODE_01C5AE:
-    LDA $81
+    LDA.b PlayerYPosScrRel_80+1
     ORA $7F                                 ;$01C5B0 |
     BNE Return01C5EB                        ;$01C5B2 |
     LDA.b #!AniGetCape_03                   ;$01C5B4 |
@@ -10375,7 +10375,7 @@ CODE_01C9EC:
     SEC                                     ;$01CA20 |
     SBC.b #$08                              ;$01CA21 |
     STA $0E                                 ;$01CA23 |
-    LDA $80                                 ;$01CA25 |
+    LDA.b PlayerYPosScrRel_80               ;$01CA25 |
     CLC                                     ;$01CA27 |
     ADC.b #$18                              ;$01CA28 |
     CMP $0E                                 ;$01CA2A |
@@ -13145,7 +13145,7 @@ CODE_01DE69:
     ADC.b SpriteYPosLow_D8,X                ;$01DE6A |
     SEC                                     ;$01DE6C |
     SBC.b Layer1YPos_1C                     ;$01DE6D |
-    CMP $80                                 ;$01DE6F |
+    CMP.b PlayerYPosScrRel_80               ;$01DE6F |
     BCS CODE_01DE8C                         ;$01DE71 |
     LDA.b #$10                              ;$01DE73 |
     STA.b PlayerYSpeed_7D                   ;$01DE75 |
@@ -17222,7 +17222,7 @@ CODE_01FC84:
     CLC                                     ;$01FCA2 |
     ADC.b #$02                              ;$01FCA3 |
     STA $04                                 ;$01FCA5 |
-    LDA $80                                 ;$01FCA7 |
+    LDA.b PlayerYPosScrRel_80               ;$01FCA7 |
     CLC                                     ;$01FCA9 |
     ADC.b #$10                              ;$01FCAA |
     STA $05                                 ;$01FCAC |

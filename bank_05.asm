@@ -235,14 +235,14 @@ CODE_0581FB:
     LDA.b #$05                              ;$058202 |
     STA $0F                                 ;$058204 |
     LDA.b #$00                              ;$058206 |
-    STA $84                                 ;$058208 |
+    STA.b SlopesPtr_82+2                    ;$058208 |
     LDA.b #$C4                              ;$05820A |
     STA.w $1430                             ;$05820C |
     LDA.b #$CA                              ;$05820F |
     STA.w $1431                             ;$058211 |
     REP #$20                                ;$058214 |
     LDA.w #$E55E                            ;$058216 |
-    STA $82                                 ;$058219 |
+    STA.b SlopesPtr_82                      ;$058219 |
     LDA.l TilesetMAP16Loc,X                 ;$05821B |
     STA $00                                 ;$05821F |
     LDA.w #$8000                            ;$058221 |
@@ -302,7 +302,7 @@ CODE_058281:
     STA.w $1431                             ;$058286 |
     REP #$30                                ;$058289 |
     LDA.w #$E5C8                            ;$05828B |
-    STA $82                                 ;$05828E |
+    STA.b SlopesPtr_82                      ;$05828E |
     LDA.w #$01C4                            ;$058290 |
     ASL                                     ;$058293 |
     TAY                                     ;$058294 |

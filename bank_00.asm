@@ -4641,7 +4641,7 @@ CODE_00A67D:
 CODE_00A6B6:
     STZ.b PlayerInAir_72
     STY.b PlayerDir_76                      ;$00A6B8 |
-    STY $89                                 ;$00A6BA |
+    STY.b PlayerPipeAction_89               ;$00A6BA |
     LDX.b #!AniEnterCastle_0A               ;$00A6BC |
     LDY.b #$00                              ;$00A6BE |
     LDA.w CarryYoshiLevels_0DC1             ;$00A6C0 |
@@ -4649,7 +4649,7 @@ CODE_00A6B6:
     LDY.b #$0F                              ;$00A6C5 |
 CODE_00A6C7:
     STX.b PlayerAnimation_71
-    STY $88                                 ;$00A6C9 |
+    STY.b PipeTimer_88                      ;$00A6C9 |
     RTS                                     ;$00A6CB |
 
 CODE_00A6CC:
@@ -4662,7 +4662,7 @@ CODE_00A6D5:
     BEQ CODE_00A6E0                         ;$00A6D8 |
     CMP.b #$05                              ;$00A6DA |
     BNE CODE_00A716                         ;$00A6DC |
-    ROR $86                                 ;$00A6DE |
+    ROR.b LevelIsSlippery_86                ;$00A6DE |
 CODE_00A6E0:
     STY.b PlayerDir_76
     LDA.b #$24                              ;$00A6E2 |
@@ -4704,12 +4704,12 @@ CODE_00A716:
     TSB.b PlayerXPos_94                     ;$00A728 |
     LDA.b #$02                              ;$00A72A |
     TSB.b PlayerYPos_96                     ;$00A72C |
-    LDX.b #$07                              ;$00A72E |
+    LDX.b #!AniCannonPipe_07                ;$00A72E |
     LDY.b #$20                              ;$00A730 |
     BRA CODE_00A6C7                         ;$00A732 |
 
 CODE_00A734:
-    STY $85
+    STY.b LevelIsWater_85
     LDA.w $13CF                             ;$00A736 |
     ORA.w KeyholeTimer_1434                 ;$00A739 |
     BNE CODE_00A6E0                         ;$00A73C |
@@ -4717,19 +4717,19 @@ CODE_00A734:
 CODE_00A740:
     CLC
     ADC.b #$03                              ;$00A741 |
-    STA $89                                 ;$00A743 |
+    STA.b PlayerPipeAction_89               ;$00A743 |
     TAY                                     ;$00A745 |
     LSR                                     ;$00A746 |
     DEC A                                   ;$00A747 |
     STA.w SpriteInPipeMode_1419             ;$00A748 |
     LDA.w $A609,Y                           ;$00A74B |
     STA.b PlayerDir_76                      ;$00A74E |
-    LDX.b #$05                              ;$00A750 |
+    LDX.b #!AniEnterHPipe_05                ;$00A750 |
     CPY.b #$06                              ;$00A752 |
     BCC CODE_00A768                         ;$00A754 |
     LDA.b #$08                              ;$00A756 |
     TSB.b PlayerXPos_94                     ;$00A758 |
-    LDX.b #$06                              ;$00A75A |
+    LDX.b #!AniEnterVPipe_06                ;$00A75A |
     CPY.b #$07                              ;$00A75C |
     LDY.b #$1E                              ;$00A75E |
     BCC CODE_00A76A                         ;$00A760 |
@@ -4743,11 +4743,11 @@ CODE_00A76A:
     JSR CODE_00A6C7                         ;$00A76C |
     LDA.w RidingYoshi_187A                  ;$00A76F |
     BEQ Return00A795                        ;$00A772 |
-    LDX $89                                 ;$00A774 |
-    LDA $88                                 ;$00A776 |
+    LDX.b PlayerPipeAction_89               ;$00A774 |
+    LDA.b PipeTimer_88                      ;$00A776 |
     CLC                                     ;$00A778 |
     ADC.w DATA_00A61D,X                     ;$00A779 |
-    STA $88                                 ;$00A77C |
+    STA.b PipeTimer_88                      ;$00A77C |
     TXA                                     ;$00A77E |
     ASL                                     ;$00A77F |
     TAX                                     ;$00A780 |
@@ -7582,14 +7582,14 @@ CODE_00C73F:
     CLC                                     ;$00C744 |
     ADC.w DATA_00C6DF,X                     ;$00C745 |
     TAX                                     ;$00C748 |
-    LDA $88                                 ;$00C749 |
+    LDA.b CutsceneInputTimer_88             ;$00C749 | TODO: not sure if $88 is timer or input here
     BNE CODE_00C764                         ;$00C74B |
     INC $8F                                 ;$00C74D |
     INC $8F                                 ;$00C74F |
     INX                                     ;$00C751 |
     INX                                     ;$00C752 |
     LDA.w DATA_00C5E9,X                     ;$00C753 |
-    STA $88                                 ;$00C756 |
+    STA.b NoYoshiInputIndex_88              ;$00C756 |
     LDA.w DATA_00C5E8,X                     ;$00C758 |
     CMP.b #$2D                              ;$00C75B |
     BNE CODE_00C764                         ;$00C75D |
@@ -7685,7 +7685,7 @@ CODE_00C7E9:
     STZ.w CarryingFlagMirror_148F           ;$00C7F0 |
     JSR aerial_physics                      ;$00C7F3 |
 CODE_00C7F6:
-    DEC $88
+    DEC.b CutsceneInputTimer_88
 Return00C7F8:
     RTS
 
@@ -7721,7 +7721,7 @@ CODE_00C827:
     JSR apply_player_speeds
     REP #$20                                ;$00C82A |
     LDY.w YoshiHeavenFlag_1B95              ;$00C82C |
-    LDA $80                                 ;$00C82F |
+    LDA.b PlayerYPosScrRel_80               ;$00C82F |
     CMP.w DATA_00C7F9,Y                     ;$00C831 |
     SEP #$20                                ;$00C834 |
     BPL CODE_00C845                         ;$00C836 |
@@ -7758,19 +7758,19 @@ ADDR_00C883:
 CODE_00C889:
     JSL CODE_02F584
 CODE_00C88D:
-    LDX $88
+    LDX.b NoYoshiInputIndex_88
     LDA.b byetudlrPress_16                  ;$00C88F |
     ORA.b axlr0000Press_18                  ;$00C891 |
     JSR disable_controls                    ;$00C893 |
     BMI CODE_00C8FB                         ;$00C896 |
     STZ.w $13DE                             ;$00C898 |
-    DEC $89                                 ;$00C89B |
+    DEC.b PlayerPipeAction_89               ;$00C89B |
     BNE CODE_00C8A8                         ;$00C89D |
     INX                                     ;$00C89F |
     INX                                     ;$00C8A0 |
-    STX $88                                 ;$00C8A1 |
+    STX.b PipeTimer_88                      ;$00C8A1 |
     LDA.w DATA_00C848-1,X                   ;$00C8A3 |
-    STA $89                                 ;$00C8A6 |
+    STA.b PlayerPipeAction_89               ;$00C8A6 |
 CODE_00C8A8:
     LDA.w DATA_00C848-2,X
     CMP.b #$FF                              ;$00C8AB |
@@ -8032,7 +8032,7 @@ CODE_00CA6D:
     LDA.b #$10                              ;$00CA81 |
 CODE_00CA83:
     CLC
-    ADC $80                                 ;$00CA84 |
+    ADC.b PlayerYPosScrRel_80               ;$00CA84 |
     STA $01                                 ;$00CA86 |
 CODE_00CA88:
     REP #$30
@@ -8682,7 +8682,7 @@ MarioAnimNoAbs1:
     BRA CODE_00D002                         ;$00CFD2 |
 
 CODE_00CFD4:
-    LDA $86
+    LDA.b LevelIsSlippery_86
     BEQ CODE_00CFE3                         ;$00CFD6 |
     LDA.b byetudlrHold_15                   ;$00CFD8 |
     AND.b #$03                              ;$00CFDA |
@@ -8963,7 +8963,7 @@ CODE_00D1B2:
     ORA.w #$000E                            ;$00D1BD |
     STA.b PlayerYPos_96                     ;$00D1C0 |
     SEP #$20                                ;$00D1C2 |
-    LDA $89                                 ;$00D1C4 |
+    LDA.b PlayerPipeAction_89               ;$00D1C4 |
     LSR                                     ;$00D1C6 |
     TAY                                     ;$00D1C7 |
     INY                                     ;$00D1C8 |
@@ -8975,7 +8975,7 @@ CODE_00D1B2:
     BPL CODE_00D1DB                         ;$00D1D6 |
     INC.w $1499                             ;$00D1D8 |
 CODE_00D1DB:
-    LDX $88
+    LDX.b PipeTimer_88
     CPX.b #$1D                              ;$00D1DD |
     BCS CODE_00D1F0                         ;$00D1DF |
     CPY.b #$03                              ;$00D1E1 |
@@ -9031,13 +9031,13 @@ CODE_00D22D:
     STA.b byetudlrHold_15                   ;$00D22F |
     LDA.b #$02                              ;$00D231 |
     STA.w $13F9                             ;$00D233 |
-    LDA $89                                 ;$00D236 |
+    LDA.b PlayerPipeAction_89               ;$00D236 |
     CMP.b #$04                              ;$00D238 |
-    LDY $88                                 ;$00D23A |
+    LDY.b PipeTimer_88                      ;$00D23A |
     BEQ CODE_00D268                         ;$00D23C |
     AND.b #$03                              ;$00D23E |
     TAY                                     ;$00D240 |
-    DEC $88                                 ;$00D241 |
+    DEC.b PipeTimer_88                      ;$00D241 |
     BNE CODE_00D24E                         ;$00D243 |
     BCS CODE_00D24E                         ;$00D245 |
     LDA.b #!Hide_All_7F                     ;$00D247 |
@@ -9074,8 +9074,8 @@ go_to_sublevel:
     SEC                                     ;$00D27E |
     SBC.b PlayerYPosMirror_D3               ;$00D27F |
     CLC                                     ;$00D281 |
-    ADC $88                                 ;$00D282 |
-    STA $88                                 ;$00D284 |
+    ADC.b CutsceneInputTimer_88             ;$00D282 |
+    STA.b CutsceneInputTimer_88             ;$00D284 |
     RTS                                     ;$00D286 |
 
 slanted_pipe_animation:
@@ -9085,12 +9085,12 @@ slanted_pipe_animation:
     LDA.b #$0C                              ;$00D28F |
     STA.b PlayerInAir_72                    ;$00D291 |
     JSR CODE_00CD8B                         ;$00D293 |
-    DEC $88                                 ;$00D296 |
+    DEC.b PipeTimer_88                      ;$00D296 |
     BNE CODE_00D29D                         ;$00D298 |
     JMP CODE_00D26A                         ;$00D29A |
 
 CODE_00D29D:
-    LDA $88
+    LDA.b PipeTimer_88
     CMP.b #$18                              ;$00D29F |
     BCC CODE_00D2AA                         ;$00D2A1 |
     BNE CODE_00D2B2                         ;$00D2A3 |
@@ -9267,7 +9267,7 @@ CODE_00D61E:
     BEQ CODE_00D682                         ;$00D620 |
     LDA.b PlayerXSpeed_7B                   ;$00D622 |
     BEQ CODE_00D62D                         ;$00D624 |
-    LDA $86                                 ;$00D626 |
+    LDA.b LevelIsSlippery_86                ;$00D626 |
     BNE CODE_00D62D                         ;$00D628 |
     JSR CODE_00FE4A                         ;$00D62A |
 CODE_00D62D:
@@ -9391,7 +9391,7 @@ CODE_00D6EC:
     BPL CODE_00D713                         ;$00D6FB |
     LDA.w $14A1                             ;$00D6FD |
     BNE CODE_00D713                         ;$00D700 |
-    LDA $86                                 ;$00D702 |
+    LDA.b LevelIsSlippery_86                ;$00D702 |
     BNE CODE_00D70E                         ;$00D704 |
     LDA.b #$0D                              ;$00D706 |
     STA.w PlayerTurningPose_13DD            ;$00D708 |
@@ -9442,7 +9442,7 @@ CODE_00D742:
     BPL CODE_00D76B                         ;$00D74D |
     REP #$20                                ;$00D74F |
     LDA.w MarioAccel,X                      ;$00D751 |
-    LDY $86                                 ;$00D754 |
+    LDY.b LevelIsSlippery_86                ;$00D754 |
     BEQ CODE_00D75F                         ;$00D756 |
     LDY.b PlayerInAir_72                    ;$00D758 |
     BNE CODE_00D75F                         ;$00D75A |
@@ -9475,7 +9475,7 @@ CODE_00D77C:
     REP #$20                                ;$00D781 |
     BNE CODE_00D78C                         ;$00D783 |
     LDA.w DATA_00D309,Y                     ;$00D785 |
-    BIT $85                                 ;$00D788 |
+    BIT.b LevelIsWater_85                   ;$00D788 |
     BMI CODE_00D78F                         ;$00D78A |
 CODE_00D78C:
     LDA.w DATA_00D2CD,Y
@@ -10552,7 +10552,7 @@ draw_mario_and_yoshi_00E2BD:
     CPX.b #$1C                              ;$00E362 |
     BNE +                                   ;$00E364 |
     ADC.w #$0001                            ;$00E366 |
-+   STA $80                                 ;$00E369 |
++   STA.b PlayerYPosScrRel_80               ;$00E369 |
     SEP #$20                                ;$00E36B |
     LDA.w $1497                             ;$00E36D |
     BEQ .CODE_00E385                        ;$00E370 |
@@ -10677,7 +10677,7 @@ CODE_00E45D:
     STA.w $0302,Y                           ;$00E468 |
     LDX $05                                 ;$00E46B |
     REP #$20                                ;$00E46D |
-    LDA $80                                 ;$00E46F |
+    LDA.b PlayerYPosScrRel_80               ;$00E46F |
     CLC                                     ;$00E471 |
     ADC.w DATA_00DE32,X                     ;$00E472 |
     PHA                                     ;$00E475 |
@@ -11041,7 +11041,7 @@ CODE_00EA34:
     STZ.w $13F9                             ;$00EA3F |
 CODE_00EA42:
     STZ.w $13FA
-    LDA $85                                 ;$00EA45 |
+    LDA.b LevelIsWater_85                   ;$00EA45 |
     BNE CODE_00EA5E                         ;$00EA47 |
     LSR $8A                                 ;$00EA49 |
     BCC CODE_00EAA3                         ;$00EA4B |
@@ -12439,14 +12439,14 @@ CODE_00F3E9:
 CODE_00F408:
     LDY.b #!AniEnterVPipe_06
 CODE_00F40A:
-    STA $88
+    STA.b PipeTimer_88
     LDA.b byetudlrHold_15                   ;$00F40C |
     AND.w DATA_00F3E5,X                     ;$00F40E |
     BEQ CODE_00F43E                         ;$00F411 |
     STA.b SpriteLock_9D                     ;$00F413 |
     AND.b #$01                              ;$00F415 |
     STA.b PlayerDir_76                      ;$00F417 |
-    STX $89                                 ;$00F419 |
+    STX.b PlayerPipeAction_89               ;$00F419 |
     TXA                                     ;$00F41B |
     LSR                                     ;$00F41C |
     TAX                                     ;$00F41D |
@@ -12688,7 +12688,7 @@ check_y_position:
     STA.b PlayerYPos_96                     ;$00F5A1 | | keep the player at that level.
 .below_y_position_limit                     ;        |/
     SEP #$20                                ;$00F5A3 |
-    LDA $81                                 ;$00F5A5 |\ If the player is below the screen,
+    LDA.b PlayerYPosScrRel_80+1             ;$00F5A5 |\ If the player is below the screen,
     DEC A                                   ;$00F5A7 | |
     BMI .return                             ;$00F5A8 | |
     LDA.w YoshiHeavenFlag_1B95              ;$00F5AA | | and it's a Yoshi wing level,
@@ -13219,7 +13219,7 @@ CODE_00F983:
     JSR CODE_00EEE1                         ;$00F994 |
 CODE_00F997:
     REP #$20
-    LDA $80                                 ;$00F999 |
+    LDA.b PlayerYPosScrRel_80               ;$00F999 |
     CMP.w #$00AE                            ;$00F99B |
     SEP #$20                                ;$00F99E |
     BMI CODE_00F9A5                         ;$00F9A0 |
@@ -13728,7 +13728,7 @@ CODE_00FD49:
 
 smoke_sparkle:
     LDA $7F                                 ;$00FD5A \ Don't draw the sparkle if the player is offscreen.
-    ORA $81                                 ;$00FD5C |
+    ORA.b PlayerYPosScrRel_80+1             ;$00FD5C |
     BNE .return                             ;$00FD5E |
     LDY.b #$03                              ;$00FD60 |
 .loop                                       ;        |
@@ -13872,7 +13872,7 @@ CODE_00FE4A:
     AND.b #$03                              ;$00FE4C |
     ORA.b PlayerInAir_72                    ;$00FE4E |
     ORA $7F                                 ;$00FE50 |
-    ORA $81                                 ;$00FE52 |
+    ORA.b PlayerYPosScrRel_80+1             ;$00FE52 |
     ORA.b SpriteLock_9D                     ;$00FE54 |
     BNE Return00FE71                        ;$00FE56 |
     LDA.b byetudlrHold_15                   ;$00FE58 |

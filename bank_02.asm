@@ -1424,7 +1424,7 @@ minor_sprites_and_loading_028AB1:
     ORA.b PlayerXPosScrRel_7E+1
     ORA.b PlayerYPosScrRel_80+1             ;$028AF7 |
     BNE +                                   ;$028AF9 |
-    LDA $80                                 ;$028AFB |
+    LDA.b PlayerYPosScrRel_80               ;$028AFB |
     CMP.b #$D0                              ;$028AFD |
     BCS +                                   ;$028AFF |
     JSL SpawnStarSparkles                   ;$028B01 | unused sparkles around the player, like from the stars
@@ -4036,7 +4036,7 @@ UnusedExtendedSpr:
     BCS Return029E35                        ;$029E21 |
     LDA $01                                 ;$029E23 |
     SEC                                     ;$029E25 |
-    SBC $80                                 ;$029E26 |
+    SBC.b PlayerYPosScrRel_80               ;$029E26 |
     SEC                                     ;$029E28 |
     SBC.b #$10                              ;$029E29 |
     CLC                                     ;$029E2B |
@@ -4173,7 +4173,7 @@ CODE_029F08:
     BCS CODE_029F2A                         ;$029F0C | presumably, draw gfx???
     JSR CODE_02A56E                         ;$029F0E | process mechanics
     BCS CODE_029F27                         ;$029F11 | erase Bubble if it is on a non-zero  map16 bank
-    LDA $85                                 ;$029F13 |
+    LDA.b LevelIsWater_85                   ;$029F13 |
     BNE CODE_029F2A                         ;$029F15 | if it is a water level, continue
     LDA $0C                                 ;$029F17 |
     CMP.b #$06                              ;$029F19 |
@@ -10718,7 +10718,7 @@ CODE_02CF52:
     LDA.b PlayerAnimation_71
     CMP.b #!AniHurt_01                      ;$02CF54 |
     BCS Return02CF51                        ;$02CF56 |
-    LDA $81                                 ;$02CF58 |
+    LDA.b PlayerYPosScrRel_80+1             ;$02CF58 |
     ORA $7F                                 ;$02CF5A |
     ORA.w $15A0,X                           ;$02CF5C |
     ORA.w $186C,X                           ;$02CF5F |
@@ -10734,7 +10734,7 @@ CODE_02CF52:
     LDA.b #$20                              ;$02CF74 |
 CODE_02CF76:
     CLC
-    ADC $80                                 ;$02CF77 |
+    ADC.b PlayerYPosScrRel_80               ;$02CF77 |
     STA $0B                                 ;$02CF79 |
     LDA.w $0300,Y                           ;$02CF7B |
     SEC                                     ;$02CF7E |
@@ -11517,7 +11517,7 @@ CODE_02D49C:
 CODE_02D4A8:
     CLC
     ADC.b SpriteYPosLow_D8,X                ;$02D4A9 |
-    CMP $80                                 ;$02D4AB |
+    CMP.b PlayerYPosScrRel_80               ;$02D4AB |
     BCC CODE_02D4EF                         ;$02D4AD |
     LDA.b SpriteXPosLow_E4,X                ;$02D4AF |
     STA $00                                 ;$02D4B1 |
@@ -13969,7 +13969,7 @@ CODE_02E67A:
     ADC.b #$0C                              ;$02E6D1 |
     CMP.b #$18                              ;$02E6D3 |
     BCS CODE_02E6EB                         ;$02E6D5 |
-    LDA $80                                 ;$02E6D7 |
+    LDA.b PlayerYPosScrRel_80               ;$02E6D7 |
     SEC                                     ;$02E6D9 |
     SBC.w $0305,Y                           ;$02E6DA |
     CLC                                     ;$02E6DD |
@@ -15548,7 +15548,7 @@ CODE_02F22B:
     BCS CODE_02F29B                         ;$02F235 |
     LDA.w $0305,Y                           ;$02F237 |
     SEC                                     ;$02F23A |
-    SBC $80                                 ;$02F23B |
+    SBC.b PlayerYPosScrRel_80               ;$02F23B |
     SBC.b #$10                              ;$02F23D |
     PHY                                     ;$02F23F |
     LDY.w RidingYoshi_187A                  ;$02F240 |
@@ -15563,7 +15563,7 @@ CODE_02F247:
     LDA.w StarTimer_1490                    ;$02F24F |
     BNE ADDR_02F29D                         ;$02F252 |
     LDA.w SpritePlayerContact_154C,X        ;$02F254 |
-    ORA $81                                 ;$02F257 |
+    ORA.b PlayerYPosScrRel_80+1             ;$02F257 |
     BNE CODE_02F29B                         ;$02F259 |
     LDA.b #$08                              ;$02F25B |
     STA.w SpritePlayerContact_154C,X        ;$02F25D |

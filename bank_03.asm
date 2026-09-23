@@ -5959,7 +5959,7 @@ CODE_03ACEB:
     LDY.b #$4C
     LDA.b PlayerXPosScrRel_7E               ;$03ACED |
     STA.w $0300,Y                           ;$03ACEF |
-    LDA $80                                 ;$03ACF2 |
+    LDA.b PlayerYPosScrRel_80               ;$03ACF2 |
     CLC                                     ;$03ACF4 |
     ADC.w BlushTileDispY,X                  ;$03ACF5 |
     STA.w $0301,Y                           ;$03ACF8 |
