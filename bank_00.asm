@@ -395,19 +395,19 @@ NMI_start:                                  ;        \
     LDA $2D                                 ;$008313 | |
     ADC.b #$00                              ;$008315 | | Handle carry if needed
     STA.w $2120                             ;$008317 |/
-    LDA $2E                                 ;$00831A |\ Update mode 7 matrix value A
+    LDA.b Mode7ParamA_2E                    ;$00831A |\ Update mode 7 matrix value A
     STA.w $211B                             ;$00831C | |
     LDA $2F                                 ;$00831F | |
     STA.w $211B                             ;$008321 |/
-    LDA $30                                 ;$008324 |\ Update mode 7 matrix value B
+    LDA.b Mode7ParamB_30                    ;$008324 |\ Update mode 7 matrix value B
     STA.w $211C                             ;$008326 | |
     LDA $31                                 ;$008329 | |
     STA.w $211C                             ;$00832B |/
-    LDA $32                                 ;$00832E |\ Update mode 7 matrix value C
+    LDA.b Mode7ParamC_32                    ;$00832E |\ Update mode 7 matrix value C
     STA.w $211D                             ;$008330 | |
     LDA $33                                 ;$008333 | |
     STA.w $211D                             ;$008335 |/
-    LDA $34                                 ;$008338 |\ Update mode 7 matrix value D
+    LDA.b Mode7ParamD_34                    ;$008338 |\ Update mode 7 matrix value D
     STA.w $211E                             ;$00833A | |
     LDA $35                                 ;$00833D | |
     STA.w $211E                             ;$00833F |/
@@ -1318,12 +1318,12 @@ CODE_008ACD:
     LDA $38                                 ;$008AD6 |
     STA $00                                 ;$008AD8 |
     REP #$30                                ;$008ADA |
-    LDA $2E                                 ;$008ADC |
-    STA $34                                 ;$008ADE |
-    LDA $30                                 ;$008AE0 |
+    LDA.b Mode7ParamA_2E                    ;$008ADC |
+    STA.b Mode7ParamD_34                    ;$008ADE |
+    LDA.b Mode7ParamB_30                    ;$008AE0 |
     EOR.w #$FFFF                            ;$008AE2 |
     INC A                                   ;$008AE5 |
-    STA $32                                 ;$008AE6 |
+    STA.b Mode7ParamC_32                    ;$008AE6 |
 CODE_008AE8:
     LDA $36
     ASL                                     ;$008AEA |
@@ -1344,7 +1344,7 @@ CODE_008AE8:
     EOR.w #$FFFF                            ;$008B06 |
     INC A                                   ;$008B09 |
 CODE_008B0A:
-    STA $30
+    STA.b Mode7ParamB_30
     TXA                                     ;$008B0C |
     EOR.w #$00FE                            ;$008B0D |
     CLC                                     ;$008B10 |
@@ -1359,7 +1359,7 @@ CODE_008B0A:
     EOR.w #$FFFF                            ;$008B22 |
     INC A                                   ;$008B25 |
 CODE_008B26:
-    STA $2E
+    STA.b Mode7ParamA_2E
     SEP #$30                                ;$008B28 |
     RTS                                     ;$008B2A |
 
