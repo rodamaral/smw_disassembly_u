@@ -37,7 +37,7 @@ reset_start:
     LDA.b #$6B                              ;$00804C | | RTL
     STA.l $7F8182                           ;$00804E |/
     JSR upload_SPC_engine                   ;$008052 | Upload the SPC engine
-    STZ.w $0100                             ;$008055 | Clear game mode
+    STZ.w GameMode_0100                     ;$008055 | Clear game mode
     STZ.w OverworldOverride_0109            ;$008058 | Clear level number(used for OW bypass)
     JSR clear_non_stack                     ;$00805B | RAM clear routine
     JSR upload_samples                      ;$00805E | Upload SPC samples
@@ -2197,7 +2197,7 @@ DATA_00931D:
     db $02,$11,$B4,$04,$00
 
 run_game_mode:
-    LDA.w $0100
+    LDA.w GameMode_0100
     JSL execute_pointer                     ;$009325 |
 
 Ptrs009329:
@@ -2303,7 +2303,7 @@ CODE_0093EA:
     LDA.b #$20                              ;$0093EF |
     JSR ScreenSettings                      ;$0093F1 |
 increment_game_mode_0093F4:
-    INC.w $0100
+    INC.w GameMode_0100
 Mode04Finish:
     LDA.b #$81
     STA.w $4200                             ;$0093F9 |
@@ -2323,7 +2323,7 @@ GM01_nintendo_main_00940F:
     BNE Return00941A                        ;$009412 |
     JSR CODE_00B888                         ;$009414 |
 CODE_009417:
-    INC.w $0100
+    INC.w GameMode_0100
 Return00941A:
     RTS
 
@@ -2333,7 +2333,7 @@ GM06_title_circle_00941B:
     BEQ CODE_00942E                         ;$009421 |
     LDA.b #$EC                              ;$009423 |
     JSR CODE_009440                         ;$009425 |
-    INC.w $0100                             ;$009428 |
+    INC.w GameMode_0100                     ;$009428 |
     JMP CODE_009C9F                         ;$00942B |
 
 CODE_00942E:
@@ -2446,8 +2446,8 @@ GM1B_credits_castle_main_0094FD:
 ADDR_009520:
     STA.w $13C6
 ADDR_009523:
-    LDA.b #$18
-    STA.w $0100                             ;$009525 |
+    LDA.b #!FadeToCutscene_18
+    STA.w GameMode_0100                     ;$009525 |
     RTS                                     ;$009528 |
 
 CODE_009529:
@@ -2502,11 +2502,11 @@ GM1D_ending_yoshi_load_009583:
     LDA.b #$28                              ;$009586 |
     LDY.b #$01                              ;$009588 |
     JSR CODE_0096CF                         ;$00958A |
-    DEC.w $0100                             ;$00958D |
+    DEC.w GameMode_0100                     ;$00958D |
     LDA.b #$16                              ;$009590 |
     STA.w $192B                             ;$009592 |
     JSR GM12_level_load_2_00A59C            ;$009595 |
-    DEC.w $0100                             ;$009598 |
+    DEC.w GameMode_0100                     ;$009598 |
     JSR TurnOffIO                           ;$00959B |
     JSR CODE_0085FA                         ;$00959E |
     JSR CODE_00A993                         ;$0095A1 |
@@ -2701,7 +2701,7 @@ CODE_00973B:
 CODE_009740:
     STZ.w $0DAE
     STZ.w $0DAF                             ;$009743 |
-    INC.w $0100                             ;$009746 |
+    INC.w GameMode_0100                     ;$009746 |
     JMP Mode04Finish                        ;$009749 |
 
 CODE_00974C:
@@ -3191,8 +3191,8 @@ GM09_title_file_erase_009B1A:
     AND.b #$40                              ;$009B28 |
     BEQ CODE_009B38                         ;$009B2A |
 CODE_009B2C:
-    DEC.w $0100
-    DEC.w $0100                             ;$009B2F |
+    DEC.w GameMode_0100
+    DEC.w GameMode_0100                     ;$009B2F |
     JSR CODE_009B11                         ;$009B32 |
     JMP CODE_009CB0                         ;$009B35 |
 
@@ -3371,9 +3371,9 @@ GM07_title_main_009C64:
     CMP.b #$FF                              ;$009C85 |
     BNE CODE_009C8F                         ;$009C87 |
 CODE_009C89:
-    LDY.b #$02
+    LDY.b #!FadeToTitleScreen_02
 CODE_009C8B:
-    STY.w $0100
+    STY.w GameMode_0100
     RTS                                     ;$009C8E |
 
 CODE_009C8F:
@@ -3422,7 +3422,7 @@ GM08_title_file_select_009CD1:
     JSR CODE_009D30                         ;$009CD8 |
     LDY.b #$02                              ;$009CDB |
     JSR CODE_009ACB                         ;$009CDD |
-    INC.w $0100                             ;$009CE0 |
+    INC.w GameMode_0100                     ;$009CE0 |
     CPX.b #$03                              ;$009CE3 |
     BNE CODE_009CEF                         ;$009CE5 |
     STZ.w $0DDE                             ;$009CE7 |
@@ -3459,7 +3459,7 @@ CODE_009D14:
 CODE_009D22:
     SEP #$10
     LDY.b #$12                              ;$009D24 |
-    INC.w $0100                             ;$009D26 |
+    INC.w GameMode_0100                     ;$009D26 |
 CODE_009D29:
     STY $12
     LDX.b #$00                              ;$009D2B |
@@ -3591,7 +3591,7 @@ GM0A_title_player_select_009DFA:
     ORA.b axlr0000Press_18                  ;$009DFC |
     AND.b #$40                              ;$009DFE |
     BEQ CODE_009E08                         ;$009E00 |
-    DEC.w $0100                             ;$009E02 |
+    DEC.w GameMode_0100                     ;$009E02 |
     JMP CODE_009B2C                         ;$009E05 |
 
 CODE_009E08:
@@ -3632,7 +3632,7 @@ CODE_009E26:
     STZ.w CurrentPlayer_0DB3                ;$009E5F |
 CODE_009E62:
     JSR KeepModeActive
-    LDY.b #$0B                              ;$009E65 |
+    LDY.b #!FadeToOverworld_0B              ;$009E65 |
     JMP CODE_009C8B                         ;$009E67 |
 
 DATA_009E6A:
@@ -3762,7 +3762,7 @@ CODE_009F4C:
     CMP.w DATA_009F33,Y                     ;$009F56 |
     BNE CODE_009F66                         ;$009F59 |
 GMPPMosaic:
-    INC.w $0100
+    INC.w GameMode_0100
     LDA.w $0DAF                             ;$009F5E |
     EOR.b #$01                              ;$009F61 |
     STA.w $0DAF                             ;$009F63 |
@@ -3923,8 +3923,8 @@ GM0C_overworld_load_00A087:
     STZ.w OWPlayerSubmap_1F11               ;$00A0A0 |
     LDA.b #$F0                              ;$00A0A3 |
     STA.w $0DB0                             ;$00A0A5 |
-    LDA.b #$10                              ;$00A0A8 |
-    STA.w $0100                             ;$00A0AA |
+    LDA.b #!FadeLevelBlack_10               ;$00A0A8 |
+    STA.w GameMode_0100                     ;$00A0AA |
     JMP Mode04Finish                        ;$00A0AD |
 
 .CODE_00A0B0:
@@ -4153,8 +4153,8 @@ GM14_main_level_00A1DA:
 .skip_cheat_00A27E:
     STA.w LevelExitMode_0DD5
     INC.w OWLoadEventFlag_1DE9              ;$00A281 |
-    LDA.b #$0B                              ;$00A284 |
-    STA.w $0100                             ;$00A286 | Fade out to Overworld
+    LDA.b #!FadeToOverworld_0B              ;$00A284 |
+    STA.w GameMode_0100                     ;$00A286 | Fade out to Overworld
 .Return00A289:
     RTS
 
@@ -7323,7 +7323,7 @@ timers_and_animation_00C47E:
     BCC .CODE_00C4F8                        ;$00C4A9 |
     JSR CODE_00FCEC                         ;$00C4AB |
     LDA.b #$02                              ;$00C4AE |
-    LDY.b #$0B                              ;$00C4B0 |
+    LDY.b #!FadeToOverworld_0B              ;$00C4B0 |
     JSR CODE_00C9FE                         ;$00C4B2 |
     LDY.b #$00                              ;$00C4B5 |
 +   STY.w $1434                             ;$00C4B7 |
@@ -7387,8 +7387,8 @@ timers_and_animation_00C47E:
     STY.w SPCIO2_1DFB                       ;$00C527 |
 +   CMP.b #$01                              ;$00C52A |
     BNE .skip_bonus_timer                   ;$00C52C |
-    LDY.b #$0B                              ;$00C52E |
-    STY.w $0100                             ;$00C530 |
+    LDY.b #!FadeToOverworld_0B              ;$00C52E |
+    STY.w GameMode_0100                     ;$00C530 |
 .skip_bonus_timer:
     LDY.w BlueSwitchTimer_14AD              ;$00C533 |
     CPY.w SilverSwitchTimer_14AE            ;$00C536 |
@@ -7469,8 +7469,8 @@ UnknownAniB:
     LDA.w EndLevelTimer_1493                ;$00C5BB |
     BEQ CODE_00C5CE                         ;$00C5BE |
     JSL CODE_0CAB13                         ;$00C5C0 |
-    LDA.w $0100                             ;$00C5C4 |
-    CMP.b #$14                              ;$00C5C7 |
+    LDA.w GameMode_0100                     ;$00C5C4 |
+    CMP.b #!Level_14                        ;$00C5C7 |
     BEQ CODE_00C5D1                         ;$00C5C9 |
     JMP CODE_00C95B                         ;$00C5CB |
 
@@ -7818,8 +7818,8 @@ CODE_00C8F8:
 
 CODE_00C8FB:
     INC.w $141D
-    LDA.b #$0F                              ;$00C8FE |
-    STA.w $0100                             ;$00C900 |
+    LDA.b #!FadeToLevel_0F                  ;$00C8FE |
+    STA.w GameMode_0100                     ;$00C900 |
     CPX.b #$11                              ;$00C903 |
     BCC CODE_00C90A                         ;$00C905 |
     INC.w CarryYoshiLevels_0DC1             ;$00C907 |
@@ -7864,7 +7864,7 @@ CODE_00C948:
     LDA.w $13D2                             ;$00C956 |
     BNE CODE_00C962                         ;$00C959 |
 CODE_00C95B:
-    LDY.b #$0B
+    LDY.b #!FadeToOverworld_0B
     LDA.b #$01                              ;$00C95D |
     JMP CODE_00C9FE                         ;$00C95F |
 
@@ -7934,7 +7934,7 @@ CODE_00C9C2:
     STA.w OWPlayerSubmap_1F11               ;$00C9DB |
     LSR                                     ;$00C9DE |
 CODE_00C9DF:
-    LDY.b #$0C
+    LDY.b #!LoadOverworld_0C
     LDX.w BonusGameFlag_1425                ;$00C9E1 |
     BEQ CODE_00C9F8                         ;$00C9E4 |
     LDX.b #$FF                              ;$00C9E6 |
@@ -7943,7 +7943,7 @@ CODE_00C9DF:
     STX.w $0DB0                             ;$00C9ED |
     STZ.w EndLevelTimer_1493                ;$00C9F0 |
     STZ.w MusicBackup_0DDA                  ;$00C9F3 |
-    LDY.b #$10                              ;$00C9F6 |
+    LDY.b #!FadeLevelBlack_10               ;$00C9F6 |
 CODE_00C9F8:
     STZ.w $0DAE
     STZ.w $0DAF                             ;$00C9FB |
@@ -7968,9 +7968,9 @@ CODE_00CA16:
 
 CODE_00CA20:
     STX.w $13C6
-    LDY.b #$18                              ;$00CA23 |
+    LDY.b #!FadeToCutscene_18               ;$00CA23 |
 CODE_00CA25:
-    STY.w $0100
+    STY.w GameMode_0100
     INC.w OWLoadEventFlag_1DE9              ;$00CA28 |
 CODE_00CA2B:
     LDA.b #$01
@@ -8831,7 +8831,7 @@ death_animation:
     BRA .show_message                       ;$00D0E4 /
 
 .not_game_over
-    LDY.b #$0B                              ;$00D0E6 \ Load the fade to OW game mode.
+    LDY.b #!FadeToOverworld_0B              ;$00D0E6 \ Load the fade to OW game mode.
     LDA.w $0F31                             ;$00D0E8 |\ If the hundreds place of the time,
     ORA.w $0F32                             ;$00D0EB | | the tens place,
     ORA.w $0F33                             ;$00D0EE | | and the ones place are zero,
@@ -8843,9 +8843,9 @@ death_animation:
     STA.w $143C                             ;$00D0FA |/
     LDA.b #$FF                              ;$00D0FD |\ Set how long the death message should persist.
     STA.w $143D                             ;$00D0FF |/
-    LDY.b #$15                              ;$00D102 | Load the "GAME OVER" or "TIME UP" game mode,
+    LDY.b #!FadeToGameOver_15               ;$00D102 | Load the "GAME OVER" or "TIME UP" game mode,
 .not_time_up                                ;        |
-    STY.w $0100                             ;$00D104 | and set the game mode.
+    STY.w GameMode_0100                     ;$00D104 | and set the game mode.
     RTS                                     ;$00D107 /
 
 .not_done
@@ -9066,8 +9066,8 @@ CODE_00D26A:
 
 go_to_sublevel:
     INC.w $141A                             ;$00D273 \ Increase the sub-level counter,
-    LDA.b #$0F                              ;$00D276 |
-    STA.w $0100                             ;$00D278 | and fade in to another level.
+    LDA.b #!FadeToLevel_0F                  ;$00D276 |
+    STA.w GameMode_0100                     ;$00D278 | and fade in to another level.
     RTS                                     ;$00D27B /
 
     LDA $96                                 ;$00D27C |

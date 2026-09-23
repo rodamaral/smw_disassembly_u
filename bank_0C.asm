@@ -661,8 +661,8 @@ CODE_0C93AD:
     PLB                                     ;$0C93AF |
     DEC.w $145B                             ;$0C93B0 |
     BNE CODE_0C93BF                         ;$0C93B3 |
-    LDA.b #$23                              ;$0C93B5 |
-    STA.w $0100                             ;$0C93B7 |
+    LDA.b #!EnemyList_23                    ;$0C93B5 |
+    STA.w GameMode_0100                     ;$0C93B7 |
     LDA.b #$FF                              ;$0C93BA |
     STA.w CreditsScreenNumber_1DE9          ;$0C93BC |
 CODE_0C93BF:
@@ -2286,7 +2286,7 @@ CODE_0CA6B0:
     DEC.w $145D                             ;$0CA710 |
     LDA.w $145D                             ;$0CA713 |
     BNE Return0CA720                        ;$0CA716 |
-    INC.w $0100                             ;$0CA718 |
+    INC.w GameMode_0100                     ;$0CA718 |
     LDA.b #$40                              ;$0CA71B |
     STA.w $145B                             ;$0CA71D |
 Return0CA720:
@@ -2801,7 +2801,7 @@ CODE_0CAB3B:
     STX.w $1B88                             ;$0CAB4B |
     CPY.b #$06                              ;$0CAB4E |
     BCC CODE_0CAB57                         ;$0CAB50 |
-    INC.w $0100                             ;$0CAB52 |
+    INC.w GameMode_0100                     ;$0CAB52 |
     BRA CODE_0CAB6B                         ;$0CAB55 |
 
 CODE_0CAB57:
@@ -3132,12 +3132,12 @@ CODE_0CAED0:
 CODE_0CAEF8:
     LDA.w $145B
     BNE CODE_0CAF0C                         ;$0CAEFB |
-    INC.w $0100                             ;$0CAEFD |
+    INC.w GameMode_0100                     ;$0CAEFD |
     LDA.w CreditsScreenNumber_1DE9          ;$0CAF00 |
     CMP.b #$0C                              ;$0CAF03 |
     BEQ CODE_0CAF0C                         ;$0CAF05 |
-    LDA.b #$22                              ;$0CAF07 |
-    STA.w $0100                             ;$0CAF09 |
+    LDA.b #!FadeInEnemyList_22              ;$0CAF07 |
+    STA.w GameMode_0100                     ;$0CAF09 |
 CODE_0CAF0C:
     SEP #$20
     JMP CODE_0CB5BC                         ;$0CAF0E |
@@ -5133,8 +5133,8 @@ CODE_0CCFDE:
     AND.b #$C0                              ;$0CCFEA |
     BEQ Return0CCFF6                        ;$0CCFEC |
     STZ.w $1442                             ;$0CCFEE |
-    LDA.b #$0B                              ;$0CCFF1 |
-    STA.w $0100                             ;$0CCFF3 |
+    LDA.b #!FadeToOverworld_0B              ;$0CCFF1 |
+    STA.w GameMode_0100                     ;$0CCFF3 |
 Return0CCFF6:
     RTS
 

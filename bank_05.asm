@@ -59,8 +59,8 @@ CODE_058079:
     STZ.w $1928                             ;$058089 |
     JSR LoadLevel                           ;$05808C |
     SEP #$30                                ;$05808F |
-    LDA.w $0100                             ;$058091 |
-    CMP.b #$22                              ;$058094 |
+    LDA.w GameMode_0100                     ;$058091 |
+    CMP.b #!FadeInEnemyList_22              ;$058094 |
     BPL CODE_05809C                         ;$058096 |
     JSL CODE_02A751                         ;$058098 |
 CODE_05809C:
@@ -2956,8 +2956,8 @@ side_exit_level:
     LDA.b #$00                              ;$05B163 |
 CODE_05B165:
     STA.w LevelExitMode_0DD5
-    LDA.b #$0B                              ;$05B168 |
-    STA.w $0100                             ;$05B16A |
+    LDA.b #!FadeToOverworld_0B              ;$05B168 |
+    STA.w GameMode_0100                     ;$05B16A |
     RTL                                     ;$05B16D |
 
 CODE_05B16E:

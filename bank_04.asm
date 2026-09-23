@@ -1718,8 +1718,8 @@ OWPU_IsOnPipe:
 CODE_04918D:
     INC.w $1B9C
     STZ.w LevelExitMode_0DD5                ;$049190 |
-    LDA.b #$0B                              ;$049193 |
-    STA.w $0100                             ;$049195 |
+    LDA.b #!FadeToOverworld_0B              ;$049193 |
+    STA.w GameMode_0100                     ;$049195 |
 OWPU_IsOnPipeRTS:
     RTS
 
@@ -1757,7 +1757,7 @@ CODE_0491B1:
     STA.w $0DB1                             ;$0491DD |
     LDA.b #$80                              ;$0491E0 |
     STA.w SPCIO2_1DFB                       ;$0491E2 |
-    INC.w $0100                             ;$0491E5 |
+    INC.w GameMode_0100                     ;$0491E5 |
     RTS                                     ;$0491E8 |
 
 CODE_0491E9:
