@@ -303,10 +303,10 @@ NMI_start:                                  ;        \
     STA.w $210D                             ;$00824D |/
     LDA.b Layer1YPos_1C                     ;$008250 |\ Set layer 1 Y position from mirrors
     CLC                                     ;$008252 | | 
-    ADC.w $1888                             ;$008253 | | $1888/9 are used as relative Y offsets
+    ADC.w ScreenShakeYOffset_1888           ;$008253 | | $1888/9 are used as relative Y offsets
     STA.w $210E                             ;$008256 | | $210E is a write twice register
     LDA.b Layer1YPos_1C+1                   ;$008259 | |
-    ADC.w $1889                             ;$00825B | |
+    ADC.w ScreenShakeYOffset_1888+1         ;$00825B | |
     STA.w $210E                             ;$00825E |/
     LDA.b Layer2XPos_1E                     ;$008261 |\ Set layer 2 X position from mirrors
     STA.w $210F                             ;$008263 | | $210F is a write twice register 
@@ -494,7 +494,7 @@ mode_7_IRQ:                                 ;        \
     LDA.w $4211                             ;$0083D2 | Reread the IRQ flag, this is unneeded
     LDA.b #$AE                              ;$0083D5 |\ Offset the V timer based on the layer 1 relative
     SEC                                     ;$0083D7 | | Y position.
-    SBC.w $1888                             ;$0083D8 | |
+    SBC.w ScreenShakeYOffset_1888           ;$0083D8 | |
     STA.w $4209                             ;$0083DB | |
     STZ.w $420A                             ;$0083DE |/
     LDA.b #$A1                              ;$0083E1 | Load NMI, IRQ, and autojoy enabled
@@ -535,7 +535,7 @@ mode_7_static_BG_scroll:                    ;        \
     STA.w $210D                             ;$008427 |/
     LDA.b Layer1YPos_1C                     ;$00842A |\ Set relative layer 1 Y position.
     CLC                                     ;$00842C | |
-    ADC.w $1888                             ;$00842D | | Add in the relative amount.
+    ADC.w ScreenShakeYOffset_1888           ;$00842D | | Add in the relative amount.
     STA.w $210E                             ;$008430 | |
     LDA.b Layer1YPos_1C+1                   ;$008433 | |
     STA.w $210E                             ;$008435 |/
@@ -2775,7 +2775,7 @@ load_boss_room_0097BC:
     LDA.b #$20                              ;$0097C7 |
     STA $38                                 ;$0097C9 |
     STA $39                                 ;$0097CB |
-    STZ.w $1888                             ;$0097CD |
+    STZ.w ScreenShakeYOffset_1888           ;$0097CD |
     JSR CODE_0085FA                         ;$0097D0 |
     LDA.b #$FF                              ;$0097D3 |
     STA.w $1931                             ;$0097D5 |
@@ -4175,20 +4175,20 @@ GM14_main_level_00A1DA:
     PHA                                     ;$00A2AB | push layer 1 positions
     LDA.b Layer1YPos_1C+1                   ;$00A2AC |
     PHA                                     ;$00A2AE |
-    STZ.w $1888                             ;$00A2AF |
-    STZ.w $1889                             ;$00A2B2 |
-    LDA.w $1887                             ;$00A2B5 |
+    STZ.w ScreenShakeYOffset_1888           ;$00A2AF |
+    STZ.w ScreenShakeYOffset_1888+1         ;$00A2B2 |
+    LDA.w ScreenShakeTimer_1887             ;$00A2B5 |
     BEQ +                                   ;$00A2B8 |\
-    DEC.w $1887                             ;$00A2BA || If there is time for shaking layer 1
+    DEC.w ScreenShakeTimer_1887             ;$00A2BA || If there is time for shaking layer 1
     AND.b #$03                              ;$00A2BD || slightly shift the camera vertically
     TAY                                     ;$00A2BF ||
     LDA.w GrndShakeDispYLo,Y                ;$00A2C0 ||
-    STA.w $1888                             ;$00A2C3 ||
+    STA.w ScreenShakeYOffset_1888           ;$00A2C3 ||
     CLC                                     ;$00A2C6 ||
     ADC.b Layer1YPos_1C                     ;$00A2C7 ||
     STA.b Layer1YPos_1C                     ;$00A2C9 ||
     LDA.w GrndShakeDispYHi,Y                ;$00A2CB ||
-    STA.w $1889                             ;$00A2CE ||
+    STA.w ScreenShakeYOffset_1888+1         ;$00A2CE ||
     ADC.b Layer1YPos_1C+1                   ;$00A2D1 ||
     STA.b Layer1YPos_1C+1                   ;$00A2D3 |/
 +   JSR update_status_tileset_008E1A        ;$00A2D5 |
@@ -13314,7 +13314,7 @@ CODE_00FA37:
 
 FlatPalaceSwitch:
     LDA.b #$20
-    STA.w $1887                             ;$00FA47 |
+    STA.w ScreenShakeTimer_1887             ;$00FA47 |
     LDY.b #$02                              ;$00FA4A |
     LDA.b #$60                              ;$00FA4C |
     STA.w $009E,y                           ;$00FA4E |
@@ -14048,7 +14048,7 @@ CODE_00FF76:
     SEC                                     ;$00FF87 |
     SBC $00                                 ;$00FF88 |
     CLC                                     ;$00FF8A |
-    ADC.w $1888                             ;$00FF8B |
+    ADC.w ScreenShakeYOffset_1888           ;$00FF8B |
     STA.b Layer3YPos_24                     ;$00FF8E |
     SEP #$20                                ;$00FF90 |
     RTL                                     ;$00FF92 |

@@ -5768,7 +5768,7 @@ CODE_03AB64:
     LDA.w DATA_03AB62,Y                     ;$03AB94 |
     STA $B6,X                               ;$03AB97 |
     LDA.b #$20                              ;$03AB99 |
-    STA.w $1887                             ;$03AB9B |
+    STA.w ScreenShakeTimer_1887             ;$03AB9B |
 Return03AB9E:
     RTS
 
@@ -6579,7 +6579,7 @@ CODE_03B18A:
     LDY.b #$25                              ;$03B1A3 |
     STY.w SPCIO3_1DFC                       ;$03B1A5 |
     LDY.b #$20                              ;$03B1A8 |
-    STY.w $1887                             ;$03B1AA |
+    STY.w ScreenShakeTimer_1887             ;$03B1AA |
 CODE_03B1AD:
     CMP.b #$08
     BCC CODE_03B1B6                         ;$03B1AF |

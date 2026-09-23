@@ -5970,7 +5970,7 @@ CODE_01AB0C:
     LDA.b #$B0                              ;$01AB1A |
     STA.w TimersStart_14AD,Y                ;$01AB1C |
     LDA.b #$20                              ;$01AB1F |
-    STA.w $1887                             ;$01AB21 |
+    STA.w ScreenShakeTimer_1887             ;$01AB21 |
     CPY.b #$01                              ;$01AB24 |
     BNE Return01AB2C                        ;$01AB26 |
     JSL CODE_02B9BD                         ;$01AB28 |
@@ -6559,7 +6559,7 @@ CODE_01AF07:
     BEQ Return01AF23                        ;$01AF0D |
     JSR SetSomeYSpeed                       ;$01AF0F |
     LDA.b #$18                              ;$01AF12 |
-    STA.w $1887                             ;$01AF14 |
+    STA.w ScreenShakeTimer_1887             ;$01AF14 |
     LDA.b #$09                              ;$01AF17 |
     STA.w SPCIO3_1DFC                       ;$01AF19 |
     LDA.b #$40                              ;$01AF1C |
@@ -11542,7 +11542,7 @@ CODE_01D286:
     JSR CODE_01D0C0
     BCC Return01D2A7                        ;$01D289 |
     LDA.b #$20                              ;$01D28B |
-    STA.w $1887                             ;$01D28D |
+    STA.w ScreenShakeTimer_1887             ;$01D28D |
     LDA.b PlayerInAir_72                    ;$01D290 |
     BNE CODE_01D299                         ;$01D292 |
     LDA.b #$28                              ;$01D294 |

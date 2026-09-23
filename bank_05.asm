@@ -4365,7 +4365,7 @@ CODE_05C198:
     STA.w $1462                             ;$05C1A0 |
     LDA.b Layer2YPos_20                     ;$05C1A3 |
     CLC                                     ;$05C1A5 |
-    ADC.w $1888                             ;$05C1A6 |
+    ADC.w ScreenShakeYOffset_1888           ;$05C1A6 |
     STA.b Layer2YPos_20                     ;$05C1A9 |
     SEP #$20                                ;$05C1AB |
     RTS                                     ;$05C1AD |
@@ -5134,7 +5134,7 @@ CODE_05C74A:
     LDA.w #$0009                            ;$05C75D |
     STA.w SPCIO3_1DFC                       ;$05C760 |
     LDA.w #$0020                            ;$05C763 |
-    STA.w $1887                             ;$05C766 |
+    STA.w ScreenShakeTimer_1887             ;$05C766 |
 CODE_05C769:
     LDX.b #$00
     STX.w $14AF                             ;$05C76B |
@@ -5385,7 +5385,7 @@ CODE_05C9A9:
     LDA.b #$09                              ;$05C9C1 |
     STA.w SPCIO3_1DFC                       ;$05C9C3 |
     LDA.b #$20                              ;$05C9C6 |
-    STA.w $1887                             ;$05C9C8 |
+    STA.w ScreenShakeTimer_1887             ;$05C9C8 |
     LDA.b #$00                              ;$05C9CB |
 CODE_05C9CD:
     STA.w $1443

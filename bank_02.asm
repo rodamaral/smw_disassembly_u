@@ -303,7 +303,7 @@ CODE_0282D8:
     ADC.l DATA_028178,X                     ;$0282E9 |
     STA.w $020C,Y                           ;$0282ED |
     STA $02                                 ;$0282F0 |
-    LDA.w $1888                             ;$0282F2 |
+    LDA.w ScreenShakeYOffset_1888           ;$0282F2 |
     STA $07                                 ;$0282F5 |
     ASL                                     ;$0282F7 |
     ROR $07                                 ;$0282F8 |
@@ -459,7 +459,7 @@ CODE_0283F8:
     SEC                                     ;$02840B |
     ROR.w $18A8,X                           ;$02840C |
     LDA.b #$30                              ;$02840F |
-    STA.w $1887                             ;$028411 |
+    STA.w ScreenShakeTimer_1887             ;$028411 |
     LDA.b #$09                              ;$028414 |
     STA.w SPCIO3_1DFC                       ;$028416 |
     CPX.b #$00                              ;$028419 |
@@ -492,7 +492,7 @@ CODE_028440:
     SEC                                     ;$028448 |
     SBC.b Layer1YPos_1C                     ;$028449 |
     SEC                                     ;$02844B |
-    SBC.w $1888                             ;$02844C |
+    SBC.w ScreenShakeYOffset_1888           ;$02844C |
     SEC                                     ;$02844F |
     SBC $00                                 ;$028450 |
     CMP.b #$20                              ;$028452 |
@@ -2742,7 +2742,7 @@ CODE_0294B0:
 
 GroundPound:
     LDA.b #$30
-    STA.w $1887                             ;$0294C3 |
+    STA.w ScreenShakeTimer_1887             ;$0294C3 |
     STZ.w $14A9                             ;$0294C6 |
     PHB                                     ;$0294C9 |
     PHK                                     ;$0294CA |
@@ -3740,7 +3740,7 @@ DATA_029BE2:
 
 CODE_029BE4:
     LDA.b #$05
-    STA.w $1887                             ;$029BE6 |
+    STA.w ScreenShakeTimer_1887             ;$029BE6 |
     LDA.b #$09                              ;$029BE9 |
     STA.w SPCIO3_1DFC                       ;$029BEB |
     STZ $00                                 ;$029BEE |
@@ -11479,7 +11479,7 @@ CODE_02D465:
     AND.b #$F0                              ;$02D46B |
     STA.b SpriteYPosLow_D8,X                ;$02D46D |
     LDA.b #$50                              ;$02D46F |
-    STA.w $1887                             ;$02D471 |
+    STA.w ScreenShakeTimer_1887             ;$02D471 |
     LDA.b #$09                              ;$02D474 |
     STA.w SPCIO3_1DFC                       ;$02D476 |
     LDA.b #$30                              ;$02D479 |
@@ -12709,7 +12709,7 @@ CODE_02DD4B:
     ORA.w $186C,X                           ;$02DD5A |
     BNE CODE_02DD6E                         ;$02DD5D |
     LDA.b #$30                              ;$02DD5F |
-    STA.w $1887                             ;$02DD61 |
+    STA.w ScreenShakeTimer_1887             ;$02DD61 |
     LDA.b #$09                              ;$02DD64 |
     STA.w SPCIO3_1DFC                       ;$02DD66 |
     PHY                                     ;$02DD69 |
