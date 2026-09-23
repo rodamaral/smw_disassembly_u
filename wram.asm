@@ -1578,7 +1578,7 @@ Layer3HorizOffset_146A: skip 2
 ; 7E146C - 7E146F unused
 skip 4
 CarryingFlag_1470: skip 1
-StandOnSolidSprite_1471: skip 1
+OnSolidSprite_1471: skip 1
 LightTopWinOpenPos_1472: skip 1
 ; 7E1473 unused
 skip 1
@@ -1610,7 +1610,7 @@ LightExists_1486: skip 1
 skip 4
 RNGCalc_148B: skip 2
 RandomNumber_148D: skip 2
-IsCarryingItem_148F: skip 1
+CarryingFlagMirror_148F: skip 1
 StarTimer_1490: skip 1
 SpriteXMovement_1491: skip 1
 PlayerPeaceSign_1492: skip 1
@@ -1709,7 +1709,7 @@ SpriteOnYoshiTongue_15D0: skip 12
 SpriteDisableObjInt_15DC: skip 12
 ; 7E15E8 unused
 skip 1
-CurSpriteProcess_15E9: skip 1
+CurrentSprite_15E9: skip 1
 SpriteOAMIndex_15EA: skip 12
 SpriteOBJAttribute_15F6: skip 12
 SpriteMisc_1602: skip 12
@@ -1852,7 +1852,7 @@ StandingOnCage_18B5: skip 1
 TileGenerateTrackB_18B6: skip 1
 ; 7E18B7 unused
 skip 1
-ActivateClusterSprite_18B8: skip 1
+RunClusterSprites_18B8: skip 1
 CurrentGenerator_18B9: skip 1
 BooRingIndex_18BA: skip 1
 ; 7E18BB unused
@@ -1883,10 +1883,10 @@ Empty_18DB: skip 1
 PlayerDuckingOnYoshi_18DC: skip 1
 SilverCoinsCollected_18DD: skip 1
 EggLaidTimer_18DE: skip 1
-CurrentYoshiSlot_18DF: skip 1
+YoshiSlot_18DF: skip 1
 LakituCloudTimer_18E0: skip 1
 LakituCloudSlot_18E1: skip 1
-YoshiIsLoose_18E2: skip 1
+YoshiSlotMirror_18E2: skip 1
 GameCloudCoinCount_18E3: skip 1
 GivePlayerLives_18E4: skip 1
 GiveLivesTimer_18E5: skip 1

@@ -6488,7 +6488,7 @@ CODE_05D8B7:
     STA $D0                                 ;$05D8F7 |
     LDA [$CE]                               ;$05D8F9 |
     AND.b #$3F                              ;$05D8FB |
-    STA.w $1692                             ;$05D8FD |
+    STA.w SpriteMemorySetting_1692          ;$05D8FD |
     LDA [$CE]                               ;$05D900 |
     AND.b #$C0                              ;$05D902 |
     STA.w $190E                             ;$05D904 |
@@ -6691,7 +6691,7 @@ CODE_05DA60:
     STA $D0                                 ;$05DA88 |
     LDA [$CE]                               ;$05DA8A |
     AND.b #$3F                              ;$05DA8C |
-    STA.w $1692                             ;$05DA8E |
+    STA.w SpriteMemorySetting_1692          ;$05DA8E |
     LDA [$CE]                               ;$05DA91 |
     AND.b #$C0                              ;$05DA93 |
     STA.w $190E                             ;$05DA95 |
@@ -6802,7 +6802,7 @@ CODE_05DB49:
     SEP #$20                                ;$05DB5D |
     LDA [$CE]                               ;$05DB5F |
     AND.b #$7F                              ;$05DB61 |
-    STA.w $1692                             ;$05DB63 |
+    STA.w SpriteMemorySetting_1692          ;$05DB63 |
     LDA [$CE]                               ;$05DB66 |
     AND.b #$80                              ;$05DB68 |
     STA.w $190E                             ;$05DB6A |

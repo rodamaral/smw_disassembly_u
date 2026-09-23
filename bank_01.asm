@@ -111,24 +111,24 @@ standard_and_cluster_sprites_01808C:
     PHB
     PHK                                     ;$01808D |
     PLB                                     ;$01808E |
-    LDA.w $148F                             ;$01808F |\
-    STA.w $1470                             ;$018092 || Refresh/mirror some addresses:
-    STZ.w $148F                             ;$018095 || - Carrying something flag
-    STZ.w $1471                             ;$018098 || - Standing on top of a sprite flag
-    STZ.w $18C2                             ;$01809B || - Riding cloud flag
-    LDA.w $18DF                             ;$01809E || - Yoshi's sprite slot
-    STA.w $18E2                             ;$0180A1 ||
-    STZ.w $18DF                             ;$0180A4 |/
+    LDA.w CarryingFlagMirror_148F           ;$01808F |\
+    STA.w CarryingFlag_1470                 ;$018092 || Refresh/mirror some addresses:
+    STZ.w CarryingFlagMirror_148F           ;$018095 || - Carrying something flag
+    STZ.w OnSolidSprite_1471                ;$018098 || - Standing on top of a sprite flag
+    STZ.w PlayerInCloud_18C2                ;$01809B || - Riding cloud flag
+    LDA.w YoshiSlot_18DF                    ;$01809E || - Yoshi's sprite slot
+    STA.w YoshiSlotMirror_18E2              ;$0180A1 ||
+    STZ.w YoshiSlot_18DF                    ;$0180A4 |/
     LDX.b #$0B                              ;$0180A7 |
--   STX.w $15E9                             ;$0180A9 |
+-   STX.w CurrentSprite_15E9                ;$0180A9 |
     JSR process_OAM_index_and_timers_0180D2 ;$0180AC |
     JSR handle_sprite_018126                ;$0180AF |
     DEX                                     ;$0180B2 |
     BPL -                                   ;$0180B3 |
-    LDA.w $18B8                             ;$0180B5 |\
+    LDA.w RunClusterSprites_18B8            ;$0180B5 |\
     BEQ +                                   ;$0180B8 || flag for running Cluster Sprites
     JSL cluster_sprites_02F808              ;$0180BA |/
-+   LDA.w $18DF                             ;$0180BE |\
++   LDA.w YoshiSlot_18DF                    ;$0180BE |\
     BNE +                                   ;$0180C1 || Reset some Yoshi-related flags if no Yoshi exists anymore
     STZ.w RidingYoshi_187A                  ;$0180C3 ||
     STZ.w PlayerYOffset_188B                ;$0180C6 |/
@@ -143,7 +143,7 @@ IsSprOffScreen:
 process_OAM_index_and_timers_0180D2:
     PHX
     TXA                                     ;$0180D3 |
-    LDX.w $1692                             ;$0180D4 |
+    LDX.w SpriteMemorySetting_1692          ;$0180D4 |
     CLC                                     ;$0180D7 |
     ADC.l DATA_07F0B4,X                     ;$0180D8 |
     TAX                                     ;$0180DC |
@@ -691,7 +691,7 @@ ADDR_018468:
 InitLakitu:
     LDY.b #$09
 CODE_01846D:
-    CPY.w $15E9
+    CPY.w CurrentSprite_15E9
     BEQ CODE_018484                         ;$018470 |
     LDA.w SpriteStatus_14C8,Y               ;$018472 |
     CMP.b #$08                              ;$018475 |
@@ -3020,7 +3020,7 @@ CODE_01951F:
 CODE_019523:
     LDA.b #$7E
     STA $07                                 ;$019525 |
-    LDX.w $15E9                             ;$019527 |
+    LDX.w CurrentSprite_15E9                ;$019527 |
     LDA [$05]                               ;$01952A |
     STA.w $1693                             ;$01952C | For sprites, X/Y outside the level, vertical or horizontal
     INC $07                                 ;$01952F |
@@ -3258,7 +3258,7 @@ GeneralResetSpr:
     STA.w $009E,y                           ;$0196F2 |
     TYX                                     ;$0196F5 |
     JSL InitSpriteTables                    ;$0196F6 |
-    LDX.w $15E9                             ;$0196FA |
+    LDX.w CurrentSprite_15E9                ;$0196FA |
     LDA.b SpriteXPosLow_E4,X                ;$0196FD |
     STA.w SpriteXPosLow_E4,y                ;$0196FF |
     LDA.w SpriteXPosHigh_14E0,X             ;$019702 |
@@ -4055,7 +4055,7 @@ CODE_019D81:
     STA.w $0302,Y                           ;$019D92 |
     LDA.w SprTilemap+1,X                    ;$019D95 |
     STA.w $0306,Y                           ;$019D98 |
-    LDX.w $15E9                             ;$019D9B |
+    LDX.w CurrentSprite_15E9                ;$019D9B |
     LDA $01                                 ;$019D9E |
     STA.w $0301,Y                           ;$019DA0 |
     CLC                                     ;$019DA3 |
@@ -4106,7 +4106,7 @@ SubSprGfx1Hlpr1:
     STA.w $0306,Y                           ;$019DF6 |
     LDA.w SprTilemap+1,X                    ;$019DF9 |
     STA.w $0302,Y                           ;$019DFC |
-    LDX.w $15E9                             ;$019DFF |
+    LDX.w CurrentSprite_15E9                ;$019DFF |
     LDA $01                                 ;$019E02 |
     STA.w $0301,Y                           ;$019E04 |
     CLC                                     ;$019E07 |
@@ -4272,7 +4272,7 @@ CODE_019F0F:
     TAX                                     ;$019F23 |
     LDA.w SprTilemap,X                      ;$019F24 |
     STA.w $0302,Y                           ;$019F27 |
-    LDX.w $15E9                             ;$019F2A | X = Sprite index
+    LDX.w CurrentSprite_15E9                ;$019F2A | X = Sprite index
     LDA $00                                 ;$019F2D |
     STA.w $0300,Y                           ;$019F2F |
     LDA $01                                 ;$019F32 |
@@ -4519,7 +4519,7 @@ CODE_01A0D4:
 CODE_01A0D6:
     PHY
     LDY.b #$00                              ;$01A0D7 |
-    LDA.w $1471                             ;$01A0D9 |
+    LDA.w OnSolidSprite_1471                ;$01A0D9 |
     CMP.b #$03                              ;$01A0DC |
     BEQ CODE_01A0E2                         ;$01A0DE |
     LDY.b #$3D                              ;$01A0E0 |
@@ -4559,8 +4559,8 @@ CODE_01A11A:
     ADC.b #$00                              ;$01A121 |
     STA.w SpriteYPosHigh_14D4,X             ;$01A123 |
     LDA.b #$01                              ;$01A126 |
-    STA.w $148F                             ;$01A128 |
-    STA.w $1470                             ;$01A12B |
+    STA.w CarryingFlagMirror_148F           ;$01A128 |
+    STA.w CarryingFlag_1470                 ;$01A12B |
     RTS                                     ;$01A12E |
 
 StunGoomba:
@@ -5029,7 +5029,7 @@ CODE_01A46C:
     LDA.w SpriteYPosHigh_14D4,X             ;$01A474 |
     ADC.b #$00                              ;$01A477 |
     STA $01                                 ;$01A479 |
-    LDY.w $15E9                             ;$01A47B |
+    LDY.w CurrentSprite_15E9                ;$01A47B |
     LDX.b #$00                              ;$01A47E |
     LDA.w $1662,Y                           ;$01A480 |
     AND.b #$0F                              ;$01A483 |
@@ -5060,7 +5060,7 @@ CODE_01A4B0:
     JMP CODE_01A417                         ;$01A4B3 |
 
 CODE_01A4B6:
-    LDX.w $15E9
+    LDX.w CurrentSprite_15E9
     RTS                                     ;$01A4B9 |
 
 CODE_01A4BA:
@@ -5189,7 +5189,7 @@ CODE_01A56D:
     LDA.w $1686,Y                           ;$01A57E |
     AND.b #$10                              ;$01A581 |
     BNE CODE_01A5A1                         ;$01A583 |
-    LDY.w $15E9                             ;$01A585 |
+    LDY.w CurrentSprite_15E9                ;$01A585 |
     LDA.w SpriteDir_157C,Y                  ;$01A588 |
     PHA                                     ;$01A58B |
     LDA $00                                 ;$01A58C |
@@ -5236,7 +5236,7 @@ CODE_01A5D3:
     RTS                                     ;$01A5D9 |
 
 CODE_01A5DA:
-    LDX.w $15E9
+    LDX.w CurrentSprite_15E9
     LDY.w $1695                             ;$01A5DD |
     JSR CODE_01A77C                         ;$01A5E0 |
     LDA.b #$02                              ;$01A5E3 |
@@ -5506,7 +5506,7 @@ CODE_01A7C0:
     PLA                                     ;$01A7C1 |
 CODE_01A7C2:
     LDX.w $1695
-    LDY.w $15E9                             ;$01A7C5 |
+    LDY.w CurrentSprite_15E9                ;$01A7C5 |
     RTS                                     ;$01A7C8 |
 
 SpriteToSpawn:
@@ -5871,12 +5871,12 @@ CODE_01AA58:
     LDA.b byetudlrHold_15
     AND.b #$40                              ;$01AA5A |
     BEQ CODE_01AA74                         ;$01AA5C |
-    LDA.w $1470                             ;$01AA5E |
+    LDA.w CarryingFlag_1470                 ;$01AA5E |
     ORA.w RidingYoshi_187A                  ;$01AA61 |
     BNE CODE_01AA74                         ;$01AA64 |
     LDA.b #$0B                              ;$01AA66 |
     STA.w SpriteStatus_14C8,X               ;$01AA68 |
-    INC.w $1470                             ;$01AA6B |
+    INC.w CarryingFlag_1470                 ;$01AA6B |
     LDA.b #$08                              ;$01AA6E |
     STA.w PickUpItemTimer_1498              ;$01AA70 |
     RTS                                     ;$01AA73 |
@@ -5936,7 +5936,7 @@ CODE_01AACD:
     BMI Return01AB2C                        ;$01AACF |
     STZ $7D                                 ;$01AAD1 |
     STZ.b PlayerInAir_72                    ;$01AAD3 |
-    INC.w $1471                             ;$01AAD5 |
+    INC.w OnSolidSprite_1471                ;$01AAD5 |
     LDA.b #$1F                              ;$01AAD8 |
     LDY.w RidingYoshi_187A                  ;$01AADA |
     BEQ CODE_01AAE1                         ;$01AADD |
@@ -6082,7 +6082,7 @@ SubSprXPosNoGrvty:
     ADC.b #$0C                              ;$01ABCE |
     TAX                                     ;$01ABD0 |
     JSR SubSprYPosNoGrvty                   ;$01ABD1 |
-    LDX.w $15E9                             ;$01ABD4 |
+    LDX.w CurrentSprite_15E9                ;$01ABD4 |
     RTS                                     ;$01ABD7 |
 
 SubSprYPosNoGrvty:
@@ -7114,7 +7114,7 @@ CODE_01B2DF:
     STA.w $030D,Y                           ;$01B2F9 |
     STA.w $0311,Y                           ;$01B2FC |
 CODE_01B2FF:
-    LDX.w $15E9
+    LDX.w CurrentSprite_15E9
     LDA.b SpriteXPosLow_E4,X                ;$01B302 |
     SEC                                     ;$01B304 |
     SBC.b Layer1XPos_1A                     ;$01B305 |
@@ -7134,7 +7134,7 @@ CODE_01B2FF:
     ADC.b #$10                              ;$01B321 |
     STA.w $0310,Y                           ;$01B323 |
 CODE_01B326:
-    LDX.w $15E9
+    LDX.w CurrentSprite_15E9
     LDA $01                                 ;$01B329 |
     BEQ CODE_01B344                         ;$01B32B |
     LDA.b #$EA                              ;$01B32D |
@@ -7224,7 +7224,7 @@ CODE_01B3D8:
     STA $01
     DEC A                                   ;$01B3DA |
     STA $02                                 ;$01B3DB |
-    LDX.w $15E9                             ;$01B3DD |
+    LDX.w CurrentSprite_15E9                ;$01B3DD |
     LDA.w $15F6,X                           ;$01B3E0 |
     STA $03                                 ;$01B3E3 |
     LDA $9E,X                               ;$01B3E5 |
@@ -7263,7 +7263,7 @@ CODE_01B411:
     INX                                     ;$01B419 |
     DEC $01                                 ;$01B41A |
     BPL CODE_01B3F6                         ;$01B41C |
-    LDX.w $15E9                             ;$01B41E |
+    LDX.w CurrentSprite_15E9                ;$01B41E |
     LDY.w $15EA,X                           ;$01B421 |
     LDA $00                                 ;$01B424 |
     BNE CODE_01B444                         ;$01B426 |
@@ -7317,7 +7317,7 @@ CODE_01B457:
     LDA.b #$10                              ;$01B476 |
     STA $7D                                 ;$01B478 |
     LDA.b #$01                              ;$01B47A |
-    STA.w $1471                             ;$01B47C |
+    STA.w OnSolidSprite_1471                ;$01B47C |
     LDA.b #$1F                              ;$01B47F |
     LDY.w RidingYoshi_187A                  ;$01B481 |
     BEQ CODE_01B488                         ;$01B484 |
@@ -7884,7 +7884,7 @@ CODE_01B838:
     INY                                     ;$01B83B |
     DEC $08                                 ;$01B83C |
     BPL CODE_01B7DE                         ;$01B83E |
-    LDX.w $15E9                             ;$01B840 |
+    LDX.w CurrentSprite_15E9                ;$01B840 |
     RTS                                     ;$01B843 |
 
 CODE_01B844:
@@ -7922,7 +7922,7 @@ CODE_01B852:
     BMI Return01B8B1                        ;$01B879 |
     STZ $7D                                 ;$01B87B |
     LDA.b #$01                              ;$01B87D |
-    STA.w $1471                             ;$01B87F |
+    STA.w OnSolidSprite_1471                ;$01B87F |
     LDA $0D                                 ;$01B882 |
     CLC                                     ;$01B884 |
     ADC.b #$1F                              ;$01B885 |
@@ -8406,7 +8406,7 @@ CODE_01BBE8:
     BPL CODE_01BBD0                         ;$01BBF0 |
     LDA $06                                 ;$01BBF2 |
     PHA                                     ;$01BBF4 |
-    LDX.w $15E9                             ;$01BBF5 |
+    LDX.w CurrentSprite_15E9                ;$01BBF5 |
     LDA.b #$08                              ;$01BBF8 |
     JSR CODE_01B37E                         ;$01BBFA |
     LDY.b #$0C                              ;$01BBFD |
@@ -8599,7 +8599,7 @@ MagiKoopasMagicGfx:
     CLC                                     ;$01BD6A |
     ADC.w MagiKoopasMagicDisp,X             ;$01BD6B |
     STA.w $0308,Y                           ;$01BD6E |
-    LDX.w $15E9                             ;$01BD71 |
+    LDX.w CurrentSprite_15E9                ;$01BD71 |
     LDA.w $15F6,X                           ;$01BD74 |
     ORA $64                                 ;$01BD77 |
     STA.w $0303,Y                           ;$01BD79 |
@@ -8638,7 +8638,7 @@ CODE_01BDA3:
 InitMagikoopa:
     LDY.b #$09
 CODE_01BDBA:
-    CPY.w $15E9
+    CPY.w CurrentSprite_15E9
     BEQ CODE_01BDCF                         ;$01BDBD |
     LDA.w SpriteStatus_14C8,Y               ;$01BDBF |
     BEQ CODE_01BDCF                         ;$01BDC2 |
@@ -8786,7 +8786,7 @@ CODE_01BE96:
     LDA.w $15EA,X                           ;$01BEBC |
     TAX                                     ;$01BEBF |
     INC.w $0301,X                           ;$01BEC0 |
-    LDX.w $15E9                             ;$01BEC3 |
+    LDX.w CurrentSprite_15E9                ;$01BEC3 |
 CODE_01BEC6:
     PLY
     CPY.b #$01                              ;$01BEC7 |
@@ -8867,7 +8867,7 @@ CODE_01BF28:
     JSL InitSpriteTables                    ;$01BF53 |
     LDA.b #$20                              ;$01BF57 |
     JSR CODE_01BF6A                         ;$01BF59 |
-    LDX.w $15E9                             ;$01BF5C |
+    LDX.w CurrentSprite_15E9                ;$01BF5C |
     LDA $00                                 ;$01BF5F |
     STA.w $00AA,y                           ;$01BF61 |
     LDA $01                                 ;$01BF64 |
@@ -9021,7 +9021,7 @@ CODE_01C036:
     ADC.b #$12                              ;$01C059 |
     STA.w $0681                             ;$01C05B |
 CODE_01C05E:
-    LDX.w $15E9
+    LDX.w CurrentSprite_15E9
     RTS                                     ;$01C061 |
 
     JSR InitGoalTape                        ;$01C062 |
@@ -9917,7 +9917,7 @@ CODE_01C6C7:
     TAX                                     ;$01C6D6 |
     LDA.w PowerUpTiles,X                    ;$01C6D7 |
     STA.w $0302,Y                           ;$01C6DA |
-    LDX.w $15E9                             ;$01C6DD |
+    LDX.w CurrentSprite_15E9                ;$01C6DD |
     LDA.b #$00                              ;$01C6E0 |
     JSR CODE_01B37E                         ;$01C6E2 |
     RTS                                     ;$01C6E5 |
@@ -10208,7 +10208,7 @@ CODE_01C8D5:
     STA.w $0303,Y                           ;$01C8FC |
     DEX                                     ;$01C8FF |
     BPL CODE_01C8D5                         ;$01C900 |
-    LDX.w $15E9                             ;$01C902 |
+    LDX.w CurrentSprite_15E9                ;$01C902 |
     LDA.b #$09                              ;$01C905 |
     STA $08                                 ;$01C907 |
     LDA.w $14B2                             ;$01C909 |
@@ -10295,7 +10295,7 @@ CODE_01C999:
     INY                                     ;$01C99C |
     DEC $08                                 ;$01C99D |
     BPL CODE_01C934                         ;$01C99F |
-    LDX.w $15E9                             ;$01C9A1 |
+    LDX.w CurrentSprite_15E9                ;$01C9A1 |
     LDY.w $15EA,X                           ;$01C9A4 |
     LDA.b #$F0                              ;$01C9A7 |
     STA.w $0305,Y                           ;$01C9A9 |
@@ -10343,7 +10343,7 @@ CODE_01C9E2:
     PHX
     JSL draw_mario_and_yoshi_00E2BD         ;$01C9E3 |
     PLX                                     ;$01C9E7 |
-    STX.w $15E9                             ;$01C9E8 |
+    STX.w CurrentSprite_15E9                ;$01C9E8 |
 Return01C9EB:
     RTS
 
@@ -10384,7 +10384,7 @@ CODE_01C9EC:
     BMI CODE_01C9E2                         ;$01CA30 |
     STZ $7D                                 ;$01CA32 |
     LDA.b #$03                              ;$01CA34 |
-    STA.w $1471                             ;$01CA36 |
+    STA.w OnSolidSprite_1471                ;$01CA36 |
     STA.w $1602,X                           ;$01CA39 |
     LDA.b #$28                              ;$01CA3C |
     LDY.w RidingYoshi_187A                  ;$01CA3E |
@@ -11238,7 +11238,7 @@ Return01D042:
 CODE_01D043:
     LDA.w $1540,X
     BNE Return01D056                        ;$01D046 |
-    INC.w $13C6                             ;$01D048 |
+    INC.w CutsceneID_13C6                   ;$01D048 |
     DEC.w EndLevelTimer_1493                ;$01D04B |
     LDA.b #$0B                              ;$01D04E |
     STA.w SPCIO2_1DFB                       ;$01D050 |
@@ -12110,7 +12110,7 @@ Return01D6C3:
 InitLineRope:
     CPX.b #$06
     BCC CODE_01D6E0                         ;$01D6C6 |
-    LDA.w $1692                             ;$01D6C8 |
+    LDA.w SpriteMemorySetting_1692          ;$01D6C8 |
     BEQ CODE_01D6E0                         ;$01D6CB |
     INC.w $1662,X                           ;$01D6CD |
     BRA CODE_01D6E0                         ;$01D6D0 |
@@ -12518,7 +12518,7 @@ CODE_01D977:
 CODE_01D989:
     LDA.b #$7E
     STA $07                                 ;$01D98B |
-    LDX.w $15E9                             ;$01D98D |
+    LDX.w CurrentSprite_15E9                ;$01D98D |
     LDA [$05]                               ;$01D990 |
     STA.w $1693                             ;$01D992 | Line Platform Sprites, X,Y quaisquer!
     INC $07                                 ;$01D995 |
@@ -12596,7 +12596,7 @@ Return01DA09:
 CODE_01DA0A:
     LDA.w $14C8,X
     BEQ CODE_01DA37                         ;$01DA0D |
-    LDA.w $1470                             ;$01DA0F |
+    LDA.w CarryingFlag_1470                 ;$01DA0F |
     ORA.w RidingYoshi_187A                  ;$01DA12 |
     BNE CODE_01D9FE                         ;$01DA15 |
     LDA.b #$03                              ;$01DA17 |
@@ -12948,7 +12948,7 @@ CODE_01DC54:
     LDA.b #$05                              ;$01DC71 |
     CPX.b #$06                              ;$01DC73 |
     BCC CODE_01DC7E                         ;$01DC75 |
-    LDY.w $1692                             ;$01DC77 |
+    LDY.w SpriteMemorySetting_1692          ;$01DC77 |
     BEQ CODE_01DC7E                         ;$01DC7A |
     LDA.b #$09                              ;$01DC7C |
 CODE_01DC7E:
@@ -12987,11 +12987,11 @@ CODE_01DCAD:
     BNE CODE_01DC85                         ;$01DCB7 |
     LDA.b #$DE                              ;$01DCB9 |
     STA.w $02FE,Y                           ;$01DCBB |
-    LDX.w $15E9                             ;$01DCBE |
+    LDX.w CurrentSprite_15E9                ;$01DCBE |
     LDA.b #$04                              ;$01DCC1 |
     CPX.b #$06                              ;$01DCC3 |
     BCC CODE_01DCCE                         ;$01DCC5 |
-    LDY.w $1692                             ;$01DCC7 |
+    LDY.w SpriteMemorySetting_1692          ;$01DCC7 |
     BEQ CODE_01DCCE                         ;$01DCCA |
     LDA.b #$08                              ;$01DCCC |
 CODE_01DCCE:
@@ -13087,7 +13087,7 @@ CODE_01DDD6:
     LDA.b #$01                              ;$01DE06 |
     STA $CB                                 ;$01DE08 |
     INC.w $1B94                             ;$01DE0A |
-    LDX.w $15E9                             ;$01DE0D |
+    LDX.w CurrentSprite_15E9                ;$01DE0D |
     RTS                                     ;$01DE10 |
 
 DATA_01DE11:
@@ -13256,7 +13256,7 @@ CODE_01DF19:
     BRA CODE_01DF4D                         ;$01DF47 |
 
     CLC                                     ;$01DF49 |
-    ADC.w $15E9                             ;$01DF4A |
+    ADC.w CurrentSprite_15E9                ;$01DF4A |
 CODE_01DF4D:
     LSR
 CODE_01DF4E:
@@ -13373,7 +13373,7 @@ CODE_01E00D:
 CODE_01E035:
     DEC $00
     BPL CODE_01DFDD                         ;$01E037 |
-    LDX.w $15E9                             ;$01E039 |
+    LDX.w CurrentSprite_15E9                ;$01E039 |
     LDY.b #$29                              ;$01E03C |
     LDA.w $1890                             ;$01E03E |
     STA.w $1920                             ;$01E041 |
@@ -13542,7 +13542,7 @@ CODE_01E16D:
     LDA.b Frame_14                          ;$01E174 |
     AND.b #$0C                              ;$01E176 |
     LSR                                     ;$01E178 |
-    ADC.w $15E9                             ;$01E179 |
+    ADC.w CurrentSprite_15E9                ;$01E179 |
     LSR                                     ;$01E17C |
     AND.b #$03                              ;$01E17D |
     TAX                                     ;$01E17F |
@@ -13604,7 +13604,7 @@ CODE_01E1D8:
 CODE_01E1DB:
     LDA.w RidingYoshi_187A
     BEQ CODE_01E1E5                         ;$01E1DE |
-    LDA.w $191C                             ;$01E1E0 |
+    LDA.w YoshiHasKey_191C                  ;$01E1E0 |
     BNE CODE_01E1ED                         ;$01E1E3 |
 CODE_01E1E5:
     TYA
@@ -13678,7 +13678,7 @@ CODE_01E26A:
     JSR CODE_01E281                         ;$01E278 |
 CODE_01E27B:
     LDA.b #$01
-    STA.w $18B8                             ;$01E27D |
+    STA.w RunClusterSprites_18B8            ;$01E27D |
     RTS                                     ;$01E280 |
 
 CODE_01E281:
@@ -14227,11 +14227,11 @@ CODE_01E664:
     STZ.b PlayerInAir_72                    ;$01E67A |
     STZ $7B                                 ;$01E67C |
     LDA.b #$02                              ;$01E67E |
-    STA.w $1471                             ;$01E680 |
+    STA.w OnSolidSprite_1471                ;$01E680 |
     LDA.w $1540,X                           ;$01E683 |
     CMP.b #$07                              ;$01E686 |
     BCS CODE_01E6AE                         ;$01E688 |
-    STZ.w $1471                             ;$01E68A |
+    STZ.w OnSolidSprite_1471                ;$01E68A |
     LDY.b #$B0                              ;$01E68D |
     LDA.b axlr0000Hold_17                   ;$01E68F |
     BPL CODE_01E69A                         ;$01E691 |
@@ -14274,7 +14274,7 @@ CODE_01E6B0:
 CODE_01E6CE:
     BIT.b byetudlrHold_15
     BVC CODE_01E6E2                         ;$01E6D0 |
-    LDA.w $1470                             ;$01E6D2 |
+    LDA.w CarryingFlag_1470                 ;$01E6D2 |
     ORA.w RidingYoshi_187A                  ;$01E6D5 |
     BNE CODE_01E6E2                         ;$01E6D8 |
     LDA.b #$0B                              ;$01E6DA |
@@ -14492,8 +14492,8 @@ CODE_01E866:
     ADC.b #$00                              ;$01E879 |
     STA.w SpriteYPosHigh_14D4,X             ;$01E87B |
     STZ.b PlayerInAir_72                    ;$01E87E |
-    INC.w $1471                             ;$01E880 |
-    INC.w $18C2                             ;$01E883 |
+    INC.w OnSolidSprite_1471                ;$01E880 |
+    INC.w PlayerInCloud_18C2                ;$01E883 |
     LDA.b byetudlrPress_16                  ;$01E886 |
     AND.b #$80                              ;$01E888 |
     BEQ Return01E897                        ;$01E88A |
@@ -14573,7 +14573,7 @@ CODE_01E901:
     CLC                                     ;$01E917 |
     ADC.w $14B2                             ;$01E918 |
     STA.w $0301,Y                           ;$01E91B |
-    LDX.w $15E9                             ;$01E91E |
+    LDX.w CurrentSprite_15E9                ;$01E91E |
     LDA.b #$60                              ;$01E921 |
     STA.w $0302,Y                           ;$01E923 |
     LDA.w $1540,X                           ;$01E926 |
@@ -14593,7 +14593,7 @@ CODE_01E935:
     INY                                     ;$01E93D |
     DEC $03                                 ;$01E93E |
     BPL CODE_01E901                         ;$01E940 |
-    LDX.w $15E9                             ;$01E942 |
+    LDX.w CurrentSprite_15E9                ;$01E942 |
     LDA.b #$F8                              ;$01E945 |
     STA.w $15EA,X                           ;$01E947 |
     LDY.b #$02                              ;$01E94A |
@@ -14758,26 +14758,26 @@ Return01EA6F:
     RTS
 
 draw_yoshi_01EA70:
-    LDX.w $18E2
+    LDX.w YoshiSlotMirror_18E2
     BEQ +                                   ;$01EA73 |
     STZ.w PlayerYOffset_188B                ;$01EA75 |
-    STZ.w $191C                             ;$01EA78 |
-    LDA.w $15E9                             ;$01EA7B |
+    STZ.w YoshiHasKey_191C                  ;$01EA78 |
+    LDA.w CurrentSprite_15E9                ;$01EA7B |
     PHA                                     ;$01EA7E |
     DEX                                     ;$01EA7F |
-    STX.w $15E9                             ;$01EA80 |
+    STX.w CurrentSprite_15E9                ;$01EA80 |
     PHB                                     ;$01EA83 |
     PHK                                     ;$01EA84 |
     PLB                                     ;$01EA85 |
     JSR .actually_draw_yoshi_01EA8F         ;$01EA86 | FIXME: better name
     PLB                                     ;$01EA89 |
     PLA                                     ;$01EA8A |
-    STA.w $15E9                             ;$01EA8B |
+    STA.w CurrentSprite_15E9                ;$01EA8B |
 +   RTL                                     ;$01EA8E |
 
 .actually_draw_yoshi_01EA8F:
     LDA.w YoshiGrowingTimer_18E8
-    ORA.w $13C6                             ;$01EA92 |
+    ORA.w CutsceneID_13C6                   ;$01EA92 |
     BEQ .not_growing_01EA9A                 ;$01EA95 |
     JMP .growing_common_01EB48              ;$01EA97 |
 
@@ -14960,7 +14960,7 @@ yoshi_01EBCA:
 
 +   TXA                                     ;$01EBE9 |
     INC A                                   ;$01EBEA |
-    STA.w $18DF                             ;$01EBEB |
+    STA.w YoshiSlot_18DF                    ;$01EBEB |
     LDA.w RidingYoshi_187A                  ;$01EBEE |
     BNE .check_hatch_yoshi_01EC04           ;$01EBF1 |
     JSR SubOffscreen0Bnk1                   ;$01EBF3 |
@@ -15135,7 +15135,7 @@ CODE_01ED0C:
     BCC CODE_01ED70                         ;$01ED36 |
     LDA.b PlayerInAir_72                    ;$01ED38 |
     BEQ CODE_01ED70                         ;$01ED3A |
-    LDA.w $1470                             ;$01ED3C |
+    LDA.w CarryingFlag_1470                 ;$01ED3C |
     ORA.w RidingYoshi_187A                  ;$01ED3F |
     BNE CODE_01ED70                         ;$01ED42 |
     LDA $7D                                 ;$01ED44 |
@@ -15452,7 +15452,7 @@ process_yoshi_head_01EF18:
     CMP.b #$02
     BNE .treat_as_mounted_01EFDB            ;$01EFC8 |\
     LDA.w $151C,X                           ;$01EFCA ||
-    ORA.w $13C6                             ;$01EFCD ||
+    ORA.w CutsceneID_13C6                   ;$01EFCD ||
     BNE .treat_as_mounted_01EFDB            ;$01EFD0 || when yoshi is able to release the tongue just before being hurt
     LDA.b Frame_14                          ;$01EFD2 ||
     AND.b #$10                              ;$01EFD4 ||
@@ -15664,7 +15664,7 @@ normal_mouth_01F14B:
     LDA.w $009E,y                           ;$01F15D ||
     CMP.b #$80                              ;$01F160 || if Yoshi has a Key on mouth
     BNE +                                   ;$01F162 ||
-    INC.w $191C                             ;$01F164 || set the Key on mouth flag
+    INC.w YoshiHasKey_191C                  ;$01F164 || set the Key on mouth flag
 +   CMP.b #$0D                              ;$01F169 ||
     BCS .try_swallow_sprite_01F1A2          ;$01F169 ||\
     PHY                                     ;$01F16B ||| for sprite numbers 00 to 0D (Bob-Omb):
@@ -16208,7 +16208,7 @@ process_tongue_01F4B2:
     STA $03                                 ;$01F564 |
     LDY.b #$0B                              ;$01F566 | loop throw sprites slots from B to 0
 -   STY.w $1695                             ;$01F568 |\ mirror loop counter
-    CPY.w $15E9                             ;$01F56B ||
+    CPY.w CurrentSprite_15E9                ;$01F56B ||
     BEQ +                                   ;$01F56E || skip Yoshi itself
     LDA.w $160E,X                           ;$01F570 ||
     BPL +                                   ;$01F573 || prevent licking more than one sprite
@@ -16306,7 +16306,7 @@ yoshi_sprites_interaction_01F622:
     TYA                                     ;$01F635 || - It's on Yoshi's tongue
     CMP.w $160E,X                           ;$01F636 || - It's dying (sprite status < 8)
     BEQ +                                   ;$01F639 || - It's carryable (sprite status 9)
-    CPY.w $15E9                             ;$01F63B || - It's invincible to star/cape/fire ($167A bit 1)
+    CPY.w CurrentSprite_15E9                ;$01F63B || - It's invincible to star/cape/fire ($167A bit 1)
     BEQ +                                   ;$01F63E || - It has Yoshi interaction disabled (e.g. already on tongue)
     LDA.w SpriteStatus_14C8,Y               ;$01F640 || - It's behind scenery
     CMP.b #$08                              ;$01F643 ||
@@ -16475,7 +16475,7 @@ YoshiEgg:
     STZ.w $187B,X                           ;$01F77A |
     JSL CODE_01F751                         ;$01F77D |
     LDA.b #$2D                              ;$01F781 |
-    LDY.w $18E2                             ;$01F783 |
+    LDY.w YoshiSlotMirror_18E2              ;$01F783 |
     BEQ CODE_01F78A                         ;$01F786 |
     LDA.b #$78                              ;$01F788 |
 CODE_01F78A:
@@ -17000,7 +17000,7 @@ CODE_01FB1A:
     BEQ CODE_01FB36                         ;$01FB20 |
     DEC A                                   ;$01FB22 |
     BNE Return01FB35                        ;$01FB23 |
-    INC.w $13C6                             ;$01FB25 |
+    INC.w CutsceneID_13C6                   ;$01FB25 |
     LDA.b #$FF                              ;$01FB28 |
     STA.w EndLevelTimer_1493                ;$01FB2A |
     LDA.b #$0B                              ;$01FB2D |

@@ -76,7 +76,7 @@ BigBooBoss:
     JSL CODE_038239                         ;$03808B |
     LDA.w SpriteStatus_14C8,X               ;$03808F |
     BNE CODE_0380A2                         ;$038092 |
-    INC.w $13C6                             ;$038094 |
+    INC.w CutsceneID_13C6                   ;$038094 |
     LDA.b #$FF                              ;$038097 |
     STA.w EndLevelTimer_1493                ;$038099 |
     LDA.b #$0B                              ;$03809C |
@@ -352,7 +352,7 @@ CODE_038254:
     CLC                                     ;$038276 |
     ADC.b #$12                              ;$038277 |
     STA.w $0681                             ;$038279 |
-    LDX.w $15E9                             ;$03827C |
+    LDX.w CurrentSprite_15E9                ;$03827C |
     RTL                                     ;$03827F |
 
 BigBooDispX:
@@ -486,7 +486,7 @@ CODE_038418:
     INX                                     ;$038428 |
     CPX.b #$14                              ;$038429 |
     BNE CODE_0383E0                         ;$03842B |
-    LDX.w $15E9                             ;$03842D |
+    LDX.w CurrentSprite_15E9                ;$03842D |
     LDA.w $1602,X                           ;$038430 |
     CMP.b #$03                              ;$038433 |
     BNE CODE_03844B                         ;$038435 |
@@ -584,7 +584,7 @@ Blurp:
     LSR                                     ;$0384D5 |
     LSR                                     ;$0384D6 |
     CLC                                     ;$0384D7 |
-    ADC.w $15E9                             ;$0384D8 |
+    ADC.w CurrentSprite_15E9                ;$0384D8 |
     LSR                                     ;$0384DB |
     LDA.b #$A2                              ;$0384DC |
     BCC CODE_0384E2                         ;$0384DE |
@@ -787,7 +787,7 @@ CODE_038636:
     STA.w $1602,X                           ;$03865B |
     LDY.b #$09                              ;$03865E |
 CODE_038660:
-    CPY.w $15E9
+    CPY.w CurrentSprite_15E9
     BEQ CODE_03866C                         ;$038663 |
     LDA.w $009E,y                           ;$038665 |
     CMP.b #$C1                              ;$038668 |
@@ -998,7 +998,7 @@ CODE_0387D7:
     LDA $7D                                 ;$0387E6 |
     BMI Return03882A                        ;$0387E8 |
     LDA.b #$01                              ;$0387EA |
-    STA.w $1471                             ;$0387EC |
+    STA.w OnSolidSprite_1471                ;$0387EC |
     LDA.b #$06                              ;$0387EF |
     STA.w SpritePlayerContact_154C,X        ;$0387F1 |
     STZ $7D                                 ;$0387F4 |
@@ -1051,7 +1051,7 @@ MegaMoleGfxRt:
     LSR                                     ;$03884A |
     NOP                                     ;$03884B |
     CLC                                     ;$03884C |
-    ADC.w $15E9                             ;$03884D |
+    ADC.w CurrentSprite_15E9                ;$03884D |
     AND.b #$01                              ;$038850 |
     ASL                                     ;$038852 |
     ASL                                     ;$038853 |
@@ -1652,7 +1652,7 @@ CODE_038CB2:
     STA.b PlayerYPos_96+1                   ;$038CC8 |
     STZ $7D                                 ;$038CCA |
     LDA.b #$01                              ;$038CCC |
-    STA.w $1471                             ;$038CCE |
+    STA.w OnSolidSprite_1471                ;$038CCE |
     LDY.b #$00                              ;$038CD1 |
     LDA.w $1491                             ;$038CD3 |
     BPL CODE_038CD9                         ;$038CD6 |
@@ -3322,7 +3322,7 @@ ReznorSignCode:
     BEQ ReznorNoLevelEnd                    ;$0398D9 |
     DEC A                                   ;$0398DB |
     BNE CODE_039910                         ;$0398DC |
-    DEC.w $13C6                             ;$0398DE |
+    DEC.w CutsceneID_13C6                   ;$0398DE |
     LDA.b #$FF                              ;$0398E1 |
     STA.w EndLevelTimer_1493                ;$0398E3 |
     LDA.b #$0B                              ;$0398E6 |
@@ -3426,7 +3426,7 @@ CODE_03999B:
     INC A                                   ;$0399A1 |
 CODE_0399A2:
     STA $06
-    LDX.w $15E9                             ;$0399A4 |
+    LDX.w CurrentSprite_15E9                ;$0399A4 |
     LDA.b SpriteXPosLow_E4,X                ;$0399A7 |
     PHA                                     ;$0399A9 |
     STZ $00                                 ;$0399AA |
@@ -5666,7 +5666,7 @@ CODE_03AAD1:
     STA.w $0302,Y                           ;$03AAEC |
     LDA.w DATA_03AA1E,X                     ;$03AAEF |
     PHX                                     ;$03AAF2 |
-    LDX.w $15E9                             ;$03AAF3 |
+    LDX.w CurrentSprite_15E9                ;$03AAF3 |
     CPX.b #$09                              ;$03AAF6 |
     BEQ CODE_03AAFC                         ;$03AAF8 |
     ORA.b #$30                              ;$03AAFA |
@@ -8408,7 +8408,7 @@ DarkRoomWithLight:
     BNE CODE_03C500                         ;$03C4DF |
     LDY.b #$09                              ;$03C4E1 |
 CODE_03C4E3:
-    CPY.w $15E9
+    CPY.w CurrentSprite_15E9
     BEQ CODE_03C4FA                         ;$03C4E6 |
     LDA.w SpriteStatus_14C8,Y               ;$03C4E8 |
     CMP.b #$08                              ;$03C4EB |
@@ -8646,7 +8646,7 @@ CODE_03C796:
     BEQ CODE_03C7A7                         ;$03C799 |
     DEC A                                   ;$03C79B |
     BNE Return03C7A6                        ;$03C79C |
-    INC.w $13C6                             ;$03C79E |
+    INC.w CutsceneID_13C6                   ;$03C79E |
     LDA.b #$FF                              ;$03C7A1 |
     STA.w EndLevelTimer_1493                ;$03C7A3 |
 Return03C7A6:
@@ -9523,7 +9523,7 @@ CODE_03CE89:
     LDA.w $1540,X
     BNE CODE_03CE9E                         ;$03CE8C |
     STZ.w SpriteStatus_14C8,X               ;$03CE8E |
-    INC.w $13C6                             ;$03CE91 |
+    INC.w CutsceneID_13C6                   ;$03CE91 |
     LDA.b #$FF                              ;$03CE94 |
     STA.w EndLevelTimer_1493                ;$03CE96 |
     LDA.b #$0B                              ;$03CE99 |

@@ -1283,12 +1283,12 @@ CODE_048DBD:
     BNE CODE_048DDF                         ;$048DDA |
     BRL CODE_048E34                         ;$048DDC |
 CODE_048DDF:
-    LDA.w $13C6
+    LDA.w CutsceneID_13C6
     AND.w #$00FF                            ;$048DE2 |
     BEQ CODE_048E38                         ;$048DE5 |
-    LDA.w $13C6                             ;$048DE7 |
+    LDA.w CutsceneID_13C6                   ;$048DE7 |
     AND.w #$FF00                            ;$048DEA |
-    STA.w $13C6                             ;$048DED |
+    STA.w CutsceneID_13C6                   ;$048DED |
     SEP #$10                                ;$048DF0 |
     LDX.w $0DD6                             ;$048DF2 |
     LDA.w $1F17,X                           ;$048DF5 |

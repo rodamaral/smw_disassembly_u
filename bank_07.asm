@@ -4343,7 +4343,7 @@ CODE_07F22A:
     BRA CODE_07F200                         ;$07F248 |
 
 CODE_07F24A:
-    LDX.w $15E9
+    LDX.w CurrentSprite_15E9
     RTS                                     ;$07F24D |
 
 DATA_07F24E:
@@ -4780,7 +4780,7 @@ CODE_07FC52:
     LDA.b #$10
     STA.w $170B,Y                           ;$07FC54 |
     PHX                                     ;$07FC57 |
-    LDX.w $15E9                             ;$07FC58 |
+    LDX.w CurrentSprite_15E9                ;$07FC58 |
     LDA.b SpriteYPosLow_D8,X                ;$07FC5B |
     CLC                                     ;$07FC5D |
     ADC.b #$04                              ;$07FC5E |

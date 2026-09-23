@@ -1638,7 +1638,7 @@ CODE_0CA1F6:
     LDA.w $0B50,X                           ;$0CA200 |
     CMP.b #$70                              ;$0CA203 |
     BNE CODE_0CA24F                         ;$0CA205 |
-    STZ.w $18E2                             ;$0CA207 |
+    STZ.w YoshiSlotMirror_18E2              ;$0CA207 |
     LDA.b #$0F                              ;$0CA20A |
     STA.w PlayerPose_13E0                   ;$0CA20C |
     JSR CODE_0CA764                         ;$0CA20F |
@@ -2244,7 +2244,7 @@ CODE_0CA6B0:
     STA.b PlayerYPos_96                     ;$0CA6BB |
     LDA.b #$01                              ;$0CA6BD |
     STA.b PlayerYPos_96+1                   ;$0CA6BF |
-    STZ.w $18E2                             ;$0CA6C1 |
+    STZ.w YoshiSlotMirror_18E2              ;$0CA6C1 |
     LDA.b #$26                              ;$0CA6C4 |
     STA.w PlayerPose_13E0                   ;$0CA6C6 |
     JSR CODE_0CA764                         ;$0CA6C9 |
@@ -2352,7 +2352,7 @@ Return0CA777:
 
 CODE_0CA778:
     LDX.b #$00
-    STX.w $15E9                             ;$0CA77A |
+    STX.w CurrentSprite_15E9                ;$0CA77A |
     LDA.b #$35                              ;$0CA77D |
     STA $9E                                 ;$0CA77F |
     LDA.w $1602                             ;$0CA781 |
@@ -2377,7 +2377,7 @@ CODE_0CA778:
     STZ.w $1602                             ;$0CA7AC |
 CODE_0CA7AF:
     LDA.b #$01
-    STA.w $18E2                             ;$0CA7B1 |
+    STA.w YoshiSlotMirror_18E2              ;$0CA7B1 |
 CODE_0CA7B4:
     JSL draw_mario_and_yoshi_00E2BD
     RTS                                     ;$0CA7B8 |
@@ -4203,7 +4203,7 @@ CODE_0CC94E:
     LDA.w $1443                             ;$0CC956 |
     AND.b #$1F                              ;$0CC959 |
     BNE Return0CC97D                        ;$0CC95B |
-    LDA.w $13C6                             ;$0CC95D |
+    LDA.w CutsceneID_13C6                   ;$0CC95D |
     DEC A                                   ;$0CC960 |
     ASL                                     ;$0CC961 |
     ASL                                     ;$0CC962 |
@@ -4246,7 +4246,7 @@ CODE_0CC98C:
     DEC.w $144D                             ;$0CC997 |
 CODE_0CC99A:
     JSR CODE_0CD803
-    LDA.w $13C6                             ;$0CC99D |
+    LDA.w CutsceneID_13C6                   ;$0CC99D |
     DEC A                                   ;$0CC9A0 |
     JSL execute_pointer                     ;$0CC9A1 |
 
@@ -4482,7 +4482,7 @@ CODE_0CCB1C:
 CODE_0CCB30:
     LDX.b #$00
     LDY.b #$30                              ;$0CCB32 |
-    LDA.w $13C6                             ;$0CCB34 |
+    LDA.w CutsceneID_13C6                   ;$0CCB34 |
     DEC A                                   ;$0CCB37 |
     BNE CODE_0CCB3C                         ;$0CCB38 |
     LDY.b #$18                              ;$0CCB3A |
@@ -4658,7 +4658,7 @@ CODE_0CCC51:
     DEC.w $1441                             ;$0CCC60 |
     BPL CODE_0CCC82                         ;$0CCC63 |
     JSR CODE_0CD373                         ;$0CCC65 |
-    LDX.w $13C6                             ;$0CCC68 |
+    LDX.w CutsceneID_13C6                   ;$0CCC68 |
     LDA.l CutsceneBgColor-1,X               ;$0CCC6B |
     ASL                                     ;$0CCC6F |
     TAX                                     ;$0CCC70 |
@@ -6196,7 +6196,7 @@ CODE_0CD803:
     BRA CODE_0CD84F                         ;$0CD810 |
 
 CODE_0CD812:
-    LDY $19
+    LDY.b Powerup_19
     BEQ CODE_0CD818                         ;$0CD814 |
     LDY.b #$01                              ;$0CD816 |
 CODE_0CD818:
@@ -6217,7 +6217,7 @@ CODE_0CD818:
     BNE CODE_0CD858                         ;$0CD833 |
     LDA.b #$10                              ;$0CD835 |
     STA.w PickUpItemTimer_1498              ;$0CD837 |
-    STZ.w $148F                             ;$0CD83A |
+    STZ.w CarryingFlagMirror_148F           ;$0CD83A |
 CODE_0CD83D:
     LDA.b #$05
     CMP.b PlayerXPos_94                     ;$0CD83F |

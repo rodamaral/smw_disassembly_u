@@ -258,7 +258,7 @@ NMI_start:                                  ;        \
     BCS .transition_NMI                     ;$0081F2 | $0D9B was 01(transition), Skip the status bar draw
     JSR draw_status_bar                     ;$0081F4 | Draw the status bar
 .transition_NMI                             ;        |
-    LDA.w $13C6                             ;$0081F7 |\ Skip the end credits code 
+    LDA.w CutsceneID_13C6                   ;$0081F7 |\ Skip the end credits code 
     CMP.b #$08                              ;$0081FA | | if the current cutscene is not $08 (end credits)
     BNE .not_end_credits                    ;$0081FC |/
     LDA.w $1FFE                             ;$0081FE |\ Skip updating the credits BG
@@ -320,7 +320,7 @@ NMI_start:                                  ;        \
     BEQ .level_NMI_return                   ;$008278 |/
 .lagging_OW_NMI                             ;        |
     LDA.b #$81                              ;$00827A | Load Enable NMI and autojoy enabled
-    LDY.w $13C6                             ;$00827C |\ Skip to NMI return if the credits are not playing
+    LDY.w CutsceneID_13C6                   ;$00827C |\ Skip to NMI return if the credits are not playing
     CPY.b #$08                              ;$00827F | |
     BNE .NMI_return                         ;$008281 |/
     LDY.w $0DAE                             ;$008283 |\ Set screen brightness from mirror
@@ -2367,7 +2367,7 @@ GM19_credits_castle_load_009468:
     JSR CODE_0085FA
     JSR Clear_1A_13D3                       ;$00946B |
     JSR SetUpScreen                         ;$00946E |
-    LDX.w $13C6                             ;$009471 |
+    LDX.w CutsceneID_13C6                   ;$009471 |
     LDA.b #$18                              ;$009474 |
     STA.w $1931                             ;$009476 |
     LDA.b #$14                              ;$009479 |
@@ -2407,7 +2407,7 @@ CODE_0094B2:
     LDA.w #$0058                            ;$0094CD |
     STA.b PlayerYPos_96                     ;$0094D0 |
     SEP #$20                                ;$0094D2 |
-    INC.w $148F                             ;$0094D4 |
+    INC.w CarryingFlagMirror_148F           ;$0094D4 |
 CODE_0094D7:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$0094DA |
@@ -2428,7 +2428,7 @@ CODE_0094E2:
     JSR CODE_009622                         ;$0094FA |
 GM1B_credits_castle_main_0094FD:
     JSL OAM_reset_7F8000
-    LDA.w $13C6                             ;$009501 |
+    LDA.w CutsceneID_13C6                   ;$009501 |
     CMP.b #$08                              ;$009504 |
     BEQ CODE_009557                         ;$009506 |
     LDA.b axlr0000Hold_17                   ;$009508 |
@@ -2438,13 +2438,13 @@ GM1B_credits_castle_main_0094FD:
     LDA.b byetudlrHold_15                   ;$009510 |
     AND.b #$08                              ;$009512 |
     BEQ ADDR_009523                         ;$009514 |
-    LDA.w $13C6                             ;$009516 |
+    LDA.w CutsceneID_13C6                   ;$009516 |
     INC A                                   ;$009519 |
     CMP.b #$09                              ;$00951A |
     BCC ADDR_009520                         ;$00951C |
     LDA.b #$01                              ;$00951E |
 ADDR_009520:
-    STA.w $13C6
+    STA.w CutsceneID_13C6
 ADDR_009523:
     LDA.b #!FadeToCutscene_18
     STA.w GameMode_0100                     ;$009525 |
@@ -2498,7 +2498,7 @@ CODE_009574:
     RTS                                     ;$009582 |
 
 GM1D_ending_yoshi_load_009583:
-    INC.w $13C6
+    INC.w CutsceneID_13C6
     LDA.b #$28                              ;$009586 |
     LDY.b #$01                              ;$009588 |
     JSR CODE_0096CF                         ;$00958A |
@@ -7577,7 +7577,7 @@ CODE_00C739:
 CODE_00C73D:
     STA.b PlayerYPos_96
 CODE_00C73F:
-    LDX.w $13C6
+    LDX.w CutsceneID_13C6
     LDA $8F                                 ;$00C742 |
     CLC                                     ;$00C744 |
     ADC.w DATA_00C6DF,X                     ;$00C745 |
@@ -7675,14 +7675,14 @@ CODE_00C7CE:
 CODE_00C7DF:
     LDA.b #$20
     STA.w PickUpItemTimer_1498              ;$00C7E1 |
-    INC.w $148F                             ;$00C7E4 |
+    INC.w CarryingFlagMirror_148F           ;$00C7E4 |
     BRA CODE_00C7F6                         ;$00C7E7 |
 
 CODE_00C7E9:
     TAY
     LDA.w $C5DA,Y                           ;$00C7EA |
     STA.w PlayerPose_13E0                   ;$00C7ED |
-    STZ.w $148F                             ;$00C7F0 |
+    STZ.w CarryingFlagMirror_148F           ;$00C7F0 |
     JSR aerial_physics                      ;$00C7F3 |
 CODE_00C7F6:
     DEC $88
@@ -7832,13 +7832,13 @@ CODE_00C90A:
 
 ending_level:
     JSR disable_controls
-    STZ.w $18C2                             ;$00C918 |
+    STZ.w PlayerInCloud_18C2                ;$00C918 |
     STZ.w $13DE                             ;$00C91B |
     STZ.w $13ED                             ;$00C91E |
     LDA.b ScreenMode_5B                     ;$00C921 |
     LSR                                     ;$00C923 |
     BCS CODE_00C944                         ;$00C924 |
-    LDA.w $13C6                             ;$00C926 |
+    LDA.w CutsceneID_13C6                   ;$00C926 |
     ORA.w $13D2                             ;$00C929 |
     BEQ CODE_00C96B                         ;$00C92C |
     LDA $72                                 ;$00C92E |
@@ -7949,7 +7949,7 @@ CODE_00C9F8:
     STZ.w $0DAF                             ;$00C9FB |
 CODE_00C9FE:
     STA.w LevelExitMode_0DD5
-    LDA.w $13C6                             ;$00CA01 |
+    LDA.w CutsceneID_13C6                   ;$00CA01 |
     BEQ CODE_00CA25                         ;$00CA04 |
     LDX.b #$08                              ;$00CA06 |
     LDA.w Translevel_13BF                   ;$00CA08 |
@@ -7967,7 +7967,7 @@ CODE_00CA16:
     BRA CODE_00CA25                         ;$00CA1E |
 
 CODE_00CA20:
-    STX.w $13C6
+    STX.w CutsceneID_13C6
     LDY.b #!FadeToCutscene_18               ;$00CA23 |
 CODE_00CA25:
     STY.w GameMode_0100
@@ -8321,7 +8321,7 @@ CODE_00CD39:                                ;        |
 .no_climb_on_air                            ;        |
     LDA $74                                 ;$00CD4A |
     BNE CODE_00CD72                         ;$00CD4C |
-    LDA.w $148F                             ;$00CD4E |
+    LDA.w CarryingFlagMirror_148F           ;$00CD4E |
     ORA.w RidingYoshi_187A                  ;$00CD51 |
     BNE CODE_00CD79                         ;$00CD54 |
     LDA $8B                                 ;$00CD56 |
@@ -8618,7 +8618,7 @@ CODE_00CF4E:
 
 CODE_00CF62:
     LDA.b #$3C
-    LDY.w $148F                             ;$00CF64 |
+    LDY.w CarryingFlagMirror_148F           ;$00CF64 |
     BEQ CODE_00CF6B                         ;$00CF67 |
     LDA.b #$1D                              ;$00CF69 |
 CODE_00CF6B:
@@ -8647,7 +8647,7 @@ CODE_00CF88:
     LDY.w $1499                             ;$00CF91 |
     BNE CODE_00CF85                         ;$00CF94 |
     LDA.b #$00                              ;$00CF96 |
-    LDX.w $18C2                             ;$00CF98 |
+    LDX.w PlayerInCloud_18C2                ;$00CF98 |
     BNE MarioAnimNoAbs1                     ;$00CF9B |
     LDA $72                                 ;$00CF9D |
     BEQ CODE_00CFB7                         ;$00CF9F |
@@ -8657,7 +8657,7 @@ CODE_00CF88:
     BEQ CODE_00CFAE                         ;$00CFA9 |
     LDA.w CODE_00CE78,Y                     ;$00CFAB |
 CODE_00CFAE:
-    LDY.w $148F
+    LDY.w CarryingFlagMirror_148F
     BEQ CODE_00D01A                         ;$00CFB1 |
     LDA.b #$09                              ;$00CFB3 |
     BRA CODE_00D01A                         ;$00CFB5 |
@@ -8713,7 +8713,7 @@ CODE_00D003:
     STA.w $13DB
     CLC                                     ;$00D006 |
     ADC.w $13DE                             ;$00D007 |
-    LDY.w $148F                             ;$00D00A |
+    LDY.w CarryingFlagMirror_148F           ;$00D00A |
     BEQ CODE_00D014                         ;$00D00D |
     CLC                                     ;$00D00F |
     ADC.b #$07                              ;$00D010 |
@@ -8968,7 +8968,7 @@ CODE_00D1B2:
     TAY                                     ;$00D1C7 |
     INY                                     ;$00D1C8 |
     LDA.w DATA_00D192,Y                     ;$00D1C9 |
-    LDX.w $148F                             ;$00D1CC |
+    LDX.w CarryingFlagMirror_148F           ;$00D1CC |
     BEQ CODE_00D1DB                         ;$00D1CF |
     EOR.b #$1C                              ;$00D1D1 |
     DEC.w $1499                             ;$00D1D3 |
@@ -9253,7 +9253,7 @@ CODE_00D5F9:
     STA $73                                 ;$00D606 |
     STZ.w $13E8                             ;$00D608 |
 CODE_00D60B:
-    LDA.w $1471
+    LDA.w OnSolidSprite_1471
     CMP.b #$02                              ;$00D60E |
     BEQ CODE_00D61E                         ;$00D610 |
     LDA $77                                 ;$00D612 |
@@ -9285,7 +9285,7 @@ CODE_00D637:
     TAX                                     ;$00D63B |
     LDA.b axlr0000Press_18                  ;$00D63C |
     BPL CODE_00D65E                         ;$00D63E |
-    LDA.w $148F                             ;$00D640 |
+    LDA.w CarryingFlagMirror_148F           ;$00D640 |
     BNE CODE_00D65E                         ;$00D643 |
     INC A                                   ;$00D645 |
     STA.w $140D                             ;$00D646 |
@@ -9371,7 +9371,7 @@ CODE_00D6D5:
     LDY $76
     CMP $76                                 ;$00D6D7 |
     BEQ CODE_00D6EC                         ;$00D6D9 |
-    LDY.w $148F                             ;$00D6DB |
+    LDY.w CarryingFlagMirror_148F           ;$00D6DB |
     BEQ CODE_00D6EA                         ;$00D6DE |
     LDY.w $1499                             ;$00D6E0 |
     BNE CODE_00D6EC                         ;$00D6E3 |
@@ -9525,7 +9525,7 @@ aerial_physics:
     BNE CODE_00D824                         ;$00D7E7 |
     LDA $72                                 ;$00D7E9 |
     BEQ CODE_00D811                         ;$00D7EB |
-    LDA.w $148F                             ;$00D7ED |
+    LDA.w CarryingFlagMirror_148F           ;$00D7ED |
     ORA.w RidingYoshi_187A                  ;$00D7F0 |
     ORA.w $140D                             ;$00D7F3 |
     BNE CODE_00D811                         ;$00D7F6 |
@@ -9668,7 +9668,7 @@ CODE_00D8E5:
     BRA CODE_00D8FF
 
 CODE_00D8E7:
-    LDA $19
+    LDA.b Powerup_19
     CMP.b #$02                              ;$00D8E9 |
     BNE CODE_00D928                         ;$00D8EB |
     LDA $72                                 ;$00D8ED |
@@ -9774,7 +9774,7 @@ water_physics:
     STZ.w $1407                             ;$00D98D |
     STZ.w $140D                             ;$00D990 |
     LDY $7D                                 ;$00D993 |
-    LDA.w $148F                             ;$00D995 |
+    LDA.w CarryingFlagMirror_148F           ;$00D995 |
     BEQ CODE_00D9EB                         ;$00D998 |
     LDA $72                                 ;$00D99A |
     BNE CODE_00D9AF                         ;$00D99C |
@@ -9943,7 +9943,7 @@ CODE_00DA8D:
     TAY                                     ;$00DA9B |
     LDA.w DATA_00D980,Y                     ;$00DA9C |
 CODE_00DA9F:
-    LDY.w $148F
+    LDY.w CarryingFlagMirror_148F
     BEQ CODE_00DAA5                         ;$00DAA2 |
     INC A                                   ;$00DAA4 |
 CODE_00DAA5:
@@ -10506,7 +10506,7 @@ draw_mario_and_yoshi_00E2BD:
     BRA .CODE_00E31A                        ;$00E312 |
 
 .CODE_00E314:
-    LDA $19
+    LDA.b Powerup_19
     ASL                                     ;$00E316 |
     ORA.w CurrentPlayer_0DB3                ;$00E317 |
 .CODE_00E31A:
@@ -11005,7 +11005,7 @@ CODE_00E9FB:
     AND.b #$1C                              ;$00E9FD |
     CMP.b #$1C                              ;$00E9FF |
     BNE CODE_00EA0D                         ;$00EA01 |
-    LDA.w $1471                             ;$00EA03 |
+    LDA.w OnSolidSprite_1471                ;$00EA03 |
     BNE CODE_00EA0D                         ;$00EA06 |
 CODE_00EA08:
     JSR CODE_00F629
@@ -11076,7 +11076,7 @@ CODE_00EA75:
     BNE CODE_00EA62                         ;$00EA7E |
     LDA.b axlr0000Hold_17                   ;$00EA80 |
     BPL CODE_00EA92                         ;$00EA82 |
-    LDA.w $148F                             ;$00EA84 |
+    LDA.w CarryingFlagMirror_148F           ;$00EA84 |
     BNE CODE_00EA92                         ;$00EA87 |
     INC A                                   ;$00EA89 |
     STA.w $140D                             ;$00EA8A |
@@ -11138,7 +11138,7 @@ layer_collision:
     EOR.w DATA_00EAB9,Y                     ;$00EAF2 |
     BMI walk_off_wall                       ;$00EAF5 |
     LDA $72                                 ;$00EAF7 |
-    ORA.w $148F                             ;$00EAF9 |
+    ORA.w CarryingFlagMirror_148F           ;$00EAF9 |
     ORA $73                                 ;$00EAFC |
     ORA.w RidingYoshi_187A                  ;$00EAFE |
     BNE walk_off_wall                       ;$00EB01 |
@@ -11608,7 +11608,7 @@ CODE_00EE11:
     STA $91                                 ;$00EE19 |
     BCC CODE_00EE3A                         ;$00EE1B |
 CODE_00EE1D:
-    LDA.w $1471
+    LDA.w OnSolidSprite_1471
     BEQ CODE_00EE2D                         ;$00EE20 |
     LDA $7D                                 ;$00EE22 |
     BMI CODE_00EE2D                         ;$00EE24 |
@@ -11731,7 +11731,7 @@ CODE_00EEEF:
     LDA.b byetudlrHold_15                   ;$00EEF2 |
     AND.b #$04                              ;$00EEF4 |
     BEQ CODE_00EF05                         ;$00EEF6 |
-    LDA.w $148F                             ;$00EEF8 |
+    LDA.w CarryingFlagMirror_148F           ;$00EEF8 |
     ORA.w $13ED                             ;$00EEFB |
     BNE CODE_00EF05                         ;$00EEFE |
     LDX.b #$1C                              ;$00EF00 |
@@ -11920,7 +11920,7 @@ CODE_00F035:
     SBC.w DATA_00EAB9,X                     ;$00F038 |
     EOR.w DATA_00EAB9,X                     ;$00F03B |
     BMI Return00F04C                        ;$00F03E |
-    LDA.w $148F                             ;$00F040 |
+    LDA.w CarryingFlagMirror_148F           ;$00F040 |
     ORA $73                                 ;$00F043 |
     BNE Return00F04C                        ;$00F045 |
     INX                                     ;$00F047 |
@@ -12192,7 +12192,7 @@ process_throw_block:
     BNE .return                             ;$00F269 | return.
     BIT.b byetudlrPress_16                  ;$00F26B |\ If the player didn't press X or Y,
     BVC .return                             ;$00F26D |/ return.
-    LDA.w $148F                             ;$00F26F |\ If the player is already carrying something
+    LDA.w CarryingFlagMirror_148F           ;$00F26F |\ If the player is already carrying something
     ORA.w RidingYoshi_187A                  ;$00F272 | | or on Yoshi,
     BNE .return                             ;$00F275 |/ return.
     LDA.b #$02                              ;$00F277 |\
@@ -12451,7 +12451,7 @@ CODE_00F40A:
     LSR                                     ;$00F41C |
     TAX                                     ;$00F41D |
     BNE CODE_00F430                         ;$00F41E |
-    LDA.w $148F                             ;$00F420 |
+    LDA.w CarryingFlagMirror_148F           ;$00F420 |
     BEQ CODE_00F430                         ;$00F423 |
     LDA $76                                 ;$00F425 |
     EOR.b #$01                              ;$00F427 |
@@ -12716,7 +12716,7 @@ HurtMario:
     JSR fall_off_wall                       ;$00F5D1 |
     PLB                                     ;$00F5D4 |
 CODE_00F5D5:
-    LDA $19
+    LDA.b Powerup_19
     BEQ kill_player                         ;$00F5D7 |
     CMP.b #$02                              ;$00F5D9 |
     BNE PowerDown                           ;$00F5DB |
@@ -13037,7 +13037,7 @@ ProcessVerticalScroll00F7F4:
     ORA.w $149F                             ;$00F837 |
     ORA $74                                 ;$00F83A |
     ORA.w $13F3                             ;$00F83C |
-    ORA.w $18C2                             ;$00F83F |
+    ORA.w PlayerInCloud_18C2                ;$00F83F |
     ORA.w $1406                             ;$00F842 |
 .CODE_00F845:
     TAX
@@ -13403,7 +13403,7 @@ DATA_00FAFB:
     db $FF,$74,$75,$76,$77
 
 LvlEndPowerUp:
-    LDX $19
+    LDX.b Powerup_19
     LDA.w StarTimer_1490                    ;$00FB02 |
     BEQ CODE_00FB09                         ;$00FB05 |
     LDX.b #$04                              ;$00FB07 |
@@ -13610,7 +13610,7 @@ CODE_00FC7A:
     LDA.w $1B94                             ;$00FC81 |
     BNE CODE_00FC98                         ;$00FC84 |
     LDX.b #$05                              ;$00FC86 |
-    LDA.w $1692                             ;$00FC88 |
+    LDA.w SpriteMemorySetting_1692          ;$00FC88 |
     CMP.b #$0A                              ;$00FC8B |
     BEQ CODE_00FC98                         ;$00FC8D |
     JSL FindFreeSprSlot                     ;$00FC8F |
@@ -13652,8 +13652,8 @@ CODE_00FCD5:
     STA.w SpriteDir_157C,X                  ;$00FCDE |
     DEC.w $160E,X                           ;$00FCE1 |
     INX                                     ;$00FCE4 |
-    STX.w $18DF                             ;$00FCE5 |
-    STX.w $18E2                             ;$00FCE8 |
+    STX.w YoshiSlot_18DF                    ;$00FCE5 |
+    STX.w YoshiSlotMirror_18E2              ;$00FCE8 |
     RTL                                     ;$00FCEB |
 
 CODE_00FCEC:
