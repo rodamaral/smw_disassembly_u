@@ -533,11 +533,11 @@ Return02848C:
 
 SubHorzPosBnk2:
     LDY.b #$00
-    LDA $94                                 ;$02848F |
+    LDA.b PlayerXPos_94                     ;$02848F |
     SEC                                     ;$028491 |
     SBC.b SpriteXPosLow_E4,X                ;$028492 |
     STA $0F                                 ;$028494 |
-    LDA $95                                 ;$028496 |
+    LDA.b PlayerXPos_94+1                   ;$028496 |
     SBC.w SpriteXPosHigh_14E0,X             ;$028498 |
     BPL Return02849E                        ;$02849B |
     INY                                     ;$02849D |
@@ -687,14 +687,14 @@ CODE_02859B:
     CLC                                     ;$0285A5 |
     ADC $01                                 ;$0285A6 |
     CLC                                     ;$0285A8 |
-    ADC $96                                 ;$0285A9 |
+    ADC.b PlayerYPos_96                     ;$0285A9 |
     STA $00                                 ;$0285AB |
     LDA.w $148E                             ;$0285AD |
     AND.b #$0F                              ;$0285B0 |
     CLC                                     ;$0285B2 |
     ADC.b #$FE                              ;$0285B3 |
     CLC                                     ;$0285B5 |
-    ADC $94                                 ;$0285B6 |
+    ADC.b PlayerXPos_94                     ;$0285B6 |
     STA $02                                 ;$0285B8 |
 CODE_0285BA:
     LDY.b #$0B
@@ -766,13 +766,13 @@ spawn_throw_block:
     TYX                                     ;$028635 | Set X to the sprite slot.
     LDA.b #$0B                              ;$028636 |
     STA.w SpriteStatus_14C8,X               ;$028638 | Set the throw block as being carried.
-    LDA $96                                 ;$02863B |\
+    LDA.b PlayerYPos_96                     ;$02863B |\
     STA.b SpriteYPosLow_D8,X                ;$02863D | | Set the sprite's Y position to the player's Y position.
-    LDA $97                                 ;$02863F | |
+    LDA.b PlayerYPos_96+1                   ;$02863F | |
     STA.w SpriteYPosHigh_14D4,X             ;$028641 |/
-    LDA $94                                 ;$028644 |\
+    LDA.b PlayerXPos_94                     ;$028644 |\
     STA.b SpriteXPosLow_E4,X                ;$028646 | | Set the sprite's X position to the player's X position.
-    LDA $95,X                               ;$028648 | |
+    LDA.b PlayerXPos_94+1,X                 ;$028648 | | GLITCH: the "LDA $95,X" is likely a typo on Nintendo's part
     STA.w SpriteXPosHigh_14E0,X             ;$02864A |/
     LDA.b #$53                              ;$02864D |\ Set the sprite to be a throw block.
     STA $9E,X                               ;$02864F |/
@@ -841,15 +841,15 @@ YoshiStompRoutine:
     JSR SprBlkInteract                      ;$0286C7 |
     LDA.b #$02                              ;$0286CA |
     STA.w $16CD,Y                           ;$0286CC |
-    LDA $94                                 ;$0286CF |
+    LDA.b PlayerXPos_94                     ;$0286CF |
     STA.w $16D1,Y                           ;$0286D1 |
-    LDA $95                                 ;$0286D4 |
+    LDA.b PlayerXPos_94+1                   ;$0286D4 |
     STA.w $16DD,Y                           ;$0286D6 |
-    LDA $96                                 ;$0286D9 |
+    LDA.b PlayerYPos_96                     ;$0286D9 |
     CLC                                     ;$0286DB |
     ADC.b #$20                              ;$0286DC |
     STA.w $16D9,Y                           ;$0286DE |
-    LDA $97                                 ;$0286E1 |
+    LDA.b PlayerYPos_96+1                   ;$0286E1 |
     ADC.b #$00                              ;$0286E3 |
     STA.w $16DD,Y                           ;$0286E5 |
     JSR CODE_029BE4                         ;$0286E8 |
@@ -1544,9 +1544,9 @@ ADDR_028BCB:
     LDA.w SpriteYPosHigh_14D4,X             ;$028BDD |
     ADC.b #$00                              ;$028BE0 |
     STA.w $1814,Y                           ;$028BE2 |
-    LDA $94                                 ;$028BE5 |
+    LDA.b PlayerXPos_94                     ;$028BE5 |
     STA $02                                 ;$028BE7 |
-    LDA $95                                 ;$028BE9 |
+    LDA.b PlayerXPos_94+1                   ;$028BE9 |
     STA $03                                 ;$028BEB |
     PHX                                     ;$028BED |
     LDX $00                                 ;$028BEE |
@@ -2281,10 +2281,10 @@ CODE_029143:
     LDA.w $16A1,X                           ;$029145 |
     SEC                                     ;$029148 |
     SBC $00                                 ;$029149 |
-    STA $96                                 ;$02914B |
+    STA.b PlayerYPos_96                     ;$02914B |
     LDA.w $16A9,X                           ;$02914D |
     SBC.b #$00                              ;$029150 |
-    STA $97                                 ;$029152 |
+    STA.b PlayerYPos_96+1                   ;$029152 |
     LDA.b #$01                              ;$029154 |
     STA.w $1471                             ;$029156 |
     STA.w $1402                             ;$029159 |
@@ -2298,13 +2298,13 @@ CODE_02915E:
     BNE CODE_029182                         ;$02916A |
     LDA.b #$A0                              ;$02916C |
     STA $7D                                 ;$02916E |
-    LDA $96                                 ;$029170 |
+    LDA.b PlayerYPos_96                     ;$029170 |
     SEC                                     ;$029172 |
     SBC.b #$02                              ;$029173 |
-    STA $96                                 ;$029175 |
-    LDA $97                                 ;$029177 |
+    STA.b PlayerYPos_96                     ;$029175 |
+    LDA.b PlayerYPos_96+1                   ;$029177 |
     SBC.b #$00                              ;$029179 |
-    STA $97                                 ;$02917B |
+    STA.b PlayerYPos_96+1                   ;$02917B |
     LDA.b #$08                              ;$02917D |
     STA.w SPCIO3_1DFC                       ;$02917F |
 CODE_029182:
@@ -3758,19 +3758,19 @@ CODE_029BF7:
 CODE_029C00:
     LDA.b #$0F
     STA.w $170B,Y                           ;$029C02 |
-    LDA $96                                 ;$029C05 |
+    LDA.b PlayerYPos_96                     ;$029C05 |
     CLC                                     ;$029C07 |
     ADC.b #$28                              ;$029C08 |
     STA.w $1715,Y                           ;$029C0A |
-    LDA $97                                 ;$029C0D |
+    LDA.b PlayerYPos_96+1                   ;$029C0D |
     ADC.b #$00                              ;$029C0F |
     STA.w $1729,Y                           ;$029C11 |
     LDX $00                                 ;$029C14 |
-    LDA $94                                 ;$029C16 |
+    LDA.b PlayerXPos_94                     ;$029C16 |
     CLC                                     ;$029C18 |
     ADC.w DATA_029BDE,X                     ;$029C19 |
     STA.w $171F,Y                           ;$029C1C |
-    LDA $95                                 ;$029C1F |
+    LDA.b PlayerXPos_94+1                   ;$029C1F |
     ADC.w DATA_029BE0,X                     ;$029C21 |
     STA.w $1733,Y                           ;$029C24 |
     LDA.w DATA_029BE2,X                     ;$029C27 |
@@ -7085,7 +7085,7 @@ ShootBullet:
     ADC.b #$10                              ;$02B48F |
     CMP.b #$10                              ;$02B491 |
     BCC Return02B4DD                        ;$02B493 |
-    LDA $94                                 ;$02B495 |
+    LDA.b PlayerXPos_94                     ;$02B495 |
     SBC.w $179B,X                           ;$02B497 |
     CLC                                     ;$02B49A |
     ADC.b #$11                              ;$02B49B |
@@ -7139,9 +7139,9 @@ SetShooterSmoke:
     STA.w $17CC,Y                           ;$02B4F8 |
     LDA.w $179B,X                           ;$02B4FB |
     PHA                                     ;$02B4FE |
-    LDA $94                                 ;$02B4FF |
+    LDA.b PlayerXPos_94                     ;$02B4FF |
     CMP.w $179B,X                           ;$02B501 |
-    LDA $95                                 ;$02B504 |
+    LDA.b PlayerXPos_94+1                   ;$02B504 |
     SBC.w $17A3,X                           ;$02B506 |
     LDX.b #$00                              ;$02B509 |
     BCC CODE_02B50E                         ;$02B50B |
@@ -10320,9 +10320,9 @@ ADDR_02CC35:
     BPL ADDR_02CC6C                         ;$02CC5A |
     CLC                                     ;$02CC5C |
     ADC.w #$0000                            ;$02CC5D |
-    CMP $94                                 ;$02CC60 |
+    CMP.b PlayerXPos_94                     ;$02CC60 |
     BCC ADDR_02CC7F                         ;$02CC62 |
-    STA $94                                 ;$02CC64 |
+    STA.b PlayerXPos_94                     ;$02CC64 |
     LDY.b #$00                              ;$02CC66 |
     STY $7B                                 ;$02CC68 |
     BRA ADDR_02CC7F                         ;$02CC6A |
@@ -10330,11 +10330,11 @@ ADDR_02CC35:
 ADDR_02CC6C:
     CLC
     ADC.w #$0090                            ;$02CC6D |
-    CMP $94                                 ;$02CC70 |
+    CMP.b PlayerXPos_94                     ;$02CC70 |
     BCS ADDR_02CC7F                         ;$02CC72 |
     LDA $00                                 ;$02CC74 |
     ADC.w #$0091                            ;$02CC76 |
-    STA $94                                 ;$02CC79 |
+    STA.b PlayerXPos_94                     ;$02CC79 |
     LDY.b #$00                              ;$02CC7B |
     STY $7B                                 ;$02CC7D |
 ADDR_02CC7F:
@@ -10343,7 +10343,7 @@ ADDR_02CC7F:
     BPL ADDR_02CC93                         ;$02CC83 |
     CLC                                     ;$02CC85 |
     ADC.w #$0020                            ;$02CC86 |
-    CMP $96                                 ;$02CC89 |
+    CMP.b PlayerYPos_96                     ;$02CC89 |
     BCC ADDR_02CCAE                         ;$02CC8B |
     LDY.b #$00                              ;$02CC8D |
     STY $7D                                 ;$02CC8F |
@@ -10352,11 +10352,11 @@ ADDR_02CC7F:
 ADDR_02CC93:
     CLC
     ADC.w #$0060                            ;$02CC94 |
-    CMP $96                                 ;$02CC97 |
+    CMP.b PlayerYPos_96                     ;$02CC97 |
     BCS ADDR_02CCAE                         ;$02CC99 |
     LDA $02                                 ;$02CC9B |
     ADC.w #$0061                            ;$02CC9D |
-    STA $96                                 ;$02CCA0 |
+    STA.b PlayerYPos_96                     ;$02CCA0 |
     LDY.b #$00                              ;$02CCA2 |
     STY $7D                                 ;$02CCA4 |
     LDY.b #$01                              ;$02CCA6 |
@@ -10773,12 +10773,12 @@ CODE_02CFAF:
     PHP                                     ;$02CFB8 |
     CLC                                     ;$02CFB9 |
     ADC.b Layer1YPos_1C                     ;$02CFBA |
-    STA $96                                 ;$02CFBC |
+    STA.b PlayerYPos_96                     ;$02CFBC |
     LDA.b Layer1YPos_1C+1                   ;$02CFBE |
     ADC.b #$00                              ;$02CFC0 |
     PLP                                     ;$02CFC2 |
     SBC.b #$00                              ;$02CFC3 |
-    STA $97                                 ;$02CFC5 |
+    STA.b PlayerYPos_96+1                   ;$02CFC5 |
     STZ.b PlayerInAir_72                    ;$02CFC7 |
     LDA.b #$02                              ;$02CFC9 |
     STA.w $1471                             ;$02CFCB |
@@ -11071,14 +11071,14 @@ try_eat_berry_tile_02D0E6:
     STA.w $1602,X                           ;$02D1D9 |
     LDA.b #$22                              ;$02D1DC |
     STA.w $1564,X                           ;$02D1DE | set animation timer
-    LDA $96                                 ;$02D1E1 | slightly adjust player's Y position
+    LDA.b PlayerYPos_96                     ;$02D1E1 | slightly adjust player's Y position
     CLC                                     ;$02D1E3 |
     ADC.b #$08                              ;$02D1E4 |
     AND.b #$F0                              ;$02D1E6 |
-    STA $96                                 ;$02D1E8 |
-    LDA $97                                 ;$02D1EA |
+    STA.b PlayerYPos_96                     ;$02D1E8 |
+    LDA.b PlayerYPos_96+1                   ;$02D1EA |
     ADC.b #$00                              ;$02D1EC |
-    STA $97                                 ;$02D1EE |
+    STA.b PlayerYPos_96+1                   ;$02D1EE |
 +   RTS                                     ;$02D1F0 |
 
 DATA_02D1F1:
@@ -11224,32 +11224,32 @@ CODE_02D2B2:
     RTS                                     ;$02D2C6 |
 
     STA $00                                 ;$02D2C7 |
-    LDA $94                                 ;$02D2C9 |
+    LDA.b PlayerXPos_94                     ;$02D2C9 |
     PHA                                     ;$02D2CB |
-    LDA $95                                 ;$02D2CC |
+    LDA.b PlayerXPos_94+1                   ;$02D2CC |
     PHA                                     ;$02D2CE |
-    LDA $96                                 ;$02D2CF |
+    LDA.b PlayerYPos_96                     ;$02D2CF |
     PHA                                     ;$02D2D1 |
-    LDA $97                                 ;$02D2D2 |
+    LDA.b PlayerYPos_96+1                   ;$02D2D2 |
     PHA                                     ;$02D2D4 |
     LDA.w SpriteXPosLow_E4,y                ;$02D2D5 |
-    STA $94                                 ;$02D2D8 |
+    STA.b PlayerXPos_94                     ;$02D2D8 |
     LDA.w SpriteXPosHigh_14E0,Y             ;$02D2DA |
-    STA $95                                 ;$02D2DD |
+    STA.b PlayerXPos_94+1                   ;$02D2DD |
     LDA.w SpriteYPosLow_D8,Y                ;$02D2DF |
-    STA $96                                 ;$02D2E2 |
+    STA.b PlayerYPos_96                     ;$02D2E2 |
     LDA.w SpriteYPosHigh_14D4,Y             ;$02D2E4 |
-    STA $97                                 ;$02D2E7 |
+    STA.b PlayerYPos_96+1                   ;$02D2E7 |
     LDA $00                                 ;$02D2E9 |
     JSR CODE_02D2FB                         ;$02D2EB |
     PLA                                     ;$02D2EE |
-    STA $97                                 ;$02D2EF |
+    STA.b PlayerYPos_96+1                   ;$02D2EF |
     PLA                                     ;$02D2F1 |
-    STA $96                                 ;$02D2F2 |
+    STA.b PlayerYPos_96                     ;$02D2F2 |
     PLA                                     ;$02D2F4 |
-    STA $95                                 ;$02D2F5 |
+    STA.b PlayerXPos_94+1                   ;$02D2F5 |
     PLA                                     ;$02D2F7 |
-    STA $94                                 ;$02D2F8 |
+    STA.b PlayerXPos_94                     ;$02D2F8 |
     RTS                                     ;$02D2FA |
 
 CODE_02D2FB:
@@ -11566,11 +11566,11 @@ DATA_02D4F2:
 
 CODE_02D4FA:
     LDY.b #$00
-    LDA $94                                 ;$02D4FC |
+    LDA.b PlayerXPos_94                     ;$02D4FC |
     SEC                                     ;$02D4FE |
     SBC.b SpriteXPosLow_E4,X                ;$02D4FF |
     STA $0F                                 ;$02D501 |
-    LDA $95                                 ;$02D503 |
+    LDA.b PlayerXPos_94+1                   ;$02D503 |
     SBC.w SpriteXPosHigh_14E0,X             ;$02D505 |
     BPL Return02D50B                        ;$02D508 |
     INY                                     ;$02D50A |
@@ -11579,11 +11579,11 @@ Return02D50B:
 
 CODE_02D50C:
     LDY.b #$00
-    LDA $96                                 ;$02D50E |
+    LDA.b PlayerYPos_96                     ;$02D50E |
     SEC                                     ;$02D510 |
     SBC.b SpriteYPosLow_D8,X                ;$02D511 |
     STA $0E                                 ;$02D513 |
-    LDA $97                                 ;$02D515 |
+    LDA.b PlayerYPos_96+1                   ;$02D515 |
     SBC.w SpriteYPosHigh_14D4,X             ;$02D517 |
     BPL Return02D51D                        ;$02D51A |
     INY                                     ;$02D51C |
@@ -14558,10 +14558,10 @@ CODE_02EADA:
     LDA.b SpriteXPosLow_E4,X                ;$02EAE2 |
     CLC                                     ;$02EAE4 |
     ADC.b #$0A                              ;$02EAE5 |
-    STA $94                                 ;$02EAE7 |
+    STA.b PlayerXPos_94                     ;$02EAE7 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02EAE9 |
     ADC.b #$00                              ;$02EAEC |
-    STA $95                                 ;$02EAEE |
+    STA.b PlayerXPos_94+1                   ;$02EAEE |
 Return02EAF0:
     RTS
 
@@ -15019,10 +15019,10 @@ CODE_02EE80:
     LDA.b SpriteYPosLow_D8,X                ;$02EE82 |
     SEC                                     ;$02EE84 |
     SBC $01                                 ;$02EE85 |
-    STA $96                                 ;$02EE87 |
+    STA.b PlayerYPos_96                     ;$02EE87 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02EE89 |
     SBC.b #$00                              ;$02EE8C |
-    STA $97                                 ;$02EE8E |
+    STA.b PlayerYPos_96+1                   ;$02EE8E |
     LDA $77                                 ;$02EE90 |
     AND.b #$01                              ;$02EE92 |
     BNE Return02EEA8                        ;$02EE94 |
@@ -15032,11 +15032,11 @@ CODE_02EE80:
     DEY                                     ;$02EE9D |
 CODE_02EE9E:
     CLC
-    ADC $94                                 ;$02EE9F |
-    STA $94                                 ;$02EEA1 |
+    ADC.b PlayerXPos_94                     ;$02EE9F |
+    STA.b PlayerXPos_94                     ;$02EEA1 |
     TYA                                     ;$02EEA3 |
-    ADC $95                                 ;$02EEA4 |
-    STA $95                                 ;$02EEA6 |
+    ADC.b PlayerXPos_94+1                   ;$02EEA4 |
+    STA.b PlayerXPos_94+1                   ;$02EEA6 |
 Return02EEA8:
     RTS
 
@@ -15527,7 +15527,7 @@ CODE_02F1EF:
     REP #$20                                ;$02F20B |
     LDA $00                                 ;$02F20D |
     SEC                                     ;$02F20F |
-    SBC $94                                 ;$02F210 |
+    SBC.b PlayerXPos_94                     ;$02F210 |
     CLC                                     ;$02F212 |
     ADC.w #$0050                            ;$02F213 |
     CMP.w #$00A0                            ;$02F216 |
@@ -17172,7 +17172,7 @@ CODE_02FDE0:
     INC A                                   ;$02FE0C |
     STA.w $1E66,X                           ;$02FE0D |
 CODE_02FE10:
-    LDA $94
+    LDA.b PlayerXPos_94
     SEC                                     ;$02FE12 |
     SBC.w $1E16,X                           ;$02FE13 |
     CLC                                     ;$02FE16 |
@@ -17187,7 +17187,7 @@ CODE_02FE10:
     LDA.b #$30                              ;$02FE27 |
 CODE_02FE29:
     STA $00
-    LDA $96                                 ;$02FE2B |
+    LDA.b PlayerYPos_96                     ;$02FE2B |
     SEC                                     ;$02FE2D |
     SBC.w $1E02,X                           ;$02FE2E |
     CLC                                     ;$02FE31 |
@@ -17235,7 +17235,7 @@ CODE_02FE77:
     LDA.w $1E3E,X                           ;$02FE80 |
     STA $01                                 ;$02FE83 |
     REP #$20                                ;$02FE85 |
-    LDA $94                                 ;$02FE87 |
+    LDA.b PlayerXPos_94                     ;$02FE87 |
     SEC                                     ;$02FE89 |
     SBC $00                                 ;$02FE8A |
     CLC                                     ;$02FE8C |
@@ -17256,7 +17256,7 @@ CODE_02FE77:
     LDA.w #$0020                            ;$02FEAD |
 CODE_02FEB0:
     STA $04
-    LDA $96                                 ;$02FEB2 |
+    LDA.b PlayerYPos_96                     ;$02FEB2 |
     SEC                                     ;$02FEB4 |
     SBC $02                                 ;$02FEB5 |
     CLC                                     ;$02FEB7 |

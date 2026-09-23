@@ -632,11 +632,11 @@ CODE_0485A7:
     LDA.w #$001E                            ;$0485A9 |
     CLC                                     ;$0485AC |
     ADC.b Layer1XPos_1A                     ;$0485AD |
-    STA $94                                 ;$0485AF |
+    STA.b PlayerXPos_94                     ;$0485AF |
     LDA.w #$0006                            ;$0485B1 |
     CLC                                     ;$0485B4 |
     ADC.b Layer1YPos_1C                     ;$0485B5 |
-    STA $96                                 ;$0485B7 |
+    STA.b PlayerYPos_96                     ;$0485B7 |
     SEP #$20                                ;$0485B9 |
     LDA.b #$08                              ;$0485BB |
     STA.w $7B                               ;$0485BD |

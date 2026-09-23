@@ -1382,9 +1382,9 @@ DATA_0C9FE7:
 CODE_0C9FEA:
     REP #$20
     LDA.w #$0038                            ;$0C9FEC |
-    STA $94                                 ;$0C9FEF |
+    STA.b PlayerXPos_94                     ;$0C9FEF |
     LDA.w #$008F                            ;$0C9FF1 |
-    STA $96                                 ;$0C9FF4 |
+    STA.b PlayerYPos_96                     ;$0C9FF4 |
     SEP #$20                                ;$0C9FF6 |
     LDA.b #$01                              ;$0C9FF8 |
     STA.b Powerup_19                        ;$0C9FFA |
@@ -1631,9 +1631,9 @@ CODE_0CA1ED:
 
 CODE_0CA1F6:
     LDA.b #$60
-    STA $96                                 ;$0CA1F8 |
+    STA.b PlayerYPos_96                     ;$0CA1F8 |
     LDA.b #$01                              ;$0CA1FA |
-    STA $97                                 ;$0CA1FC |
+    STA.b PlayerYPos_96+1                   ;$0CA1FC |
     LDX.b #$00                              ;$0CA1FE |
     LDA.w $0B50,X                           ;$0CA200 |
     CMP.b #$70                              ;$0CA203 |
@@ -1677,9 +1677,9 @@ CODE_0CA24F:
     STA.w $0B14,X                           ;$0CA251 |
     JSR CODE_0CA74F                         ;$0CA254 |
     LDA.w $0B50,X                           ;$0CA257 |
-    STA $94                                 ;$0CA25A |
+    STA.b PlayerXPos_94                     ;$0CA25A |
     LDA.w $0B6E,X                           ;$0CA25C |
-    STA $95                                 ;$0CA25F |
+    STA.b PlayerXPos_94+1                   ;$0CA25F |
     LDA.b #$01                              ;$0CA261 |
     STA.b Powerup_19                        ;$0CA263 |
     LDA.b #$08                              ;$0CA265 |
@@ -2241,9 +2241,9 @@ CODE_0CA6B0:
     JSR CODE_0CA315                         ;$0CA6B3 |
     JSR CODE_0CA2FC                         ;$0CA6B6 |
     LDA.b #$60                              ;$0CA6B9 |
-    STA $96                                 ;$0CA6BB |
+    STA.b PlayerYPos_96                     ;$0CA6BB |
     LDA.b #$01                              ;$0CA6BD |
-    STA $97                                 ;$0CA6BF |
+    STA.b PlayerYPos_96+1                   ;$0CA6BF |
     STZ.w $18E2                             ;$0CA6C1 |
     LDA.b #$26                              ;$0CA6C4 |
     STA.w PlayerPose_13E0                   ;$0CA6C6 |
@@ -5208,12 +5208,12 @@ DATA_0CD065:
 CODE_0CD069:
     LDY.b #$00
     LDX.b #$04                              ;$0CD06B |
-    LDA $94                                 ;$0CD06D |
+    LDA.b PlayerXPos_94                     ;$0CD06D |
     CLC                                     ;$0CD06F |
     ADC.b #$10                              ;$0CD070 |
     STA $00                                 ;$0CD072 |
     STA $02                                 ;$0CD074 |
-    LDA $96                                 ;$0CD076 |
+    LDA.b PlayerYPos_96                     ;$0CD076 |
     CLC                                     ;$0CD078 |
     ADC.b #$10                              ;$0CD079 |
     STA $01                                 ;$0CD07B |
@@ -5440,7 +5440,7 @@ CODE_0CD23C:
     CLC                                     ;$0CD249 |
     ADC.l $7F837B                           ;$0CD24A |
     STA.l $7F837B                           ;$0CD24E |
-    LDA $94                                 ;$0CD252 |
+    LDA.b PlayerXPos_94                     ;$0CD252 |
     SEC                                     ;$0CD254 |
     SBC.b #$A0                              ;$0CD255 |
     STA $00                                 ;$0CD257 |
@@ -5625,11 +5625,11 @@ CODE_0CD3B6:
     STA.w $0B05,X                           ;$0CD3C8 |
     LDA.w DATA_0CD396,X                     ;$0CD3CB |
     STA.w $0B14,X                           ;$0CD3CE |
-    LDA $94                                 ;$0CD3D1 |
+    LDA.b PlayerXPos_94                     ;$0CD3D1 |
     CLC                                     ;$0CD3D3 |
     ADC.b #$18                              ;$0CD3D4 |
     STA.w $0B50,X                           ;$0CD3D6 |
-    LDA $96                                 ;$0CD3D9 |
+    LDA.b PlayerYPos_96                     ;$0CD3D9 |
     CLC                                     ;$0CD3DB |
     ADC.b #$20                              ;$0CD3DC |
     STA.w $0B41,X                           ;$0CD3DE |
@@ -5748,11 +5748,11 @@ CODE_0CD4BD:
     CMP.b #$80                              ;$0CD4C0 |
     BEQ CODE_0CD4ED                         ;$0CD4C2 |
     CLC                                     ;$0CD4C4 |
-    ADC $94                                 ;$0CD4C5 |
+    ADC.b PlayerXPos_94                     ;$0CD4C5 |
     STA.w $0200,X                           ;$0CD4C7 |
     LDA.w DATA_0CD464,Y                     ;$0CD4CA |
     CLC                                     ;$0CD4CD |
-    ADC $96                                 ;$0CD4CE |
+    ADC.b PlayerYPos_96                     ;$0CD4CE |
     CLC                                     ;$0CD4D0 |
     ADC $02                                 ;$0CD4D1 |
     STA.w $0201,X                           ;$0CD4D3 |
@@ -5810,11 +5810,11 @@ CODE_0CD523:
     LDX.b #$34                              ;$0CD525 |
     LDA.b #$04                              ;$0CD527 |
     CLC                                     ;$0CD529 |
-    ADC $94                                 ;$0CD52A |
+    ADC.b PlayerXPos_94                     ;$0CD52A |
     STA.w $0200,X                           ;$0CD52C |
     LDA.w $0B43                             ;$0CD52F |
     CLC                                     ;$0CD532 |
-    ADC $96                                 ;$0CD533 |
+    ADC.b PlayerYPos_96                     ;$0CD533 |
     CLC                                     ;$0CD535 |
     ADC $00                                 ;$0CD536 |
     STA.w $0201,X                           ;$0CD538 |
@@ -5870,13 +5870,13 @@ CODE_0CD58F:
     LDX.b #$34                              ;$0CD593 |
     LDA.w $0B53                             ;$0CD595 |
     CLC                                     ;$0CD598 |
-    ADC $94                                 ;$0CD599 |
+    ADC.b PlayerXPos_94                     ;$0CD599 |
     CLC                                     ;$0CD59B |
     ADC $01                                 ;$0CD59C |
     STA.w $0200,X                           ;$0CD59E |
     LDA.w $0B44                             ;$0CD5A1 |
     CLC                                     ;$0CD5A4 |
-    ADC $96                                 ;$0CD5A5 |
+    ADC.b PlayerYPos_96                     ;$0CD5A5 |
     CLC                                     ;$0CD5A7 |
     ADC $00                                 ;$0CD5A8 |
     STA.w $0201,X                           ;$0CD5AA |
@@ -5977,7 +5977,7 @@ CODE_0CD68A:
     BEQ CODE_0CD6A1                         ;$0CD69E |
     INX                                     ;$0CD6A0 |
 CODE_0CD6A1:
-    LDA $96
+    LDA.b PlayerYPos_96
     CLC                                     ;$0CD6A3 |
     ADC.w DATA_0CD635,X                     ;$0CD6A4 |
     STA.w $02FD,Y                           ;$0CD6A7 |
@@ -5988,7 +5988,7 @@ CODE_0CD6A1:
     INC A                                   ;$0CD6B3 |
 CODE_0CD6B4:
     CLC
-    ADC $94                                 ;$0CD6B5 |
+    ADC.b PlayerXPos_94                     ;$0CD6B5 |
     STA.w $02FC,Y                           ;$0CD6B7 |
     TYA                                     ;$0CD6BA |
     LSR                                     ;$0CD6BB |
@@ -6067,13 +6067,13 @@ CODE_0CD720:
     INC A                                   ;$0CD730 |
 CODE_0CD731:
     CLC
-    ADC $94                                 ;$0CD732 |
+    ADC.b PlayerXPos_94                     ;$0CD732 |
     STA.w $0340,Y                           ;$0CD734 |
     LDA $01                                 ;$0CD737 |
     CLC                                     ;$0CD739 |
     ADC.w DATA_0CD6D3,X                     ;$0CD73A |
     CLC                                     ;$0CD73D |
-    ADC $96                                 ;$0CD73E |
+    ADC.b PlayerYPos_96                     ;$0CD73E |
     STA.w $0341,Y                           ;$0CD740 |
     LDA.w DATA_0CD6D6,X                     ;$0CD743 |
     STA.w $0342,Y                           ;$0CD746 |
@@ -6104,7 +6104,7 @@ CODE_0CD76E:
     STA.w $0342,Y
     LDA.b #$21                              ;$0CD771 |
     STA.w $0343,Y                           ;$0CD773 |
-    LDA $94                                 ;$0CD776 |
+    LDA.b PlayerXPos_94                     ;$0CD776 |
     STA.w $0340,Y                           ;$0CD778 |
     LDA $00                                 ;$0CD77B |
     STA.w $0341,Y                           ;$0CD77D |
@@ -6142,11 +6142,11 @@ CODE_0CD7A9:
     LDA.b #$39                              ;$0CD7B5 |
     STA.w PlayerPose_13E0                   ;$0CD7B7 |
 CODE_0CD7BA:
-    LDA $94
+    LDA.b PlayerXPos_94
     CMP.w DATA_0CD6E5,X                     ;$0CD7BC |
     BEQ CODE_0CD7C9                         ;$0CD7BF |
     INC A                                   ;$0CD7C1 |
-    STA $94                                 ;$0CD7C2 |
+    STA.b PlayerXPos_94                     ;$0CD7C2 |
     AND.b #$0F                              ;$0CD7C4 |
     BEQ CODE_0CD7E5                         ;$0CD7C6 |
     RTS                                     ;$0CD7C8 |
@@ -6200,7 +6200,7 @@ CODE_0CD812:
     BEQ CODE_0CD818                         ;$0CD814 |
     LDY.b #$01                              ;$0CD816 |
 CODE_0CD818:
-    LDA $94
+    LDA.b PlayerXPos_94
     CLC                                     ;$0CD81A |
     ADC.w DATA_0CD7EB,Y                     ;$0CD81B |
     STA.w $144C                             ;$0CD81E |
@@ -6210,7 +6210,7 @@ CODE_0CD818:
     ROL                                     ;$0CD826 |
     TAY                                     ;$0CD827 |
     LDA.w DATA_0CD7ED,Y                     ;$0CD828 |
-    LDY $94                                 ;$0CD82B |
+    LDY.b PlayerXPos_94                     ;$0CD82B |
     CPY.b #$40                              ;$0CD82D |
     BCS CODE_0CD858                         ;$0CD82F |
     LDY $7B                                 ;$0CD831 |
@@ -6220,9 +6220,9 @@ CODE_0CD818:
     STZ.w $148F                             ;$0CD83A |
 CODE_0CD83D:
     LDA.b #$05
-    CMP $94                                 ;$0CD83F |
+    CMP.b PlayerXPos_94                     ;$0CD83F |
     BCC CODE_0CD84C                         ;$0CD841 |
-    STA $94                                 ;$0CD843 |
+    STA.b PlayerXPos_94                     ;$0CD843 |
     LDA $7B                                 ;$0CD845 |
     BMI CODE_0CD84C                         ;$0CD847 |
 CODE_0CD849:

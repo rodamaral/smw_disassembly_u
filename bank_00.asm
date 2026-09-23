@@ -2403,9 +2403,9 @@ CODE_0094B2:
     JSR _load_stripe_image_                 ;$0094C3 |
     REP #$20                                ;$0094C6 |
     LDA.w #$0090                            ;$0094C8 |
-    STA $94                                 ;$0094CB |
+    STA.b PlayerXPos_94                     ;$0094CB |
     LDA.w #$0058                            ;$0094CD |
-    STA $96                                 ;$0094D0 |
+    STA.b PlayerYPos_96                     ;$0094D0 |
     SEP #$20                                ;$0094D2 |
     INC.w $148F                             ;$0094D4 |
 CODE_0094D7:
@@ -2806,9 +2806,9 @@ load_boss_room_0097BC:
     JSR CODE_009A3D                         ;$009809 |
     REP #$20                                ;$00980C |
     LDA.w #$0050                            ;$00980E |
-    STA $94                                 ;$009811 |
+    STA.b PlayerXPos_94                     ;$009811 |
     LDA.w #$FFD0                            ;$009813 |
-    STA $96                                 ;$009816 |
+    STA.b PlayerYPos_96                     ;$009816 |
     STZ.b Layer1XPos_1A                     ;$009818 |
     STZ.w $1462                             ;$00981A |
     LDA.w #$FF90                            ;$00981D |
@@ -2927,10 +2927,10 @@ DMA_mode_7_animations:                      ;        \
     RTS                                     ;$009924  / Finsihed with mode 7 animated tile DMA
 
 CODE_009925:
-    STZ $97
+    STZ.b PlayerYPos_96+1
     REP #$20                                ;$009927 |
     LDA.w #$0020                            ;$009929 |
-    STA $94                                 ;$00992C |
+    STA.b PlayerXPos_94                     ;$00992C |
     STZ.b Layer1XPos_1A                     ;$00992E |
     STZ.w $1462                             ;$009930 |
     STZ.b Layer1YPos_1C                     ;$009933 |
@@ -3033,7 +3033,7 @@ CODE_009A07:
     LDX.b #$B0                              ;$009A13 |
     LDA.b #$90                              ;$009A15 |
 CODE_009A17:
-    STA $96
+    STA.b PlayerYPos_96
     JSR CODE_009A1F                         ;$009A19 |
     JMP CODE_009283                         ;$009A1C |
 
@@ -4205,9 +4205,9 @@ GM14_main_level_00A1DA:
 
 mirror_player_position_00A2F3:
     REP #$20
-    LDA $94                                 ;$00A2F5 |
+    LDA.b PlayerXPos_94                     ;$00A2F5 |
     STA.b PlayerXPosMirror_D1               ;$00A2F7 |
-    LDA $96                                 ;$00A2F9 |
+    LDA.b PlayerYPos_96                     ;$00A2F9 |
     STA.b PlayerYPosMirror_D3               ;$00A2FB |
     SEP #$20                                ;$00A2FD |
     RTS                                     ;$00A2FF |
@@ -4673,10 +4673,10 @@ CODE_00A6E0:
     LDA.w MusicBackup_0DDA                  ;$00A6ED |
     ORA.b #$7F                              ;$00A6F0 |
     STA.w MusicBackup_0DDA                  ;$00A6F2 |
-    LDA $94                                 ;$00A6F5 |
+    LDA.b PlayerXPos_94                     ;$00A6F5 |
     ORA.b #$04                              ;$00A6F7 |
     STA.w $1436                             ;$00A6F9 |
-    LDA $96                                 ;$00A6FC |
+    LDA.b PlayerYPos_96                     ;$00A6FC |
     CLC                                     ;$00A6FE |
     ADC.b #$10                              ;$00A6FF |
     STA.w $1438                             ;$00A701 |
@@ -4686,7 +4686,7 @@ CODE_00A704:
     LDA.b #!AniYoshiHeaven_08               ;$00A709 |
     STA.b PlayerAnimation_71                ;$00A70B |
     LDA.b #$A0                              ;$00A70D |
-    STA $96                                 ;$00A70F |
+    STA.b PlayerYPos_96                     ;$00A70F |
     LDA.b #$90                              ;$00A711 |
     STA $7D                                 ;$00A713 |
 Return00A715:
@@ -4701,9 +4701,9 @@ CODE_00A716:
     LDA.b #$FF                              ;$00A721 |
     STA.w SpriteInPipeMode_1419             ;$00A723 |
     LDA.b #$08                              ;$00A726 |
-    TSB $94                                 ;$00A728 |
+    TSB.b PlayerXPos_94                     ;$00A728 |
     LDA.b #$02                              ;$00A72A |
-    TSB $96                                 ;$00A72C |
+    TSB.b PlayerYPos_96                     ;$00A72C |
     LDX.b #$07                              ;$00A72E |
     LDY.b #$20                              ;$00A730 |
     BRA CODE_00A6C7                         ;$00A732 |
@@ -4728,7 +4728,7 @@ CODE_00A740:
     CPY.b #$06                              ;$00A752 |
     BCC CODE_00A768                         ;$00A754 |
     LDA.b #$08                              ;$00A756 |
-    TSB $94                                 ;$00A758 |
+    TSB.b PlayerXPos_94                     ;$00A758 |
     LDX.b #$06                              ;$00A75A |
     CPY.b #$07                              ;$00A75C |
     LDY.b #$1E                              ;$00A75E |
@@ -4752,14 +4752,14 @@ CODE_00A76A:
     ASL                                     ;$00A77F |
     TAX                                     ;$00A780 |
     REP #$20                                ;$00A781 |
-    LDA $94                                 ;$00A783 |
+    LDA.b PlayerXPos_94                     ;$00A783 |
     CLC                                     ;$00A785 |
     ADC.w $A609,X                           ;$00A786 |
-    STA $94                                 ;$00A789 |
-    LDA $96                                 ;$00A78B |
+    STA.b PlayerXPos_94                     ;$00A789 |
+    LDA.b PlayerYPos_96                     ;$00A78B |
     CLC                                     ;$00A78D |
     ADC.w DATA_00A611,X                     ;$00A78E |
-    STA $96                                 ;$00A791 |
+    STA.b PlayerYPos_96                     ;$00A791 |
     SEP #$20                                ;$00A793 |
 Return00A795:
     RTS
@@ -7532,10 +7532,10 @@ castle_destroy_animation:
     JSR apply_player_speeds                 ;$00C6ED |
     LDA $7D                                 ;$00C6F0 |
     BMI CODE_00C73F                         ;$00C6F2 |
-    LDA $96                                 ;$00C6F4 |
+    LDA.b PlayerYPos_96                     ;$00C6F4 |
     CMP.b #$58                              ;$00C6F6 |
     BCS CODE_00C739                         ;$00C6F8 |
-    LDY $94                                 ;$00C6FA |
+    LDY.b PlayerXPos_94                     ;$00C6FA |
     CPY.b #$40                              ;$00C6FC |
     BCC CODE_00C73F                         ;$00C6FE |
     CPY.b #$60                              ;$00C700 |
@@ -7575,7 +7575,7 @@ CODE_00C739:
     STZ $72
     LDA.b #$58                              ;$00C73B |
 CODE_00C73D:
-    STA $96
+    STA.b PlayerYPos_96
 CODE_00C73F:
     LDX.w $13C6
     LDA $8F                                 ;$00C742 |
@@ -7659,7 +7659,7 @@ CODE_00C7C0:
     LDA.b #$38                              ;$00C7C3 |
     STA.w $1446                             ;$00C7C5 |
     LDA.b #$07                              ;$00C7C8 |
-    TRB $94                                 ;$00C7CA |
+    TRB.b PlayerXPos_94                     ;$00C7CA |
     BRA CODE_00C7F6                         ;$00C7CC |
 
 CODE_00C7CE:
@@ -7807,10 +7807,10 @@ CODE_00C8E1:
     SEC                                     ;$00C8E9 |
     SBC.b #$10                              ;$00C8EA |
 CODE_00C8EC:
-    CMP $96
+    CMP.b PlayerYPos_96
     BCS CODE_00C8F8                         ;$00C8EE |
     INC A                                   ;$00C8F0 |
-    STA $96                                 ;$00C8F1 |
+    STA.b PlayerYPos_96                     ;$00C8F1 |
     STZ $72                                 ;$00C8F3 |
     STZ.w $140D                             ;$00C8F5 |
 CODE_00C8F8:
@@ -8234,10 +8234,10 @@ no_animation:                               ;        \
 .not_fast                                   ;        | |
     TAY                                     ;$00CCA5 |/
     REP #$20                                ;$00CCA6 |\
-    LDA $94,X                               ;$00CCA8 | | Move the player's X or Y position by
+    LDA.b PlayerXPos_94,X                   ;$00CCA8 | | Move the player's X or Y position by
     CLC                                     ;$00CCAA | |
     ADC.w free_roaming_speeds,Y             ;$00CCAB | | the free roaming speed.
-    STA $94,X                               ;$00CCAE | |
+    STA.b PlayerXPos_94,X                   ;$00CCAE | |
     SEP #$20                                ;$00CCB0 |/
     RTS                                     ;$00CCB2 /
 
@@ -8276,16 +8276,16 @@ not_frozen_physics:                         ;        \
     BNE .not_platform                       ;$00CCEF |/ use a solid boss room.
     REP #$20                                ;$00CCF1 |\
     LDA.w $1436                             ;$00CCF3 | | Set the player's platform X position.
-    STA $94                                 ;$00CCF6 | |
+    STA.b PlayerXPos_94                     ;$00CCF6 | |
     LDA.w $1438                             ;$00CCF8 | | Set the player's platform Y position.
-    STA $96                                 ;$00CCFB | |
+    STA.b PlayerYPos_96                     ;$00CCFB | |
     SEP #$20                                ;$00CCFD |/
     JSR apply_player_speeds                 ;$00CCFF | Apply the player's speeds.
     REP #$20                                ;$00CD02 |\
-    LDA $94                                 ;$00CD04 | |
+    LDA.b PlayerXPos_94                     ;$00CD04 | |
     STA.w $1436                             ;$00CD06 | | Update the platform X position,
     STA.w $14B4                             ;$00CD09 | |
-    LDA $96                                 ;$00CD0C | | and update the platform Y position.
+    LDA.b PlayerYPos_96                     ;$00CD0C | | and update the platform Y position.
     AND.w #$FFF0                            ;$00CD0E | |
     STA.w $1438                             ;$00CD11 | |
     STA.w $14B6                             ;$00CD14 |/
@@ -8750,11 +8750,11 @@ CODE_00D044:
     ASL                                     ;$00D049 |
     TAY                                     ;$00D04A |
     REP #$20                                ;$00D04B |
-    LDA $94                                 ;$00D04D |
+    LDA.b PlayerXPos_94                     ;$00D04D |
     CLC                                     ;$00D04F |
     ADC.w DATA_00D034,Y                     ;$00D050 |
     STA.w $13E9                             ;$00D053 |
-    LDA $96                                 ;$00D056 |
+    LDA.b PlayerYPos_96                     ;$00D056 |
     CLC                                     ;$00D058 |
     ADC.w DATA_00D03C,Y                     ;$00D059 |
     STA.w $13EB                             ;$00D05C |
@@ -8956,12 +8956,12 @@ horizontal_pipe_animation:
     STA.w PlayerPose_13E0                   ;$00D1AF |
 CODE_00D1B2:
     REP #$20
-    LDA $96                                 ;$00D1B4 |
+    LDA.b PlayerYPos_96                     ;$00D1B4 |
     SEC                                     ;$00D1B6 |
     SBC.w #$0008                            ;$00D1B7 |
     AND.w #$FFF0                            ;$00D1BA |
     ORA.w #$000E                            ;$00D1BD |
-    STA $96                                 ;$00D1C0 |
+    STA.b PlayerYPos_96                     ;$00D1C0 |
     SEP #$20                                ;$00D1C2 |
     LDA $89                                 ;$00D1C4 |
     LSR                                     ;$00D1C6 |
@@ -8981,8 +8981,8 @@ CODE_00D1DB:
     CPY.b #$03                              ;$00D1E1 |
     BCC CODE_00D1ED                         ;$00D1E3 |
     REP #$20                                ;$00D1E5 |
-    INC $96                                 ;$00D1E7 |
-    INC $96                                 ;$00D1E9 |
+    INC.b PlayerYPos_96                     ;$00D1E7 |
+    INC.b PlayerYPos_96                     ;$00D1E9 |
     SEP #$20                                ;$00D1EB |
 CODE_00D1ED:
     LDA.w DATA_00D193,Y
@@ -9011,17 +9011,17 @@ vertical_pipe_animation:
     BEQ CODE_00D22A                         ;$00D20E |
     LDX.b #$00                              ;$00D210 |
     LDY $76                                 ;$00D212 |
-    LDA $94                                 ;$00D214 |
+    LDA.b PlayerXPos_94                     ;$00D214 |
     AND.b #$0F                              ;$00D216 |
     CMP.w PipeCntrBoundryX,Y                ;$00D218 |
     BEQ CODE_00D228                         ;$00D21B |
     BPL CODE_00D220                         ;$00D21D |
     INX                                     ;$00D21F |
 CODE_00D220:
-    LDA $94
+    LDA.b PlayerXPos_94
     CLC                                     ;$00D222 |
     ADC.w PipeCntringSpeed,X                ;$00D223 |
-    STA $94                                 ;$00D226 |
+    STA.b PlayerXPos_94                     ;$00D226 |
 CODE_00D228:
     LDA.b #$21
 CODE_00D22A:
@@ -9070,7 +9070,7 @@ go_to_sublevel:
     STA.w GameMode_0100                     ;$00D278 | and fade in to another level.
     RTS                                     ;$00D27B /
 
-    LDA $96                                 ;$00D27C |
+    LDA.b PlayerYPos_96                     ;$00D27C |
     SEC                                     ;$00D27E |
     SBC.b PlayerYPosMirror_D3               ;$00D27F |
     CLC                                     ;$00D281 |
@@ -10081,7 +10081,7 @@ CODE_00DBAC:
     LDA.b #$01                              ;$00DBB2 |
     STA.w SPCIO0_1DF9                       ;$00DBB4 |
     STX.w $13F0                             ;$00DBB7 |
-    LDA $94                                 ;$00DBBA |
+    LDA.b PlayerXPos_94                     ;$00DBBA |
     AND.b #$08                              ;$00DBBC |
     LSR                                     ;$00DBBE |
     LSR                                     ;$00DBBF |
@@ -10195,8 +10195,8 @@ apply_player_speeds:                        ;        \
     ORA.w #$FFF0                            ;$00DC6D |/
 .nonnegative                                ;        |
     PLP                                     ;$00DC70 | restore the carry bit,
-    ADC $94,X                               ;$00DC71 |\ and add the fractional bit and speed
-    STA $94,X                               ;$00DC73 |/ to the player's position.
+    ADC.b PlayerXPos_94,X                   ;$00DC71 |\ and add the fractional bit and speed
+    STA.b PlayerXPos_94,X                   ;$00DC73 |/ to the player's position.
     SEP #$20                                ;$00DC75 |
     RTS                                     ;$00DC77 /
 
@@ -10531,13 +10531,13 @@ draw_mario_and_yoshi_00E2BD:
     LSR
 .CODE_00E33E:
     REP #$20
-    LDA $94                                 ;$00E340 |
+    LDA.b PlayerXPos_94                     ;$00E340 |
     SBC.b Layer1XPos_1A                     ;$00E342 |
     STA $7E                                 ;$00E344 |
     LDA.w PlayerYOffset_188B                ;$00E346 |
     AND.w #$00FF                            ;$00E349 |
     CLC                                     ;$00E34C |
-    ADC $96                                 ;$00E34D |
+    ADC.b PlayerYPos_96                     ;$00E34D |
     LDY.b Powerup_19                        ;$00E34F |
     CPY.b #$01                              ;$00E351 |
     LDY.b #$01                              ;$00E353 |
@@ -10912,25 +10912,25 @@ level_collision:
     LDA.b #$01                              ;$00E94C |\ Set the layer being processed to layer 2.
     STA.w $1933                             ;$00E94E |/
     REP #$20                                ;$00E951 |\
-    LDA $94                                 ;$00E953 | | Offset the player's X position by
+    LDA.b PlayerXPos_94                     ;$00E953 | | Offset the player's X position by
     CLC                                     ;$00E955 | |
     ADC.b LayerXDiff_26                     ;$00E956 | | layer 2's relative X position to layer 1.
-    STA $94                                 ;$00E958 | |
-    LDA $96                                 ;$00E95A | | Offset the player's Y position by
+    STA.b PlayerXPos_94                     ;$00E958 | |
+    LDA.b PlayerYPos_96                     ;$00E95A | | Offset the player's Y position by
     CLC                                     ;$00E95C | |
     ADC.b LayerYDiff_28                     ;$00E95D | | layer 2's relative Y position to layer 1.
-    STA $96                                 ;$00E95F | |
+    STA.b PlayerYPos_96                     ;$00E95F | |
     SEP #$20                                ;$00E961 |/
     JSR layer_collision                     ;$00E963 | Process layer 2 collision.
     REP #$20                                ;$00E966 |\
-    LDA $94                                 ;$00E968 | | Restore the player's previous X position.
+    LDA.b PlayerXPos_94                     ;$00E968 | | Restore the player's previous X position.
     SEC                                     ;$00E96A | |
     SBC.b LayerXDiff_26                     ;$00E96B | |
-    STA $94                                 ;$00E96D | |
-    LDA $96                                 ;$00E96F | | Restore the player's previous Y position.
+    STA.b PlayerXPos_94                     ;$00E96D | |
+    LDA.b PlayerYPos_96                     ;$00E96F | | Restore the player's previous Y position.
     SEC                                     ;$00E971 | |
     SBC.b LayerYDiff_28                     ;$00E972 | |
-    STA $96                                 ;$00E974 | |
+    STA.b PlayerYPos_96                     ;$00E974 | |
     SEP #$20                                ;$00E976 |/
 .no_layer2_collision                        ;        |
     ASL.w $13EF                             ;$00E978 |
@@ -10965,11 +10965,11 @@ no_layer_collision:                         ;        |
     LDA.w $1462                             ;$00E9B1 |
     CLC                                     ;$00E9B4 |
     ADC.w #$00E8                            ;$00E9B5 |
-    CMP $94                                 ;$00E9B8 |
+    CMP.b PlayerXPos_94                     ;$00E9B8 |
     BEQ CODE_00E9C8                         ;$00E9BA |
     BMI CODE_00E9C8                         ;$00E9BC |
     INY                                     ;$00E9BE |
-    LDA $94                                 ;$00E9BF |
+    LDA.b PlayerXPos_94                     ;$00E9BF |
     SEC                                     ;$00E9C1 |
     SBC.w #$0008                            ;$00E9C2 |
     CMP.w $1462                             ;$00E9C5 |
@@ -11018,10 +11018,10 @@ CODE_00EA0D:
     AND.b #$02                              ;$00EA13 |
     TAY                                     ;$00EA15 |
     REP #$20                                ;$00EA16 |
-    LDA $94                                 ;$00EA18 |
+    LDA.b PlayerXPos_94                     ;$00EA18 |
     CLC                                     ;$00EA1A |
     ADC.w DATA_00E90D,Y                     ;$00EA1B |
-    STA $94                                 ;$00EA1E |
+    STA.b PlayerXPos_94                     ;$00EA1E |
     SEP #$20                                ;$00EA20 |
     LDA $77                                 ;$00EA22 |
     BMI CODE_00EA34                         ;$00EA24 |
@@ -11122,7 +11122,7 @@ page_1_water_tiles:
     db $B2,$B3
 
 layer_collision:
-    LDA $96                                 ;$00EADB |
+    LDA.b PlayerYPos_96                     ;$00EADB |
     AND.b #$0F                              ;$00EADD |
     STA $90                                 ;$00EADF |
     LDA.w WallrunType_13E3                  ;$00EAE1 |
@@ -11153,10 +11153,10 @@ layer_collision:
     ORA.b #$04                              ;$00EB14 |
     STA.w WallrunType_13E3                  ;$00EB16 |
 .solid_collision                            ;               |
-    LDA $94                                 ;$00EB19 |
+    LDA.b PlayerXPos_94                     ;$00EB19 |
     AND.b #$F0                              ;$00EB1B |
     ORA.b #$08                              ;$00EB1D |
-    STA $94                                 ;$00EB1F |
+    STA.b PlayerXPos_94                     ;$00EB1F |
     RTS                                     ;$00EB21 |
 
 .on_wall
@@ -11192,18 +11192,18 @@ walk_off_wall:                              ;               |
     ASL                                     ;$00EB4E |
     TAY                                     ;$00EB4F |
     REP #$20                                ;$00EB50 |
-    LDA $94                                 ;$00EB52 |
+    LDA.b PlayerXPos_94                     ;$00EB52 |
     CLC                                     ;$00EB54 |
     ADC.w DATA_00EABD,Y                     ;$00EB55 |
-    STA $94                                 ;$00EB58 |
+    STA.b PlayerXPos_94                     ;$00EB58 |
     LDA.w #$0008                            ;$00EB5A |
     LDY.b Powerup_19                        ;$00EB5D |
     BEQ .not_big                            ;$00EB5F |
     LDA.w #$0010                            ;$00EB61 |
 .not_big                                    ;               |
     CLC                                     ;$00EB64 |
-    ADC $96                                 ;$00EB65 |
-    STA $96                                 ;$00EB67 |
+    ADC.b PlayerYPos_96                     ;$00EB65 |
+    STA.b PlayerYPos_96                     ;$00EB67 |
     SEP #$20                                ;$00EB69 |
     LDA.b #$24                              ;$00EB6B |
     STA $72                                 ;$00EB6D |
@@ -11229,7 +11229,7 @@ normal_collision:
     ADC.b #$30                              ;$00EB8A | | use the Yoshi collision point indices.
     TAX                                     ;$00EB8C | |
 .not_on_yoshi                               ;        |/
-    LDA $94                                 ;$00EB8D |\ Get the player X,
+    LDA.b PlayerXPos_94                     ;$00EB8D |\ Get the player X,
     AND.b #$0F                              ;$00EB8F | | take the lower nybble,
     TAY                                     ;$00EB91 | |
     CLC                                     ;$00EB92 | |
@@ -11355,7 +11355,7 @@ normal_collision:
     LDA.b #$03                              ;$00EC5F |
     STA.w $13E5                             ;$00EC61 |
     LDY $93                                 ;$00EC64 |
-    LDA $94                                 ;$00EC66 |
+    LDA.b PlayerXPos_94                     ;$00EC66 |
     AND.b #$0F                              ;$00EC68 |
     CMP.w DATA_00E911,Y                     ;$00EC6A |
     BEQ .skip_side_head                     ;$00EC6D |
@@ -11468,10 +11468,10 @@ CODE_00ED28:
     BEQ CODE_00ED37                         ;$00ED2A |
     EOR.b #$FF                              ;$00ED2C |
     CLC                                     ;$00ED2E |
-    ADC $96                                 ;$00ED2F |
-    STA $96                                 ;$00ED31 |
+    ADC.b PlayerYPos_96                     ;$00ED2F |
+    STA.b PlayerYPos_96                     ;$00ED31 |
     BCC CODE_00ED37                         ;$00ED33 |
-    INC $97                                 ;$00ED35 |
+    INC.b PlayerYPos_96+1                   ;$00ED35 |
 CODE_00ED37:
     LDA.b #$08
     TSB $77                                 ;$00ED39 |
@@ -11712,13 +11712,13 @@ CODE_00EEAA:
     STA.w EndLevelTimer_1493                ;$00EECE |
 CODE_00EED1:
     INC.w $13EF
-    LDA $96                                 ;$00EED4 |
+    LDA.b PlayerYPos_96                     ;$00EED4 |
     SEC                                     ;$00EED6 |
     SBC $91                                 ;$00EED7 |
-    STA $96                                 ;$00EED9 |
-    LDA $97                                 ;$00EEDB |
+    STA.b PlayerYPos_96                     ;$00EED9 |
+    LDA.b PlayerYPos_96+1                   ;$00EEDB |
     SBC $90                                 ;$00EEDD |
-    STA $97                                 ;$00EEDF |
+    STA.b PlayerYPos_96+1                   ;$00EEDF |
 CODE_00EEE1:
     LDA.w DATA_00E53D,Y
     BNE CODE_00EEEF                         ;$00EEE4 |
@@ -11782,8 +11782,8 @@ CODE_00EF50:
     EOR.w #$FFFF                            ;$00EF51 |
     INC A                                   ;$00EF54 |
     CLC                                     ;$00EF55 |
-    ADC $94                                 ;$00EF56 |
-    STA $94                                 ;$00EF58 |
+    ADC.b PlayerXPos_94                     ;$00EF56 |
+    STA.b PlayerXPos_94                     ;$00EF58 |
     SEP #$20                                ;$00EF5A |
     PLA                                     ;$00EF5C |
     CLC                                     ;$00EF5D |
@@ -11854,14 +11854,14 @@ CODE_00EFCD:
     AND.b #$03                              ;$00EFCF |
     BNE Return00EFE7                        ;$00EFD1 |
     REP #$20                                ;$00EFD3 |
-    LDA $94                                 ;$00EFD5 |
+    LDA.b PlayerXPos_94                     ;$00EFD5 |
     CLC                                     ;$00EFD7 |
     ADC.w DATA_00E913,X                     ;$00EFD8 |
-    STA $94                                 ;$00EFDB |
-    LDA $96                                 ;$00EFDD |
+    STA.b PlayerXPos_94                     ;$00EFDB |
+    LDA.b PlayerYPos_96                     ;$00EFDD |
     CLC                                     ;$00EFDF |
     ADC.w DATA_00E91F,X                     ;$00EFE0 |
-    STA $96                                 ;$00EFE3 |
+    STA.b PlayerYPos_96                     ;$00EFE3 |
     SEP #$20                                ;$00EFE5 |
 Return00EFE7:
     RTS
@@ -12362,13 +12362,13 @@ CODE_00F38A:
     JSL CODE_02AD34                         ;$00F38B |
     PLA                                     ;$00F38F |
     STA.w $16E1,Y                           ;$00F390 |
-    LDA $94                                 ;$00F393 |
+    LDA.b PlayerXPos_94                     ;$00F393 |
     STA.w $16ED,Y                           ;$00F395 |
-    LDA $95                                 ;$00F398 |
+    LDA.b PlayerXPos_94+1                   ;$00F398 |
     STA.w $16F3,Y                           ;$00F39A |
-    LDA $96                                 ;$00F39D |
+    LDA.b PlayerYPos_96                     ;$00F39D |
     STA.w $16E7,Y                           ;$00F39F |
-    LDA $97                                 ;$00F3A2 |
+    LDA.b PlayerYPos_96+1                   ;$00F3A2 |
     STA.w $16F9,Y                           ;$00F3A4 |
     LDA.b #$30                              ;$00F3A7 |
     STA.w $16FF,Y                           ;$00F3A9 |
@@ -12398,7 +12398,7 @@ process_horizontal_pipe:
 CODE_00F3CF:
     PHX
     TAX                                     ;$00F3D0 |
-    LDA $94                                 ;$00F3D1 |
+    LDA.b PlayerXPos_94                     ;$00F3D1 |
     TXY                                     ;$00F3D3 |
     BEQ CODE_00F3D9                         ;$00F3D4 |
     EOR.b #$FF                              ;$00F3D6 |
@@ -12473,7 +12473,7 @@ Return00F442:
     RTS
 
 can_use_door:
-    LDA $94                                 ;$00F443 |
+    LDA.b PlayerXPos_94                     ;$00F443 |
     CLC                                     ;$00F445 |
     ADC.b #$04                              ;$00F446 |
     AND.b #$0F                              ;$00F448 |
@@ -12484,11 +12484,11 @@ process_collision_point:
     INX                                     ;$00F44D \ Prepare to process the next player collision point.
     INX                                     ;$00F44E |
     REP #$20                                ;$00F44F |\ Enable 16 bit A.
-    LDA $94                                 ;$00F451 | | Get the player's X position,
+    LDA.b PlayerXPos_94                     ;$00F451 | | Get the player's X position,
     CLC                                     ;$00F453 | |
     ADC.w collision_x_offsets-2,X           ;$00F454 | | add the collision X offset,
     STA $9A                                 ;$00F457 |/ and set that as the collision X to process.
-    LDA $96                                 ;$00F459 |\ Get the player's Y position,
+    LDA.b PlayerYPos_96                     ;$00F459 |\ Get the player's Y position,
     CLC                                     ;$00F45B | |
     ADC.w collision_y_offsets-2,X           ;$00F45C | | add the collision Y offset,
     STA $98                                 ;$00F45F |/ and set that as the collision Y to process.
@@ -12683,9 +12683,9 @@ check_y_position:
     LDA.w #$FF80                            ;$00F597 |\ If the player is more than 32 pixels above the
     CLC                                     ;$00F59A | | Y position of layer 1,
     ADC.b Layer1YPos_1C                     ;$00F59B | |
-    CMP $96                                 ;$00F59D | |
+    CMP.b PlayerYPos_96                     ;$00F59D | |
     BMI .below_y_position_limit             ;$00F59F | |
-    STA $96                                 ;$00F5A1 | | keep the player at that level.
+    STA.b PlayerYPos_96                     ;$00F5A1 | | keep the player at that level.
 .below_y_position_limit                     ;        |/
     SEP #$20                                ;$00F5A3 |
     LDA $81                                 ;$00F5A5 |\ If the player is below the screen,
@@ -12881,7 +12881,7 @@ update_screen_position_00F6DB:
     LDY.w $1411                             ;$00F713 |
     BEQ .CODE_00F75A                        ;$00F716 |
     LDY.b #$02                              ;$00F718 |
-    LDA $94                                 ;$00F71A |
+    LDA.b PlayerXPos_94                     ;$00F71A |
     SEC                                     ;$00F71C |
     SBC.b Layer1XPos_1A                     ;$00F71D |
     STA $00                                 ;$00F71F |
@@ -12924,7 +12924,7 @@ update_screen_position_00F6DB:
     LDY.w $1411                             ;$00F766 |
     BEQ .CODE_00F79D                                ;$00F769 |
     LDY.b #$00                              ;$00F76B |
-    LDA $94                                 ;$00F76D |
+    LDA.b PlayerXPos_94                     ;$00F76D |
     SEC                                     ;$00F76F |
     SBC.b Layer1XPos_1A                     ;$00F770 |
     STA $00                                 ;$00F772 |
@@ -13006,7 +13006,7 @@ ProcessVerticalScroll00F7F4:
     RTS                                     ;$00F7F9 |
 +   STA $04                                 ;$00F7FA |
     LDY.b #$00                              ;$00F7FC |
-    LDA $96                                 ;$00F7FE |
+    LDA.b PlayerYPos_96                     ;$00F7FE |
     SEC                                     ;$00F800 |
     SBC.b Layer1YPos_1C                     ;$00F801 |
     STA $00                                 ;$00F803 |
@@ -13142,11 +13142,11 @@ boss_room_collision:
     LDY $7D                                 ;$00F903 |
     BPL CODE_00F91E                         ;$00F905 |
     REP #$20                                ;$00F907 |
-    LDA $96                                 ;$00F909 |
+    LDA.b PlayerYPos_96                     ;$00F909 |
     CMP.w boss_ceiling_height,X             ;$00F90B |
     BPL CODE_00F91E                         ;$00F90E |
     LDA.w boss_ceiling_height,X             ;$00F910 |
-    STA $96                                 ;$00F913 |
+    STA.b PlayerYPos_96                     ;$00F913 |
     SEP #$20                                ;$00F915 |
     STZ $7D                                 ;$00F917 |
     LDA.b #$01                              ;$00F919 |
@@ -13162,14 +13162,14 @@ CODE_00F91E:
     LDA.w $1617                             ;$00F92C |
     AND.w #$00FF                            ;$00F92F |
     INC A                                   ;$00F932 |
-    CMP $94                                 ;$00F933 |
+    CMP.b PlayerXPos_94                     ;$00F933 |
     BEQ CODE_00F94A                         ;$00F935 |
     BMI CODE_00F94A                         ;$00F937 |
     LDA.w $153D                             ;$00F939 |
     AND.w #$00FF                            ;$00F93C |
     STA $00                                 ;$00F93F |
     INY                                     ;$00F941 |
-    LDA $94                                 ;$00F942 |
+    LDA.b PlayerXPos_94                     ;$00F942 |
     CLC                                     ;$00F944 |
     ADC.w #$000F                            ;$00F945 |
     CMP $00                                 ;$00F948 |
@@ -13229,11 +13229,11 @@ CODE_00F9A5:
 
 CODE_00F9A8:
     REP #$20
-    LDA $94                                 ;$00F9AA |
+    LDA.b PlayerXPos_94                     ;$00F9AA |
     CLC                                     ;$00F9AC |
     ADC.w #$0008                            ;$00F9AD |
     STA.w $14B4                             ;$00F9B0 |
-    LDA $96                                 ;$00F9B3 |
+    LDA.b PlayerYPos_96                     ;$00F9B3 |
     CLC                                     ;$00F9B5 |
     ADC.w #$0020                            ;$00F9B6 |
     STA.w $14B6                             ;$00F9B9 |
@@ -13261,12 +13261,12 @@ boss_platform_collision:
     AND.w #$00FF                            ;$00F9DD |
     SEC                                     ;$00F9E0 |
     SBC.w #$0008                            ;$00F9E1 |
-    STA $94                                 ;$00F9E4 |
+    STA.b PlayerXPos_94                     ;$00F9E4 |
     LDA.w $14BA                             ;$00F9E6 |
     AND.w #$00FF                            ;$00F9E9 |
     SEC                                     ;$00F9EC |
     SBC.w #$0020                            ;$00F9ED |
-    STA $96                                 ;$00F9F0 |
+    STA.b PlayerYPos_96                     ;$00F9F0 |
     SEP #$20                                ;$00F9F2 |
     RTS                                     ;$00F9F4 |
 
@@ -13584,9 +13584,9 @@ ADDR_00FC25:
     LDA $1B                                 ;$00FC52 |
     SBC.b #$00                              ;$00FC54 |
     STA.w SpriteXPosHigh_14E0,Y             ;$00FC56 |
-    LDA $96                                 ;$00FC59 |
+    LDA.b PlayerYPos_96                     ;$00FC59 |
     STA.w SpriteYPosLow_D8,Y                ;$00FC5B |
-    LDA $97                                 ;$00FC5E |
+    LDA.b PlayerYPos_96+1                   ;$00FC5E |
     STA.w SpriteYPosHigh_14D4,Y             ;$00FC60 |
     LDA.b #$03                              ;$00FC63 |
     STA.w $00C2,y                           ;$00FC65 |
@@ -13622,18 +13622,18 @@ CODE_00FC98:
     STA.w SpriteStatus_14C8,X               ;$00FC9A |
     LDA.b #$35                              ;$00FC9D |
     STA $9E,X                               ;$00FC9F |
-    LDA $94                                 ;$00FCA1 |
+    LDA.b PlayerXPos_94                     ;$00FCA1 |
     STA.b SpriteXPosLow_E4,X                ;$00FCA3 |
-    LDA $95                                 ;$00FCA5 |
+    LDA.b PlayerXPos_94+1                   ;$00FCA5 |
     STA.w SpriteXPosHigh_14E0,X             ;$00FCA7 |
-    LDA $96                                 ;$00FCAA |
+    LDA.b PlayerYPos_96                     ;$00FCAA |
     SEC                                     ;$00FCAC |
     SBC.b #$10                              ;$00FCAD |
-    STA $96                                 ;$00FCAF |
+    STA.b PlayerYPos_96                     ;$00FCAF |
     STA.b SpriteYPosLow_D8,X                ;$00FCB1 |
-    LDA $97                                 ;$00FCB3 |
+    LDA.b PlayerYPos_96+1                   ;$00FCB3 |
     SBC.b #$00                              ;$00FCB5 |
-    STA $97                                 ;$00FCB7 |
+    STA.b PlayerYPos_96+1                   ;$00FCB7 |
     STA.w SpriteYPosHigh_14D4,X             ;$00FCB9 |
     JSL InitSpriteTables                    ;$00FCBC |
     LDA.b #$04                              ;$00FCC0 |
@@ -13702,11 +13702,11 @@ CODE_00FD26:
     LDA.b #$12
     STA.w $170B,X                           ;$00FD28 |
     LDY $76                                 ;$00FD2B |
-    LDA $94                                 ;$00FD2D |
+    LDA.b PlayerXPos_94                     ;$00FD2D |
     CLC                                     ;$00FD2F |
     ADC.w DATA_00FD24,Y                     ;$00FD30 |
     STA.w $171F,X                           ;$00FD33 |
-    LDA $95                                 ;$00FD36 |
+    LDA.b PlayerXPos_94+1                   ;$00FD36 |
     ADC.b #$00                              ;$00FD38 |
     STA.w $1733,X                           ;$00FD3A |
     LDA.b Powerup_19                        ;$00FD3D |
@@ -13718,9 +13718,9 @@ CODE_00FD47:
     LDA.b #$0C
 CODE_00FD49:
     CLC
-    ADC $96                                 ;$00FD4A |
+    ADC.b PlayerYPos_96                     ;$00FD4A |
     STA.w $1715,X                           ;$00FD4C |
-    LDA $97                                 ;$00FD4F |
+    LDA.b PlayerYPos_96+1                   ;$00FD4F |
     ADC.b #$00                              ;$00FD51 |
     STA.w $1729,X                           ;$00FD53 |
     STZ.w $176F,X                           ;$00FD56 |
@@ -13794,7 +13794,7 @@ CODE_00FDBC:
     INX                                     ;$00FDC1 |
     INX                                     ;$00FDC2 |
 CODE_00FDC3:
-    LDA $96
+    LDA.b PlayerYPos_96
     CLC                                     ;$00FDC5 |
     ADC.w DATA_00FD9D,X                     ;$00FDC6 |
     PHP                                     ;$00FDC9 |
@@ -13802,15 +13802,15 @@ CODE_00FDC3:
     CLC                                     ;$00FDCC |
     ADC.b #$03                              ;$00FDCD |
     STA.w $17FC,Y                           ;$00FDCF |
-    LDA $97                                 ;$00FDD2 |
+    LDA.b PlayerYPos_96+1                   ;$00FDD2 |
     ADC.b #$00                              ;$00FDD4 |
     PLP                                     ;$00FDD6 |
     ADC.w DATA_00FDA1,X                     ;$00FDD7 |
     STA.w $1814,Y                           ;$00FDDA |
     PLX                                     ;$00FDDD |
-    LDA $94                                 ;$00FDDE |
+    LDA.b PlayerXPos_94                     ;$00FDDE |
     STA.w $1808,Y                           ;$00FDE0 |
-    LDA $95                                 ;$00FDE3 |
+    LDA.b PlayerXPos_94+1                   ;$00FDE3 |
     STA.w $18EA,Y                           ;$00FDE5 |
     LDA.b #$07                              ;$00FDE8 |
     STA.w $17F0,Y                           ;$00FDEA |
@@ -13851,16 +13851,16 @@ CODE_00FE16:
     ASL                                     ;$00FE1E |
     ADC.b #$F7                              ;$00FE1F |
     STA.w $1765,Y                           ;$00FE21 |
-    LDA $96                                 ;$00FE24 |
+    LDA.b PlayerYPos_96                     ;$00FE24 |
     ADC.w DATA_00FE0E,Y                     ;$00FE26 |
     STA.w $1715,Y                           ;$00FE29 |
-    LDA $97                                 ;$00FE2C |
+    LDA.b PlayerYPos_96+1                   ;$00FE2C |
     ADC.b #$00                              ;$00FE2E |
     STA.w $1729,Y                           ;$00FE30 |
-    LDA $94                                 ;$00FE33 |
+    LDA.b PlayerXPos_94                     ;$00FE33 |
     ADC.w DATA_00FE12,Y                     ;$00FE35 |
     STA.w $171F,Y                           ;$00FE38 |
-    LDA $95                                 ;$00FE3B |
+    LDA.b PlayerXPos_94+1                   ;$00FE3B |
     ADC.b #$00                              ;$00FE3D |
     STA.w $1733,Y                           ;$00FE3F |
     LDA.b #$00                              ;$00FE42 |
@@ -13896,10 +13896,10 @@ Return00FE71:
 CODE_00FE72:
     LDA.b #$03
     STA.w $17C0,Y                           ;$00FE74 |
-    LDA $94                                 ;$00FE77 |
+    LDA.b PlayerXPos_94                     ;$00FE77 |
     ADC.b #$04                              ;$00FE79 |
     STA.w $17C8,Y                           ;$00FE7B |
-    LDA $96                                 ;$00FE7E |
+    LDA.b PlayerYPos_96                     ;$00FE7E |
     ADC.b #$1A                              ;$00FE80 |
     PHX                                     ;$00FE82 |
     LDX.w RidingYoshi_187A                  ;$00FE83 |
@@ -13955,18 +13955,18 @@ shoot_fireball:
     INY                                     ;$00FEDD | |
     INY                                     ;$00FEDE |/
 .not_on_yoshi                               ;        |
-    LDA $94                                 ;$00FEDF |\ Offset the fireball's X position
+    LDA.b PlayerXPos_94                     ;$00FEDF |\ Offset the fireball's X position
     CLC                                     ;$00FEE1 | | based on the player's current X position,
     ADC.w fireball_x_offsets,Y              ;$00FEE2 | |
     STA.w $171F,X                           ;$00FEE5 |/
-    LDA $95                                 ;$00FEE8 |\ and offset the fireball's X position high byte.
+    LDA.b PlayerXPos_94+1                   ;$00FEE8 |\ and offset the fireball's X position high byte.
     ADC.w fireball_x_high_offsets,Y         ;$00FEEA | |
     STA.w $1733,X                           ;$00FEED |/
-    LDA $96                                 ;$00FEF0 |\ Offset the fireball's Y position
+    LDA.b PlayerYPos_96                     ;$00FEF0 |\ Offset the fireball's Y position
     CLC                                     ;$00FEF2 | | based on the player's current Y position,
     ADC.w fireball_y_offsets,Y              ;$00FEF3 | |
     STA.w $1715,X                           ;$00FEF6 |/
-    LDA $97                                 ;$00FEF9 |\ and offset the fireball's Y position high byte.
+    LDA.b PlayerYPos_96+1                   ;$00FEF9 |\ and offset the fireball's Y position high byte.
     ADC.b #$00                              ;$00FEFB | |
     STA.w $1729,X                           ;$00FEFD |/
     LDA.w $13F9                             ;$00FF00 |\ Set the fireball's layer.
@@ -13982,8 +13982,8 @@ ADDR_00FF07:
 ADDR_00FF14:
     XBA
     CLC                                     ;$00FF15 |
-    ADC $94                                 ;$00FF16 |
-    STA $94                                 ;$00FF18 |
+    ADC.b PlayerXPos_94                     ;$00FF16 |
+    STA.b PlayerXPos_94                     ;$00FF18 |
     LDA.w $17BB                             ;$00FF1A |
     AND.w #$FF00                            ;$00FF1D |
     BPL ADDR_00FF25                         ;$00FF20 |
@@ -13993,8 +13993,8 @@ ADDR_00FF25:
     EOR.w #$FFFF                            ;$00FF26 |
     INC A                                   ;$00FF29 |
     CLC                                     ;$00FF2A |
-    ADC $96                                 ;$00FF2B |
-    STA $96                                 ;$00FF2D |
+    ADC.b PlayerYPos_96                     ;$00FF2B |
+    STA.b PlayerYPos_96                     ;$00FF2D |
     SEP #$20                                ;$00FF2F |
     RTL                                     ;$00FF31 |
 

@@ -1009,21 +1009,21 @@ CODE_0387D7:
 MegaMoleNoYoshi:
     CLC
     ADC.b SpriteYPosLow_D8,X                ;$038800 |
-    STA $96                                 ;$038802 |
+    STA.b PlayerYPos_96                     ;$038802 |
     LDA.w SpriteYPosHigh_14D4,X             ;$038804 |
     ADC.b #$FF                              ;$038807 |
-    STA $97                                 ;$038809 |
+    STA.b PlayerYPos_96+1                   ;$038809 |
     LDY.b #$00                              ;$03880B |
     LDA.w $1491                             ;$03880D |
     BPL CODE_038813                         ;$038810 |
     DEY                                     ;$038812 |
 CODE_038813:
     CLC
-    ADC $94                                 ;$038814 |
-    STA $94                                 ;$038816 |
+    ADC.b PlayerXPos_94                     ;$038814 |
+    STA.b PlayerXPos_94                     ;$038816 |
     TYA                                     ;$038818 |
-    ADC $95                                 ;$038819 |
-    STA $95                                 ;$03881B |
+    ADC.b PlayerXPos_94+1                   ;$038819 |
+    STA.b PlayerXPos_94+1                   ;$03881B |
     RTS                                     ;$03881D |
 
 MegaMoleContact:
@@ -1605,7 +1605,7 @@ CODE_038C5A:
     BCC Return038CE3                        ;$038C74 |
     LDA $7D                                 ;$038C76 |
     BMI Return038CE3                        ;$038C78 |
-    LDA $94                                 ;$038C7A |
+    LDA.b PlayerXPos_94                     ;$038C7A |
     SEC                                     ;$038C7C |
     SBC.w $151C,X                           ;$038C7D |
     CLC                                     ;$038C80 |
@@ -1624,7 +1624,7 @@ CODE_038C8C:
     LDA.b #$30                              ;$038C96 |
 CODE_038C98:
     CLC
-    ADC $96                                 ;$038C99 |
+    ADC.b PlayerYPos_96                     ;$038C99 |
     STA $00                                 ;$038C9B |
     LDA.b SpriteYPosLow_D8,X                ;$038C9D |
     CLC                                     ;$038C9F |
@@ -1644,12 +1644,12 @@ CODE_038CB2:
     PHP                                     ;$038CBA |
     SEC                                     ;$038CBB |
     SBC $00                                 ;$038CBC |
-    STA $96                                 ;$038CBE |
+    STA.b PlayerYPos_96                     ;$038CBE |
     LDA.w SpriteYPosHigh_14D4,X             ;$038CC0 |
     SBC.b #$00                              ;$038CC3 |
     PLP                                     ;$038CC5 |
     ADC.b #$00                              ;$038CC6 |
-    STA $97                                 ;$038CC8 |
+    STA.b PlayerYPos_96+1                   ;$038CC8 |
     STZ $7D                                 ;$038CCA |
     LDA.b #$01                              ;$038CCC |
     STA.w $1471                             ;$038CCE |
@@ -1659,20 +1659,20 @@ CODE_038CB2:
     DEY                                     ;$038CD8 |
 CODE_038CD9:
     CLC
-    ADC $94                                 ;$038CDA |
-    STA $94                                 ;$038CDC |
+    ADC.b PlayerXPos_94                     ;$038CDA |
+    STA.b PlayerXPos_94                     ;$038CDC |
     TYA                                     ;$038CDE |
-    ADC $95                                 ;$038CDF |
-    STA $95                                 ;$038CE1 |
+    ADC.b PlayerXPos_94+1                   ;$038CDF |
+    STA.b PlayerXPos_94+1                   ;$038CE1 |
 Return038CE3:
     RTS
 
 CODE_038CE4:
-    LDA $94
+    LDA.b PlayerXPos_94
     CLC                                     ;$038CE6 |
     ADC.b #$04                              ;$038CE7 |
     STA $00                                 ;$038CE9 |
-    LDA $95                                 ;$038CEB |
+    LDA.b PlayerXPos_94+1                   ;$038CEB |
     ADC.b #$00                              ;$038CED |
     STA $08                                 ;$038CEF |
     LDA.b #$08                              ;$038CF1 |
@@ -1684,9 +1684,9 @@ CODE_038CE4:
     LDA.b #$30                              ;$038CFE |
 CODE_038D00:
     CLC
-    ADC $96                                 ;$038D01 |
+    ADC.b PlayerYPos_96                     ;$038D01 |
     STA $01                                 ;$038D03 |
-    LDA $97                                 ;$038D05 |
+    LDA.b PlayerYPos_96+1                   ;$038D05 |
     ADC.b #$00                              ;$038D07 |
     STA $09                                 ;$038D09 |
     RTS                                     ;$038D0B |
@@ -2711,13 +2711,13 @@ CODE_039488:
     RTS                                     ;$03949E |
 
 CODE_03949F:
-    LDA $94
+    LDA.b PlayerXPos_94
     CLC                                     ;$0394A1 |
     ADC.w DATA_039484,Y                     ;$0394A2 |
-    STA $94                                 ;$0394A5 |
-    LDA $95                                 ;$0394A7 |
+    STA.b PlayerXPos_94                     ;$0394A5 |
+    LDA.b PlayerXPos_94+1                   ;$0394A7 |
     ADC.w DATA_039486,Y                     ;$0394A9 |
-    STA $95                                 ;$0394AC |
+    STA.b PlayerXPos_94+1                   ;$0394AC |
     STZ $7B                                 ;$0394AE |
 Return0394B0:
     RTS
@@ -3511,7 +3511,7 @@ NoSetRenrTurnTime:
     BCC DrawReznor                          ;$039A40 |
     LDA.b #$08                              ;$039A42 |
     STA.w SpritePlayerContact_154C,X        ;$039A44 |
-    LDA $96                                 ;$039A47 |
+    LDA.b PlayerYPos_96                     ;$039A47 |
     SEC                                     ;$039A49 |
     SBC.b SpriteYPosLow_D8,X                ;$039A4A |
     CMP.b #$ED                              ;$039A4C |
@@ -5712,9 +5712,9 @@ CODE_03AB21:
     BNE CODE_03AB4B                         ;$03AB2E |
     LDY.b #$00                              ;$03AB30 |
     LDA.b SpriteXPosLow_E4,X                ;$03AB32 |
-    CMP $94                                 ;$03AB34 |
+    CMP.b PlayerXPos_94                     ;$03AB34 |
     LDA.w SpriteXPosHigh_14E0,X             ;$03AB36 |
-    SBC $95                                 ;$03AB39 |
+    SBC.b PlayerXPos_94+1                   ;$03AB39 |
     BMI CODE_03AB3E                         ;$03AB3B |
     INY                                     ;$03AB3D |
 CODE_03AB3E:
@@ -7129,11 +7129,11 @@ MarioClippingHeight:
 
 GetMarioClipping:
     PHX
-    LDA $94                                 ;$03B665 |
+    LDA.b PlayerXPos_94                     ;$03B665 |
     CLC                                     ;$03B667 |
     ADC.b #$02                              ;$03B668 |
     STA $00                                 ;$03B66A |
-    LDA $95                                 ;$03B66C |
+    LDA.b PlayerXPos_94+1                   ;$03B66C |
     ADC.b #$00                              ;$03B66E |
     STA $08                                 ;$03B670 |
     LDA.b #$0C                              ;$03B672 |
@@ -7153,11 +7153,11 @@ CODE_03B681:
 CODE_03B688:
     LDA.l MarioClippingHeight,X
     STA $03                                 ;$03B68C |
-    LDA $96                                 ;$03B68E |
+    LDA.b PlayerYPos_96                     ;$03B68E |
     CLC                                     ;$03B690 |
     ADC.l MairoClipDispY,X                  ;$03B691 |
     STA $01                                 ;$03B695 |
-    LDA $97                                 ;$03B697 |
+    LDA.b PlayerYPos_96+1                   ;$03B697 |
     ADC.b #$00                              ;$03B699 |
     STA $09                                 ;$03B69B |
     PLX                                     ;$03B69D |
@@ -7373,11 +7373,11 @@ Return03B816:
 
 SubHorzPosBnk3:
     LDY.b #$00
-    LDA $94                                 ;$03B819 |
+    LDA.b PlayerXPos_94                     ;$03B819 |
     SEC                                     ;$03B81B |
     SBC.b SpriteXPosLow_E4,X                ;$03B81C |
     STA $0F                                 ;$03B81E |
-    LDA $95                                 ;$03B820 |
+    LDA.b PlayerXPos_94+1                   ;$03B820 |
     SBC.w SpriteXPosHigh_14E0,X             ;$03B822 |
     BPL Return03B828                        ;$03B825 |
     INY                                     ;$03B827 |
@@ -7386,11 +7386,11 @@ Return03B828:
 
 SubVertPosBnk3:
     LDY.b #$00
-    LDA $96                                 ;$03B82B |
+    LDA.b PlayerYPos_96                     ;$03B82B |
     SEC                                     ;$03B82D |
     SBC.b SpriteYPosLow_D8,X                ;$03B82E |
     STA $0F                                 ;$03B830 |
-    LDA $97                                 ;$03B832 |
+    LDA.b PlayerYPos_96+1                   ;$03B832 |
     SBC.w SpriteYPosHigh_14D4,X             ;$03B834 |
     BPL Return03B83A                        ;$03B837 |
     INY                                     ;$03B839 |
@@ -8127,13 +8127,13 @@ Generate1Up:
     STA.w SpriteStatus_14C8,X               ;$03C2E8 |
     LDA.b #$78                              ;$03C2EB |
     STA $9E,X                               ;$03C2ED |
-    LDA $94                                 ;$03C2EF |
+    LDA.b PlayerXPos_94                     ;$03C2EF |
     STA.b SpriteXPosLow_E4,X                ;$03C2F1 |
-    LDA $95                                 ;$03C2F3 |
+    LDA.b PlayerXPos_94+1                   ;$03C2F3 |
     STA.w SpriteXPosHigh_14E0,X             ;$03C2F5 |
-    LDA $96                                 ;$03C2F8 |
+    LDA.b PlayerYPos_96                     ;$03C2F8 |
     STA.b SpriteYPosLow_D8,X                ;$03C2FA |
-    LDA $97                                 ;$03C2FC |
+    LDA.b PlayerYPos_96+1                   ;$03C2FC |
     STA.w SpriteYPosHigh_14D4,X             ;$03C2FE |
     JSL InitSpriteTables                    ;$03C301 |
     LDA.b #$10                              ;$03C305 |

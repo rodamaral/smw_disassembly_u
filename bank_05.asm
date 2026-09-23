@@ -4626,7 +4626,7 @@ ADDR_05C389:
     STA.w $0045,X                           ;$05C393 |
     LDA.w #$0017                            ;$05C396 |
     STA.w $0047,X                           ;$05C399 |
-    STZ.w $95                               ;$05C39C |
+    STZ.w PlayerXPos_94+1                   ;$05C39C |
 ADDR_05C39F:
     LDA.w $1456
     AND.w #$00FF                            ;$05C3A2 |
@@ -6316,11 +6316,11 @@ CODE_05D7AB:
     JMP CODE_05D83E                         ;$05D7B0 |
 
 CODE_05D7B3:
-    LDX $95
+    LDX.b PlayerXPos_94+1
     LDA.b ScreenMode_5B                     ;$05D7B5 |
     AND.b #!Layer1Vert_01                   ;$05D7B7 |
     BEQ CODE_05D7BD                         ;$05D7B9 |
-    LDX $97                                 ;$05D7BB |
+    LDX.b PlayerYPos_96+1                   ;$05D7BB |
 CODE_05D7BD:
     LDA.w $19B8,X
     STA.w $17BB                             ;$05D7C0 |
@@ -6348,9 +6348,9 @@ CODE_05D7D2:
     AND.b #$0F                              ;$05D7EF |
     TAX                                     ;$05D7F1 |
     LDA.l DATA_05D730,X                     ;$05D7F2 |
-    STA $96                                 ;$05D7F6 |
+    STA.b PlayerYPos_96                     ;$05D7F6 |
     LDA.l DATA_05D740,X                     ;$05D7F8 |
-    STA $97                                 ;$05D7FC |
+    STA.b PlayerYPos_96+1                   ;$05D7FC |
     LDA $00                                 ;$05D7FE |
     AND.b #$30                              ;$05D800 |
     LSR                                     ;$05D802 |
@@ -6379,9 +6379,9 @@ CODE_05D7D2:
     LSR                                     ;$05D825 |
     TAX                                     ;$05D826 |
     LDA.l DATA_05D750,X                     ;$05D827 |
-    STA $94                                 ;$05D82B |
+    STA.b PlayerXPos_94                     ;$05D82B |
     LDA.l DATA_05D758,X                     ;$05D82D |
-    STA $95                                 ;$05D831 |
+    STA.b PlayerXPos_94+1                   ;$05D831 |
     LDA.w DATA_05FE00,Y                     ;$05D833 |
     AND.b #$07                              ;$05D836 |
     STA.w $192A                             ;$05D838 |
@@ -6533,17 +6533,17 @@ CODE_05D8B7:
     AND.b #$0F                              ;$05D954 |
     TAX                                     ;$05D956 |
     LDA.l DATA_05D730,X                     ;$05D957 |
-    STA $96                                 ;$05D95B |
+    STA.b PlayerYPos_96                     ;$05D95B |
     LDA.l DATA_05D740,X                     ;$05D95D |
-    STA $97                                 ;$05D961 |
+    STA.b PlayerYPos_96+1                   ;$05D961 |
     LDA.w DATA_05F200,Y                     ;$05D963 |
     STA $02                                 ;$05D966 |
     AND.b #$07                              ;$05D968 |
     TAX                                     ;$05D96A |
     LDA.l DATA_05D750,X                     ;$05D96B |
-    STA $94                                 ;$05D96F |
+    STA.b PlayerXPos_94                     ;$05D96F |
     LDA.l DATA_05D758,X                     ;$05D971 |
-    STA $95                                 ;$05D975 |
+    STA.b PlayerXPos_94+1                   ;$05D975 |
     LDA $02                                 ;$05D977 |
     AND.b #$38                              ;$05D979 |
     LSR                                     ;$05D97B |
@@ -6572,7 +6572,7 @@ CODE_05D9A1:
     LDY.w #$0000                            ;$05D9A7 |
     LDA [$65],Y                             ;$05D9AA |
     AND.b #$1F                              ;$05D9AC |
-    STA $97                                 ;$05D9AE |
+    STA.b PlayerYPos_96+1                   ;$05D9AE |
     INC A                                   ;$05D9B0 |
     STA.b LastScreenVert_5F                 ;$05D9B1 |
     LDA.b #$01                              ;$05D9B3 |
@@ -6601,7 +6601,7 @@ CODE_05D9B8:
     LSR                                     ;$05D9E4 |
     LSR                                     ;$05D9E5 |
     LSR                                     ;$05D9E6 |
-    STA $95                                 ;$05D9E7 |
+    STA.b PlayerXPos_94+1                   ;$05D9E7 |
     JMP CODE_05DA17                         ;$05D9E9 |
 
 CODE_05D9EC:
@@ -6613,12 +6613,12 @@ CODE_05D9EC:
     AND.b #!Layer1Vert_01                   ;$05D9F6 |
     BNE CODE_05DA01                         ;$05D9F8 |
     LDA $01                                 ;$05D9FA |
-    STA $95                                 ;$05D9FC |
+    STA.b PlayerXPos_94+1                   ;$05D9FC |
     JMP CODE_05DA17                         ;$05D9FE |
 
 CODE_05DA01:
     LDA $01
-    STA $97                                 ;$05DA03 |
+    STA.b PlayerYPos_96+1                   ;$05DA03 |
     STA.b Layer1YPos_1C+1                   ;$05DA05 |
     SEP #$10                                ;$05DA07 |
     LDY.w $1414                             ;$05DA09 |
@@ -6673,12 +6673,12 @@ CODE_05DA60:
     LDA.w $13CF
     BNE CODE_05DAD0                         ;$05DA63 |
     LDA.l DATA_05D790,X                     ;$05DA65 |
-    STA $96                                 ;$05DA69 |
+    STA.b PlayerYPos_96                     ;$05DA69 |
     LDA.b #$01                              ;$05DA6B |
-    STA $97                                 ;$05DA6D |
+    STA.b PlayerYPos_96+1                   ;$05DA6D |
     LDA.b #$30                              ;$05DA6F |
-    STA $94                                 ;$05DA71 |
-    STZ $95                                 ;$05DA73 |
+    STA.b PlayerXPos_94                     ;$05DA71 |
+    STZ.b PlayerXPos_94+1                   ;$05DA73 |
     LDA.b #$C0                              ;$05DA75 |
     STA.b Layer1YPos_1C                     ;$05DA77 |
     STA.b Layer2YPos_20                     ;$05DA79 |
@@ -6850,11 +6850,11 @@ CODE_05DBAC:
     BEQ CODE_05DBB5                         ;$05DBB1 |
     LDY.b #$01                              ;$05DBB3 |
 CODE_05DBB5:
-    LDX $95
+    LDX.b PlayerXPos_94+1
     LDA.b ScreenMode_5B                     ;$05DBB7 |
     AND.b #!Layer1Vert_01                   ;$05DBB9 |
     BEQ CODE_05DBBF                         ;$05DBBB |
-    LDX $97                                 ;$05DBBD |
+    LDX.b PlayerYPos_96+1                   ;$05DBBD |
 CODE_05DBBF:
     LDA.w DATA_05DBA9,Y
     STA.w $19B8,X                           ;$05DBC2 |
