@@ -1356,7 +1356,7 @@ PtrsLong0DA41E:
 
 CODE_0DA44B:
     SEP #$30
-    LDX $5A                                 ;$0DA44D |
+    LDX.b LvlLoadObjNo_5A                   ;$0DA44D |
     DEX                                     ;$0DA44F |
     TXA                                     ;$0DA450 |
     JSL execute_pointer_long                ;$0DA451 |
@@ -1429,7 +1429,7 @@ PtrsLong0DA455:
 CODE_0DA512:
     LDY.b #$00
     LDA [$65],Y                             ;$0DA514 |
-    STA $5A                                 ;$0DA516 |
+    STA.b LvlLoadObjNo_5A                   ;$0DA516 |
     INY                                     ;$0DA518 |
     TYA                                     ;$0DA519 |
     CLC                                     ;$0DA51A |
@@ -1441,7 +1441,7 @@ CODE_0DA512:
     LDA $0A                                 ;$0DA525 |
     AND.b #$1F                              ;$0DA527 |
     TAX                                     ;$0DA529 |
-    LDA $5A                                 ;$0DA52A |
+    LDA.b LvlLoadObjNo_5A                   ;$0DA52A |
     STA.w $19B8,X                           ;$0DA52C |
     LDA $0B                                 ;$0DA52F |
     AND.b #$01                              ;$0DA531 |
@@ -4796,7 +4796,7 @@ DATA_0DBB68:
 
 CODE_0DC190:
     SEP #$30
-    LDX $5A                                 ;$0DC192 |
+    LDX.b LvlLoadObjNo_5A                   ;$0DC192 |
     DEX                                     ;$0DC194 |
     TXA                                     ;$0DC195 |
     JSL execute_pointer_long                ;$0DC196 |
@@ -5594,7 +5594,7 @@ DATA_0DC620:
 
 CODE_0DCD90:
     SEP #$30
-    LDX $5A                                 ;$0DCD92 |
+    LDX.b LvlLoadObjNo_5A                   ;$0DCD92 |
     DEX                                     ;$0DCD94 |
     TXA                                     ;$0DCD95 |
     JSL execute_pointer_long                ;$0DCD96 |
@@ -6547,7 +6547,7 @@ DATA_0DD282:
 
 CODE_0DD990:
     SEP #$30
-    LDX $5A                                 ;$0DD992 |
+    LDX.b LvlLoadObjNo_5A                   ;$0DD992 |
     DEX                                     ;$0DD994 |
     TXA                                     ;$0DD995 |
     JSL execute_pointer_long                ;$0DD996 |
@@ -7851,7 +7851,7 @@ DATA_0DE186:
 
 CODE_0DE890:
     SEP #$30
-    LDX $5A                                 ;$0DE892 |
+    LDX.b LvlLoadObjNo_5A                   ;$0DE892 |
     DEX                                     ;$0DE894 |
     TXA                                     ;$0DE895 |
     JSL execute_pointer_long                ;$0DE896 |

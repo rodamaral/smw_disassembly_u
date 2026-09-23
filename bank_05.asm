@@ -630,7 +630,7 @@ HeaderVHscroll:
     RTS                                     ;$0585D7 |
 
 CODE_0585D8:
-    LDA $5A
+    LDA.b LvlLoadObjNo_5A
     BNE CODE_0585E2                         ;$0585DA |
     LDA.b LvlLoadObjSize_59                 ;$0585DC |
     CMP.b #$02                              ;$0585DE |
@@ -677,12 +677,12 @@ LoadLevelData:
     LSR                                     ;$058621 |
     LSR                                     ;$058622 |
     LSR                                     ;$058623 |
-    STA $5A                                 ;$058624 |
+    STA.b LvlLoadObjNo_5A                   ;$058624 |
     LDA $0A                                 ;$058626 |
     AND.b #$60                              ;$058628 |
     LSR                                     ;$05862A |
-    ORA $5A                                 ;$05862B |
-    STA $5A                                 ;$05862D |
+    ORA.b LvlLoadObjNo_5A                   ;$05862B |
+    STA.b LvlLoadObjNo_5A                   ;$05862D |
     LDA.b ScreenMode_5B                     ;$05862F |
     LDY.w $1933                             ;$058631 |
     BEQ CODE_058637                         ;$058634 |
@@ -762,7 +762,7 @@ CODE_05863E:
     INC $6C                                 ;$0586C1 |
     INC $6F                                 ;$0586C3 |
 LoadNoHiCoord:
-    LDA $5A
+    LDA.b LvlLoadObjNo_5A
     BNE LevLoadJsrNrm                       ;$0586C7 |
     JSR LevLoadExtObj                       ;$0586C9 |
     JMP LevLoadContinue                     ;$0586CC |
