@@ -570,7 +570,7 @@ CODE_058563:
     LSR                                     ;$05856C |
     LSR                                     ;$05856D |
     ORA.b #$01                              ;$05856E |
-    STA $3E                                 ;$058570 |
+    STA.b MainBGMode_3E                     ;$058570 |
     INY                                     ;$058572 |
     LDA [$65],Y                             ;$058573 |
     STA $00                                 ;$058575 |
@@ -5607,7 +5607,7 @@ CODE_05CC84:
     LDA.b #$01
     STA.w $13D5                             ;$05CC86 |
     LDA.b #$08                              ;$05CC89 |
-    TSB $3E                                 ;$05CC8B |
+    TSB.b MainBGMode_3E                     ;$05CC8B |
     REP #$30                                ;$05CC8D |
     STZ.b Layer3XPos_22                     ;$05CC8F |
     STZ.b Layer3YPos_24                     ;$05CC91 |

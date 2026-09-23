@@ -10491,9 +10491,9 @@ CODE_01CACB:
     SBC.w $14C0                             ;$01CB0F |
     STA.w $14B3                             ;$01CB12 |
     LDA.w $151C,X                           ;$01CB15 |
-    STA $36                                 ;$01CB18 |
+    STA.b Mode7Angle_36                     ;$01CB18 |
     LDA.w $1528,X                           ;$01CB1A |
-    STA $37                                 ;$01CB1D |
+    STA.b Mode7Angle_36+1                   ;$01CB1D |
     RTS                                     ;$01CB1F |
 
 CODE_01CB20:
@@ -10501,13 +10501,13 @@ CODE_01CB20:
     STA.w $1866                             ;$01CB22 |
     PHX                                     ;$01CB25 |
     REP #$30                                ;$01CB26 |
-    LDA $36                                 ;$01CB28 |
+    LDA.b Mode7Angle_36                     ;$01CB28 |
     ASL                                     ;$01CB2A |
     AND.w #$01FF                            ;$01CB2B |
     TAX                                     ;$01CB2E |
     LDA.l CircleCoords,X                    ;$01CB2F |
     STA.w $14C2                             ;$01CB33 |
-    LDA $36                                 ;$01CB36 |
+    LDA.b Mode7Angle_36                     ;$01CB36 |
     CLC                                     ;$01CB38 |
     ADC.w #$0080                            ;$01CB39 |
     STA $00                                 ;$01CB3C |
@@ -10812,8 +10812,8 @@ CODE_01CD5E:
     LDA.b #$01
     STA.w SpriteDir_157C,X                  ;$01CD60 |
     LDA.b #$20                              ;$01CD63 |
-    STA $38                                 ;$01CD65 |
-    STA $39                                 ;$01CD67 |
+    STA.b Mode7XScale_38                    ;$01CD65 |
+    STA.b Mode7YScale_39                    ;$01CD67 |
     JSL CODE_03DD7D                         ;$01CD69 |
     LDY $C2,X                               ;$01CD6D |
     LDA.w DATA_01CD92,Y                     ;$01CD6F |
@@ -10964,8 +10964,8 @@ Ptrs01CE72:
     dw CODE_01CEFD
 
 CODE_01CE78:
-    STZ $36
-    STZ $37                                 ;$01CE7A |
+    STZ.b Mode7Angle_36
+    STZ.b Mode7Angle_36+1                   ;$01CE7A |
     LDA.w $1540,X                           ;$01CE7C |
     BEQ CODE_01CEA5                         ;$01CE7F |
     LDY.b #$03                              ;$01CE81 |
@@ -11087,8 +11087,8 @@ CODE_01CF42:
 CODE_01CF44:
     LDA.w $1558,X
     BNE CODE_01CF4F                         ;$01CF47 |
-    LDA $36                                 ;$01CF49 |
-    ORA $37                                 ;$01CF4B |
+    LDA.b Mode7Angle_36                     ;$01CF49 |
+    ORA.b Mode7Angle_36+1                   ;$01CF4B |
     BEQ CODE_01CF67                         ;$01CF4D |
 CODE_01CF4F:
     LDA $B6,X
@@ -11100,12 +11100,12 @@ CODE_01CF4F:
     DEY                                     ;$01CF5A |
 CODE_01CF5B:
     CLC
-    ADC $36                                 ;$01CF5C |
-    STA $36                                 ;$01CF5E |
+    ADC.b Mode7Angle_36                     ;$01CF5C |
+    STA.b Mode7Angle_36                     ;$01CF5E |
     TYA                                     ;$01CF60 |
-    ADC $37                                 ;$01CF61 |
+    ADC.b Mode7Angle_36+1                   ;$01CF61 |
     AND.b #$01                              ;$01CF63 |
-    STA $37                                 ;$01CF65 |
+    STA.b Mode7Angle_36+1                   ;$01CF65 |
 CODE_01CF67:
     LDA.b #$06
     LDY $AA,X                               ;$01CF69 |
@@ -11141,15 +11141,15 @@ CODE_01CF99:
 
 CODE_01CF9E:
     LDY.w $18A6
-    LDA $38                                 ;$01CFA1 |
+    LDA.b Mode7XScale_38                    ;$01CFA1 |
     CMP.b #$20                              ;$01CFA3 |
     BEQ CODE_01CFA9                         ;$01CFA5 |
-    INC $38                                 ;$01CFA7 |
+    INC.b Mode7XScale_38                    ;$01CFA7 |
 CODE_01CFA9:
-    LDA $39
+    LDA.b Mode7YScale_39
     CMP.b #$20                              ;$01CFAB |
     BEQ CODE_01CFB1                         ;$01CFAD |
-    DEC $39                                 ;$01CFAF |
+    DEC.b Mode7YScale_39                    ;$01CFAF |
 CODE_01CFB1:
     LDA.b #$07
     STA.w $1602,X                           ;$01CFB3 |
@@ -11190,27 +11190,27 @@ CODE_01CFE0:
     BCS CODE_01CFF1                         ;$01CFEC |
     DEC.w SpriteYPosHigh_14D4,X             ;$01CFEE |
 CODE_01CFF1:
-    DEC $39
+    DEC.b Mode7YScale_39
     TYA                                     ;$01CFF3 |
     AND.b #$03                              ;$01CFF4 |
     BEQ CODE_01CFFA                         ;$01CFF6 |
-    DEC $38                                 ;$01CFF8 |
+    DEC.b Mode7XScale_38                    ;$01CFF8 |
 CODE_01CFFA:
     BRA CODE_01D00F
 
 CODE_01CFFC:
-    LDA $36
+    LDA.b Mode7Angle_36
     CLC                                     ;$01CFFE |
     ADC.b #$06                              ;$01CFFF |
-    STA $36                                 ;$01D001 |
-    LDA $37                                 ;$01D003 |
+    STA.b Mode7Angle_36                     ;$01D001 |
+    LDA.b Mode7Angle_36+1                   ;$01D003 |
     ADC.b #$00                              ;$01D005 |
     AND.b #$01                              ;$01D007 |
-    STA $37                                 ;$01D009 |
-    INC $38                                 ;$01D00B |
-    INC $39                                 ;$01D00D |
+    STA.b Mode7Angle_36+1                   ;$01D009 |
+    INC.b Mode7XScale_38                    ;$01D00B |
+    INC.b Mode7YScale_39                    ;$01D00D |
 CODE_01D00F:
-    LDA $39
+    LDA.b Mode7YScale_39
     CMP.b #$A0                              ;$01D011 |
     BCC Return01D042                        ;$01D013 |
     LDA.w $15A0,X                           ;$01D015 |
@@ -11310,7 +11310,7 @@ CODE_01D0C0:
     BMI CODE_01D0DC                         ;$01D0C2 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01D0C4 |
     BNE CODE_01D0DC                         ;$01D0C7 |
-    LDA $39                                 ;$01D0C9 |
+    LDA.b Mode7YScale_39                    ;$01D0C9 |
     LSR                                     ;$01D0CB |
     TAY                                     ;$01D0CC |
     LDA.b SpriteYPosLow_D8,X                ;$01D0CD |
@@ -11396,7 +11396,7 @@ CODE_01D17C:
     STA $08                                 ;$01D18C |
     STA $09                                 ;$01D18E |
     STA $0A                                 ;$01D190 |
-    LDA $36                                 ;$01D192 |
+    LDA.b Mode7Angle_36                     ;$01D192 |
     ASL                                     ;$01D194 |
     BEQ CODE_01D19A                         ;$01D195 |
     JMP CODE_01D224                         ;$01D197 |
@@ -11481,14 +11481,14 @@ CODE_01D215:
     STA.w $1594,X                           ;$01D221 |
 CODE_01D224:
     LDY.w SpriteDir_157C,X
-    LDA $36                                 ;$01D227 |
+    LDA.b Mode7Angle_36                     ;$01D227 |
     CLC                                     ;$01D229 |
     ADC.w DATA_01D239,Y                     ;$01D22A |
-    STA $36                                 ;$01D22D |
-    LDA $37                                 ;$01D22F |
+    STA.b Mode7Angle_36                     ;$01D22D |
+    LDA.b Mode7Angle_36+1                   ;$01D22F |
     ADC.w DATA_01D23B,Y                     ;$01D231 |
     AND.b #$01                              ;$01D234 |
-    STA $37                                 ;$01D236 |
+    STA.b Mode7Angle_36+1                   ;$01D236 |
     RTS                                     ;$01D238 |
 
 DATA_01D239:
@@ -11527,17 +11527,17 @@ CODE_01D25E:
     ADC.b #$04                              ;$01D26D |
     STA $AA,X                               ;$01D26F |
 CODE_01D271:
-    LDA $36
-    ORA $37                                 ;$01D273 |
+    LDA.b Mode7Angle_36
+    ORA.b Mode7Angle_36+1                   ;$01D273 |
     BEQ CODE_01D286                         ;$01D275 |
-    LDA $36                                 ;$01D277 |
+    LDA.b Mode7Angle_36                     ;$01D277 |
     CLC                                     ;$01D279 |
     ADC.b #$08                              ;$01D27A |
-    STA $36                                 ;$01D27C |
-    LDA $37                                 ;$01D27E |
+    STA.b Mode7Angle_36                     ;$01D27C |
+    LDA.b Mode7Angle_36+1                   ;$01D27E |
     ADC.b #$00                              ;$01D280 |
     AND.b #$01                              ;$01D282 |
-    STA $37                                 ;$01D284 |
+    STA.b Mode7Angle_36+1                   ;$01D284 |
 CODE_01D286:
     JSR CODE_01D0C0
     BCC Return01D2A7                        ;$01D289 |
@@ -11552,8 +11552,8 @@ CODE_01D299:
     STA.w SPCIO3_1DFC                       ;$01D29B |
     LDA.b #$28                              ;$01D29E |
     STA.w $1540,X                           ;$01D2A0 |
-    STZ $36                                 ;$01D2A3 |
-    STZ $37                                 ;$01D2A5 |
+    STZ.b Mode7Angle_36                     ;$01D2A3 |
+    STZ.b Mode7Angle_36+1                   ;$01D2A5 |
 Return01D2A7:
     RTS
 
@@ -11681,13 +11681,13 @@ CODE_01D351:
 
 CODE_01D379:
     LDA.b #$18
-    STA $38                                 ;$01D37B |
+    STA.b Mode7XScale_38                    ;$01D37B |
     PHX                                     ;$01D37D |
-    LDA $39                                 ;$01D37E |
+    LDA.b Mode7YScale_39                    ;$01D37E |
     LSR                                     ;$01D380 |
     TAX                                     ;$01D381 |
     LDA.b #$28                              ;$01D382 |
-    STA $39                                 ;$01D384 |
+    STA.b Mode7YScale_39                    ;$01D384 |
     LSR                                     ;$01D386 |
     TAY                                     ;$01D387 |
     LDA.w $D0D6,Y                           ;$01D388 |
@@ -16982,7 +16982,7 @@ PlatformKoopaKids:
     BNE CODE_01FB1A                         ;$01FAFA |
     JSR SubHorizPos                         ;$01FAFC |
     STY $00                                 ;$01FAFF |
-    LDA $36                                 ;$01FB01 |
+    LDA.b Mode7Angle_36                     ;$01FB01 |
     ASL                                     ;$01FB03 |
     ROL                                     ;$01FB04 |
     AND.b #$01                              ;$01FB05 |
@@ -17060,7 +17060,7 @@ CODE_01FB7B:
 CODE_01FB99:
     STZ $AA,X
     STZ $B6,X                               ;$01FB9B |
-    LDA $36                                 ;$01FB9D |
+    LDA.b Mode7Angle_36                     ;$01FB9D |
     BPL CODE_01FBA4                         ;$01FB9F |
     CLC                                     ;$01FBA1 |
     ADC.b #$08                              ;$01FBA2 |
@@ -17077,7 +17077,7 @@ CODE_01FBA4:
     STA $01                                 ;$01FBB0 |
     LDA.w SpritePlayerContact_154C,X        ;$01FBB2 |
     BNE CODE_01FBD9                         ;$01FBB5 |
-    LDA $37                                 ;$01FBB7 |
+    LDA.b Mode7Angle_36+1                   ;$01FBB7 |
     BNE CODE_01FBC9                         ;$01FBB9 |
     LDA.b SpriteXPosLow_E4,X                ;$01FBBB |
     CMP.b #$78                              ;$01FBBD |
@@ -17324,21 +17324,21 @@ CODE_01FD50:
     ADC.b #$00                              ;$01FD6B |
     STA.w $14B7                             ;$01FD6D |
     REP #$20                                ;$01FD70 |
-    LDA $36                                 ;$01FD72 |
+    LDA.b Mode7Angle_36                     ;$01FD72 |
     EOR.w #$01FF                            ;$01FD74 |
     INC A                                   ;$01FD77 |
     AND.w #$01FF                            ;$01FD78 |
-    STA $36                                 ;$01FD7B |
+    STA.b Mode7Angle_36                     ;$01FD7B |
     SEP #$20                                ;$01FD7D |
     PHX                                     ;$01FD7F |
     JSL CODE_01CC9D                         ;$01FD80 |
     PLX                                     ;$01FD84 |
     REP #$20                                ;$01FD85 |
-    LDA $36                                 ;$01FD87 |
+    LDA.b Mode7Angle_36                     ;$01FD87 |
     EOR.w #$01FF                            ;$01FD89 |
     INC A                                   ;$01FD8C |
     AND.w #$01FF                            ;$01FD8D |
-    STA $36                                 ;$01FD90 |
+    STA.b Mode7Angle_36                     ;$01FD90 |
     SEP #$20                                ;$01FD92 |
     RTS                                     ;$01FD94 |
 

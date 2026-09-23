@@ -3310,11 +3310,11 @@ ReznorSignCode:
     JSL CODE_03DEDF                         ;$0398BE |
     PLX                                     ;$0398C2 |
     REP #$20                                ;$0398C3 |
-    LDA $36                                 ;$0398C5 |
+    LDA.b Mode7Angle_36                     ;$0398C5 |
     CLC                                     ;$0398C7 |
     ADC.w #$0001                            ;$0398C8 |
     AND.w #$01FF                            ;$0398CB |
-    STA $36                                 ;$0398CE |
+    STA.b Mode7Angle_36                     ;$0398CE |
     SEP #$20                                ;$0398D0 |
     CPX.b #$07                              ;$0398D2 |
     BNE CODE_039910                         ;$0398D4 |
@@ -3356,11 +3356,11 @@ CODE_03991A:
     TXA
     AND.b #$03                              ;$03991B |
     TAY                                     ;$03991D |
-    LDA $36                                 ;$03991E |
+    LDA.b Mode7Angle_36                     ;$03991E |
     CLC                                     ;$039920 |
     ADC.w ReznorStartPosLo,Y                ;$039921 |
     STA $00                                 ;$039924 |
-    LDA $37                                 ;$039926 |
+    LDA.b Mode7Angle_36+1                   ;$039926 |
     ADC.w ReznorStartPosHi,Y                ;$039928 |
     AND.b #$01                              ;$03992B |
     STA $01                                 ;$03992D |
@@ -4697,7 +4697,7 @@ DATA_03A265:
     db $07,$07,$07,$07
 
 CODE_03A279:
-    LDA $38
+    LDA.b Mode7XScale_38
     LSR                                     ;$03A27B |
     LSR                                     ;$03A27C |
     LSR                                     ;$03A27D |
@@ -4747,7 +4747,7 @@ CODE_03A2CE:
     STZ.w $1594,X                           ;$03A2D2 |
     LDA.b #$30                              ;$03A2D5 |
     STA $64                                 ;$03A2D7 |
-    LDA $38                                 ;$03A2D9 |
+    LDA.b Mode7XScale_38                    ;$03A2D9 |
     CMP.b #$20                              ;$03A2DB |
     BCS CODE_03A2E1                         ;$03A2DD |
     STZ $64                                 ;$03A2DF |
@@ -5086,12 +5086,12 @@ CODE_03A5D8:
     LDA.w DATA_03A52D,Y                     ;$03A5E5 |
     STA.w SpriteAnimationTimer_1570,X       ;$03A5E8 |
     LDA.w DATA_03A56D,Y                     ;$03A5EB |
-    STA $36                                 ;$03A5EE |
-    STZ $37                                 ;$03A5F0 |
+    STA.b Mode7Angle_36                     ;$03A5EE |
+    STZ.b Mode7Angle_36+1                   ;$03A5F0 |
     CMP.b #$FF                              ;$03A5F2 |
     BNE CODE_03A5FC                         ;$03A5F4 |
-    STZ $36                                 ;$03A5F6 |
-    INC $37                                 ;$03A5F8 |
+    STZ.b Mode7Angle_36                     ;$03A5F6 |
+    INC.b Mode7Angle_36+1                   ;$03A5F8 |
     STZ $64                                 ;$03A5FA |
 CODE_03A5FC:
     LDA.w $14B6
@@ -5175,10 +5175,10 @@ CODE_03A691:
     LSR                                     ;$03A698 |
     TAY                                     ;$03A699 |
     LDA.w DATA_03A64D,Y                     ;$03A69A |
-    STA $36                                 ;$03A69D |
-    STZ $37                                 ;$03A69F |
+    STA.b Mode7Angle_36                     ;$03A69D |
+    STZ.b Mode7Angle_36+1                   ;$03A69F |
     BPL CODE_03A6A5                         ;$03A6A1 |
-    INC $37                                 ;$03A6A3 |
+    INC.b Mode7Angle_36+1                   ;$03A6A3 |
 CODE_03A6A5:
     PLA
     LDY.b #$0C                              ;$03A6A6 |
@@ -5314,11 +5314,11 @@ CODE_03A76D:
     LDA.b Frame_13                          ;$03A774 |
     AND.w DATA_03A72F,Y                     ;$03A776 |
     BNE CODE_03A78D                         ;$03A779 |
-    LDA $38                                 ;$03A77B |
+    LDA.b Mode7XScale_38                    ;$03A77B |
     CLC                                     ;$03A77D |
     ADC.w DATA_03A729,Y                     ;$03A77E |
-    STA $38                                 ;$03A781 |
-    STA $39                                 ;$03A783 |
+    STA.b Mode7XScale_38                    ;$03A781 |
+    STA.b Mode7YScale_39                    ;$03A783 |
     CMP.w DATA_03A72D,Y                     ;$03A785 |
     BNE CODE_03A78D                         ;$03A788 |
     INC.w $14B2                             ;$03A78A |
@@ -5341,8 +5341,8 @@ Return03A7AC:
 
 CODE_03A7AD:
     LDA.b #$60
-    STA $38                                 ;$03A7AF |
-    STA $39                                 ;$03A7B1 |
+    STA.b Mode7XScale_38                    ;$03A7AF |
+    STA.b Mode7YScale_39                    ;$03A7B1 |
     LDA.b #$FF                              ;$03A7B3 |
     STA.w SpriteXPosHigh_14E0,X             ;$03A7B5 |
     LDA.b #$60                              ;$03A7B8 |
@@ -5358,8 +5358,8 @@ CODE_03A7AD:
     LDA.b #$00                              ;$03A7CF |
     STA.w SpriteYPosHigh_14D4,X             ;$03A7D1 |
     LDA.b #$08                              ;$03A7D4 |
-    STA $38                                 ;$03A7D6 |
-    STA $39                                 ;$03A7D8 |
+    STA.b Mode7XScale_38                    ;$03A7D6 |
+    STA.b Mode7YScale_39                    ;$03A7D8 |
     LDA.b #$64                              ;$03A7DA |
     STA $B6,X                               ;$03A7DC |
     RTS                                     ;$03A7DE |
@@ -5436,9 +5436,9 @@ CODE_03A858:
     LDA.b Frame_13
     AND.b #$03                              ;$03A85A |
     BNE Return03A86D                        ;$03A85C |
-    INC $38                                 ;$03A85E |
-    INC $39                                 ;$03A860 |
-    LDA $38                                 ;$03A862 |
+    INC.b Mode7XScale_38                    ;$03A85E |
+    INC.b Mode7YScale_39                    ;$03A860 |
+    LDA.b Mode7XScale_38                    ;$03A862 |
     CMP.b #$20                              ;$03A864 |
     BNE Return03A86D                        ;$03A866 |
     LDA.b #$FF                              ;$03A868 |
@@ -5796,15 +5796,15 @@ CODE_03ABBE:
     STZ $AA,X                               ;$03ABC3 |
     LDA.w $1540,X                           ;$03ABC5 |
     BNE CODE_03ABEB                         ;$03ABC8 |
-    LDA $36                                 ;$03ABCA |
+    LDA.b Mode7Angle_36                     ;$03ABCA |
     CLC                                     ;$03ABCC |
     ADC.b #$0A                              ;$03ABCD |
-    STA $36                                 ;$03ABCF |
-    LDA $37                                 ;$03ABD1 |
+    STA.b Mode7Angle_36                     ;$03ABCF |
+    LDA.b Mode7Angle_36+1                   ;$03ABD1 |
     ADC.b #$00                              ;$03ABD3 |
-    STA $37                                 ;$03ABD5 |
+    STA.b Mode7Angle_36+1                   ;$03ABD5 |
     BEQ Return03ABEA                        ;$03ABD7 |
-    STZ $36                                 ;$03ABD9 |
+    STZ.b Mode7Angle_36                     ;$03ABD9 |
     LDA.b #$20                              ;$03ABDB |
     STA.w SpritePlayerContact_154C,X        ;$03ABDD |
     LDA.b #$60                              ;$03ABE0 |
@@ -5849,21 +5849,21 @@ CODE_03AC22:
     STA $B6,X                               ;$03AC29 |
     LDA.b #$FC                              ;$03AC2B |
     STA $AA,X                               ;$03AC2D |
-    LDA $36                                 ;$03AC2F |
+    LDA.b Mode7Angle_36                     ;$03AC2F |
     CLC                                     ;$03AC31 |
     ADC.b #$05                              ;$03AC32 |
-    STA $36                                 ;$03AC34 |
-    LDA $37                                 ;$03AC36 |
+    STA.b Mode7Angle_36                     ;$03AC34 |
+    LDA.b Mode7Angle_36+1                   ;$03AC36 |
     ADC.b #$00                              ;$03AC38 |
-    STA $37                                 ;$03AC3A |
+    STA.b Mode7Angle_36+1                   ;$03AC3A |
     LDA.b Frame_13                          ;$03AC3C |
     AND.b #$03                              ;$03AC3E |
     BNE Return03AC4C                        ;$03AC40 |
-    LDA $38                                 ;$03AC42 |
+    LDA.b Mode7XScale_38                    ;$03AC42 |
     CMP.b #$80                              ;$03AC44 |
     BCS CODE_03AC4D                         ;$03AC46 |
-    INC $38                                 ;$03AC48 |
-    INC $39                                 ;$03AC4A |
+    INC.b Mode7XScale_38                    ;$03AC48 |
+    INC.b Mode7YScale_39                    ;$03AC4A |
 Return03AC4C:
     RTS
 
@@ -6425,14 +6425,14 @@ DATA_03B076:
     db $10,$F0
 
 CODE_03B078:
-    LDA $38
+    LDA.b Mode7XScale_38
     CMP.b #$20                              ;$03B07A |
     BNE Return03B0DB                        ;$03B07C |
     LDA.w $151C,X                           ;$03B07E |
     CMP.b #$07                              ;$03B081 |
     BCC Return03B0F2                        ;$03B083 |
-    LDA $36                                 ;$03B085 |
-    ORA $37                                 ;$03B087 |
+    LDA.b Mode7Angle_36                     ;$03B085 |
+    ORA.b Mode7Angle_36+1                   ;$03B087 |
     BNE Return03B0F2                        ;$03B089 |
     JSR CODE_03B0DC                         ;$03B08B |
     LDA.w SpritePlayerContact_154C,X        ;$03B08E |
@@ -7919,15 +7919,15 @@ CODE_03C12D:
     INX                                     ;$03C143 |
     INX                                     ;$03C144 |
 CODE_03C145:
-    LDA $36
+    LDA.b Mode7Angle_36
     CLC                                     ;$03C147 |
     ADC.l IggyPlatSpeed,X                   ;$03C148 |
-    STA $36                                 ;$03C14C |
+    STA.b Mode7Angle_36                     ;$03C14C |
     PHA                                     ;$03C14E |
-    LDA $37                                 ;$03C14F |
+    LDA.b Mode7Angle_36+1                   ;$03C14F |
     ADC.l DATA_03C116,X                     ;$03C151 |
     AND.b #$01                              ;$03C155 |
-    STA $37                                 ;$03C157 |
+    STA.b Mode7Angle_36+1                   ;$03C157 |
     PLA                                     ;$03C159 |
     CMP.l IggyPlatBounds,X                  ;$03C15A |
     BNE Return03C175                        ;$03C15E |
@@ -10354,8 +10354,8 @@ CODE_03DD7D:
     LDA.b #$48                              ;$03DD8D |
     STA.b Mode7CenterY_2C                   ;$03DD8F |
     LDA.b #$14                              ;$03DD91 |
-    STA $38                                 ;$03DD93 |
-    STA $39                                 ;$03DD95 |
+    STA.b Mode7XScale_38                    ;$03DD93 |
+    STA.b Mode7YScale_39                    ;$03DD95 |
 CODE_03DD97:
     LDA.b #$FF
     STA.b LevelScreens_5D                   ;$03DD99 |

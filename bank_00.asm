@@ -464,7 +464,7 @@ IRQ_NMI_return:                             ;        |
     LDA $25                                 ;$0083A3 | |
     STA.w $2112                             ;$0083A5 |/
 mode_7_IRQ_return:                          ;        |
-    LDA $3E                                 ;$0083A8 |\ Set the BG mode
+    LDA.b MainBGMode_3E                     ;$0083A8 |\ Set the BG mode
     STA.w $2105                             ;$0083AA |/
     LDA $40                                 ;$0083AD |\ Set any color math settings
     STA.w $2131                             ;$0083AF |/
@@ -514,13 +514,13 @@ mode_7_scroll:                              ;        \
     NOP                                     ;$0083FA |/
     LDA.b #$07                              ;$0083FB |\ Enable mode 7
     STA.w $2105                             ;$0083FD |/
-    LDA $3A                                 ;$008400 |\ Set layer 1 X position
+    LDA.b Mode7XPos_3A                      ;$008400 |\ Set layer 1 X position
     STA.w $210D                             ;$008402 | |
-    LDA $3B                                 ;$008405 | |
+    LDA.b Mode7XPos_3A+1                    ;$008405 | |
     STA.w $210D                             ;$008407 |/
-    LDA $3C                                 ;$00840A |\ Set layer 1 X position
+    LDA.b Mode7YPos_3C                      ;$00840A |\ Set layer 1 X position
     STA.w $210E                             ;$00840C | |
-    LDA $3D                                 ;$00840F | |
+    LDA.b Mode7YPos_3C+1                    ;$00840F | |
     STA.w $210E                             ;$008411 |/
     BRA IRQ_return                          ;$008414 / Finish off IRQ
 
@@ -569,7 +569,7 @@ DMA_OAM:                                    ;        \
     SEP #$20                                ;$008468 | 8 bit A
     LDA.b #$80                              ;$00846A |\ Enable sprite rotation priority
     STA.w $2103                             ;$00846C |/
-    LDA $3F                                 ;$00846F |\ Set OAM rotation address
+    LDA.b OAMAddress_3F                     ;$00846F |\ Set OAM rotation address
     STA.w $2102                             ;$008471 |/
     RTS                                     ;$008474 / Finished with OAM DMA
 
@@ -757,7 +757,7 @@ CODE_00862F:
     LDA.b #$19                              ;$008638 |
     STA.w $4311                             ;$00863A |
     STY.w $420B                             ;$00863D |
-    STZ $3F                                 ;$008640 |
+    STZ.b OAMAddress_3F                     ;$008640 |
     JSL OAM_reset_7F8000                    ;$008642 |
     JMP DMA_OAM                             ;$008646 |
 
@@ -1311,11 +1311,11 @@ DATA_008ABC:
     db $F0
 
 CODE_008ACD:
-    LDA $39
+    LDA.b Mode7YScale_39
     STA $00                                 ;$008ACF |
     REP #$30                                ;$008AD1 |
     JSR CODE_008AE8                         ;$008AD3 |
-    LDA $38                                 ;$008AD6 |
+    LDA.b Mode7XScale_38                    ;$008AD6 |
     STA $00                                 ;$008AD8 |
     REP #$30                                ;$008ADA |
     LDA.b Mode7ParamA_2E                    ;$008ADC |
@@ -1325,7 +1325,7 @@ CODE_008ACD:
     INC A                                   ;$008AE5 |
     STA.b Mode7ParamC_32                    ;$008AE6 |
 CODE_008AE8:
-    LDA $36
+    LDA.b Mode7Angle_36
     ASL                                     ;$008AEA |
     PHA                                     ;$008AEB |
     XBA                                     ;$008AEC |
@@ -2569,7 +2569,7 @@ CODE_00961E:
 CODE_009622:
     JSR KeepModeActive
     LDA.b #$09                              ;$009625 |
-    STA $3E                                 ;$009627 |
+    STA.b MainBGMode_3E                     ;$009627 |
     JMP CODE_0093EA                         ;$009629 |
 
 GM25_ending_enemy_main_00962C:
@@ -2773,8 +2773,8 @@ load_boss_room_0097BC:
     STZ.w $0DB0                             ;$0097C1 |
     JSR GMPPMosaic                          ;$0097C4 |
     LDA.b #$20                              ;$0097C7 |
-    STA $38                                 ;$0097C9 |
-    STA $39                                 ;$0097CB |
+    STA.b Mode7XScale_38                    ;$0097C9 |
+    STA.b Mode7YScale_39                    ;$0097CB |
     STZ.w ScreenShakeYOffset_1888           ;$0097CD |
     JSR CODE_0085FA                         ;$0097D0 |
     LDA.b #$FF                              ;$0097D3 |
@@ -2794,7 +2794,7 @@ load_boss_room_0097BC:
     LDA.b #$03
     STA.w $13F9                             ;$0097F3 |
     LDA.b #$C8                              ;$0097F6 |
-    STA $3F                                 ;$0097F8 |
+    STA.b OAMAddress_3F                     ;$0097F8 |
     LDA.b #$12                              ;$0097FA |
 +   DEC.w $1931                             ;$0097FC |
     BRA +                                   ;$0097FF |
@@ -2819,9 +2819,9 @@ load_boss_room_0097BC:
     LDA.w #$0050                            ;$00982A |
     STA.b Mode7CenterY_2C                   ;$00982D |
     LDA.w #$0080                            ;$00982F |
-    STA $3A                                 ;$009832 |
+    STA.b Mode7XPos_3A                      ;$009832 |
     LDA.w #$0010                            ;$009834 |
-    STA $3C                                 ;$009837 |
+    STA.b Mode7YPos_3C                      ;$009837 |
     SEP #$20                                ;$009839 |
 .Reznor_00983B:
     LDA.b #$13
@@ -4004,7 +4004,7 @@ CODE_00A11B:
     JSL CODE_048D91                         ;$00A161 |
     JSL CODE_04D6E9                         ;$00A165 |
     LDA.b #$F0                              ;$00A169 |
-    STA $3F                                 ;$00A16B |
+    STA.b OAMAddress_3F                     ;$00A16B |
     JSR consolidate_OAM_008494              ;$00A16D |
     JSR _load_stripe_image_                 ;$00A170 |
     STZ.w $13D9                             ;$00A173 |
@@ -5607,7 +5607,7 @@ CODE_00AF25:
     LDA.b #$04                              ;$00AF29 |
     TRB $40                                 ;$00AF2B |
     LDA.b #$09                              ;$00AF2D |
-    STA $3E                                 ;$00AF2F |
+    STA.b MainBGMode_3E                     ;$00AF2F |
     JSL CODE_05CBFF                         ;$00AF31 |
 CODE_00AF35:
     LDA.b Frame_13
@@ -13205,7 +13205,7 @@ CODE_00F962:
     STA.w KeyholeYPos_1438                  ;$00F97D |
     JSR boss_platform_collision             ;$00F980 |
 CODE_00F983:
-    LDA $36
+    LDA.b Mode7Angle_36
     CLC                                     ;$00F985 |
     ADC.b #$48                              ;$00F986 |
     LSR                                     ;$00F988 |
@@ -13248,15 +13248,15 @@ CODE_00F9BC:
     RTS                                     ;$00F9C8 |
 
 boss_platform_collision:
-    LDA $36                                 ;$00F9C9 |
+    LDA.b Mode7Angle_36                     ;$00F9C9 |
     PHA                                     ;$00F9CB |
     EOR.w #$FFFF                            ;$00F9CC |
     INC A                                   ;$00F9CF |
-    STA $36                                 ;$00F9D0 |
+    STA.b Mode7Angle_36                     ;$00F9D0 |
     JSR CODE_00F9BC                         ;$00F9D2 |
     REP #$20                                ;$00F9D5 |
     PLA                                     ;$00F9D7 |
-    STA $36                                 ;$00F9D8 |
+    STA.b Mode7Angle_36                     ;$00F9D8 |
     LDA.w $14B8                             ;$00F9DA |
     AND.w #$00FF                            ;$00F9DD |
     SEC                                     ;$00F9E0 |
