@@ -8311,7 +8311,7 @@ no_special_collision:                       ;        \
 skip_standard_collision:                    ;        |
     JSR check_y_position                    ;$00CD36 | Check the player's Y position.
 CODE_00CD39:                                ;        |
-    STZ.w $13DD                             ;$00CD39 | Clear the turning around pose.
+    STZ.w PlayerTurningPose_13DD            ;$00CD39 | Clear the turning around pose.
     LDY.w $13F3                             ;$00CD3C |\ If the player is still getting a P-balloon,
     BNE p_balloon                           ;$00CD3F |/ run the inflation code.
     LDA.w $18BE                             ;$00CD41 |\ If the player can climb on air,
@@ -9394,7 +9394,7 @@ CODE_00D6EC:
     LDA $86                                 ;$00D702 |
     BNE CODE_00D70E                         ;$00D704 |
     LDA.b #$0D                              ;$00D706 |
-    STA.w $13DD                             ;$00D708 |
+    STA.w PlayerTurningPose_13DD            ;$00D708 |
     JSR CODE_00FE4A                         ;$00D70B |
 CODE_00D70E:
     TXA

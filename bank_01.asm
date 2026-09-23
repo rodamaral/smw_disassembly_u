@@ -4313,7 +4313,7 @@ ShellSpeedX:
 
 HandleSprCarried:
     JSR CODE_019F9B
-    LDA.w $13DD                             ;$019F74 |
+    LDA.w PlayerTurningPose_13DD            ;$019F74 |
     BNE CODE_019F83                         ;$019F77 |
     LDA.w SpriteInPipeMode_1419             ;$019F79 |
     BNE CODE_019F83                         ;$019F7C |
@@ -4511,7 +4511,7 @@ CODE_01A0C4:
     CMP.b #$02                              ;$01A0C9 |
     BEQ CODE_01A0D4                         ;$01A0CB |
 CODE_01A0CD:
-    LDA.w $13DD
+    LDA.w PlayerTurningPose_13DD
     ORA $74                                 ;$01A0D0 |
     BEQ CODE_01A0D6                         ;$01A0D2 |
 CODE_01A0D4:
