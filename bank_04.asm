@@ -5016,8 +5016,8 @@ CODE_04D6E9:
     LDA.w #$FFFF                            ;$04D6ED |
     STA.b Layer1PrevTileUp_4D               ;$04D6F0 |
     STA.b Layer1PrevTileDown_4F             ;$04D6F2 |
-    LDA.w #$0202                            ;$04D6F4 |
-    STA $55                                 ;$04D6F7 |
+    LDA.w #!ScrollRightDown_0202            ;$04D6F4 |
+    STA.b Layer1ScrollDir_55                ;$04D6F7 |
     LDA.w $0DD6                             ;$04D6F9 |
     LSR                                     ;$04D6FC |
     LSR                                     ;$04D6FD |

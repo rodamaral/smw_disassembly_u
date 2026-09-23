@@ -12887,9 +12887,9 @@ update_screen_position_00F6DB:
     STA $00                                 ;$00F71F |
     CMP.w $142A                             ;$00F721 |
     BPL +                                   ;$00F724 |
-    LDY.b #$00                              ;$00F726 |
-+   STY $55                                 ;$00F728 |
-    STY $56                                 ;$00F72A |
+    LDY.b #!ScrollLeftUp_00                 ;$00F726 |
++   STY.b Layer1ScrollDir_55                ;$00F728 |
+    STY.b Layer2ScrollDir_56                ;$00F72A |
     SEC                                     ;$00F72C |
     SBC.w $142C,Y                           ;$00F72D |
     BEQ .CODE_00F75A                        ;$00F730 |
@@ -13012,9 +13012,9 @@ ProcessVerticalScroll00F7F4:
     STA $00                                 ;$00F803 |
     CMP.w #$0070                            ;$00F805 |
     BMI +                                   ;$00F808 |
-    LDY.b #$02                              ;$00F80A |
-+   STY $55                                 ;$00F80C |
-    STY $56                                 ;$00F80E |
+    LDY.b #!ScrollRightDown_02              ;$00F80A |
++   STY.b Layer1ScrollDir_55                ;$00F80C |
+    STY.b Layer2ScrollDir_56                ;$00F80E |
     SEC                                     ;$00F810 |
     SBC.w DATA_00F69F,Y                     ;$00F811 |
     STA $02                                 ;$00F814 |

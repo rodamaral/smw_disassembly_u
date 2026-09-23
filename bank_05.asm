@@ -80,8 +80,8 @@ CODE_05809E:
     STA.b Layer1TileDown_47                 ;$0580B2 |
     LDA.b Layer2TileUp_49                   ;$0580B4 |
     STA.b Layer2TileDown_4B                 ;$0580B6 |
-    LDA.w #$0202                            ;$0580B8 |
-    STA $55                                 ;$0580BB |
+    LDA.w #!ScrollRightDown_0202            ;$0580B8 |
+    STA.b Layer1ScrollDir_55                ;$0580BB |
 CODE_0580BD:
     REP #$30
     JSL CODE_0588EC                         ;$0580BF |
@@ -800,7 +800,7 @@ process_level_mode_setting_0586F1:
     AND.b #!Layer1Vert_01                   ;$0586FB |
     BNE .vertical_layer_1_058713            ;$0586FD |
     REP #$20                                ;$0586FF | Horizontal Layer 1
-    LDA $55                                 ;$058701 |
+    LDA.b Layer1ScrollDir_55                ;$058701 |
     AND.w #$00FF                            ;$058703 |
     TAX                                     ;$058706 |
     LDA.b Layer1XPos_1A                     ;$058707 |
@@ -811,7 +811,7 @@ process_level_mode_setting_0586F1:
 
 .vertical_layer_1_058713:
     REP #$20
-    LDA $55                                 ;$058715 |
+    LDA.b Layer1ScrollDir_55                ;$058715 |
     AND.w #$00FF                            ;$058717 |
     TAX                                     ;$05871A |
     LDA.b Layer1YPos_1C                     ;$05871B |
@@ -834,7 +834,7 @@ process_level_mode_setting_0586F1:
     AND.b #!Layer2Vert_02                   ;$05873B |
     BNE .CODE_058753                        ;$05873D |
     REP #$20                                ;$05873F |
-    LDA $56                                 ;$058741 |
+    LDA.b Layer2ScrollDir_56                ;$058741 |
     AND.w #$00FF                            ;$058743 |
     TAX                                     ;$058746 |
     LDA.b Layer2XPos_1E                     ;$058747 |
@@ -844,7 +844,7 @@ process_level_mode_setting_0586F1:
     JMP .CODE_058764                        ;$058750 |
 .CODE_058753:
     REP #$20
-    LDA $56                                 ;$058755 |
+    LDA.b Layer2ScrollDir_56                ;$058755 |
     AND.w #$00FF                            ;$058757 |
     TAX                                     ;$05875A |
     LDA.b Layer2YPos_20                     ;$05875B |
@@ -887,7 +887,7 @@ set_map16_for_VRAM_upload_05877E:
     ADC.w #$0017                            ;$058798 |
     STA.b Layer1TileDown_47                 ;$05879B |
     SEP #$30                                ;$05879D |
-    LDA $55                                 ;$05879F |
+    LDA.b Layer1ScrollDir_55                ;$05879F |
     TAX                                     ;$0587A1 |
     LDA.b Layer1TileUp_45,X                 ;$0587A2 |
     LSR                                     ;$0587A4 |
@@ -1145,7 +1145,7 @@ CODE_0589CE:
     LDA.b #$00                              ;$0589F3 |
     STA $0C                                 ;$0589F5 |
     STA $0F                                 ;$0589F7 |
-    LDA $55                                 ;$0589F9 |
+    LDA.b Layer1ScrollDir_55                ;$0589F9 |
     TAX                                     ;$0589FB |
     LDA.b Layer1TileUp_45,X                 ;$0589FC |
     AND.b #$0F                              ;$0589FE |
@@ -1255,7 +1255,7 @@ CODE_058A9B:
     LDA.b #$00                              ;$058AC0 |
     STA $0C                                 ;$058AC2 |
     STA $0F                                 ;$058AC4 |
-    LDA $55                                 ;$058AC6 |
+    LDA.b Layer1ScrollDir_55                ;$058AC6 |
     TAX                                     ;$058AC8 |
     LDY.w #$0020                            ;$058AC9 |
     LDA.b Layer1TileUp_45,X                 ;$058ACC |
@@ -1396,7 +1396,7 @@ CODE_058BA7:
     LDA.b #$00                              ;$058BC1 |
     STA $0C                                 ;$058BC3 |
     STA $0F                                 ;$058BC5 |
-    LDA $56                                 ;$058BC7 |
+    LDA.b Layer2ScrollDir_56                ;$058BC7 |
     TAX                                     ;$058BC9 |
     LDA.b Layer2TileUp_49,X                 ;$058BCA |
     AND.b #$0F                              ;$058BCC |
@@ -1517,7 +1517,7 @@ CODE_058C8B:
     LDA.b #$00                              ;$058CA5 |
     STA $0C                                 ;$058CA7 |
     STA $0F                                 ;$058CA9 |
-    LDA $56                                 ;$058CAB |
+    LDA.b Layer2ScrollDir_56                ;$058CAB |
     TAX                                     ;$058CAD |
     LDY.w #$0030                            ;$058CAE |
     LDA.b Layer2TileUp_49,X                 ;$058CB1 |
@@ -4243,7 +4243,7 @@ CODE_05C0D0:
     BCS CODE_05C0D7                         ;$05C0D3 |
     LDX $08                                 ;$05C0D5 |
 CODE_05C0D7:
-    STX $55
+    STX.b Layer1ScrollDir_55
     LDA.w #$FFFF                            ;$05C0D9 |
     STA $08                                 ;$05C0DC |
     LDA $04                                 ;$05C0DE |
@@ -5012,7 +5012,7 @@ ADDR_05C659:
     RTS                                     ;$05C673 |
 
 ADDR_05C674:
-    STZ $56
+    STZ.b Layer2ScrollDir_56
     REP #$20                                ;$05C676 |
     LDA.w $144C                             ;$05C678 |
     CMP.w #$FFC0                            ;$05C67B |
@@ -5154,9 +5154,9 @@ CODE_05C784:
     JMP CODE_05C32B
 
 CODE_05C787:
-    LDA.b #$02
-    STA $55                                 ;$05C789 |
-    STA $56                                 ;$05C78B |
+    LDA.b #!ScrollRightDown_02
+    STA.b Layer1ScrollDir_55                ;$05C789 |
+    STA.b Layer2ScrollDir_56                ;$05C78B |
     LDA.w $1456                             ;$05C78D |
     LSR                                     ;$05C790 |
     LSR                                     ;$05C791 |
@@ -5185,8 +5185,8 @@ CODE_05C7BC:
     LDA.w $1B9A
     BEQ CODE_05C7ED                         ;$05C7BF |
 CODE_05C7C1:
-    LDA.b #$02
-    STA $56                                 ;$05C7C3 |
+    LDA.b #!ScrollRightDown_02
+    STA.b Layer2ScrollDir_56                ;$05C7C3 |
     REP #$20                                ;$05C7C5 |
     LDA.w $144A                             ;$05C7C7 |
     CMP.w #$0400                            ;$05C7CA |

@@ -416,18 +416,18 @@ Layer2PrevTileDown_53: skip 2
 ; used for handling camera behavior and spawning sprites
 Layer1ScrollDir_55: skip 1
 ; Valid values
-!ScrollDir_LeftUp = 0
-!ScrollDir_Loading = 1
-!ScrollDir_RightDown = 2
+!ScrollLeftUp_00 = 0
+!ScrollLoading_01 = 1
+!ScrollRightDown_02 = 2
+!ScrollRightDown_0202 = $0202
 
 ; === $7E0056 ===
 ; 1 byte
 ; Which direction Layer 2 has scrolled
 ; used for handling camera behavior
 Layer2ScrollDir_56: skip 1
-; Valid values
-!ScrollDir_LeftUp = 0
-!ScrollDir_RightDown = 2
+!ScrollLeftUp_00 = 0
+!ScrollRightDown_02 = 2
 
 ; === $7E0057 ===
 ; 1 byte

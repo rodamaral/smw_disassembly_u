@@ -5334,7 +5334,7 @@ load_sprites_from_level_02A7FC:
     AND.b #$01                              ;$02A7FE |
     BNE Return02A84B                        ;$02A800 |
 CODE_02A802:
-    LDY $55
+    LDY.b Layer1ScrollDir_55
     LDA.b ScreenMode_5B                     ;$02A804 |
     LSR                                     ;$02A806 |
     BCC CODE_02A817                         ;$02A807 |
@@ -5967,10 +5967,10 @@ CODE_02AC5C:
     LDA.b ScreenMode_5B
     LSR                                     ;$02AC5E |
     BCC CODE_02ACA1                         ;$02AC5F |
-    LDA $55                                 ;$02AC61 |
+    LDA.b Layer1ScrollDir_55                ;$02AC61 |
     PHA                                     ;$02AC63 |
-    LDA.b #$01                              ;$02AC64 |
-    STA $55                                 ;$02AC66 |
+    LDA.b #!ScrollLoading_01                ;$02AC64 |
+    STA.b Layer1ScrollDir_55                ;$02AC66 |
     LDA.b Layer1YPos_1C                     ;$02AC68 |
     PHA                                     ;$02AC6A |
     SEC                                     ;$02AC6B |
@@ -6000,14 +6000,14 @@ CODE_02AC7A:
     PLA                                     ;$02AC9A |
     STA.b Layer1YPos_1C                     ;$02AC9B |
     PLA                                     ;$02AC9D |
-    STA $55                                 ;$02AC9E |
+    STA.b Layer1ScrollDir_55                ;$02AC9E |
     RTS                                     ;$02ACA0 |
 
 CODE_02ACA1:
-    LDA $55
+    LDA.b Layer1ScrollDir_55
     PHA                                     ;$02ACA3 |
-    LDA.b #$01                              ;$02ACA4 |
-    STA $55                                 ;$02ACA6 |
+    LDA.b #!ScrollLoading_01                ;$02ACA4 |
+    STA.b Layer1ScrollDir_55                ;$02ACA6 |
     LDA.b Layer1XPos_1A                     ;$02ACA8 |
     PHA                                     ;$02ACAA |
     SEC                                     ;$02ACAB |
@@ -6037,7 +6037,7 @@ CODE_02ACBA:
     PLA                                     ;$02ACDA |
     STA.b Layer1XPos_1A                     ;$02ACDB |
     PLA                                     ;$02ACDD |
-    STA $55                                 ;$02ACDE |
+    STA.b Layer1ScrollDir_55                ;$02ACDE |
     RTS                                     ;$02ACE0 |
 
 CODE_02ACE1:
