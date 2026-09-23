@@ -381,14 +381,14 @@ NMI_start:                                  ;        \
 .lagging_mode_7_NMI                         ;        |
     LDA.b #$09                              ;$0082F7 |
     STA.w $2105                             ;$0082F9 |
-    LDA $2A                                 ;$0082FC |\ Set the mode 7 center X position
+    LDA.b Mode7CenterX_2A                   ;$0082FC |\ Set the mode 7 center X position
     CLC                                     ;$0082FE | |
     ADC.b #$80                              ;$0082FF | | Offset the center by #$80
     STA.w $211F                             ;$008301 | |
     LDA $2B                                 ;$008304 | |
     ADC.b #$00                              ;$008306 | | Handle carry if needed
     STA.w $211F                             ;$008308 |/
-    LDA $2C                                 ;$00830B |\ Set the mode 7 center Y position
+    LDA.b Mode7CenterY_2C                   ;$00830B |\ Set the mode 7 center Y position
     CLC                                     ;$00830D | |
     ADC.b #$80                              ;$00830E | | Offset the center by #$80
     STA.w $2120                             ;$008310 | |
@@ -2815,9 +2815,9 @@ load_boss_room_0097BC:
     STA.b Layer1YPos_1C                     ;$009820 |
     STA.w $1464                             ;$009822 |
     LDA.w #$0080                            ;$009825 |
-    STA $2A                                 ;$009828 |
+    STA.b Mode7CenterX_2A                   ;$009828 |
     LDA.w #$0050                            ;$00982A |
-    STA $2C                                 ;$00982D |
+    STA.b Mode7CenterY_2C                   ;$00982D |
     LDA.w #$0080                            ;$00982F |
     STA $3A                                 ;$009832 |
     LDA.w #$0010                            ;$009834 |
@@ -2936,9 +2936,9 @@ CODE_009925:
     STZ.b Layer1YPos_1C                     ;$009933 |
     STZ.w $1464                             ;$009935 |
     LDA.w #$0080                            ;$009938 |
-    STA $2A                                 ;$00993B |
+    STA.b Mode7CenterX_2A                   ;$00993B |
     LDA.w #$00A0                            ;$00993D |
-    STA $2C                                 ;$009940 |
+    STA.b Mode7CenterY_2C                   ;$009940 |
     SEP #$20                                ;$009942 |
     JSR CODE_00AE15                         ;$009944 |
     JSL standard_and_cluster_sprites_01808C ;$009947 |
@@ -8344,7 +8344,7 @@ CODE_00CD72:
     JMP CODE_00DB17                         ;$00CD76 |
 
 CODE_00CD79:
-    LDA $75
+    LDA.b PlayerInWater_75
     BEQ use_land_physics                    ;$00CD7B |
     JSR water_physics                       ;$00CD7D |
     BRA CODE_00CD8F                         ;$00CD80 |
@@ -8515,7 +8515,7 @@ set_player_pose:
     BPL CODE_00CECD                         ;$00CEC1 |
     CMP.b #$0C                              ;$00CEC3 |
     BEQ CODE_00CEFD                         ;$00CEC5 |
-    LDA $75                                 ;$00CEC7 |
+    LDA.b PlayerInWater_75                  ;$00CEC7 |
     BNE CODE_00CEFD                         ;$00CEC9 |
     BRA MrioNtInWtr                         ;$00CECB |
 
@@ -8568,7 +8568,7 @@ CODE_00CF04:
 CODE_00CF0A:
     STX.w $13DF
     TYA                                     ;$00CF0D |
-    LDY $75                                 ;$00CF0E |
+    LDY.b PlayerInWater_75                  ;$00CF0E |
     BEQ CODE_00CF13                         ;$00CF10 |
     ASL                                     ;$00CF12 |
 CODE_00CF13:
@@ -10063,7 +10063,7 @@ CODE_00DB92:
     RTS                                     ;$00DB95 |
 
 CODE_00DB96:
-    LDY $75
+    LDY.b PlayerInWater_75
     BIT.b byetudlrPress_16                  ;$00DB98 |
     BPL CODE_00DBAC                         ;$00DB9A |
     LDA.b #$0B                              ;$00DB9C |
@@ -10109,7 +10109,7 @@ CODE_00DBCA:
 CODE_00DBE8:
     TXA
     ASL                                     ;$00DBE9 |
-    ORA $75                                 ;$00DBEA |
+    ORA.b PlayerInWater_75                  ;$00DBEA |
     TAX                                     ;$00DBEC |
     LDA.w DATA_00DAB7,X                     ;$00DBED |
     STA.b PlayerXSpeed_7B                   ;$00DBF0 |
@@ -11045,7 +11045,7 @@ CODE_00EA42:
     BNE CODE_00EA5E                         ;$00EA47 |
     LSR $8A                                 ;$00EA49 |
     BCC CODE_00EAA3                         ;$00EA4B |
-    LDA $75                                 ;$00EA4D |
+    LDA.b PlayerInWater_75                  ;$00EA4D |
     BNE CODE_00EA65                         ;$00EA4F |
     LDA.b PlayerYSpeed_7D                   ;$00EA51 |
     BMI CODE_00EA65                         ;$00EA53 |
@@ -11055,14 +11055,14 @@ CODE_00EA42:
     STZ.b PlayerYSpeed_7D                   ;$00EA5C |
 CODE_00EA5E:
     LDA.b #$01
-    STA $75                                 ;$00EA60 |
+    STA.b PlayerInWater_75                  ;$00EA60 |
 CODE_00EA62:
     JMP CODE_00FD08
 
 CODE_00EA65:
     LSR $8A
     BCS CODE_00EA5E                         ;$00EA67 |
-    LDA $75                                 ;$00EA69 |
+    LDA.b PlayerInWater_75                  ;$00EA69 |
     BEQ Return00EAA5                        ;$00EA6B |
     LDA.b #$FC                              ;$00EA6D |
     CMP.b PlayerYSpeed_7D                   ;$00EA6F |
@@ -11092,7 +11092,7 @@ CODE_00EA92:
     LDA.b #$AA                              ;$00EA9F |
     STA.b PlayerYSpeed_7D                   ;$00EAA1 |
 CODE_00EAA3:
-    STZ $75
+    STZ.b PlayerInWater_75
 Return00EAA5:
     RTS
 
@@ -13049,7 +13049,7 @@ ProcessVerticalScroll00F7F4:
     CPX.b #$02                              ;$00F852 |
     BCS .CODE_00F869                        ;$00F854 |
 .CODE_00F856:
-    LDX $75
+    LDX.b PlayerInWater_75
     BEQ .CODE_00F85E                        ;$00F858 |
     LDX.b PlayerInAir_72                    ;$00F85A |
     BNE .CODE_00F869                        ;$00F85C |

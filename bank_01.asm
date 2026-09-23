@@ -10719,9 +10719,9 @@ CODE_01CCC5:
 
 CODE_01CCC7:
     REP #$20
-    LDA $2A                                 ;$01CCC9 |
+    LDA.b Mode7CenterX_2A                   ;$01CCC9 |
     STA.w $14B0                             ;$01CCCB |
-    LDA $2C                                 ;$01CCCE |
+    LDA.b Mode7CenterY_2C                   ;$01CCCE |
     STA.w $14B2                             ;$01CCD0 |
     LDA.w $14B4                             ;$01CCD3 |
     SEC                                     ;$01CCD6 |

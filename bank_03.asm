@@ -3296,7 +3296,7 @@ ReznorNotLocked:
     JSL CODE_03D70C                         ;$03989F |
 ReznorSignCode:
     LDA.b #$80
-    STA $2A                                 ;$0398A5 |
+    STA.b Mode7CenterX_2A                   ;$0398A5 |
     STZ $2B                                 ;$0398A7 |
     LDX.b #$00                              ;$0398A9 |
     LDA.b #$C0                              ;$0398AB |
@@ -3435,7 +3435,7 @@ CODE_0399A2:
     DEC $00                                 ;$0399B0 |
 CODE_0399B2:
     CLC
-    ADC $2A                                 ;$0399B3 |
+    ADC.b Mode7CenterX_2A                   ;$0399B3 |
     PHP                                     ;$0399B5 |
     CLC                                     ;$0399B6 |
     ADC.b #$40                              ;$0399B7 |
@@ -3457,7 +3457,7 @@ CODE_0399B2:
     DEC $01                                 ;$0399D5 |
 CODE_0399D7:
     CLC
-    ADC $2C                                 ;$0399D8 |
+    ADC.b Mode7CenterY_2C                   ;$0399D8 |
     PHP                                     ;$0399DA |
     ADC.b #$20                              ;$0399DB |
     STA.b SpriteYPosLow_D8,X                ;$0399DD |
@@ -4714,9 +4714,9 @@ CODE_03A279:
     AND.b #$03                              ;$03A294 |
     STA.w $1428                             ;$03A296 |
     LDA.b #$90                              ;$03A299 |
-    STA $2A                                 ;$03A29B |
+    STA.b Mode7CenterX_2A                   ;$03A29B |
     LDA.b #$C8                              ;$03A29D |
-    STA $2C                                 ;$03A29F |
+    STA.b Mode7CenterY_2C                   ;$03A29F |
     JSL CODE_03DEDF                         ;$03A2A1 |
     LDA.w $14B5                             ;$03A2A5 |
     BEQ CODE_03A2AD                         ;$03A2A8 |
@@ -10352,7 +10352,7 @@ CODE_03DD7D:
     BNE CODE_03DD97                         ;$03DD88 |
     JSR CODE_03DE8E                         ;$03DD8A |
     LDA.b #$48                              ;$03DD8D |
-    STA $2C                                 ;$03DD8F |
+    STA.b Mode7CenterY_2C                   ;$03DD8F |
     LDA.b #$14                              ;$03DD91 |
     STA $38                                 ;$03DD93 |
     STA $39                                 ;$03DD95 |
