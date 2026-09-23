@@ -2777,7 +2777,7 @@ DATA_0CAB1D:
 CODE_0CAB1F:
     LDX.w $1B88
     LDA.b #$33                              ;$0CAB22 |
-    STA $41                                 ;$0CAB24 |
+    STA.b Layer12Window_41                  ;$0CAB24 |
     LDY.w $1928                             ;$0CAB26 |
     BNE CODE_0CAB2F                         ;$0CAB29 |
     CPX.b #$00                              ;$0CAB2B |
@@ -2838,7 +2838,7 @@ CODE_0CAB7C:
     STA.w $212E                             ;$0CAB8C |
     STA.w $212F                             ;$0CAB8F |
     LDA.b #$22                              ;$0CAB92 |
-    STA $44                                 ;$0CAB94 |
+    STA.b ColorAddition_44                  ;$0CAB94 |
     LDA.b #$80                              ;$0CAB96 |
     STA.w $0D9F                             ;$0CAB98 |
     RTS                                     ;$0CAB9B |

@@ -4550,7 +4550,7 @@ ZeroSpriteTables:
     STZ.w $1564,X                           ;$07F748 |
     STZ.w $1FE2,X                           ;$07F74B |
     STZ.w $1626,X                           ;$07F74E |
-    STZ.w $1570,X                           ;$07F751 |
+    STZ.w SpriteAnimationTimer_1570,X       ;$07F751 |
     STZ $B6,X                               ;$07F754 |
     STZ.w $14F8,X                           ;$07F756 |
     STZ $AA,X                               ;$07F759 |

@@ -226,13 +226,13 @@ NMI_start:                                  ;        \
     LDA.b #$80                              ;$0081AA |\ Force blank
     STA.w $2100                             ;$0081AC |/
     STZ.w $420C                             ;$0081AF | Disable HDMA
-    LDA $41                                 ;$0081B2 |\ Update layer 1 and 2 window mask settings
+    LDA.b Layer12Window_41                  ;$0081B2 |\ Update layer 1 and 2 window mask settings
     STA.w $2123                             ;$0081B4 |/
     LDA $42                                 ;$0081B7 |\ Update layer 3 and 4 window mask settings
     STA.w $2124                             ;$0081B9 |/
-    LDA $43                                 ;$0081BC |\ Update sprite and color window settings
+    LDA.b OBJCWWindow_43                    ;$0081BC |\ Update sprite and color window settings
     STA.w $2125                             ;$0081BE |/
-    LDA $44                                 ;$0081C1 |\ Initial color addition settings
+    LDA.b ColorAddition_44                  ;$0081C1 |\ Initial color addition settings
     STA.w $2130                             ;$0081C3 |/
     LDA.w IRQNMICommand_0D9B                ;$0081C6 |\ Check for a regular level
     BPL .regular_level_NMI                  ;$0081C9 | |
@@ -501,7 +501,7 @@ mode_7_IRQ:                                 ;        \
 .platform_bosses                            ;        |
     LDY.w EndLevelTimer_1493                ;$0083E3 |\ if the level isn't ending, run mode 7 scrolling
     BEQ mode_7_scroll                       ;$0083E6 |/
-    LDY.w $1495                             ;$0083E8 |\ Also, if the fade timer is less than #$40
+    LDY.w ColorFadeTimer_1495               ;$0083E8 |\ Also, if the fade timer is less than #$40
     CPY.b #$40                              ;$0083EB | | keep on setting the mode 7 scroll
     BCC mode_7_scroll                       ;$0083ED |/
     LDA.b #$81                              ;$0083EF | Load NMI and autojoy enabled
@@ -1290,15 +1290,15 @@ SetUpScreen:
     STA.w $210B                             ;$008A90 |
     LDA.b #$04                              ;$008A93 |
     STA.w $210C                             ;$008A95 |
-    STZ $41                                 ;$008A98 |
+    STZ.b Layer12Window_41                  ;$008A98 |
     STZ $42                                 ;$008A9A |
-    STZ $43                                 ;$008A9C |
+    STZ.b OBJCWWindow_43                    ;$008A9C |
     STZ.w $212A                             ;$008A9E |
     STZ.w $212B                             ;$008AA1 |
     STZ.w $212E                             ;$008AA4 |
     STZ.w $212F                             ;$008AA7 |
     LDA.b #$02                              ;$008AAA |
-    STA $44                                 ;$008AAC |
+    STA.b ColorAddition_44                  ;$008AAC |
     LDA.b #$80                              ;$008AAE |
     STA.w $211A                             ;$008AB0 |
     RTS                                     ;$008AB3 |
@@ -2340,13 +2340,13 @@ CODE_00942E:
     DEC.w $1DF5
     BNE Return00941A                        ;$009431 |
     INC.w $1DF5                             ;$009433 |
-    LDA.w $1433                             ;$009436 |
+    LDA.w SpotlightSize_1433                ;$009436 |
     CLC                                     ;$009439 |
     ADC.b #$04                              ;$00943A |
     CMP.b #$F0                              ;$00943C |
     BCS CODE_009417                         ;$00943E |
 CODE_009440:
-    STA.w $1433
+    STA.w SpotlightSize_1433
 CODE_009443:
     JSR CODE_00CA61
     LDA.b #$80                              ;$009446 |
@@ -2832,11 +2832,11 @@ load_boss_room_0097BC:
     STZ.w $212D                             ;$009848 |
     STZ.w $212F                             ;$00984B |
     LDA.b #$02                              ;$00984E |
-    STA $41                                 ;$009850 |
+    STA.b Layer12Window_41                  ;$009850 |
     LDA.b #$32                              ;$009852 |
-    STA $43                                 ;$009854 |
+    STA.b OBJCWWindow_43                    ;$009854 |
     LDA.b #$20                              ;$009856 |
-    STA $44                                 ;$009858 |
+    STA.b ColorAddition_44                  ;$009858 |
     JSR GM04DoDMA                           ;$00985A |
     JSR CODE_008ACD                         ;$00985D |
 run_level_physics_009860:
@@ -3113,13 +3113,13 @@ GM04_title_load_2_009A8B:
     LDA.b #!IRQNMICutscenes_01              ;$009AA8 |
     STA.w IRQNMICommand_0D9B                ;$009AAA |
     LDA.b #$33                              ;$009AAD |
-    STA $41                                 ;$009AAF |
+    STA.b Layer12Window_41                  ;$009AAF |
     LDA.b #$00                              ;$009AB1 |
     STA $42                                 ;$009AB3 |
     LDA.b #$23                              ;$009AB5 |
-    STA $43                                 ;$009AB7 |
+    STA.b OBJCWWindow_43                    ;$009AB7 |
     LDA.b #$12                              ;$009AB9 |
-    STA $44                                 ;$009ABB |
+    STA.b ColorAddition_44                  ;$009ABB |
     JSR CODE_009443                         ;$009ABD |
     LDA.b #$10                              ;$009AC0 |
     STA.w $1DF5                             ;$009AC2 |
@@ -3950,7 +3950,7 @@ GM0C_overworld_load_00A087:
     LDA.w $0DC2                             ;$00A0E0 |
     STA.w $0DBC,X                           ;$00A0E3 |
     LDA.b #$03                              ;$00A0E6 |
-    STA $44                                 ;$00A0E8 |
+    STA.b ColorAddition_44                  ;$00A0E8 |
     LDA.b #$30                              ;$00A0EA |
     LDX.b #$15                              ;$00A0EC |
     LDY.w $13C9                             ;$00A0EE |
@@ -3968,9 +3968,9 @@ CODE_00A101:
     STA.w $0701                             ;$00A10A |
     SEP #$20                                ;$00A10D |
     LDA.b #$30                              ;$00A10F |
-    STA $43                                 ;$00A111 |
+    STA.b OBJCWWindow_43                    ;$00A111 |
     LDA.b #$20                              ;$00A113 |
-    STA $44                                 ;$00A115 |
+    STA.b ColorAddition_44                  ;$00A115 |
     LDA.b #$B3                              ;$00A117 |
     LDX.b #$17                              ;$00A119 |
 CODE_00A11B:
@@ -4617,10 +4617,10 @@ CODE_00A67D:
     STZ.w $13D9,X
     DEX                                     ;$00A680 |
     BNE CODE_00A67D                         ;$00A681 |
-    ASL.w $13CB                             ;$00A683 |
+    ASL.w UnusedStarCounter_13CB            ;$00A683 |
     STZ.w $149A                             ;$00A686 |
     STZ.w PickUpItemTimer_1498              ;$00A689 |
-    STZ.w $1495                             ;$00A68C |
+    STZ.w ColorFadeTimer_1495               ;$00A68C |
     STZ.w SpriteInPipeMode_1419             ;$00A68F |
     LDY.b #$01                              ;$00A692 |
     LDX.w $1931                             ;$00A694 |
@@ -4668,18 +4668,18 @@ CODE_00A6E0:
     LDA.b #$24                              ;$00A6E2 |
     STA $72                                 ;$00A6E4 |
     STZ.b SpriteLock_9D                     ;$00A6E6 |
-    LDA.w $1434                             ;$00A6E8 |
+    LDA.w KeyholeTimer_1434                 ;$00A6E8 |
     BEQ CODE_00A704                         ;$00A6EB |
     LDA.w MusicBackup_0DDA                  ;$00A6ED |
     ORA.b #$7F                              ;$00A6F0 |
     STA.w MusicBackup_0DDA                  ;$00A6F2 |
     LDA.b PlayerXPos_94                     ;$00A6F5 |
     ORA.b #$04                              ;$00A6F7 |
-    STA.w $1436                             ;$00A6F9 |
+    STA.w KeyholeXPos_1436                  ;$00A6F9 |
     LDA.b PlayerYPos_96                     ;$00A6FC |
     CLC                                     ;$00A6FE |
     ADC.b #$10                              ;$00A6FF |
-    STA.w $1438                             ;$00A701 |
+    STA.w KeyholeYPos_1438                  ;$00A701 |
 CODE_00A704:
     LDA.w YoshiHeavenFlag_1B95
     BEQ Return00A715                        ;$00A707 |
@@ -4711,7 +4711,7 @@ CODE_00A716:
 CODE_00A734:
     STY $85
     LDA.w $13CF                             ;$00A736 |
-    ORA.w $1434                             ;$00A739 |
+    ORA.w KeyholeTimer_1434                 ;$00A739 |
     BNE CODE_00A6E0                         ;$00A73C |
     LDA.b #$04                              ;$00A73E |
 CODE_00A740:
@@ -5613,7 +5613,7 @@ CODE_00AF35:
     LDA.b Frame_13
     AND.b #$03                              ;$00AF37 |
     BNE Return00AFA2                        ;$00AF39 |
-    LDA.w $1495                             ;$00AF3B |
+    LDA.w ColorFadeTimer_1495               ;$00AF3B |
     CMP.b #$40                              ;$00AF3E |
     BCS Return00AFA2                        ;$00AF40 |
     JSR CODE_00AFA3                         ;$00AF42 |
@@ -5667,7 +5667,7 @@ CODE_00AFA3:
     TAY
     INC A                                   ;$00AFA4 |
     INC A                                   ;$00AFA5 |
-    STA.w $1495                             ;$00AFA6 |
+    STA.w ColorFadeTimer_1495               ;$00AFA6 |
     TYA                                     ;$00AFA9 |
     LSR                                     ;$00AFAA |
     LSR                                     ;$00AFAB |
@@ -7303,21 +7303,21 @@ DATA_00C478:
 
 timers_and_animation_00C47E:
     STZ.b PlayerHiddenTiles_78
-    LDA.w $13CB                             ;$00C480 |
+    LDA.w UnusedStarCounter_13CB            ;$00C480 |
     BPL +                                   ;$00C483 |
     JSL CODE_01C580                         ;$00C485 | as $13CB was left off, this is normally unreachable
-    STZ.w $13CB                             ;$00C489 |
-+   LDY.w $1434                             ;$00C48C |
+    STZ.w UnusedStarCounter_13CB            ;$00C489 |
++   LDY.w KeyholeTimer_1434                 ;$00C48C |
     BEQ .CODE_00C4BA                        ;$00C48F | if keyhole timer is set
     STY.w PlayerIsFrozen_13FB               ;$00C491 |
     STY.b SpriteLock_9D                     ;$00C494 |
-    LDX.w $1435                             ;$00C496 |
-    LDA.w $1433                             ;$00C499 |
+    LDX.w KeyholeDirection_1435             ;$00C496 |
+    LDA.w SpotlightSize_1433                ;$00C499 |
     CMP.w DATA_00C470,X                     ;$00C49C |
     BNE .CODE_00C4BC                        ;$00C49F |
     DEY                                     ;$00C4A1 |
     BNE +                                   ;$00C4A2 |
-    INC.w $1435                             ;$00C4A4 |
+    INC.w KeyholeDirection_1435             ;$00C4A4 |
     TXA                                     ;$00C4A7 |
     LSR                                     ;$00C4A8 |
     BCC .CODE_00C4F8                        ;$00C4A9 |
@@ -7326,34 +7326,34 @@ timers_and_animation_00C47E:
     LDY.b #!FadeToOverworld_0B              ;$00C4B0 |
     JSR CODE_00C9FE                         ;$00C4B2 |
     LDY.b #$00                              ;$00C4B5 |
-+   STY.w $1434                             ;$00C4B7 |
++   STY.w KeyholeTimer_1434                 ;$00C4B7 |
 .CODE_00C4BA:
     BRA .CODE_00C4F8
 
 .CODE_00C4BC:
     CLC
     ADC.w DATA_00C474,X                     ;$00C4BD |
-    STA.w $1433                             ;$00C4C0 |
+    STA.w SpotlightSize_1433                ;$00C4C0 |
     LDA.b #$22                              ;$00C4C3 |
-    STA $41                                 ;$00C4C5 |
+    STA.b Layer12Window_41                  ;$00C4C5 |
     LDA.b #$02                              ;$00C4C7 |
     STA $42                                 ;$00C4C9 |
     LDA.w DATA_00C478,X                     ;$00C4CB |
-    STA $43                                 ;$00C4CE |
+    STA.b OBJCWWindow_43                    ;$00C4CE |
     LDA.b #$12                              ;$00C4D0 |
-    STA $44                                 ;$00C4D2 |
+    STA.b ColorAddition_44                  ;$00C4D2 |
     REP #$20                                ;$00C4D4 |
     LDA.w #$CB93                            ;$00C4D6 |
     STA $04                                 ;$00C4D9 |
     STZ $06                                 ;$00C4DB |
     SEP #$20                                ;$00C4DD |
-    LDA.w $1436                             ;$00C4DF |
+    LDA.w KeyholeXPos_1436                  ;$00C4DF |
     SEC                                     ;$00C4E2 |
     SBC.b Layer1XPos_1A                     ;$00C4E3 |
     CLC                                     ;$00C4E5 |
     ADC.b #$04                              ;$00C4E6 |
     STA $00                                 ;$00C4E8 |
-    LDA.w $1438                             ;$00C4EA |
+    LDA.w KeyholeYPos_1438                  ;$00C4EA |
     SEC                                     ;$00C4ED |
     SBC.b Layer1YPos_1C                     ;$00C4EE |
     CLC                                     ;$00C4F0 |
@@ -7370,9 +7370,9 @@ timers_and_animation_00C47E:
     BNE .skip_timers_00C569                 ;$00C502 |
     INC.b Frame_14                          ;$00C504 |
     LDX.b #$13                              ;$00C506 |
--   LDA.w $1495,X                           ;$00C508 | decrement $1495-$14A8 every frame
+-   LDA.w ColorFadeTimer_1495,X             ;$00C508 | decrement $1495-$14A8 every frame
     BEQ +                                   ;$00C50B |
-    DEC.w $1495,X                           ;$00C50D |
+    DEC.w ColorFadeTimer_1495,X             ;$00C50D |
 +   DEX                                     ;$00C510 |
     BNE -                                   ;$00C511 |
     LDA.b Frame_14                          ;$00C513 |
@@ -7848,7 +7848,7 @@ CODE_00C935:
     LDA.w $13D2
     BNE CODE_00C948                         ;$00C938 |
     JSR CODE_00B03E                         ;$00C93A |
-    LDA.w $1495                             ;$00C93D |
+    LDA.w ColorFadeTimer_1495               ;$00C93D |
     CMP.b #$40                              ;$00C940 |
     BCC Return00C96A                        ;$00C942 |
 CODE_00C944:
@@ -7901,7 +7901,7 @@ CODE_00C98B:
     STA.w $1492                             ;$00C99A |
     ASL                                     ;$00C99D |
     STA.w $1494                             ;$00C99E |
-    STZ.w $1495                             ;$00C9A1 |
+    STZ.w ColorFadeTimer_1495               ;$00C9A1 |
 CODE_00C9A4:
     JMP no_special_collision
 
@@ -7924,7 +7924,7 @@ CODE_00C9C2:
     LDA.b #$01                              ;$00C9C5 |
     STA.b byetudlrHold_15                   ;$00C9C7 |
     JSR no_special_collision                ;$00C9C9 |
-    LDA.w $1433                             ;$00C9CC |
+    LDA.w SpotlightSize_1433                ;$00C9CC |
     BNE Return00CA30                        ;$00C9CF |
     LDA.w $141C                             ;$00C9D1 |
     INC A                                   ;$00C9D4 |
@@ -7989,11 +7989,11 @@ CODE_00CA3A:
 
 CODE_00CA3E:
     LDA.b #$F0
-    STA.w $1433                             ;$00CA40 |
+    STA.w SpotlightSize_1433                ;$00CA40 |
     RTS                                     ;$00CA43 |
 
 CODE_00CA44:
-    LDA.w $1433
+    LDA.w SpotlightSize_1433
     BNE CODE_00CA4A                         ;$00CA47 |
     RTS                                     ;$00CA49 |
 
@@ -8002,12 +8002,12 @@ CODE_00CA4A:
     LDA.b #$FC                              ;$00CA4D |
     JSR CODE_00CA6D                         ;$00CA4F |
     LDA.b #$33                              ;$00CA52 |
-    STA $41                                 ;$00CA54 |
-    STA $43                                 ;$00CA56 |
+    STA.b Layer12Window_41                  ;$00CA54 |
+    STA.b OBJCWWindow_43                    ;$00CA56 |
     LDA.b #$03                              ;$00CA58 |
     STA $42                                 ;$00CA5A |
     LDA.b #$22                              ;$00CA5C |
-    STA $44                                 ;$00CA5E |
+    STA.b ColorAddition_44                  ;$00CA5E |
     RTS                                     ;$00CA60 |
 
 CODE_00CA61:
@@ -8020,8 +8020,8 @@ CODE_00CA61:
 
 CODE_00CA6D:
     CLC
-    ADC.w $1433                             ;$00CA6E |
-    STA.w $1433                             ;$00CA71 |
+    ADC.w SpotlightSize_1433                ;$00CA6E |
+    STA.w SpotlightSize_1433                ;$00CA71 |
     LDA $7E                                 ;$00CA74 |
     CLC                                     ;$00CA76 |
     ADC.b #$08                              ;$00CA77 |
@@ -8045,7 +8045,7 @@ CODE_00CA88:
     LDX.w #$0000                            ;$00CA93 |
 CODE_00CA96:
     LDA $01
-    CMP.w $1433                             ;$00CA98 |
+    CMP.w SpotlightSize_1433                ;$00CA98 |
     BCC CODE_00CABD                         ;$00CA9B |
     LDA.b #$FF                              ;$00CA9D |
     STA.w $04A0,X                           ;$00CA9F |
@@ -8158,7 +8158,7 @@ CODE_00CC14:
     LDA $01                                 ;$00CC15 |
     STA.w $4205                             ;$00CC17 |
     STZ.w $4204                             ;$00CC1A |
-    LDA.w $1433                             ;$00CC1D |
+    LDA.w SpotlightSize_1433                ;$00CC1D |
     STA.w $4206                             ;$00CC20 |
     NOP                                     ;$00CC23 |
     NOP                                     ;$00CC24 |
@@ -8173,7 +8173,7 @@ CODE_00CC14:
     SEP #$20                                ;$00CC30 |
     LDA ($06),Y                             ;$00CC32 |
     STA.w $4202                             ;$00CC34 |
-    LDA.w $1433                             ;$00CC37 |
+    LDA.w SpotlightSize_1433                ;$00CC37 |
     STA.w $4203                             ;$00CC3A |
     NOP                                     ;$00CC3D |
     NOP                                     ;$00CC3E |
@@ -8183,7 +8183,7 @@ CODE_00CC14:
     STA $03                                 ;$00CC44 |
     LDA ($04),Y                             ;$00CC46 |
     STA.w $4202                             ;$00CC48 |
-    LDA.w $1433                             ;$00CC4B |
+    LDA.w SpotlightSize_1433                ;$00CC4B |
     STA.w $4203                             ;$00CC4E |
     NOP                                     ;$00CC51 |
     NOP                                     ;$00CC52 |
@@ -8275,19 +8275,19 @@ not_frozen_physics:                         ;        \
     LDA $72                                 ;$00CCED |\ If in the air,
     BNE .not_platform                       ;$00CCEF |/ use a solid boss room.
     REP #$20                                ;$00CCF1 |\
-    LDA.w $1436                             ;$00CCF3 | | Set the player's platform X position.
+    LDA.w KeyholeXPos_1436                  ;$00CCF3 | | Set the player's platform X position.
     STA.b PlayerXPos_94                     ;$00CCF6 | |
-    LDA.w $1438                             ;$00CCF8 | | Set the player's platform Y position.
+    LDA.w KeyholeYPos_1438                  ;$00CCF8 | | Set the player's platform Y position.
     STA.b PlayerYPos_96                     ;$00CCFB | |
     SEP #$20                                ;$00CCFD |/
     JSR apply_player_speeds                 ;$00CCFF | Apply the player's speeds.
     REP #$20                                ;$00CD02 |\
     LDA.b PlayerXPos_94                     ;$00CD04 | |
-    STA.w $1436                             ;$00CD06 | | Update the platform X position,
+    STA.w KeyholeXPos_1436                  ;$00CD06 | | Update the platform X position,
     STA.w $14B4                             ;$00CD09 | |
     LDA.b PlayerYPos_96                     ;$00CD0C | | and update the platform Y position.
     AND.w #$FFF0                            ;$00CD0E | |
-    STA.w $1438                             ;$00CD11 | |
+    STA.w KeyholeYPos_1438                  ;$00CD11 | |
     STA.w $14B6                             ;$00CD14 |/
     JSR boss_platform_collision             ;$00CD17 | Apply the platform collision.
     BRA .apply_boss_room_collision          ;$00CD1A /
@@ -13198,11 +13198,11 @@ CODE_00F962:
     LDA.w $14B8                             ;$00F968 |
     AND.w #$00FF                            ;$00F96B |
     STA.w $14B4                             ;$00F96E |
-    STA.w $1436                             ;$00F971 |
+    STA.w KeyholeXPos_1436                  ;$00F971 |
     LDA.w $14BA                             ;$00F974 |
     AND.w #$00F0                            ;$00F977 |
     STA.w $14B6                             ;$00F97A |
-    STA.w $1438                             ;$00F97D |
+    STA.w KeyholeYPos_1438                  ;$00F97D |
     JSR boss_platform_collision             ;$00F980 |
 CODE_00F983:
     LDA $36
@@ -13457,7 +13457,7 @@ LvlEndStoreSpr:
     STA.w $009E,y
     CMP.b #$76                              ;$00FB58 |
     BNE CODE_00FB5F                         ;$00FB5A |
-    INC.w $13CB                             ;$00FB5C |
+    INC.w UnusedStarCounter_13CB            ;$00FB5C |
 CODE_00FB5F:
     TYX
     JSL InitSpriteTables                    ;$00FB60 |
@@ -13537,7 +13537,7 @@ CODE_00FBD5:
     RTS                                     ;$00FBEF |
 
 CODE_00FBF0:
-    INC.w $1570,X
+    INC.w SpriteAnimationTimer_1570,X
     JSL UpdateYPosNoGrvty                   ;$00FBF3 |
     INC $AA,X                               ;$00FBF7 |
     INC $AA,X                               ;$00FBF9 |

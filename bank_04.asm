@@ -5420,7 +5420,7 @@ CODE_04DB81:
     BNE CODE_04DB7A                         ;$04DB8B |
     SEP #$20                                ;$04DB8D |
     LDA.b #$33                              ;$04DB8F |
-    STA $41                                 ;$04DB91 |
+    STA.b Layer12Window_41                  ;$04DB91 |
     LDA.b #$33                              ;$04DB93 |
 CODE_04DB95:
     STA $43
@@ -7256,14 +7256,14 @@ DATA_04F288:
     db $D0,$D8,$D8,$00,$00,$28,$28,$30
 
 CODE_04F290:
-    LDY.w $1439
+    LDY.w KeyholeYPos_1438+1
     CPY.b #$0C                              ;$04F293 |
     BCC CODE_04F29B                         ;$04F295 |
     STZ.w $13D2                             ;$04F297 |
     RTS                                     ;$04F29A |
 
 CODE_04F29B:
-    LDA.w $1437
+    LDA.w KeyholeXPos_1436+1
     BNE CODE_04F314                         ;$04F29E |
     CPY.b #$08                              ;$04F2A0 |
     BCS CODE_04F30C                         ;$04F2A2 |
@@ -7271,7 +7271,7 @@ CODE_04F29B:
     STA.w SPCIO3_1DFC                       ;$04F2A6 |
     LDA.b #$07                              ;$04F2A9 |
     STA $00                                 ;$04F2AB |
-    LDX.w $1436                             ;$04F2AD |
+    LDX.w KeyholeXPos_1436                  ;$04F2AD |
 CODE_04F2B0:
     LDY.w $0DD6
     LDA.w $1F17,Y                           ;$04F2B3 |
@@ -7297,24 +7297,24 @@ CODE_04F2B0:
     BPL CODE_04F2B0                         ;$04F2F2 |
     CPX.b #$28                              ;$04F2F4 |
     BCC CODE_04F309                         ;$04F2F6 |
-    LDA.w $1438                             ;$04F2F8 |
+    LDA.w KeyholeYPos_1438                  ;$04F2F8 |
     CLC                                     ;$04F2FB |
     ADC.b #$20                              ;$04F2FC |
     CMP.b #$A0                              ;$04F2FE |
     BCC CODE_04F304                         ;$04F300 |
     LDA.b #$00                              ;$04F302 |
 CODE_04F304:
-    STA.w $1438
+    STA.w KeyholeYPos_1438
     LDX.b #$00                              ;$04F307 |
 CODE_04F309:
-    STX.w $1436
+    STX.w KeyholeXPos_1436
 CODE_04F30C:
     LDA.b #$10
-    STA.w $1437                             ;$04F30E |
-    INC.w $1439                             ;$04F311 |
+    STA.w KeyholeXPos_1436+1                ;$04F30E |
+    INC.w KeyholeYPos_1438+1                ;$04F311 |
 CODE_04F314:
-    DEC.w $1437
-    LDA.w $1438                             ;$04F317 |
+    DEC.w KeyholeXPos_1436+1
+    LDA.w KeyholeYPos_1438                  ;$04F317 |
     STA $0F                                 ;$04F31A |
     LDX.b #$00                              ;$04F31C |
 CODE_04F31E:
@@ -7372,9 +7372,9 @@ CODE_04F378:
 CODE_04F383:
     STA $0F
     INX                                     ;$04F385 |
-    CPX.w $1436                             ;$04F386 |
+    CPX.w KeyholeXPos_1436                  ;$04F386 |
     BCC CODE_04F31E                         ;$04F389 |
-    LDA.w $1439                             ;$04F38B |
+    LDA.w KeyholeYPos_1438+1                ;$04F38B |
     CMP.b #$05                              ;$04F38E |
     BCC Return04F396                        ;$04F390 |
     CPX.b #$28                              ;$04F392 |
@@ -7451,9 +7451,9 @@ CODE_04F3FF:
     STA.w SPCIO3_1DFC                       ;$04F401 |
     INC.w $1B87                             ;$04F404 |
 CODE_04F407:
-    STZ $41
+    STZ.b Layer12Window_41
     STZ $42                                 ;$04F409 |
-    STZ $43                                 ;$04F40B |
+    STZ.b OBJCWWindow_43                    ;$04F40B |
     STZ.w $0D9F                             ;$04F40D |
     RTS                                     ;$04F410 |
 
@@ -7531,7 +7531,7 @@ CODE_04F47F:
     STZ.w $0701                             ;$04F48B |
     SEP #$20                                ;$04F48E |
     LDA.b #$22                              ;$04F490 |
-    STA $41                                 ;$04F492 |
+    STA.b Layer12Window_41                  ;$04F492 |
     LDA.b #$20                              ;$04F494 |
     JMP CODE_04DB95                         ;$04F496 |
 

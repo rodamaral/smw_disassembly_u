@@ -1697,7 +1697,7 @@ SpriteMisc_1540: skip 12
 SpritePlayerContact_154C: skip 12
 SpriteMisc_1558: skip 12
 SpriteMisc_1564: skip 12
-SpriteMisc_1570: skip 12
+SpriteAnimationTimer_1570: skip 12
 SpriteDir_157C: skip 12
 ; Valid values
 !SpriteDir_Left = 0

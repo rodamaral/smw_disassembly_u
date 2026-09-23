@@ -2920,12 +2920,12 @@ CODE_05B10C:
     BEQ CODE_05B132                         ;$05B11B |
     STZ.w MessageBoxTrigger_1426            ;$05B11D |
     STZ.w $1B88                             ;$05B120 |
-    STZ $41                                 ;$05B123 |
+    STZ.b Layer12Window_41                  ;$05B123 |
     STZ $42                                 ;$05B125 |
-    STZ $43                                 ;$05B127 |
+    STZ.b OBJCWWindow_43                    ;$05B127 |
     STZ.w $0D9F                             ;$05B129 |
     LDA.b #$02                              ;$05B12C |
-    STA $44                                 ;$05B12E |
+    STA.b ColorAddition_44                  ;$05B12E |
     BRA CODE_05B18E                         ;$05B130 |
 
 CODE_05B132:
@@ -3113,14 +3113,14 @@ CODE_05B275:
     BNE CODE_05B26D                         ;$05B27F |
     SEP #$20                                ;$05B281 |
     LDA.b #$22                              ;$05B283 |
-    STA $41                                 ;$05B285 |
+    STA.b Layer12Window_41                  ;$05B285 |
     LDY.w $13D2                             ;$05B287 |
     BEQ CODE_05B28E                         ;$05B28A |
     LDA.b #$20                              ;$05B28C |
 CODE_05B28E:
     STA $43
     LDA.b #$22                              ;$05B290 |
-    STA $44                                 ;$05B292 |
+    STA.b ColorAddition_44                  ;$05B292 |
     LDA.b #$80                              ;$05B294 |
     STA.w $0D9F                             ;$05B296 |
 CODE_05B299:
