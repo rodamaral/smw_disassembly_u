@@ -1304,23 +1304,22 @@ DynGfxTilePtr_0D85: skip 20
 ; pointer to graphics that make up parts of Mario (OBJ tile $7F)
 DynGfxTile7FPtr_0D99: skip 2
 
-; === $7E0D9A ===
+; === $7E0D9B ===
 ; 1 byte
 ; flag to determine which NMI and IRQ code to run for various game modes
-IRQNMICommand_0D9A: skip 1
+IRQNMICommand_0D9B: skip 1
 ; Valid values
-!IRQNMI_Standard = 0
-!IRQNMI_Cutscenes = 1
-!IRQNMI_Overworld = 2
-!IRQNMI_IggyLarry = %10000000
-!IRQNMI_ReznorMortonRoy = %11000000
-!IRQNMI_Bowser = %11000001
+!IRQNMIStandard_00 = 0
+!IRQNMICutscenes_01 = 1
+!IRQNMIOverworld_02 = 2
+!IRQNMIIggyLarry_80 = %10000000
+!IRQNMIReznorMortonRoy_C0 = %11000000
+!IRQNMIBowser_C1 = %11000001
 
 ; === $7E0D9C ===
 ; 1 byte
 ; unused
 WRAM_0D9C: skip 1
-
 
 ThroughMain_0D9D: skip 1
 ThroughSub_0D9E: skip 1

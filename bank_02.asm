@@ -3056,7 +3056,7 @@ CODE_0296F4:
     LDA $A5
     CMP.b #$A9                              ;$0296F6 |
     BEQ CODE_02974A                         ;$0296F8 |
-    LDA.w $0D9B                             ;$0296FA |
+    LDA.w IRQNMICommand_0D9B                ;$0296FA |
     AND.b #$40                              ;$0296FD |
     BEQ CODE_02974A                         ;$0296FF |
     LDY.w DATA_0296BC,X                     ;$029701 |
@@ -3153,10 +3153,10 @@ CODE_029797:
     BNE CODE_0297A3                         ;$02979E |
     DEC.w $17CC,X                           ;$0297A0 |
 CODE_0297A3:
-    BIT.w $0D9B
+    BIT.w IRQNMICommand_0D9B
     BVC CODE_0297B2                         ;$0297A6 |
-    LDA.w $0D9B                             ;$0297A8 |
-    CMP.b #$C1                              ;$0297AB |
+    LDA.w IRQNMICommand_0D9B                ;$0297A8 |
+    CMP.b #!IRQNMIBowser_C1                 ;$0297AB |
     BEQ CODE_0297B2                         ;$0297AD |
     JMP CODE_029838                         ;$0297AF |
 
@@ -3353,7 +3353,7 @@ DATA_029922:
 CODE_029927:
     LDA.w $17CC,X
     BNE CODE_029941                         ;$02992A |
-    BIT.w $0D9B                             ;$02992C |
+    BIT.w IRQNMICommand_0D9B                ;$02992C |
     BVC CODE_02993E                         ;$02992F |
     LDA.w $140F                             ;$029931 |
     BNE CODE_02993E                         ;$029934 |
@@ -3376,9 +3376,9 @@ CODE_02994F:
     BEQ CODE_02996C                         ;$029953 |
     LDA.w $140F                             ;$029955 |
     BNE CODE_02996C                         ;$029958 |
-    LDA.w $0D9B                             ;$02995A |
+    LDA.w IRQNMICommand_0D9B                ;$02995A |
     BPL CODE_02996C                         ;$02995D |
-    CMP.b #$C1                              ;$02995F |
+    CMP.b #!IRQNMIBowser_C1                 ;$02995F |
     BEQ CODE_029967                         ;$029961 |
     AND.b #$40                              ;$029963 |
     BNE CODE_02999F                         ;$029965 |
@@ -4327,7 +4327,7 @@ CODE_02A02C:
     LDA $A5                                 ;$02A02C | WARNING: gets sprite id for slot 7 directly from sprite table, not from $9E
     CMP.b #$A9                              ;$02A02E |
     BEQ CODE_02A03B                         ;$02A030 |
-    LDA.w $0D9B                             ;$02A032 |
+    LDA.w IRQNMICommand_0D9B                ;$02A032 |
     BPL CODE_02A03B                         ;$02A035 |
     AND.b #$40                              ;$02A037 |
     BNE ADDR_02A04F                         ;$02A039 |
@@ -4499,7 +4499,7 @@ ReznorFireball:
     JSR CODE_02B560                         ;$02A172 |
     JSR CODE_02A3F6                         ;$02A175 |
 CODE_02A178:
-    LDA.w $0D9B
+    LDA.w IRQNMICommand_0D9B
     BPL CODE_02A1A4                         ;$02A17B |
     JSR CODE_02A1A4                         ;$02A17D |
     LDY.w DATA_02A153,X                     ;$02A180 |
@@ -4759,7 +4759,7 @@ SmokePuff:
     BEQ CODE_02A344                         ;$02A352 |
     LDA.w $140F                             ;$02A354 |
     BNE CODE_02A362                         ;$02A357 |
-    LDA.w $0D9B                             ;$02A359 |
+    LDA.w IRQNMICommand_0D9B                ;$02A359 |
     BPL CODE_02A362                         ;$02A35C |
     AND.b #$40                              ;$02A35E |
     BNE ADDR_02A3B1                         ;$02A360 |
@@ -5023,12 +5023,12 @@ CODE_02A56E:
     STZ.w $1694                             ;$02A574 | reset scratch memory
     LDA.w $140F                             ;$02A577 |
     BNE CODE_02A5BC                         ;$02A57A |
-    LDA.w $0D9B                             ;$02A57C |
+    LDA.w IRQNMICommand_0D9B                ;$02A57C |
     BPL CODE_02A5BC                         ;$02A57F |
     AND.b #$40                              ;$02A581 |
     BEQ CODE_02A592                         ;$02A583 | normal case
-    LDA.w $0D9B                             ;$02A585 |
-    CMP.b #$C1                              ;$02A588 |
+    LDA.w IRQNMICommand_0D9B                ;$02A585 |
+    CMP.b #!IRQNMIBowser_C1                 ;$02A588 |
     BEQ CODE_02A5BC                         ;$02A58A |
     LDA.w $1715,X                           ;$02A58C |
     CMP.b #$A8                              ;$02A58F |
@@ -5275,7 +5275,7 @@ CODE_02A751:
     PLB                                     ;$02A753 |
     JSR CODE_02ABF2                         ;$02A754 |
     JSR CODE_02AC5C                         ;$02A757 |
-    LDA.w $0D9B                             ;$02A75A |
+    LDA.w IRQNMICommand_0D9B                ;$02A75A |
     BMI CODE_02A763                         ;$02A75D |
     JSL standard_and_cluster_sprites_01808C ;$02A75F |
 CODE_02A763:
@@ -6132,10 +6132,10 @@ DATA_02AD9E:
     db $B0,$B8,$C0,$C8,$D0,$D8
 
 ScoreSprGfx:
-    BIT.w $0D9B
+    BIT.w IRQNMICommand_0D9B
     BVC CODE_02ADB8                         ;$02ADA7 |
-    LDA.w $0D9B                             ;$02ADA9 |
-    CMP.b #$C1                              ;$02ADAC |
+    LDA.w IRQNMICommand_0D9B                ;$02ADA9 |
+    CMP.b #!IRQNMIBowser_C1                 ;$02ADAC |
     BEQ Return02ADC8                        ;$02ADAE |
     LDA.b #$F0                              ;$02ADB0 |
     STA.w $0205                             ;$02ADB2 |
@@ -6265,7 +6265,7 @@ CODE_02AE5B:
     SBC $03                                 ;$02AE97 |
     BNE Return02AEFB                        ;$02AE99 |
     LDY.w DATA_02AD9E,X                     ;$02AE9B |
-    BIT.w $0D9B                             ;$02AE9E |
+    BIT.w IRQNMICommand_0D9B                ;$02AE9E |
     BVC CODE_02AEA5                         ;$02AEA1 |
     LDY.b #$04                              ;$02AEA3 |
 CODE_02AEA5:

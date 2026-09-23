@@ -2585,7 +2585,7 @@ CODE_0191ED:
     ORA.w $1FE2,X                           ;$0191FB |
     BNE Return019210                        ;$0191FE |
     BCS CODE_01920C                         ;$019200 |
-    BIT.w $0D9B                             ;$019202 |
+    BIT.w IRQNMICommand_0D9B                ;$019202 |
     BMI CODE_01920C                         ;$019205 |
     JSL CODE_0284C0                         ;$019207 |
     RTS                                     ;$01920B |
@@ -5552,8 +5552,8 @@ CODE_01A80F:
     LDA.b PlayerAnimation_71
     CMP.b #!AniHurt_01                      ;$01A811 |
     BCS ReturnNoContact                     ;$01A813 |
-    LDA.b #$00                              ;$01A815 |
-    BIT.w $0D9B                             ;$01A817 |
+    LDA.b #!IRQNMIStandard_00               ;$01A815 |
+    BIT.w IRQNMICommand_0D9B                ;$01A817 |
     BVS CODE_01A822                         ;$01A81A |
     LDA.w $13F9                             ;$01A81C |
     EOR.w $1632,X                           ;$01A81F |
@@ -9520,10 +9520,10 @@ CODE_01C3F1:
     BRA CODE_01C437
 
 CODE_01C3F3:
-    LDA.w $0D9B
-    CMP.b #$C1                              ;$01C3F6 |
+    LDA.w IRQNMICommand_0D9B
+    CMP.b #!IRQNMIBowser_C1                 ;$01C3F6 |
     BEQ CODE_01C42C                         ;$01C3F8 |
-    BIT.w $0D9B                             ;$01C3FA |
+    BIT.w IRQNMICommand_0D9B                ;$01C3FA |
     BVC CODE_01C42C                         ;$01C3FD |
     STZ.w $1588,X                           ;$01C3FF |
     STZ $B6,X                               ;$01C402 |
@@ -9816,10 +9816,10 @@ CODE_01C61A:
     STZ $0A                                 ;$01C61D |
     LDA.w $140F                             ;$01C61F |
     BNE CODE_01C636                         ;$01C622 |
-    LDA.w $0D9B                             ;$01C624 |
-    CMP.b #$C1                              ;$01C627 |
+    LDA.w IRQNMICommand_0D9B                ;$01C624 |
+    CMP.b #!IRQNMIBowser_C1                 ;$01C627 |
     BEQ CODE_01C636                         ;$01C629 |
-    BIT.w $0D9B                             ;$01C62B |
+    BIT.w IRQNMICommand_0D9B                ;$01C62B |
     BVC CODE_01C636                         ;$01C62E |
     LDA.b #$D8                              ;$01C630 |
     STA.w $15EA,X                           ;$01C632 |

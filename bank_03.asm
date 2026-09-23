@@ -10154,7 +10154,7 @@ CODE_03D968:
     DEX                                     ;$03D96B |
     BNE CODE_03D968                         ;$03D96C |
     SEP #$10                                ;$03D96E |
-    BIT.w $0D9B                             ;$03D970 |
+    BIT.w IRQNMICommand_0D9B                ;$03D970 |
     BVS Return03D990                        ;$03D973 |
     PHB                                     ;$03D975 |
     PHK                                     ;$03D976 |
@@ -10534,7 +10534,7 @@ CODE_03DEDF:
     REP #$30                                ;$03DEF9 |
     STZ $06                                 ;$03DEFB |
     LDY.w #$0003                            ;$03DEFD |
-    LDA.w $0D9B                             ;$03DF00 |
+    LDA.w IRQNMICommand_0D9B                ;$03DF00 |
     LSR                                     ;$03DF03 |
     BCC CODE_03DF44                         ;$03DF04 |
     LDA.w $1428                             ;$03DF06 |

@@ -234,7 +234,7 @@ NMI_start:                                  ;        \
     STA.w $2125                             ;$0081BE |/
     LDA $44                                 ;$0081C1 |\ Initial color addition settings
     STA.w $2130                             ;$0081C3 |/
-    LDA.w $0D9B                             ;$0081C6 |\ Check for a regular level
+    LDA.w IRQNMICommand_0D9B                ;$0081C6 |\ Check for a regular level
     BPL .regular_level_NMI                  ;$0081C9 | |
     JMP .mode_7_NMI                         ;$0081CB |/ Otherwise go to mode 7 routines
 .regular_level_NMI                          ;        |
@@ -245,14 +245,14 @@ NMI_start:                                  ;        \
     STA.w $2105                             ;$0081D7 |/
     LDA.b LagFlag_10                        ;$0081DA |\ If the game is not lagging skip to regular NMI
     BEQ .no_lag                             ;$0081DC |/
-    LDA.w $0D9B                             ;$0081DE |\ Check if we are in a regular level
+    LDA.w IRQNMICommand_0D9B                ;$0081DE |\ Check if we are in a regular level
     LSR                                     ;$0081E1 | |
     BEQ .lagging_level_NMI                  ;$0081E2 | |
     JMP .lagging_OW_NMI                     ;$0081E4 |/ Otherwise process as the OW
 .no_lag                                     ;        |
     INC.b LagFlag_10                        ;$0081E7 | Allow the game loop to run after NMI
     JSR upload_palette                      ;$0081E9 | Upload special and normal palettes
-    LDA.w $0D9B                             ;$0081EC |\ Separate the current level mode
+    LDA.w IRQNMICommand_0D9B                ;$0081EC |\ Separate the current level mode
     LSR                                     ;$0081EF |/
     BNE .OW_NMI                             ;$0081F0 | $0D9B was 02, run OW code
     BCS .transition_NMI                     ;$0081F2 | $0D9B was 01(transition), Skip the status bar draw
@@ -316,7 +316,7 @@ NMI_start:                                  ;        \
     STA.w $2110                             ;$00826D | | $2110 is a write twice register 
     LDA $21                                 ;$008270 | |
     STA.w $2110                             ;$008272 |/
-    LDA.w $0D9B                             ;$008275 |\ If we are in a level, skip to level NMI return
+    LDA.w IRQNMICommand_0D9B                ;$008275 |\ If we are in a level, skip to level NMI return
     BEQ .level_NMI_return                   ;$008278 |/
 .lagging_OW_NMI                             ;        |
     LDA.b #$81                              ;$00827A | Load Enable NMI and autojoy enabled
@@ -365,10 +365,10 @@ NMI_start:                                  ;        \
 .skip_mode_7_transition_DMA                 ;        |
     JSR restore_SP1_tiles                   ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
     JSR dynamic_sprite_DMA                  ;$0082D7 | DMA Mario/Yoshi/Vertical fireball graphics
-    BIT.w $0D9B                             ;$0082DA |\ If we are in a platform boss fight
+    BIT.w IRQNMICommand_0D9B                ;$0082DA |\ If we are in a platform boss fight
     BVC .draw_status_bar                    ;$0082DD |/ Draw the status bar
     JSR DMA_mode_7_animations               ;$0082DF | <--some animation stuff, investigate more
-    LDA.w $0D9B                             ;$0082E2 |\ If we are fighting bowser, don't draw the status bar
+    LDA.w IRQNMICommand_0D9B                ;$0082E2 |\ If we are fighting bowser, don't draw the status bar
     LSR                                     ;$0082E5 | |
     BCS .skip_status_bar                    ;$0082E6 |/
 .draw_status_bar                            ;        |
@@ -412,7 +412,7 @@ NMI_start:                                  ;        \
     LDA $35                                 ;$00833D | |
     STA.w $211E                             ;$00833F |/
     JSR mode_7_static_BG_scroll             ;$008342 |
-    LDA.w $0D9B                             ;$008345 |\ If we are not at bowser there are a few extra
+    LDA.w IRQNMICommand_0D9B                ;$008345 |\ If we are not at bowser there are a few extra
     LSR                                     ;$008348 | | Items we still need to process otherwise
     BCC .skip_bowser                        ;$008349 |/ We can finish off NMI
     LDA.w $0DAE                             ;$00834B |\ Set the screen brightness from $0DAE
@@ -423,7 +423,7 @@ NMI_start:                                  ;        \
     JMP mode_7_scroll                       ;$008359 | Set the mode 7 scroll values -- statusbar unused
 .skip_bowser                                ;        |
     LDY.b #$24                              ;$00835C | Load the VTimer trigger
-    BIT.w $0D9B                             ;$00835E |\ If we are running in the platform boss mode
+    BIT.w IRQNMICommand_0D9B                ;$00835E |\ If we are running in the platform boss mode
     BVC .skip_vtimer_change                 ;$008361 |/ skip to the end of NMI
     LDA.w $13FC                             ;$008363 |\ If we are fighting Morton or Roy
     ASL                                     ;$008366 | |
@@ -449,7 +449,7 @@ IRQ_start:                                  ;        \
     LDA.w $4211                             ;$008380 |\ Read the IRQ status flag
     BPL IRQ_return                          ;$008383 |/ If the IRQ status flag is not triggered skip IRQ
     LDA.b #$81                              ;$008385 | Load NMI enabled, autojoy enabled
-    LDY.w $0D9B                             ;$008387 |\ If we are in a mode 7 level branch
+    LDY.w IRQNMICommand_0D9B                ;$008387 |\ If we are in a mode 7 level branch
     BMI mode_7_IRQ                          ;$00838A |/
 IRQ_NMI_return:                             ;        |
     STA.w $4200                             ;$00838C | Store interrupt enabled flags
@@ -479,7 +479,7 @@ EmptyHandler:                               ;        |
     RTI                                     ;$0083B9 / Return from NMI
 
 mode_7_IRQ:                                 ;        \ 
-    BIT.w $0D9B                             ;$0083DA |\ Platform bosses have only one IRQ
+    BIT.w IRQNMICommand_0D9B                ;$0083DA |\ Platform bosses have only one IRQ
     BVC .platform_bosses                    ;$0083BD |/ So skip the differentiation code
     LDY.b IRQType_11                        ;$0083BF |\ If we are in the First IRQ branch
     BEQ .first_IRQ                          ;$0083C1 |/
@@ -1593,7 +1593,7 @@ update_status_tileset_008E1A:
     LDA.w EndLevelTimer_1493                ;$008E1A |\
     ORA.b SpriteLock_9D                     ;$008E1D || Don't update the clock if:
     BNE .update_time_tilemap                ;$008E1F ||  - Ending a level
-    LDA.w $0D9B                             ;$008E21 ||  - Game is frozen
+    LDA.w IRQNMICommand_0D9B                ;$008E21 ||  - Game is frozen
     CMP.b #$C1                              ;$008E24 ||  - In Bowser's battle mode
     BEQ .update_time_tilemap                ;$008E26 ||
     DEC.w $0F30                             ;$008E28 || Decrement subsecond timer
@@ -1901,11 +1901,11 @@ calculate_decimal_digits_009051:
 
 draw_reserve_item_009079:
     LDY.b #$E0
-    BIT.w $0D9B                             ;$00907B |
+    BIT.w IRQNMICommand_0D9B                ;$00907B |
     BVC CODE_00908E                         ;$00907E |
     LDY.b #$00                              ;$009080 |
-    LDA.w $0D9B                             ;$009082 |
-    CMP.b #$C1                              ;$009085 |
+    LDA.w IRQNMICommand_0D9B                ;$009082 |
+    CMP.b #!IRQNMIBowser_C1                 ;$009085 |
     BEQ CODE_00908E                         ;$009087 |
     LDA.b #$F0                              ;$009089 |
     STA.w $0201,Y                           ;$00908B |
@@ -2116,7 +2116,7 @@ window_HDMA_data:
 
 CODE_009283:
     JSR clear_window_HDMA
-    LDA.w $0D9B                             ;$009286 |
+    LDA.w IRQNMICommand_0D9B                ;$009286 |
     LSR                                     ;$009289 |
     BCS CODE_0092A0                         ;$00928A |
     REP #$10                                ;$00928C |
@@ -2298,8 +2298,8 @@ CODE_0093CA:
     LDX.b #$10                              ;$0093E6 |
     LDY.b #$04                              ;$0093E8 |
 CODE_0093EA:
-    LDA.b #$01
-    STA.w $0D9B                             ;$0093EC |
+    LDA.b #!IRQNMICutscenes_01
+    STA.w IRQNMICommand_0D9B                ;$0093EC |
     LDA.b #$20                              ;$0093EF |
     JSR ScreenSettings                      ;$0093F1 |
 increment_game_mode_0093F4:
@@ -2689,8 +2689,8 @@ CODE_009728:
     LDA.w MusicBackup_0DDA
     CMP.b #$40                              ;$00972B |
     BCS CODE_00973B                         ;$00972D |
-    LDY.w $0D9B                             ;$00972F |
-    CPY.b #$C1                              ;$009732 |
+    LDY.w IRQNMICommand_0D9B                ;$00972F |
+    CPY.b #!IRQNMIBowser_C1                 ;$009732 |
     BNE CODE_009738                         ;$009734 |
     LDA.b #$16                              ;$009736 |
 CODE_009738:
@@ -2780,7 +2780,7 @@ load_boss_room_0097BC:
     LDA.b #$FF                              ;$0097D3 |
     STA.w $1931                             ;$0097D5 |
     JSL CODE_03D958                         ;$0097D8 |
-    BIT.w $0D9B                             ;$0097DC |
+    BIT.w IRQNMICommand_0D9B                ;$0097DC |
     BVC .Iggy_Larry_009801                  ;$0097DF |
     JSR CODE_009925                         ;$0097E1 |
     LDY.w $13FC                             ;$0097E4 |
@@ -2853,7 +2853,7 @@ DATA_009875:
 
 boss_room_00987D:
     JSR CODE_008ACD
-    BIT.w $0D9B                             ;$009880 |
+    BIT.w IRQNMICommand_0D9B                ;$009880 |
     BVC CODE_009888                         ;$009883 |
     JMP CODE_009A52                         ;$009885 |
 
@@ -2868,7 +2868,7 @@ mode_7_VRAM_addresses:
     dw $141E,$139E,$131E,$169E 
 
 DMA_mode_7_animations:                      ;        \ 
-    LDA.w $0D9B                             ;$0098A9 |\ If we are at bowser skip uploading lava tiles
+    LDA.w IRQNMICommand_0D9B                ;$0098A9 |\ If we are at bowser skip uploading lava tiles
     LSR                                     ;$0098AC | |
     BCS .bowser                             ;$0098AD |/
     LDA.b Frame_14                          ;$0098AF |\ Get the animation index relative
@@ -2942,7 +2942,7 @@ CODE_009925:
     SEP #$20                                ;$009942 |
     JSR CODE_00AE15                         ;$009944 |
     JSL standard_and_cluster_sprites_01808C ;$009947 |
-    LDA.w $0D9B                             ;$00994B |
+    LDA.w IRQNMICommand_0D9B                ;$00994B |
     LSR                                     ;$00994E |
     LDX.b #$C0                              ;$00994F |
     LDA.b #$A0                              ;$009951 |
@@ -3067,7 +3067,7 @@ DATA_009A4E:
     db $FF,$01,$18,$30
 
 CODE_009A52:
-    LDA.w $0D9B
+    LDA.w IRQNMICommand_0D9B
     LSR                                     ;$009A55 |
     BCS CODE_009A6F                         ;$009A56 |
     JSL update_screen_position_00F6DB       ;$009A58 |
@@ -3110,8 +3110,8 @@ GM04_title_load_2_009A8B:
     JSR CODE_00ADA6                         ;$009A9E |
     JSR CODE_00922F                         ;$009AA1 |
     JSL CODE_04F675                         ;$009AA4 |
-    LDA.b #$01                              ;$009AA8 |
-    STA.w $0D9B                             ;$009AAA |
+    LDA.b #!IRQNMICutscenes_01              ;$009AA8 |
+    STA.w IRQNMICommand_0D9B                ;$009AAA |
     LDA.b #$33                              ;$009AAD |
     STA $41                                 ;$009AAF |
     LDA.b #$00                              ;$009AB1 |
@@ -4009,8 +4009,8 @@ CODE_00A11B:
     JSR _load_stripe_image_                 ;$00A170 |
     STZ.w $13D9                             ;$00A173 |
     JSR KeepModeActive                      ;$00A176 |
-    LDA.b #$02                              ;$00A179 |
-    STA.w $0D9B                             ;$00A17B |
+    LDA.b #!IRQNMIOverworld_02              ;$00A179 |
+    STA.w IRQNMICommand_0D9B                ;$00A17B |
     REP #$10                                ;$00A17E |
     LDX.w #$01BE                            ;$00A180 |
     LDA.b #$FF                              ;$00A183 |
@@ -4129,7 +4129,7 @@ GM14_main_level_00A1DA:
     LDA.b Frame_13                          ;$00A253 |
     AND.b #$0F                              ;$00A255 |
     BNE .level_paused_00A25B                ;$00A257 |
-+   BRA .level_unpaused_00A28A               ;$00A259 |
++   BRA .level_unpaused_00A28A              ;$00A259 |
 
 .level_paused_00A25B:
     LDA.b byetudlrHold_15
@@ -4159,7 +4159,7 @@ GM14_main_level_00A1DA:
     RTS
 
 .level_unpaused_00A28A:
-    LDA.w $0D9B
+    LDA.w IRQNMICommand_0D9B
     BPL .normal_level                       ;$00A28D |
     JSR boss_room_00987D                    ;$00A28F |
     JMP .common_level_logic                 ;$00A292 |
@@ -4524,7 +4524,7 @@ GM12_level_load_2_00A59C:
     JSR SetUpScreen                         ;$00A5A5 |
     JSR GM04DoDMA                           ;$00A5A8 |
     JSL CODE_05809E                         ;$00A5AB |
-    LDA.w $0D9B                             ;$00A5AF |
+    LDA.w IRQNMICommand_0D9B                ;$00A5AF |
     BPL .load_regular_level_00A5B9          ;$00A5B2 |
     JSR load_boss_room_0097BC               ;$00A5B4 |
     BRA .common_level_00A5CF                ;$00A5B7 |
@@ -8266,11 +8266,11 @@ no_animation:                               ;        \
     RTS                                     ;$00CCDF /
 
 not_frozen_physics:                         ;        \
-    LDA.w $0D9B                             ;$00CCE0 |\ If fighting the mode 7 koopalings,
+    LDA.w IRQNMICommand_0D9B                ;$00CCE0 |\ If fighting the mode 7 koopalings,
     BPL no_special_collision                ;$00CCE3 | | use special collision.
     LSR                                     ;$00CCE5 | |
     BCS no_special_collision                ;$00CCE6 |/
-    BIT.w $0D9B                             ;$00CCE8 |\ If fighting Morton, Roy, or Ludwig,
+    BIT.w IRQNMICommand_0D9B                ;$00CCE8 |\ If fighting Morton, Roy, or Ludwig,
     BVS .not_platform                       ;$00CCEB |/ don't use the platform collision.
     LDA $72                                 ;$00CCED |\ If in the air,
     BNE .not_platform                       ;$00CCEF |/ use a solid boss room.
@@ -13132,7 +13132,7 @@ boss_ceiling_height:
 
 boss_room_collision:
     JSR reset_collision_flags               ;$00F8F2 |
-    BIT.w $0D9B                             ;$00F8F5 |
+    BIT.w IRQNMICommand_0D9B                ;$00F8F5 |
     BVC CODE_00F94E                         ;$00F8F8 |
     JSR level_collision                     ;$00F8FA |
     LDA.w $13FC                             ;$00F8FD |

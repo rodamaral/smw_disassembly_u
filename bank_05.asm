@@ -521,7 +521,7 @@ CODE_0584E3:
     LDA.l LevCGADSUBtable,X                 ;$058513 |
     STA $40                                 ;$058517 |
     LDA.l SpecialLevTable,X                 ;$058519 |
-    STA.w $0D9B                             ;$05851D |
+    STA.w IRQNMICommand_0D9B                ;$05851D |
     LDA.l VerticalTable,X                   ;$058520 |
     STA.b ScreenMode_5B                     ;$058524 |
     LSR                                     ;$058526 |
