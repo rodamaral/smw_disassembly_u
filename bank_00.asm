@@ -2418,7 +2418,7 @@ CODE_0094E2:
     DEX                                     ;$0094E4 |
     BPL CODE_0094E2                         ;$0094E5 |
     LDA.b #$20                              ;$0094E7 |
-    STA $64                                 ;$0094E9 |
+    STA.b SpriteProperties_64               ;$0094E9 |
     JSR CODE_00A635                         ;$0094EB |
     STZ $76                                 ;$0094EE |
     STZ.b PlayerInAir_72                    ;$0094F0 |
@@ -10596,7 +10596,7 @@ draw_mario_and_yoshi_00E2BD:
     STA $0A                                 ;$00E3B9 |
     LDA.w DATA_00E0CC,Y                     ;$00E3BB |
     STA $0B                                 ;$00E3BE |
-    LDA $64                                 ;$00E3C0 |
+    LDA.b SpriteProperties_64               ;$00E3C0 |
     LDX.w $13F9                             ;$00E3C2 |
     BEQ +                                   ;$00E3C5 |
     LDA.w DATA_00E2B9,X                     ;$00E3C7 |

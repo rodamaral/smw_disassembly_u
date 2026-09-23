@@ -469,7 +469,7 @@ ScreenMode_5B: skip 1
 ; === $7E005C ===
 ; 1 byte
 ; unused
-WRAM_00_5C: skip 1
+skip 1
 
 ; === $7E005D ===
 ; 1 byte
@@ -490,7 +490,7 @@ LastScreenVert_5F: skip 1
 ; === $7E0060 ===
 ; 4 bytes
 ; unused
-WRAM_00_60: skip 4
+skip 4
 
 ; === $7E0064 ===
 ; 1 byte
