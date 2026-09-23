@@ -619,14 +619,16 @@ PlayerDirection_76: skip 1
 ; |  |+--- collision on top
 ; |  +---- collision inside
 ; +------- collision with edge of screen
-PlayerBlockedDir_77: skip 1
+PlayerBlocked_77: skip 1
 ; Valid values
-!PlayerBlock_Right = %00001
-!PlayerBlock_Left = %00010
-!PlayerBlock_Bottom = %00100
-!PlayerBlock_Top = %01000
-!PlayerBlock_Inside = %10000
-!PlayerBlock_Screen = %10000000
+!Block_Right_01 = %00001
+!Block_Left_02 = %00010
+!Block_Sides_03 = %00011
+!Block_Bottom_04 = %00100
+!Block_Top_08 = %01000
+!Block_Inside_10 = %10000
+!Block_Y_1C = %11100
+!Block_Screen_80 = %10000000
 
 ; === $7E0078 ===
 ; 1 byte

@@ -8301,8 +8301,8 @@ not_frozen_physics:                         ;        \
 no_special_collision:                       ;        \
     LDA.b PlayerYSpeed_7D                   ;$00CD24 |\ If the player is rising
     BPL .no_hit_ceiling                     ;$00CD26 | |
-    LDA $77                                 ;$00CD28 | |
-    AND.b #$08                              ;$00CD2A | | and hit the ceiling,
+    LDA.b PlayerBlocked_77                  ;$00CD28 | |
+    AND.b #!Block_Top_08                    ;$00CD2A | | and hit the ceiling,
     BEQ .no_hit_ceiling                     ;$00CD2C | |
     STZ.b PlayerYSpeed_7D                   ;$00CD2E |/ clear his Y speed.
 .no_hit_ceiling                             ;        |
@@ -9256,8 +9256,8 @@ CODE_00D60B:
     LDA.w OnSolidSprite_1471
     CMP.b #$02                              ;$00D60E |
     BEQ CODE_00D61E                         ;$00D610 |
-    LDA $77                                 ;$00D612 |
-    AND.b #$08                              ;$00D614 |
+    LDA.b PlayerBlocked_77                  ;$00D612 |
+    AND.b #!Block_Top_08                    ;$00D614 |
     BNE CODE_00D61E                         ;$00D616 |
     LDA.b byetudlrPress_16                  ;$00D618 |
     ORA.b axlr0000Press_18                  ;$00D61A |
@@ -10957,8 +10957,8 @@ no_layer_collision:                         ;        |
     LDA $7E
     CMP.b #$F0                              ;$00E9A3 |
     BCS CODE_00EA08                         ;$00E9A5 |
-    LDA $77                                 ;$00E9A7 |
-    AND.b #$03                              ;$00E9A9 |
+    LDA.b PlayerBlocked_77                  ;$00E9A7 |
+    AND.b #!Block_Sides_03                  ;$00E9A9 |
     BNE CODE_00E9FB                         ;$00E9AB |
     REP #$20                                ;$00E9AD |
     LDY.b #$00                              ;$00E9AF |
@@ -10979,8 +10979,8 @@ CODE_00E9C8:
     BPL CODE_00E9FB                         ;$00E9CC |
     LDA.w $1411                             ;$00E9CE |
     BNE CODE_00E9F6                         ;$00E9D1 |
-    LDA.b #$80                              ;$00E9D3 |
-    TSB $77                                 ;$00E9D5 |
+    LDA.b #!Block_Screen_80                 ;$00E9D3 |
+    TSB.b PlayerBlocked_77                  ;$00E9D5 |
     REP #$20                                ;$00E9D7 |
     LDA.w $1446                             ;$00E9D9 |
     LSR                                     ;$00E9DC |
@@ -10999,11 +10999,11 @@ CODE_00E9C8:
     STA.w $13DA                             ;$00E9F3 |
 CODE_00E9F6:
     LDA.w DATA_00E90A,Y
-    TSB $77                                 ;$00E9F9 |
+    TSB.b PlayerBlocked_77                  ;$00E9F9 |
 CODE_00E9FB:
-    LDA $77
-    AND.b #$1C                              ;$00E9FD |
-    CMP.b #$1C                              ;$00E9FF |
+    LDA.b PlayerBlocked_77
+    AND.b #!Block_Y_1C                      ;$00E9FD |
+    CMP.b #!Block_Y_1C                      ;$00E9FF |
     BNE CODE_00EA0D                         ;$00EA01 |
     LDA.w OnSolidSprite_1471                ;$00EA03 |
     BNE CODE_00EA0D                         ;$00EA06 |
@@ -11012,8 +11012,8 @@ CODE_00EA08:
     BRA CODE_00EA32                         ;$00EA0B |
 
 CODE_00EA0D:
-    LDA $77
-    AND.b #$03                              ;$00EA0F |
+    LDA.b PlayerBlocked_77
+    AND.b #!Block_Sides_03                  ;$00EA0F |
     BEQ CODE_00EA34                         ;$00EA11 |
     AND.b #$02                              ;$00EA13 |
     TAY                                     ;$00EA15 |
@@ -11023,7 +11023,7 @@ CODE_00EA0D:
     ADC.w DATA_00E90D,Y                     ;$00EA1B |
     STA.b PlayerXPos_94                     ;$00EA1E |
     SEP #$20                                ;$00EA20 |
-    LDA $77                                 ;$00EA22 |
+    LDA.b PlayerBlocked_77                  ;$00EA22 |
     BMI CODE_00EA34                         ;$00EA24 |
     LDA.b #$03                              ;$00EA26 |
     STA.w $13E5                             ;$00EA28 |
@@ -11083,8 +11083,8 @@ CODE_00EA75:
     LDA.b #$04                              ;$00EA8D |
     STA.w SPCIO3_1DFC                       ;$00EA8F |
 CODE_00EA92:
-    LDA $77
-    AND.b #$08                              ;$00EA94 |
+    LDA.b PlayerBlocked_77
+    AND.b #!Block_Top_08                    ;$00EA94 |
     BNE CODE_00EA62                         ;$00EA96 |
     JSR CODE_00FDA5                         ;$00EA98 |
     LDA.b #$0B                              ;$00EA9B |
@@ -11098,7 +11098,7 @@ Return00EAA5:
 
 reset_collision_flags:
     STZ.w $13E5                             ;$00EAA6 \ Clear the player animation timer index,
-    STZ $77                                 ;$00EAA9 | the directional blocked status,
+    STZ.b PlayerBlocked_77                  ;$00EAA9 | the directional blocked status,
     STZ.w $13E1                             ;$00EAAB |\ the type of slope that the player is on,
     STZ.w $13EE                             ;$00EAAE |/
     STZ $8A                                 ;$00EAB1 | the collision points' swimming flags,
@@ -11367,8 +11367,8 @@ normal_collision:
     BEQ .skip_side_head                     ;$00EC79 |
 .on_note_block                              ;        |
     LDA.w DATA_00E90A,Y                     ;$00EC7B |
-    TSB $77                                 ;$00EC7E |
-    AND.b #$03                              ;$00EC80 |
+    TSB.b PlayerBlocked_77                  ;$00EC7E |
+    AND.b #!Block_Sides_03                  ;$00EC80 |
     TAY                                     ;$00EC82 |
     LDA.w $1693                             ;$00EC83 |
     JSL CODE_00F127                         ;$00EC86 |
@@ -11456,10 +11456,10 @@ CODE_00ED0F:
     BCS CODE_00ED28                         ;$00ED16 |
     LDY.b PlayerInAir_72                    ;$00ED18 |
     BNE CODE_00ED28                         ;$00ED1A |
-    LDA $77                                 ;$00ED1C |
+    LDA.b PlayerBlocked_77                  ;$00ED1C |
     AND.b #$FC                              ;$00ED1E |
     ORA.b #$09                              ;$00ED20 |
-    STA $77                                 ;$00ED22 |
+    STA.b PlayerBlocked_77                  ;$00ED22 |
     STZ.b PlayerXSpeed_7B                   ;$00ED24 |
     BRA CODE_00ED3B                         ;$00ED26 |
 
@@ -11473,8 +11473,8 @@ CODE_00ED28:
     BCC CODE_00ED37                         ;$00ED33 |
     INC.b PlayerYPos_96+1                   ;$00ED35 |
 CODE_00ED37:
-    LDA.b #$08
-    TSB $77                                 ;$00ED39 |
+    LDA.b #!Block_Top_08
+    TSB.b PlayerBlocked_77                  ;$00ED39 |
 CODE_00ED3B:
     LDA.b PlayerYSpeed_7D
     BPL CODE_00ED4A                         ;$00ED3D |
@@ -11617,8 +11617,8 @@ CODE_00EE1D:
     JMP CODE_00EEE1                         ;$00EE2A |
 
 CODE_00EE2D:
-    LDA $77
-    AND.b #$04                              ;$00EE2F |
+    LDA.b PlayerBlocked_77
+    AND.b #!Block_Bottom_04                 ;$00EE2F |
     ORA.b PlayerInAir_72                    ;$00EE31 |
     BNE Return00EE39                        ;$00EE33 |
 CODE_00EE35:
@@ -11799,8 +11799,8 @@ CODE_00EF68:
     STZ $74                                 ;$00EF6D |
     STZ.w $1406                             ;$00EF6F |
     STZ.w $140D                             ;$00EF72 |
-    LDA.b #$04                              ;$00EF75 |
-    TSB $77                                 ;$00EF77 |
+    LDA.b #!Block_Bottom_04                 ;$00EF75 |
+    TSB.b PlayerBlocked_77                  ;$00EF77 |
     LDY.w $1407                             ;$00EF79 |
     BNE CODE_00EF99                         ;$00EF7C |
     LDA.w RidingYoshi_187A                  ;$00EF7E |

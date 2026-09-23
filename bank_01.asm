@@ -7311,8 +7311,8 @@ CODE_01B457:
     BPL CODE_01B4B4                         ;$01B46A |
     LDA.b PlayerYSpeed_7D                   ;$01B46C |
     BMI CODE_01B4B2                         ;$01B46E |
-    LDA $77                                 ;$01B470 |
-    AND.b #$08                              ;$01B472 |
+    LDA.b PlayerBlocked_77                  ;$01B470 |
+    AND.b #!Block_Top_08                    ;$01B472 |
     BNE CODE_01B4B2                         ;$01B474 |
     LDA.b #$10                              ;$01B476 |
     STA.b PlayerYSpeed_7D                   ;$01B478 |
@@ -7331,8 +7331,8 @@ CODE_01B488:
     LDA.w SpriteYPosHigh_14D4,X             ;$01B491 |
     SBC.b #$00                              ;$01B494 |
     STA.b PlayerYPos_96+1                   ;$01B496 |
-    LDA $77                                 ;$01B498 |
-    AND.b #$03                              ;$01B49A |
+    LDA.b PlayerBlocked_77                  ;$01B498 |
+    AND.b #!Block_Sides_03                  ;$01B49A |
     BNE CODE_01B4B0                         ;$01B49C |
     LDY.b #$00                              ;$01B49E |
     LDA.w $1528,X                           ;$01B4A0 |
@@ -10399,8 +10399,8 @@ CODE_01CA45:
     LDA.w $14BB                             ;$01CA4F |
     SBC.b #$00                              ;$01CA52 |
     STA.b PlayerYPos_96+1                   ;$01CA54 |
-    LDA $77                                 ;$01CA56 |
-    AND.b #$03                              ;$01CA58 |
+    LDA.b PlayerBlocked_77                  ;$01CA56 |
+    AND.b #!Block_Sides_03                  ;$01CA58 |
     BNE CODE_01CA6E                         ;$01CA5A |
     LDY.b #$00                              ;$01CA5C |
     LDA.w $1491                             ;$01CA5E |
@@ -12580,8 +12580,8 @@ CODE_01D9D3:
     EOR.b #$FF                              ;$01D9ED |
     INC A                                   ;$01D9EF |
     STA.w $18B6                             ;$01D9F0 |
-    LDA $77                                 ;$01D9F3 |
-    AND.b #$03                              ;$01D9F5 |
+    LDA.b PlayerBlocked_77                  ;$01D9F3 |
+    AND.b #!Block_Sides_03                  ;$01D9F5 |
     BNE Return01DA09                        ;$01D9F7 |
     JSR CODE_01A80F                         ;$01D9F9 |
     BCS CODE_01DA0A                         ;$01D9FC |

@@ -15023,8 +15023,8 @@ CODE_02EE80:
     LDA.w SpriteYPosHigh_14D4,X             ;$02EE89 |
     SBC.b #$00                              ;$02EE8C |
     STA.b PlayerYPos_96+1                   ;$02EE8E |
-    LDA $77                                 ;$02EE90 |
-    AND.b #$01                              ;$02EE92 |
+    LDA.b PlayerBlocked_77                  ;$02EE90 |
+    AND.b #!Block_Right_01                  ;$02EE92 |
     BNE Return02EEA8                        ;$02EE94 |
     LDY.b #$00                              ;$02EE96 |
     LDA.w $1491                             ;$02EE98 |
