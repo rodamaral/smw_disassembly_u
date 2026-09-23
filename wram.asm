@@ -739,7 +739,7 @@ PlayerPipeAction_89:
 ; timer for no yoshi intro auto input (how long each input lasts)
 NoYoshiInputTimer_89: skip 1
 
-;;; TODO $8A:
+;;; TODO $8A - $8F:
 
 ; === $7E008A ===
 ; 1 byte
@@ -843,7 +843,7 @@ CutsceneInputIndex_8F: skip 1
 ; 1 byte
 ; vertical position of the player within a block
 ; relative to the player's feet
-PlayerYPosInBlock_90: skip 1
+PlayerYPosBlock_90: skip 1
 
 ; === $7E0091 ===
 ; 1 byte
@@ -854,7 +854,7 @@ PlayerBlockMoveY_91: skip 1
 ; 1 byte
 ; horizontal position of the player within a block
 ; relative to the center of the player
-PlayerXPosInBlock_92: skip 1
+PlayerXPosBlock_92: skip 1
 
 ; === $7E0093 ===
 ; 1 byte
@@ -876,12 +876,12 @@ PlayerYPos_96: skip 2
 ; === $7E0098 ===
 ; 2 bytes
 ; vertical position of the currently processing player interaction point
-TouchBlockYPos_98: skip 2
+InteractionPtYPos_98: skip 2
 
 ; === $7E009A ===
 ; 2 bytes
 ; horizontal position of the currently processing player interaction point
-TouchBlockXPos_9A: skip 2
+InteractionPtXPos_9A: skip 2
 
 ; === $7E009C ===
 ; 1 byte

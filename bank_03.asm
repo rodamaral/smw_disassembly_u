@@ -296,13 +296,13 @@ CODE_0381F5:
     TYX                                     ;$038210 |
     STZ.w SpriteStatus_14C8,X               ;$038211 |
     LDA.b SpriteXPosLow_E4,X                ;$038214 |
-    STA $9A                                 ;$038216 |
+    STA.b InteractionPtXPos_9A              ;$038216 |
     LDA.w SpriteXPosHigh_14E0,X             ;$038218 |
-    STA $9B                                 ;$03821B |
+    STA.b InteractionPtXPos_9A+1            ;$03821B |
     LDA.b SpriteYPosLow_D8,X                ;$03821D |
-    STA $98                                 ;$03821F |
+    STA.b InteractionPtYPos_98              ;$03821F |
     LDA.w SpriteYPosHigh_14D4,X             ;$038221 |
-    STA $99                                 ;$038224 |
+    STA.b InteractionPtYPos_98+1            ;$038224 |
     PHB                                     ;$038226 |
     LDA.b #$02                              ;$038227 |
     PHA                                     ;$038229 |
@@ -2590,13 +2590,13 @@ CODE_039387:
 GenTileFromSpr1:
     STA $9C
     LDA.b SpriteXPosLow_E4,X                ;$03938D |
-    STA $9A                                 ;$03938F |
+    STA.b InteractionPtXPos_9A              ;$03938F |
     LDA.w SpriteXPosHigh_14E0,X             ;$039391 |
-    STA $9B                                 ;$039394 |
+    STA.b InteractionPtXPos_9A+1            ;$039394 |
     LDA.b SpriteYPosLow_D8,X                ;$039396 |
-    STA $98                                 ;$039398 |
+    STA.b InteractionPtYPos_98              ;$039398 |
     LDA.w SpriteYPosHigh_14D4,X             ;$03939A |
-    STA $99                                 ;$03939D |
+    STA.b InteractionPtYPos_98+1            ;$03939D |
     JSL generate_tile                       ;$03939F |
     RTS                                     ;$0393A3 |
 
@@ -7746,17 +7746,17 @@ GenTileFromSpr2:
     LDA.b SpriteXPosLow_E4,X                ;$03C002 |
     SEC                                     ;$03C004 |
     SBC.b #$08                              ;$03C005 |
-    STA $9A                                 ;$03C007 |
+    STA.b InteractionPtXPos_9A              ;$03C007 |
     LDA.w SpriteXPosHigh_14E0,X             ;$03C009 |
     SBC.b #$00                              ;$03C00C |
-    STA $9B                                 ;$03C00E |
+    STA.b InteractionPtXPos_9A+1            ;$03C00E |
     LDA.b SpriteYPosLow_D8,X                ;$03C010 |
     CLC                                     ;$03C012 |
     ADC.b #$08                              ;$03C013 |
-    STA $98                                 ;$03C015 |
+    STA.b InteractionPtYPos_98              ;$03C015 |
     LDA.w SpriteYPosHigh_14D4,X             ;$03C017 |
     ADC.b #$00                              ;$03C01A |
-    STA $99                                 ;$03C01C |
+    STA.b InteractionPtYPos_98+1            ;$03C01C |
     JSL generate_tile                       ;$03C01E |
     RTL                                     ;$03C022 |
 
@@ -9993,11 +9993,11 @@ BreakBridge:
     CPX.b #$0C                              ;$03D721 |
     BCS CODE_03D757                         ;$03D723 |
     LDA.l DATA_03D700,X                     ;$03D725 |
-    STA $9A                                 ;$03D729 |
-    STZ $9B                                 ;$03D72B |
+    STA.b InteractionPtXPos_9A              ;$03D729 |
+    STZ.b InteractionPtXPos_9A+1            ;$03D72B |
     LDA.b #$B0                              ;$03D72D |
-    STA $98                                 ;$03D72F |
-    STZ $99                                 ;$03D731 |
+    STA.b InteractionPtYPos_98              ;$03D72F |
+    STZ.b InteractionPtYPos_98+1            ;$03D731 |
     LDA.w $14A7                             ;$03D733 |
     BEQ CODE_03D74A                         ;$03D736 |
     CMP.b #$3C                              ;$03D738 |
@@ -10022,8 +10022,8 @@ CODE_03D759:
     REP #$20
     LDA.w #$0170                            ;$03D75B |
     SEC                                     ;$03D75E |
-    SBC $9A                                 ;$03D75F |
-    STA $9A                                 ;$03D761 |
+    SBC.b InteractionPtXPos_9A              ;$03D75F |
+    STA.b InteractionPtXPos_9A              ;$03D761 |
     SEP #$20                                ;$03D763 |
     RTS                                     ;$03D765 |
 
@@ -10032,7 +10032,7 @@ CODE_03D766:
     JSR CODE_03D759                         ;$03D769 |
 CODE_03D76C:
     REP #$20
-    LDA $9A                                 ;$03D76E |
+    LDA.b InteractionPtXPos_9A              ;$03D76E |
     SEC                                     ;$03D770 |
     SBC.b Layer1XPos_1A                     ;$03D771 |
     CMP.w #$0100                            ;$03D773 |
@@ -10043,16 +10043,16 @@ Return03D77E:
     RTS
 
 CODE_03D77F:
-    LDA $9A
+    LDA.b InteractionPtXPos_9A
     LSR                                     ;$03D781 |
     LSR                                     ;$03D782 |
     LSR                                     ;$03D783 |
     STA $01                                 ;$03D784 |
     LSR                                     ;$03D786 |
-    ORA $98                                 ;$03D787 |
+    ORA.b InteractionPtYPos_98              ;$03D787 |
     REP #$20                                ;$03D789 |
     AND.w #$00FF                            ;$03D78B |
-    LDX $9B                                 ;$03D78E |
+    LDX.b InteractionPtXPos_9A+1            ;$03D78E |
     BEQ CODE_03D798                         ;$03D790 |
     CLC                                     ;$03D792 |
     ADC.w #$01B0                            ;$03D793 |

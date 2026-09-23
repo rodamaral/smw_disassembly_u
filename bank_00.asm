@@ -6606,9 +6606,9 @@ ADDR_00BEBB:
     JMP CODE_00BFB9
 
 CODE_00BEBE:
-    LDA $9A
+    LDA.b InteractionPtXPos_9A
     STA $0C                                 ;$00BEC0 |
-    LDA $98                                 ;$00BEC2 |
+    LDA.b InteractionPtYPos_98              ;$00BEC2 |
     STA $0E                                 ;$00BEC4 |
     LDA.w #$0000                            ;$00BEC6 |
     SEP #$20                                ;$00BEC9 |
@@ -6622,12 +6622,12 @@ CODE_00BED6:
     LDA $09                                 ;$00BED8 |
     AND.b #$01                              ;$00BEDA |
     BEQ CODE_00BEEC                         ;$00BEDC |
-    LDA $9B                                 ;$00BEDE |
+    LDA.b InteractionPtXPos_9A+1            ;$00BEDE |
     STA $00                                 ;$00BEE0 |
-    LDA $99                                 ;$00BEE2 |
-    STA $9B                                 ;$00BEE4 |
+    LDA.b InteractionPtYPos_98+1            ;$00BEE2 |
+    STA.b InteractionPtXPos_9A+1            ;$00BEE4 |
     LDA $00                                 ;$00BEE6 |
-    STA $99                                 ;$00BEE8 |
+    STA.b InteractionPtYPos_98+1            ;$00BEE8 |
     LDY $0C                                 ;$00BEEA |
 CODE_00BEEC:
     CPY.w #$0200
@@ -6649,7 +6649,7 @@ CODE_00BEEC:
     LDA.b [Layer1DataPtr_65],Y              ;$00BF0E |
     STA $05                                 ;$00BF10 |
     STZ $06                                 ;$00BF12 |
-    LDA $9B                                 ;$00BF14 |
+    LDA.b InteractionPtXPos_9A+1            ;$00BF14 |
     STA $07                                 ;$00BF16 |
     ASL                                     ;$00BF18 |
     CLC                                     ;$00BF19 |
@@ -6669,16 +6669,16 @@ CODE_00BEEC:
     LDA $09                                 ;$00BF31 |
     AND.b #$01                              ;$00BF33 |
     BEQ CODE_00BF41                         ;$00BF35 |
-    LDA $99                                 ;$00BF37 |
+    LDA.b InteractionPtYPos_98+1            ;$00BF37 |
     LSR                                     ;$00BF39 |
-    LDA $9B                                 ;$00BF3A |
+    LDA.b InteractionPtXPos_9A+1            ;$00BF3A |
     AND.b #$01                              ;$00BF3C |
     JMP CODE_00BF46                         ;$00BF3E |
 
 CODE_00BF41:
-    LDA $9B
+    LDA.b InteractionPtXPos_9A+1
     LSR                                     ;$00BF43 |
-    LDA $99                                 ;$00BF44 |
+    LDA.b InteractionPtYPos_98+1            ;$00BF44 |
 CODE_00BF46:
     ROL
     ASL                                     ;$00BF47 |
@@ -6691,7 +6691,7 @@ CODE_00BF46:
     ADC.b #$10                              ;$00BF53 |
     STA $04                                 ;$00BF55 |
 CODE_00BF57:
-    LDA $98
+    LDA.b InteractionPtYPos_98
     AND.b #$F0                              ;$00BF59 |
     CLC                                     ;$00BF5B |
     ASL                                     ;$00BF5C |
@@ -6701,7 +6701,7 @@ CODE_00BF57:
     AND.b #$03                              ;$00BF61 |
     ORA $04                                 ;$00BF63 |
     STA $06                                 ;$00BF65 |
-    LDA $9A                                 ;$00BF67 |
+    LDA.b InteractionPtXPos_9A              ;$00BF67 |
     AND.b #$F0                              ;$00BF69 |
     LSR                                     ;$00BF6B |
     LSR                                     ;$00BF6C |
@@ -6796,7 +6796,7 @@ DATA_00C005:
 
 CODE_00C00D:
     REP #$30
-    LDA $9A                                 ;$00C00F |
+    LDA.b InteractionPtXPos_9A              ;$00C00F |
     AND.w #$FF00                            ;$00C011 |
     LSR                                     ;$00C014 |
     LSR                                     ;$00C015 |
@@ -6805,7 +6805,7 @@ CODE_00C00D:
     LSR                                     ;$00C018 |
     LSR                                     ;$00C019 |
     STA $04                                 ;$00C01A |
-    LDA $9A                                 ;$00C01C |
+    LDA.b InteractionPtXPos_9A              ;$00C01C |
     AND.w #$0080                            ;$00C01E |
     LSR                                     ;$00C021 |
     LSR                                     ;$00C022 |
@@ -6816,7 +6816,7 @@ CODE_00C00D:
     LSR                                     ;$00C027 |
     ORA $04                                 ;$00C028 |
     STA $04                                 ;$00C02A |
-    LDA $98                                 ;$00C02C |
+    LDA.b InteractionPtYPos_98              ;$00C02C |
     AND.w #$0100                            ;$00C02E |
     BEQ CODE_00C03A                         ;$00C031 |
     LDA $04                                 ;$00C033 |
@@ -6832,7 +6832,7 @@ CODE_00C03A:
     ADC $04                                 ;$00C047 |
     STA $04                                 ;$00C049 |
     TAY                                     ;$00C04B |
-    LDA $9A                                 ;$00C04C |
+    LDA.b InteractionPtXPos_9A              ;$00C04C |
     AND.w #$0070                            ;$00C04E |
     LSR                                     ;$00C051 |
     LSR                                     ;$00C052 |
@@ -6855,10 +6855,10 @@ CODE_00C074:
     JSR CODE_00C00D
 CODE_00C077:
     REP #$30
-    LDA $98                                 ;$00C079 |
+    LDA.b InteractionPtYPos_98              ;$00C079 |
     AND.w #$01F0                            ;$00C07B |
     STA $04                                 ;$00C07E |
-    LDA $9A                                 ;$00C080 |
+    LDA.b InteractionPtXPos_9A              ;$00C080 |
     LSR                                     ;$00C082 |
     LSR                                     ;$00C083 |
     LSR                                     ;$00C084 |
@@ -6891,10 +6891,10 @@ CODE_00C0C1:
     JSR CODE_00C00D
 CODE_00C0C4:
     REP #$30
-    LDA $98                                 ;$00C0C6 |
+    LDA.b InteractionPtYPos_98              ;$00C0C6 |
     AND.w #$01F0                            ;$00C0C8 |
     STA $04                                 ;$00C0CB |
-    LDA $9A                                 ;$00C0CD |
+    LDA.b InteractionPtXPos_9A              ;$00C0CD |
     LSR                                     ;$00C0CF |
     LSR                                     ;$00C0D0 |
     LSR                                     ;$00C0D1 |
@@ -7006,10 +7006,10 @@ Return00C1AB:
 CODE_00C1AC:
     JSR CODE_00C00D
     REP #$30                                ;$00C1AF |
-    LDA $98                                 ;$00C1B1 |
+    LDA.b InteractionPtYPos_98              ;$00C1B1 |
     AND.w #$01F0                            ;$00C1B3 |
     STA $04                                 ;$00C1B6 |
-    LDA $9A                                 ;$00C1B8 |
+    LDA.b InteractionPtXPos_9A              ;$00C1B8 |
     LSR                                     ;$00C1BA |
     LSR                                     ;$00C1BB |
     LSR                                     ;$00C1BC |
@@ -7222,10 +7222,10 @@ CODE_00C3A4:
 
 CODE_00C3D1:
     REP #$30
-    LDA $98                                 ;$00C3D3 |
+    LDA.b InteractionPtYPos_98              ;$00C3D3 |
     AND.w #$01F0                            ;$00C3D5 |
     STA $04                                 ;$00C3D8 |
-    LDA $9A                                 ;$00C3DA |
+    LDA.b InteractionPtXPos_9A              ;$00C3DA |
     LSR                                     ;$00C3DC |
     LSR                                     ;$00C3DD |
     LSR                                     ;$00C3DE |
@@ -11124,7 +11124,7 @@ page_1_water_tiles:
 layer_collision:
     LDA.b PlayerYPos_96                     ;$00EADB |
     AND.b #$0F                              ;$00EADD |
-    STA $90                                 ;$00EADF |
+    STA.b PlayerYPosBlock_90                ;$00EADF |
     LDA.w WallRunFlag_13E3                  ;$00EAE1 |
     BNE .wall_running                       ;$00EAE4 |
     JMP normal_collision                    ;$00EAE6 |
@@ -11145,7 +11145,7 @@ layer_collision:
     LDA.w WallRunFlag_13E3                  ;$00EB03 |
     CMP.b #$06                              ;$00EB06 |
     BCS .on_wall                            ;$00EB08 |
-    LDX $90                                 ;$00EB0A |
+    LDX.b PlayerYPosBlock_90                ;$00EB0A |
     CPX.b #$08                              ;$00EB0C |
     BCC stop_wall_running_return            ;$00EB0E |
     CMP.b #$04                              ;$00EB10 |
@@ -11235,20 +11235,20 @@ normal_collision:
     CLC                                     ;$00EB92 | |
     ADC.b #$08                              ;$00EB93 | |
     AND.b #$0F                              ;$00EB95 | |
-    STA $92                                 ;$00EB97 | | and set the position within a block.
-    STZ $93                                 ;$00EB99 |/
+    STA.b PlayerXPosBlock_92                ;$00EB97 | | and set the position within a block.
+    STZ.b PlayerBlockXSide_93               ;$00EB99 |/
     CPY.b #$08                              ;$00EB9B |\ If the player is on the left side of a block,
     BCC .right_side                         ;$00EB9D | |
     TXA                                     ;$00EB9F | |
     ADC.b #$0B                              ;$00EBA0 | | use the left side collision point indices.
     TAX                                     ;$00EBA2 | |
-    INC $93                                 ;$00EBA3 | | Set the side of the block that the player is in.
+    INC.b PlayerBlockXSide_93               ;$00EBA3 | | Set the side of the block that the player is in.
 .right_side                                 ;        |/
-    LDA $90                                 ;$00EBA5 |\ Get the player Y,
+    LDA.b PlayerYPosBlock_90                ;$00EBA5 |\ Get the player Y,
     CLC                                     ;$00EBA7 | |
     ADC.w collision_y_offsets+6,X           ;$00EBA8 | | add the head offset,
     AND.b #$0F                              ;$00EBAB | |
-    STA $91                                 ;$00EBAD |/ and set the amount to move the player out of a block.
+    STA.b PlayerBlockMoveY_91               ;$00EBAD |/ and set the amount to move the player out of a block.
     JSR process_collision_point             ;$00EBAF | Process the center body collision point.
     BEQ .center_page_0                      ;$00EBB2 |\ Process page 0 tiles, if applicable.
     CPY.b #$11                              ;$00EBB4 | | If it's tiles 100 - 110,
@@ -11344,7 +11344,7 @@ normal_collision:
     BCS .skip_side_head                     ;$00EC4C |/ ignore it.
 .side_body_in_block                         ;        |
     LDA.b PlayerDir_76                      ;$00EC4E |
-    CMP $93                                 ;$00EC50 |
+    CMP.b PlayerBlockXSide_93               ;$00EC50 |
     BEQ .CODE_00EC5F                        ;$00EC52 |
     JSR process_horizontal_pipe             ;$00EC54 |
     PHX                                     ;$00EC57 |
@@ -11354,7 +11354,7 @@ normal_collision:
 .CODE_00EC5F                                ;        |
     LDA.b #$03                              ;$00EC5F |
     STA.w $13E5                             ;$00EC61 |
-    LDY $93                                 ;$00EC64 |
+    LDY.b PlayerBlockXSide_93               ;$00EC64 |
     LDA.b PlayerXPos_94                     ;$00EC66 |
     AND.b #$0F                              ;$00EC68 |
     CMP.w DATA_00E911,Y                     ;$00EC6A |
@@ -11402,19 +11402,19 @@ CODE_00ECB1:
     CPY.b #$D8                              ;$00ECB9 |
     BCC CODE_00ECDA                         ;$00ECBB |
     REP #$20                                ;$00ECBD |
-    LDA $98                                 ;$00ECBF |
+    LDA.b InteractionPtYPos_98              ;$00ECBF |
     CLC                                     ;$00ECC1 |
     ADC.w #$0010                            ;$00ECC2 |
-    STA $98                                 ;$00ECC5 |
+    STA.b InteractionPtYPos_98              ;$00ECC5 |
     JSR process_collision                   ;$00ECC7 |
     BEQ CODE_00ECF8                         ;$00ECCA |
     CPY.b #$6E                              ;$00ECCC |
     BCC CODE_00ED4A                         ;$00ECCE |
     CPY.b #$D8                              ;$00ECD0 |
     BCS CODE_00ED4A                         ;$00ECD2 |
-    LDA $91                                 ;$00ECD4 |
+    LDA.b PlayerBlockMoveY_91               ;$00ECD4 |
     SBC.b #$0F                              ;$00ECD6 |
-    STA $91                                 ;$00ECD8 |
+    STA.b PlayerBlockMoveY_91               ;$00ECD8 |
 CODE_00ECDA:
     TYA
     SEC                                     ;$00ECDB |
@@ -11428,7 +11428,7 @@ CODE_00ECDA:
     ASL                                     ;$00ECE8 |
     ASL                                     ;$00ECE9 |
     SEP #$20                                ;$00ECEA |
-    ORA $92                                 ;$00ECEC |
+    ORA.b PlayerXPosBlock_92                ;$00ECEC |
     REP #$10                                ;$00ECEE |
     TAY                                     ;$00ECF0 |
     LDA.w DATA_00E632,Y                     ;$00ECF1 |
@@ -11450,7 +11450,7 @@ CODE_00ED0D:
     LDA.b #$F0
 CODE_00ED0F:
     CLC
-    ADC $91                                 ;$00ED10 |
+    ADC.b PlayerBlockMoveY_91               ;$00ED10 |
     BPL CODE_00ED4A                         ;$00ED12 |
     CMP.b #$F9                              ;$00ED14 |
     BCS CODE_00ED28                         ;$00ED16 |
@@ -11504,19 +11504,19 @@ CODE_00ED5E:
 
 CODE_00ED69:
     REP #$20
-    LDA $98                                 ;$00ED6B |
+    LDA.b InteractionPtYPos_98              ;$00ED6B |
     SEC                                     ;$00ED6D |
     SBC.w #$0010                            ;$00ED6E |
-    STA $98                                 ;$00ED71 |
+    STA.b InteractionPtYPos_98              ;$00ED71 |
     JSR process_collision                   ;$00ED73 |
     BEQ CODE_00EDE9                         ;$00ED76 |
     CPY.b #$6E                              ;$00ED78 |
     BCC CODE_00EDE9                         ;$00ED7A |
     CPY.b #$D8                              ;$00ED7C |
     BCS CODE_00EDE9                         ;$00ED7E |
-    LDA $90                                 ;$00ED80 |
+    LDA.b PlayerYPosBlock_90                ;$00ED80 |
     ADC.b #$10                              ;$00ED82 |
-    STA $90                                 ;$00ED84 |
+    STA.b PlayerYPosBlock_90                ;$00ED84 |
 CODE_00ED86:
     LDA.w $1931
     CMP.b #$03                              ;$00ED89 |
@@ -11540,11 +11540,11 @@ CODE_00ED95:
     ASL                                     ;$00EDA4 |
     ASL                                     ;$00EDA5 |
     SEP #$20                                ;$00EDA6 |
-    ORA $92                                 ;$00EDA8 |
+    ORA.b PlayerXPosBlock_92                ;$00EDA8 |
     PHX                                     ;$00EDAA |
     REP #$10                                ;$00EDAB |
     TAX                                     ;$00EDAD |
-    LDA $90                                 ;$00EDAE |
+    LDA.b PlayerYPosBlock_90                ;$00EDAE |
     SEC                                     ;$00EDB0 |
     SBC.w DATA_00E632,X                     ;$00EDB1 |
     BPL CODE_00EDB9                         ;$00EDB4 |
@@ -11555,8 +11555,8 @@ CODE_00EDB9:
     PLY                                     ;$00EDBC |
     CMP.w DATA_00E51C,Y                     ;$00EDBD |
     BCS CODE_00EDE9                         ;$00EDC0 |
-    STA $91                                 ;$00EDC2 |
-    STZ $90                                 ;$00EDC4 |
+    STA.b PlayerBlockMoveY_91               ;$00EDC2 |
+    STZ.b PlayerYPosBlock_90                ;$00EDC4 |
     JSR CODE_00F005                         ;$00EDC6 |
     CPY.b #$1C                              ;$00EDC9 |
     BCC CODE_00EDD5                         ;$00EDCB |
@@ -11601,11 +11601,11 @@ CODE_00EE06:
     CPY.b #$5C                              ;$00EE0D |
     BCC CODE_00EE1D                         ;$00EE0F |
 CODE_00EE11:
-    LDA $90
+    LDA.b PlayerYPosBlock_90
     AND.b #$0F                              ;$00EE13 |
-    STZ $90                                 ;$00EE15 |
+    STZ.b PlayerYPosBlock_90                ;$00EE15 |
     CMP.b #$08                              ;$00EE17 |
-    STA $91                                 ;$00EE19 |
+    STA.b PlayerBlockMoveY_91               ;$00EE19 |
     BCC CODE_00EE3A                         ;$00EE1B |
 CODE_00EE1D:
     LDA.w OnSolidSprite_1471
@@ -11685,10 +11685,10 @@ CODE_00EE8F:
     CMP.b #$02                              ;$00EE9A |
     BCS CODE_00EED1                         ;$00EE9C |
     REP #$20                                ;$00EE9E |
-    LDA $9A                                 ;$00EEA0 |
+    LDA.b InteractionPtXPos_9A              ;$00EEA0 |
     SEC                                     ;$00EEA2 |
     SBC.w #$0010                            ;$00EEA3 |
-    STA $9A                                 ;$00EEA6 |
+    STA.b InteractionPtXPos_9A              ;$00EEA6 |
     SEP #$20                                ;$00EEA8 |
 CODE_00EEAA:
     TXA
@@ -11714,10 +11714,10 @@ CODE_00EED1:
     INC.w $13EF
     LDA.b PlayerYPos_96                     ;$00EED4 |
     SEC                                     ;$00EED6 |
-    SBC $91                                 ;$00EED7 |
+    SBC.b PlayerBlockMoveY_91               ;$00EED7 |
     STA.b PlayerYPos_96                     ;$00EED9 |
     LDA.b PlayerYPos_96+1                   ;$00EEDB |
-    SBC $90                                 ;$00EEDD |
+    SBC.b PlayerYPosBlock_90                ;$00EEDD |
     STA.b PlayerYPos_96+1                   ;$00EEDF |
 CODE_00EEE1:
     LDA.w DATA_00E53D,Y
@@ -11897,7 +11897,7 @@ CODE_00F005:
     BNE Return00F04C                        ;$00F011 |
     TAX                                     ;$00F013 |
     LSR                                     ;$00F014 |
-    LDA $92                                 ;$00F015 |
+    LDA.b PlayerXPosBlock_92                ;$00F015 |
     BCC CODE_00F01B                         ;$00F017 |
     EOR.b #$0F                              ;$00F019 |
 CODE_00F01B:
@@ -12069,7 +12069,7 @@ CODE_00F17F:
 
 CODE_00F1AE:
     LSR
-    LDA $9A                                 ;$00F1AF |
+    LDA.b InteractionPtXPos_9A              ;$00F1AF |
     ROR                                     ;$00F1B1 |
     LSR                                     ;$00F1B2 |
     LSR                                     ;$00F1B3 |
@@ -12100,8 +12100,8 @@ CODE_00F1D0:
 CODE_00F1DA:
     TAY
     LDA.b #$0F                              ;$00F1DB |
-    TRB $9A                                 ;$00F1DD |
-    TRB $98                                 ;$00F1DF |
+    TRB.b InteractionPtXPos_9A              ;$00F1DD |
+    TRB.b InteractionPtYPos_98              ;$00F1DF |
     CPY.b #$06                              ;$00F1E1 |
     BNE CODE_00F1EC                         ;$00F1E3 |
     LDY.w $1931                             ;$00F1E5 |
@@ -12121,15 +12121,15 @@ Return00F1F8:
     RTL
 
 CODE_00F1F9:
-    LDA $99
+    LDA.b InteractionPtYPos_98+1
     LSR                                     ;$00F1FB |
-    LDA $98                                 ;$00F1FC |
+    LDA.b InteractionPtYPos_98              ;$00F1FC |
     AND.b #$C0                              ;$00F1FE |
     ROL                                     ;$00F200 |
     ROL                                     ;$00F201 |
     ROL                                     ;$00F202 |
     TAY                                     ;$00F203 |
-    LDA $9A                                 ;$00F204 |
+    LDA.b InteractionPtXPos_9A              ;$00F204 |
     LSR                                     ;$00F206 |
     LSR                                     ;$00F207 |
     LSR                                     ;$00F208 |
@@ -12179,7 +12179,7 @@ CODE_00F24E:
     LDA.b #$0D                              ;$00F252 |
     STA $9C                                 ;$00F254 |
     LDA.l DATA_00F0F8,X                     ;$00F256 |
-    STA $9A                                 ;$00F25A |
+    STA.b InteractionPtXPos_9A              ;$00F25A |
     JSL generate_tile                       ;$00F25C |
     PLA                                     ;$00F260 |
 CODE_00F261:
@@ -12280,7 +12280,7 @@ process_page_0_tiles_no_swim:
     ORA.b #$18                              ;$00F300 | | set a different climbing flag.
 .not_center                                 ;        |/
     TSB.b InteractionPtsClimbable_8B        ;$00F302 | Set the climbing flag corresponding to the interaction point.
-    LDA $93                                 ;$00F304 |
+    LDA.b PlayerBlockXSide_93               ;$00F304 |
     STA.b PlayerBlockXSide_8C               ;$00F306 |
     RTS                                     ;$00F308 /
 
@@ -12310,10 +12310,10 @@ process_page_0_tiles_no_climb:
     CPY.b #$2D                              ;$00F332 |
     BEQ .is_upper_yoshi_coin                ;$00F334 |
     BCC .is_regular_coin                    ;$00F336 | Process regular coin code if it's not a yoshi coin.
-    LDA $98                                 ;$00F338 |\
+    LDA.b InteractionPtYPos_98              ;$00F338 |\
     SEC                                     ;$00F33A | |
     SBC.b #$10                              ;$00F33B | | Offset the tile Y position to erase the top half first.
-    STA $98                                 ;$00F33D |/
+    STA.b InteractionPtYPos_98              ;$00F33D |/
 .is_upper_yoshi_coin                        ;        |
     JSL give_yoshi_coin_points              ;$00F33F | Give yoshi coin points.
     INC.w $1422                             ;$00F343 |\ Increase the number of yoshi coins collected.
@@ -12425,7 +12425,7 @@ CODE_00F3E9:
     CMP.b #$02                              ;$00F3EE |
     BCS Return00F442                        ;$00F3F0 |
     TAY                                     ;$00F3F2 |
-    LDA $92                                 ;$00F3F3 |
+    LDA.b PlayerXPosBlock_92                ;$00F3F3 |
     SBC.w DATA_00F3E3,Y                     ;$00F3F5 |
     CMP.b #$05                              ;$00F3F8 |
     BCS CODE_00F43F                         ;$00F3FA |
@@ -12487,11 +12487,11 @@ process_collision_point:
     LDA.b PlayerXPos_94                     ;$00F451 | | Get the player's X position,
     CLC                                     ;$00F453 | |
     ADC.w collision_x_offsets-2,X           ;$00F454 | | add the collision X offset,
-    STA $9A                                 ;$00F457 |/ and set that as the collision X to process.
+    STA.b InteractionPtXPos_9A              ;$00F457 |/ and set that as the collision X to process.
     LDA.b PlayerYPos_96                     ;$00F459 |\ Get the player's Y position,
     CLC                                     ;$00F45B | |
     ADC.w collision_y_offsets-2,X           ;$00F45C | | add the collision Y offset,
-    STA $98                                 ;$00F45F |/ and set that as the collision Y to process.
+    STA.b InteractionPtYPos_98              ;$00F45F |/ and set that as the collision Y to process.
 process_collision:                          ;        /
     JSR collision                           ;$00F461 | Process collision.
     RTS                                     ;$00F464 |
@@ -12507,16 +12507,16 @@ collision:
 .not_layer_2
     BNE .vertical_level                     ;$00F472 | Process vertical level collision, if applicable.
     REP #$20                                ;$00F474 \
-    LDA $98                                 ;$00F476 |
+    LDA.b InteractionPtYPos_98              ;$00F476 |
     CMP.w #$01B0                            ;$00F478 | If collision Y > $01B0,
     SEP #$20                                ;$00F47B |
     BCS .air_tile                           ;$00F47D | act like air.
     AND.b #$F0                              ;$00F47F |\
     STA $00                                 ;$00F481 | | Set the upper nybble of map16 table index.
-    LDX $9B                                 ;$00F483 | |
+    LDX.b InteractionPtXPos_9A+1            ;$00F483 | |
     CPX.b LevelScreens_5D                   ;$00F485 | | If collision X > end of level,
     BCS .air_tile                           ;$00F487 | | act like air.
-    LDA $9A                                 ;$00F489 | | Get collision X,
+    LDA.b InteractionPtXPos_9A              ;$00F489 | | Get collision X,
     LSR                                     ;$00F48B | |
     LSR                                     ;$00F48C | |
     LSR                                     ;$00F48D | |
@@ -12525,7 +12525,7 @@ collision:
     CLC                                     ;$00F491 | |
     ADC.l DATA_00BA60,X                     ;$00F492 | |
     STA $00                                 ;$00F496 | |
-    LDA $99                                 ;$00F498 | |
+    LDA.b InteractionPtYPos_98+1            ;$00F498 | |
     ADC.l DATA_00BA9C,X                     ;$00F49A |/ Add by $C800 + $01B0 * screen number for map16 pointer.
     BRA .process_map16                      ;$00F49E / Process map16.
 
@@ -12537,16 +12537,16 @@ collision:
     RTS                                     ;$00F4A5 /
 
 .vertical_level
-    LDA $9B                                 ;$00F4A6 \
+    LDA.b InteractionPtXPos_9A+1            ;$00F4A6 \
     CMP.b #$02                              ;$00F4A8 | If collision X > $0200,
     BCS .air_tile_2                         ;$00F4AA | act like air.
-    LDX $99                                 ;$00F4AC |
+    LDX.b InteractionPtYPos_98+1            ;$00F4AC |
     CPX.b LevelScreens_5D                   ;$00F4AE | If collision Y > end of level,
     BCS .air_tile_2                         ;$00F4B0 | act like air.
-    LDA $98                                 ;$00F4B2 |\
+    LDA.b InteractionPtYPos_98              ;$00F4B2 |\
     AND.b #$F0                              ;$00F4B4 | |
     STA $00                                 ;$00F4B6 | | Set the upper nybble of map16 table index.
-    LDA $9A                                 ;$00F4B8 | | Get collision X,
+    LDA.b InteractionPtXPos_9A              ;$00F4B8 | | Get collision X,
     LSR                                     ;$00F4BA | |
     LSR                                     ;$00F4BB | |
     LSR                                     ;$00F4BC | |
@@ -12555,7 +12555,7 @@ collision:
     CLC                                     ;$00F4C0 | |
     ADC.l DATA_00BA80,X                     ;$00F4C1 | |
     STA $00                                 ;$00F4C5 | |
-    LDA $9B                                 ;$00F4C7 | |
+    LDA.b InteractionPtXPos_9A+1            ;$00F4C7 | |
     ADC.l DATA_00BABC,X                     ;$00F4C9 |/ Add by $C800 + $0200 * screen number for map16 pointer.
 .process_map16                              ;        |
     STA $01                                 ;$00F4CD |\ Set pointer to map16 low byte table,
@@ -12580,16 +12580,16 @@ collision:
     ASL                                     ;$00F4EC |
     BNE .vertical_layer_2                   ;$00F4ED | Process vertical layer 2 collision, if applicable.
     REP #$20                                ;$00F4EF \
-    LDA $98                                 ;$00F4F1 |
+    LDA.b InteractionPtYPos_98              ;$00F4F1 |
     CMP.w #$01B0                            ;$00F4F3 | If collision Y > $01B0,
     SEP #$20                                ;$00F4F6 |
     BCS .air_tile_2                         ;$00F4F8 | act like air.
     AND.b #$F0                              ;$00F4FA |\
     STA $00                                 ;$00F4FC | | Set the upper nybble of map16 table index.
-    LDX $9B                                 ;$00F4FE | |
+    LDX.b InteractionPtXPos_9A+1            ;$00F4FE | |
     CPX.b #$10                              ;$00F500 | | If collision X > end of level,
     BCS .air_tile_2                         ;$00F502 | | act like air.
-    LDA $9A                                 ;$00F504 | | Get collision X,
+    LDA.b InteractionPtXPos_9A              ;$00F504 | | Get collision X,
     LSR                                     ;$00F506 | |
     LSR                                     ;$00F507 | |
     LSR                                     ;$00F508 | |
@@ -12598,21 +12598,21 @@ collision:
     CLC                                     ;$00F50C | |
     ADC.l DATA_00BA70,X                     ;$00F50D | |
     STA $00                                 ;$00F511 | |
-    LDA $99                                 ;$00F513 | |
+    LDA.b InteractionPtYPos_98+1            ;$00F513 | |
     ADC.l DATA_00BAAC,X                     ;$00F515 |/ Add by $C800 + $1B0 * (screen number + $10) for map16 pointer.
     BRA .process_map16                      ;$00F519 / Process map16.
 
 .vertical_layer_2
-    LDA $9B                                 ;$00F51B \
+    LDA.b InteractionPtXPos_9A+1            ;$00F51B \
     CMP.b #$02                              ;$00F51D | If collision X > $0200,
     BCS .air_tile_2                         ;$00F51F | act like air.
-    LDX $99                                 ;$00F521 |
+    LDX.b InteractionPtYPos_98+1            ;$00F521 |
     CPX.b #$0E                              ;$00F523 | If collision Y > $0E00,
     BCS .air_tile_2                         ;$00F525 | act like air.
-    LDA $98                                 ;$00F527 |\
+    LDA.b InteractionPtYPos_98              ;$00F527 |\
     AND.b #$F0                              ;$00F529 | |
     STA $00                                 ;$00F52B | | Set the upper nybble of map16 table index.
-    LDA $9A                                 ;$00F52D | | Get collision X,
+    LDA.b InteractionPtXPos_9A              ;$00F52D | | Get collision X,
     LSR                                     ;$00F52F | |
     LSR                                     ;$00F530 | |
     LSR                                     ;$00F531 | |
@@ -12621,7 +12621,7 @@ collision:
     CLC                                     ;$00F535 | |
     ADC.l DATA_00BA8E,X                     ;$00F536 | |
     STA $00                                 ;$00F53A | |
-    LDA $9B                                 ;$00F53C | |
+    LDA.b InteractionPtXPos_9A+1            ;$00F53C | |
     ADC.l DATA_00BACA,X                     ;$00F53E |/ Add by $C800 + $200 * (screen number + $10) for map16 pointer.
     JMP .process_map16                      ;$00F542 / Process map16.
 
@@ -13320,17 +13320,17 @@ FlatPalaceSwitch:
     STA.w $009E,y                           ;$00FA4E |
     LDA.b #$08                              ;$00FA51 |
     STA.w SpriteStatus_14C8,Y               ;$00FA53 |
-    LDA $9A                                 ;$00FA56 |
+    LDA.b InteractionPtXPos_9A              ;$00FA56 |
     AND.b #$F0                              ;$00FA58 |
     STA.w SpriteXPosLow_E4,y                ;$00FA5A |
-    LDA $9B                                 ;$00FA5D |
+    LDA.b InteractionPtXPos_9A+1            ;$00FA5D |
     STA.w SpriteXPosHigh_14E0,Y             ;$00FA5F |
-    LDA $98                                 ;$00FA62 |
+    LDA.b InteractionPtYPos_98              ;$00FA62 |
     AND.b #$F0                              ;$00FA64 |
     CLC                                     ;$00FA66 |
     ADC.b #$10                              ;$00FA67 |
     STA.w SpriteYPosLow_D8,Y                ;$00FA69 |
-    LDA $99                                 ;$00FA6C |
+    LDA.b InteractionPtYPos_98+1            ;$00FA6C |
     ADC.b #$00                              ;$00FA6E |
     STA.w SpriteYPosHigh_14D4,Y             ;$00FA70 |
     PHX                                     ;$00FA73 |
@@ -13742,20 +13742,20 @@ smoke_sparkle:
 .found_smoke_slot
     LDA.b #$05
     STA.w $17C0,Y                           ;$00FD6D |
-    LDA $9A                                 ;$00FD70 |
+    LDA.b InteractionPtXPos_9A              ;$00FD70 |
     AND.b #$F0                              ;$00FD72 |
     STA.w $17C8,Y                           ;$00FD74 |
-    LDA $98                                 ;$00FD77 |
+    LDA.b InteractionPtYPos_98              ;$00FD77 |
     AND.b #$F0                              ;$00FD79 |
     STA.w $17C4,Y                           ;$00FD7B |
     LDA.w $1933                             ;$00FD7E |
     BEQ CODE_00FD97                         ;$00FD81 |
-    LDA $9A                                 ;$00FD83 |
+    LDA.b InteractionPtXPos_9A              ;$00FD83 |
     SEC                                     ;$00FD85 |
     SBC.b LayerXDiff_26                     ;$00FD86 |
     AND.b #$F0                              ;$00FD88 |
     STA.w $17C8,Y                           ;$00FD8A |
-    LDA $98                                 ;$00FD8D |
+    LDA.b InteractionPtYPos_98              ;$00FD8D |
     SEC                                     ;$00FD8F |
     SBC.b LayerYDiff_28                     ;$00FD90 |
     AND.b #$F0                              ;$00FD92 |

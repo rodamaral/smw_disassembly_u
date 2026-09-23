@@ -807,18 +807,18 @@ CODE_02867F:
     STA.w SPCIO3_1DFC                       ;$028681 |
     LDA.b #$01                              ;$028684 |
     STA.w $17F0,X                           ;$028686 |
-    LDA $9A                                 ;$028689 |
+    LDA.b InteractionPtXPos_9A              ;$028689 |
     CLC                                     ;$02868B |
     ADC.w DATA_028746,Y                     ;$02868C |
     STA.w $1808,X                           ;$02868F |
-    LDA $9B                                 ;$028692 |
+    LDA.b InteractionPtXPos_9A+1            ;$028692 |
     ADC.b #$00                              ;$028694 |
     STA.w $18EA,X                           ;$028696 |
-    LDA $98                                 ;$028699 |
+    LDA.b InteractionPtYPos_98              ;$028699 |
     CLC                                     ;$02869B |
     ADC.w DATA_028742,Y                     ;$02869C |
     STA.w $17FC,X                           ;$02869F |
-    LDA $99                                 ;$0286A2 |
+    LDA.b InteractionPtYPos_98+1            ;$0286A2 |
     ADC.b #$00                              ;$0286A4 |
     STA.w $1814,X                           ;$0286A6 |
     LDA.w DATA_02874A,Y                     ;$0286A9 |
@@ -866,28 +866,28 @@ CODE_0286EF:
     BPL CODE_0286EF                         ;$0286F5 |
     INY                                     ;$0286F7 |
 CODE_0286F8:
-    LDA $9A
+    LDA.b InteractionPtXPos_9A
     STA.w $16D1,Y                           ;$0286FA |
-    LDA $9B                                 ;$0286FD |
+    LDA.b InteractionPtXPos_9A+1            ;$0286FD |
     STA.w $16D5,Y                           ;$0286FF |
-    LDA $98                                 ;$028702 |
+    LDA.b InteractionPtYPos_98              ;$028702 |
     STA.w $16D9,Y                           ;$028704 |
-    LDA $99                                 ;$028707 |
+    LDA.b InteractionPtYPos_98+1            ;$028707 |
     STA.w $16DD,Y                           ;$028709 |
     LDA.w $1933                             ;$02870C |
     BEQ CODE_02872F                         ;$02870F |
-    LDA $9A                                 ;$028711 |
+    LDA.b InteractionPtXPos_9A              ;$028711 |
     SEC                                     ;$028713 |
     SBC.b LayerXDiff_26                     ;$028714 |
     STA.w $16D1,Y                           ;$028716 |
-    LDA $9B                                 ;$028719 |
+    LDA.b InteractionPtXPos_9A+1            ;$028719 |
     SBC.b LayerXDiff_26+1                   ;$02871B |
     STA.w $16D5,Y                           ;$02871D |
-    LDA $98                                 ;$028720 |
+    LDA.b InteractionPtYPos_98              ;$028720 |
     SEC                                     ;$028722 |
     SBC.b LayerYDiff_28                     ;$028723 |
     STA.w $16D9,Y                           ;$028725 |
-    LDA $99                                 ;$028728 |
+    LDA.b InteractionPtYPos_98+1            ;$028728 |
     SBC.b LayerYDiff_28+1                   ;$02872A |
     STA.w $16DD,Y                           ;$02872C |
 CODE_02872F:
@@ -964,26 +964,26 @@ CODE_0287A6:
     LDA.w $1699,Y                           ;$0287A9 |
     CMP.b #$07                              ;$0287AC |
     BNE NoResetTurningBlk                   ;$0287AE |
-    LDA $9A                                 ;$0287B0 |
+    LDA.b InteractionPtXPos_9A              ;$0287B0 |
     PHA                                     ;$0287B2 |
-    LDA $9B                                 ;$0287B3 |
+    LDA.b InteractionPtXPos_9A+1            ;$0287B3 |
     PHA                                     ;$0287B5 |
-    LDA $98                                 ;$0287B6 |
+    LDA.b InteractionPtYPos_98              ;$0287B6 |
     PHA                                     ;$0287B8 |
-    LDA $99                                 ;$0287B9 |
+    LDA.b InteractionPtYPos_98+1            ;$0287B9 |
     PHA                                     ;$0287BB |
     LDA.w $16A5,Y                           ;$0287BC |
-    STA $9A                                 ;$0287BF |
+    STA.b InteractionPtXPos_9A              ;$0287BF |
     LDA.w $16AD,Y                           ;$0287C1 |
-    STA $9B                                 ;$0287C4 |
+    STA.b InteractionPtXPos_9A+1            ;$0287C4 |
     LDA.w $16A1,Y                           ;$0287C6 |
     CLC                                     ;$0287C9 |
     ADC.b #$0C                              ;$0287CA |
     AND.b #$F0                              ;$0287CC |
-    STA $98                                 ;$0287CE |
+    STA.b InteractionPtYPos_98              ;$0287CE |
     LDA.w $16A9,Y                           ;$0287D0 |
     ADC.b #$00                              ;$0287D3 |
-    STA $99                                 ;$0287D5 |
+    STA.b InteractionPtYPos_98+1            ;$0287D5 |
     LDA.w $16C1,Y                           ;$0287D7 |
     STA $9C                                 ;$0287DA |
     LDA $04                                 ;$0287DC |
@@ -1004,13 +1004,13 @@ CODE_0287A6:
     PLA                                     ;$0287F5 |
     STA $04                                 ;$0287F6 |
     PLA                                     ;$0287F8 |
-    STA $99                                 ;$0287F9 |
+    STA.b InteractionPtYPos_98+1            ;$0287F9 |
     PLA                                     ;$0287FB |
-    STA $98                                 ;$0287FC |
+    STA.b InteractionPtYPos_98              ;$0287FC |
     PLA                                     ;$0287FE |
-    STA $9B                                 ;$0287FF |
+    STA.b InteractionPtXPos_9A+1            ;$0287FF |
     PLA                                     ;$028801 |
-    STA $9A                                 ;$028802 |
+    STA.b InteractionPtXPos_9A              ;$028802 |
 NoResetTurningBlk:
     LDY.w $18CD
 CODE_028807:
@@ -1039,13 +1039,13 @@ CODE_02882A:
     STA.w $1699,Y                           ;$02882D |
     LDA.b #$00                              ;$028830 |
     STA.w $169D,Y                           ;$028832 |
-    LDA $9A                                 ;$028835 |
+    LDA.b InteractionPtXPos_9A              ;$028835 |
     STA.w $16A5,Y                           ;$028837 |
-    LDA $9B                                 ;$02883A |
+    LDA.b InteractionPtXPos_9A+1            ;$02883A |
     STA.w $16AD,Y                           ;$02883C |
-    LDA $98                                 ;$02883F |
+    LDA.b InteractionPtYPos_98              ;$02883F |
     STA.w $16A1,Y                           ;$028841 |
-    LDA $99                                 ;$028844 |
+    LDA.b InteractionPtYPos_98+1            ;$028844 |
     STA.w $16A9,Y                           ;$028846 |
     LDA.w $1933                             ;$028849 |
     LSR                                     ;$02884C |
@@ -1120,7 +1120,7 @@ CODE_0288DC:
     LDY $05
     CPY.b #$0B                              ;$0288DE |
     BNE CODE_0288EA                         ;$0288E0 |
-    LDA $9A                                 ;$0288E2 | 0B: generate Key/P-Balloon/Wings/Green Shell
+    LDA.b InteractionPtXPos_9A              ;$0288E2 | 0B: generate Key/P-Balloon/Wings/Green Shell
     AND.b #$30                              ;$0288E4 | if low X position is 20, 60, A0, E0 ()
     CMP.b #$20                              ;$0288E6 |
     BEQ GenSpriteFromBlk                    ;$0288E8 |
@@ -1198,28 +1198,28 @@ CODE_028967:
     INC.w $1432                             ;$02896C |
     STZ.w DirectCoinTimer_190C              ;$02896F |
 CODE_028972:
-    LDA $9A
+    LDA.b InteractionPtXPos_9A
     STA.b SpriteXPosLow_E4,X                ;$028974 |
-    LDA $9B                                 ;$028976 |
+    LDA.b InteractionPtXPos_9A+1            ;$028976 |
     STA.w SpriteXPosHigh_14E0,X             ;$028978 |
-    LDA $98                                 ;$02897B |
+    LDA.b InteractionPtYPos_98              ;$02897B |
     STA.b SpriteYPosLow_D8,X                ;$02897D |
-    LDA $99                                 ;$02897F |
+    LDA.b InteractionPtYPos_98+1            ;$02897F |
     STA.w SpriteYPosHigh_14D4,X             ;$028981 |
     LDA.w $1933                             ;$028984 | unint $1933 for Angel Blocks, possibly shifting the item according to layer 2 positions
     BEQ CODE_0289A5                         ;$028987 |
-    LDA $9A                                 ;$028989 |
+    LDA.b InteractionPtXPos_9A              ;$028989 |
     SEC                                     ;$02898B |
     SBC.b LayerXDiff_26                     ;$02898C |
     STA.b SpriteXPosLow_E4,X                ;$02898E |
-    LDA $9B                                 ;$028990 |
+    LDA.b InteractionPtXPos_9A+1            ;$028990 |
     SBC.b LayerXDiff_26+1                   ;$028992 |
     STA.w SpriteXPosHigh_14E0,X             ;$028994 |
-    LDA $98                                 ;$028997 |
+    LDA.b InteractionPtYPos_98              ;$028997 |
     SEC                                     ;$028999 |
     SBC.b LayerYDiff_28                     ;$02899A |
     STA.b SpriteYPosLow_D8,X                ;$02899C |
-    LDA $99                                 ;$02899E |
+    LDA.b InteractionPtYPos_98+1            ;$02899E |
     SBC.b LayerYDiff_28+1                   ;$0289A0 |
     STA.w SpriteYPosHigh_14D4,X             ;$0289A2 |
 CODE_0289A5:
@@ -1336,9 +1336,9 @@ CODE_028A47:
 CODE_028A50:
     LDA.b #$01
     STA.w $17C0,X                           ;$028A52 |
-    LDA $98                                 ;$028A55 |
+    LDA.b InteractionPtYPos_98              ;$028A55 |
     STA.w $17C4,X                           ;$028A57 |
-    LDA $9A                                 ;$028A5A |
+    LDA.b InteractionPtXPos_9A              ;$028A5A |
     STA.w $17C8,X                           ;$028A5C |
     LDA.b #$1B                              ;$028A5F |
     STA.w $17CC,X                           ;$028A61 |
@@ -1361,15 +1361,15 @@ ADDR_028A7A:
 CODE_028A7D:
     JSL CODE_05B34A
     INC.w $17D0,X                           ;$028A81 |
-    LDA $9A                                 ;$028A84 |
+    LDA.b InteractionPtXPos_9A              ;$028A84 |
     STA.w $17E0,X                           ;$028A86 |
-    LDA $9B                                 ;$028A89 |
+    LDA.b InteractionPtXPos_9A+1            ;$028A89 |
     STA.w $17EC,X                           ;$028A8B |
-    LDA $98                                 ;$028A8E |
+    LDA.b InteractionPtYPos_98              ;$028A8E |
     SEC                                     ;$028A90 |
     SBC.b #$10                              ;$028A91 |
     STA.w $17D4,X                           ;$028A93 |
-    LDA $99                                 ;$028A96 |
+    LDA.b InteractionPtYPos_98+1            ;$028A96 |
     SBC.b #$00                              ;$028A98 |
     STA.w $17E8,X                           ;$028A9A |
     LDA.w $1933                             ;$028A9D |
@@ -2348,18 +2348,18 @@ TileFromBounceSpr1:
     CLC                                     ;$0291BF |
     ADC.b #$08                              ;$0291C0 |
     AND.b #$F0                              ;$0291C2 |
-    STA $9A                                 ;$0291C4 |
+    STA.b InteractionPtXPos_9A              ;$0291C4 |
     LDA.w $16AD,X                           ;$0291C6 |
     ADC.b #$00                              ;$0291C9 |
-    STA $9B                                 ;$0291CB |
+    STA.b InteractionPtXPos_9A+1            ;$0291CB |
     LDA.w $16A1,X                           ;$0291CD |
     CLC                                     ;$0291D0 |
     ADC.b #$08                              ;$0291D1 |
     AND.b #$F0                              ;$0291D3 |
-    STA $98                                 ;$0291D5 |
+    STA.b InteractionPtYPos_98              ;$0291D5 |
     LDA.w $16A9,X                           ;$0291D7 |
     ADC.b #$00                              ;$0291DA |
-    STA $99                                 ;$0291DC |
+    STA.b InteractionPtYPos_98+1            ;$0291DC |
     LDA.w $16C9,X                           ;$0291DE |
     ASL                                     ;$0291E1 |
     ROL                                     ;$0291E2 |
@@ -2825,24 +2825,24 @@ CapeLayerInteraction029540:
     ADC.w DATA_02953C,Y                     ;$029550 |
     AND.b #$F0                              ;$029553 |
     STA $00                                 ;$029555 |
-    STA $98                                 ;$029557 |
+    STA.b InteractionPtYPos_98              ;$029557 |
     LDA.w $13EC                             ;$029559 |
     ADC.b #$00                              ;$02955C |
     CMP.b LevelScreens_5D                   ;$02955E |
     BCS Return0295AD                        ;$029560 |
     STA $03                                 ;$029562 |
-    STA $99                                 ;$029564 |
+    STA.b InteractionPtYPos_98+1            ;$029564 |
     LDA.w $13E9                             ;$029566 |
     CLC                                     ;$029569 |
     ADC.w DATA_02953E,Y                     ;$02956A |
     STA $01                                 ;$02956D |
-    STA $9A                                 ;$02956F |
+    STA.b InteractionPtXPos_9A              ;$02956F |
     LDA.w $13EA                             ;$029571 |
     ADC.b #$00                              ;$029574 |
     CMP.b #$02                              ;$029576 |
     BCS Return0295AD                        ;$029578 |
     STA $02                                 ;$02957A |
-    STA $9B                                 ;$02957C |
+    STA.b InteractionPtXPos_9A+1            ;$02957C |
     LDA $01                                 ;$02957E |
     LSR                                     ;$029580 |
     LSR                                     ;$029581 |
@@ -2875,24 +2875,24 @@ CapeHorizontalLayer0295AE:
     ADC.w DATA_02953C,Y                     ;$0295B2 |
     AND.b #$F0                              ;$0295B5 |
     STA $00                                 ;$0295B7 |
-    STA $98                                 ;$0295B9 |
+    STA.b InteractionPtYPos_98              ;$0295B9 |
     LDA.w $13EC                             ;$0295BB |
     ADC.b #$00                              ;$0295BE |
     CMP.b #$02                              ;$0295C0 |
     BCS Return0295AD                        ;$0295C2 |
     STA $02                                 ;$0295C4 |
-    STA $99                                 ;$0295C6 |
+    STA.b InteractionPtYPos_98+1            ;$0295C6 |
     LDA.w $13E9                             ;$0295C8 |
     CLC                                     ;$0295CB |
     ADC.w DATA_02953E,Y                     ;$0295CC |
     STA $01                                 ;$0295CF |
-    STA $9A                                 ;$0295D1 |
+    STA.b InteractionPtXPos_9A              ;$0295D1 |
     LDA.w $13EA                             ;$0295D3 |
     ADC.b #$00                              ;$0295D6 |
     CMP.b LevelScreens_5D                   ;$0295D8 |
     BCS Return0295AD                        ;$0295DA |
     STA $03                                 ;$0295DC |
-    STA $9B                                 ;$0295DE |
+    STA.b InteractionPtXPos_9A+1            ;$0295DE |
     LDA $01                                 ;$0295E0 |
     LSR                                     ;$0295E2 |
     LSR                                     ;$0295E3 |
@@ -5104,7 +5104,7 @@ CODE_02A611:
     LDA.w $1715,X                           ;$02A618 |
     CLC                                     ;$02A61B |
     ADC.b #$08                              ;$02A61C |
-    STA $98                                 ;$02A61E |
+    STA.b InteractionPtYPos_98              ;$02A61E |
     AND.b #$F0                              ;$02A620 |
     STA $00                                 ;$02A622 |
     LDA.w $1729,X                           ;$02A624 |
@@ -5112,18 +5112,18 @@ CODE_02A611:
     CMP.b LevelScreens_5D                   ;$02A629 |
     BCS CODE_02A677                         ;$02A62B |
     STA $03                                 ;$02A62D |
-    STA $99                                 ;$02A62F |
+    STA.b InteractionPtYPos_98+1            ;$02A62F |
     LDA.w $171F,X                           ;$02A631 |
     CLC                                     ;$02A634 |
     ADC.b #$04                              ;$02A635 |
     STA $01                                 ;$02A637 |
-    STA $9A                                 ;$02A639 |
+    STA.b InteractionPtXPos_9A              ;$02A639 |
     LDA.w $1733,X                           ;$02A63B |
     ADC.b #$00                              ;$02A63E |
     CMP.b #$02                              ;$02A640 |
     BCS CODE_02A677                         ;$02A642 |
     STA $02                                 ;$02A644 |
-    STA $9B                                 ;$02A646 |
+    STA.b InteractionPtXPos_9A+1            ;$02A646 |
     LDA $01                                 ;$02A648 |
     LSR                                     ;$02A64A |
     LSR                                     ;$02A64B |
@@ -5157,13 +5157,13 @@ CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision
     LDA.w $1715,X
     CLC                                     ;$02A67C |
     ADC.b #$08                              ;$02A67D |
-    STA $98                                 ;$02A67F |
+    STA.b InteractionPtYPos_98              ;$02A67F |
     AND.b #$F0                              ;$02A681 |
     STA $00                                 ;$02A683 |
     LDA.w $1729,X                           ;$02A685 |
     ADC.b #$00                              ;$02A688 |
     STA $02                                 ;$02A68A |
-    STA $99                                 ;$02A68C |
+    STA.b InteractionPtYPos_98+1            ;$02A68C |
     LDA $00                                 ;$02A68E |
     SEC                                     ;$02A690 |
     SBC.b Layer1YPos_1C                     ;$02A691 |
@@ -5173,13 +5173,13 @@ CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision
     CLC                                     ;$02A69A |
     ADC.b #$04                              ;$02A69B |
     STA $01                                 ;$02A69D |
-    STA $9A                                 ;$02A69F |
+    STA.b InteractionPtXPos_9A              ;$02A69F |
     LDA.w $1733,X                           ;$02A6A1 |
     ADC.b #$00                              ;$02A6A4 |
     CMP.b LevelScreens_5D                   ;$02A6A6 |
     BCS CODE_02A677                         ;$02A6A8 |
     STA $03                                 ;$02A6AA |
-    STA $9B                                 ;$02A6AC |
+    STA.b InteractionPtXPos_9A+1            ;$02A6AC |
     LDA $01                                 ;$02A6AE |
     LSR                                     ;$02A6B0 |
     LSR                                     ;$02A6B1 |
@@ -5221,9 +5221,9 @@ CODE_02A6DB:
     BCC CODE_02A727                         ;$02A6FC |
     CMP.b #$D8                              ;$02A6FE |
     BCS CODE_02A735                         ;$02A700 |
-    LDY $9A                                 ;$02A702 |
+    LDY.b InteractionPtXPos_9A              ;$02A702 |
     STY $0A                                 ;$02A704 |
-    LDY $98                                 ;$02A706 |
+    LDY.b InteractionPtYPos_98              ;$02A706 |
     STY $0C                                 ;$02A708 |
     JSL CODE_00FA19                         ;$02A70A |
     LDA $00                                 ;$02A70E |
@@ -5248,7 +5248,7 @@ CODE_02A729:
     RTS                                     ;$02A72A |
 
 CODE_02A72B:
-    LDA $98
+    LDA.b InteractionPtYPos_98
     AND.b #$0F                              ;$02A72D |
     CMP.b #$06                              ;$02A72F |
     BCS CODE_02A729                         ;$02A731 |
@@ -5256,7 +5256,7 @@ CODE_02A72B:
     RTS                                     ;$02A734 |
 
 CODE_02A735:
-    LDA $98
+    LDA.b InteractionPtYPos_98
     AND.b #$0F                              ;$02A737 |
     CMP.b #$06                              ;$02A739 |
     BCS CODE_02A729                         ;$02A73B |
@@ -7814,13 +7814,13 @@ Return02B9A3:
 GenTileFromSpr0:
     STA $9C
     LDA.b SpriteXPosLow_E4,X                ;$02B9A6 |
-    STA $9A                                 ;$02B9A8 |
+    STA.b InteractionPtXPos_9A              ;$02B9A8 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02B9AA |
-    STA $9B                                 ;$02B9AD |
+    STA.b InteractionPtXPos_9A+1            ;$02B9AD |
     LDA.b SpriteYPosLow_D8,X                ;$02B9AF |
-    STA $98                                 ;$02B9B1 |
+    STA.b InteractionPtYPos_98              ;$02B9B1 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02B9B3 |
-    STA $99                                 ;$02B9B6 |
+    STA.b InteractionPtYPos_98+1            ;$02B9B6 |
     JSL generate_tile                       ;$02B9B8 |
     RTL                                     ;$02B9BC |
 
@@ -7974,16 +7974,16 @@ CODE_02BAC0:
     STA.w $009E,y                           ;$02BAC7 |
     LDA $00                                 ;$02BACA |
     STA.w SpriteXPosLow_E4,y                ;$02BACC |
-    STA $9A                                 ;$02BACF |
+    STA.b InteractionPtXPos_9A              ;$02BACF |
     LDA $08                                 ;$02BAD1 |
     STA.w SpriteXPosHigh_14E0,Y             ;$02BAD3 |
-    STA $9B                                 ;$02BAD6 |
+    STA.b InteractionPtXPos_9A+1            ;$02BAD6 |
     LDA $01                                 ;$02BAD8 |
     STA.w SpriteYPosLow_D8,Y                ;$02BADA |
-    STA $98                                 ;$02BADD |
+    STA.b InteractionPtYPos_98              ;$02BADD |
     LDA $09                                 ;$02BADF |
     STA.w SpriteYPosHigh_14D4,Y             ;$02BAE1 |
-    STA $99                                 ;$02BAE4 |
+    STA.b InteractionPtYPos_98+1            ;$02BAE4 |
     PHX                                     ;$02BAE6 |
     TYX                                     ;$02BAE7 |
     JSL InitSpriteTables                    ;$02BAE8 |
@@ -9068,13 +9068,13 @@ CODE_02C2A6:
     LDA.w $1588,X
     AND.b #$04                              ;$02C2A9 |
     BEQ CODE_02C2F7                         ;$02C2AB |
-    LDA $9B                                 ;$02C2AD |
+    LDA.b InteractionPtXPos_9A+1            ;$02C2AD |
     PHA                                     ;$02C2AF |
-    LDA $9A                                 ;$02C2B0 |
+    LDA.b InteractionPtXPos_9A              ;$02C2B0 |
     PHA                                     ;$02C2B2 |
-    LDA $99                                 ;$02C2B3 |
+    LDA.b InteractionPtYPos_98+1            ;$02C2B3 |
     PHA                                     ;$02C2B5 |
-    LDA $98                                 ;$02C2B6 |
+    LDA.b InteractionPtYPos_98              ;$02C2B6 |
     PHA                                     ;$02C2B8 |
     JSL ShatterBlock                        ;$02C2B9 |
     LDA.b #$02                              ;$02C2BD |
@@ -9083,14 +9083,14 @@ CODE_02C2A6:
     PLA                                     ;$02C2C5 |
     SEC                                     ;$02C2C6 |
     SBC.b #$10                              ;$02C2C7 |
-    STA $98                                 ;$02C2C9 |
+    STA.b InteractionPtYPos_98              ;$02C2C9 |
     PLA                                     ;$02C2CB |
     SBC.b #$00                              ;$02C2CC |
-    STA $99                                 ;$02C2CE |
+    STA.b InteractionPtYPos_98+1            ;$02C2CE |
     PLA                                     ;$02C2D0 |
-    STA $9A                                 ;$02C2D1 |
+    STA.b InteractionPtXPos_9A              ;$02C2D1 |
     PLA                                     ;$02C2D3 |
-    STA $9B                                 ;$02C2D4 |
+    STA.b InteractionPtXPos_9A+1            ;$02C2D4 |
     JSL ShatterBlock                        ;$02C2D6 |
     LDA.b #$02                              ;$02C2DA |
     STA $9C                                 ;$02C2DC |
@@ -10461,16 +10461,16 @@ CODE_02CD59:
     LDA.b #$1B                              ;$02CD60 |
     STA $9C                                 ;$02CD62 |
     LDA.b SpriteXPosLow_E4,X                ;$02CD64 |
-    STA $9A                                 ;$02CD66 |
+    STA.b InteractionPtXPos_9A              ;$02CD66 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02CD68 |
-    STA $9B                                 ;$02CD6B |
+    STA.b InteractionPtXPos_9A+1            ;$02CD6B |
     LDA.b SpriteYPosLow_D8,X                ;$02CD6D |
     SEC                                     ;$02CD6F |
     SBC.b #$10                              ;$02CD70 |
-    STA $98                                 ;$02CD72 |
+    STA.b InteractionPtYPos_98              ;$02CD72 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02CD74 |
     SBC.b #$00                              ;$02CD77 |
-    STA $99                                 ;$02CD79 |
+    STA.b InteractionPtYPos_98+1            ;$02CD79 |
     JSL generate_tile                       ;$02CD7B |
 CODE_02CD7F:
     JSL InvisBlkMainRt
@@ -11086,13 +11086,13 @@ DATA_02D1F1:
 
 generate_tree_tile_02D1F3:
     LDA.w $18B0
-    STA $9A                                 ;$02D1F6 |
+    STA.b InteractionPtXPos_9A              ;$02D1F6 |
     LDA.w $18B1                             ;$02D1F8 |
-    STA $9B                                 ;$02D1FB |
+    STA.b InteractionPtXPos_9A+1            ;$02D1FB |
     LDA.w $18B2                             ;$02D1FD |
-    STA $98                                 ;$02D200 |
+    STA.b InteractionPtYPos_98              ;$02D200 |
     LDA.w $18B3                             ;$02D202 |
-    STA $99                                 ;$02D205 |
+    STA.b InteractionPtYPos_98+1            ;$02D205 |
     LDA.b #$04                              ;$02D207 |
     STA $9C                                 ;$02D209 |
     JSL generate_tile                       ;$02D20B |
@@ -12877,9 +12877,9 @@ CODE_02DEB0:
     ORA.w $186C,X                           ;$02DED9 |
     BNE CODE_02DEEA                         ;$02DEDC |
     LDA.b SpriteXPosLow_E4,X                ;$02DEDE |
-    STA $9A                                 ;$02DEE0 |
+    STA.b InteractionPtXPos_9A              ;$02DEE0 |
     LDA.b SpriteYPosLow_D8,X                ;$02DEE2 |
-    STA $98                                 ;$02DEE4 |
+    STA.b InteractionPtYPos_98              ;$02DEE4 |
     JSL CODE_028A44                         ;$02DEE6 |
 CODE_02DEEA:
     LDA.b #$00
@@ -13418,13 +13418,13 @@ CODE_02E2B0:
     LDA.w $151C,X                           ;$02E2BE |
     STA $C2,X                               ;$02E2C1 |
     LDA.b SpriteXPosLow_E4,X                ;$02E2C3 |
-    STA $9A                                 ;$02E2C5 |
+    STA.b InteractionPtXPos_9A              ;$02E2C5 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E2C7 |
-    STA $9B                                 ;$02E2CA |
+    STA.b InteractionPtXPos_9A+1            ;$02E2CA |
     LDA.b SpriteYPosLow_D8,X                ;$02E2CC |
-    STA $98                                 ;$02E2CE |
+    STA.b InteractionPtYPos_98              ;$02E2CE |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E2D0 |
-    STA $99                                 ;$02E2D3 |
+    STA.b InteractionPtYPos_98+1            ;$02E2D3 |
     LDA.b #$06                              ;$02E2D5 |
     STA $9C                                 ;$02E2D7 |
     JSL generate_tile                       ;$02E2D9 |
@@ -13641,13 +13641,13 @@ CODE_02E463:
     TYA                                     ;$02E472 |
     STA.w SpriteDir_157C,X                  ;$02E473 |
     LDA.b SpriteXPosLow_E4,X                ;$02E476 |
-    STA $9A                                 ;$02E478 |
+    STA.b InteractionPtXPos_9A              ;$02E478 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E47A |
-    STA $9B                                 ;$02E47D |
+    STA.b InteractionPtXPos_9A+1            ;$02E47D |
     LDA.b SpriteYPosLow_D8,X                ;$02E47F |
-    STA $98                                 ;$02E481 |
+    STA.b InteractionPtYPos_98              ;$02E481 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E483 |
-    STA $99                                 ;$02E486 |
+    STA.b InteractionPtYPos_98+1            ;$02E486 |
     PHB                                     ;$02E488 |
     LDA.b #$02                              ;$02E489 |
     PHA                                     ;$02E48B |
@@ -13746,13 +13746,13 @@ CODE_02E533:
     LDA.w MushrmScaleTiles,Y
     STA $9C                                 ;$02E536 |
     LDA.b SpriteXPosLow_E4,X                ;$02E538 |
-    STA $9A                                 ;$02E53A |
+    STA.b InteractionPtXPos_9A              ;$02E53A |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E53C |
-    STA $9B                                 ;$02E53F |
+    STA.b InteractionPtXPos_9A+1            ;$02E53F |
     LDA.b SpriteYPosLow_D8,X                ;$02E541 |
-    STA $98                                 ;$02E543 |
+    STA.b InteractionPtYPos_98              ;$02E543 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E545 |
-    STA $99                                 ;$02E548 |
+    STA.b InteractionPtYPos_98+1            ;$02E548 |
     JSL generate_tile                       ;$02E54A |
 CODE_02E54E:
     JSR MushroomScaleGfx
@@ -14254,27 +14254,27 @@ GrowingPipeGfx:
     LDA.w $185E                             ;$02E8C6 |
     STA $9C                                 ;$02E8C9 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8CB |
-    STA $9A                                 ;$02E8CD |
+    STA.b InteractionPtXPos_9A              ;$02E8CD |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E8CF |
-    STA $9B                                 ;$02E8D2 |
+    STA.b InteractionPtXPos_9A+1            ;$02E8D2 |
     LDA.b SpriteYPosLow_D8,X                ;$02E8D4 |
-    STA $98                                 ;$02E8D6 |
+    STA.b InteractionPtYPos_98              ;$02E8D6 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E8D8 |
-    STA $99                                 ;$02E8DB |
+    STA.b InteractionPtYPos_98+1            ;$02E8DB |
     JSL generate_tile                       ;$02E8DD |
     LDA.w $18B6                             ;$02E8E1 |
     STA $9C                                 ;$02E8E4 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8E6 |
     CLC                                     ;$02E8E8 |
     ADC.b #$10                              ;$02E8E9 |
-    STA $9A                                 ;$02E8EB |
+    STA.b InteractionPtXPos_9A              ;$02E8EB |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E8ED |
     ADC.b #$00                              ;$02E8F0 |
-    STA $9B                                 ;$02E8F2 |
+    STA.b InteractionPtXPos_9A+1            ;$02E8F2 |
     LDA.b SpriteYPosLow_D8,X                ;$02E8F4 |
-    STA $98                                 ;$02E8F6 |
+    STA.b InteractionPtYPos_98              ;$02E8F6 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E8F8 |
-    STA $99                                 ;$02E8FB |
+    STA.b InteractionPtYPos_98+1            ;$02E8FB |
     JSL generate_tile                       ;$02E8FD |
     RTS                                     ;$02E901 |
 

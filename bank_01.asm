@@ -2887,13 +2887,13 @@ Return019424:
 
 CODE_019425:
     LDA $0A
-    STA $9A                                 ;$019427 |
+    STA.b InteractionPtXPos_9A              ;$019427 |
     LDA $0B                                 ;$019429 |
-    STA $9B                                 ;$01942B |
+    STA.b InteractionPtXPos_9A+1            ;$01942B |
     LDA $0C                                 ;$01942D |
-    STA $98                                 ;$01942F |
+    STA.b InteractionPtYPos_98              ;$01942F |
     LDA $0D                                 ;$019431 |
-    STA $99                                 ;$019433 |
+    STA.b InteractionPtYPos_98+1            ;$019433 |
 CODE_019435:
     LDY $0F
     LDA.w $1588,X                           ;$019437 |
@@ -3095,15 +3095,15 @@ CODE_019598:
     LDA.b SpriteXPosLow_E4,X                ;$0195A6 |
     CLC                                     ;$0195A8 |
     ADC.b #$08                              ;$0195A9 |
-    STA $9A                                 ;$0195AB |
+    STA.b InteractionPtXPos_9A              ;$0195AB |
     LDA.w SpriteXPosHigh_14E0,X             ;$0195AD |
     ADC.b #$00                              ;$0195B0 |
-    STA $9B                                 ;$0195B2 |
+    STA.b InteractionPtXPos_9A+1            ;$0195B2 |
     LDA.b SpriteYPosLow_D8,X                ;$0195B4 |
     AND.b #$F0                              ;$0195B6 |
-    STA $98                                 ;$0195B8 |
+    STA.b InteractionPtYPos_98              ;$0195B8 |
     LDA.w SpriteYPosHigh_14D4,X             ;$0195BA |
-    STA $99                                 ;$0195BD |
+    STA.b InteractionPtYPos_98+1            ;$0195BD |
     LDA.w $1588,X                           ;$0195BF |
     AND.b #$20                              ;$0195C2 |
     ASL                                     ;$0195C4 |
@@ -3653,13 +3653,13 @@ CODE_0199E1:
     JSR IsSprOffScreen
     BNE Return019A03                        ;$0199E4 |
     LDA.b SpriteXPosLow_E4,X                ;$0199E6 |
-    STA $9A                                 ;$0199E8 |
+    STA.b InteractionPtXPos_9A              ;$0199E8 |
     LDA.w SpriteXPosHigh_14E0,X             ;$0199EA |
-    STA $9B                                 ;$0199ED |
+    STA.b InteractionPtXPos_9A+1            ;$0199ED |
     LDA.b SpriteYPosLow_D8,X                ;$0199EF |
-    STA $98                                 ;$0199F1 |
+    STA.b InteractionPtYPos_98              ;$0199F1 |
     LDA.w SpriteYPosHigh_14D4,X             ;$0199F3 |
-    STA $99                                 ;$0199F6 |
+    STA.b InteractionPtYPos_98+1            ;$0199F6 |
     PHB                                     ;$0199F8 |
     LDA.b #$02                              ;$0199F9 |
     PHA                                     ;$0199FB |
@@ -6418,13 +6418,13 @@ CODE_01ADF8:
     LDA.b #$50                              ;$01AE11 |
     STA.w $163E,X                           ;$01AE13 |
     LDA.b SpriteXPosLow_E4,X                ;$01AE16 |
-    STA $9A                                 ;$01AE18 |
+    STA.b InteractionPtXPos_9A              ;$01AE18 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01AE1A |
-    STA $9B                                 ;$01AE1D |
+    STA.b InteractionPtXPos_9A+1            ;$01AE1D |
     LDA.b SpriteYPosLow_D8,X                ;$01AE1F |
-    STA $98                                 ;$01AE21 |
+    STA.b InteractionPtYPos_98              ;$01AE21 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01AE23 |
-    STA $99                                 ;$01AE26 |
+    STA.b InteractionPtYPos_98+1            ;$01AE26 |
     LDA.b #$FF                              ;$01AE28 |
     STA.w $161A,X                           ;$01AE2A |
     LDY.w $151C,X                           ;$01AE2D |
@@ -8490,14 +8490,14 @@ StoreSpriteNum:
     LDA.b #$08                              ;$01BC92 |
     STA.w SpriteStatus_14C8,X               ;$01BC94 |
     JSL InitSpriteTables                    ;$01BC97 |
-    LDA $9B                                 ;$01BC9B |
+    LDA.b InteractionPtXPos_9A+1            ;$01BC9B |
     STA.w SpriteXPosHigh_14E0,X             ;$01BC9D |
-    LDA $9A                                 ;$01BCA0 |
+    LDA.b InteractionPtXPos_9A              ;$01BCA0 |
     AND.b #$F0                              ;$01BCA2 |
     STA.b SpriteXPosLow_E4,X                ;$01BCA4 |
-    LDA $99                                 ;$01BCA6 |
+    LDA.b InteractionPtYPos_98+1            ;$01BCA6 |
     STA.w SpriteYPosHigh_14D4,X             ;$01BCA8 |
-    LDA $98                                 ;$01BCAB |
+    LDA.b InteractionPtYPos_98              ;$01BCAB |
     AND.b #$F0                              ;$01BCAD |
     STA.b SpriteYPosLow_D8,X                ;$01BCAF |
     LDA.b #$02                              ;$01BCB1 |
@@ -9214,13 +9214,13 @@ CODE_01C1CB:
     CMP.b #$00                              ;$01C1CF |
     BNE Return01C1ED                        ;$01C1D1 |
     LDA.b SpriteXPosLow_E4,X                ;$01C1D3 |
-    STA $9A                                 ;$01C1D5 |
+    STA.b InteractionPtXPos_9A              ;$01C1D5 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01C1D7 |
-    STA $9B                                 ;$01C1DA |
+    STA.b InteractionPtXPos_9A+1            ;$01C1DA |
     LDA.b SpriteYPosLow_D8,X                ;$01C1DC |
-    STA $98                                 ;$01C1DE |
+    STA.b InteractionPtYPos_98              ;$01C1DE |
     LDA.w SpriteYPosHigh_14D4,X             ;$01C1E0 |
-    STA $99                                 ;$01C1E3 |
+    STA.b InteractionPtYPos_98+1            ;$01C1E3 |
     LDA.b #$03                              ;$01C1E5 |
     STA $9C                                 ;$01C1E7 |
     JSL generate_tile                       ;$01C1E9 |
@@ -13764,13 +13764,13 @@ CODE_01E320:
     CMP.b #$4E                              ;$01E325 |
     BNE CODE_01E343                         ;$01E327 |
     LDA.b SpriteXPosLow_E4,X                ;$01E329 |
-    STA $9A                                 ;$01E32B |
+    STA.b InteractionPtXPos_9A              ;$01E32B |
     LDA.w SpriteXPosHigh_14E0,X             ;$01E32D |
-    STA $9B                                 ;$01E330 |
+    STA.b InteractionPtXPos_9A+1            ;$01E330 |
     LDA.b SpriteYPosLow_D8,X                ;$01E332 |
-    STA $98                                 ;$01E334 |
+    STA.b InteractionPtYPos_98              ;$01E334 |
     LDA.w SpriteYPosHigh_14D4,X             ;$01E336 |
-    STA $99                                 ;$01E339 |
+    STA.b InteractionPtYPos_98+1            ;$01E339 |
     LDA.b #$08                              ;$01E33B |
     STA $9C                                 ;$01E33D |
     JSL generate_tile                       ;$01E33F |
