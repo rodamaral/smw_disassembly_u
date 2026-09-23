@@ -8319,7 +8319,7 @@ CODE_00CD39:                                ;        |
     LDA.b #$1F                              ;$00CD46 | | set the climbing flag.
     STA $8B                                 ;$00CD48 |/
 .no_climb_on_air                            ;        |
-    LDA $74                                 ;$00CD4A |
+    LDA.b PlayerClimb_74                    ;$00CD4A |
     BNE CODE_00CD72                         ;$00CD4C |
     LDA.w CarryingFlagMirror_148F           ;$00CD4E |
     ORA.w RidingYoshi_187A                  ;$00CD51 |
@@ -8340,7 +8340,7 @@ CODE_00CD39:                                ;        |
     BEQ CODE_00CD79                         ;$00CD70 |
 CODE_00CD72:
     LDA $8B
-    STA $74                                 ;$00CD74 |
+    STA.b PlayerClimb_74                    ;$00CD74 |
     JMP CODE_00DB17                         ;$00CD76 |
 
 CODE_00CD79:
@@ -10076,7 +10076,7 @@ CODE_00DB96:
 
 CODE_00DBAC:
     BVC CODE_00DBCA
-    LDA $74                                 ;$00DBAE |
+    LDA.b PlayerClimb_74                    ;$00DBAE |
     BPL CODE_00DBCA                         ;$00DBB0 |
     LDA.b #$01                              ;$00DBB2 |
     STA.w SPCIO0_1DF9                       ;$00DBB4 |
@@ -10102,7 +10102,7 @@ CODE_00DBCA:
     AND.b #$18                              ;$00DBDA |
     CMP.b #$18                              ;$00DBDC |
     BEQ CODE_00DBE8                         ;$00DBDE |
-    LDA $74                                 ;$00DBE0 |
+    LDA.b PlayerClimb_74                    ;$00DBE0 |
     BPL CODE_00DC00                         ;$00DBE2 |
     CPX $8C                                 ;$00DBE4 |
     BEQ CODE_00DBF2                         ;$00DBE6 |
@@ -10122,7 +10122,7 @@ CODE_00DBF2:
     LSR $8B                                 ;$00DBFC |
     BCS CODE_00DC0B                         ;$00DBFE |
 CODE_00DC00:
-    STZ $74
+    STZ.b PlayerClimb_74
     RTS                                     ;$00DC02 |
 
 CODE_00DC03:
@@ -10132,7 +10132,7 @@ CODE_00DC03:
     AND.b #$02                              ;$00DC07 |
     BEQ CODE_00DC16                         ;$00DC09 |
 CODE_00DC0B:
-    LDA $74
+    LDA.b PlayerClimb_74
     BMI CODE_00DC11                         ;$00DC0D |
     STZ.b PlayerXSpeed_7B                   ;$00DC0F |
 CODE_00DC11:
@@ -11796,7 +11796,7 @@ CODE_00EF60:
 CODE_00EF68:
     STZ.w $18B5
     STZ.b PlayerInAir_72                    ;$00EF6B |
-    STZ $74                                 ;$00EF6D |
+    STZ.b PlayerClimb_74                    ;$00EF6D |
     STZ.w $1406                             ;$00EF6F |
     STZ.w $140D                             ;$00EF72 |
     LDA.b #!Block_Bottom_04                 ;$00EF75 |
@@ -13035,7 +13035,7 @@ ProcessVerticalScroll00F7F4:
     LDA.w YoshiHasWingsGfx_1410             ;$00F833 |
     LSR                                     ;$00F836 |
     ORA.w $149F                             ;$00F837 |
-    ORA $74                                 ;$00F83A |
+    ORA.b PlayerClimb_74                    ;$00F83A |
     ORA.w PBalloonFlag_13F3                 ;$00F83C |
     ORA.w PlayerInCloud_18C2                ;$00F83F |
     ORA.w $1406                             ;$00F842 |

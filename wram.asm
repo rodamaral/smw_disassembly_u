@@ -587,7 +587,7 @@ PlayerIsDucking_73: skip 1
 ; |  |+--- top horizontal collision
 ; |  +---- bottom horizontal collision
 ; +------- can climb diagonally (net vs vine)
-PlayerIsClimbing_74: skip 1
+PlayerClimb_74: skip 1
 ; Valid values
 !PlayerClimb_Center = %00001
 !PlayerClimb_Top = %00010

@@ -2616,7 +2616,7 @@ CODE_0293B0:
     BNE CODE_0293F7                         ;$0293CC |
     LDA.w $1632,X                           ;$0293CE |
     PHY                                     ;$0293D1 |
-    LDY $74                                 ;$0293D2 |
+    LDY.b PlayerClimb_74                    ;$0293D2 |
     BEQ CODE_0293D8                         ;$0293D4 |
     EOR.b #$01                              ;$0293D6 |
 CODE_0293D8:

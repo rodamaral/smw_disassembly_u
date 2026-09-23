@@ -4512,7 +4512,7 @@ CODE_01A0C4:
     BEQ CODE_01A0D4                         ;$01A0CB |
 CODE_01A0CD:
     LDA.w PlayerTurningPose_13DD
-    ORA $74                                 ;$01A0D0 |
+    ORA.b PlayerClimb_74                    ;$01A0D0 |
     BEQ CODE_01A0D6                         ;$01A0D2 |
 CODE_01A0D4:
     LDY.b #$05
@@ -5845,7 +5845,7 @@ SetAsStunned:
     RTS                                     ;$01AA32 |
 
 BoostMarioSpeed:
-    LDA $74
+    LDA.b PlayerClimb_74
     BNE Return01AA41                        ;$01AA35 |
     LDA.b #$D0                              ;$01AA37 |
     BIT.b byetudlrHold_15                   ;$01AA39 |
