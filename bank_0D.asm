@@ -1065,7 +1065,7 @@ CODE_0DA100:                                ; extended object processing routine
 
 CODE_0DA106:                                ; extended object subroutine
     SEP #$30                                ; $0DA106 | set 8-bit AXY
-    LDA $59                                 ; $0DA108 | object size/extended object number
+    LDA.b LvlLoadObjSize_59                 ; $0DA108 | object size/extended object number
     TAX                                     ; $0DA10A | goes into both A and X (the latter is used for some tables)
     JSL execute_pointer_long                ; $0DA10B | call a 24-bit pointer (JSL $0086FA)
 
@@ -1501,7 +1501,7 @@ Return0DA5B0:
     RTS
 
 CODE_0DA5B1:
-    LDY $57
+    LDY.b LevelLoadPos_57
     JSR StzTo6ePointer0080E7                ;$0DA5B3 |
     LDX $00                                 ;$0DA5B6 |
     CPX.b #$13                              ;$0DA5B8 |
@@ -1563,7 +1563,7 @@ CODE_0DA61B:
     ORA.b #$01                              ;$0DA622 |
     STA $0E                                 ;$0DA624 |
 CODE_0DA626:
-    LDA $57
+    LDA.b LevelLoadPos_57
     AND.b #$07                              ;$0DA628 |
     TAX                                     ;$0DA62A |
     LDY $0E                                 ;$0DA62B |
@@ -1598,7 +1598,7 @@ DATA_0DA654:
     db $DA,$DC
 
 ADDR_0DA656:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TXA                                     ;$0DA658 |
     SEC                                     ;$0DA659 |
     SBC.b #$42                              ;$0DA65A |
@@ -1615,7 +1615,7 @@ DATA_0DA671:
     db $B4,$B5
 
 CODE_0DA673:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TXA                                     ;$0DA675 |
     SEC                                     ;$0DA676 |
     SBC.b #$44                              ;$0DA677 |
@@ -1636,7 +1636,7 @@ CODE_0DA68E:
     BNE Return0DA6B0                        ;$0DA697 |
     LDA.w $13CE                             ;$0DA699 |
     BNE Return0DA6B0                        ;$0DA69C |
-    LDY $57                                 ;$0DA69E |
+    LDY.b LevelLoadPos_57                   ;$0DA69E |
     DEY                                     ;$0DA6A0 |
     JSR StzTo6ePointer0080E7                ;$0DA6A1 |
     LDA.b #$35                              ;$0DA6A4 |
@@ -1672,7 +1672,7 @@ DATA_0DA6CF:
     db $20,$28
 
 CODE_0DA6D1:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TXA                                     ;$0DA6D3 |
     SEC                                     ;$0DA6D4 |
     SBC.b #$47                              ;$0DA6D5 |
@@ -1695,7 +1695,7 @@ DATA_0DA6EE:
     db $53,$4A,$4A,$4A,$63
 
 CODE_0DA71B:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$08                              ;$0DA71D |
     STA $00                                 ;$0DA71F |
     LDA.b #$04                              ;$0DA721 |
@@ -1724,7 +1724,7 @@ DATA_0DA748:
     db $4A,$5D,$5A,$49,$49,$49,$4F,$60
 
 CODE_0DA760:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$05                              ;$0DA762 |
     STA $00                                 ;$0DA764 |
     LDA.b #$03                              ;$0DA766 |
@@ -1775,7 +1775,7 @@ DATA_0DA7B1:
     db $13,$0B,$0B,$15,$16,$17,$17,$18
 
 CODE_0DA7C1:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DA7C3 |
     JSR CODE_0DA6B1                         ;$0DA7C5 |
 CODE_0DA7C8:
@@ -1797,7 +1797,7 @@ DATA_0DA7E3:
     db $66,$67,$68,$69
 
 CODE_0DA7E7:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DA7E9 |
     JSR CODE_0DA6B1                         ;$0DA7EB |
 CODE_0DA7EE:
@@ -1821,7 +1821,7 @@ DATA_0DA80B:
     db $E2,$E4
 
 CODE_0DA80D:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TXA                                     ;$0DA80F |
     SEC                                     ;$0DA810 |
     SBC.b #$91                              ;$0DA811 |
@@ -1836,10 +1836,10 @@ CODE_0DA80D:
     RTS                                     ;$0DA829 |
 
 CODE_0DA82A:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DA82C |
     ADC.b #$10                              ;$0DA82D |
-    STA $57                                 ;$0DA82F |
+    STA.b LevelLoadPos_57                   ;$0DA82F |
     TAY                                     ;$0DA831 |
     BCC Return0DA83D                        ;$0DA832 |
     LDA $6C                                 ;$0DA834 |
@@ -1863,7 +1863,7 @@ DATA_0DA844:
     db $E6,$E0
 
 CODE_0DA846:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TXA                                     ;$0DA848 |
     SEC                                     ;$0DA849 |
     SBC.b #$93                              ;$0DA84A |
@@ -1893,7 +1893,7 @@ DATA_0DA87B:
     db $F1,$F2
 
 CODE_0DA87D:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TXA                                     ;$0DA87F |
     SEC                                     ;$0DA880 |
     SBC.b #$95                              ;$0DA881 |
@@ -1924,12 +1924,12 @@ DATA_0DA8B4:
     db $1E,$24,$2E,$2F,$30,$32,$65
 
 CODE_0DA8C3:
-    LDY $57
-    LDA $59                                 ;$0DA8C5 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DA8C5 |
     AND.b #$0F                              ;$0DA8C7 |
     STA $00                                 ;$0DA8C9 |
     STA $02                                 ;$0DA8CB |
-    LDA $59                                 ;$0DA8CD |
+    LDA.b LvlLoadObjSize_59                 ;$0DA8CD |
     LSR                                     ;$0DA8CF |
     LSR                                     ;$0DA8D0 |
     LSR                                     ;$0DA8D1 |
@@ -2027,17 +2027,17 @@ CODE_0DA95D:
     STA $6C                                 ;$0DA970 |
     STA $6F                                 ;$0DA972 |
     INC.w $1BA1                             ;$0DA974 |
-    LDA $57                                 ;$0DA977 |
+    LDA.b LevelLoadPos_57                   ;$0DA977 |
     AND.b #$F0                              ;$0DA979 |
     TAY                                     ;$0DA97B |
 Return0DA97C:
     RTS
 
 CODE_0DA97D:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DA97F |
     ADC.b #$10                              ;$0DA980 |
-    STA $57                                 ;$0DA982 |
+    STA.b LevelLoadPos_57                   ;$0DA982 |
     TAY                                     ;$0DA984 |
     BCC Return0DA991                        ;$0DA985 |
 CODE_0DA987:
@@ -2050,7 +2050,7 @@ Return0DA991:
     RTS
 
 CODE_0DA992:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DA994 |
     ADC.b #$0F                              ;$0DA995 |
     TAY                                     ;$0DA997 |
@@ -2070,11 +2070,11 @@ CODE_0DA99D:
 CODE_0DA9AE:
     JSR CODE_0DA9D6
 CODE_0DA9B1:
-    STY $57
+    STY.b LevelLoadPos_57
     RTS                                     ;$0DA9B3 |
 
 CODE_0DA9B4:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DA9B6 |
     ADC.b #$11                              ;$0DA9B7 |
     TAY                                     ;$0DA9B9 |
@@ -2094,7 +2094,7 @@ CODE_0DA9BF:
 CODE_0DA9D0:
     JSR CODE_0DA9EF
 CODE_0DA9D3:
-    STY $57
+    STY.b LevelLoadPos_57
     RTS                                     ;$0DA9D5 |
 
 CODE_0DA9D6:
@@ -2150,14 +2150,14 @@ DATA_0DAA21:
     db $00,$00,$3A,$34,$38
 
 CODE_0DAA26:
-    LDY $57
-    LDA $59                                 ;$0DAA28 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAA28 |
     LSR                                     ;$0DAA2A |
     LSR                                     ;$0DAA2B |
     LSR                                     ;$0DAA2C |
     LSR                                     ;$0DAA2D |
     STA $00                                 ;$0DAA2E |
-    LDA $59                                 ;$0DAA30 |
+    LDA.b LvlLoadObjSize_59                 ;$0DAA30 |
     AND.b #$0F                              ;$0DAA32 |
     TAX                                     ;$0DAA34 |
     JSR CODE_0DA6B1                         ;$0DAA35 |
@@ -2219,12 +2219,12 @@ DATA_0DAAAC:
     db $3D,$3E,$3D,$3E,$3D,$3E,$3D,$3E
 
 CODE_0DAAB4:
-    LDY $57
-    LDA $59                                 ;$0DAAB6 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAAB6 |
     AND.b #$0F                              ;$0DAAB8 |
     STA $00                                 ;$0DAABA |
     STA $01                                 ;$0DAABC |
-    LDA $59                                 ;$0DAABE |
+    LDA.b LvlLoadObjSize_59                 ;$0DAABE |
     AND.b #$F0                              ;$0DAAC0 |
     LSR                                     ;$0DAAC2 |
     LSR                                     ;$0DAAC3 |
@@ -2268,8 +2268,8 @@ CODE_0DAAFC:
     RTS                                     ;$0DAB0C |
 
 CODE_0DAB0D:
-    LDY $57
-    LDA $59                                 ;$0DAB0F |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAB0F |
     LSR                                     ;$0DAB11 |
     LSR                                     ;$0DAB12 |
     LSR                                     ;$0DAB13 |
@@ -2298,7 +2298,7 @@ Return0DAB3D:
     RTS
 
 CODE_0DAB3E:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DAB40 |
 CODE_0DAB42:
     CMP.b #$0A
@@ -2323,12 +2323,12 @@ PtrsLong0DAB50:
     dl CODE_0DAFEA
 
 CODE_0DAB6E:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$01                              ;$0DAB70 |
     STA $02                                 ;$0DAB72 |
     STA $00                                 ;$0DAB74 |
     JSR CODE_0DA6B1                         ;$0DAB76 |
-    LDA $59                                 ;$0DAB79 |
+    LDA.b LvlLoadObjSize_59                 ;$0DAB79 |
     LSR                                     ;$0DAB7B |
     LSR                                     ;$0DAB7C |
     LSR                                     ;$0DAB7D |
@@ -2373,7 +2373,7 @@ CODE_0DABB8:
     JMP Return0DABF6                        ;$0DABC5 |
 
 CODE_0DABC8:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DABCA |
     ADC.b #$0E                              ;$0DABCB |
     TAY                                     ;$0DABCD |
@@ -2393,7 +2393,7 @@ CODE_0DABD3:
 CODE_0DABE4:
     JSR CODE_0DA9D6
 CODE_0DABE7:
-    STY $57
+    STY.b LevelLoadPos_57
     JMP CODE_0DAB83                         ;$0DABE9 |
 
 CODE_0DABEC:
@@ -2437,8 +2437,8 @@ CODE_0DAC1A:
     JMP CODE_0DA95B                         ;$0DAC1E |
 
 CODE_0DAC21:
-    LDY $57
-    LDA $59                                 ;$0DAC23 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAC23 |
     LSR                                     ;$0DAC25 |
     LSR                                     ;$0DAC26 |
     LSR                                     ;$0DAC27 |
@@ -2477,7 +2477,7 @@ CODE_0DAC57:
     JMP Return0DAC91                        ;$0DAC62 |
 
 CODE_0DAC65:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DAC67 |
     ADC.b #$0F                              ;$0DAC68 |
     TAY                                     ;$0DAC6A |
@@ -2497,7 +2497,7 @@ CODE_0DAC70:
 CODE_0DAC81:
     JSR CODE_0DA9D6
 CODE_0DAC84:
-    STY $57
+    STY.b LevelLoadPos_57
     JMP CODE_0DAC34                         ;$0DAC86 |
 
 CODE_0DAC89:
@@ -2509,12 +2509,12 @@ Return0DAC91:
     RTS
 
 CODE_0DAC92:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$03                              ;$0DAC94 |
     STA $02                                 ;$0DAC96 |
     STA $00                                 ;$0DAC98 |
     JSR CODE_0DA6B1                         ;$0DAC9A |
-    LDA $59                                 ;$0DAC9D |
+    LDA.b LvlLoadObjSize_59                 ;$0DAC9D |
     LSR                                     ;$0DAC9F |
     LSR                                     ;$0DACA0 |
     LSR                                     ;$0DACA1 |
@@ -2577,7 +2577,7 @@ CODE_0DAD00:
     JMP Return0DAD43                        ;$0DAD10 |
 
 CODE_0DAD13:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DAD15 |
     ADC.b #$0C                              ;$0DAD16 |
     TAY                                     ;$0DAD18 |
@@ -2597,7 +2597,7 @@ CODE_0DAD1E:
 ADDR_0DAD2F:
     JSR CODE_0DA9D6
 CODE_0DAD32:
-    STY $57
+    STY.b LevelLoadPos_57
     JMP CODE_0DACA7                         ;$0DAD34 |
 
 CODE_0DAD37:
@@ -2613,12 +2613,12 @@ Return0DAD43:
     RTS
 
 CODE_0DAD44:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$01                              ;$0DAD46 |
     STX $02                                 ;$0DAD48 |
     STX $00                                 ;$0DAD4A |
     JSR CODE_0DA6B1                         ;$0DAD4C |
-    LDA $59                                 ;$0DAD4F |
+    LDA.b LvlLoadObjSize_59                 ;$0DAD4F |
     LSR                                     ;$0DAD51 |
     LSR                                     ;$0DAD52 |
     LSR                                     ;$0DAD53 |
@@ -2666,12 +2666,12 @@ CODE_0DADA0:
     JMP CODE_0DAD65
 
 CODE_0DADA3:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DADA5 |
     STX $02                                 ;$0DADA7 |
     STX $00                                 ;$0DADA9 |
     JSR CODE_0DA6B1                         ;$0DADAB |
-    LDA $59                                 ;$0DADAE |
+    LDA.b LvlLoadObjSize_59                 ;$0DADAE |
     LSR                                     ;$0DADB0 |
     LSR                                     ;$0DADB1 |
     LSR                                     ;$0DADB2 |
@@ -2707,11 +2707,11 @@ Return0DADEA:
     RTS
 
 CODE_0DADEB:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$03                              ;$0DADED |
     STX $02                                 ;$0DADEF |
     JSR CODE_0DA6B1                         ;$0DADF1 |
-    LDA $59                                 ;$0DADF4 |
+    LDA.b LvlLoadObjSize_59                 ;$0DADF4 |
     LSR                                     ;$0DADF6 |
     LSR                                     ;$0DADF7 |
     LSR                                     ;$0DADF8 |
@@ -2774,8 +2774,8 @@ CODE_0DAE6A:
     JMP CODE_0DAE0A
 
 CODE_0DAE6D:
-    LDY $57
-    LDA $59                                 ;$0DAE6F |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAE6F |
     LSR                                     ;$0DAE71 |
     LSR                                     ;$0DAE72 |
     LSR                                     ;$0DAE73 |
@@ -2831,7 +2831,7 @@ CODE_0DAECC:
     SEC                                     ;$0DAECE |
     SBC.b #$02                              ;$0DAECF |
     STA $02                                 ;$0DAED1 |
-    LDA $57                                 ;$0DAED3 |
+    LDA.b LevelLoadPos_57                   ;$0DAED3 |
     CLC                                     ;$0DAED5 |
     ADC.b #$12                              ;$0DAED6 |
     TAY                                     ;$0DAED8 |
@@ -2851,7 +2851,7 @@ CODE_0DAEDE:
 ADDR_0DAEEF:
     JSR CODE_0DA9EF
 CODE_0DAEF2:
-    STY $57
+    STY.b LevelLoadPos_57
     DEC $00                                 ;$0DAEF4 |
     BMI Return0DAEFB                        ;$0DAEF6 |
     JMP CODE_0DAE88                         ;$0DAEF8 |
@@ -2860,8 +2860,8 @@ Return0DAEFB:
     RTS
 
 CODE_0DAEFC:
-    LDY $57
-    LDA $59                                 ;$0DAEFE |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAEFE |
     LSR                                     ;$0DAF00 |
     LSR                                     ;$0DAF01 |
     LSR                                     ;$0DAF02 |
@@ -2915,8 +2915,8 @@ CODE_0DAF4C:
     RTS                                     ;$0DAF60 |
 
 CODE_0DAF61:
-    LDY $57
-    LDA $59                                 ;$0DAF63 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAF63 |
     LSR                                     ;$0DAF65 |
     LSR                                     ;$0DAF66 |
     LSR                                     ;$0DAF67 |
@@ -2964,7 +2964,7 @@ CODE_0DAFAF:
     SEC                                     ;$0DAFB1 |
     SBC.b #$01                              ;$0DAFB2 |
     STA $02                                 ;$0DAFB4 |
-    LDA $57                                 ;$0DAFB6 |
+    LDA.b LevelLoadPos_57                   ;$0DAFB6 |
     CLC                                     ;$0DAFB8 |
     ADC.b #$11                              ;$0DAFB9 |
     TAY                                     ;$0DAFBB |
@@ -2984,7 +2984,7 @@ CODE_0DAFC1:
 CODE_0DAFD2:
     JSR CODE_0DA9EF
 CODE_0DAFD5:
-    STY $57
+    STY.b LevelLoadPos_57
     DEC $00                                 ;$0DAFD7 |
     BMI Return0DAFDE                        ;$0DAFD9 |
     JMP CODE_0DAF7B                         ;$0DAFDB |
@@ -3001,8 +3001,8 @@ CODE_0DAFDF:
     RTS                                     ;$0DAFE9 |
 
 CODE_0DAFEA:
-    LDY $57
-    LDA $59                                 ;$0DAFEC |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DAFEC |
     LSR                                     ;$0DAFEE |
     LSR                                     ;$0DAFEF |
     LSR                                     ;$0DAFF0 |
@@ -3062,14 +3062,14 @@ DATA_0DB066:
     db $FF,$FF,$FF,$E2,$E2,$E4,$E4
 
 CODE_0DB075:
-    LDY $57
-    LDA $59                                 ;$0DB077 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB077 |
     LSR                                     ;$0DB079 |
     LSR                                     ;$0DB07A |
     LSR                                     ;$0DB07B |
     LSR                                     ;$0DB07C |
     STA $00                                 ;$0DB07D |
-    LDA $59                                 ;$0DB07F |
+    LDA.b LvlLoadObjSize_59                 ;$0DB07F |
     AND.b #$0F                              ;$0DB081 |
     TAX                                     ;$0DB083 |
     JSR StzTo6ePointer0080E7                ;$0DB084 |
@@ -3222,7 +3222,7 @@ Return0DB1C7:
     RTS
 
 CODE_0DB1C8:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     STA $00                                 ;$0DB1CA |
     TAX                                     ;$0DB1CC |
     LDA.b #$02                              ;$0DB1CD |
@@ -3230,11 +3230,11 @@ CODE_0DB1C8:
     JMP CODE_0DB1E3                         ;$0DB1D1 |
 
 CODE_0DB1D4:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DB1D6 |
     STA $00                                 ;$0DB1D8 |
     TAX                                     ;$0DB1DA |
-    LDA $59                                 ;$0DB1DB |
+    LDA.b LvlLoadObjSize_59                 ;$0DB1DB |
     LSR                                     ;$0DB1DD |
     LSR                                     ;$0DB1DE |
     LSR                                     ;$0DB1DF |
@@ -3242,7 +3242,7 @@ CODE_0DB1D4:
     STA $02                                 ;$0DB1E1 |
 CODE_0DB1E3:
     JSR CODE_0DA6B1
-    LDY $57                                 ;$0DB1E6 |
+    LDY.b LevelLoadPos_57                   ;$0DB1E6 |
 CODE_0DB1E8:
     JSR Sta1To6ePointer
     LDA.b #$00                              ;$0DB1EB |
@@ -3286,11 +3286,11 @@ DATA_0DB221:
     db $3B,$25,$3E
 
 CODE_0DB224:
-    LDY $57
-    LDA $59                                 ;$0DB226 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB226 |
     AND.b #$0F                              ;$0DB228 |
     STA $02                                 ;$0DB22A |
-    LDA $59                                 ;$0DB22C |
+    LDA.b LvlLoadObjSize_59                 ;$0DB22C |
     LSR                                     ;$0DB22E |
     LSR                                     ;$0DB22F |
     LSR                                     ;$0DB230 |
@@ -3357,18 +3357,18 @@ CODE_0DB29F:
     LDA $03                                 ;$0DB2A2 |
     STA [$6B],Y                             ;$0DB2A4 |
     JSR CODE_0DA6BA                         ;$0DB2A6 |
-    LDA $57                                 ;$0DB2A9 |
+    LDA.b LevelLoadPos_57                   ;$0DB2A9 |
     CLC                                     ;$0DB2AB |
     ADC.b #$01                              ;$0DB2AC |
     TAY                                     ;$0DB2AE |
     AND.b #$0F                              ;$0DB2AF |
     BNE CODE_0DB2BB                         ;$0DB2B1 |
     JSR CODE_0DA9EF                         ;$0DB2B3 |
-    LDA $57                                 ;$0DB2B6 |
+    LDA.b LevelLoadPos_57                   ;$0DB2B6 |
     AND.b #$F0                              ;$0DB2B8 |
     TAY                                     ;$0DB2BA |
 CODE_0DB2BB:
-    STY $57
+    STY.b LevelLoadPos_57
     LDA $00                                 ;$0DB2BD |
     STA $01                                 ;$0DB2BF |
     INX                                     ;$0DB2C1 |
@@ -3410,7 +3410,7 @@ CODE_0DB2CA:
     ORA.b #$02                              ;$0DB303 |
     STA $0E                                 ;$0DB305 |
 CODE_0DB307:
-    LDY $57
+    LDY.b LevelLoadPos_57
     TYA                                     ;$0DB309 |
     AND.b #$08                              ;$0DB30A |
     BEQ CODE_0DB314                         ;$0DB30C |
@@ -3425,7 +3425,7 @@ CODE_0DB314:
     LDA ($08),Y                             ;$0DB31A |
     AND.l DATA_0DA8A6,X                     ;$0DB31C |
     BNE Return0DB335                        ;$0DB320 |
-    LDY $57                                 ;$0DB322 |
+    LDY.b LevelLoadPos_57                   ;$0DB322 |
     JSR StzTo6ePointer0080E7                ;$0DB324 |
     LDA.b #$2D                              ;$0DB327 |
     STA [$6B],Y                             ;$0DB329 |
@@ -3437,12 +3437,12 @@ Return0DB335:
     RTS
 
 ADDR_0DB336:
-    LDY $57
-    LDA $59                                 ;$0DB338 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB338 |
     AND.b #$0F                              ;$0DB33A |
     STA $00                                 ;$0DB33C |
     TAX                                     ;$0DB33E |
-    LDA $59                                 ;$0DB33F |
+    LDA.b LvlLoadObjSize_59                 ;$0DB33F |
     LSR                                     ;$0DB341 |
     LSR                                     ;$0DB342 |
     LSR                                     ;$0DB343 |
@@ -3519,11 +3519,11 @@ DATA_0DB3BB:
     db $05,$06
 
 CODE_0DB3BD:
-    LDY $57
-    LDA $59                                 ;$0DB3BF |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB3BF |
     AND.b #$0F                              ;$0DB3C1 |
     STA $00                                 ;$0DB3C3 |
-    LDA $59                                 ;$0DB3C5 |
+    LDA.b LvlLoadObjSize_59                 ;$0DB3C5 |
     LSR                                     ;$0DB3C7 |
     LSR                                     ;$0DB3C8 |
     LSR                                     ;$0DB3C9 |
@@ -3544,12 +3544,12 @@ DATA_0DB3DF:
     db $02,$03,$05,$0B
 
 CODE_0DB3E3:
-    LDY $57
-    LDA $59                                 ;$0DB3E5 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB3E5 |
     AND.b #$0F                              ;$0DB3E7 |
     STA $00                                 ;$0DB3E9 |
     STA $02                                 ;$0DB3EB |
-    LDA $59                                 ;$0DB3ED |
+    LDA.b LvlLoadObjSize_59                 ;$0DB3ED |
     LSR                                     ;$0DB3EF |
     LSR                                     ;$0DB3F0 |
     LSR                                     ;$0DB3F1 |
@@ -3587,8 +3587,8 @@ DATA_0DB42B:
     db $26,$44
 
 CODE_0DB42D:
-    LDY $57
-    LDA $59                                 ;$0DB42F |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB42F |
     AND.b #$0F                              ;$0DB431 |
     STA $00                                 ;$0DB433 |
     STA $01                                 ;$0DB435 |
@@ -3614,14 +3614,14 @@ CODE_0DB446:
     RTS                                     ;$0DB460 |
 
 CODE_0DB461:
-    LDY $57
-    LDA $59                                 ;$0DB463 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB463 |
     LSR                                     ;$0DB465 |
     LSR                                     ;$0DB466 |
     LSR                                     ;$0DB467 |
     LSR                                     ;$0DB468 |
     STA $00                                 ;$0DB469 |
-    LDA $59                                 ;$0DB46B |
+    LDA.b LvlLoadObjSize_59                 ;$0DB46B |
     AND.b #$0F                              ;$0DB46D |
     STA $01                                 ;$0DB46F |
     TAX                                     ;$0DB471 |
@@ -3651,14 +3651,14 @@ DATA_0DB49C:
     db $0A,$0C
 
 CODE_0DB49E:
-    LDY $57
-    LDA $59                                 ;$0DB4A0 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB4A0 |
     LSR                                     ;$0DB4A2 |
     LSR                                     ;$0DB4A3 |
     LSR                                     ;$0DB4A4 |
     LSR                                     ;$0DB4A5 |
     STA $00                                 ;$0DB4A6 |
-    LDA $59                                 ;$0DB4A8 |
+    LDA.b LvlLoadObjSize_59                 ;$0DB4A8 |
     AND.b #$0F                              ;$0DB4AA |
     TAX                                     ;$0DB4AC |
     LDA.l DATA_0DB49C,X                     ;$0DB4AD |
@@ -3735,8 +3735,8 @@ CODE_0DB517:
     RTS                                     ;$0DB51E |
 
 CODE_0DB51F:
-    LDY $57
-    LDA $59                                 ;$0DB521 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB521 |
     AND.b #$F0                              ;$0DB523 |
     LSR                                     ;$0DB525 |
     LSR                                     ;$0DB526 |
@@ -3761,8 +3761,8 @@ CODE_0DB537:
     RTS                                     ;$0DB546 |
 
 CODE_0DB547:
-    LDY $57
-    LDA $59                                 ;$0DB549 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB549 |
     AND.b #$0F                              ;$0DB54B |
     TAX                                     ;$0DB54D |
     JSR Sta1To6ePointer                     ;$0DB54E |
@@ -3785,8 +3785,8 @@ DATA_0DB569:
     db $91,$92,$96,$97,$9A,$9B,$9F,$A0
 
 ADDR_0DB571:
-    LDY $57
-    LDA $59                                 ;$0DB573 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB573 |
     SEC                                     ;$0DB575 |
     SBC.b #$68                              ;$0DB576 |
     TAX                                     ;$0DB578 |
@@ -3808,7 +3808,7 @@ DATA_0DB589:
 CODE_0DB58B:
     LDX.b #$00
 CODE_0DB58D:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.w $1F27,X                           ;$0DB58F |
     BNE CODE_0DB59E                         ;$0DB592 |
     JSR StzTo6ePointer0080E7                ;$0DB594 |
@@ -3832,11 +3832,11 @@ DATA_0DB5B2:
     db $79,$80,$87,$8E,$C3
 
 CODE_0DB5B7:
-    LDY $57
-    LDA $59                                 ;$0DB5B9 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB5B9 |
     AND.b #$0F                              ;$0DB5BB |
     STA $00                                 ;$0DB5BD |
-    LDA $59                                 ;$0DB5BF |
+    LDA.b LvlLoadObjSize_59                 ;$0DB5BF |
     LSR                                     ;$0DB5C1 |
     LSR                                     ;$0DB5C2 |
     LSR                                     ;$0DB5C3 |
@@ -3871,14 +3871,14 @@ DATA_0DB5EA:
     db $84,$81
 
 CODE_0DB604:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DB606 |
     STA $00                                 ;$0DB608 |
     LDA.b #$03                              ;$0DB60A |
     STA $03                                 ;$0DB60C |
     LDX.b #$00                              ;$0DB60E |
     JSR CODE_0DA6B1                         ;$0DB610 |
-    LDY $57                                 ;$0DB613 |
+    LDY.b LevelLoadPos_57                   ;$0DB613 |
     LDA $00                                 ;$0DB615 |
     STA $02                                 ;$0DB617 |
     LDA.b #$02                              ;$0DB619 |
@@ -3915,7 +3915,7 @@ CODE_0DB652:
     JMP CODE_0DB6B2                         ;$0DB661 |
 
 CODE_0DB664:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA $00                                 ;$0DB666 |
     STA $02                                 ;$0DB668 |
     LDA.b #$02                              ;$0DB66A |
@@ -3964,11 +3964,11 @@ DATA_0DB6C1:
     db $93,$9C
 
 CODE_0DB6C3:
-    LDY $57
-    LDA $59                                 ;$0DB6C5 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB6C5 |
     AND.b #$0F                              ;$0DB6C7 |
     STA $00                                 ;$0DB6C9 |
-    LDA $59                                 ;$0DB6CB |
+    LDA.b LvlLoadObjSize_59                 ;$0DB6CB |
     LSR                                     ;$0DB6CD |
     LSR                                     ;$0DB6CE |
     LSR                                     ;$0DB6CF |
@@ -3986,8 +3986,8 @@ DATA_0DB6E1:
     db $C1,$C2
 
 CODE_0DB6E3:
-    LDY $57
-    LDA $59                                 ;$0DB6E5 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB6E5 |
     SEC                                     ;$0DB6E7 |
     SBC.b #$88                              ;$0DB6E8 |
     TAX                                     ;$0DB6EA |
@@ -4002,14 +4002,14 @@ DATA_0DB6FD:
     db $8F,$8F,$98,$98,$90,$90,$99,$99
 
 ADDR_0DB705:
-    LDY $57
-    LDA $59                                 ;$0DB707 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB707 |
     LSR                                     ;$0DB709 |
     LSR                                     ;$0DB70A |
     LSR                                     ;$0DB70B |
     LSR                                     ;$0DB70C |
     STA $00                                 ;$0DB70D |
-    LDA $59                                 ;$0DB70F |
+    LDA.b LvlLoadObjSize_59                 ;$0DB70F |
     AND.b #$0F                              ;$0DB711 |
     TAX                                     ;$0DB713 |
     JSR StzTo6ePointer0080E7                ;$0DB714 |
@@ -4031,8 +4031,8 @@ DATA_0DB72F:
     db $59,$5A,$EF,$C7,$EE,$59,$5B,$5C
 
 CODE_0DB73F:
-    LDY $57
-    LDA $59                                 ;$0DB741 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB741 |
     LSR                                     ;$0DB743 |
     LSR                                     ;$0DB744 |
     LSR                                     ;$0DB745 |
@@ -4090,12 +4090,12 @@ CODE_0DB79F:
     RTS                                     ;$0DB7A9 |
 
 CODE_0DB7AA:
-    LDY $57
-    LDA $59                                 ;$0DB7AC |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB7AC |
     AND.b #$0F                              ;$0DB7AE |
     STA $00                                 ;$0DB7B0 |
     STA $02                                 ;$0DB7B2 |
-    LDA $59                                 ;$0DB7B4 |
+    LDA.b LvlLoadObjSize_59                 ;$0DB7B4 |
     LSR                                     ;$0DB7B6 |
     LSR                                     ;$0DB7B7 |
     LSR                                     ;$0DB7B8 |
@@ -4141,7 +4141,7 @@ CODE_0DB7FD:
     DEC $02                                 ;$0DB809 |
     BPL CODE_0DB7D6                         ;$0DB80B |
     JSR CODE_0DA95D                         ;$0DB80D |
-    STY $57                                 ;$0DB810 |
+    STY.b LevelLoadPos_57                   ;$0DB810 |
     JSR CODE_0DA6B1                         ;$0DB812 |
     DEX                                     ;$0DB815 |
     STX $01                                 ;$0DB816 |
@@ -4188,12 +4188,12 @@ CODE_0DB85E:
     JMP CODE_0DA95B                         ;$0DB860 |
 
 CODE_0DB863:
-    LDY $57
-    LDA $59                                 ;$0DB865 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB865 |
     AND.b #$0F                              ;$0DB867 |
     STA $00                                 ;$0DB869 |
     STA $02                                 ;$0DB86B |
-    LDA $59                                 ;$0DB86D |
+    LDA.b LvlLoadObjSize_59                 ;$0DB86D |
     LSR                                     ;$0DB86F |
     LSR                                     ;$0DB870 |
     LSR                                     ;$0DB871 |
@@ -4294,11 +4294,11 @@ DATA_0DB91C:
 CODE_0DB91E:
     LDX.b #$01
 CODE_0DB920:
-    LDY $57
-    LDA $59                                 ;$0DB922 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB922 |
     AND.b #$0F                              ;$0DB924 |
     STA $00                                 ;$0DB926 |
-    LDA $59                                 ;$0DB928 |
+    LDA.b LvlLoadObjSize_59                 ;$0DB928 |
     LSR                                     ;$0DB92A |
     LSR                                     ;$0DB92B |
     LSR                                     ;$0DB92C |
@@ -4335,11 +4335,11 @@ DATA_0DB964:
     db $BE,$C0
 
 CODE_0DB966:
-    LDY $57
-    LDA $59                                 ;$0DB968 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB968 |
     AND.b #$0F                              ;$0DB96A |
     TAX                                     ;$0DB96C |
-    LDA $59                                 ;$0DB96D |
+    LDA.b LvlLoadObjSize_59                 ;$0DB96D |
     LSR                                     ;$0DB96F |
     LSR                                     ;$0DB970 |
     LSR                                     ;$0DB971 |
@@ -4388,8 +4388,8 @@ CODE_0DB9BB:
     RTS                                     ;$0DB9BF |
 
 CODE_0DB9C0:
-    LDY $57
-    LDA $59                                 ;$0DB9C2 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DB9C2 |
     LSR                                     ;$0DB9C4 |
     LSR                                     ;$0DB9C5 |
     LSR                                     ;$0DB9C6 |
@@ -4431,12 +4431,12 @@ CODE_0DBA01:
     RTS                                     ;$0DBA09 |
 
 CODE_0DBA0A:
-    LDY $57
-    LDA $59                                 ;$0DBA0C |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DBA0C |
     AND.b #$0F                              ;$0DBA0E |
     STA $00                                 ;$0DBA10 |
     TAX                                     ;$0DBA12 |
-    LDA $59                                 ;$0DBA13 |
+    LDA.b LvlLoadObjSize_59                 ;$0DBA13 |
     LSR                                     ;$0DBA15 |
     LSR                                     ;$0DBA16 |
     LSR                                     ;$0DBA17 |
@@ -4472,11 +4472,11 @@ DATA_0DBA48:
     db $60,$5D,$C5,$C4
 
 CODE_0DBA4C:
-    LDY $57
-    LDA $59                                 ;$0DBA4E |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DBA4E |
     AND.b #$0F                              ;$0DBA50 |
     TAX                                     ;$0DBA52 |
-    LDA $59                                 ;$0DBA53 |
+    LDA.b LvlLoadObjSize_59                 ;$0DBA53 |
     LSR                                     ;$0DBA55 |
     LSR                                     ;$0DBA56 |
     LSR                                     ;$0DBA57 |
@@ -4515,10 +4515,10 @@ DATA_0DBA7C:
     db $B6,$25,$25,$25,$25,$25,$25,$25
 
 CODE_0DBADC:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     STA $0F                                 ;$0DBADE |
 CODE_0DBAE0:
-    LDA $57
+    LDA.b LevelLoadPos_57
     STA $0E                                 ;$0DBAE2 |
     TAY                                     ;$0DBAE4 |
     LDX.b #$00                              ;$0DBAE5 |
@@ -4561,8 +4561,8 @@ CODE_0DBB12:
     RTS                                     ;$0DBB2B |
 
 CODE_0DBB2C:
-    LDY $57
-    LDA $59                                 ;$0DBB2E |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DBB2E |
     LSR                                     ;$0DBB30 |
     LSR                                     ;$0DBB31 |
     LSR                                     ;$0DBB32 |
@@ -4870,8 +4870,8 @@ DATA_0DC257:
     db $07,$08
 
 CODE_0DC259:
-    LDY $57
-    LDA $59                                 ;$0DC25B |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC25B |
     SEC                                     ;$0DC25D |
     SBC.b #$4B                              ;$0DC25E |
     TAX                                     ;$0DC260 |
@@ -4899,7 +4899,7 @@ DATA_0DC26B:
     db $7B,$83,$84,$84,$85,$80
 
 CODE_0DC2E9:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DC2EB |
 CODE_0DC2ED:
     LDA.b #$08
@@ -4928,7 +4928,7 @@ DATA_0DC318:
     db $98,$99,$9A,$9B,$9C,$9C
 
 CODE_0DC31E:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DC320 |
     LDA.b #$01                              ;$0DC322 |
     STA $00                                 ;$0DC324 |
@@ -4948,7 +4948,7 @@ CODE_0DC32A:
     RTS                                     ;$0DC340 |
 
 CODE_0DC341:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$02                              ;$0DC343 |
     LSR                                     ;$0DC345 |
     JSL execute_pointer_long                ;$0DC346 |
@@ -4964,14 +4964,14 @@ DATA_0DC354:
     db $F3,$F6,$F4,$F5
 
 CODE_0DC358:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$00                              ;$0DC35A |
     STA $02                                 ;$0DC35C |
-    LDA $59                                 ;$0DC35E |
+    LDA.b LvlLoadObjSize_59                 ;$0DC35E |
     AND.b #$03                              ;$0DC360 |
     TAX                                     ;$0DC362 |
     JSR CODE_0DA6B1                         ;$0DC363 |
-    LDA $59                                 ;$0DC366 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC366 |
     LSR                                     ;$0DC368 |
     LSR                                     ;$0DC369 |
     LSR                                     ;$0DC36A |
@@ -5008,7 +5008,7 @@ CODE_0DC39B:
     JMP Return0DC3D7                        ;$0DC3A6 |
 
 CODE_0DC3A9:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DC3AB |
     ADC.b #$0F                              ;$0DC3AC |
     TAY                                     ;$0DC3AE |
@@ -5028,7 +5028,7 @@ CODE_0DC3B4:
 CODE_0DC3C5:
     JSR CODE_0DA9D6
 CODE_0DC3C8:
-    STY $57
+    STY.b LevelLoadPos_57
     JMP CODE_0DC370                         ;$0DC3CA |
 
 CODE_0DC3CD:
@@ -5041,14 +5041,14 @@ Return0DC3D7:
     RTS
 
 CODE_0DC3D8:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$00                              ;$0DC3DA |
     STA $02                                 ;$0DC3DC |
-    LDA $59                                 ;$0DC3DE |
+    LDA.b LvlLoadObjSize_59                 ;$0DC3DE |
     AND.b #$03                              ;$0DC3E0 |
     TAX                                     ;$0DC3E2 |
     JSR CODE_0DA6B1                         ;$0DC3E3 |
-    LDA $59                                 ;$0DC3E6 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC3E6 |
     LSR                                     ;$0DC3E8 |
     LSR                                     ;$0DC3E9 |
     LSR                                     ;$0DC3EA |
@@ -5089,11 +5089,11 @@ DATA_0DC42C:
     db $5A,$59
 
 CODE_0DC42E:
-    LDY $57
-    LDA $59                                 ;$0DC430 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC430 |
     AND.b #$0F                              ;$0DC432 |
     STA $00                                 ;$0DC434 |
-    LDA $59                                 ;$0DC436 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC436 |
     LSR                                     ;$0DC438 |
     LSR                                     ;$0DC439 |
     LSR                                     ;$0DC43A |
@@ -5111,14 +5111,14 @@ DATA_0DC44C:
     db $5B,$5C,$53
 
 CODE_0DC44F:
-    LDY $57
-    LDA $59                                 ;$0DC451 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC451 |
     LSR                                     ;$0DC453 |
     LSR                                     ;$0DC454 |
     LSR                                     ;$0DC455 |
     LSR                                     ;$0DC456 |
     STA $00                                 ;$0DC457 |
-    LDA $59                                 ;$0DC459 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC459 |
     AND.b #$0F                              ;$0DC45B |
     TAX                                     ;$0DC45D |
 CODE_0DC45E:
@@ -5140,11 +5140,11 @@ DATA_0DC475:
     db $5F,$62,$65
 
 CODE_0DC478:
-    LDY $57
-    LDA $59                                 ;$0DC47A |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC47A |
     AND.b #$0F                              ;$0DC47C |
     STA $00                                 ;$0DC47E |
-    LDA $59                                 ;$0DC480 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC480 |
     LSR                                     ;$0DC482 |
     LSR                                     ;$0DC483 |
     LSR                                     ;$0DC484 |
@@ -5184,8 +5184,8 @@ Return0DC4C8:
     RTS
 
 CODE_0DC4C9:
-    LDY $57
-    LDA $59                                 ;$0DC4CB |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC4CB |
     AND.b #$0F                              ;$0DC4CD |
     STA $00                                 ;$0DC4CF |
     LDX $00                                 ;$0DC4D1 |
@@ -5206,11 +5206,11 @@ CODE_0DC4E3:
     RTS                                     ;$0DC4EE |
 
 CODE_0DC4EF:
-    LDY $57
-    LDA $59                                 ;$0DC4F1 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC4F1 |
     AND.b #$0F                              ;$0DC4F3 |
     TAX                                     ;$0DC4F5 |
-    LDA $59                                 ;$0DC4F6 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC4F6 |
     LSR                                     ;$0DC4F8 |
     LSR                                     ;$0DC4F9 |
     LSR                                     ;$0DC4FA |
@@ -5275,11 +5275,11 @@ Return0DC589:
     RTS
 
 CODE_0DC58A:
-    LDY $57
-    LDA $59                                 ;$0DC58C |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC58C |
     AND.b #$0F                              ;$0DC58E |
     STA $00                                 ;$0DC590 |
-    LDA $59                                 ;$0DC592 |
+    LDA.b LvlLoadObjSize_59                 ;$0DC592 |
     LSR                                     ;$0DC594 |
     LSR                                     ;$0DC595 |
     LSR                                     ;$0DC596 |
@@ -5316,8 +5316,8 @@ CODE_0DC5BA:
     RTS                                     ;$0DC5D7 |
 
 CODE_0DC5D8:
-    LDY $57
-    LDA $59                                 ;$0DC5DA |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DC5DA |
     LSR                                     ;$0DC5DC |
     LSR                                     ;$0DC5DD |
     LSR                                     ;$0DC5DE |
@@ -5669,8 +5669,8 @@ DATA_0DCE57:
     db $82,$25,$80,$81,$25,$83,$84,$85
 
 CODE_0DCE67:
-    LDY $57
-    LDA $59                                 ;$0DCE69 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCE69 |
     SEC                                     ;$0DCE6B |
     SBC.b #$4D                              ;$0DCE6C |
     ASL                                     ;$0DCE6E |
@@ -5696,8 +5696,8 @@ DATA_0DCE90:
     db $76,$77,$78,$79
 
 CODE_0DCE94:
-    LDY $57
-    LDA $59                                 ;$0DCE96 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCE96 |
     SEC                                     ;$0DCE98 |
     SBC.b #$51                              ;$0DCE99 |
     TAX                                     ;$0DCE9B |
@@ -5707,8 +5707,8 @@ CODE_0DCE94:
     RTS                                     ;$0DCEA5 |
 
 ADDR_0DCEA6:
-    LDY $57
-    LDA $59                                 ;$0DCEA8 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCEA8 |
     SEC                                     ;$0DCEAA |
     SBC.b #$51                              ;$0DCEAB |
     TAX                                     ;$0DCEAD |
@@ -5724,8 +5724,8 @@ DATA_0DCEBE:
     db $96,$97
 
 CODE_0DCEC0:
-    LDY $57
-    LDA $59                                 ;$0DCEC2 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCEC2 |
     LDX.b #$00                              ;$0DCEC4 |
 CODE_0DCEC6:
     JSR StzTo6ePointer0080E7
@@ -5741,8 +5741,8 @@ DATA_0DCED8:
     db $98,$99
 
 CODE_0DCEDA:
-    LDY $57
-    LDA $59                                 ;$0DCEDC |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCEDC |
     LDX.b #$00                              ;$0DCEDE |
 CODE_0DCEE0:
     JSR StzTo6ePointer0080E7
@@ -5757,11 +5757,11 @@ DATA_0DCEF0:
     db $0C,$0D
 
 ADDR_0DCEF2:
-    LDY $57
-    LDA $59                                 ;$0DCEF4 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCEF4 |
     AND.b #$0F                              ;$0DCEF6 |
     STA $00                                 ;$0DCEF8 |
-    LDA $59                                 ;$0DCEFA |
+    LDA.b LvlLoadObjSize_59                 ;$0DCEFA |
     LSR                                     ;$0DCEFC |
     LSR                                     ;$0DCEFD |
     LSR                                     ;$0DCEFE |
@@ -5779,11 +5779,11 @@ DATA_0DCF10:
     db $92,$93
 
 CODE_0DCF12:
-    LDY $57
-    LDA $59                                 ;$0DCF14 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCF14 |
     AND.b #$0F                              ;$0DCF16 |
     STA $00                                 ;$0DCF18 |
-    LDA $59                                 ;$0DCF1A |
+    LDA.b LvlLoadObjSize_59                 ;$0DCF1A |
     LSR                                     ;$0DCF1C |
     LSR                                     ;$0DCF1D |
     LSR                                     ;$0DCF1E |
@@ -5801,11 +5801,11 @@ DATA_0DCF30:
     db $90,$91,$A2
 
 CODE_0DCF33:
-    LDY $57
-    LDA $59                                 ;$0DCF35 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCF35 |
     AND.b #$0F                              ;$0DCF37 |
     TAX                                     ;$0DCF39 |
-    LDA $59                                 ;$0DCF3A |
+    LDA.b LvlLoadObjSize_59                 ;$0DCF3A |
     LSR                                     ;$0DCF3C |
     LSR                                     ;$0DCF3D |
     LSR                                     ;$0DCF3E |
@@ -5821,7 +5821,7 @@ CODE_0DCF42:
     RTS                                     ;$0DCF52 |
 
 CODE_0DCF53:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DCF55 |
     TAX                                     ;$0DCF57 |
     JSL execute_pointer_long                ;$0DCF58 |
@@ -5835,8 +5835,8 @@ PtrsLong0DCF5C:
     dl CODE_0DD034
 
 CODE_0DCF6E:
-    LDY $57
-    LDA $59                                 ;$0DCF70 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCF70 |
     LSR                                     ;$0DCF72 |
     LSR                                     ;$0DCF73 |
     LSR                                     ;$0DCF74 |
@@ -5851,7 +5851,7 @@ CODE_0DCF7A:
     LDA.b #$8D                              ;$0DCF85 |
     STA [$6B],Y                             ;$0DCF87 |
     JSR CODE_0DA6BA                         ;$0DCF89 |
-    LDA $57                                 ;$0DCF8C |
+    LDA.b LevelLoadPos_57                   ;$0DCF8C |
     CLC                                     ;$0DCF8E |
     ADC.b #$0E                              ;$0DCF8F |
     TAY                                     ;$0DCF91 |
@@ -5871,7 +5871,7 @@ CODE_0DCF97:
 ADDR_0DCFA8:
     JSR CODE_0DA9D6
 CODE_0DCFAB:
-    STY $57
+    STY.b LevelLoadPos_57
     DEX                                     ;$0DCFAD |
     BPL CODE_0DCF7A                         ;$0DCFAE |
     RTS                                     ;$0DCFB0 |
@@ -5883,8 +5883,8 @@ CODE_0DCFB1:
     LDA.b #$94                              ;$0DCFB7 |
 CODE_0DCFB9:
     STA $00
-    LDY $57                                 ;$0DCFBB |
-    LDA $59                                 ;$0DCFBD |
+    LDY.b LevelLoadPos_57                   ;$0DCFBB |
+    LDA.b LvlLoadObjSize_59                 ;$0DCFBD |
     LSR                                     ;$0DCFBF |
     LSR                                     ;$0DCFC0 |
     LSR                                     ;$0DCFC1 |
@@ -5894,7 +5894,7 @@ CODE_0DCFC4:
     JSR StzTo6ePointer0080E7
     LDA $00                                 ;$0DCFC7 |
     STA [$6B],Y                             ;$0DCFC9 |
-    LDA $57                                 ;$0DCFCB |
+    LDA.b LevelLoadPos_57                   ;$0DCFCB |
     CLC                                     ;$0DCFCD |
     ADC.b #$0F                              ;$0DCFCE |
     TAY                                     ;$0DCFD0 |
@@ -5914,14 +5914,14 @@ CODE_0DCFD6:
 CODE_0DCFE7:
     JSR CODE_0DA9D6
 CODE_0DCFEA:
-    STY $57
+    STY.b LevelLoadPos_57
     DEX                                     ;$0DCFEC |
     BPL CODE_0DCFC4                         ;$0DCFED |
     RTS                                     ;$0DCFEF |
 
 ADDR_0DCFF0:
-    LDY $57
-    LDA $59                                 ;$0DCFF2 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DCFF2 |
     LSR                                     ;$0DCFF4 |
     LSR                                     ;$0DCFF5 |
     LSR                                     ;$0DCFF6 |
@@ -5936,7 +5936,7 @@ ADDR_0DCFFC:
     LDA.b #$8F                              ;$0DD007 |
     STA [$6B],Y                             ;$0DD009 |
     JSR CODE_0DA6BA                         ;$0DD00B |
-    LDA $57                                 ;$0DD00E |
+    LDA.b LevelLoadPos_57                   ;$0DD00E |
     CLC                                     ;$0DD010 |
     ADC.b #$10                              ;$0DD011 |
     TAY                                     ;$0DD013 |
@@ -5957,7 +5957,7 @@ ADDR_0DD019:
     TAY                                     ;$0DD02A |
     JSR CODE_0DA9EF                         ;$0DD02B |
 ADDR_0DD02E:
-    STY $57
+    STY.b LevelLoadPos_57
     DEX                                     ;$0DD030 |
     BPL ADDR_0DCFFC                         ;$0DD031 |
     RTS                                     ;$0DD033 |
@@ -5969,8 +5969,8 @@ CODE_0DD034:
     LDA.b #$95                              ;$0DD03A |
 CODE_0DD03C:
     STA $00
-    LDY $57                                 ;$0DD03E |
-    LDA $59                                 ;$0DD040 |
+    LDY.b LevelLoadPos_57                   ;$0DD03E |
+    LDA.b LvlLoadObjSize_59                 ;$0DD040 |
     LSR                                     ;$0DD042 |
     LSR                                     ;$0DD043 |
     LSR                                     ;$0DD044 |
@@ -5980,7 +5980,7 @@ CODE_0DD047:
     JSR StzTo6ePointer0080E7
     LDA $00                                 ;$0DD04A |
     STA [$6B],Y                             ;$0DD04C |
-    LDA $57                                 ;$0DD04E |
+    LDA.b LevelLoadPos_57                   ;$0DD04E |
     CLC                                     ;$0DD050 |
     ADC.b #$10                              ;$0DD051 |
     TAY                                     ;$0DD053 |
@@ -5999,13 +5999,13 @@ CODE_0DD059:
     TAY                                     ;$0DD066 |
     JSR CODE_0DA9EF                         ;$0DD067 |
 CODE_0DD06A:
-    STY $57
+    STY.b LevelLoadPos_57
     DEX                                     ;$0DD06C |
     BPL CODE_0DD047                         ;$0DD06D |
     RTS                                     ;$0DD06F |
 
 ADDR_0DD070:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     LSR                                     ;$0DD072 |
     LSR                                     ;$0DD073 |
     LSR                                     ;$0DD074 |
@@ -6017,8 +6017,8 @@ PtrsLong0DD07A:
     dl ADDR_0DD0C3
 
 ADDR_0DD080:
-    LDY $57
-    LDA $59                                 ;$0DD082 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD082 |
     AND.b #$0F                              ;$0DD084 |
     TAX                                     ;$0DD086 |
 ADDR_0DD087:
@@ -6055,14 +6055,14 @@ ADDR_0DD0A9:
 ADDR_0DD0BA:
     JSR CODE_0DA9D6
 ADDR_0DD0BD:
-    STY $57
+    STY.b LevelLoadPos_57
     DEX                                     ;$0DD0BF |
     BPL ADDR_0DD087                         ;$0DD0C0 |
     RTS                                     ;$0DD0C2 |
 
 ADDR_0DD0C3:
-    LDY $57
-    LDA $59                                 ;$0DD0C5 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD0C5 |
     AND.b #$0F                              ;$0DD0C7 |
     TAX                                     ;$0DD0C9 |
 ADDR_0DD0CA:
@@ -6098,14 +6098,14 @@ ADDR_0DD0EC:
     TAY                                     ;$0DD0F9 |
     JSR CODE_0DA9EF                         ;$0DD0FA |
 ADDR_0DD0FD:
-    STY $57
+    STY.b LevelLoadPos_57
     DEX                                     ;$0DD0FF |
     BPL ADDR_0DD0CA                         ;$0DD100 |
     RTS                                     ;$0DD102 |
 
 CODE_0DD103:
-    LDY $57
-    LDA $59                                 ;$0DD105 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD105 |
     AND.b #$0F                              ;$0DD107 |
     STA $00                                 ;$0DD109 |
     JSR Sta1To6ePointer                     ;$0DD10B |
@@ -6142,11 +6142,11 @@ CODE_0DD140:
     RTS                                     ;$0DD144 |
 
 CODE_0DD145:
-    LDY $57
-    LDA $59                                 ;$0DD147 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD147 |
     AND.b #$0F                              ;$0DD149 |
     STA $00                                 ;$0DD14B |
-    LDA $59                                 ;$0DD14D |
+    LDA.b LvlLoadObjSize_59                 ;$0DD14D |
     LSR                                     ;$0DD14F |
     LSR                                     ;$0DD150 |
     LSR                                     ;$0DD151 |
@@ -6177,8 +6177,8 @@ CODE_0DD167:
     RTS                                     ;$0DD181 |
 
 ADDR_0DD182:
-    LDY $57
-    LDA $59                                 ;$0DD184 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD184 |
     AND.b #$0F                              ;$0DD186 |
     TAX                                     ;$0DD188 |
     JSR Sta1To6ePointer                     ;$0DD189 |
@@ -6198,8 +6198,8 @@ ADDR_0DD196:
     RTS                                     ;$0DD1A4 |
 
 ADDR_0DD1A5:
-    LDY $57
-    LDA $59                                 ;$0DD1A7 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD1A7 |
     LSR                                     ;$0DD1A9 |
     LSR                                     ;$0DD1AA |
     LSR                                     ;$0DD1AB |
@@ -6232,11 +6232,11 @@ DATA_0DD1D3:
     db $61,$62,$63,$64,$65,$66
 
 CODE_0DD1D9:
-    LDY $57
-    LDA $59                                 ;$0DD1DB |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD1DB |
     AND.b #$0F                              ;$0DD1DD |
     TAX                                     ;$0DD1DF |
-    LDA $59                                 ;$0DD1E0 |
+    LDA.b LvlLoadObjSize_59                 ;$0DD1E0 |
     LSR                                     ;$0DD1E2 |
     LSR                                     ;$0DD1E3 |
     LSR                                     ;$0DD1E4 |
@@ -6291,8 +6291,8 @@ DATA_0DD24C:
     db $A3,$0E
 
 CODE_0DD24E:
-    LDY $57
-    LDA $59                                 ;$0DD250 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DD250 |
     AND.b #$0F                              ;$0DD252 |
     STA $00                                 ;$0DD254 |
     STA $01                                 ;$0DD256 |
@@ -6618,7 +6618,7 @@ PtrsLong0DD99A:
     dl CODE_0DDD5C
 
 CODE_0DDA57:
-    LDY $57
+    LDY.b LevelLoadPos_57
     JSR Sta1To6ePointer                     ;$0DDA59 |
     LDA.b #$FE                              ;$0DDA5C |
     STA [$6B],Y                             ;$0DDA5E |
@@ -6628,8 +6628,8 @@ DATA_0DDA61:
     db $7D,$7E,$7F,$80,$81,$82,$83
 
 CODE_0DDA68:
-    LDY $57
-    LDA $59                                 ;$0DDA6A |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDA6A |
     SEC                                     ;$0DDA6C |
     SBC.b #$75                              ;$0DDA6D |
     TAX                                     ;$0DDA6F |
@@ -6645,8 +6645,8 @@ DATA_0DDA7D:
     db $84,$85,$86
 
 CODE_0DDA80:
-    LDY $57
-    LDA $59                                 ;$0DDA82 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDA82 |
     SEC                                     ;$0DDA84 |
     SBC.b #$7C                              ;$0DDA85 |
     TAX                                     ;$0DDA87 |
@@ -6663,7 +6663,7 @@ DATA_0DDA9E:
     db $66,$67,$68,$69
 
 CODE_0DDAA2:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DDAA4 |
     JSR CODE_0DA6B1                         ;$0DDAA6 |
 CODE_0DDAA9:
@@ -6687,11 +6687,11 @@ DATA_0DDAC6:
     db $5B,$5B
 
 CODE_0DDAC8:
-    LDY $57
-    LDA $59                                 ;$0DDACA |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDACA |
     AND.b #$0F                              ;$0DDACC |
     TAX                                     ;$0DDACE |
-    LDA $59                                 ;$0DDACF |
+    LDA.b LvlLoadObjSize_59                 ;$0DDACF |
     LSR                                     ;$0DDAD1 |
     LSR                                     ;$0DDAD2 |
     LSR                                     ;$0DDAD3 |
@@ -6712,7 +6712,7 @@ CODE_0DDAE8:
     RTS                                     ;$0DDAF1 |
 
 CODE_0DDAF2:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$03                              ;$0DDAF4 |
     JSL execute_pointer_long                ;$0DDAF6 |
 
@@ -6723,12 +6723,12 @@ PtrsLong0DDAFA:
     dl CODE_0DDC61
 
 CODE_0DDB06:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$01                              ;$0DDB08 |
     STA $02                                 ;$0DDB0A |
     STA $00                                 ;$0DDB0C |
     JSR CODE_0DA6B1                         ;$0DDB0E |
-    LDA $59                                 ;$0DDB11 |
+    LDA.b LvlLoadObjSize_59                 ;$0DDB11 |
     LSR                                     ;$0DDB13 |
     LSR                                     ;$0DDB14 |
     LSR                                     ;$0DDB15 |
@@ -6773,7 +6773,7 @@ CODE_0DDB50:
     JMP Return0DDB8E                        ;$0DDB5D |
 
 CODE_0DDB60:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DDB62 |
     ADC.b #$0E                              ;$0DDB63 |
     TAY                                     ;$0DDB65 |
@@ -6793,7 +6793,7 @@ CODE_0DDB6B:
 CODE_0DDB7C:
     JSR CODE_0DA9D6
 CODE_0DDB7F:
-    STY $57
+    STY.b LevelLoadPos_57
     JMP CODE_0DDB1B                         ;$0DDB81 |
 
 CODE_0DDB84:
@@ -6807,12 +6807,12 @@ Return0DDB8E:
     RTS
 
 CODE_0DDB8F:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$00                              ;$0DDB91 |
     STA $02                                 ;$0DDB93 |
     STA $00                                 ;$0DDB95 |
     JSR CODE_0DA6B1                         ;$0DDB97 |
-    LDA $59                                 ;$0DDB9A |
+    LDA.b LvlLoadObjSize_59                 ;$0DDB9A |
     LSR                                     ;$0DDB9C |
     LSR                                     ;$0DDB9D |
     LSR                                     ;$0DDB9E |
@@ -6848,7 +6848,7 @@ CODE_0DDBC7:
     JMP Return0DDC01                        ;$0DDBD2 |
 
 CODE_0DDBD5:
-    LDA $57
+    LDA.b LevelLoadPos_57
     CLC                                     ;$0DDBD7 |
     ADC.b #$0F                              ;$0DDBD8 |
     TAY                                     ;$0DDBDA |
@@ -6868,7 +6868,7 @@ CODE_0DDBE0:
 CODE_0DDBF1:
     JSR CODE_0DA9D6
 CODE_0DDBF4:
-    STY $57
+    STY.b LevelLoadPos_57
     JMP CODE_0DDBA4                         ;$0DDBF6 |
 
 CODE_0DDBF9:
@@ -6880,12 +6880,12 @@ Return0DDC01:
     RTS
 
 ADDR_0DDC02:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$01                              ;$0DDC04 |
     STX $02                                 ;$0DDC06 |
     STX $00                                 ;$0DDC08 |
     JSR CODE_0DA6B1                         ;$0DDC0A |
-    LDA $59                                 ;$0DDC0D |
+    LDA.b LvlLoadObjSize_59                 ;$0DDC0D |
     LSR                                     ;$0DDC0F |
     LSR                                     ;$0DDC10 |
     LSR                                     ;$0DDC11 |
@@ -6933,12 +6933,12 @@ ADDR_0DDC5E:
     JMP ADDR_0DDC23
 
 CODE_0DDC61:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DDC63 |
     STX $02                                 ;$0DDC65 |
     STX $00                                 ;$0DDC67 |
     JSR CODE_0DA6B1                         ;$0DDC69 |
-    LDA $59                                 ;$0DDC6C |
+    LDA.b LvlLoadObjSize_59                 ;$0DDC6C |
     LSR                                     ;$0DDC6E |
     LSR                                     ;$0DDC6F |
     LSR                                     ;$0DDC70 |
@@ -6974,11 +6974,11 @@ Return0DDCA8:
     RTS
 
 CODE_0DDCA9:
-    LDY $57
-    LDA $59                                 ;$0DDCAB |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDCAB |
     AND.b #$0F                              ;$0DDCAD |
     STA $00                                 ;$0DDCAF |
-    LDA $59                                 ;$0DDCB1 |
+    LDA.b LvlLoadObjSize_59                 ;$0DDCB1 |
     LSR                                     ;$0DDCB3 |
     LSR                                     ;$0DDCB4 |
     LSR                                     ;$0DDCB5 |
@@ -7013,14 +7013,14 @@ CODE_0DDCDD:
     RTS                                     ;$0DDCE9 |
 
 CODE_0DDCEA:
-    LDY $57
-    LDA $59                                 ;$0DDCEC |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDCEC |
     LSR                                     ;$0DDCEE |
     LSR                                     ;$0DDCEF |
     LSR                                     ;$0DDCF0 |
     LSR                                     ;$0DDCF1 |
     STA $00                                 ;$0DDCF2 |
-    LDA $59                                 ;$0DDCF4 |
+    LDA.b LvlLoadObjSize_59                 ;$0DDCF4 |
     AND.b #$0F                              ;$0DDCF6 |
     STA $01                                 ;$0DDCF8 |
     JSR CODE_0DA6B1                         ;$0DDCFA |
@@ -7055,14 +7055,14 @@ DATA_0DDD2A:
     db $4D,$50,$4F,$51
 
 CODE_0DDD2E:
-    LDY $57
-    LDA $59                                 ;$0DDD30 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDD30 |
     LSR                                     ;$0DDD32 |
     LSR                                     ;$0DDD33 |
     LSR                                     ;$0DDD34 |
     LSR                                     ;$0DDD35 |
     STA $00                                 ;$0DDD36 |
-    LDA $59                                 ;$0DDD38 |
+    LDA.b LvlLoadObjSize_59                 ;$0DDD38 |
     AND.b #$0F                              ;$0DDD3A |
     TAX                                     ;$0DDD3C |
     LDA $00                                 ;$0DDD3D |
@@ -7081,14 +7081,14 @@ CODE_0DDD51:
     RTS                                     ;$0DDD5B |
 
 CODE_0DDD5C:
-    LDY $57
-    LDA $59                                 ;$0DDD5E |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDD5E |
     LSR                                     ;$0DDD60 |
     LSR                                     ;$0DDD61 |
     LSR                                     ;$0DDD62 |
     LSR                                     ;$0DDD63 |
     STA $00                                 ;$0DDD64 |
-    LDA $59                                 ;$0DDD66 |
+    LDA.b LvlLoadObjSize_59                 ;$0DDD66 |
     AND.b #$0F                              ;$0DDD68 |
     STA $01                                 ;$0DDD6A |
     JSR CODE_0DA6B1                         ;$0DDD6C |
@@ -7107,7 +7107,7 @@ CODE_0DDD71:
     RTS                                     ;$0DDD86 |
 
 CODE_0DDD87:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     LSR                                     ;$0DDD89 |
     LSR                                     ;$0DDD8A |
     LSR                                     ;$0DDD8B |
@@ -7120,8 +7120,8 @@ PtrsLong0DDD93:
     dl CODE_0DDE3C
 
 CODE_0DDD99:
-    LDY $57
-    LDA $59                                 ;$0DDD9B |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDD9B |
     AND.b #$0F                              ;$0DDD9D |
     STA $00                                 ;$0DDD9F |
     ASL                                     ;$0DDDA1 |
@@ -7191,7 +7191,7 @@ CODE_0DDE09:
     DEX
     BPL CODE_0DDDF3                         ;$0DDE0A |
     JSR CODE_0DA6BA                         ;$0DDE0C |
-    LDA $57                                 ;$0DDE0F |
+    LDA.b LevelLoadPos_57                   ;$0DDE0F |
     CLC                                     ;$0DDE11 |
     ADC.b #$1F                              ;$0DDE12 |
     TAY                                     ;$0DDE14 |
@@ -7211,7 +7211,7 @@ CODE_0DDE1A:
 CODE_0DDE2B:
     JSR CODE_0DA9D6
 CODE_0DDE2E:
-    STY $57
+    STY.b LevelLoadPos_57
     DEC $01                                 ;$0DDE30 |
     DEC $01                                 ;$0DDE32 |
     DEC $00                                 ;$0DDE34 |
@@ -7222,8 +7222,8 @@ Return0DDE3B:
     RTS
 
 CODE_0DDE3C:
-    LDY $57
-    LDA $59                                 ;$0DDE3E |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DDE3E |
     AND.b #$0F                              ;$0DDE40 |
     STA $00                                 ;$0DDE42 |
     ASL                                     ;$0DDE44 |
@@ -7293,7 +7293,7 @@ CODE_0DDEAC:
     DEX
     BPL CODE_0DDE96                         ;$0DDEAD |
     JSR CODE_0DA6BA                         ;$0DDEAF |
-    LDA $57                                 ;$0DDEB2 |
+    LDA.b LevelLoadPos_57                   ;$0DDEB2 |
     CLC                                     ;$0DDEB4 |
     ADC.b #$20                              ;$0DDEB5 |
     TAY                                     ;$0DDEB7 |
@@ -7312,7 +7312,7 @@ CODE_0DDEBD:
     AND.b #$F0                              ;$0DDECB |
     TAY                                     ;$0DDECD |
 CODE_0DDECE:
-    STY $57
+    STY.b LevelLoadPos_57
     DEC $01                                 ;$0DDED0 |
     DEC $01                                 ;$0DDED2 |
     DEC $00                                 ;$0DDED4 |
@@ -7348,12 +7348,12 @@ DATA_0DDF1A:
     db $40,$DC,$F0,$DD,$A0,$DF,$50,$E1
 
 CODE_0DDF3A:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DDF3C |
-    STA $59                                 ;$0DDF3E |
+    STA.b LvlLoadObjSize_59                 ;$0DDF3E |
     JSR CODE_0DA6B1                         ;$0DDF40 |
     LDY.b #$50                              ;$0DDF43 |
-    STY $57                                 ;$0DDF45 |
+    STY.b LevelLoadPos_57                   ;$0DDF45 |
     LDA.b #$0F                              ;$0DDF47 |
     STA $00                                 ;$0DDF49 |
     LDA.b #$04                              ;$0DDF4B |
@@ -7367,10 +7367,10 @@ CODE_0DDF51:
     DEX                                     ;$0DDF59 |
     BPL CODE_0DDF51                         ;$0DDF5A |
     JSR CODE_0DA6BA                         ;$0DDF5C |
-    LDA $57                                 ;$0DDF5F |
+    LDA.b LevelLoadPos_57                   ;$0DDF5F |
     CLC                                     ;$0DDF61 |
     ADC.b #$40                              ;$0DDF62 |
-    STA $57                                 ;$0DDF64 |
+    STA.b LevelLoadPos_57                   ;$0DDF64 |
     TAY                                     ;$0DDF66 |
     BCC CODE_0DDF6C                         ;$0DDF67 |
     JSR CODE_0DA987                         ;$0DDF69 |
@@ -7390,7 +7390,7 @@ CODE_0DDF80:
     STA $01                                 ;$0DDF82 |
     LDX $00                                 ;$0DDF84 |
     LDA.l DATA_0DDEEA,X                     ;$0DDF86 |
-    STA $57                                 ;$0DDF8A |
+    STA.b LevelLoadPos_57                   ;$0DDF8A |
     TAY                                     ;$0DDF8C |
     LDA.l DATA_0DDEF2,X                     ;$0DDF8D |
     STA $6C                                 ;$0DDF91 |
@@ -7484,7 +7484,7 @@ CODE_0DE016:
     MVN $7F,$7F                             ;$0DE04E |
     PLB                                     ;$0DE051 |
     SEP #$30                                ;$0DE052 |
-    DEC $59                                 ;$0DE054 |
+    DEC.b LvlLoadObjSize_59                 ;$0DE054 |
     BEQ Return0DE05D                        ;$0DE056 |
     INC $08                                 ;$0DE058 |
     JMP CODE_0DE016                         ;$0DE05A |
@@ -7508,8 +7508,8 @@ DATA_0DE0AA:
     db $00,$13,$26,$39
 
 CODE_0DE0AE:
-    LDY $57
-    LDA $59                                 ;$0DE0B0 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DE0B0 |
     SEC                                     ;$0DE0B2 |
     SBC.b #$71                              ;$0DE0B3 |
     TAX                                     ;$0DE0B5 |
@@ -7578,11 +7578,11 @@ DATA_0DE132:
     db $48,$51,$4F
 
 CODE_0DE135:
-    LDY $57
-    LDA $59                                 ;$0DE137 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DE137 |
     AND.b #$0F                              ;$0DE139 |
     STA $00                                 ;$0DE13B |
-    LDA $59                                 ;$0DE13D |
+    LDA.b LvlLoadObjSize_59                 ;$0DE13D |
     LSR                                     ;$0DE13F |
     LSR                                     ;$0DE140 |
     LSR                                     ;$0DE141 |
@@ -7925,8 +7925,8 @@ DATA_0DE957:
     db $73,$74,$75,$76,$93,$94,$95,$96
 
 CODE_0DE95F:
-    LDY $57
-    LDA $59                                 ;$0DE961 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DE961 |
     SEC                                     ;$0DE963 |
     SBC.b #$57                              ;$0DE964 |
     TAX                                     ;$0DE966 |
@@ -7961,8 +7961,8 @@ DATA_0DE98F:
     db $85,$25,$25
 
 CODE_0DE9AA:
-    LDY $57
-    LDA $59                                 ;$0DE9AC |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DE9AC |
     SEC                                     ;$0DE9AE |
     SBC.b #$61                              ;$0DE9AF |
     STA $00                                 ;$0DE9B1 |
@@ -7996,14 +7996,14 @@ DATA_0DE9E1:
     db $FC,$FD,$FE,$FF
 
 CODE_0DE9ED:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     SEC                                     ;$0DE9EF |
     SBC.b #$64                              ;$0DE9F0 |
     ASL                                     ;$0DE9F2 |
     ASL                                     ;$0DE9F3 |
     TAX                                     ;$0DE9F4 |
 CODE_0DE9F5:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDA.b #$01                              ;$0DE9F7 |
     STA $00                                 ;$0DE9F9 |
     STA $01                                 ;$0DE9FB |
@@ -8030,8 +8030,8 @@ DATA_0DEA1E:
     db $25,$25,$80,$81,$25,$25,$25,$80
 
 ADDR_0DEA3E:
-    LDY $57
-    LDA $59                                 ;$0DEA40 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEA40 |
     SEC                                     ;$0DEA42 |
     SBC.b #$66                              ;$0DEA43 |
     ASL                                     ;$0DEA45 |
@@ -8071,7 +8071,7 @@ DATA_0DEA71:
     db $C1,$C2,$C6,$A7,$A8,$A4
 
 CODE_0DEABF:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DEAC1 |
 CODE_0DEAC3:
     LDA.b #$05
@@ -8109,7 +8109,7 @@ DATA_0DEADE:
     db $C2,$C3,$C5,$C5
 
 CODE_0DEB6A:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DEB6C |
 CODE_0DEB6E:
     LDA.b #$09
@@ -8153,7 +8153,7 @@ DATA_0DEB93:
     db $E5,$DD,$E5,$E7,$E8,$E9,$E5,$E5
 
 CODE_0DEC33:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DEC35 |
 CODE_0DEC37:
     LDA.b #$0F
@@ -8175,7 +8175,7 @@ CODE_0DEC3B:
     RTS                                     ;$0DEC5B |
 
 CODE_0DEC5C:
-    LDY $57
+    LDY.b LevelLoadPos_57
     JSR Sta1To6ePointer                     ;$0DEC5E |
     LDA.b #$10                              ;$0DEC61 |
     STA [$6B],Y                             ;$0DEC63 |
@@ -8184,7 +8184,7 @@ CODE_0DEC5C:
 ADDR_0DEC66:
     CMP.b #$CA
 ADDR_0DEC68:
-    LDY $57
+    LDY.b LevelLoadPos_57
     LDX.b #$00                              ;$0DEC6A |
 ADDR_0DEC6C:
     JSR StzTo6ePointer0080E7
@@ -8201,8 +8201,8 @@ DATA_0DEC7E:
     db $F4,$F5,$F6,$F7,$F8,$F9,$FA,$FB
 
 CODE_0DEC8E:
-    LDY $57
-    LDA $59                                 ;$0DEC90 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEC90 |
     SEC                                     ;$0DEC92 |
     SBC.b #$8A                              ;$0DEC93 |
     TAX                                     ;$0DEC95 |
@@ -8244,12 +8244,12 @@ CODE_0DECC9:
     SBC.b #$34                              ;$0DECCB |
     TAX                                     ;$0DECCD |
 CODE_0DECCE:
-    LDY $57
-    LDA $59                                 ;$0DECD0 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DECD0 |
     AND.b #$0F                              ;$0DECD2 |
     STA $00                                 ;$0DECD4 |
     STA $02                                 ;$0DECD6 |
-    LDA $59                                 ;$0DECD8 |
+    LDA.b LvlLoadObjSize_59                 ;$0DECD8 |
     LSR                                     ;$0DECDA |
     LSR                                     ;$0DECDB |
     LSR                                     ;$0DECDC |
@@ -8285,11 +8285,11 @@ DATA_0DED0F:
     db $82,$8B,$88
 
 CODE_0DED12:
-    LDY $57
-    LDA $59                                 ;$0DED14 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DED14 |
     AND.b #$0F                              ;$0DED16 |
     STA $00                                 ;$0DED18 |
-    LDA $59                                 ;$0DED1A |
+    LDA.b LvlLoadObjSize_59                 ;$0DED1A |
     LSR                                     ;$0DED1C |
     LSR                                     ;$0DED1D |
     LSR                                     ;$0DED1E |
@@ -8312,8 +8312,8 @@ CODE_0DED32:
     RTS                                     ;$0DED42 |
 
 CODE_0DED43:
-    LDY $57
-    LDA $59                                 ;$0DED45 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DED45 |
     AND.b #$0F                              ;$0DED47 |
     TAX                                     ;$0DED49 |
 CODE_0DED4A:
@@ -8340,14 +8340,14 @@ DATA_0DED68:
     db $83,$79,$79
 
 CODE_0DED6B:
-    LDY $57
-    LDA $59                                 ;$0DED6D |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DED6D |
     LSR                                     ;$0DED6F |
     LSR                                     ;$0DED70 |
     LSR                                     ;$0DED71 |
     LSR                                     ;$0DED72 |
     STA $00                                 ;$0DED73 |
-    LDA $59                                 ;$0DED75 |
+    LDA.b LvlLoadObjSize_59                 ;$0DED75 |
     AND.b #$0F                              ;$0DED77 |
     TAX                                     ;$0DED79 |
     JSR StzTo6ePointer0080E7                ;$0DED7A |
@@ -8368,11 +8368,11 @@ DATA_0DED95:
     db $5F,$60,$5A,$5B
 
 CODE_0DED99:
-    LDA $59
+    LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DED9B |
     TAX                                     ;$0DED9D |
-    LDY $57                                 ;$0DED9E |
-    LDA $59                                 ;$0DEDA0 |
+    LDY.b LevelLoadPos_57                   ;$0DED9E |
+    LDA.b LvlLoadObjSize_59                 ;$0DEDA0 |
     LSR                                     ;$0DEDA2 |
     LSR                                     ;$0DEDA3 |
     LSR                                     ;$0DEDA4 |
@@ -8388,8 +8388,8 @@ CODE_0DEDA8:
     RTS                                     ;$0DEDB8 |
 
 CODE_0DEDB9:
-    LDY $57
-    LDA $59                                 ;$0DEDBB |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEDBB |
     AND.b #$0F                              ;$0DEDBD |
     TAX                                     ;$0DEDBF |
     JSR Sta1To6ePointer                     ;$0DEDC0 |
@@ -8409,11 +8409,11 @@ CODE_0DEDCD:
     RTS                                     ;$0DEDDA |
 
 CODE_0DEDDB:
-    LDY $57
-    LDA $59                                 ;$0DEDDD |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEDDD |
     AND.b #$0F                              ;$0DEDDF |
     STA $00                                 ;$0DEDE1 |
-    LDA $59                                 ;$0DEDE3 |
+    LDA.b LvlLoadObjSize_59                 ;$0DEDE3 |
     LSR                                     ;$0DEDE5 |
     LSR                                     ;$0DEDE6 |
     LSR                                     ;$0DEDE7 |
@@ -8443,11 +8443,11 @@ CODE_0DEE0B:
     RTS                                     ;$0DEE16 |
 
 CODE_0DEE17:
-    LDY $57
-    LDA $59                                 ;$0DEE19 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEE19 |
     AND.b #$0F                              ;$0DEE1B |
     STA $00                                 ;$0DEE1D |
-    LDA $59                                 ;$0DEE1F |
+    LDA.b LvlLoadObjSize_59                 ;$0DEE1F |
     LSR                                     ;$0DEE21 |
     LSR                                     ;$0DEE22 |
     LSR                                     ;$0DEE23 |
@@ -8478,11 +8478,11 @@ CODE_0DEE45:
     RTS                                     ;$0DEE51 |
 
 CODE_0DEE52:
-    LDY $57
-    LDA $59                                 ;$0DEE54 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEE54 |
     AND.b #$0F                              ;$0DEE56 |
     STA $00                                 ;$0DEE58 |
-    LDA $59                                 ;$0DEE5A |
+    LDA.b LvlLoadObjSize_59                 ;$0DEE5A |
     LSR                                     ;$0DEE5C |
     LSR                                     ;$0DEE5D |
     LSR                                     ;$0DEE5E |
@@ -8510,11 +8510,11 @@ CODE_0DEE74:
     RTS                                     ;$0DEE88 |
 
 CODE_0DEE89:
-    LDY $57
-    LDA $59                                 ;$0DEE8B |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEE8B |
     AND.b #$0F                              ;$0DEE8D |
     STA $00                                 ;$0DEE8F |
-    LDA $59                                 ;$0DEE91 |
+    LDA.b LvlLoadObjSize_59                 ;$0DEE91 |
     LSR                                     ;$0DEE93 |
     LSR                                     ;$0DEE94 |
     LSR                                     ;$0DEE95 |
@@ -8542,8 +8542,8 @@ CODE_0DEEB3:
     RTS                                     ;$0DEEBF |
 
 CODE_0DEEC0:
-    LDY $57
-    LDA $59                                 ;$0DEEC2 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEEC2 |
     AND.b #$0F                              ;$0DEEC4 |
     STA $00                                 ;$0DEEC6 |
     ASL                                     ;$0DEEC8 |
@@ -8551,7 +8551,7 @@ CODE_0DEEC0:
     CLC                                     ;$0DEECA |
     ADC.b #$02                              ;$0DEECB |
     TAX                                     ;$0DEECD |
-    LDA $59                                 ;$0DEECE |
+    LDA.b LvlLoadObjSize_59                 ;$0DEECE |
     LSR                                     ;$0DEED0 |
     LSR                                     ;$0DEED1 |
     LSR                                     ;$0DEED2 |
@@ -8560,13 +8560,13 @@ CODE_0DEEC0:
     JSR CODE_0DA6B1                         ;$0DEED6 |
     JSR CODE_0DED4A                         ;$0DEED9 |
     JSR CODE_0DA6BA                         ;$0DEEDC |
-    LDA $57                                 ;$0DEEDF |
+    LDA.b LevelLoadPos_57                   ;$0DEEDF |
     CLC                                     ;$0DEEE1 |
     ADC.b #$01                              ;$0DEEE2 |
     TAY                                     ;$0DEEE4 |
     AND.b #$0F                              ;$0DEEE5 |
     BNE CODE_0DEEF1                         ;$0DEEE7 |
-    LDA $57                                 ;$0DEEE9 |
+    LDA.b LevelLoadPos_57                   ;$0DEEE9 |
     AND.b #$F0                              ;$0DEEEB |
     TAY                                     ;$0DEEED |
     JSR CODE_0DA9EF                         ;$0DEEEE |
@@ -8574,7 +8574,7 @@ CODE_0DEEF1:
     TYA
     CLC                                     ;$0DEEF2 |
     ADC.b #$10                              ;$0DEEF3 |
-    STA $57                                 ;$0DEEF5 |
+    STA.b LevelLoadPos_57                   ;$0DEEF5 |
     TAY                                     ;$0DEEF7 |
     BCC CODE_0DEEFD                         ;$0DEEF8 |
     JSR CODE_0DA987                         ;$0DEEFA |
@@ -8604,7 +8604,7 @@ CODE_0DEF21:
     DEX
     BNE CODE_0DEF0A                         ;$0DEF22 |
     JSR CODE_0DA6BA                         ;$0DEF24 |
-    LDA $57                                 ;$0DEF27 |
+    LDA.b LevelLoadPos_57                   ;$0DEF27 |
     CLC                                     ;$0DEF29 |
     ADC.b #$04                              ;$0DEF2A |
     TAY                                     ;$0DEF2C |
@@ -8617,7 +8617,7 @@ CODE_0DEF21:
     TAY                                     ;$0DEF37 |
     JSR CODE_0DA9EF                         ;$0DEF38 |
 CODE_0DEF3B:
-    STY $57
+    STY.b LevelLoadPos_57
     DEC $00                                 ;$0DEF3D |
     BMI Return0DEF44                        ;$0DEF3F |
     JMP CODE_0DEEFD                         ;$0DEF41 |
@@ -8626,8 +8626,8 @@ Return0DEF44:
     RTS
 
 CODE_0DEF45:
-    LDY $57
-    LDA $59                                 ;$0DEF47 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEF47 |
     AND.b #$0F                              ;$0DEF49 |
     TAX                                     ;$0DEF4B |
     JSR StzTo6ePointer0080E7                ;$0DEF4C |
@@ -8647,11 +8647,11 @@ CODE_0DEF59:
     RTS                                     ;$0DEF66 |
 
 CODE_0DEF67:
-    LDY $57
-    LDA $59                                 ;$0DEF69 |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEF69 |
     AND.b #$0F                              ;$0DEF6B |
     STA $00                                 ;$0DEF6D |
-    LDA $59                                 ;$0DEF6F |
+    LDA.b LvlLoadObjSize_59                 ;$0DEF6F |
     LSR                                     ;$0DEF71 |
     LSR                                     ;$0DEF72 |
     LSR                                     ;$0DEF73 |
@@ -8692,11 +8692,11 @@ DATA_0DEFA6:
     db $64,$6A
 
 CODE_0DEFA8:
-    LDY $57
-    LDA $59                                 ;$0DEFAA |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DEFAA |
     AND.b #$0F                              ;$0DEFAC |
     STA $00                                 ;$0DEFAE |
-    LDA $59                                 ;$0DEFB0 |
+    LDA.b LvlLoadObjSize_59                 ;$0DEFB0 |
     LSR                                     ;$0DEFB2 |
     LSR                                     ;$0DEFB3 |
     LSR                                     ;$0DEFB4 |
@@ -8761,11 +8761,11 @@ CODE_0DF01C:
     RTS                                     ;$0DF02A |
 
 CODE_0DF02B:
-    LDY $57
-    LDA $59                                 ;$0DF02D |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DF02D |
     AND.b #$0F                              ;$0DF02F |
     STA $00                                 ;$0DF031 |
-    LDA $59                                 ;$0DF033 |
+    LDA.b LvlLoadObjSize_59                 ;$0DF033 |
     LSR                                     ;$0DF035 |
     LSR                                     ;$0DF036 |
     LSR                                     ;$0DF037 |
@@ -8804,11 +8804,11 @@ DATA_0DF06B:
     db $59
 
 CODE_0DF06C:
-    LDY $57
-    LDA $59                                 ;$0DF06E |
+    LDY.b LevelLoadPos_57
+    LDA.b LvlLoadObjSize_59                 ;$0DF06E |
     AND.b #$0F                              ;$0DF070 |
     STA $00                                 ;$0DF072 |
-    LDA $59                                 ;$0DF074 |
+    LDA.b LvlLoadObjSize_59                 ;$0DF074 |
     LSR                                     ;$0DF076 |
     LSR                                     ;$0DF077 |
     LSR                                     ;$0DF078 |

@@ -438,7 +438,7 @@ LevelLoadPos_57: skip 1
 ; === $7E0058 ===
 ; 1 byte
 ; unused
-WRAM_00_58: skip 1
+skip 1
 
 ; === $7E0059 ===
 ; 1 byte

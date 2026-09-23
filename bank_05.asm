@@ -632,7 +632,7 @@ HeaderVHscroll:
 CODE_0585D8:
     LDA $5A
     BNE CODE_0585E2                         ;$0585DA |
-    LDA $59                                 ;$0585DC |
+    LDA.b LvlLoadObjSize_59                 ;$0585DC |
     CMP.b #$02                              ;$0585DE |
     BCC Return0585FE                        ;$0585E0 |
 CODE_0585E2:
@@ -663,7 +663,7 @@ LoadLevelData:
     STA $0B                                 ;$05860A |
     INY                                     ;$05860C |
     LDA [$65],Y                             ;$05860D |
-    STA $59                                 ;$05860F |
+    STA.b LvlLoadObjSize_59                 ;$05860F |
     INY                                     ;$058611 |
     TYA                                     ;$058612 |
     CLC                                     ;$058613 |
@@ -698,11 +698,11 @@ CODE_05863E:
     ASL                                     ;$058643 |
     ASL                                     ;$058644 |
     ASL                                     ;$058645 |
-    STA $57                                 ;$058646 |
+    STA.b LevelLoadPos_57                   ;$058646 |
     LDA $0B                                 ;$058648 |
     AND.b #$0F                              ;$05864A |
-    ORA $57                                 ;$05864C |
-    STA $57                                 ;$05864E |
+    ORA.b LevelLoadPos_57                   ;$05864C |
+    STA.b LevelLoadPos_57                   ;$05864E |
     REP #$20                                ;$058650 |
     LDA.w $1933                             ;$058652 |
     AND.w #$00FF                            ;$058655 |
