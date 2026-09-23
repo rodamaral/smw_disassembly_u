@@ -1455,7 +1455,7 @@ CODE_0CA063:
     DEX                                     ;$0CA081 |
     CPX.b #$06                              ;$0CA082 |
     BNE CODE_0CA063                         ;$0CA084 |
-    STZ $76                                 ;$0CA086 |
+    STZ.b PlayerDir_76                      ;$0CA086 |
     LDA.b #$E2                              ;$0CA088 |
     STA.w $1B89                             ;$0CA08A |
     PLB                                     ;$0CA08D |
@@ -1869,7 +1869,7 @@ CODE_0CA3C9:
     PLB                                     ;$0CA3CB |
     LDA.b #$01                              ;$0CA3CC |
     STA.w $1457                             ;$0CA3CE |
-    STZ $76                                 ;$0CA3D1 |
+    STZ.b PlayerDir_76                      ;$0CA3D1 |
     STZ.w $1442                             ;$0CA3D3 |
     LDA.b #$00                              ;$0CA3D6 |
     STA.w $0B50                             ;$0CA3D8 |
@@ -5964,7 +5964,7 @@ CODE_0CD680:
 CODE_0CD68A:
     ASL
     STA.w $02FE,Y                           ;$0CD68B |
-    LDA $76                                 ;$0CD68E |
+    LDA.b PlayerDir_76                      ;$0CD68E |
     LSR                                     ;$0CD690 |
     ROR                                     ;$0CD691 |
     LSR                                     ;$0CD692 |
@@ -5982,7 +5982,7 @@ CODE_0CD6A1:
     ADC.w DATA_0CD635,X                     ;$0CD6A4 |
     STA.w $02FD,Y                           ;$0CD6A7 |
     LDA.w DATA_0CD60F,X                     ;$0CD6AA |
-    LDX $76                                 ;$0CD6AD |
+    LDX.b PlayerDir_76                      ;$0CD6AD |
     BNE CODE_0CD6B4                         ;$0CD6AF |
     EOR.b #$FF                              ;$0CD6B1 |
     INC A                                   ;$0CD6B3 |
@@ -6046,7 +6046,7 @@ CODE_0CD70A:
     STA $00                                 ;$0CD70E |
     LDA.w DATA_0CD6CA,Y                     ;$0CD710 |
     STA $01                                 ;$0CD713 |
-    LDA $76                                 ;$0CD715 |
+    LDA.b PlayerDir_76                      ;$0CD715 |
     LSR                                     ;$0CD717 |
     ROR                                     ;$0CD718 |
     LSR                                     ;$0CD719 |

@@ -604,7 +604,7 @@ PlayerInWater_75: skip 1
 ; === $7E0076 ===
 ; 1 byte
 ; direction player is facing
-PlayerDirection_76: skip 1
+PlayerDir_76: skip 1
 ; Valid values
 !PlayerDir_Left = 0
 !PlayerDir_Right = 1

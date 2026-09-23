@@ -2420,7 +2420,7 @@ CODE_0094E2:
     LDA.b #!Priority2_20                    ;$0094E7 |
     STA.b SpriteYXPPCCCT_64                 ;$0094E9 |
     JSR CODE_00A635                         ;$0094EB |
-    STZ $76                                 ;$0094EE |
+    STZ.b PlayerDir_76                      ;$0094EE |
     STZ.b PlayerInAir_72                    ;$0094F0 |
     JSL set_player_pose                     ;$0094F2 |
     LDX.b #$17                              ;$0094F6 |
@@ -4640,7 +4640,7 @@ CODE_00A67D:
 
 CODE_00A6B6:
     STZ.b PlayerInAir_72
-    STY $76                                 ;$00A6B8 |
+    STY.b PlayerDir_76                      ;$00A6B8 |
     STY $89                                 ;$00A6BA |
     LDX.b #!AniEnterCastle_0A               ;$00A6BC |
     LDY.b #$00                              ;$00A6BE |
@@ -4664,7 +4664,7 @@ CODE_00A6D5:
     BNE CODE_00A716                         ;$00A6DC |
     ROR $86                                 ;$00A6DE |
 CODE_00A6E0:
-    STY $76
+    STY.b PlayerDir_76
     LDA.b #$24                              ;$00A6E2 |
     STA.b PlayerInAir_72                    ;$00A6E4 |
     STZ.b SpriteLock_9D                     ;$00A6E6 |
@@ -4696,7 +4696,7 @@ CODE_00A716:
     CMP.b #$06
     BCC CODE_00A740                         ;$00A718 |
     BNE CODE_00A734                         ;$00A71A |
-    STY $76                                 ;$00A71C |
+    STY.b PlayerDir_76                      ;$00A71C |
     STY.w $13DF                             ;$00A71E |
     LDA.b #$FF                              ;$00A721 |
     STA.w SpriteInPipeMode_1419             ;$00A723 |
@@ -4723,7 +4723,7 @@ CODE_00A740:
     DEC A                                   ;$00A747 |
     STA.w SpriteInPipeMode_1419             ;$00A748 |
     LDA.w $A609,Y                           ;$00A74B |
-    STA $76                                 ;$00A74E |
+    STA.b PlayerDir_76                      ;$00A74E |
     LDX.b #$05                              ;$00A750 |
     CPY.b #$06                              ;$00A752 |
     BCC CODE_00A768                         ;$00A754 |
@@ -7549,7 +7549,7 @@ castle_destroy_animation:
     SEC                                     ;$00C70F |
     SBC.b Layer1YPos_1C                     ;$00C710 |
     LDX.b #$D0                              ;$00C712 |
-    LDY $76                                 ;$00C714 |
+    LDY.b PlayerDir_76                      ;$00C714 |
     BEQ CODE_00C730                         ;$00C716 |
     LDY.b #$00                              ;$00C718 |
     BRA CODE_00C72E                         ;$00C71A |
@@ -7883,7 +7883,7 @@ CODE_00C96B:
     CMP.b #$28                              ;$00C976 |
     BCC CODE_00C984                         ;$00C978 |
     LDA.b #$01                              ;$00C97A |
-    STA $76                                 ;$00C97C |
+    STA.b PlayerDir_76                      ;$00C97C |
     STA.b byetudlrHold_15                   ;$00C97E |
     LDA.b #$05                              ;$00C980 |
     STA.b PlayerXSpeed_7B                   ;$00C982 |
@@ -8022,7 +8022,7 @@ CODE_00CA6D:
     CLC
     ADC.w SpotlightSize_1433                ;$00CA6E |
     STA.w SpotlightSize_1433                ;$00CA71 |
-    LDA $7E                                 ;$00CA74 |
+    LDA.b PlayerXPosScrRel_7E               ;$00CA74 |
     CLC                                     ;$00CA76 |
     ADC.b #$08                              ;$00CA77 |
     STA $00                                 ;$00CA79 |
@@ -8388,7 +8388,7 @@ set_yoshi_pose:                             ;        \
     LDA.w yoshi_poses-1,Y                   ;$00CDBA | Load the pose.
     DEY                                     ;$00CDBD |\ If the player isn't turning around or sticking
     BNE .set_pose                           ;$00CDBE | | Yoshi's tongue out,
-    LDY $73                                 ;$00CDC0 | | and the player is ducking,
+    LDY.b PlayerIsDucking_73                ;$00CDC0 | | and the player is ducking,
     BEQ .set_pose                           ;$00CDC2 | |
     LDA.b #$1D                              ;$00CDC4 | | use pose $1D.
 .set_pose                                   ;        | |
@@ -8466,7 +8466,7 @@ CODE_00CE49:
     STZ.w $1401
 CODE_00CE4C:
     LDX.b #$00
-    LDA $76                                 ;$00CE4E |
+    LDA.b PlayerDir_76                      ;$00CE4E |
     ASL                                     ;$00CE50 |
     STA.w $13FF                             ;$00CE51 |
     REP #$20                                ;$00CE54 |
@@ -8577,7 +8577,7 @@ lbl14A2Not0:
     LDA.w $140D
     ORA.w $14A6                             ;$00CF19 |
     BEQ CODE_00CF4E                         ;$00CF1C |
-    STZ $73                                 ;$00CF1E |
+    STZ.b PlayerIsDucking_73                ;$00CF1E |
     LDA.b Frame_14                          ;$00CF20 |
     AND.b #$06                              ;$00CF22 |
     TAX                                     ;$00CF24 |
@@ -8595,7 +8595,7 @@ CODE_00CF2F:
     INX                                     ;$00CF39 |
 CODE_00CF3A:
     LDA.w DATA_00CEA1,X
-    STA $76                                 ;$00CF3D |
+    STA.b PlayerDir_76                      ;$00CF3D |
     LDY.b Powerup_19                        ;$00CF3F |
     CPY.b #$02                              ;$00CF41 |
     BNE CODE_00CF48                         ;$00CF43 |
@@ -8611,7 +8611,7 @@ CODE_00CF4E:
     LDA.w $13E1                             ;$00CF55 |
     LSR                                     ;$00CF58 |
     LSR                                     ;$00CF59 |
-    ORA $76                                 ;$00CF5A |
+    ORA.b PlayerDir_76                      ;$00CF5A |
     TAY                                     ;$00CF5C |
     LDA.w DATA_00CE7F,Y                     ;$00CF5D |
     BRA CODE_00CF85                         ;$00CF60 |
@@ -8622,7 +8622,7 @@ CODE_00CF62:
     BEQ CODE_00CF6B                         ;$00CF67 |
     LDA.b #$1D                              ;$00CF69 |
 CODE_00CF6B:
-    LDY $73
+    LDY.b PlayerIsDucking_73
     BNE CODE_00CF85                         ;$00CF6D |
     LDA.w $149C                             ;$00CF6F |
     BEQ CODE_00CF7E                         ;$00CF72 |
@@ -8728,7 +8728,7 @@ CODE_00D01A:
     BEQ MarioAnimNo45                       ;$00D01D |
     TYA                                     ;$00D01F |
     AND.b #$01                              ;$00D020 |
-    STA $76                                 ;$00D022 |
+    STA.b PlayerDir_76                      ;$00D022 |
     LDA.b #$10                              ;$00D024 |
     CPY.b #$06                              ;$00D026 |
     BCC MarioAnimNo45                       ;$00D028 |
@@ -8767,7 +8767,7 @@ powerup_physics:                            ;        \
     BNE .not_caped                          ;$00D066 |
     BIT.b byetudlrPress_16                  ;$00D068 |\ and X or Y are tapped,
     BVC .return                             ;$00D06A |/
-    LDA $73                                 ;$00D06C |\ and the player is neither ducking,
+    LDA.b PlayerIsDucking_73                ;$00D06C |\ and the player is neither ducking,
     ORA.w RidingYoshi_187A                  ;$00D06E | | nor on Yoshi,
     ORA.w $140D                             ;$00D071 | | nor spin jumping,
     BNE .return                             ;$00D074 |/
@@ -8780,7 +8780,7 @@ powerup_physics:                            ;        \
 .not_caped                                  ;        \
     CMP.b #$03                              ;$00D081 |\ If the player is fiery,
     BNE .return                             ;$00D083 |/ 
-    LDA $73                                 ;$00D085 |\ and not on Yoshi,
+    LDA.b PlayerIsDucking_73                ;$00D085 |\ and not on Yoshi,
     ORA.w RidingYoshi_187A                  ;$00D087 | |
     BNE .return                             ;$00D08A |/
     BIT.b byetudlrPress_16                  ;$00D08C |\ and X or Y are tapped,
@@ -8797,7 +8797,7 @@ powerup_physics:                            ;        \
     BEQ .face_left                          ;$00D0A5 | | and also flip the player's direction.
     INY                                     ;$00D0A7 | |
 .face_left                                  ;        | |
-    STY $76                                 ;$00D0A8 |/
+    STY.b PlayerDir_76                      ;$00D0A8 |/
 .shoot_fireball                             ;        |
     JSR shoot_fireball                      ;$00D0AA | Shoot a fireball.
 .return                                     ;        |
@@ -8858,7 +8858,7 @@ death_animation:
     LSR                                     ;$00D116 | |
     LSR                                     ;$00D117 | | and flip the player's direction every four frames.
     AND.b #$01                              ;$00D118 | |
-    STA $76                                 ;$00D11A |/
+    STA.b PlayerDir_76                      ;$00D11A |/
 .return                                     ;        |
     RTS                                     ;$00D11C /
 
@@ -9010,7 +9010,7 @@ vertical_pipe_animation:
     LDY.w RidingYoshi_187A                  ;$00D20B |
     BEQ CODE_00D22A                         ;$00D20E |
     LDX.b #$00                              ;$00D210 |
-    LDY $76                                 ;$00D212 |
+    LDY.b PlayerDir_76                      ;$00D212 |
     LDA.b PlayerXPos_94                     ;$00D214 |
     AND.b #$0F                              ;$00D216 |
     CMP.w PipeCntrBoundryX,Y                ;$00D218 |
@@ -9244,13 +9244,13 @@ land_physics:
     JMP CODE_00D682                         ;$00D5F6 |
 
 CODE_00D5F9:
-    STZ $73
+    STZ.b PlayerIsDucking_73
     LDA.w $13ED                             ;$00D5FB |
     BNE CODE_00D60B                         ;$00D5FE |
     LDA.b byetudlrHold_15                   ;$00D600 |
     AND.b #$04                              ;$00D602 |
     BEQ CODE_00D60B                         ;$00D604 |
-    STA $73                                 ;$00D606 |
+    STA.b PlayerIsDucking_73                ;$00D606 |
     STZ.w $13E8                             ;$00D608 |
 CODE_00D60B:
     LDA.w OnSolidSprite_1471
@@ -9263,7 +9263,7 @@ CODE_00D60B:
     ORA.b axlr0000Press_18                  ;$00D61A |
     BMI CODE_00D630                         ;$00D61C |
 CODE_00D61E:
-    LDA $73
+    LDA.b PlayerIsDucking_73
     BEQ CODE_00D682                         ;$00D620 |
     LDA.b PlayerXSpeed_7B                   ;$00D622 |
     BEQ CODE_00D62D                         ;$00D624 |
@@ -9291,7 +9291,7 @@ CODE_00D637:
     STA.w $140D                             ;$00D646 |
     LDA.b #$04                              ;$00D649 |
     STA.w SPCIO3_1DFC                       ;$00D64B |
-    LDY $76                                 ;$00D64E |
+    LDY.b PlayerDir_76                      ;$00D64E |
     LDA.w DATA_00D5F0,Y                     ;$00D650 |
     STA.w $13E2                             ;$00D653 |
     LDA.w RidingYoshi_187A                  ;$00D656 |
@@ -9352,12 +9352,12 @@ CODE_00D6B1:
     AND.b #$01                              ;$00D6B4 |
     LDY.w $1407                             ;$00D6B6 |
     BEQ CODE_00D6D5                         ;$00D6B9 |
-    CMP $76                                 ;$00D6BB |
+    CMP.b PlayerDir_76                      ;$00D6BB |
     BEQ CODE_00D6C3                         ;$00D6BD |
     LDY.b byetudlrPress_16                  ;$00D6BF |
     BPL CODE_00D68D                         ;$00D6C1 |
 CODE_00D6C3:
-    LDX $76
+    LDX.b PlayerDir_76
     LDY.w DATA_00D5EE,X                     ;$00D6C5 |
     STY.w $13E1                             ;$00D6C8 |
     STA $01                                 ;$00D6CB |
@@ -9368,8 +9368,8 @@ CODE_00D6C3:
     BRA CODE_00D713                         ;$00D6D3 |
 
 CODE_00D6D5:
-    LDY $76
-    CMP $76                                 ;$00D6D7 |
+    LDY.b PlayerDir_76
+    CMP.b PlayerDir_76                      ;$00D6D7 |
     BEQ CODE_00D6EC                         ;$00D6D9 |
     LDY.w CarryingFlagMirror_148F           ;$00D6DB |
     BEQ CODE_00D6EA                         ;$00D6DE |
@@ -9378,7 +9378,7 @@ CODE_00D6D5:
     LDY.b #$08                              ;$00D6E5 |
     STY.w $1499                             ;$00D6E7 |
 CODE_00D6EA:
-    STA $76
+    STA.b PlayerDir_76
 CODE_00D6EC:
     STA $01
     ASL                                     ;$00D6EE |
@@ -9545,7 +9545,7 @@ CODE_00D811:
     JMP CODE_00D8CD
 
 CODE_00D814:
-    STZ $73
+    STZ.b PlayerIsDucking_73
     LDA.b #$0B                              ;$00D816 |
     STA.b PlayerInAir_72                    ;$00D818 |
     STZ.w $1409                             ;$00D81A |
@@ -9576,7 +9576,7 @@ CODE_00D82B:
 
 CODE_00D849:
     LSR
-    LDY $76                                 ;$00D84A |
+    LDY.b PlayerDir_76                      ;$00D84A |
     BEQ CODE_00D850                         ;$00D84C |
     EOR.b #$01                              ;$00D84E |
 CODE_00D850:
@@ -9637,7 +9637,7 @@ CODE_00D8AF:
     STX.b PlayerYSpeed_7D                   ;$00D8B4 |
     STZ.w $1409                             ;$00D8B6 |
 CODE_00D8B9:
-    LDX $76
+    LDX.b PlayerDir_76
     LDA.b PlayerXSpeed_7B                   ;$00D8BB |
     BEQ CODE_00D8C4                         ;$00D8BD |
     EOR.w DATA_00D535,X                     ;$00D8BF |
@@ -9770,7 +9770,7 @@ DATA_00D984:
 
 water_physics:
     STZ.w $13ED                             ;$00D988 |
-    STZ $73                                 ;$00D98B |
+    STZ.b PlayerIsDucking_73                ;$00D98B |
     STZ.w $1407                             ;$00D98D |
     STZ.w $140D                             ;$00D990 |
     LDY.b PlayerYSpeed_7D                   ;$00D993 |
@@ -9825,7 +9825,7 @@ CODE_00D9DD:
     LDA.b byetudlrHold_15                   ;$00D9E1 |
     AND.b #$03                              ;$00D9E3 |
     BNE CODE_00DA48                         ;$00D9E5 |
-    LDA $76                                 ;$00D9E7 |
+    LDA.b PlayerDir_76                      ;$00D9E7 |
     BRA CODE_00DA46                         ;$00D9E9 |
 
 CODE_00D9EB:
@@ -9877,7 +9877,7 @@ CODE_00DA2D:
     AND.b #$04                              ;$00DA35 |
     BEQ CODE_00DA40                         ;$00DA37 |
     STZ.w $13E8                             ;$00DA39 |
-    INC $73                                 ;$00DA3C |
+    INC.b PlayerIsDucking_73                ;$00DA3C |
     BRA CODE_00DA69                         ;$00DA3E |
 
 CODE_00DA40:
@@ -9889,7 +9889,7 @@ CODE_00DA46:
 CODE_00DA48:
     STY $00
     AND.b #$01                              ;$00DA4A |
-    STA $76                                 ;$00DA4C |
+    STA.b PlayerDir_76                      ;$00DA4C |
     PHA                                     ;$00DA4E |
     ASL                                     ;$00DA4F |
     ASL                                     ;$00DA50 |
@@ -10043,7 +10043,7 @@ CODE_00DB5D:
     BMI CODE_00DB76                         ;$00DB72 |
     EOR.b #$01                              ;$00DB74 |
 CODE_00DB76:
-    STA $76
+    STA.b PlayerDir_76
     LDA.w DATA_00DACD,Y                     ;$00DB78 |
     BRA CODE_00DB92                         ;$00DB7B |
 
@@ -10087,7 +10087,7 @@ CODE_00DBAC:
     LSR                                     ;$00DBBF |
     LSR                                     ;$00DBC0 |
     EOR.b #$01                              ;$00DBC1 |
-    STA $76                                 ;$00DBC3 |
+    STA.b PlayerDir_76                      ;$00DBC3 |
     LDA.b #$08                              ;$00DBC5 |
     STA.w $149E                             ;$00DBC7 |
 CODE_00DBCA:
@@ -10146,9 +10146,9 @@ CODE_00DC16:
     STA.w $1496                             ;$00DC1F |
     AND.b #$07                              ;$00DC22 |
     BNE Return00DC2C                        ;$00DC24 |
-    LDA $76                                 ;$00DC26 |
+    LDA.b PlayerDir_76                      ;$00DC26 |
     EOR.b #$01                              ;$00DC28 |
-    STA $76                                 ;$00DC2A |
+    STA.b PlayerDir_76                      ;$00DC2A |
 Return00DC2C:
     RTS
 
@@ -10174,7 +10174,7 @@ apply_player_speeds:                        ;        \
     RTS                                     ;$00DC4E /
 
 .apply_speed
-    LDA $7B,X                               ;$00DC4F \ Load the player's speed,
+    LDA.b PlayerXSpeed_7B,X                 ;$00DC4F \ Load the player's speed,
     ASL                                     ;$00DC51 |\ get the lower nybble and multiply by 16,
     ASL                                     ;$00DC52 | |
     ASL                                     ;$00DC53 | |
@@ -10184,7 +10184,7 @@ apply_player_speeds:                        ;        \
     STA.w $13DA,X                           ;$00DC59 |/
     REP #$20                                ;$00DC5C |
     PHP                                     ;$00DC5E | Preserve the carry bit.
-    LDA $7B,X                               ;$00DC5F | Load the player's speed,
+    LDA.b PlayerXSpeed_7B,X                 ;$00DC5F | Load the player's speed,
     LSR                                     ;$00DC61 |\ divide by 16,
     LSR                                     ;$00DC62 | |
     LSR                                     ;$00DC63 | |
@@ -10533,7 +10533,7 @@ draw_mario_and_yoshi_00E2BD:
     REP #$20
     LDA.b PlayerXPos_94                     ;$00E340 |
     SBC.b Layer1XPos_1A                     ;$00E342 |
-    STA $7E                                 ;$00E344 |
+    STA.b PlayerXPosScrRel_7E               ;$00E344 |
     LDA.w PlayerYOffset_188B                ;$00E346 |
     AND.w #$00FF                            ;$00E349 |
     CLC                                     ;$00E34C |
@@ -10580,7 +10580,7 @@ draw_mario_and_yoshi_00E2BD:
     BNE +                                   ;$00E395 |
     LDX.b #$20                              ;$00E397 |
 +   LDA.w DATA_00DCEC,X                     ;$00E399 |
-    ORA $76                                 ;$00E39C |
+    ORA.b PlayerDir_76                      ;$00E39C |
     TAY                                     ;$00E39E |
     LDA.w DATA_00DD32,Y                     ;$00E39F |
     STA $05                                 ;$00E3A2 |
@@ -10601,7 +10601,7 @@ draw_mario_and_yoshi_00E2BD:
     BEQ +                                   ;$00E3C5 |
     LDA.w DATA_00E2B9,X                     ;$00E3C7 |
 +   LDY.w DATA_00E2B2,X                     ;$00E3CA |
-    LDX $76                                 ;$00E3CD |
+    LDX.b PlayerDir_76                      ;$00E3CD |
     ORA.w mario_properties,X                ;$00E3CF |
     STA.w $0303,Y                           ;$00E3D2 |
     STA.w $0307,Y                           ;$00E3D5 |
@@ -10648,7 +10648,7 @@ draw_mario_and_yoshi_00E2BD:
 .CODE_00E432:
     LDA.w DATA_00E1D6,X
 .CODE_00E435:
-    ORA $76
+    ORA.b PlayerDir_76
     TAY                                     ;$00E437 |
     LDA.w DATA_00E21A,Y                     ;$00E438 |
     STA $05                                 ;$00E43B |
@@ -10689,7 +10689,7 @@ CODE_00E45D:
     BCS CODE_00E49F                         ;$00E480 |
     STA.w $0301,Y                           ;$00E482 |
     REP #$20                                ;$00E485 |
-    LDA $7E                                 ;$00E487 |
+    LDA.b PlayerXPosScrRel_7E               ;$00E487 |
     CLC                                     ;$00E489 |
     ADC.w DATA_00DD4E,X                     ;$00E48A |
     PHA                                     ;$00E48D |
@@ -10946,7 +10946,7 @@ no_layer_collision:                         ;        |
     LDA.w $1B96                             ;$00E98C |\ If side exits are enabled,
     BEQ .no_side_exits                      ;$00E98F | |
     REP #$20                                ;$00E991 | |
-    LDA $7E                                 ;$00E993 | |
+    LDA.b PlayerXPosScrRel_7E               ;$00E993 | |
     CMP.w #$00FA                            ;$00E995 | | and the player is touching the side of the screen,
     SEP #$20                                ;$00E998 | |
     BCC CODE_00E9FB                         ;$00E99A | |
@@ -10954,7 +10954,7 @@ no_layer_collision:                         ;        |
     RTS                                     ;$00E9A0 /
 
 .no_side_exits
-    LDA $7E
+    LDA.b PlayerXPosScrRel_7E
     CMP.b #$F0                              ;$00E9A3 |
     BCS CODE_00EA08                         ;$00E9A5 |
     LDA.b PlayerBlocked_77                  ;$00E9A7 |
@@ -11139,7 +11139,7 @@ layer_collision:
     BMI walk_off_wall                       ;$00EAF5 |
     LDA.b PlayerInAir_72                    ;$00EAF7 |
     ORA.w CarryingFlagMirror_148F           ;$00EAF9 |
-    ORA $73                                 ;$00EAFC |
+    ORA.b PlayerIsDucking_73                ;$00EAFC |
     ORA.w RidingYoshi_187A                  ;$00EAFE |
     BNE walk_off_wall                       ;$00EB01 |
     LDA.w WallRunFlag_13E3                  ;$00EB03 |
@@ -11218,7 +11218,7 @@ normal_collision:
     LDX.b #$00                              ;$00EB77 \ Initialize collision point index
     LDA.b Powerup_19                        ;$00EB79 |\
     BEQ .not_big                            ;$00EB7B | | If the player is big
-    LDA $73                                 ;$00EB7D | |
+    LDA.b PlayerIsDucking_73                ;$00EB7D | |
     BNE .not_big                            ;$00EB7F | | and not ducking,
     LDX.b #$18                              ;$00EB81 | | use the big Mario collision point indices.
 .not_big                                    ;        |/
@@ -11343,7 +11343,7 @@ normal_collision:
     CPY.b #$6E                              ;$00EC4A | | or 16E - 1FF,
     BCS .skip_side_head                     ;$00EC4C |/ ignore it.
 .side_body_in_block                         ;        |
-    LDA $76                                 ;$00EC4E |
+    LDA.b PlayerDir_76                      ;$00EC4E |
     CMP $93                                 ;$00EC50 |
     BEQ .CODE_00EC5F                        ;$00EC52 |
     JSR process_horizontal_pipe             ;$00EC54 |
@@ -11893,7 +11893,7 @@ CODE_00F005:
     CMP.b #$02                              ;$00F009 |
     BCS Return00F04C                        ;$00F00B |
     EOR.b #$01                              ;$00F00D |
-    CMP $76                                 ;$00F00F |
+    CMP.b PlayerDir_76                      ;$00F00F |
     BNE Return00F04C                        ;$00F011 |
     TAX                                     ;$00F013 |
     LSR                                     ;$00F014 |
@@ -11921,7 +11921,7 @@ CODE_00F035:
     EOR.w DATA_00EAB9,X                     ;$00F03B |
     BMI Return00F04C                        ;$00F03E |
     LDA.w CarryingFlagMirror_148F           ;$00F040 |
-    ORA $73                                 ;$00F043 |
+    ORA.b PlayerIsDucking_73                ;$00F043 |
     BNE Return00F04C                        ;$00F045 |
     INX                                     ;$00F047 |
     INX                                     ;$00F048 |
@@ -12445,7 +12445,7 @@ CODE_00F40A:
     BEQ CODE_00F43E                         ;$00F411 |
     STA.b SpriteLock_9D                     ;$00F413 |
     AND.b #$01                              ;$00F415 |
-    STA $76                                 ;$00F417 |
+    STA.b PlayerDir_76                      ;$00F417 |
     STX $89                                 ;$00F419 |
     TXA                                     ;$00F41B |
     LSR                                     ;$00F41C |
@@ -12453,9 +12453,9 @@ CODE_00F40A:
     BNE CODE_00F430                         ;$00F41E |
     LDA.w CarryingFlagMirror_148F           ;$00F420 |
     BEQ CODE_00F430                         ;$00F423 |
-    LDA $76                                 ;$00F425 |
+    LDA.b PlayerDir_76                      ;$00F425 |
     EOR.b #$01                              ;$00F427 |
-    STA $76                                 ;$00F429 |
+    STA.b PlayerDir_76                      ;$00F429 |
     LDA.b #$08                              ;$00F42B |
     STA.w $1499                             ;$00F42D |
 CODE_00F430:
@@ -13647,7 +13647,7 @@ CODE_00FC98:
 CODE_00FCD5:
     INC.w RidingYoshi_187A
     INC $C2,X                               ;$00FCD8 |
-    LDA $76                                 ;$00FCDA |
+    LDA.b PlayerDir_76                      ;$00FCDA |
     EOR.b #$01                              ;$00FCDC |
     STA.w SpriteDir_157C,X                  ;$00FCDE |
     DEC.w $160E,X                           ;$00FCE1 |
@@ -13701,7 +13701,7 @@ DATA_00FD24:
 CODE_00FD26:
     LDA.b #$12
     STA.w $170B,X                           ;$00FD28 |
-    LDY $76                                 ;$00FD2B |
+    LDY.b PlayerDir_76                      ;$00FD2B |
     LDA.b PlayerXPos_94                     ;$00FD2D |
     CLC                                     ;$00FD2F |
     ADC.w DATA_00FD24,Y                     ;$00FD30 |
@@ -13712,7 +13712,7 @@ CODE_00FD26:
     LDA.b Powerup_19                        ;$00FD3D |
     BEQ CODE_00FD47                         ;$00FD3F |
     LDA.b #$04                              ;$00FD41 |
-    LDY $73                                 ;$00FD43 |
+    LDY.b PlayerIsDucking_73                ;$00FD43 |
     BEQ CODE_00FD49                         ;$00FD45 |
 CODE_00FD47:
     LDA.b #$0C
@@ -13943,7 +13943,7 @@ shoot_fireball:
     STA.w $170B,X                           ;$00FEC1 |/
     LDA.b #$30                              ;$00FEC4 |\ Set the fireball's Y speed.
     STA.w $173D,X                           ;$00FEC6 |/
-    LDY $76                                 ;$00FEC9 |\ Set the fireball's X speed
+    LDY.b PlayerDir_76                      ;$00FEC9 |\ Set the fireball's X speed
     LDA.w fireball_x_speeds,Y               ;$00FECB | | depending on the player's direction.
     STA.w $1747,X                           ;$00FECE |/
     LDA.w RidingYoshi_187A                  ;$00FED1 |\ If on Yoshi,

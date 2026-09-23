@@ -4436,7 +4436,7 @@ CODE_01A041:
     AND.b #$03                              ;$01A043 |
     BNE CODE_01A079                         ;$01A045 |
 CODE_01A047:
-    LDY $76
+    LDY.b PlayerDir_76
     LDA.b PlayerXPosMirror_D1               ;$01A049 |
     CLC                                     ;$01A04B |
     ADC.w DATA_019F67,Y                     ;$01A04C |
@@ -4468,7 +4468,7 @@ CODE_01A079:
     STA $C2,X                               ;$01A080 |
     LDA.b #$0A                              ;$01A082 |
     STA.w SpriteStatus_14C8,X               ;$01A084 |
-    LDY $76                                 ;$01A087 |
+    LDY.b PlayerDir_76                      ;$01A087 |
     LDA.w RidingYoshi_187A                  ;$01A089 |
     BEQ CODE_01A090                         ;$01A08C |
     INY                                     ;$01A08E |
@@ -4494,7 +4494,7 @@ CODE_01A0A6:
 
 CODE_01A0B1:
     LDY.b #$00
-    LDA $76                                 ;$01A0B3 |
+    LDA.b PlayerDir_76                      ;$01A0B3 |
     BNE CODE_01A0B8                         ;$01A0B5 |
     INY                                     ;$01A0B7 |
 CODE_01A0B8:
@@ -4541,7 +4541,7 @@ CODE_01A0E2:
     ADC.w DATA_019F61,Y                     ;$01A101 |
     STA.w SpriteXPosHigh_14E0,X             ;$01A104 |
     LDA.b #$0D                              ;$01A107 |
-    LDY $73                                 ;$01A109 |
+    LDY.b PlayerIsDucking_73                ;$01A109 |
     BNE CODE_01A111                         ;$01A10B |
     LDY.b Powerup_19                        ;$01A10D |
     BNE CODE_01A113                         ;$01A10F |
@@ -4601,7 +4601,7 @@ CODE_01A169:
     LDA.w $14C8,X
     CMP.b #$0B                              ;$01A16C |
     BNE Return01A177                        ;$01A16E |
-    LDA $76                                 ;$01A170 |
+    LDA.b PlayerDir_76                      ;$01A170 |
     EOR.b #$01                              ;$01A172 |
     STA.w SpriteDir_157C,X                  ;$01A174 |
 Return01A177:
@@ -6863,7 +6863,7 @@ kick_kill_sprite_01B12A:
     STA $AA,X                               ;$01B13E |
     LDA.b #$02                              ;$01B140 |
     STA.w SpriteStatus_14C8,X               ;$01B142 |
-    STY $76                                 ;$01B145 |
+    STY.b PlayerDir_76                      ;$01B145 |
     LDA.b #$01                              ;$01B147 |
     JSL GivePoints                          ;$01B149 |
     RTS                                     ;$01B14D |
@@ -7358,7 +7358,7 @@ CODE_01B4B4:
     LSR                                     ;$01B4B7 |
     BCS CODE_01B4B2                         ;$01B4B8 |
     LDA.b #$00                              ;$01B4BA |
-    LDY $73                                 ;$01B4BC |
+    LDY.b PlayerIsDucking_73                ;$01B4BC |
     BNE CODE_01B4C4                         ;$01B4BE |
     LDY.b Powerup_19                        ;$01B4C0 |
     BNE CODE_01B4C6                         ;$01B4C2 |
@@ -7959,7 +7959,7 @@ ADDR_01B8B2:
     ADC $0D                                 ;$01B8B5 |
     STA $02                                 ;$01B8B7 |
     LDA.b #$FF                              ;$01B8B9 |
-    LDY $73                                 ;$01B8BB |
+    LDY.b PlayerIsDucking_73                ;$01B8BB |
     BNE ADDR_01B8C3                         ;$01B8BD |
     LDY.b Powerup_19                        ;$01B8BF |
     BNE ADDR_01B8C5                         ;$01B8C1 |
@@ -7986,7 +7986,7 @@ ADDR_01B8D5:
     LDA.b SpriteXPosLow_E4,X                ;$01B8DE |
     SEC                                     ;$01B8E0 |
     SBC.b Layer1XPos_1A                     ;$01B8E1 |
-    CMP $7E                                 ;$01B8E3 |
+    CMP.b PlayerXPosScrRel_7E               ;$01B8E3 |
     BCC ADDR_01B8EF                         ;$01B8E5 |
     LDA $00                                 ;$01B8E7 |
     EOR.b #$FF                              ;$01B8E9 |
@@ -14914,7 +14914,7 @@ draw_yoshi_01EA70:
     STA.w $13C7                             ;$01EB8D || persist Yoshi color
     LDA.w SpriteDir_157C,X                  ;$01EB90 ||
     EOR.b #$01                              ;$01EB93 ||
-    STA $76                                 ;$01EB95 |/ make player face the same direction as Yoshi
+    STA.b PlayerDir_76                      ;$01EB95 |/ make player face the same direction as Yoshi
 .not_mounted_01EB97:
     LDA.b SpriteYXPPCCCT_64
     PHA                                     ;$01EB99 |
@@ -15274,7 +15274,7 @@ handle_off_yoshi_01EE61:
     ORA.b SpriteLock_9D                     ;$01EE6F |
     BNE +                                   ;$01EE71 |
     LDA.w SpriteDir_157C,X                  ;$01EE73 |
-    STA $76                                 ;$01EE76 |
+    STA.b PlayerDir_76                      ;$01EE76 |
     EOR.b #$01                              ;$01EE78 |
     STA.w SpriteDir_157C,X                  ;$01EE7A |
 +   LDA.w SpriteInPipeMode_1419             ;$01EE7D |
@@ -16708,7 +16708,7 @@ CODE_01F8F2:
     BCC CODE_01F92F                         ;$01F90A |
 CODE_01F90C:
     STZ $C2,X
-    CPY $76                                 ;$01F90E |
+    CPY.b PlayerDir_76                      ;$01F90E |
     BNE CODE_01F914                         ;$01F910 |
     INC $C2,X                               ;$01F912 |
 CODE_01F914:
@@ -17218,7 +17218,7 @@ CODE_01FC84:
     STA $03                                 ;$01FC9A |
     STZ $08                                 ;$01FC9C |
     STZ $09                                 ;$01FC9E |
-    LDA $7E                                 ;$01FCA0 |
+    LDA.b PlayerXPosScrRel_7E               ;$01FCA0 |
     CLC                                     ;$01FCA2 |
     ADC.b #$02                              ;$01FCA3 |
     STA $04                                 ;$01FCA5 |

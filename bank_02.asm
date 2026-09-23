@@ -1421,8 +1421,8 @@ minor_sprites_and_loading_028AB1:
     DEC.w $18D3                             ;$028AF0 |
     AND.b #$01                              ;$028AF3 |
 .try_spawn_star_sparkles:
-    ORA $7F
-    ORA $81                                 ;$028AF7 |
+    ORA.b PlayerXPosScrRel_7E+1
+    ORA.b PlayerYPosScrRel_80+1             ;$028AF7 |
     BNE +                                   ;$028AF9 |
     LDA $80                                 ;$028AFB |
     CMP.b #$D0                              ;$028AFD |
@@ -4029,7 +4029,7 @@ UnusedExtendedSpr:
     LDX.w CurrentSprite_15E9                ;$029E14 |
     LDA $00                                 ;$029E17 |
     SEC                                     ;$029E19 |
-    SBC $7E                                 ;$029E1A |
+    SBC.b PlayerXPosScrRel_7E               ;$029E1A |
     CLC                                     ;$029E1C |
     ADC.b #$04                              ;$029E1D |
     CMP.b #$08                              ;$029E1F |
@@ -10723,7 +10723,7 @@ CODE_02CF52:
     ORA.w $15A0,X                           ;$02CF5C |
     ORA.w $186C,X                           ;$02CF5F |
     BNE Return02CF51                        ;$02CF62 |
-    LDA $7E                                 ;$02CF64 |
+    LDA.b PlayerXPosScrRel_7E               ;$02CF64 |
     CLC                                     ;$02CF66 |
     ADC.b #$02                              ;$02CF67 |
     STA $0A                                 ;$02CF69 |
@@ -11511,7 +11511,7 @@ CODE_02D49C:
     LDA.b #$00
     LDY.b Powerup_19                        ;$02D49E |
     BEQ CODE_02D4A8                         ;$02D4A0 |
-    LDY $73                                 ;$02D4A2 |
+    LDY.b PlayerIsDucking_73                ;$02D4A2 |
     BNE CODE_02D4A8                         ;$02D4A4 |
     LDA.b #$10                              ;$02D4A6 |
 CODE_02D4A8:
@@ -11524,7 +11524,7 @@ CODE_02D4A8:
     LDA.w SpriteXPosHigh_14E0,X             ;$02D4B3 |
     STA $01                                 ;$02D4B6 |
     REP #$20                                ;$02D4B8 |
-    LDA $7E                                 ;$02D4BA |
+    LDA.b PlayerXPosScrRel_7E               ;$02D4BA |
     CLC                                     ;$02D4BC |
     ADC $00                                 ;$02D4BD |
     SEC                                     ;$02D4BF |
@@ -13962,7 +13962,7 @@ CODE_02E67A:
     LDA.w $15A0,X                           ;$02E6C2 |
     BNE CODE_02E6EB                         ;$02E6C5 |
     LDY.w $15EA,X                           ;$02E6C7 |
-    LDA $7E                                 ;$02E6CA |
+    LDA.b PlayerXPosScrRel_7E               ;$02E6CA |
     SEC                                     ;$02E6CC |
     SBC.w $0304,Y                           ;$02E6CD |
     CLC                                     ;$02E6D0 |
@@ -15542,7 +15542,7 @@ CODE_02F1EF:
 CODE_02F22B:
     LDA.w $0304,Y
     SEC                                     ;$02F22E |
-    SBC $7E                                 ;$02F22F |
+    SBC.b PlayerXPosScrRel_7E               ;$02F22F |
     ADC.b #$0C                              ;$02F231 |
     CMP.b #$18                              ;$02F233 |
     BCS CODE_02F29B                         ;$02F235 |
@@ -17180,7 +17180,7 @@ CODE_02FE10:
     CMP.b #$1E                              ;$02FE19 |
     BCS CODE_02FE48                         ;$02FE1B |
     LDA.b #$20                              ;$02FE1D |
-    LDY $73                                 ;$02FE1F |
+    LDY.b PlayerIsDucking_73                ;$02FE1F |
     BNE CODE_02FE29                         ;$02FE21 |
     LDY.b Powerup_19                        ;$02FE23 |
     BEQ CODE_02FE29                         ;$02FE25 |

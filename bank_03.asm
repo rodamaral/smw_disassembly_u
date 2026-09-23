@@ -5957,7 +5957,7 @@ CODE_03ACCB:
     INX                                     ;$03ACEA |
 CODE_03ACEB:
     LDY.b #$4C
-    LDA $7E                                 ;$03ACED |
+    LDA.b PlayerXPosScrRel_7E               ;$03ACED |
     STA.w $0300,Y                           ;$03ACEF |
     LDA $80                                 ;$03ACF2 |
     CLC                                     ;$03ACF4 |
@@ -5966,7 +5966,7 @@ CODE_03ACEB:
     LDA.w BlushTiles,X                      ;$03ACFB |
     STA.w $0302,Y                           ;$03ACFE |
     PLX                                     ;$03AD01 |
-    LDA $76                                 ;$03AD02 |
+    LDA.b PlayerDir_76                      ;$03AD02 |
     CMP.b #$01                              ;$03AD04 |
     LDA.b #$31                              ;$03AD06 |
     BCC CODE_03AD0C                         ;$03AD08 |
@@ -6073,7 +6073,7 @@ CODE_03ADC2:
     JSR SubHorzPosBnk3
     TYA                                     ;$03ADC5 |
     STA.w SpriteDir_157C,X                  ;$03ADC6 |
-    STA $76                                 ;$03ADC9 |
+    STA.b PlayerDir_76                      ;$03ADC9 |
     RTS                                     ;$03ADCB |
 
 CODE_03ADCC:
@@ -6114,7 +6114,7 @@ CODE_03ADFF:
     STA.b PlayerXSpeed_7B                   ;$03AE07 |
     TYA                                     ;$03AE09 |
     STA.w SpriteDir_157C,X                  ;$03AE0A |
-    STA $76                                 ;$03AE0D |
+    STA.b PlayerDir_76                      ;$03AE0D |
     JSL UpdateXPosNoGrvty                   ;$03AE0F |
     RTS                                     ;$03AE13 |
 
@@ -6122,7 +6122,7 @@ CODE_03AE14:
     JSR SubHorzPosBnk3
     TYA                                     ;$03AE17 |
     STA.w SpriteDir_157C,X                  ;$03AE18 |
-    STA $76                                 ;$03AE1B |
+    STA.b PlayerDir_76                      ;$03AE1B |
     INC $C2,X                               ;$03AE1D |
     LDA.b #$60                              ;$03AE1F |
     STA.w $1540,X                           ;$03AE21 |
@@ -7139,7 +7139,7 @@ GetMarioClipping:
     LDA.b #$0C                              ;$03B672 |
     STA $02                                 ;$03B674 |
     LDX.b #$00                              ;$03B676 |
-    LDA $73                                 ;$03B678 |
+    LDA.b PlayerIsDucking_73                ;$03B678 |
     BNE CODE_03B680                         ;$03B67A |
     LDA.b Powerup_19                        ;$03B67C |
     BNE CODE_03B681                         ;$03B67E |
