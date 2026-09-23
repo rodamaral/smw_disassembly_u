@@ -73,13 +73,13 @@ CODE_05809E:
     STZ.w $1928                             ;$0580A1 |
     REP #$30                                ;$0580A4 |
     LDA.w #$FFFF                            ;$0580A6 |
-    STA $4D                                 ;$0580A9 |
-    STA $4F                                 ;$0580AB |
+    STA.b Layer1PrevTileUp_4D               ;$0580A9 |
+    STA.b Layer1PrevTileDown_4F             ;$0580AB |
     JSR set_map16_for_VRAM_upload_05877E    ;$0580AD |
     LDA.b Layer1TileUp_45                   ;$0580B0 |
-    STA $47                                 ;$0580B2 |
-    LDA $49                                 ;$0580B4 |
-    STA $4B                                 ;$0580B6 |
+    STA.b Layer1TileDown_47                 ;$0580B2 |
+    LDA.b Layer2TileUp_49                   ;$0580B4 |
+    STA.b Layer2TileDown_4B                 ;$0580B6 |
     LDA.w #$0202                            ;$0580B8 |
     STA $55                                 ;$0580BB |
 CODE_0580BD:
@@ -88,10 +88,10 @@ CODE_0580BD:
     JSL CODE_058955                         ;$0580C3 |
     JSL generic_layer_1_and_2_upload        ;$0580C7 |
     REP #$30                                ;$0580CB |
-    INC $47                                 ;$0580CD |
-    INC $4B                                 ;$0580CF |
+    INC.b Layer1TileDown_47                 ;$0580CD |
+    INC.b Layer2TileDown_4B                 ;$0580CF |
     SEP #$30                                ;$0580D1 |
-    LDA $47                                 ;$0580D3 |
+    LDA.b Layer1TileDown_47                 ;$0580D3 |
     LSR                                     ;$0580D5 |
     LSR                                     ;$0580D6 |
     LSR                                     ;$0580D7 |
@@ -125,8 +125,8 @@ CODE_0580EC:
     STA.w $212F                             ;$058114 |
     REP #$20                                ;$058117 |
     LDA.w #$FFFF                            ;$058119 |
-    STA $4D                                 ;$05811C |
-    STA $4F                                 ;$05811E |
+    STA.b Layer1PrevTileUp_4D               ;$05811C |
+    STA.b Layer1PrevTileDown_4F             ;$05811E |
     STA $51                                 ;$058120 |
     STA $53                                 ;$058122 |
     PLP                                     ;$058124 |
@@ -805,7 +805,7 @@ process_level_mode_setting_0586F1:
     TAX                                     ;$058706 |
     LDA.b Layer1XPos_1A                     ;$058707 |
     AND.w #$FFF0                            ;$058709 |
-    CMP $4D,X                               ;$05870C |
+    CMP.b Layer1PrevTileUp_4D,X             ;$05870C |
     BEQ .CODE_058737                        ;$05870E |
     JMP .common_058724                      ;$058710 |
 
@@ -816,15 +816,15 @@ process_level_mode_setting_0586F1:
     TAX                                     ;$05871A |
     LDA.b Layer1YPos_1C                     ;$05871B |
     AND.w #$FFF0                            ;$05871D |
-    CMP $4D,X                               ;$058720 |
+    CMP.b Layer1PrevTileUp_4D,X             ;$058720 |
     BEQ .CODE_058737                        ;$058722 |
 .common_058724:
-    STA $4D,X
+    STA.b Layer1PrevTileUp_4D,X
     TXA                                     ;$058726 |
     EOR.w #$0002                            ;$058727 |
     TAX                                     ;$05872A |
     LDA.w #$FFFF                            ;$05872B |
-    STA $4D,X                               ;$05872E |
+    STA.b Layer1PrevTileUp_4D,X             ;$05872E |
     JSL execute_level_mode_setting_05881A   ;$058730 |
     JMP .return_058774                      ;$058734 |
 
@@ -885,7 +885,7 @@ set_map16_for_VRAM_upload_05877E:
     TYA                                     ;$058796 |
     CLC                                     ;$058797 |
     ADC.w #$0017                            ;$058798 |
-    STA $47                                 ;$05879B |
+    STA.b Layer1TileDown_47                 ;$05879B |
     SEP #$30                                ;$05879D |
     LDA $55                                 ;$05879F |
     TAX                                     ;$0587A1 |
@@ -925,7 +925,7 @@ set_map16_for_VRAM_upload_05877E:
     TYA                                     ;$0587DA |
     CLC                                     ;$0587DB |
     ADC.w #$0017                            ;$0587DC |
-    STA $47                                 ;$0587DF |
+    STA.b Layer1TileDown_47                 ;$0587DF |
 .common_0587E1:
     SEP #$20
     LDA.b ScreenMode_5B                     ;$0587E3 |
@@ -940,11 +940,11 @@ set_map16_for_VRAM_upload_05877E:
     TAY                                     ;$0587F1 |
     SEC                                     ;$0587F2 |
     SBC.w #$0008                            ;$0587F3 |
-    STA $49                                 ;$0587F6 |
+    STA.b Layer2TileUp_49                   ;$0587F6 |
     TYA                                     ;$0587F8 |
     CLC                                     ;$0587F9 |
     ADC.w #$0017                            ;$0587FA |
-    STA $4B                                 ;$0587FD |
+    STA.b Layer2TileDown_4B                 ;$0587FD |
     JMP .return_058818                      ;$0587FF |
 
 .horizontal_layer_2_058802:
@@ -957,11 +957,11 @@ set_map16_for_VRAM_upload_05877E:
     TAY                                     ;$05880A |
     SEC                                     ;$05880B |
     SBC.w #$0008                            ;$05880C |
-    STA $49                                 ;$05880F |
+    STA.b Layer2TileUp_49                   ;$05880F |
     TYA                                     ;$058811 |
     CLC                                     ;$058812 |
     ADC.w #$0017                            ;$058813 |
-    STA $4B                                 ;$058816 |
+    STA.b Layer2TileDown_4B                 ;$058816 |
 .return_058818:
     PLP
     RTS                                     ;$058819 |
@@ -1398,12 +1398,12 @@ CODE_058BA7:
     STA $0F                                 ;$058BC5 |
     LDA $56                                 ;$058BC7 |
     TAX                                     ;$058BC9 |
-    LDA $49,X                               ;$058BCA |
+    LDA.b Layer2TileUp_49,X                 ;$058BCA |
     AND.b #$0F                              ;$058BCC |
     ASL                                     ;$058BCE |
     STA.w $1CE7                             ;$058BCF |
     LDY.w #$0030                            ;$058BD2 |
-    LDA $49,X                               ;$058BD5 |
+    LDA.b Layer2TileUp_49,X                 ;$058BD5 |
     AND.b #$10                              ;$058BD7 |
     BEQ CODE_058BDE                         ;$058BD9 |
     LDY.w #$0034                            ;$058BDB |
@@ -1411,7 +1411,7 @@ CODE_058BDE:
     TYA
     STA.w $1CE6                             ;$058BDF |
     REP #$30                                ;$058BE2 |
-    LDA $49,X                               ;$058BE4 |
+    LDA.b Layer2TileUp_49,X                 ;$058BE4 |
     AND.w #$01F0                            ;$058BE6 |
     LSR                                     ;$058BE9 |
     LSR                                     ;$058BEA |
@@ -1442,7 +1442,7 @@ CODE_058BDE:
 CODE_058C15:
     STY $0C
     REP #$30                                ;$058C17 |
-    LDA $49,X                               ;$058C19 |
+    LDA.b Layer2TileUp_49,X                 ;$058C19 |
     AND.w #$000F                            ;$058C1B |
     STA $08                                 ;$058C1E |
     LDX.w #$0000                            ;$058C20 |
@@ -1520,20 +1520,20 @@ CODE_058C8B:
     LDA $56                                 ;$058CAB |
     TAX                                     ;$058CAD |
     LDY.w #$0030                            ;$058CAE |
-    LDA $49,X                               ;$058CB1 |
+    LDA.b Layer2TileUp_49,X                 ;$058CB1 |
     AND.b #$10                              ;$058CB3 |
     BEQ CODE_058CBA                         ;$058CB5 |
     LDY.w #$0038                            ;$058CB7 |
 CODE_058CBA:
     TYA
     STA $00                                 ;$058CBB |
-    LDA $49,X                               ;$058CBD |
+    LDA.b Layer2TileUp_49,X                 ;$058CBD |
     LSR                                     ;$058CBF |
     LSR                                     ;$058CC0 |
     AND.b #$03                              ;$058CC1 |
     ORA $00                                 ;$058CC3 |
     STA.w $1CE6                             ;$058CC5 |
-    LDA $49,X                               ;$058CC8 |
+    LDA.b Layer2TileUp_49,X                 ;$058CC8 |
     AND.b #$03                              ;$058CCA |
     ASL                                     ;$058CCC |
     ASL                                     ;$058CCD |
@@ -1543,7 +1543,7 @@ CODE_058CBA:
     ASL                                     ;$058CD1 |
     STA.w $1CE7                             ;$058CD2 |
     REP #$20                                ;$058CD5 |
-    LDA $49,X                               ;$058CD7 |
+    LDA.b Layer2TileUp_49,X                 ;$058CD7 |
     AND.w #$01F0                            ;$058CD9 |
     LSR                                     ;$058CDC |
     LSR                                     ;$058CDD |
@@ -1574,7 +1574,7 @@ CODE_058CBA:
 CODE_058D08:
     STY $0C
     REP #$30                                ;$058D0A |
-    LDA $49,X                               ;$058D0C |
+    LDA.b Layer2TileUp_49,X                 ;$058D0C |
     AND.w #$000F                            ;$058D0E |
     ASL                                     ;$058D11 |
     ASL                                     ;$058D12 |
