@@ -3297,7 +3297,7 @@ ReznorNotLocked:
 ReznorSignCode:
     LDA.b #$80
     STA.b Mode7CenterX_2A                   ;$0398A5 |
-    STZ $2B                                 ;$0398A7 |
+    STZ.b Mode7CenterX_2A+1                 ;$0398A7 |
     LDX.b #$00                              ;$0398A9 |
     LDA.b #$C0                              ;$0398AB |
     STA.b SpriteXPosLow_E4                  ;$0398AD | WARN: unindexed table
@@ -3440,7 +3440,7 @@ CODE_0399B2:
     CLC                                     ;$0399B6 |
     ADC.b #$40                              ;$0399B7 |
     STA.b SpriteXPosLow_E4,X                ;$0399B9 |
-    LDA $2B                                 ;$0399BB |
+    LDA.b Mode7CenterX_2A+1                 ;$0399BB |
     ADC.b #$00                              ;$0399BD |
     PLP                                     ;$0399BF |
     ADC $00                                 ;$0399C0 |
@@ -3461,7 +3461,7 @@ CODE_0399D7:
     PHP                                     ;$0399DA |
     ADC.b #$20                              ;$0399DB |
     STA.b SpriteYPosLow_D8,X                ;$0399DD |
-    LDA $2D                                 ;$0399DF |
+    LDA.b Mode7CenterY_2C+1                 ;$0399DF |
     ADC.b #$00                              ;$0399E1 |
     PLP                                     ;$0399E3 |
     ADC $01                                 ;$0399E4 |
@@ -7283,7 +7283,7 @@ GetDrawInfoBnk3:
     LDA.b SpriteXPosLow_E4,X                ;$03B766 |
     CMP.b Layer1XPos_1A                     ;$03B768 |
     LDA.w SpriteXPosHigh_14E0,X             ;$03B76A |
-    SBC $1B                                 ;$03B76D |
+    SBC.b Layer1XPos_1A+1                   ;$03B76D |
     BEQ CODE_03B774                         ;$03B76F |
     INC.w $15A0,X                           ;$03B771 |
 CODE_03B774:
@@ -7451,7 +7451,7 @@ CODE_03B85F:
     ROL $00                                 ;$03B88E |
     CMP.b SpriteXPosLow_E4,X                ;$03B890 |
     PHP                                     ;$03B892 |
-    LDA $1B                                 ;$03B893 |
+    LDA.b Layer1XPos_1A+1                   ;$03B893 |
     LSR $00                                 ;$03B895 |
     ADC.w DATA_03B847,Y                     ;$03B897 |
     PLP                                     ;$03B89A |

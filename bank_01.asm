@@ -2513,14 +2513,14 @@ CODE_019140:
     ADC.b LayerXDiff_26                     ;$019162 |
     STA.b SpriteXPosLow_E4,X                ;$019164 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019166 |
-    ADC $27                                 ;$019169 |
+    ADC.b LayerXDiff_26+1                   ;$019169 |
     STA.w SpriteXPosHigh_14E0,X             ;$01916B |
     LDA.b SpriteYPosLow_D8,X                ;$01916E |
     CLC                                     ;$019170 |
     ADC.b LayerYDiff_28                     ;$019171 |
     STA.b SpriteYPosLow_D8,X                ;$019173 |
     LDA.w SpriteYPosHigh_14D4,X             ;$019175 |
-    ADC $29                                 ;$019178 |
+    ADC.b LayerYDiff_28+1                   ;$019178 |
     STA.w SpriteYPosHigh_14D4,X             ;$01917A |
     JSR CODE_019211                         ;$01917D |
     LDA.b SpriteXPosLow_E4,X                ;$019180 |
@@ -2528,14 +2528,14 @@ CODE_019140:
     SBC.b LayerXDiff_26                     ;$019183 |
     STA.b SpriteXPosLow_E4,X                ;$019185 |
     LDA.w SpriteXPosHigh_14E0,X             ;$019187 |
-    SBC $27                                 ;$01918A |
+    SBC.b LayerXDiff_26+1                   ;$01918A |
     STA.w SpriteXPosHigh_14E0,X             ;$01918C |
     LDA.b SpriteYPosLow_D8,X                ;$01918F |
     SEC                                     ;$019191 |
     SBC.b LayerYDiff_28                     ;$019192 |
     STA.b SpriteYPosLow_D8,X                ;$019194 |
     LDA.w SpriteYPosHigh_14D4,X             ;$019196 |
-    SBC $29                                 ;$019199 |
+    SBC.b LayerYDiff_28+1                   ;$019199 |
     STA.w SpriteYPosHigh_14D4,X             ;$01919B |
     LDA.w $1588,X                           ;$01919E |
     BPL CODE_0191BE                         ;$0191A1 |
@@ -4168,7 +4168,7 @@ CODE_019E37:
     SBC.b Layer1XPos_1A                     ;$019E65 |
     STA.w $0300,Y                           ;$019E67 |
     PLA                                     ;$019E6A |
-    SBC $1B                                 ;$019E6B |
+    SBC.b Layer1XPos_1A+1                   ;$019E6B |
     BNE CODE_019E93                         ;$019E6D |
     LDA $01                                 ;$019E6F |
     SEC                                     ;$019E71 |
@@ -4880,7 +4880,7 @@ get_draw_info_bnk1_01A365:
     LDA.b SpriteXPosLow_E4,X                ;$01A36B |
     CMP.b Layer1XPos_1A                     ;$01A36D |
     LDA.w SpriteXPosHigh_14E0,X             ;$01A36F |
-    SBC $1B                                 ;$01A372 |
+    SBC.b Layer1XPos_1A+1                   ;$01A372 |
     BEQ +                                   ;$01A374 |
     INC.w $15A0,X                           ;$01A376 |
 +   LDA.w SpriteXPosHigh_14E0,X             ;$01A379 |
@@ -6177,7 +6177,7 @@ CODE_01AC33:
     ROL $00                                 ;$01AC62 |
     CMP.b SpriteXPosLow_E4,X                ;$01AC64 |
     PHP                                     ;$01AC66 |
-    LDA $1B                                 ;$01AC67 |
+    LDA.b Layer1XPos_1A+1                   ;$01AC67 |
     LSR $00                                 ;$01AC69 |
     ADC.w SpriteOffScreen4,Y                ;$01AC6B |
     PLP                                     ;$01AC6E |
@@ -6892,7 +6892,7 @@ CODE_01B167:
     LDA $02                                 ;$01B171 |
     CMP.b Layer1XPos_1A                     ;$01B173 |
     PLA                                     ;$01B175 |
-    SBC $1B                                 ;$01B176 |
+    SBC.b Layer1XPos_1A+1                   ;$01B176 |
     BNE Return01B191                        ;$01B178 |
     LDA.w $148E                             ;$01B17A |
     AND.b #$0F                              ;$01B17D |
@@ -8699,7 +8699,7 @@ CODE_01BDFB:
     ADC.b Layer1XPos_1A                     ;$01BE23 |
     AND.b #$F0                              ;$01BE25 |
     STA.b SpriteXPosLow_E4,X                ;$01BE27 |
-    LDA $1B                                 ;$01BE29 |
+    LDA.b Layer1XPos_1A+1                   ;$01BE29 |
     ADC.b #$00                              ;$01BE2B |
     STA.w SpriteXPosHigh_14E0,X             ;$01BE2D |
     JSR SubHorizPos                         ;$01BE30 |

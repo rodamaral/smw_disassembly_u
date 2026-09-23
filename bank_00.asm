@@ -299,7 +299,7 @@ NMI_start:                                  ;        \
 .lagging_level_NMI                          ;        |
     LDA.b Layer1XPos_1A                     ;$008246 |\ Set layer 1 X position from mirrors
     STA.w $210D                             ;$008248 | | $210D is a write twice register 
-    LDA $1B                                 ;$00824B | |
+    LDA.b Layer1XPos_1A+1                   ;$00824B | |
     STA.w $210D                             ;$00824D |/
     LDA.b Layer1YPos_1C                     ;$008250 |\ Set layer 1 Y position from mirrors
     CLC                                     ;$008252 | | 
@@ -310,11 +310,11 @@ NMI_start:                                  ;        \
     STA.w $210E                             ;$00825E |/
     LDA.b Layer2XPos_1E                     ;$008261 |\ Set layer 2 X position from mirrors
     STA.w $210F                             ;$008263 | | $210F is a write twice register 
-    LDA $1F                                 ;$008266 | |
+    LDA.b Layer2XPos_1E+1                   ;$008266 | |
     STA.w $210F                             ;$008268 |/
     LDA.b Layer2YPos_20                     ;$00826B |\ Set layer 2 Y position from mirrors
     STA.w $2110                             ;$00826D | | $2110 is a write twice register 
-    LDA $21                                 ;$008270 | |
+    LDA.b Layer2YPos_20+1                   ;$008270 | |
     STA.w $2110                             ;$008272 |/
     LDA.w IRQNMICommand_0D9B                ;$008275 |\ If we are in a level, skip to level NMI return
     BEQ .level_NMI_return                   ;$008278 |/
@@ -385,31 +385,31 @@ NMI_start:                                  ;        \
     CLC                                     ;$0082FE | |
     ADC.b #$80                              ;$0082FF | | Offset the center by #$80
     STA.w $211F                             ;$008301 | |
-    LDA $2B                                 ;$008304 | |
+    LDA.b Mode7CenterX_2A+1                 ;$008304 | |
     ADC.b #$00                              ;$008306 | | Handle carry if needed
     STA.w $211F                             ;$008308 |/
     LDA.b Mode7CenterY_2C                   ;$00830B |\ Set the mode 7 center Y position
     CLC                                     ;$00830D | |
     ADC.b #$80                              ;$00830E | | Offset the center by #$80
     STA.w $2120                             ;$008310 | |
-    LDA $2D                                 ;$008313 | |
+    LDA.b Mode7CenterY_2C+1                 ;$008313 | |
     ADC.b #$00                              ;$008315 | | Handle carry if needed
     STA.w $2120                             ;$008317 |/
     LDA.b Mode7ParamA_2E                    ;$00831A |\ Update mode 7 matrix value A
     STA.w $211B                             ;$00831C | |
-    LDA $2F                                 ;$00831F | |
+    LDA.b Mode7ParamA_2E+1                  ;$00831F | |
     STA.w $211B                             ;$008321 |/
     LDA.b Mode7ParamB_30                    ;$008324 |\ Update mode 7 matrix value B
     STA.w $211C                             ;$008326 | |
-    LDA $31                                 ;$008329 | |
+    LDA.b Mode7ParamB_30+1                  ;$008329 | |
     STA.w $211C                             ;$00832B |/
     LDA.b Mode7ParamC_32                    ;$00832E |\ Update mode 7 matrix value C
     STA.w $211D                             ;$008330 | |
-    LDA $33                                 ;$008333 | |
+    LDA.b Mode7ParamC_32+1                  ;$008333 | |
     STA.w $211D                             ;$008335 |/
     LDA.b Mode7ParamD_34                    ;$008338 |\ Update mode 7 matrix value D
     STA.w $211E                             ;$00833A | |
-    LDA $35                                 ;$00833D | |
+    LDA.b Mode7ParamD_34+1                  ;$00833D | |
     STA.w $211E                             ;$00833F |/
     JSR mode_7_static_BG_scroll             ;$008342 |
     LDA.w IRQNMICommand_0D9B                ;$008345 |\ If we are not at bowser there are a few extra
@@ -457,11 +457,11 @@ IRQ_NMI_return:                             ;        |
     JSR wait_for_hblank                     ;$008391 |/
     LDA.b Layer3XPos_22                     ;$008394 |\ Set layer 3 X position
     STA.w $2111                             ;$008396 | |
-    LDA $23                                 ;$008399 | |
+    LDA.b Layer3XPos_22+1                   ;$008399 | |
     STA.w $2111                             ;$00839B |/
     LDA.b Layer3YPos_24                     ;$00839E |\ Set layer 3 Y position
     STA.w $2112                             ;$0083A0 | |
-    LDA $25                                 ;$0083A3 | |
+    LDA.b Layer3YPos_24+1                   ;$0083A3 | |
     STA.w $2112                             ;$0083A5 |/
 mode_7_IRQ_return:                          ;        |
     LDA.b MainBGMode_3E                     ;$0083A8 |\ Set the BG mode
@@ -531,7 +531,7 @@ mode_7_static_BG_scroll:                    ;        \
     STA.w $210B                             ;$00841D |/
     LDA.b Layer1XPos_1A                     ;$008420 |\ Set layer 1 X position.
     STA.w $210D                             ;$008422 | |
-    LDA $1B                                 ;$008425 | |
+    LDA.b Layer1XPos_1A+1                   ;$008425 | |
     STA.w $210D                             ;$008427 |/
     LDA.b Layer1YPos_1C                     ;$00842A |\ Set relative layer 1 Y position.
     CLC                                     ;$00842C | |
@@ -3819,7 +3819,7 @@ load_layer3_009FB8:
     BEQ +                                   ;$009FDC |
     LDA.b #$40                              ;$009FDE |
 +   STA.b Layer3YPos_24                     ;$009FE0 |
-    STZ $25                                 ;$009FE2 |
+    STZ.b Layer3YPos_24+1                   ;$009FE2 |
     JSL CODE_05BC72                         ;$009FE4 |
     BRA CODE_00A01B                         ;$009FE8 |
 
@@ -3853,7 +3853,7 @@ CODE_00A012:
     LDA.b #$D0                              ;$00A015 |
 CODE_00A017:
     STA.b Layer3YPos_24
-    STZ $25                                 ;$00A019 |
+    STZ.b Layer3YPos_24+1                   ;$00A019 |
 CODE_00A01B:
     LDA.b #$04
     TRB $40                                 ;$00A01D |
@@ -13581,7 +13581,7 @@ ADDR_00FC25:
     SEC                                     ;$00FC4C |
     SBC.b #$10                              ;$00FC4D |
     STA.w SpriteXPosLow_E4,y                ;$00FC4F |
-    LDA $1B                                 ;$00FC52 |
+    LDA.b Layer1XPos_1A+1                   ;$00FC52 |
     SBC.b #$00                              ;$00FC54 |
     STA.w SpriteXPosHigh_14E0,Y             ;$00FC56 |
     LDA.b PlayerYPos_96                     ;$00FC59 |

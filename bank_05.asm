@@ -3081,9 +3081,9 @@ CODE_05B218:
     LDA.b #$01                              ;$05B243 |
     STA.w $13D5                             ;$05B245 |
     STZ.b Layer3XPos_22                     ;$05B248 |
-    STZ $23                                 ;$05B24A |
+    STZ.b Layer3XPos_22+1                   ;$05B24A |
     STZ.b Layer3YPos_24                     ;$05B24C |
-    STZ $25                                 ;$05B24E |
+    STZ.b Layer3YPos_24+1                   ;$05B24E |
 CODE_05B250:
     LDX.w $1B88
     LDA.w $1B89                             ;$05B253 |
@@ -4811,7 +4811,7 @@ process_layer_3_05C40C:
     ADC.w $17BD                             ;$05C4EF |
     STA.b Layer3XPos_22                     ;$05C4F2 |
     LDA.b #$01                              ;$05C4F4 |
-    STA $23                                 ;$05C4F6 |
+    STA.b Layer3XPos_22+1                   ;$05C4F6 |
     RTS                                     ;$05C4F8 |
 
 CODE_05C4F9:
@@ -6515,7 +6515,7 @@ CODE_05D8B7:
     ROL                                     ;$05D930 |
     STA.w $1BE3                             ;$05D931 |
     STZ.b Layer1YPos_1C+1                   ;$05D934 |
-    STZ $21                                 ;$05D936 |
+    STZ.b Layer2YPos_20+1                   ;$05D936 |
     LDA.w DATA_05F600,Y                     ;$05D938 |
     AND.b #$80                              ;$05D93B |
     STA.w $141F                             ;$05D93D |
@@ -6624,7 +6624,7 @@ CODE_05DA01:
     LDY.w $1414                             ;$05DA09 |
     CPY.b #$03                              ;$05DA0C |
     BEQ CODE_05DA12                         ;$05DA0E |
-    STA $21                                 ;$05DA10 |
+    STA.b Layer2YPos_20+1                   ;$05DA10 |
 CODE_05DA12:
     LDA.b #$01
     STA.w $1412                             ;$05DA14 |

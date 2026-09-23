@@ -4763,7 +4763,7 @@ CODE_0CCD23:
     CMP.b #$C0                              ;$0CCD27 |
     BNE CODE_0CCD31                         ;$0CCD29 |
     STZ.b Layer1XPos_1A                     ;$0CCD2B |
-    STZ $1B                                 ;$0CCD2D |
+    STZ.b Layer1XPos_1A+1                   ;$0CCD2D |
     BRA CODE_0CCD75                         ;$0CCD2F |
 
 CODE_0CCD31:
@@ -5169,7 +5169,7 @@ CODE_0CD023:
     BPL CODE_0CD046                         ;$0CD029 |
     STZ.w $143E                             ;$0CD02B |
     STZ.b Layer1XPos_1A                     ;$0CD02E |
-    STZ $1B                                 ;$0CD030 |
+    STZ.b Layer1XPos_1A+1                   ;$0CD030 |
     BRA CODE_0CD046                         ;$0CD032 |
 
 CODE_0CD034:
@@ -5326,7 +5326,7 @@ CODE_0CD133:
     STA.w $0B5F,X                           ;$0CD13C |
     LDA.b Layer1XPos_1A                     ;$0CD13F |
     STA.w $0B50,X                           ;$0CD141 |
-    LDA $1B                                 ;$0CD144 |
+    LDA.b Layer1XPos_1A+1                   ;$0CD144 |
     STA.w $0B6E,X                           ;$0CD146 |
     LDA.w $1447                             ;$0CD149 |
     STA.w $0B05,X                           ;$0CD14C |
@@ -5341,7 +5341,7 @@ CODE_0CD133:
     LDA.w $0B50,X                           ;$0CD164 |
     STA.b Layer1XPos_1A                     ;$0CD167 |
     LDA.w $0B6E,X                           ;$0CD169 |
-    STA $1B                                 ;$0CD16C |
+    STA.b Layer1XPos_1A+1                   ;$0CD16C |
 Return0CD16E:
     RTS
 
@@ -5368,7 +5368,7 @@ CODE_0CD18F:
     DEC.w $143F
     BPL Return0CD19B                        ;$0CD192 |
     STZ.b Layer2YPos_20                     ;$0CD194 |
-    STZ $21                                 ;$0CD196 |
+    STZ.b Layer2YPos_20+1                   ;$0CD196 |
     INC.w $1442                             ;$0CD198 |
 Return0CD19B:
     RTS
