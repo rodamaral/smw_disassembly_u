@@ -578,7 +578,7 @@ CODE_0284C2:
     CMP.b #$42                              ;$0284CC |
     BNE CODE_0284D8                         ;$0284CE |
 CODE_0284D0:
-    LDA $AA,X
+    LDA.b SpriteYSpeed_AA,X
     BPL Return0284E7                        ;$0284D2 |
     LDA.b #$0A                              ;$0284D4 |
     BRA CODE_0284A6                         ;$0284D6 |
@@ -1297,7 +1297,7 @@ CODE_028A11:
     STA.w $1540,X                           ;$028A13 |
     LDA.b #$D0                              ;$028A16 |
 CODE_028A18:
-    STA $AA,X
+    STA.b SpriteYSpeed_AA,X
     LDA.b #$2C                              ;$028A1A |
     STA.w SpritePlayerContact_154C,X        ;$028A1C |
     LDA.w $190F,X                           ;$028A1F |
@@ -2655,7 +2655,7 @@ CODE_029404:
     BEQ Return029426                        ;$029411 |
     STZ.b SpritePhase_C2,X                  ;$029413 |
     LDA.b #$C0                              ;$029415 |
-    STA $AA,X                               ;$029417 |
+    STA.b SpriteYSpeed_AA,X                 ;$029417 |
     LDA.b #$10                              ;$029419 |
     STA.w $1540,X                           ;$02941B |
     STZ.w SpriteDir_157C,X                  ;$02941E |
@@ -2731,7 +2731,7 @@ CODE_0294A2:
     BNE CODE_0294B0                         ;$0294AC |
     LDA.b #$C0                              ;$0294AE |
 CODE_0294B0:
-    STA $AA,X
+    STA.b SpriteYSpeed_AA,X
     JSR SubHorzPosBnk2                      ;$0294B2 |
     LDA.w DATA_029392,Y                     ;$0294B5 |
     STA.b SpriteXSpeed_B6,X                 ;$0294B8 |
@@ -4442,7 +4442,7 @@ ChuckFireKill:
     LDA.b #$02                              ;$02A10B |
     STA.w SpriteStatus_14C8,X               ;$02A10D |
     LDA.b #$D0                              ;$02A110 |
-    STA $AA,X                               ;$02A112 |
+    STA.b SpriteYSpeed_AA,X                 ;$02A112 |
     JSR SubHorzPosBnk2                      ;$02A114 |
     LDA.w FireKillSpeedX,Y                  ;$02A117 |
     STA.b SpriteXSpeed_B6,X                 ;$02A11A |
@@ -4459,7 +4459,7 @@ TurnSpriteToCoin:
     STA.w SpriteStatus_14C8,X               ;$02A12F |
     JSL InitSpriteTables                    ;$02A132 |
     LDA.b #$D0                              ;$02A136 |
-    STA $AA,X                               ;$02A138 |
+    STA.b SpriteYSpeed_AA,X                 ;$02A138 |
     JSR SubHorzPosBnk2                      ;$02A13A |
     TYA                                     ;$02A13D |
     EOR.b #$01                              ;$02A13E |
@@ -6438,7 +6438,7 @@ CODE_02AFAF:
     LDA $09                                 ;$02AFD9 |
     STA.w SpriteYPosHigh_14D4,X             ;$02AFDB |
     LDA.w EerieGroupSpeedY,Y                ;$02AFDE |
-    STA $AA,X                               ;$02AFE1 |
+    STA.b SpriteYSpeed_AA,X                 ;$02AFE1 |
     LDA.w EerieGroupState,Y                 ;$02AFE3 |
     STA.b SpritePhase_C2,X                  ;$02AFE6 |
     CPY.b #$04                              ;$02AFE8 |
@@ -6688,7 +6688,7 @@ CODE_02B196:
 CODE_02B1B1:
     STA.b SpriteXSpeed_B6,X
     LDA.b #$B8                              ;$02B1B3 |
-    STA $AA,X                               ;$02B1B5 |
+    STA.b SpriteYSpeed_AA,X                 ;$02B1B5 |
 Return02B1B7:
     RTS
 
@@ -6720,7 +6720,7 @@ GenSuperKoopa:
     ADC.b #$00                              ;$02B1E5 |
     STA.w SpriteYPosHigh_14D4,X             ;$02B1E7 |
     LDA.b #$28                              ;$02B1EA |
-    STA $AA,X                               ;$02B1EC |
+    STA.b SpriteYSpeed_AA,X                 ;$02B1EC |
     PLA                                     ;$02B1EE |
     AND.b #$01                              ;$02B1EF |
     TAY                                     ;$02B1F1 |
@@ -6829,7 +6829,7 @@ CODE_02B288:
     AND.b #$03                              ;$02B2AC |
     TAY                                     ;$02B2AE |
     LDA.w DATA_02B264,Y                     ;$02B2AF |
-    STA $AA,X                               ;$02B2B2 |
+    STA.b SpriteYSpeed_AA,X                 ;$02B2B2 |
     LDY.w $18B9                             ;$02B2B4 |
     LDA.b Layer1XPos_1A                     ;$02B2B7 |
     CLC                                     ;$02B2B9 |
@@ -7369,8 +7369,8 @@ CODE_02B692:
     CMP.b #$08                              ;$02B698 |
     BNE Return02B6A6                        ;$02B69A |
     JSR UpdateYPosNoGrvtyB1                 ;$02B69C |
-    INC $AA,X                               ;$02B69F |
-    INC $AA,X                               ;$02B6A1 |
+    INC.b SpriteYSpeed_AA,X                 ;$02B69F |
+    INC.b SpriteYSpeed_AA,X                 ;$02B6A1 |
     JSR SubOffscreen0Bnk2                   ;$02B6A3 |
 Return02B6A6:
     RTS
@@ -7402,18 +7402,18 @@ CODE_02B6CF:
     STA.b SpriteXSpeed_B6,X                 ;$02B6D5 |
     JSR UpdateXPosNoGrvtyB1                 ;$02B6D7 |
     JSR UpdateYPosNoGrvtyB1                 ;$02B6DA |
-    LDA $AA,X                               ;$02B6DD |
+    LDA.b SpriteYSpeed_AA,X                 ;$02B6DD |
     CMP.b #$40                              ;$02B6DF |
     BPL CODE_02B6E8                         ;$02B6E1 |
     CLC                                     ;$02B6E3 |
     ADC.b #$02                              ;$02B6E4 |
-    STA $AA,X                               ;$02B6E6 |
+    STA.b SpriteYSpeed_AA,X                 ;$02B6E6 |
 CODE_02B6E8:
     JSL CODE_019138
     LDA.w $1588,X                           ;$02B6EC |
     AND.b #$04                              ;$02B6EF |
     BEQ CODE_02B6F5                         ;$02B6F1 |
-    STZ $AA,X                               ;$02B6F3 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02B6F3 |
 CODE_02B6F5:
     LDA.w $1588,X
     AND.b #$03                              ;$02B6F8 |
@@ -7666,10 +7666,10 @@ CODE_02B896:
     LDA.w $1540,X                           ;$02B8A7 |
     BEQ CODE_02B8BC                         ;$02B8AA |
     LDA.b #$08                              ;$02B8AC |
-    STA $AA,X                               ;$02B8AE |
+    STA.b SpriteYSpeed_AA,X                 ;$02B8AE |
     JSR UpdateYPosNoGrvtyB1                 ;$02B8B0 |
     LDA.b #$10                              ;$02B8B3 |
-    STA $AA,X                               ;$02B8B5 |
+    STA.b SpriteYSpeed_AA,X                 ;$02B8B5 |
 Return02B8B7:
     RTS
 
@@ -7693,12 +7693,12 @@ CODE_02B8BC:
 CODE_02B8D2:
     JSR UpdateXPosNoGrvtyB1
     JSR UpdateYPosNoGrvtyB1                 ;$02B8D5 |
-    LDA $AA,X                               ;$02B8D8 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02B8D8 |
     BEQ CODE_02B8E4                         ;$02B8DA |
     LDA.b Frame_13                          ;$02B8DC |
     AND.b #$01                              ;$02B8DE |
     BNE CODE_02B8E4                         ;$02B8E0 |
-    DEC $AA,X                               ;$02B8E2 |
+    DEC.b SpriteYSpeed_AA,X                 ;$02B8E2 |
 CODE_02B8E4:
     TXA
     CLC                                     ;$02B8E5 |
@@ -7854,7 +7854,7 @@ CODE_02B9D9:
     ORA.b #$02                              ;$02B9EE |
     STA.w $15F6,X                           ;$02B9F0 |
     LDA.b #$D8                              ;$02B9F3 |
-    STA.w $AA,X                             ;$02B9F5 |
+    STA.w SpriteYSpeed_AA,X                 ;$02B9F5 |
     PLX                                     ;$02B9F8 |
     RTS                                     ;$02B9F9 |
 
@@ -8087,12 +8087,12 @@ DolphinMain:
     LDA.b Frame_14                          ;$02BBA7 |
     AND.b #$00                              ;$02BBA9 |
     BNE CODE_02BBB7                         ;$02BBAB |
-    LDA $AA,X                               ;$02BBAD |
+    LDA.b SpriteYSpeed_AA,X                 ;$02BBAD |
     BMI CODE_02BBB5                         ;$02BBAF |
     CMP.b #$3F                              ;$02BBB1 |
     BCS CODE_02BBB7                         ;$02BBB3 |
 CODE_02BBB5:
-    INC $AA,X
+    INC.b SpriteYSpeed_AA,X
 CODE_02BBB7:
     TXA
     EOR.b Frame_13                          ;$02BBB8 |
@@ -8100,17 +8100,17 @@ CODE_02BBB7:
     BCC CODE_02BBC1                         ;$02BBBB |
     JSL CODE_019138                         ;$02BBBD |
 CODE_02BBC1:
-    LDA $AA,X
+    LDA.b SpriteYSpeed_AA,X
     BMI CODE_02BBFB                         ;$02BBC3 |
     LDA.w $164A,X                           ;$02BBC5 |
     BEQ CODE_02BBFB                         ;$02BBC8 |
-    LDA $AA,X                               ;$02BBCA |
+    LDA.b SpriteYSpeed_AA,X                 ;$02BBCA |
     BEQ CODE_02BBD7                         ;$02BBCC |
     SEC                                     ;$02BBCE |
     SBC.b #$08                              ;$02BBCF |
-    STA $AA,X                               ;$02BBD1 |
+    STA.b SpriteYSpeed_AA,X                 ;$02BBD1 |
     BPL CODE_02BBD7                         ;$02BBD3 |
-    STZ $AA,X                               ;$02BBD5 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02BBD5 |
 CODE_02BBD7:
     LDA.w $151C,X
     BNE CODE_02BBF7                         ;$02BBDA |
@@ -8132,7 +8132,7 @@ CODE_02BBD7:
     INC.b SpritePhase_C2,X                  ;$02BBF5 |
 CODE_02BBF7:
     LDA.b #$C0
-    STA $AA,X                               ;$02BBF9 |
+    STA.b SpriteYSpeed_AA,X                 ;$02BBF9 |
 CODE_02BBFB:
     JSL InvisBlkMainRt
 Return02BBFF:
@@ -8345,10 +8345,10 @@ CODE_02BD91:
     EOR.b #$FF                              ;$02BD93 |
     INC A                                   ;$02BD95 |
     STA.b SpriteXSpeed_B6,X                 ;$02BD96 |
-    LDA $AA,X                               ;$02BD98 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02BD98 |
     EOR.b #$FF                              ;$02BD9A |
     INC A                                   ;$02BD9C |
-    STA $AA,X                               ;$02BD9D |
+    STA.b SpriteYSpeed_AA,X                 ;$02BD9D |
     LDA.b #$40                              ;$02BD9F |
     STA.w $1540,X                           ;$02BDA1 |
     INC.b SpritePhase_C2,X                  ;$02BDA4 |
@@ -8367,7 +8367,7 @@ CODE_02BDB3:
     BNE CODE_02BDE7                         ;$02BDB6 |
     LDY.b SpritePhase_C2,X                  ;$02BDB8 |
     LDA.w DATA_02BCA7,Y                     ;$02BDBA |
-    STA $AA,X                               ;$02BDBD |
+    STA.b SpriteYSpeed_AA,X                 ;$02BDBD |
     LDA.w DATA_02BC9F,Y                     ;$02BDBF |
     STA.b SpriteXSpeed_B6,X                 ;$02BDC2 |
     JSL CODE_019138                         ;$02BDC4 |
@@ -8432,14 +8432,14 @@ CODE_02BE2D:
 CODE_02BE2F:
     LDY.b SpritePhase_C2,X
     LDA.w DATA_02BC97,Y                     ;$02BE31 |
-    STA $AA,X                               ;$02BE34 |
+    STA.b SpriteYSpeed_AA,X                 ;$02BE34 |
     LDA.w DATA_02BC8F,Y                     ;$02BE36 |
     STA.b SpriteXSpeed_B6,X                 ;$02BE39 |
     LDA.b SpriteNumber_9E,X                 ;$02BE3B |
     CMP.b #$A5                              ;$02BE3D |
     BNE CODE_02BE45                         ;$02BE3F |
     ASL.b SpriteXSpeed_B6,X                 ;$02BE41 |
-    ASL $AA,X                               ;$02BE43 |
+    ASL.b SpriteYSpeed_AA,X                 ;$02BE43 |
 CODE_02BE45:
     JSR UpdateXPosNoGrvtyB1
     JSR UpdateYPosNoGrvtyB1                 ;$02BE48 |
@@ -8665,13 +8665,13 @@ RipVanFishMain:
     JSL SprSprPMarioSprRts                  ;$02BFD8 |
     LDA.b SpriteXSpeed_B6,X                 ;$02BFDC |
     PHA                                     ;$02BFDE |
-    LDA $AA,X                               ;$02BFDF |
+    LDA.b SpriteYSpeed_AA,X                 ;$02BFDF |
     PHA                                     ;$02BFE1 |
     LDY.w StarTimer_1490                    ;$02BFE2 |
     BEQ CODE_02BFF3                         ;$02BFE5 |
     EOR.b #$FF                              ;$02BFE7 |
     INC A                                   ;$02BFE9 |
-    STA $AA,X                               ;$02BFEA |
+    STA.b SpriteYSpeed_AA,X                 ;$02BFEA |
     LDA.b SpriteXSpeed_B6,X                 ;$02BFEC |
     EOR.b #$FF                              ;$02BFEE |
     INC A                                   ;$02BFF0 |
@@ -8682,7 +8682,7 @@ CODE_02BFF3:
     JSR UpdateYPosNoGrvtyB1                 ;$02BFF9 |
     JSL CODE_019138                         ;$02BFFC |
     PLA                                     ;$02C000 |
-    STA $AA,X                               ;$02C001 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C001 |
     PLA                                     ;$02C003 |
     STA.b SpriteXSpeed_B6,X                 ;$02C004 |
     INC.w SpriteAnimationTimer_1570,X       ;$02C006 |
@@ -8694,12 +8694,12 @@ CODE_02C012:
     LDA.w $1588,X
     AND.b #$0C                              ;$02C015 |
     BEQ CODE_02C01B                         ;$02C017 |
-    STZ $AA,X                               ;$02C019 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02C019 |
 CODE_02C01B:
     LDA.w $164A,X
     BNE CODE_02C024                         ;$02C01E |
     LDA.b #$10                              ;$02C020 |
-    STA $AA,X                               ;$02C022 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C022 |
 CODE_02C024:
     LDA.b SpritePhase_C2,X
     JSL execute_pointer                     ;$02C026 |
@@ -8710,7 +8710,7 @@ RipVanFishPtrs:
 
 CODE_02C02E:
     LDA.b #$02
-    STA $AA,X                               ;$02C030 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C030 |
     LDA.b Frame_13                          ;$02C032 |
     AND.b #$03                              ;$02C034 |
     BNE CODE_02C044                         ;$02C036 |
@@ -8726,7 +8726,7 @@ CODE_02C044:
     LDA.w $1588,X
     AND.b #$04                              ;$02C047 |
     BEQ CODE_02C053                         ;$02C049 |
-    STZ $AA,X                               ;$02C04B |
+    STZ.b SpriteYSpeed_AA,X                 ;$02C04B |
     LDA.b SpriteYPosLow_D8,X                ;$02C04D |
     AND.b #$F0                              ;$02C04F |
     STA.b SpriteYPosLow_D8,X                ;$02C051 |
@@ -8780,12 +8780,12 @@ CODE_02C095:
     STA.b SpriteXSpeed_B6,X                 ;$02C0A9 |
 CODE_02C0AB:
     JSR CODE_02D50C
-    LDA $AA,X                               ;$02C0AE |
+    LDA.b SpriteYSpeed_AA,X                 ;$02C0AE |
     CMP.w DATA_02BFC8,Y                     ;$02C0B0 |
     BEQ CODE_02C0BB                         ;$02C0B3 |
     CLC                                     ;$02C0B5 |
     ADC.w DATA_02BFCA,Y                     ;$02C0B6 |
-    STA $AA,X                               ;$02C0B9 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C0B9 |
 CODE_02C0BB:
     LDY.b #$00
     LDA.w SpriteAnimationTimer_1570,X       ;$02C0BD |
@@ -9017,7 +9017,7 @@ CODE_02C23D:
     LDA.w $1588,X
     AND.b #$04                              ;$02C240 |
     BNE CODE_02C253                         ;$02C242 |
-    LDA $AA,X                               ;$02C244 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02C244 |
     BPL CODE_02C253                         ;$02C246 |
     LDA.b SpritePhase_C2,X                  ;$02C248 |
     CMP.b #$05                              ;$02C24A |
@@ -9039,7 +9039,7 @@ CODE_02C25B:
     AND.b #$08                              ;$02C26C |
     BEQ CODE_02C274                         ;$02C26E |
     LDA.b #$10                              ;$02C270 |
-    STA $AA,X                               ;$02C272 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C272 |
 CODE_02C274:
     LDA.w $1588,X
     AND.b #$03                              ;$02C277 |
@@ -9102,7 +9102,7 @@ CODE_02C2E4:
     AND.b #$04                              ;$02C2E7 |
     BEQ CODE_02C2F7                         ;$02C2E9 |
     LDA.b #$C0                              ;$02C2EB |
-    STA $AA,X                               ;$02C2ED |
+    STA.b SpriteYSpeed_AA,X                 ;$02C2ED |
     JSR UpdateYPosNoGrvtyB1                 ;$02C2EF |
     BRA CODE_02C301                         ;$02C2F2 |
 
@@ -9118,7 +9118,7 @@ CODE_02C301:
     LDY.w $164A,X                           ;$02C304 |
     CPY.b #$01                              ;$02C307 |
     LDY.b #$00                              ;$02C309 |
-    LDA $AA,X                               ;$02C30B |
+    LDA.b SpriteYSpeed_AA,X                 ;$02C30B |
     BCC CODE_02C31A                         ;$02C30D |
     INY                                     ;$02C30F |
     CMP.b #$00                              ;$02C310 |
@@ -9142,7 +9142,7 @@ CODE_02C328:
     CLC                                     ;$02C331 |
     ADC.b #$03                              ;$02C332 |
 CODE_02C334:
-    STA $AA,X
+    STA.b SpriteYSpeed_AA,X
     LDA.b SpritePhase_C2,X                  ;$02C336 |
     JSL execute_pointer                     ;$02C338 |
 
@@ -9234,7 +9234,7 @@ CODE_02C3CB:
     CMP.b #$D0                              ;$02C3D7 |
     BCS CODE_02C3E7                         ;$02C3D9 |
     LDA.b #$C8                              ;$02C3DB |
-    STA $AA,X                               ;$02C3DD |
+    STA.b SpriteYSpeed_AA,X                 ;$02C3DD |
     LDA.b #$3E                              ;$02C3DF |
     STA.w $1540,X                           ;$02C3E1 |
     INC.w $1534,X                           ;$02C3E4 |
@@ -9292,7 +9292,7 @@ CODE_02C43A:
     BCC CODE_02C44A                         ;$02C442 |
     CMP.b #$30                              ;$02C444 |
     BCS CODE_02C44A                         ;$02C446 |
-    STZ $AA,X                               ;$02C448 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02C448 |
 CODE_02C44A:
     LSR
     LSR                                     ;$02C44B |
@@ -9391,7 +9391,7 @@ Return02C4E2:
 CODE_02C4E3:
     JSR CODE_02C556
     LDA.b #$06                              ;$02C4E6 |
-    LDY $AA,X                               ;$02C4E8 |
+    LDY.b SpriteYSpeed_AA,X                 ;$02C4E8 |
     CPY.b #$F0                              ;$02C4EA |
     BMI CODE_02C504                         ;$02C4EC |
     LDY.w $160E,X                           ;$02C4EE |
@@ -9417,14 +9417,14 @@ CODE_02C504:
     LDA.b #$20                              ;$02C51B |
     STA.w $1540,X                           ;$02C51D |
     LDA.b #$F0                              ;$02C520 |
-    STA $AA,X                               ;$02C522 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C522 |
     JSR CODE_02D50C                         ;$02C524 |
     LDA $0E                                 ;$02C527 |
     BPL Return02C53B                        ;$02C529 |
     CMP.b #$D0                              ;$02C52B |
     BCS Return02C53B                        ;$02C52D |
     LDA.b #$C0                              ;$02C52F |
-    STA $AA,X                               ;$02C531 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C531 |
     INC.w $160E,X                           ;$02C533 |
 CODE_02C536:
     LDA.b #$08
@@ -9466,7 +9466,7 @@ CODE_02C564:
     STA.b SpritePhase_C2,X                  ;$02C577 |
 CODE_02C579:
     STZ.b SpriteXSpeed_B6,X
-    STZ $AA,X                               ;$02C57B |
+    STZ.b SpriteYSpeed_AA,X                 ;$02C57B |
 Return02C57D:
     RTS
 
@@ -9489,7 +9489,7 @@ CODE_02C582:
     LDA.w DATA_02C580,Y                     ;$02C597 |
     STA.b SpriteXSpeed_B6,X                 ;$02C59A |
     LDA.b #$B0                              ;$02C59C |
-    STA $AA,X                               ;$02C59E |
+    STA.b SpriteYSpeed_AA,X                 ;$02C59E |
     LDA.b #$06                              ;$02C5A0 |
     STA.b SpritePhase_C2,X                  ;$02C5A2 |
     JMP CODE_02C536                         ;$02C5A4 |
@@ -9554,7 +9554,7 @@ CODE_02C618:
     AND.b #$3F                              ;$02C61F |
     BNE Return02C627                        ;$02C621 |
     LDA.b #$E0                              ;$02C623 |
-    STA $AA,X                               ;$02C625 |
+    STA.b SpriteYSpeed_AA,X                 ;$02C625 |
 Return02C627:
     RTS
 
@@ -9777,7 +9777,7 @@ CODE_02C79D:
     LDA.w StarTimer_1490                    ;$02C7A8 |
     BEQ CODE_02C7C4                         ;$02C7AB |
     LDA.b #$D0                              ;$02C7AD |
-    STA $AA,X                               ;$02C7AF |
+    STA.b SpriteYSpeed_AA,X                 ;$02C7AF |
 CODE_02C7B1:
     STZ.b SpriteXSpeed_B6,X
     LDA.b #$02                              ;$02C7B3 |
@@ -9807,7 +9807,7 @@ CODE_02C7C4:
     LDA.w $1528,X                           ;$02C7EB |
     CMP.b #$03                              ;$02C7EE |
     BCC CODE_02C7F6                         ;$02C7F0 |
-    STZ $AA,X                               ;$02C7F2 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02C7F2 |
     BRA CODE_02C7B1                         ;$02C7F4 |
 
 CODE_02C7F6:
@@ -11164,18 +11164,18 @@ CODE_02D25F:
     LDY.b #$08                              ;$02D26D |
 CODE_02D26F:
     STY $00
-    LDA $AA,X                               ;$02D271 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02D271 |
     CMP $00                                 ;$02D273 |
     BEQ CODE_02D27F                         ;$02D275 |
     BPL CODE_02D27D                         ;$02D277 |
-    INC $AA,X                               ;$02D279 |
-    INC $AA,X                               ;$02D27B |
+    INC.b SpriteYSpeed_AA,X                 ;$02D279 |
+    INC.b SpriteYSpeed_AA,X                 ;$02D27B |
 CODE_02D27D:
-    DEC $AA,X
+    DEC.b SpriteYSpeed_AA,X
 CODE_02D27F:
     LDA.b SpriteXSpeed_B6,X
     STA.b PlayerXSpeed_7B                   ;$02D281 |
-    LDA $AA,X                               ;$02D283 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02D283 |
     STA.b PlayerYSpeed_7D                   ;$02D285 |
     RTL                                     ;$02D287 |
 
@@ -11189,7 +11189,7 @@ UpdateXPosNoGrvtyB1:
     RTS                                     ;$02D293 |
 
 UpdateYPosNoGrvtyB1:
-    LDA $AA,X
+    LDA.b SpriteYSpeed_AA,X
     ASL                                     ;$02D296 |
     ASL                                     ;$02D297 |
     ASL                                     ;$02D298 |
@@ -11200,7 +11200,7 @@ UpdateYPosNoGrvtyB1:
     PHP                                     ;$02D2A1 |
     PHP                                     ;$02D2A2 |
     LDY.b #$00                              ;$02D2A3 |
-    LDA $AA,X                               ;$02D2A5 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02D2A5 |
     LSR                                     ;$02D2A7 |
     LSR                                     ;$02D2A8 |
     LSR                                     ;$02D2A9 |
@@ -11446,7 +11446,7 @@ CODE_02D422:
     STA.w SpriteXPosHigh_14E0,X             ;$02D43A |
     STZ.b SpriteYPosLow_D8,X                ;$02D43D |
     STZ.w SpriteYPosHigh_14D4,X             ;$02D43F |
-    STZ $AA,X                               ;$02D442 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02D442 |
 Return02D444:
     RTL
 
@@ -11454,7 +11454,7 @@ CODE_02D445:
     LDA.w $1540,X
     BEQ CODE_02D452                         ;$02D448 |
     LDA.b #$04                              ;$02D44A |
-    STA $AA,X                               ;$02D44C |
+    STA.b SpriteYSpeed_AA,X                 ;$02D44C |
     JSR UpdateYPosNoGrvtyB1                 ;$02D44E |
     RTL                                     ;$02D451 |
 
@@ -11464,14 +11464,14 @@ CODE_02D452:
 
 CODE_02D455:
     JSR UpdateYPosNoGrvtyB1
-    LDA $AA,X                               ;$02D458 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02D458 |
     BMI CODE_02D460                         ;$02D45A |
     CMP.b #$40                              ;$02D45C |
     BCS CODE_02D465                         ;$02D45E |
 CODE_02D460:
     CLC
     ADC.b #$07                              ;$02D461 |
-    STA $AA,X                               ;$02D463 |
+    STA.b SpriteYSpeed_AA,X                 ;$02D463 |
 CODE_02D465:
     LDA.b SpriteYPosLow_D8,X
     CMP.b #$A0                              ;$02D467 |
@@ -11497,7 +11497,7 @@ Return02D488:
 
 CODE_02D489:
     LDA.b #$E0
-    STA $AA,X                               ;$02D48B |
+    STA.b SpriteYSpeed_AA,X                 ;$02D48B |
     JSR UpdateYPosNoGrvtyB1                 ;$02D48D |
     LDA.b SpriteYPosLow_D8,X                ;$02D490 |
     BNE Return02D49B                        ;$02D492 |
@@ -11543,7 +11543,7 @@ CODE_02D4A8:
 
 CODE_02D4DC:
     STZ.b PlayerYSpeed_7D
-    LDA $AA,X                               ;$02D4DE |
+    LDA.b SpriteYSpeed_AA,X                 ;$02D4DE |
     BMI Return02D4E4                        ;$02D4E0 |
     STA.b PlayerYSpeed_7D                   ;$02D4E2 |
 Return02D4E4:
@@ -12131,10 +12131,10 @@ CODE_02D91D:
     LDA.w $151C,X                           ;$02D942 |
     AND.b #$01                              ;$02D945 |
     TAY                                     ;$02D947 |
-    LDA $AA,X                               ;$02D948 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02D948 |
     CLC                                     ;$02D94A |
     ADC.w BubbleSprGfxProp3,Y               ;$02D94B |
-    STA $AA,X                               ;$02D94E |
+    STA.b SpriteYSpeed_AA,X                 ;$02D94E |
     CMP.w BubbleSprGfxProp4,Y               ;$02D950 |
     BNE CODE_02D958                         ;$02D953 |
     INC.w $151C,X                           ;$02D955 |
@@ -12490,10 +12490,10 @@ CODE_02DBC1:
     LDA.w $151C,X
     AND.b #$01                              ;$02DBC4 |
     TAY                                     ;$02DBC6 |
-    LDA $AA,X                               ;$02DBC7 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02DBC7 |
     CLC                                     ;$02DBC9 |
     ADC.w DATA_02DB58,Y                     ;$02DBCA |
-    STA $AA,X                               ;$02DBCD |
+    STA.b SpriteYSpeed_AA,X                 ;$02DBCD |
     CMP.w DATA_02DB5A,Y                     ;$02DBCF |
     BNE CODE_02DBD7                         ;$02DBD2 |
     INC.w $151C,X                           ;$02DBD4 |
@@ -12622,7 +12622,7 @@ CODE_02DCB7:
     LDA.w $1588,X                           ;$02DCD0 |
     AND.b #$04                              ;$02DCD3 |
     BEQ CODE_02DCDB                         ;$02DCD5 |
-    STZ $AA,X                               ;$02DCD7 |
+    STZ.b SpriteYSpeed_AA,X                 ;$02DCD7 |
     STZ.b SpriteXSpeed_B6,X                 ;$02DCD9 |
 CODE_02DCDB:
     LDA.b SpritePhase_C2,X
@@ -12861,7 +12861,7 @@ CODE_02DEB0:
     LDA.w $1540,X
     BNE CODE_02DEFC                         ;$02DEB3 |
     LDA.b #$30                              ;$02DEB5 |
-    STA $AA,X                               ;$02DEB7 |
+    STA.b SpriteYSpeed_AA,X                 ;$02DEB7 |
     JSR UpdateYPosNoGrvtyB1                 ;$02DEB9 |
     LDA.w $1FE2,X                           ;$02DEBC |
     BNE CODE_02DEEA                         ;$02DEBF |
@@ -12981,16 +12981,16 @@ CODE_02DF93:
     JSL SprSprPMarioSprRts                  ;$02DF9D |
     JSR SubOffscreen0Bnk2                   ;$02DFA1 |
     JSR UpdateYPosNoGrvtyB1                 ;$02DFA4 |
-    LDA $AA,X                               ;$02DFA7 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02DFA7 |
     CMP.b #$40                              ;$02DFA9 |
     BPL CODE_02DFAF                         ;$02DFAB |
-    INC $AA,X                               ;$02DFAD |
+    INC.b SpriteYSpeed_AA,X                 ;$02DFAD |
 CODE_02DFAF:
     JSL CODE_019138
     LDA.w $1588,X                           ;$02DFB3 |
     AND.b #$04                              ;$02DFB6 |
     BEQ CODE_02DFBC                         ;$02DFB8 |
-    STZ $AA,X                               ;$02DFBA |
+    STZ.b SpriteYSpeed_AA,X                 ;$02DFBA |
 CODE_02DFBC:
     LDA.b SpritePhase_C2,X
     JSL execute_pointer                     ;$02DFBE |
@@ -13207,7 +13207,7 @@ JumpingPiranhaPtrs:
     dw CODE_02E177
 
 CODE_02E13C:
-    STZ $AA,X
+    STZ.b SpriteYSpeed_AA,X
     LDA.w $1540,X                           ;$02E13E |
     BNE Return02E158                        ;$02E141 |
     JSR CODE_02D4FA                         ;$02E143 |
@@ -13217,24 +13217,24 @@ CODE_02E13C:
     CMP.b #$37                              ;$02E14B |
     BCC Return02E158                        ;$02E14D |
     LDA.b #$C0                              ;$02E14F |
-    STA $AA,X                               ;$02E151 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E151 |
     INC.b SpritePhase_C2,X                  ;$02E153 |
     STZ.w $1602,X                           ;$02E155 |
 Return02E158:
     RTS
 
 CODE_02E159:
-    LDA $AA,X
+    LDA.b SpriteYSpeed_AA,X
     BMI CODE_02E161                         ;$02E15B |
     CMP.b #$40                              ;$02E15D |
     BCS CODE_02E166                         ;$02E15F |
 CODE_02E161:
     CLC
     ADC.b #$02                              ;$02E162 |
-    STA $AA,X                               ;$02E164 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E164 |
 CODE_02E166:
     INC.w SpriteAnimationTimer_1570,X
-    LDA $AA,X                               ;$02E169 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E169 |
     CMP.b #$F0                              ;$02E16B |
     BMI Return02E176                        ;$02E16D |
     LDA.b #$50                              ;$02E16F |
@@ -13252,11 +13252,11 @@ CODE_02E17F:
     LDA.b Frame_14                          ;$02E182 |
     AND.b #$03                              ;$02E184 |
     BNE CODE_02E191                         ;$02E186 |
-    LDA $AA,X                               ;$02E188 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E188 |
     CMP.b #$08                              ;$02E18A |
     BPL CODE_02E191                         ;$02E18C |
     INC A                                   ;$02E18E |
-    STA $AA,X                               ;$02E18F |
+    STA.b SpriteYSpeed_AA,X                 ;$02E18F |
 CODE_02E191:
     JSL CODE_019138
     LDA.w $1588,X                           ;$02E195 |
@@ -13393,7 +13393,7 @@ CODE_02E288:
     LDA.w DATA_02E1F9,Y                     ;$02E28A |
     STA.b SpriteXSpeed_B6,X                 ;$02E28D |
     LDA.w DATA_02E1FD,Y                     ;$02E28F |
-    STA $AA,X                               ;$02E292 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E292 |
     JSR UpdateYPosNoGrvtyB1                 ;$02E294 |
     JSR UpdateXPosNoGrvtyB1                 ;$02E297 |
     LDA.b byetudlrHold_15                   ;$02E29A |
@@ -13486,10 +13486,10 @@ CODE_02E311:
     LDA.b SpritePhase_C2,X                  ;$02E330 |
     AND.b #$01                              ;$02E332 |
     TAY                                     ;$02E334 |
-    LDA $AA,X                               ;$02E335 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E335 |
     CLC                                     ;$02E337 |
     ADC.w DATA_02E30D,Y                     ;$02E338 |
-    STA $AA,X                               ;$02E33B |
+    STA.b SpriteYSpeed_AA,X                 ;$02E33B |
     CMP.w DATA_02E30F,Y                     ;$02E33D |
     BNE CODE_02E344                         ;$02E340 |
     INC.b SpritePhase_C2,X                  ;$02E342 |
@@ -13636,7 +13636,7 @@ CODE_02E463:
     STA.b SpriteNumber_9E,X                 ;$02E465 |
     JSL InitSpriteTables                    ;$02E467 |
     LDA.b #$D0                              ;$02E46B |
-    STA $AA,X                               ;$02E46D |
+    STA.b SpriteYSpeed_AA,X                 ;$02E46D |
     JSR CODE_02D4FA                         ;$02E46F |
     TYA                                     ;$02E472 |
     STA.w SpriteDir_157C,X                  ;$02E473 |
@@ -13737,9 +13737,9 @@ CODE_02E524:
     LDA.b SpriteYPosLow_D8,X
     AND.b #$0F                              ;$02E526 |
     BNE CODE_02E54E                         ;$02E528 |
-    LDA $AA,X                               ;$02E52A |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E52A |
     BEQ CODE_02E54E                         ;$02E52C |
-    LDA $AA,X                               ;$02E52E |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E52E |
     BPL CODE_02E533                         ;$02E530 |
     INY                                     ;$02E532 |
 CODE_02E533:
@@ -13766,7 +13766,7 @@ CODE_02E559:
     PHA                                     ;$02E55D |
     JSR UpdateYPosNoGrvtyB1                 ;$02E55E |
     PLA                                     ;$02E561 |
-    STA $AA,X                               ;$02E562 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E562 |
     LDY.b #$00                              ;$02E564 |
     LDA.w $1491                             ;$02E566 |
     EOR.b #$FF                              ;$02E569 |
@@ -14066,7 +14066,7 @@ CODE_02E77C:
     LDA.b #$80                              ;$02E77E |
     STA.w $1540,X                           ;$02E780 |
     LDA.b #$A0                              ;$02E783 |
-    STA $AA,X                               ;$02E785 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E785 |
     RTS                                     ;$02E787 |
 
 CODE_02E788:
@@ -14076,14 +14076,14 @@ CODE_02E788:
     BCS Return02E7A3                        ;$02E78F |
     STZ.b SpriteXSpeed_B6,X                 ;$02E791 |
     JSR UpdateYPosNoGrvtyB1                 ;$02E793 |
-    LDA $AA,X                               ;$02E796 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E796 |
     BMI CODE_02E79E                         ;$02E798 |
     CMP.b #$30                              ;$02E79A |
     BCS Return02E7A3                        ;$02E79C |
 CODE_02E79E:
     CLC
     ADC.b #$02                              ;$02E79F |
-    STA $AA,X                               ;$02E7A1 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E7A1 |
 Return02E7A3:
     RTS
 
@@ -14141,18 +14141,18 @@ CODE_02E7FD:
     AND.b #$08                              ;$02E800 |
     BEQ CODE_02E808                         ;$02E802 |
     LDA.b #$10                              ;$02E804 |
-    STA $AA,X                               ;$02E806 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E806 |
 CODE_02E808:
     LDA.w $1588,X
     AND.b #$04                              ;$02E80B |
     BEQ CODE_02E828                         ;$02E80D |
-    LDA $AA,X                               ;$02E80F |
+    LDA.b SpriteYSpeed_AA,X                 ;$02E80F |
     CMP.b #$38                              ;$02E811 |
     LDA.b #$E0                              ;$02E813 |
     BCC CODE_02E819                         ;$02E815 |
     LDA.b #$D0                              ;$02E817 |
 CODE_02E819:
-    STA $AA,X
+    STA.b SpriteYSpeed_AA,X
     LDA.b #$08                              ;$02E81B |
     LDY.w $15B8,X                           ;$02E81D |
     BEQ CODE_02E828                         ;$02E820 |
@@ -14234,7 +14234,7 @@ CODE_02E872:
 
 CODE_02E8A2:
     LDA.w DATA_02E835,Y
-    STA $AA,X                               ;$02E8A5 |
+    STA.b SpriteYSpeed_AA,X                 ;$02E8A5 |
     BEQ CODE_02E8B2                         ;$02E8A7 |
     LDA.b SpriteYPosLow_D8,X                ;$02E8A9 |
     AND.b #$0F                              ;$02E8AB |
@@ -14366,7 +14366,7 @@ CODE_02E996:
 CODE_02E99A:
     LDA.b #$F8
 CODE_02E99C:
-    STA $AA,X
+    STA.b SpriteYSpeed_AA,X
     JSR UpdateYPosNoGrvtyB1                 ;$02E99E |
     RTS                                     ;$02E9A1 |
 
@@ -14587,7 +14587,7 @@ CODE_02EAF2:
     LDA.b #$30                              ;$02EB1D |
     STA.w SpritePlayerContact_154C,X        ;$02EB1F |
     LDA.b #$D0                              ;$02EB22 |
-    STA $AA,X                               ;$02EB24 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EB24 |
 Return02EB26:
     RTL
 
@@ -14635,12 +14635,12 @@ CODE_02EB49:
     LDA.b Frame_13                          ;$02EB6B |
     AND.b #$01                              ;$02EB6D |
     BNE Return02EB7C                        ;$02EB6F |
-    LDA $AA,X                               ;$02EB71 |
+    LDA.b SpriteYSpeed_AA,X                 ;$02EB71 |
     CMP.b #$F0                              ;$02EB73 |
     BMI Return02EB7C                        ;$02EB75 |
     CLC                                     ;$02EB77 |
     ADC.b #$FF                              ;$02EB78 |
-    STA $AA,X                               ;$02EB7A |
+    STA.b SpriteYSpeed_AA,X                 ;$02EB7A |
 Return02EB7C:
     RTS
 
@@ -14699,14 +14699,14 @@ CODE_02EBC6:
 CODE_02EBCA:
     INC.b SpritePhase_C2,X
     LDA.b #$D0                              ;$02EBCC |
-    STA $AA,X                               ;$02EBCE |
+    STA.b SpriteYSpeed_AA,X                 ;$02EBCE |
     RTS                                     ;$02EBD0 |
 
 CODE_02EBD1:
-    LDA $AA,X
+    LDA.b SpriteYSpeed_AA,X
     CLC                                     ;$02EBD3 |
     ADC.b #$02                              ;$02EBD4 |
-    STA $AA,X                               ;$02EBD6 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EBD6 |
     CMP.b #$14                              ;$02EBD8 |
     BMI CODE_02EBDE                         ;$02EBDA |
     INC.b SpritePhase_C2,X                  ;$02EBDC |
@@ -14720,11 +14720,11 @@ CODE_02EBE7:
     LDY.w SpriteDir_157C,X
     LDA.w DATA_02EB89,Y                     ;$02EBEA |
     STA.b SpriteXSpeed_B6,X                 ;$02EBED |
-    LDA $AA,X                               ;$02EBEF |
+    LDA.b SpriteYSpeed_AA,X                 ;$02EBEF |
     BEQ CODE_02EBF8                         ;$02EBF1 |
     CLC                                     ;$02EBF3 |
     ADC.b #$FF                              ;$02EBF4 |
-    STA $AA,X                               ;$02EBF6 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EBF6 |
 CODE_02EBF8:
     LDY.b #$02
     LDA.b Frame_13                          ;$02EBFA |
@@ -14984,18 +14984,18 @@ CODE_02EE36:
     BPL CODE_02EE21                         ;$02EE37 |
     LDA.w $18BC                             ;$02EE39 |
     STA.b SpriteXSpeed_B6,X                 ;$02EE3C |
-    LDA $AA,X                               ;$02EE3E |
+    LDA.b SpriteYSpeed_AA,X                 ;$02EE3E |
     CMP.b #$20                              ;$02EE40 |
     BMI CODE_02EE48                         ;$02EE42 |
     LDA.b #$20                              ;$02EE44 |
-    STA $AA,X                               ;$02EE46 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EE46 |
 CODE_02EE48:
     JSL UpdateSpritePos
     LDA.w $1588,X                           ;$02EE4C |
     AND.b #$04                              ;$02EE4F |
     BEQ CODE_02EE57                         ;$02EE51 |
     LDA.b #$10                              ;$02EE53 |
-    STA $AA,X                               ;$02EE55 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EE55 |
 CODE_02EE57:
     JSL MarioSprInteract
     BCC Return02EEA8                        ;$02EE5B |
@@ -15096,12 +15096,12 @@ ADDR_02EEF9:
     JSR SubOffscreen0Bnk2                   ;$02EF00 |
     LDY.b #$01                              ;$02EF03 |
 ADDR_02EF05:
-    LDA $AA,X
+    LDA.b SpriteYSpeed_AA,X
     CMP.w DATA_02EEB3,Y                     ;$02EF07 |
     BEQ ADDR_02EF12                         ;$02EF0A |
     CLC                                     ;$02EF0C |
     ADC.w DATA_02EEB1,Y                     ;$02EF0D |
-    STA $AA,X                               ;$02EF10 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EF10 |
 ADDR_02EF12:
     JSR UpdateYPosNoGrvtyB1
     LDA.b #$08                              ;$02EF15 |
@@ -15174,7 +15174,7 @@ ADDR_02EF7B:
     TYX                                     ;$02EF9C |
     JSL InitSpriteTables                    ;$02EF9D |
     LDA.b #$E0                              ;$02EFA1 |
-    STA $AA,X                               ;$02EFA3 |
+    STA.b SpriteYSpeed_AA,X                 ;$02EFA3 |
     INC.w SpriteDir_157C,X                  ;$02EFA5 |
     PLX                                     ;$02EFA8 |
     RTS                                     ;$02EFA9 |
@@ -15316,7 +15316,7 @@ CODE_02F086:
 CODE_02F090:
     LDA.w WigglerSpeed,Y
     STA.b SpriteXSpeed_B6,X                 ;$02F093 |
-    INC $AA,X                               ;$02F095 |
+    INC.b SpriteYSpeed_AA,X                 ;$02F095 |
     JSL CODE_019138                         ;$02F097 |
     LDA.w $1588,X                           ;$02F09B |
     AND.b #$03                              ;$02F09E |
@@ -15601,7 +15601,7 @@ ADDR_02F29D:
     LDA.b #$02
     STA.w SpriteStatus_14C8,X               ;$02F29F |
     LDA.b #$D0                              ;$02F2A2 |
-    STA $AA,X                               ;$02F2A4 |
+    STA.b SpriteYSpeed_AA,X                 ;$02F2A4 |
     INC.w $18D2                             ;$02F2A6 |
     LDA.w $18D2                             ;$02F2A9 |
     CMP.b #$09                              ;$02F2AC |
@@ -15683,10 +15683,10 @@ CODE_02F321:
     JSR CODE_02F3EA
     JSR UpdateXPosNoGrvtyB1                 ;$02F324 |
     JSR UpdateYPosNoGrvtyB1                 ;$02F327 |
-    LDA $AA,X                               ;$02F32A |
+    LDA.b SpriteYSpeed_AA,X                 ;$02F32A |
     CLC                                     ;$02F32C |
     ADC.b #$03                              ;$02F32D |
-    STA $AA,X                               ;$02F32F |
+    STA.b SpriteYSpeed_AA,X                 ;$02F32F |
     LDA.b SpritePhase_C2,X                  ;$02F331 |
     JSL execute_pointer                     ;$02F333 |
 
@@ -15707,7 +15707,7 @@ CODE_02F342:
     LDA.w DATA_02F340,Y                     ;$02F345 |
     STA.b SpriteXSpeed_B6,X                 ;$02F348 |
     STZ.w $1602,X                           ;$02F34A |
-    LDA $AA,X                               ;$02F34D |
+    LDA.b SpriteYSpeed_AA,X                 ;$02F34D |
     BMI Return02F370                        ;$02F34F |
     LDA.b SpriteYPosLow_D8,X                ;$02F351 |
     CMP.b #$E8                              ;$02F353 |
@@ -15715,7 +15715,7 @@ CODE_02F342:
     AND.b #$F8                              ;$02F357 |
     STA.b SpriteYPosLow_D8,X                ;$02F359 |
     LDA.b #$F0                              ;$02F35B |
-    STA $AA,X                               ;$02F35D |
+    STA.b SpriteYSpeed_AA,X                 ;$02F35D |
     LDA.b SpriteXPosLow_E4,X                ;$02F35F |
     CLC                                     ;$02F361 |
     ADC.b #$30                              ;$02F362 |
@@ -15746,7 +15746,7 @@ Return02F38E:
     RTS
 
 CODE_02F38F:
-    STZ $AA,X
+    STZ.b SpriteYSpeed_AA,X
     STZ.b SpriteXSpeed_B6,X                 ;$02F391 |
     STZ.w $1602,X                           ;$02F393 |
     LDA.w $1540,X                           ;$02F396 |
@@ -15853,7 +15853,7 @@ CODE_02F434:
 CODE_02F442:
     STY.b SpriteXSpeed_B6,X
     LDA.b #$FC                              ;$02F444 |
-    STA $AA,X                               ;$02F446 |
+    STA.b SpriteYSpeed_AA,X                 ;$02F446 |
     JSR UpdateYPosNoGrvtyB1                 ;$02F448 |
     LDA.w $1540,X                           ;$02F44B |
     BNE CODE_02F453                         ;$02F44E |
@@ -17427,7 +17427,7 @@ CODE_02FFD1:
 ADDR_02FFDD:
     LDA.b #$18
 CODE_02FFDF:
-    STA $AA,X
+    STA.b SpriteYSpeed_AA,X
     RTS                                     ;$02FFE1 |
 
 DATA_02FFE2:

@@ -13520,7 +13520,7 @@ CODE_00FBBC:
     CMP.b #$01                              ;$00FBCD |
     BNE CODE_00FBD5                         ;$00FBCF |
     LDA.b #$D0                              ;$00FBD1 |
-    STA $AA,X                               ;$00FBD3 |
+    STA.b SpriteYSpeed_AA,X                 ;$00FBD3 |
 CODE_00FBD5:
     PHX
     LDA.b #$04                              ;$00FBD6 |
@@ -13539,9 +13539,9 @@ CODE_00FBD5:
 CODE_00FBF0:
     INC.w SpriteAnimationTimer_1570,X
     JSL UpdateYPosNoGrvty                   ;$00FBF3 |
-    INC $AA,X                               ;$00FBF7 |
-    INC $AA,X                               ;$00FBF9 |
-    LDA $AA,X                               ;$00FBFB |
+    INC.b SpriteYSpeed_AA,X                 ;$00FBF7 |
+    INC.b SpriteYSpeed_AA,X                 ;$00FBF9 |
+    LDA.b SpriteYSpeed_AA,X                 ;$00FBFB |
     CMP.b #$20                              ;$00FBFD |
     BMI CODE_00FC1E                         ;$00FBFF |
     JSL CODE_05B34A                         ;$00FC01 |
