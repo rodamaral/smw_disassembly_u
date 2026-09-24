@@ -15,7 +15,7 @@ reset_start:
     REP #$38                                ;$00801D | Disable decimal mode, Enable 16 bit A/X/Y
     LDA.w #$0000                            ;$00801F |\ Set up the direct page
     TCD                                     ;$008022 |/
-    LDA.w #$01FF                            ;$008023 |\ Set up the stack
+    LDA.w #!StackStart_01FF                 ;$008023 |\ Set up the stack
     TCS                                     ;$008026 |/
     LDA.w #$F0A9                            ;$008027 |\ Upload OAM clear routine
     STA.l OAM_reset_7F8000                  ;$00802A | | LDA #$F0
@@ -1262,7 +1262,7 @@ CODE_008A53:
 CODE_008A55:
     DEX
     DEX                                     ;$008A56 |
-    CPX.w #$01FF                            ;$008A57 |
+    CPX.w #!StackStart_01FF                 ;$008A57 |
     BPL CODE_008A61                         ;$008A5A |
     CPX.w #$0100                            ;$008A5C |
     BPL CODE_008A55                         ;$008A5F |
@@ -2637,7 +2637,7 @@ GM03_title_load_1_0096AE:
     LDX.b #$07                              ;$0096B4 |
     LDA.b #$FF                              ;$0096B6 |
 CODE_0096B8:
-    STA.w $0101,X
+    STA.w SpriteGFXFile_0101,X
     DEX                                     ;$0096BB |
     BPL CODE_0096B8                         ;$0096BC |
     LDA.w OverworldOverride_0109            ;$0096BE |
@@ -3292,7 +3292,7 @@ CODE_009BC9:
     PHB
     PHK                                     ;$009BCA |
     PLB                                     ;$009BCB |
-    LDX.w $010A                             ;$009BCC |
+    LDX.w SaveFile_010A                     ;$009BCC |
     LDA.w DATA_009CCB,X                     ;$009BCF |
     XBA                                     ;$009BD2 |
     LDA.w DATA_009CCE,X                     ;$009BD3 |
@@ -3430,7 +3430,7 @@ GM08_title_file_select_009CD1:
     JMP CODE_009D3A                         ;$009CEC |
 
 CODE_009CEF:
-    STX.w $010A
+    STX.w SaveFile_010A
     JSR CODE_009DB5                         ;$009CF2 |
     BNE CODE_009D22                         ;$009CF5 |
     PHX                                     ;$009CF7 |
@@ -5003,7 +5003,7 @@ GFXTransferLoop:
     LDA.w DATA_00A9D2,X                     ;$00A9F9 |
     STA.w $2117                             ;$00A9FC |
     LDY $04,X                               ;$00A9FF |
-    LDA.w $0101,X                           ;$00AA01 |
+    LDA.w SpriteGFXFile_0101,X              ;$00AA01 |
     CMP $04,X                               ;$00AA04 |
     BEQ DontUploadSpr                       ;$00AA06 |
     JSR UploadGFXFile                       ;$00AA08 |
@@ -5013,7 +5013,7 @@ DontUploadSpr:
     LDX.b #$03                              ;$00AA0F |
 UpdtCrrntSpritGFX:
     LDA $04,X
-    STA.w $0101,X                           ;$00AA13 |
+    STA.w SpriteGFXFile_0101,X              ;$00AA13 |
     DEX                                     ;$00AA16 |
     BPL UpdtCrrntSpritGFX                   ;$00AA17 |
     LDA.w $1931                             ;$00AA19 |
@@ -5038,7 +5038,7 @@ CODE_00AA35:
     LDA.w DATA_00A9D6,X                     ;$00AA3A |
     STA.w $2117                             ;$00AA3D |
     LDY $04,X                               ;$00AA40 |
-    LDA.w $0105,X                           ;$00AA42 |
+    LDA.w BackgroundGFXFile_0105,X          ;$00AA42 |
     CMP $04,X                               ;$00AA45 |
     BEQ NoUploadFGBG                        ;$00AA47 |
     JSR UploadGFXFile                       ;$00AA49 |
@@ -5048,7 +5048,7 @@ NoUploadFGBG:
     LDX.b #$03                              ;$00AA50 |
 UpdateCurrentFGBG:
     LDA $04,X
-    STA.w $0105,X                           ;$00AA54 |
+    STA.w BackgroundGFXFile_0105,X          ;$00AA54 |
     DEX                                     ;$00AA57 |
     BPL UpdateCurrentFGBG                   ;$00AA58 |
     RTS                                     ;$00AA5A |
@@ -5060,7 +5060,7 @@ NoUpdateVRAM80:
     LDX.b #$03
     LDA.b #$80                              ;$00AA62 |
 Store80:
-    STA.w $0105,X
+    STA.w BackgroundGFXFile_0105,X
     DEX                                     ;$00AA67 |
     BPL Store80                             ;$00AA68 |
     RTS                                     ;$00AA6A |

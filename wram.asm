@@ -1062,6 +1062,7 @@ skip 238
 ; stack starts here and grows down
 ; ~240 bytes available before Bad Things(TM) happen
 StackStart_01FF: skip 1
+!StackStart_01FF = $01FF
 
 ; === $7E0200 ===
 ; 512 bytes
