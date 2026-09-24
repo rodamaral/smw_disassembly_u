@@ -938,7 +938,7 @@ SpriteYSpeed_AA: skip 12
 ; === $7E00B6 ===
 ; 12 bytes
 ; sprite horizontal speed table
-SpriteXSpeed_86: skip 12
+SpriteXSpeed_B6: skip 12
 
 ; === $7E00C2 ===
 ; 12 bytes
@@ -1714,7 +1714,7 @@ SpriteYPosSpx_14EC: skip 12
 SpriteXPosSpx_14F8: skip 12
 SpriteMisc_1504: skip 12
 SpriteMisc_1510: skip 12
-SpriteMisc_151C: skip 12
+Sprite_151C: skip 12
 SpriteMisc_1528: skip 12
 SpriteMisc_1534: skip 12
 SpriteMisc_1540: skip 12
@@ -1727,7 +1727,7 @@ SpriteDir_157C: skip 12
 !SpriteDir_Left = 0
 !SpriteDir_Right = 1
 SpriteBlockedDirs_1588: skip 12
-SpriteMisc_1594: skip 12
+Sprite_1594: skip 12
 SpriteOffscreenX_15A0: skip 12
 SpriteMisc_15AC: skip 12
 SpriteSlope_15B8: skip 12
@@ -1744,7 +1744,7 @@ SpriteMisc_160E: skip 12
 SpriteLoadIndex_161A: skip 12
 SpriteMisc_1626: skip 12
 SpriteBehindScene_1632: skip 12
-SpriteMisc_163E: skip 12
+Sprite_163E: skip 12
 SpriteInLiquid_164A: skip 12
 SpriteTweakerA_1656: skip 12
 SpriteTweakerB_1662: skip 12
@@ -1910,7 +1910,7 @@ Empty_18DB: skip 1
 DuckingYoshi_18DC: skip 1
 SilverCoinsCollected_18DD: skip 1
 EggLaidTimer_18DE: skip 1
-YoshiSlot_18DF: skip 1
+YoshiSlot_18DF: skip 1 ; TODO: should be YoshiPlus1 or something that indicates it is not really the slot
 LakituCloudTimer_18E0: skip 1
 LakituCloudSlot_18E1: skip 1
 YoshiSlotMirror_18E2: skip 1

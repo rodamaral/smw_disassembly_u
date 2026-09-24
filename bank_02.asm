@@ -4901,23 +4901,23 @@ CODE_02A473:
     PHX
     LDX.w YoshiSlot_18DF                    ;$02A474 |
     LDA.b #$10                              ;$02A477 |
-    STA.w $163D,X                           ;$02A479 |
-    LDA.b #$03                              ;$02A47C |
+    STA.w Sprite_163E-1,X                   ;$02A479 | TODO: if Yoshi despawned and $187A is somehow set
+    LDA.b #$03                              ;$02A47C | this could result in a glitch that changes properties of slot B
     STA.w SPCIO1_1DFA                       ;$02A47E |
     LDA.b #$13                              ;$02A481 |
     STA.w SPCIO3_1DFC                       ;$02A483 |
     LDA.b #$02                              ;$02A486 |
-    STA $C1,X                               ;$02A488 |
+    STA.b SpriteTable_C2-1,X                ;$02A488 |
     STZ.w RidingYoshi_187A                  ;$02A48A |
     STZ.w CarryYoshiLevels_0DC1             ;$02A48D |
     LDA.b #$C0                              ;$02A490 |
     STA.b PlayerYSpeed_7D                   ;$02A492 |
     STZ.b PlayerXSpeed_7B                   ;$02A494 |
-    LDY.w $157B,X                           ;$02A496 |
+    LDY.w SpriteDir_157C-1,X                ;$02A496 |
     LDA.w DATA_02A4B3,Y                     ;$02A499 |
-    STA $B5,X                               ;$02A49C |
-    STZ.w $1593,X                           ;$02A49E |
-    STZ.w $151B,X                           ;$02A4A1 |
+    STA.b SpriteXSpeed_B6-1,X               ;$02A49C |
+    STZ.w Sprite_1594-1,X                   ;$02A49E |
+    STZ.w Sprite_151C-1,X                   ;$02A4A1 |
     STZ.w $18AE                             ;$02A4A4 |
     LDA.b #$30                              ;$02A4A7 |
     STA.w $1497                             ;$02A4A9 |
