@@ -943,7 +943,7 @@ SpriteXSpeed_B6: skip 12
 ; === $7E00C2 ===
 ; 12 bytes
 ; various sprite properties table
-SpriteTable_C2: skip 12
+SpritePhase_C2: skip 12
 
 ; === $7E00CE ===
 ; 3 bytes

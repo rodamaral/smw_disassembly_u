@@ -5036,7 +5036,7 @@ ADDR_05C696:
 ADDR_05C69E:
     LDA.w #$8502
     EOR.b SpriteYXPPCCCT_64,X             ;$05C6A1 | TODO: investigate index usage
-    LSR $C2,X                               ;$05C6A3 |
+    LSR.b SpritePhase_C2,X                  ;$05C6A3 |
     JSR $40AE                               ;$05C6A5 |
     TRB $D0                                 ;$05C6A8 |
     JSL $1446AD                             ;$05C6AA |

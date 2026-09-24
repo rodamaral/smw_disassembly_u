@@ -2361,7 +2361,7 @@ CODE_0CA778:
     PLA                                     ;$0CA789 |
     STA.w $1602                             ;$0CA78A |
     LDA.b #$02                              ;$0CA78D |
-    STA $C2                                 ;$0CA78F |
+    STA.b SpritePhase_C2                    ;$0CA78F | WARN: unindexed table
     LDA.b #$01                              ;$0CA791 |
     STA.w SpriteDir_157C                    ;$0CA793 | WARN: unindexed table
     LDA.w $1456                             ;$0CA796 |

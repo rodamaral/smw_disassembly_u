@@ -13646,7 +13646,7 @@ CODE_00FC98:
     STA.w $15F6,X                           ;$00FCD2 |
 CODE_00FCD5:
     INC.w RidingYoshi_187A
-    INC $C2,X                               ;$00FCD8 |
+    INC.b SpritePhase_C2,X                  ;$00FCD8 |
     LDA.b PlayerDir_76                      ;$00FCDA |
     EOR.b #$01                              ;$00FCDC |
     STA.w SpriteDir_157C,X                  ;$00FCDE |

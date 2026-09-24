@@ -4536,7 +4536,7 @@ Sprite190FVals:
 ZeroSpriteTables:
     STZ.w $164A,X
     STZ.w $1632,X                           ;$07F725 |
-    STZ $C2,X                               ;$07F728 |
+    STZ.b SpritePhase_C2,X                  ;$07F728 |
     STZ.w $151C,X                           ;$07F72A |
     STZ.w $1528,X                           ;$07F72D |
     STZ.w $1534,X                           ;$07F730 |
@@ -4551,7 +4551,7 @@ ZeroSpriteTables:
     STZ.w $1FE2,X                           ;$07F74B |
     STZ.w $1626,X                           ;$07F74E |
     STZ.w SpriteAnimationTimer_1570,X       ;$07F751 |
-    STZ $B6,X                               ;$07F754 |
+    STZ.b SpriteXSpeed_B6,X                 ;$07F754 |
     STZ.w $14F8,X                           ;$07F756 |
     STZ $AA,X                               ;$07F759 |
     STZ.w $14EC,X                           ;$07F75B |
