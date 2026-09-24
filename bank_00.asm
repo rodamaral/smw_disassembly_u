@@ -592,8 +592,8 @@ CODE_008496:
     ORA.w $0421,X                           ;$0084A3 |
     ASL                                     ;$0084A6 |
     ASL                                     ;$0084A7 |
-    ORA.w $0420,X                           ;$0084A8 |
-    STA.w $0400,Y                           ;$0084AB |
+    ORA.w OAMTileSize_0420,X                ;$0084A8 |
+    STA.w OAMTileBitSize_0400,Y             ;$0084AB |
     LDA.w $0427,X                           ;$0084AE |
     ASL                                     ;$0084B1 |
     ASL                                     ;$0084B2 |
@@ -818,7 +818,7 @@ CODE_0086C7:
     LDX.w #$0062                            ;$0086C9 |
     LDA.w #$0202                            ;$0086CC |
 CODE_0086CF:
-    STA.w $0420,X
+    STA.w OAMTileSize_0420,X
     DEX                                     ;$0086D2 |
     DEX                                     ;$0086D3 |
     BPL CODE_0086CF                         ;$0086D4 |
@@ -1928,7 +1928,7 @@ CODE_00908E:
 CODE_0090AB:
     LDY $01
     LDA.b #$78                              ;$0090AD |
-    STA.w $0200,Y                           ;$0090AF |
+    STA.w OAMMirror_0200,Y                  ;$0090AF |
     LDA.b #$0F                              ;$0090B2 |
     STA.w $0201,Y                           ;$0090B4 |
     LDA.b #$30                              ;$0090B7 |
@@ -1942,7 +1942,7 @@ CODE_0090AB:
     LSR                                     ;$0090C9 |
     TAY                                     ;$0090CA |
     LDA.b #$02                              ;$0090CB |
-    STA.w $0420,Y                           ;$0090CD |
+    STA.w OAMTileSize_0420,Y                ;$0090CD |
 Return0090D0:
     RTS
 
@@ -2265,7 +2265,7 @@ GM00_nintendo_load_009391:
     LDX.b #$03                              ;$00939C |
 CODE_00939E:
     LDA.w nintendo_positions,X
-    STA.w $0200,Y                           ;$0093A1 |
+    STA.w OAMMirror_0200,Y                  ;$0093A1 |
     LDA.b #$70                              ;$0093A4 |
     STA.w $0201,Y                           ;$0093A6 |
     LDA.w nintendo_tiles,X                  ;$0093A9 |
@@ -2279,7 +2279,7 @@ CODE_00939E:
     DEX                                     ;$0093B8 |
     BPL CODE_00939E                         ;$0093B9 |
     LDA.b #$AA                              ;$0093BB |
-    STA.w $0400                             ;$0093BD |
+    STA.w OAMTileBitSize_0400               ;$0093BD |
     LDA.b #$01                              ;$0093C0 |
     STA.w SPCIO3_1DFC                       ;$0093C2 |
     LDA.b #$40                              ;$0093C5 |

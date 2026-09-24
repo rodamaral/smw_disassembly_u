@@ -2164,7 +2164,7 @@ CODE_0CA618:
     CMP.b #$F0                              ;$0CA625 |
     BCS CODE_0CA655                         ;$0CA627 |
     LDA.w $0B50,Y                           ;$0CA629 |
-    STA.w $0200,X                           ;$0CA62C |
+    STA.w OAMMirror_0200,X                  ;$0CA62C |
     LDA.w $0B41,Y                           ;$0CA62F |
     STA.w $0201,X                           ;$0CA632 |
     PHY                                     ;$0CA635 |
@@ -2182,7 +2182,7 @@ CODE_0CA618:
     LSR                                     ;$0CA64A |
     LSR                                     ;$0CA64B |
     TAX                                     ;$0CA64C |
-    STZ.w $0420,X                           ;$0CA64D |
+    STZ.w OAMTileSize_0420,X                ;$0CA64D |
     PLX                                     ;$0CA650 |
     INX                                     ;$0CA651 |
     INX                                     ;$0CA652 |
@@ -2431,7 +2431,7 @@ CODE_0CA83C:
     STA.w $0204,X                           ;$0CA846 |
     CLC                                     ;$0CA849 |
     ADC.b #$08                              ;$0CA84A |
-    STA.w $0200,X                           ;$0CA84C |
+    STA.w OAMMirror_0200,X                  ;$0CA84C |
     BCC CODE_0CA855                         ;$0CA84F |
     LDA.b #$01                              ;$0CA851 |
     STA $0A                                 ;$0CA853 |
@@ -2461,7 +2461,7 @@ CODE_0CA855:
     LDA.b #$02                              ;$0CA885 |
     STA.w $0421,X                           ;$0CA887 |
     LDA $0A                                 ;$0CA88A |
-    STA.w $0420,X                           ;$0CA88C |
+    STA.w OAMTileSize_0420,X                ;$0CA88C |
     PLX                                     ;$0CA88F |
     REP #$20                                ;$0CA890 |
     TXA                                     ;$0CA892 |
@@ -2520,7 +2520,7 @@ CODE_0CA8E6:
     STA $01                                 ;$0CA8F3 |
     LDX $02                                 ;$0CA8F5 |
     LDA $00                                 ;$0CA8F7 |
-    STA.w $0200,X                           ;$0CA8F9 |
+    STA.w OAMMirror_0200,X                  ;$0CA8F9 |
     LDA $01                                 ;$0CA8FC |
     STA.w $0201,X                           ;$0CA8FE |
     LSR $0E                                 ;$0CA901 |
@@ -2548,7 +2548,7 @@ CODE_0CA923:
     LSR                                     ;$0CA925 |
     TAX                                     ;$0CA926 |
     LDA.b #$02                              ;$0CA927 |
-    STA.w $0420,X                           ;$0CA929 |
+    STA.w OAMTileSize_0420,X                ;$0CA929 |
     INC $02                                 ;$0CA92C |
     INC $02                                 ;$0CA92E |
     INC $02                                 ;$0CA930 |
@@ -2607,7 +2607,7 @@ CODE_0CA9AA:
     LDA.w DATA_0CA96A,Y
     CLC                                     ;$0CA9AD |
     ADC $00                                 ;$0CA9AE |
-    STA.w $0200,X                           ;$0CA9B0 |
+    STA.w OAMMirror_0200,X                  ;$0CA9B0 |
     LDA.w DATA_0CA96B,Y                     ;$0CA9B3 |
     CLC                                     ;$0CA9B6 |
     ADC $00                                 ;$0CA9B7 |
@@ -2641,7 +2641,7 @@ CODE_0CA9AA:
     LDY.b #$00                              ;$0CA9F4 |
 CODE_0CA9F6:
     TYA
-    STA.w $0420,X                           ;$0CA9F7 |
+    STA.w OAMTileSize_0420,X                ;$0CA9F7 |
     STA.w $0421,X                           ;$0CA9FA |
     PLX                                     ;$0CA9FD |
     PLY                                     ;$0CA9FE |
@@ -2678,7 +2678,7 @@ CODE_0CAA15:
     STA.w $0207,X                           ;$0CAA23 |
     PLY                                     ;$0CAA26 |
     LDA $00                                 ;$0CAA27 |
-    STA.w $0200,X                           ;$0CAA29 |
+    STA.w OAMMirror_0200,X                  ;$0CAA29 |
     STA.w $0204,X                           ;$0CAA2C |
     LDA $02                                 ;$0CAA2F |
     STA.w $0201,X                           ;$0CAA31 |
@@ -2694,7 +2694,7 @@ CODE_0CAA15:
     LSR                                     ;$0CAA48 |
     TAX                                     ;$0CAA49 |
     LDA.b #$02                              ;$0CAA4A |
-    STA.w $0420,X                           ;$0CAA4C |
+    STA.w OAMTileSize_0420,X                ;$0CAA4C |
     STA.w $0421,X                           ;$0CAA4F |
     RTS                                     ;$0CAA52 |
 
@@ -2735,7 +2735,7 @@ CODE_0CAADF:
     TXY                                     ;$0CAAE4 |
 CODE_0CAAE5:
     LDA.w DATA_0CAA53,Y
-    STA.w $0200,X                           ;$0CAAE8 |
+    STA.w OAMMirror_0200,X                  ;$0CAAE8 |
     LDA.w DATA_0CAA54,Y                     ;$0CAAEB |
     STA.w $0201,X                           ;$0CAAEE |
     LDA.w DATA_0CAA55,Y                     ;$0CAAF1 |
@@ -2748,7 +2748,7 @@ CODE_0CAAE5:
     LSR                                     ;$0CAB00 |
     TAX                                     ;$0CAB01 |
     LDA.b #$02                              ;$0CAB02 |
-    STA.w $0420,X                           ;$0CAB04 |
+    STA.w OAMTileSize_0420,X                ;$0CAB04 |
     PLX                                     ;$0CAB07 |
     INX                                     ;$0CAB08 |
     INX                                     ;$0CAB09 |
@@ -3401,7 +3401,7 @@ CODE_0CB5E8:
     BEQ CODE_0CB633                         ;$0CB5F0 |
     SEC                                     ;$0CB5F2 |
     SBC $03                                 ;$0CB5F3 |
-    STA.w $0200,Y                           ;$0CB5F5 |
+    STA.w OAMMirror_0200,Y                  ;$0CB5F5 |
     LDA.b #$00                              ;$0CB5F8 |
     SBC $04                                 ;$0CB5FA |
     AND.b #$01                              ;$0CB5FC |
@@ -3414,7 +3414,7 @@ CODE_0CB5E8:
     ORA $04                                 ;$0CB608 |
     PHY                                     ;$0CB60A |
     LDY $01                                 ;$0CB60B |
-    STA.w $0420,Y                           ;$0CB60D |
+    STA.w OAMTileSize_0420,Y                ;$0CB60D |
     PLY                                     ;$0CB610 |
     LDA.w DATA_0CAF12,X                     ;$0CB611 |
     STA.w $0201,Y                           ;$0CB614 |
@@ -4506,15 +4506,15 @@ CODE_0CCB5B:
     BEQ CODE_0CCB64                         ;$0CCB60 |
     LDY.b #$E2                              ;$0CCB62 |
 CODE_0CCB64:
-    STY.w $0202
+    STY.w OAMTileNo_0202
     LDA.b #$39                              ;$0CCB67 |
-    STA.w $0203                             ;$0CCB69 |
+    STA.w OAMTileAttr_0203                  ;$0CCB69 |
     LDA.b #$50                              ;$0CCB6C |
-    STA.w $0200                             ;$0CCB6E |
+    STA.w OAMMirror_0200                    ;$0CCB6E |
     LDA.b #$67                              ;$0CCB71 |
-    STA.w $0201                             ;$0CCB73 |
+    STA.w OAMTileYPos_0201                  ;$0CCB73 |
     LDA.b #$02                              ;$0CCB76 |
-    STA.w $0420                             ;$0CCB78 |
+    STA.w OAMTileSize_0420                  ;$0CCB78 |
     RTS                                     ;$0CCB7B |
 
 DATA_0CCB7C:
@@ -4967,7 +4967,7 @@ DATA_0CCEA7:
 CODE_0CCEAB:
     LDX.b #$30
     LDA.b #$B0                              ;$0CCEAD |
-    STA.w $0200,X                           ;$0CCEAF |
+    STA.w OAMMirror_0200,X                  ;$0CCEAF |
     LDA.w $0B43                             ;$0CCEB2 |
     STA.w $0201,X                           ;$0CCEB5 |
     LDA.b Frame_13                          ;$0CCEB8 |
@@ -4983,7 +4983,7 @@ CODE_0CCEAB:
     LSR                                     ;$0CCECC |
     TAX                                     ;$0CCECD |
     LDA.b #$02                              ;$0CCECE |
-    STA.w $0420,X                           ;$0CCED0 |
+    STA.w OAMTileSize_0420,X                ;$0CCED0 |
     RTS                                     ;$0CCED3 |
 
 DATA_0CCED4:
@@ -5050,7 +5050,7 @@ CODE_0CCF49:
     BEQ Return0CCF71                        ;$0CCF4E |
     LDX.b #$04                              ;$0CCF50 |
     LDA.w $0B52                             ;$0CCF52 |
-    STA.w $0200,X                           ;$0CCF55 |
+    STA.w OAMMirror_0200,X                  ;$0CCF55 |
     LDA.w $0B43                             ;$0CCF58 |
     STA.w $0201,X                           ;$0CCF5B |
     LDA.w DATA_0CCF3B,Y                     ;$0CCF5E |
@@ -5061,7 +5061,7 @@ CODE_0CCF49:
     LSR                                     ;$0CCF6B |
     LSR                                     ;$0CCF6C |
     TAX                                     ;$0CCF6D |
-    STZ.w $0420,X                           ;$0CCF6E |
+    STZ.w OAMTileSize_0420,X                ;$0CCF6E |
 Return0CCF71:
     RTS
 
@@ -5099,7 +5099,7 @@ CODE_0CCFA3:
     LDY.b #$21                              ;$0CCFAC |
     STA.w $0203,X                           ;$0CCFAE |
     LDA.b #$AC                              ;$0CCFB1 |
-    STA.w $0200,X                           ;$0CCFB3 |
+    STA.w OAMMirror_0200,X                  ;$0CCFB3 |
     LDA.b #$63                              ;$0CCFB6 |
     STA.w $0201,X                           ;$0CCFB8 |
     TXA                                     ;$0CCFBB |
@@ -5107,7 +5107,7 @@ CODE_0CCFA3:
     LSR                                     ;$0CCFBD |
     TAX                                     ;$0CCFBE |
     LDA.b #$02                              ;$0CCFBF |
-    STA.w $0420,X                           ;$0CCFC1 |
+    STA.w OAMTileSize_0420,X                ;$0CCFC1 |
     RTS                                     ;$0CCFC4 |
 
 CODE_0CCFC5:
@@ -5219,7 +5219,7 @@ CODE_0CD069:
     STA $01                                 ;$0CD07B |
 CODE_0CD07D:
     LDA $00
-    STA.w $0200,X                           ;$0CD07F |
+    STA.w OAMMirror_0200,X                  ;$0CD07F |
     LDA $01                                 ;$0CD082 |
     STA.w $0201,X                           ;$0CD084 |
     LDA.w DATA_0CD061,Y                     ;$0CD087 |
@@ -5231,7 +5231,7 @@ CODE_0CD07D:
     LSR                                     ;$0CD095 |
     LSR                                     ;$0CD096 |
     TAX                                     ;$0CD097 |
-    STZ.w $0420,X                           ;$0CD098 |
+    STZ.w OAMTileSize_0420,X                ;$0CD098 |
     PLX                                     ;$0CD09B |
     LDA $00                                 ;$0CD09C |
     CLC                                     ;$0CD09E |
@@ -5685,7 +5685,7 @@ CODE_0CD429:
     LDA.w $0B50,Y                           ;$0CD42E |
     CMP.b #$50                              ;$0CD431 |
     BCC CODE_0CD45A                         ;$0CD433 |
-    STA.w $0200,X                           ;$0CD435 |
+    STA.w OAMMirror_0200,X                  ;$0CD435 |
     LDA.w $0B41,Y                           ;$0CD438 |
     STA.w $0201,X                           ;$0CD43B |
     PHY                                     ;$0CD43E |
@@ -5703,7 +5703,7 @@ CODE_0CD429:
     LSR                                     ;$0CD453 |
     LSR                                     ;$0CD454 |
     TAX                                     ;$0CD455 |
-    STZ.w $0420,X                           ;$0CD456 |
+    STZ.w OAMTileSize_0420,X                ;$0CD456 |
     PLX                                     ;$0CD459 |
 CODE_0CD45A:
     INX
@@ -5749,7 +5749,7 @@ CODE_0CD4BD:
     BEQ CODE_0CD4ED                         ;$0CD4C2 |
     CLC                                     ;$0CD4C4 |
     ADC.b PlayerXPos_94                     ;$0CD4C5 |
-    STA.w $0200,X                           ;$0CD4C7 |
+    STA.w OAMMirror_0200,X                  ;$0CD4C7 |
     LDA.w DATA_0CD464,Y                     ;$0CD4CA |
     CLC                                     ;$0CD4CD |
     ADC.b PlayerYPos_96                     ;$0CD4CE |
@@ -5765,7 +5765,7 @@ CODE_0CD4BD:
     LSR                                     ;$0CD4E2 |
     LSR                                     ;$0CD4E3 |
     TAX                                     ;$0CD4E4 |
-    STZ.w $0420,X                           ;$0CD4E5 |
+    STZ.w OAMTileSize_0420,X                ;$0CD4E5 |
     PLX                                     ;$0CD4E8 |
     INX                                     ;$0CD4E9 |
     INX                                     ;$0CD4EA |
@@ -5811,7 +5811,7 @@ CODE_0CD523:
     LDA.b #$04                              ;$0CD527 |
     CLC                                     ;$0CD529 |
     ADC.b PlayerXPos_94                     ;$0CD52A |
-    STA.w $0200,X                           ;$0CD52C |
+    STA.w OAMMirror_0200,X                  ;$0CD52C |
     LDA.w $0B43                             ;$0CD52F |
     CLC                                     ;$0CD532 |
     ADC.b PlayerYPos_96                     ;$0CD533 |
@@ -5832,7 +5832,7 @@ CODE_0CD523:
     LSR                                     ;$0CD550 |
     LSR                                     ;$0CD551 |
     TAX                                     ;$0CD552 |
-    STZ.w $0420,X                           ;$0CD553 |
+    STZ.w OAMTileSize_0420,X                ;$0CD553 |
 Return0CD556:
     RTS
 
@@ -5873,7 +5873,7 @@ CODE_0CD58F:
     ADC.b PlayerXPos_94                     ;$0CD599 |
     CLC                                     ;$0CD59B |
     ADC $01                                 ;$0CD59C |
-    STA.w $0200,X                           ;$0CD59E |
+    STA.w OAMMirror_0200,X                  ;$0CD59E |
     LDA.w $0B44                             ;$0CD5A1 |
     CLC                                     ;$0CD5A4 |
     ADC.b PlayerYPos_96                     ;$0CD5A5 |
@@ -5892,7 +5892,7 @@ CODE_0CD58F:
     LSR                                     ;$0CD5BF |
     LSR                                     ;$0CD5C0 |
     TAX                                     ;$0CD5C1 |
-    STZ.w $0420,X                           ;$0CD5C2 |
+    STZ.w OAMTileSize_0420,X                ;$0CD5C2 |
 Return0CD5C5:
     RTS
 

@@ -4304,7 +4304,7 @@ CODE_07F200:
     ADC.b #$64                              ;$07F207 |
     CLC                                     ;$07F209 |
     ADC $02                                 ;$07F20A |
-    STA.w $0200,Y                           ;$07F20C |
+    STA.w OAMMirror_0200,Y                  ;$07F20C |
     LDA.l DATA_07F134,X                     ;$07F20F |
     CLC                                     ;$07F213 |
     ADC.b #$40                              ;$07F214 |
@@ -4333,7 +4333,7 @@ CODE_07F22A:
     LSR                                     ;$07F23B |
     TAY                                     ;$07F23C |
     LDA.b #$00                              ;$07F23D |
-    STA.w $0420,Y                           ;$07F23F |
+    STA.w OAMTileSize_0420,Y                ;$07F23F |
     PLY                                     ;$07F242 |
     INY                                     ;$07F243 |
     INY                                     ;$07F244 |

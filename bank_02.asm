@@ -502,7 +502,7 @@ CODE_028440:
     STA.w $0201,Y                           ;$02845A |
 CODE_02845D:
     LDA $0C,X
-    STA.w $0200,Y                           ;$02845F |
+    STA.w OAMMirror_0200,Y                  ;$02845F |
     LDA.b #$E6                              ;$028462 |
     LDX $00                                 ;$028464 |
     BEQ CODE_02846A                         ;$028466 |
@@ -516,7 +516,7 @@ CODE_02846A:
     LSR                                     ;$028474 |
     TAX                                     ;$028475 |
     LDA.b #$02                              ;$028476 |
-    STA.w $0420,X                           ;$028478 |
+    STA.w OAMTileSize_0420,X                ;$028478 |
     LDX $0F                                 ;$02847B |
     INY                                     ;$02847D |
     INY                                     ;$02847E |
@@ -1643,7 +1643,7 @@ ADDR_028C6E:
     SBC.b Layer1YPos_1C+1                   ;$028C8B |
     BNE ADDR_028C66                         ;$028C8D |
     LDA $00                                 ;$028C8F |
-    STA.w $0200,Y                           ;$028C91 |
+    STA.w OAMMirror_0200,Y                  ;$028C91 |
     LDA $01                                 ;$028C94 |
     STA.w $0201,Y                           ;$028C96 |
     PHX                                     ;$028C99 |
@@ -1662,7 +1662,7 @@ ADDR_028C6E:
     LSR                                     ;$028CB0 |
     TAY                                     ;$028CB1 |
     LDA.b #$00                              ;$028CB2 |
-    STA.w $0420,Y                           ;$028CB4 |
+    STA.w OAMTileSize_0420,Y                ;$028CB4 |
     RTS                                     ;$028CB7 |
 
 BooStreamTiles:
@@ -1706,7 +1706,7 @@ CODE_028CFF:
     SBC.b Layer1XPos_1A+1                   ;$028D0D |
     BNE Return028D41                        ;$028D0F |
     LDA $00                                 ;$028D11 |
-    STA.w $0200,Y                           ;$028D13 |
+    STA.w OAMMirror_0200,Y                  ;$028D13 |
     LDA.w $17FC,X                           ;$028D16 |
     SEC                                     ;$028D19 |
     SBC.b Layer1YPos_1C                     ;$028D1A |
@@ -1727,7 +1727,7 @@ CODE_028CFF:
     LSR                                     ;$028D3A |
     TAY                                     ;$028D3B |
     LDA.b #$02                              ;$028D3C |
-    STA.w $0420,Y                           ;$028D3E |
+    STA.w OAMTileSize_0420,Y                ;$028D3E |
 Return028D41:
     RTS
 
@@ -1780,7 +1780,7 @@ CODE_028D8B:
     SBC.b Layer1XPos_1A                     ;$028D95 |
     CMP.b #$F0                              ;$028D97 |
     BCS CODE_028D62                         ;$028D99 |
-    STA.w $0200,Y                           ;$028D9B |
+    STA.w OAMMirror_0200,Y                  ;$028D9B |
     LDA.w $17FC,X                           ;$028D9E |
     SEC                                     ;$028DA1 |
     SBC.b Layer1YPos_1C                     ;$028DA2 |
@@ -1805,7 +1805,7 @@ CODE_028DB6:
     LSR                                     ;$028DC8 |
     TAY                                     ;$028DC9 |
     LDA.b #$02                              ;$028DCA |
-    STA.w $0420,Y                           ;$028DCC |
+    STA.w OAMTileSize_0420,Y                ;$028DCC |
     LDA.b SpriteLock_9D                     ;$028DCF |
     BNE Return028DD6                        ;$028DD1 |
     INC.w $1850,X                           ;$028DD3 |
@@ -1857,7 +1857,7 @@ CODE_028E20:
     BCC CODE_028E76                         ;$028E2B |
     CMP.b #$FC                              ;$028E2D |
     BCS CODE_028E76                         ;$028E2F |
-    STA.w $0200,Y                           ;$028E31 |
+    STA.w OAMMirror_0200,Y                  ;$028E31 |
     LDA.w $17FC,X                           ;$028E34 |
     SEC                                     ;$028E37 |
     SBC.b Layer1YPos_1C                     ;$028E38 |
@@ -1890,7 +1890,7 @@ CODE_028E66:
     LSR                                     ;$028E6B |
     TAY                                     ;$028E6C |
     LDA.b #$00                              ;$028E6D |
-    STA.w $0420,Y                           ;$028E6F |
+    STA.w OAMTileSize_0420,Y                ;$028E6F |
     LDX.w $1698                             ;$028E72 |
     RTS                                     ;$028E75 |
 
@@ -1922,7 +1922,7 @@ CODE_028E7E:
     SBC.b Layer1XPos_1A                     ;$028EA8 |
     CMP.b #$F8                              ;$028EAA |
     BCS CODE_028ED7                         ;$028EAC |
-    STA.w $0200,Y                           ;$028EAE |
+    STA.w OAMMirror_0200,Y                  ;$028EAE |
     LDA.b #$6F                              ;$028EB1 |
     STA.w $0202,Y                           ;$028EB3 |
     LDA.w $1850,X                           ;$028EB6 |
@@ -1935,7 +1935,7 @@ CODE_028E7E:
     LSR                                     ;$028EC4 |
     TAY                                     ;$028EC5 |
     LDA.b #$00                              ;$028EC6 |
-    STA.w $0420,Y                           ;$028EC8 |
+    STA.w OAMTileSize_0420,Y                ;$028EC8 |
     RTS                                     ;$028ECB |
 
 StarSparkleTiles:
@@ -1958,7 +1958,7 @@ CODE_028EE1:
     SBC.b Layer1XPos_1A                     ;$028EE8 |
     CMP.b #$F0                              ;$028EEA |
     BCS CODE_028ED7                         ;$028EEC |
-    STA.w $0200,Y                           ;$028EEE |
+    STA.w OAMMirror_0200,Y                  ;$028EEE |
     LDA.w $17FC,X                           ;$028EF1 |
     SEC                                     ;$028EF4 |
     SBC.b Layer1YPos_1C                     ;$028EF5 |
@@ -1990,7 +1990,7 @@ CODE_028F11:
     LSR                                     ;$028F23 |
     TAY                                     ;$028F24 |
     LDA.b #$00                              ;$028F25 |
-    STA.w $0420,Y                           ;$028F27 |
+    STA.w OAMTileSize_0420,Y                ;$028F27 |
     RTS                                     ;$028F2A |
 
 LavaSplashTiles:
@@ -2014,7 +2014,7 @@ CODE_028F4D:
     LDA.w $1808,X                           ;$028F50 |
     SEC                                     ;$028F53 |
     SBC.b Layer1XPos_1A                     ;$028F54 |
-    STA.w $0200,Y                           ;$028F56 |
+    STA.w OAMMirror_0200,Y                  ;$028F56 |
     LDA.w $17FC,X                           ;$028F59 |
     CMP.b #$F0                              ;$028F5C |
     BCS CODE_028F87                         ;$028F5E |
@@ -2037,7 +2037,7 @@ CODE_028F4D:
     LSR                                     ;$028F7F |
     TAY                                     ;$028F80 |
     LDA.b #$00                              ;$028F81 |
-    STA.w $0420,Y                           ;$028F83 |
+    STA.w OAMTileSize_0420,Y                ;$028F83 |
     RTS                                     ;$028F86 |
 
 CODE_028F87:
@@ -2097,7 +2097,7 @@ CODE_028FDD:
     SBC.b Layer1XPos_1A+1                   ;$028FEB |
     BNE CODE_028F87                         ;$028FED |
     LDA $01                                 ;$028FEF |
-    STA.w $0200,Y                           ;$028FF1 |
+    STA.w OAMMirror_0200,Y                  ;$028FF1 |
     LDA $00                                 ;$028FF4 |
     CMP.b #$F0                              ;$028FF6 |
     BCS CODE_028F87                         ;$028FF8 |
@@ -2126,7 +2126,7 @@ CODE_029018:
     LSR                                     ;$029025 |
     TAY                                     ;$029026 |
     LDA.b #$00                              ;$029027 |
-    STA.w $0420,Y                           ;$029029 |
+    STA.w OAMTileSize_0420,Y                ;$029029 |
 Return02902C:
     RTS
 
@@ -2409,7 +2409,7 @@ CODE_029201:
     SEC                                     ;$02923E |
     SBC $03                                 ;$02923F |
     STA $00                                 ;$029241 |
-    STA.w $0200,Y                           ;$029243 |
+    STA.w OAMMirror_0200,Y                  ;$029243 |
     LDA.w $1901,X                           ;$029246 |
     ORA.b SpriteYXPPCCCT_64                 ;$029249 |
     STA.w $0203,Y                           ;$02924B |
@@ -2422,7 +2422,7 @@ CODE_029201:
     LSR                                     ;$02925A |
     TAY                                     ;$02925B |
     LDA.b #$02                              ;$02925C |
-    STA.w $0420,Y                           ;$02925E |
+    STA.w OAMTileSize_0420,Y                ;$02925E |
     LDX.w $1698                             ;$029261 |
     RTS                                     ;$029264 |
 
@@ -3107,7 +3107,7 @@ CODE_02974A:
     SBC.b Layer1XPos_1A                     ;$029751 |
     CMP.b #$F4                              ;$029753 |
     BCS CODE_029793                         ;$029755 |
-    STA.w $0200,Y                           ;$029757 |
+    STA.w OAMMirror_0200,Y                  ;$029757 |
     LDA.w $17C4,X                           ;$02975A |
     SEC                                     ;$02975D |
     SBC.b Layer1YPos_1C                     ;$02975E |
@@ -3139,7 +3139,7 @@ CODE_029776:
     LSR                                     ;$02978B |
     TAY                                     ;$02978C |
     LDA.b #$02                              ;$02978D |
-    STA.w $0420,Y                           ;$02978F |
+    STA.w OAMTileSize_0420,Y                ;$02978F |
     RTS                                     ;$029792 |
 
 CODE_029793:
@@ -3167,7 +3167,7 @@ CODE_0297B2:
     SBC.b Layer1XPos_1A                     ;$0297B8 |
     CMP.b #$F0                              ;$0297BA |
     BCS CODE_029793                         ;$0297BC |
-    STA.w $0200,Y                           ;$0297BE |
+    STA.w OAMMirror_0200,Y                  ;$0297BE |
     STA.w $0208,Y                           ;$0297C1 |
     CLC                                     ;$0297C4 |
     ADC.b #$08                              ;$0297C5 |
@@ -3219,7 +3219,7 @@ CODE_029825:
     LSR                                     ;$029827 |
     TAY                                     ;$029828 |
     LDA.b #$00                              ;$029829 |
-    STA.w $0420,Y                           ;$02982B |
+    STA.w OAMTileSize_0420,Y                ;$02982B |
     STA.w $0421,Y                           ;$02982E |
     STA.w $0422,Y                           ;$029831 |
     STA.w $0423,Y                           ;$029834 |
@@ -3392,7 +3392,7 @@ CODE_02996F:
     LDA.w $17C8,X
     SEC                                     ;$029972 |
     SBC.b Layer1XPos_1A                     ;$029973 |
-    STA.w $0200,Y                           ;$029975 |
+    STA.w OAMMirror_0200,Y                  ;$029975 |
     LDA.w $17C4,X                           ;$029978 |
     SEC                                     ;$02997B |
     SBC.b Layer1YPos_1C                     ;$02997C |
@@ -3411,7 +3411,7 @@ CODE_02996F:
     LSR                                     ;$029997 |
     TAY                                     ;$029998 |
     LDA.b #$00                              ;$029999 |
-    STA.w $0420,Y                           ;$02999B |
+    STA.w OAMTileSize_0420,Y                ;$02999B |
     RTS                                     ;$02999E |
 
 CODE_02999F:
@@ -3503,7 +3503,7 @@ CODE_029A08:
     STY $0F                                 ;$029A40 |
     LDY $0F                                 ;$029A42 |
     LDA $00                                 ;$029A44 |
-    STA.w $0200,Y                           ;$029A46 |
+    STA.w OAMMirror_0200,Y                  ;$029A46 |
     LDA $01                                 ;$029A49 |
     STA.w $0201,Y                           ;$029A4B |
     LDA.b #$E8                              ;$029A4E |
@@ -3516,7 +3516,7 @@ CODE_029A08:
     LSR                                     ;$029A5C |
     TAY                                     ;$029A5D |
     LDA.b #$02                              ;$029A5E |
-    STA.w $0420,Y                           ;$029A60 |
+    STA.w OAMTileSize_0420,Y                ;$029A60 |
     TXA                                     ;$029A63 |
     CLC                                     ;$029A64 |
     ADC.b Frame_14                          ;$029A65 |
@@ -3537,7 +3537,7 @@ CODE_029A71:
     LDA $00                                 ;$029A75 |
     CLC                                     ;$029A77 |
     ADC.b #$04                              ;$029A78 |
-    STA.w $0200,Y                           ;$029A7A |
+    STA.w OAMMirror_0200,Y                  ;$029A7A |
     STA.w $0204,Y                           ;$029A7D |
     LDA $01                                 ;$029A80 |
     CLC                                     ;$029A82 |
@@ -3554,7 +3554,7 @@ CODE_029A71:
     LSR                                     ;$029A9C |
     TAY                                     ;$029A9D |
     LDA.b #$00                              ;$029A9E |
-    STA.w $0420,Y                           ;$029AA0 |
+    STA.w OAMTileSize_0420,Y                ;$029AA0 |
     STA.w $0421,Y                           ;$029AA3 |
     PLX                                     ;$029AA6 |
     RTS                                     ;$029AA7 |
@@ -3670,7 +3670,7 @@ VolcanoLotusFire:
     BPL CODE_029BDA                         ;$029B74 |
 CODE_029B76:
     LDA $00
-    STA.w $0200,Y                           ;$029B78 |
+    STA.w OAMMirror_0200,Y                  ;$029B78 |
     LDA $01                                 ;$029B7B |
     CMP.b #$F0                              ;$029B7D |
     BCS CODE_029BA5                         ;$029B7F |
@@ -3693,7 +3693,7 @@ CODE_029B99:
     LSR                                     ;$029B9E |
     TAY                                     ;$029B9F |
     LDA.b #$00                              ;$029BA0 |
-    STA.w $0420,Y                           ;$029BA2 |
+    STA.w OAMTileSize_0420,Y                ;$029BA2 |
 CODE_029BA5:
     LDA.b SpriteLock_9D
     BNE Return029BD9                        ;$029BA7 |
@@ -3805,7 +3805,7 @@ SmokeTrail:
     LSR                                     ;$029C5F |
     TAY                                     ;$029C60 |
     LDA.b #$02                              ;$029C61 |
-    STA.w $0420,Y                           ;$029C63 |
+    STA.w OAMTileSize_0420,Y                ;$029C63 |
     PLX                                     ;$029C66 |
     LDA.b SpriteLock_9D                     ;$029C67 |
     BNE Return029C7E                        ;$029C69 |
@@ -3904,7 +3904,7 @@ CODE_029CF8:
     SEC                                     ;$029D18 |
     SBC.b Layer1XPos_1A                     ;$029D19 |
     STA $00                                 ;$029D1B |
-    STA.w $0200,Y                           ;$029D1D |
+    STA.w OAMMirror_0200,Y                  ;$029D1D |
     LDA.w $170B,X                           ;$029D20 |
     CMP.b #$0E                              ;$029D23 |
     BNE ADDR_029D45                         ;$029D25 |
@@ -3923,7 +3923,7 @@ CODE_029D36:
     LSR                                     ;$029D3D |
     TAY                                     ;$029D3E |
     LDA.b #$00                              ;$029D3F |
-    STA.w $0420,Y                           ;$029D41 |
+    STA.w OAMTileSize_0420,Y                ;$029D41 |
     RTS                                     ;$029D44 |
 
 ADDR_029D45:
@@ -3934,7 +3934,7 @@ ADDR_029D45:
     LDA.b #$04                              ;$029D4F |
     JSR CODE_029D36                         ;$029D51 |
     LDA.b #$02                              ;$029D54 |
-    STA.w $0420,Y                           ;$029D56 |
+    STA.w OAMTileSize_0420,Y                ;$029D56 |
     RTS                                     ;$029D59 |
 
 CODE_029D5A:
@@ -4011,7 +4011,7 @@ UnusedExtendedSpr:
     BCC CODE_029E39                         ;$029DED |
     CMP.b #$F0                              ;$029DEF |
     BCS CODE_029E39                         ;$029DF1 |
-    STA.w $0200,Y                           ;$029DF3 |
+    STA.w OAMMirror_0200,Y                  ;$029DF3 |
     LDA.w $1765,X                           ;$029DF6 |
     TAX                                     ;$029DF9 |
     LDA.w UnusedExSprGfxProp,X              ;$029DFA |
@@ -4025,7 +4025,7 @@ UnusedExtendedSpr:
     TAY                                     ;$029E0B |
     LDX $0F                                 ;$029E0C |
     LDA.w UnusedExSprTileSize,X             ;$029E0E |
-    STA.w $0420,Y                           ;$029E11 |
+    STA.w OAMTileSize_0420,Y                ;$029E11 |
     LDX.w CurrentSprite_15E9                ;$029E14 |
     LDA $00                                 ;$029E17 |
     SEC                                     ;$029E19 |
@@ -4091,7 +4091,7 @@ CODE_029E6B:
     LSR                                     ;$029E7A |
     TAY                                     ;$029E7B |
     LDA.b #$02                              ;$029E7C |
-    STA.w $0420,Y                           ;$029E7E |
+    STA.w OAMTileSize_0420,Y                ;$029E7E |
     RTS                                     ;$029E81 |
 
 LavaSplashTiles2:
@@ -4118,7 +4118,7 @@ CODE_029E9D:
     SBC.b Layer1XPos_1A+1                   ;$029EAB |
     BNE CODE_029EE6                         ;$029EAD |
     LDA $00                                 ;$029EAF |
-    STA.w $0200,Y                           ;$029EB1 |
+    STA.w OAMMirror_0200,Y                  ;$029EB1 |
     LDA.w $1715,X                           ;$029EB4 |
     SEC                                     ;$029EB7 |
     SBC.b Layer1YPos_1C                     ;$029EB8 |
@@ -4143,7 +4143,7 @@ CODE_029E9D:
     LSR                                     ;$029EDB |
     TAY                                     ;$029EDC |
     LDA.b #$00                              ;$029EDD |
-    STA.w $0420,Y                           ;$029EDF |
+    STA.w OAMTileSize_0420,Y                ;$029EDF |
     LDX.w CurrentSprite_15E9                ;$029EE2 |
     RTS                                     ;$029EE5 |
 
@@ -4201,10 +4201,10 @@ CODE_029F2A:
     LDA.w DATA_029EEA,Y                     ;$029F41 |
     STA $00                                 ;$029F44 |
     LDY.w DATA_02A153,X                     ;$029F46 |
-    LDA.w $0200,Y                           ;$029F49 |
+    LDA.w OAMMirror_0200,Y                  ;$029F49 |
     CLC                                     ;$029F4C |
     ADC $00                                 ;$029F4D |
-    STA.w $0200,Y                           ;$029F4F |
+    STA.w OAMMirror_0200,Y                  ;$029F4F |
     LDA.w $0201,Y                           ;$029F52 |
     CLC                                     ;$029F55 |
     ADC.b #$05                              ;$029F56 |
@@ -4242,7 +4242,7 @@ CODE_029F7F:
     LSR                                     ;$029F91 |
     TAY                                     ;$029F92 |
     LDA.b #$02                              ;$029F93 |
-    STA.w $0420,Y                           ;$029F95 |
+    STA.w OAMTileSize_0420,Y                ;$029F95 |
     RTS                                     ;$029F98 |
 
 DATA_029F99:
@@ -4519,7 +4519,7 @@ CODE_02A178:
     LSR                                     ;$02A19B |
     TAX                                     ;$02A19C |
     LDA.b #$02                              ;$02A19D |
-    STA.w $0420,X                           ;$02A19F |
+    STA.w OAMTileSize_0420,X                ;$02A19F |
     PLX                                     ;$02A1A2 |
     RTS                                     ;$02A1A3 |
 
@@ -4550,7 +4550,7 @@ CODE_02A1A7:
     BCS CODE_02A211                         ;$02A1D3 |
     STA.w $0201,Y                           ;$02A1D5 |
     LDA $01                                 ;$02A1D8 |
-    STA.w $0200,Y                           ;$02A1DA |
+    STA.w OAMMirror_0200,Y                  ;$02A1DA |
     LDA.w $1779,X                           ;$02A1DD |
     STA $01                                 ;$02A1E0 |
     LDA.b Frame_14                          ;$02A1E2 |
@@ -4575,7 +4575,7 @@ CODE_02A204:
     LSR                                     ;$02A206 |
     TAY                                     ;$02A207 |
     LDA.b #$00                              ;$02A208 |
-    STA.w $0420,Y                           ;$02A20A |
+    STA.w OAMTileSize_0420,Y                ;$02A20A |
     LDX.w CurrentSprite_15E9                ;$02A20D |
     RTS                                     ;$02A210 |
 
@@ -4646,7 +4646,7 @@ CODE_02A26A:
 CODE_02A287:
     LDY.w DATA_02A153,X
     LDA $00                                 ;$02A28A |
-    STA.w $0200,Y                           ;$02A28C |
+    STA.w OAMMirror_0200,Y                  ;$02A28C |
     LDA.w $1715,X                           ;$02A28F |
     SEC                                     ;$02A292 |
     SBC.b Layer1YPos_1C                     ;$02A293 |
@@ -4671,7 +4671,7 @@ CODE_02A287:
     LSR                                     ;$02A2B7 |
     TAY                                     ;$02A2B8 |
     LDA.b #$00                              ;$02A2B9 |
-    STA.w $0420,Y                           ;$02A2BB |
+    STA.w OAMTileSize_0420,Y                ;$02A2BB |
 Return02A2BE:
     RTS
 
@@ -4741,7 +4741,7 @@ CODE_02A317:
     LSR                                     ;$02A33B |
     TAX                                     ;$02A33C |
     LDA.b #$02                              ;$02A33D |
-    STA.w $0420,X                           ;$02A33F |
+    STA.w OAMTileSize_0420,X                ;$02A33F |
     PLX                                     ;$02A342 |
     RTS                                     ;$02A343 |
 
@@ -4774,7 +4774,7 @@ CODE_02A36C:
     SBC.b Layer1XPos_1A                     ;$02A370 |
     CMP.b #$F8                              ;$02A372 |
     BCS CODE_02A3AE                         ;$02A374 |
-    STA.w $0200,Y                           ;$02A376 |
+    STA.w OAMMirror_0200,Y                  ;$02A376 |
     LDA.w $1715,X                           ;$02A379 |
     SEC                                     ;$02A37C |
     SBC.b Layer1YPos_1C                     ;$02A37D |
@@ -4800,7 +4800,7 @@ CODE_02A36C:
     LSR                                     ;$02A3A3 |
     TAY                                     ;$02A3A4 |
     LDA.b #$02                              ;$02A3A5 |
-    STA.w $0420,Y                           ;$02A3A7 |
+    STA.w OAMTileSize_0420,Y                ;$02A3A7 |
     LDX.w CurrentSprite_15E9                ;$02A3AA |
     RTS                                     ;$02A3AD |
 
@@ -6277,7 +6277,7 @@ CODE_02AEA5:
     LDA.w $16ED,X                           ;$02AEB1 |
     SEC                                     ;$02AEB4 |
     SBC $04                                 ;$02AEB5 |
-    STA.w $0200,Y                           ;$02AEB7 |
+    STA.w OAMMirror_0200,Y                  ;$02AEB7 |
     CLC                                     ;$02AEBA |
     ADC.b #$08                              ;$02AEBB |
     STA.w $0204,Y                           ;$02AEBD |
@@ -6305,7 +6305,7 @@ CODE_02AEDF:
     LSR                                     ;$02AEEA |
     TAY                                     ;$02AEEB |
     LDA.b #$00                              ;$02AEEC |
-    STA.w $0420,Y                           ;$02AEEE |
+    STA.w OAMTileSize_0420,Y                ;$02AEEE |
     STA.w $0421,Y                           ;$02AEF1 |
     LDA.w $16E1,X                           ;$02AEF4 |
     CMP.b #$11                              ;$02AEF7 |
@@ -6320,7 +6320,7 @@ ADDR_02AEFC:
     SBC $04                                 ;$02AF02 |
     SEC                                     ;$02AF04 |
     SBC.b #$08                              ;$02AF05 |
-    STA.w $0200,Y                           ;$02AF07 |
+    STA.w OAMMirror_0200,Y                  ;$02AF07 |
     LDA.w $16E7,X                           ;$02AF0A |
     SEC                                     ;$02AF0D |
     SBC $02                                 ;$02AF0E |
@@ -6335,7 +6335,7 @@ ADDR_02AEFC:
     LSR                                     ;$02AF21 |
     TAY                                     ;$02AF22 |
     LDA.b #$00                              ;$02AF23 |
-    STA.w $0420,Y                           ;$02AF25 |
+    STA.w OAMTileSize_0420,Y                ;$02AF25 |
     RTS                                     ;$02AF28 |
 
     STZ.w $16E1,X                           ;$02AF29 |
@@ -8045,7 +8045,7 @@ draw_yoshi_wings_02BB23:
     LDA $00                                 ;$02BB51 |
     SEC                                     ;$02BB53 |
     SBC.b Layer1XPos_1A                     ;$02BB54 |
-    STA.w $0200,Y                           ;$02BB56 |
+    STA.w OAMMirror_0200,Y                  ;$02BB56 |
     PLA                                     ;$02BB59 |
     SBC.b Layer1XPos_1A+1                   ;$02BB5A |
     BNE +                                   ;$02BB5C |
@@ -8065,7 +8065,7 @@ draw_yoshi_wings_02BB23:
     LSR                                     ;$02BB7D |
     TAY                                     ;$02BB7E |
     LDA.l YoshiWingsSize,X                  ;$02BB7F |
-    STA.w $0420,Y                           ;$02BB83 |
+    STA.w OAMTileSize_0420,Y                ;$02BB83 |
 +   PLX                                     ;$02BB86 |
 .return_02BB87:
     RTL
@@ -15814,7 +15814,7 @@ CODE_02F3EA:
     LDA.b SpriteXPosLow_E4,X                ;$02F401 |
     SEC                                     ;$02F403 |
     SBC.b Layer1XPos_1A                     ;$02F404 |
-    STA.w $0200,Y                           ;$02F406 |
+    STA.w OAMMirror_0200,Y                  ;$02F406 |
     LDA.b SpriteYPosLow_D8,X                ;$02F409 |
     SEC                                     ;$02F40B |
     SBC.b Layer1YPos_1C                     ;$02F40C |
@@ -15832,7 +15832,7 @@ CODE_02F3EA:
     LSR                                     ;$02F424 |
     TAY                                     ;$02F425 |
     LDA.b #$00                              ;$02F426 |
-    STA.w $0420,Y                           ;$02F428 |
+    STA.w OAMTileSize_0420,Y                ;$02F428 |
     RTS                                     ;$02F42B |
 
 SmokeMain:
@@ -16208,7 +16208,7 @@ CODE_02F6BC:
     LDA.b #$B8
     CLC                                     ;$02F6BE |
     ADC.w DATA_02F6A0,X                     ;$02F6BF |
-    STA.w $0200,Y                           ;$02F6C2 |
+    STA.w OAMMirror_0200,Y                  ;$02F6C2 |
     LDA.b #$50                              ;$02F6C5 |
     SEC                                     ;$02F6C7 |
     SBC.b Layer1YPos_1C                     ;$02F6C8 |
@@ -16227,7 +16227,7 @@ CODE_02F6BC:
     LSR                                     ;$02F6E1 |
     TAY                                     ;$02F6E2 |
     LDA.b #$02                              ;$02F6E3 |
-    STA.w $0420,Y                           ;$02F6E5 |
+    STA.w OAMTileSize_0420,Y                ;$02F6E5 |
     PLY                                     ;$02F6E8 |
     INY                                     ;$02F6E9 |
     INY                                     ;$02F6EA |
@@ -16329,7 +16329,7 @@ CODE_02F7D0:
     LDA $00
     CLC                                     ;$02F7D2 |
     ADC.w DATA_02F6F1,X                     ;$02F7D3 |
-    STA.w $0200,Y                           ;$02F7D6 |
+    STA.w OAMMirror_0200,Y                  ;$02F7D6 |
     LDA.w DATA_02F721,X                     ;$02F7D9 |
     STA.w $0202,Y                           ;$02F7DC |
     LDX $02                                 ;$02F7DF |
@@ -16349,7 +16349,7 @@ CODE_02F7F5:
     LSR                                     ;$02F7FA |
     TAY                                     ;$02F7FB |
     LDA.b #$02                              ;$02F7FC |
-    STA.w $0420,Y                           ;$02F7FE |
+    STA.w OAMTileSize_0420,Y                ;$02F7FE |
 CODE_02F801:
     DEX
     BMI Return02F807                        ;$02F802 |
@@ -17205,7 +17205,7 @@ CODE_02FE48:
     LDA.w $1E16,X                           ;$02FE4B |
     SEC                                     ;$02FE4E |
     SBC.b Layer1XPos_1A                     ;$02FE4F |
-    STA.w $0200,Y                           ;$02FE51 |
+    STA.w OAMMirror_0200,Y                  ;$02FE51 |
     LDA.w $1E02,X                           ;$02FE54 |
     SEC                                     ;$02FE57 |
     SBC.b Layer1YPos_1C                     ;$02FE58 |
@@ -17219,7 +17219,7 @@ CODE_02FE48:
     LSR                                     ;$02FE69 |
     TAY                                     ;$02FE6A |
     LDA.b #$02                              ;$02FE6B |
-    STA.w $0420,Y                           ;$02FE6D |
+    STA.w OAMTileSize_0420,Y                ;$02FE6D |
     RTS                                     ;$02FE70 |
 
 CODE_02FE71:

@@ -3157,7 +3157,7 @@ CODE_05B2F8:
     PHX                                     ;$05B2FE |
     LDX $00                                 ;$05B2FF |
     LDA.w DATA_05B2DB,X                     ;$05B301 |
-    STA.w $0200,Y                           ;$05B304 |
+    STA.w OAMMirror_0200,Y                  ;$05B304 |
     PLX                                     ;$05B307 |
     INX                                     ;$05B308 |
     INX                                     ;$05B309 |
@@ -3168,7 +3168,7 @@ CODE_05B2F8:
     DEY                                     ;$05B310 |
     DEY                                     ;$05B311 |
     BPL CODE_05B2F8                         ;$05B312 |
-    STZ.w $0400                             ;$05B314 |
+    STZ.w OAMTileBitSize_0400               ;$05B314 |
     SEP #$20                                ;$05B317 |
     PLX                                     ;$05B319 |
     RTS                                     ;$05B31A |

@@ -16068,7 +16068,7 @@ draw_yoshi_tongue_01F3FE:
     LDY.b #$0C                              ;$01F468 | draw tongue in 5 segments, one per loop
 .loop_01F46A:
     LDA $00                                 ;$01F46A |
-    STA.w $0200,Y                           ;$01F46C |
+    STA.w OAMMirror_0200,Y                  ;$01F46C |
     CLC                                     ;$01F46F |
     ADC $05                                 ;$01F470 |
     STA $00                                 ;$01F472 |
@@ -16099,7 +16099,7 @@ draw_yoshi_tongue_01F3FE:
     LSR                                     ;$01F4A1 |
     TAY                                     ;$01F4A2 |
     LDA.b #$00                              ;$01F4A3 |
-    STA.w $0420,Y                           ;$01F4A5 |
+    STA.w OAMTileSize_0420,Y                ;$01F4A5 |
     PLY                                     ;$01F4A8 |
     INY                                     ;$01F4A9 |
     INY                                     ;$01F4AA |

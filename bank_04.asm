@@ -667,7 +667,7 @@ CODE_0485E8:
     TYX                                     ;$0485F2 |
 CODE_0485F3:
     LDA $00
-    STA.w $0200,X                           ;$0485F5 |
+    STA.w OAMMirror_0200,X                  ;$0485F5 |
     CLC                                     ;$0485F8 |
     ADC.b #$08                              ;$0485F9 |
     STA $00                                 ;$0485FB |
@@ -680,7 +680,7 @@ CODE_0485F3:
     PHX                                     ;$04860C |
     TYX                                     ;$04860D |
     LDA.b #$00                              ;$04860E |
-    STA.w $0420,X                           ;$048610 |
+    STA.w OAMTileSize_0420,X                ;$048610 |
     PLX                                     ;$048613 |
     INY                                     ;$048614 |
     TYA                                     ;$048615 |

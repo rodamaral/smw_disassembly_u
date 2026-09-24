@@ -6337,7 +6337,7 @@ CODE_03AFD7:
     LDX.b #$04                              ;$03AFE4 |
 CODE_03AFE6:
     LDA.w $0300,Y
-    STA.w $0200,Y                           ;$03AFE9 |
+    STA.w OAMMirror_0200,Y                  ;$03AFE9 |
     LDA.w $0301,Y                           ;$03AFEC |
     STA.w $0201,Y                           ;$03AFEF |
     LDA.w $0302,Y                           ;$03AFF2 |
@@ -6350,7 +6350,7 @@ CODE_03AFE6:
     LSR                                     ;$03B001 |
     TAY                                     ;$03B002 |
     LDA.w $0460,Y                           ;$03B003 |
-    STA.w $0420,Y                           ;$03B006 |
+    STA.w OAMTileSize_0420,Y                ;$03B006 |
     PLY                                     ;$03B009 |
     INY                                     ;$03B00A |
     INY                                     ;$03B00B |
@@ -6931,7 +6931,7 @@ CODE_03B457:
     LDY.b #$04                              ;$03B45F |
 CODE_03B461:
     LDA.w BowserItemBoxPosX,X
-    STA.w $0200,Y                           ;$03B464 |
+    STA.w OAMMirror_0200,Y                  ;$03B464 |
     LDA.w BowserItemBoxPosY,X               ;$03B467 |
     STA.w $0201,Y                           ;$03B46A |
     LDA.b #$43                              ;$03B46D |
@@ -6944,7 +6944,7 @@ CODE_03B461:
     LSR                                     ;$03B47B |
     TAY                                     ;$03B47C |
     LDA.b #$02                              ;$03B47D |
-    STA.w $0420,Y                           ;$03B47F |
+    STA.w OAMTileSize_0420,Y                ;$03B47F |
     PLY                                     ;$03B482 |
     INY                                     ;$03B483 |
     INY                                     ;$03B484 |
@@ -7013,7 +7013,7 @@ CODE_03B4FA:
     LDA.w BowserRoofPosX,X
     SEC                                     ;$03B4FD |
     SBC.b Layer1XPos_1A                     ;$03B4FE |
-    STA.w $0200,Y                           ;$03B500 |
+    STA.w OAMMirror_0200,Y                  ;$03B500 |
     LDA.w BowserRoofPosY,X                  ;$03B503 |
     SEC                                     ;$03B506 |
     SBC.b Layer1YPos_1C                     ;$03B507 |
@@ -7033,7 +7033,7 @@ CODE_03B514:
     LSR                                     ;$03B521 |
     TAY                                     ;$03B522 |
     LDA.b #$02                              ;$03B523 |
-    STA.w $0420,Y                           ;$03B525 |
+    STA.w OAMTileSize_0420,Y                ;$03B525 |
     PLY                                     ;$03B528 |
     INY                                     ;$03B529 |
     INY                                     ;$03B52A |
@@ -9017,7 +9017,7 @@ CODE_03CA82:
     ADC $02                                 ;$03CA87 |
     CLC                                     ;$03CA89 |
     ADC $08                                 ;$03CA8A |
-    STA.w $0200,Y                           ;$03CA8C |
+    STA.w OAMMirror_0200,Y                  ;$03CA8C |
     LDA $03                                 ;$03CA8F |
     CLC                                     ;$03CA91 |
     ADC $09                                 ;$03CA92 |
@@ -9056,7 +9056,7 @@ CODE_03CABD:
     LSR                                     ;$03CAC8 |
     TAY                                     ;$03CAC9 |
     LDA.b #$00                              ;$03CACA |
-    STA.w $0420,Y                           ;$03CACC |
+    STA.w OAMTileSize_0420,Y                ;$03CACC |
     PLY                                     ;$03CACF |
     INY                                     ;$03CAD0 |
     INY                                     ;$03CAD1 |
@@ -9937,7 +9937,7 @@ CODE_03D680:
     ASL                                     ;$03D683 |
     TAX                                     ;$03D684 |
     LDA.w DATA_03D524,X                     ;$03D685 |
-    STA.w $0200,Y                           ;$03D688 |
+    STA.w OAMMirror_0200,Y                  ;$03D688 |
     LDA.w DATA_03D526,X                     ;$03D68B |
     STA.w $0202,Y                           ;$03D68E |
     PHY                                     ;$03D691 |
@@ -9947,7 +9947,7 @@ CODE_03D680:
     TAY                                     ;$03D695 |
     SEP #$20                                ;$03D696 |
     LDA.b #$00                              ;$03D698 |
-    STA.w $0420,Y                           ;$03D69A |
+    STA.w OAMTileSize_0420,Y                ;$03D69A |
     REP #$20                                ;$03D69D |
     PLY                                     ;$03D69F |
     PLX                                     ;$03D6A0 |
