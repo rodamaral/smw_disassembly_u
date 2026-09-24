@@ -2442,11 +2442,11 @@ Return019097:
     RTS
 
 FlipSpriteDir:
-    LDA.w $15AC,X
+    LDA.w SpriteTurnTimer_15AC,X
     BNE Return0190B1                        ;$01909B |
     LDA.b #$08                              ;$01909D |
-    STA.w $15AC,X                           ;$01909F |
-CODE_0190A2:
+    STA.w SpriteTurnTimer_15AC,X            ;$01909F |
+flip_sprite_dir_0190A2:
     LDA.b SpriteXSpeed_B6,X
     EOR.b #$FF                              ;$0190A4 |
     INC A                                   ;$0190A6 |
@@ -3616,7 +3616,7 @@ CODE_01999B:
 CODE_01999E:
     LDA.b #$01
     STA.w SPCIO0_1DF9                       ;$0199A0 |
-    JSR CODE_0190A2                         ;$0199A3 |
+    JSR flip_sprite_dir_0190A2              ;$0199A3 |
     LDA.w $15A0,X                           ;$0199A6 |
     BNE CODE_0199D2                         ;$0199A9 |
     LDA.b SpriteXPosLow_E4,X                ;$0199AB |
@@ -3671,15 +3671,13 @@ Return019A03:
     RTS
 
 SetSomeYSpeed:
-    LDA.w $1588,X
-    BMI CODE_019A10                         ;$019A07 |
-    LDA.b #$00                              ;$019A09 |
-    LDY.w $15B8,X                           ;$019A0B |
-    BEQ CODE_019A12                         ;$019A0E |
-CODE_019A10:
-    LDA.b #$18
-CODE_019A12:
-    STA.b SpriteYSpeed_AA,X
+    LDA.w SpriteBlocked_1588,X
+    BMI +                                   ;$019A07 |\ branch if blocked by Layer 2 above
+    LDA.b #$00                              ;$019A09 ||
+    LDY.w SpriteSlope_15B8,X                ;$019A0B ||\ branch if on flat ground
+    BEQ ++                                  ;$019A0E ||/
++   LDA.b #$18                              ;$019A10 |/
+++  STA.b SpriteYSpeed_AA,X                 ;$019A11 |
     RTS                                     ;$019A14 |
 
 UpdateDirection:
@@ -5660,7 +5658,7 @@ CODE_01A8D8:
     RTS                                     ;$01A8E5 |
 
 CODE_01A8E6:
-    LDA.w $13ED
+    LDA.w PlayerSlopePose_13ED
     BEQ CODE_01A8F9                         ;$01A8E9 |
     LDA.w $190F,X                           ;$01A8EB |
     AND.b #$04                              ;$01A8EE |
@@ -15026,20 +15024,20 @@ yoshi_01EBCA:
 
 .game_running_01EC61:
     LDA.b PlayerInAir_72
-    BNE .CODE_01EC6A                        ;$01EC63 |
+    BNE .do_not_lay_egg_01EC6A              ;$01EC63 |
     LDA.w EggLaidTimer_18DE                 ;$01EC65 |
     BNE .CODE_01EC6D                        ;$01EC68 |
-.CODE_01EC6A:
-    JMP .CODE_01ECE1
+.do_not_lay_egg_01EC6A:
+    JMP .not_laying_egg_01ECE1
 
 .CODE_01EC6D:
     DEC.w EggLaidTimer_18DE
     CMP.b #$01                              ;$01EC70 |
-    BNE .CODE_01EC78                        ;$01EC72 |
+    BNE .prepare_lay_egg_01EC78             ;$01EC72 |
     STZ.b SpriteLock_9D                     ;$01EC74 |
-    BRA .CODE_01EC6A                        ;$01EC76 |
+    BRA .do_not_lay_egg_01EC6A              ;$01EC76 |
 
-.CODE_01EC78:
+.prepare_lay_egg_01EC78:
     INC.w PlayerIsFrozen_13FB
     JSR .mounted_player_relative_y_01EC50   ;$01EC7B |
     STY.b SpriteLock_9D                     ;$01EC7E |
@@ -15090,27 +15088,27 @@ yoshi_01EBCA:
     PLX                                     ;$01ECDF |
     RTS                                     ;$01ECE0 |
 
-.CODE_01ECE1:
+.not_laying_egg_01ECE1:
     LDA.b SpritePhase_C2,X
     CMP.b #$01                              ;$01ECE3 |
-    BNE .CODE_01ECEA                        ;$01ECE5 |
-    JMP .CODE_01ED70                         ;$01ECE7 |
+    BNE .unmounted_yoshi_physics_01ECEA     ;$01ECE5 |
+    JMP .mounted_physics_01ED70             ;$01ECE7 |
 
-.CODE_01ECEA:
+.unmounted_yoshi_physics_01ECEA:
     JSR SubUpdateSprPos
     JSR IsOnGround                          ;$01ECED |
-    BEQ +                                   ;$01ECF0 |
-    JSR SetSomeYSpeed                       ;$01ECF2 |
-    LDA.b SpritePhase_C2,X                  ;$01ECF5 |
-    CMP.b #$02                              ;$01ECF7 |
-    BCS +                                   ;$01ECF9 |
-    STZ.b SpriteXSpeed_B6,X                 ;$01ECFB |
-    LDA.b #$F0                              ;$01ECFD |
-    STA.b SpriteYSpeed_AA,X                 ;$01ECFF |
+    BEQ +                                   ;$01ECF0 |\
+    JSR SetSomeYSpeed                       ;$01ECF2 || if Yoshi is on the ground
+    LDA.b SpritePhase_C2,X                  ;$01ECF5 ||
+    CMP.b #$02                              ;$01ECF7 ||
+    BCS +                                   ;$01ECF9 |\
+    STZ.b SpriteXSpeed_B6,X                 ;$01ECFB || if Yoshi is also normal, hop
+    LDA.b #$F0                              ;$01ECFD || 
+    STA.b SpriteYSpeed_AA,X                 ;$01ECFF |/
 +   JSR UpdateDirection                     ;$01ED01 |
     JSR IsTouchingObjSide                   ;$01ED04 |
-    BEQ +                                   ;$01ED07 |
-    JSR CODE_0190A2                         ;$01ED09 |
+    BEQ +                                   ;$01ED07 |\ if hitting wall, turn around
+    JSR flip_sprite_dir_0190A2              ;$01ED09 |/
 +   LDA.b #$04                              ;$01ED0C |
     CLC                                     ;$01ED0E |
     ADC.b SpriteXPosLow_E4,X                ;$01ED0F |
@@ -15130,71 +15128,72 @@ yoshi_01EBCA:
     STA $06                                 ;$01ED2C |
     JSL GetMarioClipping                    ;$01ED2E |
     JSL CheckForContact                     ;$01ED32 |
-    BCC .CODE_01ED70                        ;$01ED36 |
-    LDA.b PlayerInAir_72                    ;$01ED38 |
-    BEQ .CODE_01ED70                        ;$01ED3A |
-    LDA.w CarryingFlag_1470                 ;$01ED3C |
-    ORA.w RidingYoshi_187A                  ;$01ED3F |
-    BNE .CODE_01ED70                        ;$01ED42 |
-    LDA.b PlayerYSpeed_7D                   ;$01ED44 |
-    BMI .CODE_01ED70                        ;$01ED46 |
-..SetOnYoshi:
-    LDY.b #$01
-    JSR adjust_player_y_on_yoshi_01EDCE     ;$01ED4A |
-    STZ.b PlayerXSpeed_7B                   ;$01ED4D |
-    STZ.b PlayerYSpeed_7D                   ;$01ED4F |
-    LDA.b #$0C                              ;$01ED51 |
-    STA.w YoshiDuckTimer_18AF               ;$01ED53 |
-    LDA.b #$01                              ;$01ED56 |
-    STA.b SpritePhase_C2,X                  ;$01ED58 |
-    LDA.b #$02                              ;$01ED5A |
-    STA.w SPCIO1_1DFA                       ;$01ED5C |
-    LDA.b #$1F                              ;$01ED5F |
-    STA.w SPCIO3_1DFC                       ;$01ED61 |
-    JSL DisabledAddSmokeRt                  ;$01ED64 |
-    LDA.b #$20                              ;$01ED68 |
-    STA.w $163E,X                           ;$01ED6A |
-    INC.w $1697                             ;$01ED6D |
-.CODE_01ED70:
+    BCC .mounted_physics_01ED70             ;$01ED36 |\ branch if:
+    LDA.b PlayerInAir_72                    ;$01ED38 || - player is not in air
+    BEQ .mounted_physics_01ED70             ;$01ED3A || - player is carrying something
+    LDA.w CarryingFlag_1470                 ;$01ED3C || - already mounted
+    ORA.w RidingYoshi_187A                  ;$01ED3F || - player is going up
+    BNE .mounted_physics_01ED70             ;$01ED42 ||
+    LDA.b PlayerYSpeed_7D                   ;$01ED44 ||
+    BMI .mounted_physics_01ED70             ;$01ED46 ||
+; mount Yoshi                                        ||
+    LDY.b #$01                              ;$01ED48 ||\
+    JSR adjust_player_y_on_yoshi_01EDCE     ;$01ED4A |||
+    STZ.b PlayerXSpeed_7B                   ;$01ED4D |||
+    STZ.b PlayerYSpeed_7D                   ;$01ED4F |||
+    LDA.b #$0C                              ;$01ED51 |||
+    STA.w YoshiDuckTimer_18AF               ;$01ED53 |||
+    LDA.b #$01                              ;$01ED56 |||
+    STA.b SpritePhase_C2,X                  ;$01ED58 |||
+    LDA.b #$02                              ;$01ED5A |||
+    STA.w SPCIO1_1DFA                       ;$01ED5C |||
+    LDA.b #$1F                              ;$01ED5F |||
+    STA.w SPCIO3_1DFC                       ;$01ED61 |||
+    JSL DisabledAddSmokeRt                  ;$01ED64 |||
+    LDA.b #$20                              ;$01ED68 |||
+    STA.w Sprite_163E,X                     ;$01ED6A |||
+    INC.w SpriteStompCounter_1697           ;$01ED6D |/
+.mounted_physics_01ED70:
     LDA.b SpritePhase_C2,X                  ;$01ED70 |
     CMP.b #$01                              ;$01ED72 |
-    BNE ..return_01EDCB                     ;$01ED74 |
-    JSR yoshi_sprites_interaction_01F622    ;$01ED76 |
-    LDA.b byetudlrHold_15                   ;$01ED79 |
-    AND.b #$03                              ;$01ED7B |
-    BEQ +                                   ;$01ED7D |
-    DEC A                                   ;$01ED7F |
-    CMP.w SpriteDir_157C,X                  ;$01ED80 |
-    BEQ +                                   ;$01ED83 |
-    LDA.w $15AC,X                           ;$01ED85 |
-    ORA.w $151C,X                           ;$01ED88 |
-    ORA.w DuckingYoshi_18DC                 ;$01ED8B |
-    BNE +                                   ;$01ED8E |
-    LDA.b #$10                              ;$01ED90 |
-    STA.w $15AC,X                           ;$01ED92 |
-+   LDA.w PBalloonFlag_13F3                 ;$01ED95 |
-    BNE +                                   ;$01ED98 |
-    BIT.b axlr0000Press_18                  ;$01ED9A |
-    BPL ..return_01EDCB                     ;$01ED9C |
-+   LDA.b #$02                              ;$01ED9E |
-    STA.w $1FE2,X                           ;$01EDA0 |
-    STZ.b SpritePhase_C2,X                  ;$01EDA3 |
-    LDA.b #$03                              ;$01EDA5 |
-    STA.w SPCIO1_1DFA                       ;$01EDA7 |
-    STZ.w CarryYoshiLevels_0DC1             ;$01EDAA |
-    LDA.b PlayerXSpeed_7B                   ;$01EDAD |
-    STA.b SpriteXSpeed_B6,X                 ;$01EDAF |
-    LDA.b #$A0                              ;$01EDB1 |
-    LDY.b PlayerInAir_72                    ;$01EDB3 |
-    BNE +                                   ;$01EDB5 |
-    JSR SubHorizPos                         ;$01EDB7 |
-    LDA.w DATA_01EBC0,Y                     ;$01EDBA |
-    STA.b PlayerXSpeed_7B                   ;$01EDBD |
-    LDA.b #$C0                              ;$01EDBF |
-+   STA.b PlayerYSpeed_7D                   ;$01EDC1 |
-    STZ.w RidingYoshi_187A                  ;$01EDC3 |
-    STZ.b SpriteYSpeed_AA,X                 ;$01EDC6 |
-    JSR adjust_player_y_off_yoshi_01EDCC    ;$01EDC8 |
+    BNE ..return_01EDCB                     ;$01ED74 |\ if not mounted, return
+    JSR yoshi_sprites_interaction_01F622    ;$01ED76 ||
+    LDA.b byetudlrHold_15                   ;$01ED79 ||
+    AND.b #$03                              ;$01ED7B ||
+    BEQ +                                   ;$01ED7D ||\ if pressing left or right,
+    DEC A                                   ;$01ED7F ||| try to turn around
+    CMP.w SpriteDir_157C,X                  ;$01ED80 |||
+    BEQ +                                   ;$01ED83 |||
+    LDA.w SpriteTurnTimer_15AC,X            ;$01ED85 |||
+    ORA.w Sprite_151C,X                     ;$01ED88 |||
+    ORA.w DuckingYoshi_18DC                 ;$01ED8B |||
+    BNE +                                   ;$01ED8E |||\
+    LDA.b #$10                              ;$01ED90 |||/
+    STA.w SpriteTurnTimer_15AC,X            ;$01ED92 ||/
++   LDA.w PBalloonFlag_13F3                 ;$01ED95 ||
+    BNE +                                   ;$01ED98 ||\ if just pressed A or has a P-Balloon
+    BIT.b axlr0000Press_18                  ;$01ED9A ||| dismount
+    BPL ..return_01EDCB                     ;$01ED9C ||/
+; dismount Yoshi:                                    ||
++   LDA.b #$02                              ;$01ED9E ||
+    STA.w SpriteDisableTimer_1FE2,X         ;$01EDA0 ||
+    STZ.b SpritePhase_C2,X                  ;$01EDA3 || normal phase
+    LDA.b #$03                              ;$01EDA5 ||
+    STA.w SPCIO1_1DFA                       ;$01EDA7 ||
+    STZ.w CarryYoshiLevels_0DC1             ;$01EDAA ||
+    LDA.b PlayerXSpeed_7B                   ;$01EDAD ||
+    STA.b SpriteXSpeed_B6,X                 ;$01EDAF || set Yoshi X speed same as player's
+    LDA.b #$A0                              ;$01EDB1 ||
+    LDY.b PlayerInAir_72                    ;$01EDB3 ||
+    BNE +                                   ;$01EDB5 ||\
+    JSR SubHorizPos                         ;$01EDB7 ||| set spinjump dismount
+    LDA.w DATA_01EBC0,Y                     ;$01EDBA ||| however, this does not set the spin jump flag $140D
+    STA.b PlayerXSpeed_7B                   ;$01EDBD ||| which is set by $D646 and can be bypassed sometimes
+    LDA.b #$C0                              ;$01EDBF ||/
++   STA.b PlayerYSpeed_7D                   ;$01EDC1 ||
+    STZ.w RidingYoshi_187A                  ;$01EDC3 ||
+    STZ.b SpriteYSpeed_AA,X                 ;$01EDC6 ||
+    JSR adjust_player_y_off_yoshi_01EDCC    ;$01EDC8 |/
 ..return_01EDCB:
     RTS
 

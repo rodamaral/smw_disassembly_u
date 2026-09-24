@@ -1490,14 +1490,14 @@ skip 2
 CapeInteracts_13E8: skip 1
 CapeInteractionXPos_13E9: skip 2
 CapeInteractionYPos_13EB: skip 2
-PlayerSlopePose_13ED: skip 1
+PlayerSlopePose_13ED: skip 1 ;done
 CurrentSlope_13EE: skip 1
-PlayerIsOnGround_13EF: skip 1
+PlayerGroundType_13EF: skip 1
 NetDoorDirIndex_13F0: skip 1
 VerticalScrollEnabled_13F1: skip 1
 ; 7E13F2 unused
 skip 1
-PBalloonFlag_13F3: skip 1
+PBalloonFlag_13F3: skip 1 ;done
 BonusRoomBlocks_13F4: skip 5
 PlayerBehindNet_13F9: skip 1
 PlayerCanJumpWater_13FA: skip 1
@@ -1727,10 +1727,10 @@ SpriteDir_157C: skip 12
 ; Valid values
 !SpriteDir_Left = 0
 !SpriteDir_Right = 1
-SpriteBlockedDirs_1588: skip 12
+SpriteBlocked_1588: skip 12
 Sprite_1594: skip 12
 SpriteOffscreenX_15A0: skip 12
-SpriteMisc_15AC: skip 12
+SpriteTurnTimer_15AC: skip 12
 SpriteSlope_15B8: skip 12
 SpriteWayOffscreenX_15C4: skip 12
 SpriteOnYoshiTongue_15D0: skip 12
@@ -2087,7 +2087,7 @@ SaveDataBufferSwitches_1FCE: skip 4
 skip 3
 SaveDataBufferExits_1FD5: skip 1
 SpriteMisc_1FD6: skip 12
-SpriteMisc_1FE2: skip 12
+SpriteDisableTimer_1FE2: skip 12
 MoonCollected_1FEE: skip 12
 ; 7E1FFA unused
 skip 1
