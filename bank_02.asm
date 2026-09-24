@@ -5360,7 +5360,7 @@ CODE_02A823:
     LDX.b #$00                              ;$02A82A |
     LDY.b #$01                              ;$02A82C |
 LoadSpriteLoopStrt:
-    LDA [$CE],Y
+    LDA.b [SpriteDataPtr_CE],Y
     CMP.b #$FF                              ;$02A830 |
     BEQ Return02A84B                        ;$02A832 |
     ASL                                     ;$02A834 |
@@ -5369,7 +5369,7 @@ LoadSpriteLoopStrt:
     AND.b #$10                              ;$02A837 |
     STA $02                                 ;$02A839 |
     INY                                     ;$02A83B |
-    LDA [$CE],Y                             ;$02A83C |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02A83C |
     AND.b #$0F                              ;$02A83E |
     ORA $02                                 ;$02A840 |
     CMP $01                                 ;$02A842 |
@@ -5385,7 +5385,7 @@ Return02A84B:
 
 CODE_02A84C:
     BNE Return02A84B
-    LDA [$CE],Y                             ;$02A84E |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02A84E |
     AND.b #$F0                              ;$02A850 |
     CMP $00                                 ;$02A852 |
     BNE LoadNextSprite                      ;$02A854 |
@@ -5394,7 +5394,7 @@ CODE_02A84C:
     STX $02                                 ;$02A85B |
     INC.w $1938,X                           ;$02A85D |
     INY                                     ;$02A860 |
-    LDA [$CE],Y                             ;$02A861 |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02A861 |
     STA $05                                 ;$02A863 |
     DEY                                     ;$02A865 |
     CMP.b #$E7                              ;$02A866 |
@@ -5410,7 +5410,7 @@ LoadScrollSprite:
     SBC.b #$E7                              ;$02A877 |
     STA.w $143E                             ;$02A879 |
     DEY                                     ;$02A87C |
-    LDA [$CE],Y                             ;$02A87D |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02A87D |
     LSR                                     ;$02A87F |
     LSR                                     ;$02A880 |
     STA.w $1440                             ;$02A881 |
@@ -5538,7 +5538,7 @@ CODE_02A93C:
     LDA.b ScreenMode_5B                     ;$02A93E |
     LSR                                     ;$02A940 |
     BCC CODE_02A95B                         ;$02A941 |
-    LDA [$CE],Y                             ;$02A943 |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02A943 |
     PHA                                     ;$02A945 |
     AND.b #$F0                              ;$02A946 |
     STA.b SpriteXPosLow_E4,X                ;$02A948 |
@@ -5552,7 +5552,7 @@ CODE_02A93C:
     BRA CODE_02A971                         ;$02A959 |
 
 CODE_02A95B:
-    LDA [$CE],Y
+    LDA.b [SpriteDataPtr_CE],Y
     PHA                                     ;$02A95D |
     AND.b #$F0                              ;$02A95E |
     STA.b SpriteYPosLow_D8,X                ;$02A960 |
@@ -5569,7 +5569,7 @@ CODE_02A971:
     LDA $04                                 ;$02A973 |
     STA.w SpriteStatus_14C8,X               ;$02A975 |
     CMP.b #$09                              ;$02A978 |
-    LDA [$CE],Y                             ;$02A97A |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02A97A |
     BCC CODE_02A984                         ;$02A97C |
     SEC                                     ;$02A97E |
     SBC.b #$DA                              ;$02A97F |
@@ -5682,7 +5682,7 @@ ADDR_02AA35:
     ADC.b #$00                              ;$02AA4F |
     STA.w $1E3E,X                           ;$02AA51 |
     LDY $03                                 ;$02AA54 |
-    LDA [$CE],Y                             ;$02AA56 |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02AA56 |
     PHA                                     ;$02AA58 |
     AND.b #$F0                              ;$02AA59 |
     STA.w $1E02,X                           ;$02AA5B |
@@ -5814,7 +5814,7 @@ CODE_02AB28:
     STZ $0F                                 ;$02AB42 |
     BEQ CODE_02AB6D                         ;$02AB44 |
     LDY $03                                 ;$02AB46 |
-    LDA [$CE],Y                             ;$02AB48 |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02AB48 |
     LDY.w $18BA                             ;$02AB4A |
     PHA                                     ;$02AB4D |
     AND.b #$F0                              ;$02AB4E |
@@ -5870,7 +5870,7 @@ CODE_02AB9E:
     LDA.b ScreenMode_5B                     ;$02ABA8 |
     LSR                                     ;$02ABAA |
     BCC CODE_02ABC7                         ;$02ABAB |
-    LDA [$CE],Y                             ;$02ABAD |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02ABAD |
     PHA                                     ;$02ABAF |
     AND.b #$F0                              ;$02ABB0 |
     STA.w $179B,X                           ;$02ABB2 |
@@ -5884,7 +5884,7 @@ CODE_02AB9E:
     BRA CODE_02ABDF                         ;$02ABC5 |
 
 CODE_02ABC7:
-    LDA [$CE],Y
+    LDA.b [SpriteDataPtr_CE],Y
     PHA                                     ;$02ABC9 |
     AND.b #$F0                              ;$02ABCA |
     STA.w $178B,X                           ;$02ABCC |
@@ -6349,7 +6349,7 @@ DATA_02AF30:
 
 Load3Platforms:
     LDY $03
-    LDA [$CE],Y                             ;$02AF35 |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02AF35 |
     PHA                                     ;$02AF37 |
     AND.b #$F0                              ;$02AF38 |
     STA $08                                 ;$02AF3A |
@@ -6407,7 +6407,7 @@ EerieGroupSpeedX:
 
 Load5Eeries:
     LDY $03
-    LDA [$CE],Y                             ;$02AF9F |
+    LDA.b [SpriteDataPtr_CE],Y              ;$02AF9F |
     PHA                                     ;$02AFA1 |
     AND.b #$F0                              ;$02AFA2 |
     STA $08                                 ;$02AFA4 |
@@ -15227,10 +15227,10 @@ WigglerInit:
     LDY.b #$7E                              ;$02EFF8 |
 CODE_02EFFA:
     LDA.b SpriteXPosLow_E4,X
-    STA [$D5],Y                             ;$02EFFC |
+    STA.b [WigglerSegmentPtr_D5],Y          ;$02EFFC |
     LDA.b SpriteYPosLow_D8,X                ;$02EFFE |
     INY                                     ;$02F000 |
-    STA [$D5],Y                             ;$02F001 |
+    STA.b [WigglerSegmentPtr_D5],Y          ;$02F001 |
     DEY                                     ;$02F003 |
     DEY                                     ;$02F004 |
     DEY                                     ;$02F005 |
@@ -15248,12 +15248,12 @@ CODE_02F011:
     LDA.b #$7B                              ;$02F015 |
     CLC                                     ;$02F017 |
     ADC.w DATA_02EFEA,Y                     ;$02F018 |
-    STA $D5                                 ;$02F01B |
+    STA.b WigglerSegmentPtr_D5              ;$02F01B |
     LDA.b #$9A                              ;$02F01D |
     ADC.w DATA_02EFEE,Y                     ;$02F01F |
-    STA $D6                                 ;$02F022 |
+    STA.b WigglerSegmentPtr_D5+1            ;$02F022 |
     LDA.b #$7F                              ;$02F024 |
-    STA $D7                                 ;$02F026 |
+    STA.b WigglerSegmentPtr_D5+2            ;$02F026 |
     RTS                                     ;$02F028 |
 
 WigglerMain:
@@ -15353,11 +15353,11 @@ CODE_02F0DB:
     PHX
     PHB                                     ;$02F0DC |
     REP #$30                                ;$02F0DD |
-    LDA $D5                                 ;$02F0DF |
+    LDA.b WigglerSegmentPtr_D5              ;$02F0DF |
     CLC                                     ;$02F0E1 |
     ADC.w #$007D                            ;$02F0E2 |
     TAX                                     ;$02F0E5 |
-    LDA $D5                                 ;$02F0E6 |
+    LDA.b WigglerSegmentPtr_D5              ;$02F0E6 |
     CLC                                     ;$02F0E8 |
     ADC.w #$007F                            ;$02F0E9 |
     TAY                                     ;$02F0EC |
@@ -15368,10 +15368,10 @@ CODE_02F0DB:
     PLX                                     ;$02F0F6 |
     LDY.b #$00                              ;$02F0F7 |
     LDA.b SpriteXPosLow_E4,X                ;$02F0F9 |
-    STA [$D5],Y                             ;$02F0FB |
+    STA.b [WigglerSegmentPtr_D5],Y          ;$02F0FB |
     LDA.b SpriteYPosLow_D8,X                ;$02F0FD |
     INY                                     ;$02F0FF |
-    STA [$D5],Y                             ;$02F100 |
+    STA.b [WigglerSegmentPtr_D5],Y          ;$02F100 |
     RTS                                     ;$02F102 |
 
 DATA_02F103:
@@ -15423,7 +15423,7 @@ CODE_02F12D:
     TAY                                     ;$02F14C |
 CODE_02F14D:
     STY $09
-    LDA [$D5],Y                             ;$02F14F |
+    LDA.b [WigglerSegmentPtr_D5],Y          ;$02F14F |
     PLY                                     ;$02F151 |
     SEC                                     ;$02F152 |
     SBC.b Layer1XPos_1A                     ;$02F153 |
@@ -15431,7 +15431,7 @@ CODE_02F14D:
     PHY                                     ;$02F158 |
     LDY $09                                 ;$02F159 |
     INY                                     ;$02F15B |
-    LDA [$D5],Y                             ;$02F15C |
+    LDA.b [WigglerSegmentPtr_D5],Y          ;$02F15C |
     PLY                                     ;$02F15E |
     SEC                                     ;$02F15F |
     SBC.b Layer1YPos_1C                     ;$02F160 |

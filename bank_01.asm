@@ -5631,7 +5631,7 @@ CODE_01A897:
     LDA $0B                                 ;$01A8A7 |
     SBC.b #$00                              ;$01A8A9 |
     PLP                                     ;$01A8AB |
-    SBC $D4                                 ;$01A8AC |
+    SBC.b PlayerYPosMirror_D3+1             ;$01A8AC |
     BMI CODE_01A8E6                         ;$01A8AE |
     LDA.b PlayerYSpeed_7D                   ;$01A8B0 |
     BPL CODE_01A8C0                         ;$01A8B2 |
@@ -6307,7 +6307,7 @@ CODE_01AD42:
     SEC                                     ;$01AD46 |
     SBC.b SpriteYPosLow_D8,X                ;$01AD47 |
     STA $0E                                 ;$01AD49 |
-    LDA $D4                                 ;$01AD4B |
+    LDA.b PlayerYPosMirror_D3+1             ;$01AD4B |
     SBC.w SpriteYPosHigh_14D4,X             ;$01AD4D |
     BPL Return01AD53                        ;$01AD50 |
     INY                                     ;$01AD52 |
@@ -14440,7 +14440,7 @@ CODE_01E81D:
     CLC
     ADC.b PlayerYPosMirror_D3               ;$01E81E |
     STA.b SpriteYPosLow_D8,X                ;$01E820 |
-    LDA $D4                                 ;$01E822 |
+    LDA.b PlayerYPosMirror_D3+1             ;$01E822 |
     ADC.b #$00                              ;$01E824 |
     STA.w SpriteYPosHigh_14D4,X             ;$01E826 |
     LDA.b PlayerXPosMirror_D1               ;$01E829 |
@@ -14488,7 +14488,7 @@ CODE_01E866:
     CLC                                     ;$01E871 |
     ADC.w DATA_01E793,Y                     ;$01E872 |
     STA.b SpriteYPosLow_D8,X                ;$01E875 |
-    LDA $D4                                 ;$01E877 |
+    LDA.b PlayerYPosMirror_D3+1             ;$01E877 |
     ADC.b #$00                              ;$01E879 |
     STA.w SpriteYPosHigh_14D4,X             ;$01E87B |
     STZ.b PlayerInAir_72                    ;$01E87E |
@@ -15214,7 +15214,7 @@ adjust_player_y_on_yoshi_01EDCE:
     LDA.w SpriteYPosHigh_14D4,X             ;$01EDD8 |
     SBC.b #$00                              ;$01EDDB |
     STA.b PlayerYPos_96+1                   ;$01EDDD |
-    STA $D4                                 ;$01EDDF |
+    STA.b PlayerYPosMirror_D3+1             ;$01EDDF |
     RTS                                     ;$01EDE1 |
 
 .yoshi_offset_distance_01EDE2:
@@ -16802,13 +16802,13 @@ CODE_01F9A2:
     SEC                                     ;$01F9A5 |
     SBC.w $18B6                             ;$01F9A6 |
     STA.b PlayerYPosMirror_D3               ;$01F9A9 |
-    LDA $D4                                 ;$01F9AB |
+    LDA.b PlayerYPosMirror_D3+1             ;$01F9AB |
     PHA                                     ;$01F9AD |
     SBC.b #$00                              ;$01F9AE |
-    STA $D4                                 ;$01F9B0 |
+    STA.b PlayerYPosMirror_D3+1             ;$01F9B0 |
     JSR CODE_01AD42                         ;$01F9B2 |
     PLA                                     ;$01F9B5 |
-    STA $D4                                 ;$01F9B6 |
+    STA.b PlayerYPosMirror_D3+1             ;$01F9B6 |
     PLA                                     ;$01F9B8 |
     STA.b PlayerYPosMirror_D3               ;$01F9B9 |
     LDA $AA,X                               ;$01F9BB |

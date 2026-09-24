@@ -6481,15 +6481,15 @@ CODE_05D8B7:
     LDA.w #$0000                            ;$05D8E6 |
     SEP #$20                                ;$05D8E9 |
     LDA.w Ptrs05EC00,Y                      ;$05D8EB |
-    STA $CE                                 ;$05D8EE |
+    STA.b SpriteDataPtr_CE                  ;$05D8EE |
     LDA.w $EC01,Y                           ;$05D8F0 |
     STA $CF                                 ;$05D8F3 |
     LDA.b #$07                              ;$05D8F5 |
     STA $D0                                 ;$05D8F7 |
-    LDA [$CE]                               ;$05D8F9 |
+    LDA.b [SpriteDataPtr_CE]                ;$05D8F9 |
     AND.b #$3F                              ;$05D8FB |
     STA.w SpriteMemorySetting_1692          ;$05D8FD |
-    LDA [$CE]                               ;$05D900 |
+    LDA.b [SpriteDataPtr_CE]                ;$05D900 |
     AND.b #$C0                              ;$05D902 |
     STA.w $190E                             ;$05D904 |
     REP #$10                                ;$05D907 |
@@ -6684,15 +6684,15 @@ CODE_05DA60:
     STA.b Layer2YPos_20                     ;$05DA79 |
     STZ.w $192A                             ;$05DA7B |
     LDA.b #$EE                              ;$05DA7E |
-    STA $CE                                 ;$05DA80 |
+    STA.b SpriteDataPtr_CE                  ;$05DA80 |
     LDA.b #$C3                              ;$05DA82 |
     STA $CF                                 ;$05DA84 |
     LDA.b #$07                              ;$05DA86 |
     STA $D0                                 ;$05DA88 |
-    LDA [$CE]                               ;$05DA8A |
+    LDA.b [SpriteDataPtr_CE]                ;$05DA8A |
     AND.b #$3F                              ;$05DA8C |
     STA.w SpriteMemorySetting_1692          ;$05DA8E |
-    LDA [$CE]                               ;$05DA91 |
+    LDA.b [SpriteDataPtr_CE]                ;$05DA91 |
     AND.b #$C0                              ;$05DA93 |
     STA.w $190E                             ;$05DA95 |
     STZ.w $1413                             ;$05DA98 |
@@ -6796,14 +6796,14 @@ CODE_05DB49:
     LDA.l ChocIsld2Layer1,X                 ;$05DB4B |
     STA.b Layer1DataPtr_65                  ;$05DB4F |
     LDA.l ChocIsld2Sprites,X                ;$05DB51 |
-    STA $CE                                 ;$05DB55 |
+    STA.b SpriteDataPtr_CE                  ;$05DB55 |
     LDA.l ChocIsld2Layer2,X                 ;$05DB57 |
     STA.b Layer2DataPtr_68                  ;$05DB5B |
     SEP #$20                                ;$05DB5D |
-    LDA [$CE]                               ;$05DB5F |
+    LDA.b [SpriteDataPtr_CE]                ;$05DB5F |
     AND.b #$7F                              ;$05DB61 |
     STA.w SpriteMemorySetting_1692          ;$05DB63 |
-    LDA [$CE]                               ;$05DB66 |
+    LDA.b [SpriteDataPtr_CE]                ;$05DB66 |
     AND.b #$80                              ;$05DB68 |
     STA.w $190E                             ;$05DB6A |
     RTS                                     ;$05DB6D |
