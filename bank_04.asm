@@ -5075,7 +5075,7 @@ CODE_04D76A:
     RTL                                     ;$04D76F |
 
 CODE_04D770:
-    STA.l $7FC800,X
+    STA.l Map16TilesHigh_7FC800,X
     STA.l $7FC9B0,X                         ;$04D774 |
     STA.l $7FCB60,X                         ;$04D778 |
     STA.l $7FCD10,X                         ;$04D77C |
@@ -5596,7 +5596,7 @@ CODE_04DCE8:
     LDA.l $7EC800,X                         ;$04DCEA |
     STA $02                                 ;$04DCEE |
     REP #$20                                ;$04DCF0 |
-    LDA.l $7FC800,X                         ;$04DCF2 |
+    LDA.l Map16TilesHigh_7FC800,X           ;$04DCF2 |
     STA $03                                 ;$04DCF6 |
     LDA $02                                 ;$04DCF8 |
     ASL                                     ;$04DCFA |

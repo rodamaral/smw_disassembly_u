@@ -370,7 +370,7 @@ CODE_0582C8:
     RTS                                     ;$058339 |
 
 CODE_05833A:
-    STA.l $7FC800,X
+    STA.l Map16TilesHigh_7FC800,X
     STA.l $7FCA00,X                         ;$05833E |
     STA.l $7FCC00,X                         ;$058342 |
     STA.l $7FCE00,X                         ;$058346 |

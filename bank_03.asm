@@ -10065,7 +10065,7 @@ CODE_03D798:
     LDA.b #$25                              ;$03D79F |
     STA.l $7EC800,X                         ;$03D7A1 |
     LDA.b #$00                              ;$03D7A5 |
-    STA.l $7FC800,X                         ;$03D7A7 |
+    STA.l Map16TilesHigh_7FC800,X           ;$03D7A7 |
     REP #$20                                ;$03D7AB |
     LDA.l $7F837B                           ;$03D7AD |
     TAX                                     ;$03D7B1 |

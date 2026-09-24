@@ -3043,8 +3043,8 @@ CODE_009A1F:
 CODE_009A23:
     STA.l $7EC800,X
     STA.l $7EC9B0,X                         ;$009A27 |
-    STA.l $7FC800,X                         ;$009A2B |
-    STA.l $7FC9B0,X                         ;$009A2F |
+    STA.l Map16TilesHigh_7FC800,X           ;$009A2B |
+    STA.l Map16TilesHigh_7FC800+$1B0,X      ;$009A2F |
     INX                                     ;$009A33 |
     DEY                                     ;$009A34 |
     BNE CODE_009A23                         ;$009A35 |
