@@ -581,7 +581,7 @@ CODE_058563:
     LSR                                     ;$05857B |
     LSR                                     ;$05857C |
     TAX                                     ;$05857D |
-    LDA.w $141A                             ;$05857E |
+    LDA.w SublevelCount_141A                ;$05857E |
     BNE CODE_058590                         ;$058581 |
     LDA.l TimerTable,X                      ;$058583 |
     STA.w $0F31                             ;$058587 |
@@ -6311,7 +6311,7 @@ CODE_05D796:
 CODE_05D7A8:
     JSR CODE_05DBAC
 CODE_05D7AB:
-    LDA.w $141A
+    LDA.w SublevelCount_141A
     BNE CODE_05D7B3                         ;$05D7AE |
     JMP CODE_05D83E                         ;$05D7B0 |
 
@@ -6518,7 +6518,7 @@ CODE_05D8B7:
     STZ.b Layer2YPos_20+1                   ;$05D936 |
     LDA.w DATA_05F600,Y                     ;$05D938 |
     AND.b #$80                              ;$05D93B |
-    STA.w $141F                             ;$05D93D |
+    STA.w DisableNoYoshiIntro_141F          ;$05D93D |
     LDA.w DATA_05F600,Y                     ;$05D940 |
     AND.b #$60                              ;$05D943 |
     LSR                                     ;$05D945 |
@@ -6578,7 +6578,7 @@ CODE_05D9A1:
     LDA.b #$01                              ;$05D9B3 |
     STA.w $1412                             ;$05D9B5 |
 CODE_05D9B8:
-    LDA.w $141A
+    LDA.w SublevelCount_141A
     BNE CODE_05D9EC                         ;$05D9BB |
     LDA $02                                 ;$05D9BD |
     LSR                                     ;$05D9BF |
@@ -6650,11 +6650,11 @@ CODE_05DA35:
     JMP CODE_05DAD7
 
 CODE_05DA38:
-    LDA.w $141A
+    LDA.w SublevelCount_141A
     BNE CODE_05DA35                         ;$05DA3B |
-    LDA.w $141D                             ;$05DA3D |
+    LDA.w ShowMarioStart_141D               ;$05DA3D |
     BNE CODE_05DA35                         ;$05DA40 |
-    LDA.w $141F                             ;$05DA42 |
+    LDA.w DisableNoYoshiIntro_141F          ;$05DA42 |
     BNE CODE_05DA35                         ;$05DA45 |
     LDA.w Translevel_13BF                   ;$05DA47 |
     CMP.b #$31                              ;$05DA4A |
@@ -6723,7 +6723,7 @@ CODE_05DAD0:
     LDA.l DATA_05D760,X
     STA.w $1931                             ;$05DAD4 |
 CODE_05DAD7:
-    LDA.w $141A
+    LDA.w SublevelCount_141A
     BEQ CODE_05DAEB                         ;$05DADA |
     LDA.w BonusGameFlag_1425                ;$05DADC |
     BNE CODE_05DAEB                         ;$05DADF |
@@ -6858,7 +6858,7 @@ CODE_05DBB5:
 CODE_05DBBF:
     LDA.w DATA_05DBA9,Y
     STA.w $19B8,X                           ;$05DBC2 |
-    INC.w $141A                             ;$05DBC5 |
+    INC.w SublevelCount_141A                ;$05DBC5 |
     RTS                                     ;$05DBC8 |
 
 DATA_05DBC9:

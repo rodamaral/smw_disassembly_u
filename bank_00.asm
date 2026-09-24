@@ -171,8 +171,8 @@ upload_level_music:
     LDA.w OverworldOverride_0109            ;$008139 | Load bank 2 music if this is the intro level
     CMP.b #$E9                              ;$00813C |
     BEQ upload_music_bank_2                 ;$00813E |
-    ORA.w $141A                             ;$008140 | If you are transitioning levels reupload music
-    ORA.w $141D                             ;$008143 |
+    ORA.w SublevelCount_141A                ;$008140 | If you are transitioning levels reupload music
+    ORA.w ShowMarioStart_141D               ;$008143 |
     BNE SPC_upload_return                   ;$008146 /
 upload_music_bank_2:
     LDA.b #music_bank_2                     ;$008148 \ Set up pointer at $00 to the SPC data ($0EAED6)
@@ -795,7 +795,7 @@ update_controllers:                         ;        \
     AND.w byetudlrP2Hold_0DA3               ;$008697 | | Reset any disabled bits turned on
     STA.w byetudlrP2Frame_0DA7              ;$00869A | | Store controller data
     STY.w byetudlrP2Mask_0DAB               ;$00869D |/
-    LDX.w $0DA0                             ;$0086A0 |\ Check for the second controller
+    LDX.w ControllersPresent_0DA0           ;$0086A0 |\ Check for the second controller
     BPL .single_controller                  ;$0086A3 |/
     LDX.w CurrentPlayer_0DB3                ;$0086A5 | Load current player
 .single_controller                          ;        |
@@ -1989,7 +1989,7 @@ try_castle_entrance_00919B:
     JSR execute_player_animation_00C593     ;$0091A1 ||
     BRA ++                                  ;$0091A4 |/
 
-+   LDA.w $141A                             ;$0091A6 |\
++   LDA.w SublevelCount_141A                ;$0091A6 |\
     BNE ++                                  ;$0091A9 || if entering from overworld (main level)
     LDA.b #$1E                              ;$0091AB || set the Green star block coin counter
     STA.w $0DC0                             ;$0091AD |/
@@ -2619,8 +2619,8 @@ GM10_level_start_00968E:
     JSR CODE_0085FA
     LDA.w BonusGameFlag_1425                ;$009691 |
     BNE CODE_0096A8                         ;$009694 |
-    LDA.w $141A                             ;$009696 |
-    ORA.w $141D                             ;$009699 |
+    LDA.w SublevelCount_141A                ;$009696 |
+    ORA.w ShowMarioStart_141D               ;$009699 |
     ORA.w OverworldOverride_0109            ;$00969C |
     BNE CODE_0096AB                         ;$00969F |
     LDA.w $13C1                             ;$0096A1 |
@@ -2654,9 +2654,9 @@ CODE_0096CF:
 GM11_level_load_1_0096D5:
     STZ.w $4200
     JSR disable_controls                    ;$0096D8 |
-    LDA.w $141A                             ;$0096DB |
+    LDA.w SublevelCount_141A                ;$0096DB |
     BNE CODE_0096E9                         ;$0096DE |
-    LDA.w $141D                             ;$0096E0 |
+    LDA.w ShowMarioStart_141D               ;$0096E0 |
     BEQ CODE_0096E9                         ;$0096E3 |
     JSL CODE_04DC09                         ;$0096E5 |
 CODE_0096E9:
@@ -3096,7 +3096,7 @@ SetUp0DA0GM4:
 CODE_009A86:
     DEC A
 CODE_009A87:
-    STA.w $0DA0
+    STA.w ControllersPresent_0DA0
     RTS                                     ;$009A8A |
 
 GM04_title_load_2_009A8B:
@@ -3620,7 +3620,7 @@ CODE_009E26:
     REP #$20                                ;$009E3D |
     STZ.w $0DB6                             ;$009E3F |
     STZ.w $0DB8                             ;$009E42 |
-    STZ.w $0DBA                             ;$009E45 |
+    STZ.w SavedPlayerYoshi_0DBA             ;$009E45 |
     STZ.w $0DC2                             ;$009E48 |
     STZ.w $0F48                             ;$009E4B |
     STZ.w $0F34                             ;$009E4E |
@@ -3944,9 +3944,9 @@ GM0C_overworld_load_00A087:
     STA.w $0DB6,X                           ;$00A0D2 |
     LDA.w CarryYoshiLevels_0DC1             ;$00A0D5 |
     BEQ .CODE_00A0DD                        ;$00A0D8 |
-    LDA.w $13C7                             ;$00A0DA |
+    LDA.w YoshiColor_13C7                   ;$00A0DA |
 .CODE_00A0DD:
-    STA.w $0DBA,X
+    STA.w SavedPlayerYoshi_0DBA,X
     LDA.w $0DC2                             ;$00A0E0 |
     STA.w $0DBC,X                           ;$00A0E3 |
     LDA.b #$03                              ;$00A0E6 |
@@ -4605,7 +4605,7 @@ CODE_00A660:
     ORA.w $13F7                             ;$00A669 |
     ORA.w $13F8                             ;$00A66C |
     BEQ CODE_00A674                         ;$00A66F |
-    STA.w $141B                             ;$00A671 |
+    STA.w DidPlayBonusGame_141B             ;$00A671 |
 CODE_00A674:
     LDX.b #$23
 CODE_00A676:
@@ -4629,9 +4629,9 @@ CODE_00A67D:
     LDA.w DATA_00A625,X                     ;$00A69B |
     LSR                                     ;$00A69E |
     BEQ CODE_00A6CC                         ;$00A69F |
-    LDA.w $141D                             ;$00A6A1 |
-    ORA.w $141A                             ;$00A6A4 |
-    ORA.w $141F                             ;$00A6A7 |
+    LDA.w ShowMarioStart_141D               ;$00A6A1 |
+    ORA.w SublevelCount_141A                ;$00A6A4 |
+    ORA.w DisableNoYoshiIntro_141F          ;$00A6A7 |
     BNE CODE_00A6CC                         ;$00A6AA |
     LDA.w $13CF                             ;$00A6AC |
     BEQ CODE_00A6B6                         ;$00A6AF |
@@ -4788,7 +4788,7 @@ CODE_00A7AF:
     CLC                                     ;$00A7B3 |
     ADC.b Layer2YPos_20                     ;$00A7B4 |
 CODE_00A7B6:
-    STA.w $1417
+    STA.w BackgroundVertOffset_1417
 CODE_00A7B9:
     LDA.w #$0080
     STA.w $142A                             ;$00A7BC |
@@ -6599,7 +6599,7 @@ generate_tile:
     PHP
     REP #$30                                ;$00BEB1 |
     PHX                                     ;$00BEB3 |
-    LDA $9C                                 ;$00BEB4 |
+    LDA.b TileGenerate_9C                   ;$00BEB4 |
     AND.w #$00FF                            ;$00BEB6 |
     BNE CODE_00BEBE                         ;$00BEB9 |
 ADDR_00BEBB:
@@ -6753,7 +6753,7 @@ CODE_00BFB9:
 
 CODE_00BFBC:
     SEP #$30
-    LDA $9C                                 ;$00BFBE |
+    LDA.b TileGenerate_9C                   ;$00BFBE |
     DEC A                                   ;$00BFC0 |
     PHK                                     ;$00BFC1 |
     PER $0003                               ;$00BFC2 |
@@ -6866,7 +6866,7 @@ CODE_00C077:
     AND.w #$000F                            ;$00C086 |
     ORA $04                                 ;$00C089 |
     TAY                                     ;$00C08B |
-    LDA $9C                                 ;$00C08C |
+    LDA.b TileGenerate_9C                   ;$00C08C |
     AND.w #$00FF                            ;$00C08E |
     TAX                                     ;$00C091 |
     SEP #$20                                ;$00C092 |
@@ -6902,7 +6902,7 @@ CODE_00C0C4:
     AND.w #$000F                            ;$00C0D3 |
     ORA $04                                 ;$00C0D6 |
     TAY                                     ;$00C0D8 |
-    LDA $9C                                 ;$00C0D9 |
+    LDA.b TileGenerate_9C                   ;$00C0D9 |
     SEC                                     ;$00C0DB |
     SBC.w #$0009                            ;$00C0DC |
     AND.w #$00FF                            ;$00C0DF |
@@ -7151,7 +7151,7 @@ CODE_00C334:
     LDA $06                                 ;$00C33D |
     ADC.b #$00                              ;$00C33F |
     STA $06                                 ;$00C341 |
-    LDA $9C                                 ;$00C343 |
+    LDA.b TileGenerate_9C                   ;$00C343 |
     SEC                                     ;$00C345 |
     SBC.b #$19                              ;$00C346 |
     STA $00                                 ;$00C348 |
@@ -7791,7 +7791,7 @@ CODE_00C8BC:
     BMI CODE_00C8CE                         ;$00C8CA |
     LDY.b #$7F                              ;$00C8CC |
 CODE_00C8CE:
-    STY.w $18D9
+    STY.w NoYoshiIntroTimer_18D9
 CODE_00C8D1:
     JSR apply_player_speeds
     LDA.b #$24                              ;$00C8D4 |
@@ -7817,7 +7817,7 @@ CODE_00C8F8:
     JMP use_land_physics
 
 CODE_00C8FB:
-    INC.w $141D
+    INC.w ShowMarioStart_141D
     LDA.b #!FadeToLevel_0F                  ;$00C8FE |
     STA.w GameMode_0100                     ;$00C900 |
     CPX.b #$11                              ;$00C903 |
@@ -7825,7 +7825,7 @@ CODE_00C8FB:
     INC.w CarryYoshiLevels_0DC1             ;$00C907 |
 CODE_00C90A:
     LDA.b #$01
-    STA.w $1B9B                             ;$00C90C |
+    STA.w RemoveYoshiFlag_1B9B              ;$00C90C |
     LDA.b #$03                              ;$00C90F |
     STA.w SPCIO1_1DFA                       ;$00C911 |
     RTS                                     ;$00C914 |
@@ -7926,7 +7926,7 @@ CODE_00C9C2:
     JSR no_special_collision                ;$00C9C9 |
     LDA.w SpotlightSize_1433                ;$00C9CC |
     BNE Return00CA30                        ;$00C9CF |
-    LDA.w $141C                             ;$00C9D1 |
+    LDA.w SecretGoalTape_141C               ;$00C9D1 |
     INC A                                   ;$00C9D4 |
     CMP.b #$03                              ;$00C9D5 |
     BNE CODE_00C9DF                         ;$00C9D7 |
@@ -8399,7 +8399,7 @@ set_yoshi_pose:                             ;        \
     BIT.b byetudlrPress_16                  ;$00CDD0 |\ and X or Y is tapped,
     BVC return_00CDDC                       ;$00CDD2 |/
     LDA.b #$08                              ;$00CDD4 |\
-    STA.w $18DB                             ;$00CDD6 |/
+    STA.w Unread_18DB                       ;$00CDD6 |/
     JSR shoot_fireball                      ;$00CDD9 | then shoot a fireball.
 return_00CDDC:                              ;        |
     RTS                                     ;$00CDDC /
@@ -8819,7 +8819,7 @@ death_animation:
     BNE .not_done                           ;$00D0C9 |/ keep letting the player fall.
     LDA.b #$80                              ;$00D0CB |\ Exit the level without events occuring.
     STA.w LevelExitMode_0DD5                ;$00D0CD |/
-    LDA.w $1B9B                             ;$00D0D0 |\ If yoshi has not been left behind,
+    LDA.w RemoveYoshiFlag_1B9B              ;$00D0D0 |\ If yoshi has not been left behind,
     BNE .keep_yoshi                         ;$00D0D3 | |
     STZ.w CarryYoshiLevels_0DC1             ;$00D0D5 | | get rid of him.
 .keep_yoshi                                 ;        |/
@@ -9042,7 +9042,7 @@ CODE_00D22D:
     BCS CODE_00D24E                         ;$00D245 |
     LDA.b #!Hide_All_7F                     ;$00D247 |
     STA.b PlayerHiddenTiles_78              ;$00D249 |
-    INC.w $1405                             ;$00D24B |
+    INC.w DrawYoshiInPipe_1405              ;$00D24B |
 CODE_00D24E:
     LDA.b PlayerXSpeed_7B
     ORA.b PlayerYSpeed_7D                   ;$00D250 |
@@ -9065,7 +9065,7 @@ CODE_00D26A:
     JMP reset_animation                     ;$00D270 |
 
 go_to_sublevel:
-    INC.w $141A                             ;$00D273 \ Increase the sub-level counter,
+    INC.w SublevelCount_141A                ;$00D273 \ Increase the sub-level counter,
     LDA.b #!FadeToLevel_0F                  ;$00D276 |
     STA.w GameMode_0100                     ;$00D278 | and fade in to another level.
     RTS                                     ;$00D27B /
@@ -12149,7 +12149,7 @@ CODE_00F220:
     BRA CODE_00F1EC                         ;$00F224 |
 
 CODE_00F226:
-    LDA.w $141B
+    LDA.w DidPlayBonusGame_141B
     BNE CODE_00F236                         ;$00F229 |
     TXA                                     ;$00F22B |
     BEQ CODE_00F230                         ;$00F22C |
@@ -12177,7 +12177,7 @@ CODE_00F24E:
     BCS CODE_00F261                         ;$00F24F |
     PHA                                     ;$00F251 |
     LDA.b #$0D                              ;$00F252 |
-    STA $9C                                 ;$00F254 |
+    STA.b TileGenerate_9C                   ;$00F254 |
     LDA.l DATA_00F0F8,X                     ;$00F256 |
     STA.b InteractionPtXPos_9A              ;$00F25A |
     JSL generate_tile                       ;$00F25C |
@@ -12201,7 +12201,7 @@ process_throw_block:
     JSL spawn_throw_block                   ;$00F27B | | Try to spawn a throw block.
     BMI .no_sprite_slots                    ;$00F27F |/ If there were no sprite slots, return.
     LDA.b #$02                              ;$00F281 |\
-    STA $9C                                 ;$00F283 | | Clear the tile.
+    STA.b TileGenerate_9C                   ;$00F283 | | Clear the tile.
     JSL generate_tile                       ;$00F285 |/
 .no_sprite_slots                            ;        |
     PHK                                     ;$00F289 |
@@ -12250,7 +12250,7 @@ process_page_0_tiles_no_swim:
     CPY.b #$38                              ;$00F2C9 \ If it's the midway point,
     BNE .not_midway_point                   ;$00F2CB |
     LDA.b #$02                              ;$00F2CD |
-    STA $9C                                 ;$00F2CF |
+    STA.b TileGenerate_9C                   ;$00F2CF |
     JSL generate_tile                       ;$00F2D1 | remove the midway point,
     JSR smoke_sparkle                       ;$00F2D5 | create the sparkle effect,
     LDA.w $13CD                             ;$00F2D8 |
@@ -12338,7 +12338,7 @@ process_page_0_tiles_no_climb:
 .clear_tile                                 ;        |
     LDY.b #$01                              ;$00F36B |
 .remove_yoshi_coin                          ;        |
-    STY $9C                                 ;$00F36D |
+    STY.b TileGenerate_9C                   ;$00F36D |
     JSL generate_tile                       ;$00F36F | Remove the tile with item memory,
     JSR smoke_sparkle                       ;$00F373 | and create the sparkle effect.
 return_00F376:                              ;        |
@@ -12972,7 +12972,7 @@ update_screen_position_00F6DB:
     LSR                                     ;$00F7BB |
 .CODE_00F7BC:
     CLC
-    ADC.w $1417                             ;$00F7BD |
+    ADC.w BackgroundVertOffset_1417         ;$00F7BD |
     STA.b Layer2YPos_20                     ;$00F7C0 |
 .CODE_00F7C2:
     SEP #$20
@@ -13638,7 +13638,7 @@ CODE_00FC98:
     JSL InitSpriteTables                    ;$00FCBC |
     LDA.b #$04                              ;$00FCC0 |
     STA.w $1FE2,X                           ;$00FCC2 |
-    LDA.w $13C7                             ;$00FCC5 |
+    LDA.w YoshiColor_13C7                   ;$00FCC5 |
     STA.w $15F6,X                           ;$00FCC8 |
     LDA.w YoshiHeavenFlag_1B95              ;$00FCCB |
     BEQ CODE_00FCD5                         ;$00FCCE |

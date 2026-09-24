@@ -7796,7 +7796,7 @@ CODE_03C054:
     CMP.b #$78                              ;$03C058 |
     BCS CODE_03C09B                         ;$03C05A |
 ADDR_03C05C:
-    STZ.w $18AC
+    STZ.w YoshiSwallowTimer_18AC
     STZ.w YoshiHasWings_141E                ;$03C05F |
     LDA.b #$35                              ;$03C062 |
     STA.w SpriteNumber_9E,X                 ;$03C064 |

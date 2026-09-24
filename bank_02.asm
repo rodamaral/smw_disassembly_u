@@ -940,7 +940,7 @@ CODE_028773:
     JSR SprBlkInteract                      ;$02877D |
 CODE_028780:
     LDA.b #$02
-    STA $9C                                 ;$028782 |
+    STA.b TileGenerate_9C                   ;$028782 |
     JSL generate_tile                       ;$028784 |
     RTL                                     ;$028788 |
 
@@ -985,7 +985,7 @@ CODE_0287A6:
     ADC.b #$00                              ;$0287D3 |
     STA.b InteractionPtYPos_98+1            ;$0287D5 |
     LDA.w $16C1,Y                           ;$0287D7 |
-    STA $9C                                 ;$0287DA |
+    STA.b TileGenerate_9C                   ;$0287DA |
     LDA $04                                 ;$0287DC |
     PHA                                     ;$0287DE |
     LDA $05                                 ;$0287DF |
@@ -4918,7 +4918,7 @@ CODE_02A473:
     STA.b SpriteXSpeed_B6-1,X               ;$02A49C |
     STZ.w Sprite_1594-1,X                   ;$02A49E |
     STZ.w Sprite_151C-1,X                   ;$02A4A1 |
-    STZ.w $18AE                             ;$02A4A4 |
+    STZ.w YoshiStartEatTimer_18AE           ;$02A4A4 |
     LDA.b #$30                              ;$02A4A7 |
     STA.w $1497                             ;$02A4A9 |
     PLX                                     ;$02A4AC |
@@ -5281,7 +5281,7 @@ CODE_02A751:
 CODE_02A763:
     LDA.w CarryYoshiLevels_0DC1
     BEQ CODE_02A771                         ;$02A766 |
-    LDA.w $1B9B                             ;$02A768 |
+    LDA.w RemoveYoshiFlag_1B9B              ;$02A768 |
     BNE CODE_02A771                         ;$02A76B |
     JSL CODE_00FC7A                         ;$02A76D |
 CODE_02A771:
@@ -7911,7 +7911,7 @@ CODE_02BA48:
     CMP.b #$02                              ;$02BA50 |
     BCS Return02BA47                        ;$02BA52 |
     STA $0D                                 ;$02BA54 |
-    STA.w $18B3                             ;$02BA56 |
+    STA.w YoshiYPos_18B2+1                  ;$02BA56 |
     LDA $00                                 ;$02BA59 |
     STA $06                                 ;$02BA5B |
     LDA $08                                 ;$02BA5D |
@@ -7997,7 +7997,7 @@ CODE_02BAC0:
     STA.w $167A,X                           ;$02BAFE |
     PLX                                     ;$02BB01 |
     LDA.b #$04                              ;$02BB02 |
-    STA $9C                                 ;$02BB04 |
+    STA.b TileGenerate_9C                   ;$02BB04 |
     JSL generate_tile                       ;$02BB06 |
     RTL                                     ;$02BB0A |
 
@@ -9078,7 +9078,7 @@ CODE_02C2A6:
     PHA                                     ;$02C2B8 |
     JSL ShatterBlock                        ;$02C2B9 |
     LDA.b #$02                              ;$02C2BD |
-    STA $9C                                 ;$02C2BF |
+    STA.b TileGenerate_9C                   ;$02C2BF |
     JSL generate_tile                       ;$02C2C1 |
     PLA                                     ;$02C2C5 |
     SEC                                     ;$02C2C6 |
@@ -9093,7 +9093,7 @@ CODE_02C2A6:
     STA.b InteractionPtXPos_9A+1            ;$02C2D4 |
     JSL ShatterBlock                        ;$02C2D6 |
     LDA.b #$02                              ;$02C2DA |
-    STA $9C                                 ;$02C2DC |
+    STA.b TileGenerate_9C                   ;$02C2DC |
     JSL generate_tile                       ;$02C2DE |
     BRA CODE_02C2F4                         ;$02C2E2 |
 
@@ -10459,7 +10459,7 @@ CODE_02CD59:
     CMP.b #$5E                              ;$02CD5C |
     BNE CODE_02CD7F                         ;$02CD5E |
     LDA.b #$1B                              ;$02CD60 |
-    STA $9C                                 ;$02CD62 |
+    STA.b TileGenerate_9C                   ;$02CD62 |
     LDA.b SpriteXPosLow_E4,X                ;$02CD64 |
     STA.b InteractionPtXPos_9A              ;$02CD66 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02CD68 |
@@ -11006,7 +11006,7 @@ try_eat_berry_tile_02D0E6:
     LDA.b SpriteYPosLow_D8,X
     CLC                                     ;$02D14B |
     ADC.b #$08                              ;$02D14C |
-    STA.w $18B2                             ;$02D14E | Mouth Y position, low
+    STA.w YoshiYPos_18B2                    ;$02D14E | Mouth Y position, low
     AND.b #$F0                              ;$02D151 |
     STA $00                                 ;$02D153 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02D155 |
@@ -11014,18 +11014,18 @@ try_eat_berry_tile_02D0E6:
     CMP.b #$02                              ;$02D15A |
     BCS .return_02D148                      ;$02D15C | if Yoshi's Y >= 512px, return
     STA $02                                 ;$02D15E |
-    STA.w $18B3                             ;$02D160 | Mouth Y position, high
+    STA.w YoshiYPos_18B2+1                  ;$02D160 | Mouth Y position, high
     LDY.w SpriteDir_157C,X                  ;$02D163 |
     LDA.b SpriteXPosLow_E4,X                ;$02D166 |
     CLC                                     ;$02D168 |
     ADC.w DATA_02D0D0,Y                     ;$02D169 |
     STA $01                                 ;$02D16C |
-    STA.w $18B0                             ;$02D16E | Mouth X position, low
+    STA.w YoshiXPos_18B0                    ;$02D16E | Mouth X position, low
     LDA.w SpriteXPosHigh_14E0,X             ;$02D171 |
     ADC.w DATA_02D0D2,Y                     ;$02D174 |
     CMP.b LevelScreens_5D                   ;$02D177 |
     BCS .return_02D148                      ;$02D179 | if Yoshi's X is beyond the number of screens, return
-    STA.w $18B1                             ;$02D17B | Mouth X position, high
+    STA.w YoshiXPos_18B0+1                  ;$02D17B | Mouth X position, high
     STA $03                                 ;$02D17E |
     LDA $01                                 ;$02D180 |
     LSR                                     ;$02D182 |
@@ -11085,16 +11085,16 @@ DATA_02D1F1:
     db $00,$04
 
 generate_tree_tile_02D1F3:
-    LDA.w $18B0
+    LDA.w YoshiXPos_18B0
     STA.b InteractionPtXPos_9A              ;$02D1F6 |
-    LDA.w $18B1                             ;$02D1F8 |
+    LDA.w YoshiXPos_18B0+1                  ;$02D1F8 |
     STA.b InteractionPtXPos_9A+1            ;$02D1FB |
-    LDA.w $18B2                             ;$02D1FD |
+    LDA.w YoshiYPos_18B2                    ;$02D1FD |
     STA.b InteractionPtYPos_98              ;$02D200 |
-    LDA.w $18B3                             ;$02D202 |
+    LDA.w YoshiYPos_18B2+1                  ;$02D202 |
     STA.b InteractionPtYPos_98+1            ;$02D205 |
     LDA.b #$04                              ;$02D207 |
-    STA $9C                                 ;$02D209 |
+    STA.b TileGenerate_9C                   ;$02D209 |
     JSL generate_tile                       ;$02D20B |
 Return02D20F:
     RTL
@@ -13426,7 +13426,7 @@ CODE_02E2B0:
     LDA.w SpriteYPosHigh_14D4,X             ;$02E2D0 |
     STA.b InteractionPtYPos_98+1            ;$02E2D3 |
     LDA.b #$06                              ;$02E2D5 |
-    STA $9C                                 ;$02E2D7 |
+    STA.b TileGenerate_9C                   ;$02E2D7 |
     JSL generate_tile                       ;$02E2D9 |
     RTS                                     ;$02E2DD |
 
@@ -13744,7 +13744,7 @@ CODE_02E524:
     INY                                     ;$02E532 |
 CODE_02E533:
     LDA.w MushrmScaleTiles,Y
-    STA $9C                                 ;$02E536 |
+    STA.b TileGenerate_9C                   ;$02E536 |
     LDA.b SpriteXPosLow_E4,X                ;$02E538 |
     STA.b InteractionPtXPos_9A              ;$02E53A |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E53C |
@@ -14252,7 +14252,7 @@ GrowingPipeGfx:
     LDA.w GrowingPipeTiles2,Y               ;$02E8C0 |
     STA.w $18B6                             ;$02E8C3 |
     LDA.w $185E                             ;$02E8C6 |
-    STA $9C                                 ;$02E8C9 |
+    STA.b TileGenerate_9C                   ;$02E8C9 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8CB |
     STA.b InteractionPtXPos_9A              ;$02E8CD |
     LDA.w SpriteXPosHigh_14E0,X             ;$02E8CF |
@@ -14263,7 +14263,7 @@ GrowingPipeGfx:
     STA.b InteractionPtYPos_98+1            ;$02E8DB |
     JSL generate_tile                       ;$02E8DD |
     LDA.w $18B6                             ;$02E8E1 |
-    STA $9C                                 ;$02E8E4 |
+    STA.b TileGenerate_9C                   ;$02E8E4 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8E6 |
     CLC                                     ;$02E8E8 |
     ADC.b #$10                              ;$02E8E9 |
@@ -16162,9 +16162,9 @@ ADDR_02F63D:
     RTS                                     ;$02F66D |
 
 CODE_02F66E:
-    LDA.w $18D9
+    LDA.w NoYoshiIntroTimer_18D9
     BEQ CODE_02F676                         ;$02F671 |
-    DEC.w $18D9                             ;$02F673 |
+    DEC.w NoYoshiIntroTimer_18D9            ;$02F673 |
 CODE_02F676:
     CMP.b #$B0
     BNE CODE_02F67F                         ;$02F678 |
@@ -16258,9 +16258,9 @@ DATA_02F749:
     db $03,$03,$03,$03,$03,$02,$01,$00
 
 CODE_02F759:
-    LDA.w $18D9
+    LDA.w NoYoshiIntroTimer_18D9
     BEQ CODE_02F761                         ;$02F75C |
-    DEC.w $18D9                             ;$02F75E |
+    DEC.w NoYoshiIntroTimer_18D9            ;$02F75E |
 CODE_02F761:
     CMP.b #$76
     BNE CODE_02F76A                         ;$02F763 |

@@ -1376,12 +1376,12 @@ CurrentPlayer_0DB3: skip 1
 SavedPlayerLives_0DB4: skip 2
 SavedPlayerCoins_0DB6: skip 2
 SavedPlayerPowerup_0DB7: skip 2
-SavedPlayerYoshi_0DBA: skip 2
+SavedPlayerYoshi_0DBA: skip 2 ;done
 SavedPlayerItembox_0DBC: skip 2
 PlayerLives_0DBE: skip 1
 PlayerCoins_0DBF: skip 1
 GreenStarBlockCoins_0DC0: skip 1
-CarryYoshiLevels_0DC1: skip 1
+CarryYoshiLevels_0DC1: skip 1 ;done
 PlayerItembox_0DC2: skip 1
 ; 7E0DC3 - 7E0DC6 unused
 skip 4
@@ -1420,7 +1420,7 @@ OWSpriteZPosSpx_0EE5: skip 16 ; unused?
 KoopaKidActive_0EF5: skip 1
 KoopaKidTile_0EF6: skip 1
 EnterLevelAuto_0EF7: skip 1
-YoshiSavedFlag_0EF8: skip 1
+YoshiSavedFlag_0EF8: skip 1 ;done
 StatusBar_0EF9: skip 55
 InGameTimerFrames_0F30: skip 1
 InGameTimerHundreds_0F31: skip 1
@@ -1453,7 +1453,7 @@ OverworldLayer1Tile_13C1: skip 2
 CurrentSubmap_13C3: skip 2
 MoonCounter_13C5: skip 1
 CutsceneID_13C6: skip 1
-YoshiColor_13C7: skip 1
+YoshiColor_13C7: skip 1 ;done
 ; 7E13C8 unused
 skip 1
 ShowContinueEnd_13C9: skip 1
@@ -1519,7 +1519,7 @@ Layer3TideSetting_1403: skip 1
 !Tide_Stationary = 2
 
 ScreenScrollAtWill_1404: skip 1
-DrawYoshiInPipe_1405: skip 1
+DrawYoshiInPipe_1405: skip 1 ;done
 BouncingOnBoard_1406: skip 1
 FlightPhase_1407: skip 1
 NextFlightPhase_1408: skip 1
@@ -1530,21 +1530,21 @@ skip 2
 SpinJumpFlag_140D: skip 1
 Layer2Touched_140E: skip 1
 ReznorOAMIndex_140F: skip 1
-YoshiHasWingsGfx_1410: skip 1
+YoshiHasWingsGfx_1410: skip 1 ;done
 HorizLayer1Setting_1411: skip 1
 VertLayer1Setting_1412: skip 1
 HorizLayer2Setting_1413: skip 1
 VertLayer2Setting_1414: skip 1
 ; 7E1415 - 7E1416 unused
 skip 2
-BackgroundVertOffset_1407: skip 2
-SpriteInPipeMode_1419: skip 1
-SublevelCount_140A: skip 1
-DidPlayBonusGame_140B: skip 1
-SecretGoalTape_140C: skip 1
-ShowMarioStart_140D: skip 1
-YoshiHasWings_141E: skip 1
-DisableNoYoshiIntro_140F: skip 1
+BackgroundVertOffset_1417: skip 2 ;done
+SpriteInPipeMode_1419: skip 1 ;done
+SublevelCount_141A: skip 1 ;done
+DidPlayBonusGame_141B: skip 1 ;done
+SecretGoalTape_141C: skip 1 ;done
+ShowMarioStart_141D: skip 1 ;done
+YoshiHasWings_141E: skip 1 ;done
+DisableNoYoshiIntro_141F: skip 1 ;done
 DragonCoinsCollected_1420: skip 1
 OneUpCheckpoints_1421: skip 1
 DragonCoinsShown_1422: skip 1
@@ -1868,12 +1868,12 @@ Empty_18A6: skip 1
 Map16TileDestroy_18A7: skip 1
 BossPillarFalling_18A8: skip 2
 BossPillarYPos_18AA: skip 2
-YoshiSwallowTimer_18AC: skip 1
-YoshiWalkingTimer_18AD: skip 1
-YoshiStartEatTimer_18AE: skip 1
-YoshiDuckTimer_18AF: skip 1
-YoshiXPos_18B0: skip 2
-YoshiYPos_18B2: skip 2
+YoshiSwallowTimer_18AC: skip 1 ; done
+YoshiWalkingTimer_18AD: skip 1 ; done
+YoshiStartEatTimer_18AE: skip 1 ; done
+YoshiDuckTimer_18AF: skip 1 ; done
+YoshiXPos_18B0: skip 2 ; done
+YoshiYPos_18B2: skip 2 ; done
 ; 7E18B4 unused
 skip 1
 StandingOnCage_18B5: skip 1
@@ -1905,10 +1905,10 @@ EatenBerryType_18D6: skip 1
 SprMap16TouchVertHigh_18D7: skip 1
 ; 7E18D8 unused
 skip 1
-NoYoshiIntroTimer_18D9: skip 1
-YoshiEggSprite_18DA: skip 1
-Empty_18DB: skip 1
-DuckingYoshi_18DC: skip 1
+NoYoshiIntroTimer_18D9: skip 1 ;done
+YoshiEggSprite_18DA: skip 1 ;done
+Unread_18DB: skip 1 ;done
+DuckingYoshi_18DC: skip 1 ;done
 SilverCoinsCollected_18DD: skip 1
 EggLaidTimer_18DE: skip 1
 YoshiSlot_18DF: skip 1 ; TODO: should be YoshiPlus1 or something that indicates it is not really the slot
@@ -1920,8 +1920,8 @@ GivePlayerLives_18E4: skip 1
 GiveLivesTimer_18E5: skip 1
 ; 7E18E6 unused
 skip 1
-YoshiCanStomp_18E7: skip 1
-YoshiGrowingTimer_18E8: skip 1
+YoshiCanStomp_18E7: skip 1 ;done
+YoshiGrowingTimer_18E8: skip 1 ;done
 SmokeSpriteSlotFull_18E9: skip 1
 MinExtSpriteXPosHigh_18EA: skip 12
 ; 7E18F6 unused
@@ -1947,7 +1947,7 @@ FinalCutscene_190D: skip 1
 SpriteBuoyancy_190E: skip 1
 SpriteTweakerF_190F: skip 12
 Empty_191B: skip 1
-YoshiHasKey_191C: skip 1
+YoshiHasKey_191C: skip 1 ;done
 SumoClustOverwrite_191D: skip 1
 BigSwitchPressTimer_191E: skip 1
 ; 7E191F unused
@@ -2003,12 +2003,12 @@ BlinkCursorTimer_1B91: skip 1
 BlinkCursorPos_1B92: skip 1
 UseSecondaryExit_1B93: skip 1
 DisableBonusSprite_1B94: skip 1
-YoshiHeavenFlag_1B95: skip 1
+YoshiHeavenFlag_1B95: skip 1 ;done
 SideExitEnabled_1B96: skip 1
 Empty_1B97: skip 2
 ShowPeaceSign_1B99: skip 1
 BGFastScrollActive_1B9A: skip 1
-RemoveYoshiFlag_1B9B: skip 1
+RemoveYoshiFlag_1B9B: skip 1 ;done
 EnteringStarWarp_1B9C: skip 1
 Layer3TideTimer_1B9D: skip 1
 SwapOverworldMusic_1B9E: skip 1

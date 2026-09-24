@@ -4785,7 +4785,7 @@ CODE_01A2AD:
     CMP.b #$78                              ;$01A2B1 |
     BCS CODE_01A2F4                         ;$01A2B3 |
 CODE_01A2B5:
-    STZ.w $18AC
+    STZ.w YoshiSwallowTimer_18AC
     STZ.w YoshiHasWings_141E                ;$01A2B8 |
     LDA.b #$35                              ;$01A2BB |
     STA.w SpriteNumber_9E,X                 ;$01A2BD |
@@ -8501,7 +8501,7 @@ StoreSpriteNum:
     AND.b #$F0                              ;$01BCAD |
     STA.b SpriteYPosLow_D8,X                ;$01BCAF |
     LDA.b #$02                              ;$01BCB1 |
-    STA $9C                                 ;$01BCB3 |
+    STA.b TileGenerate_9C                   ;$01BCB3 |
     JSL generate_tile                       ;$01BCB5 |
 CODE_01BCB9:
     JSR CODE_01BD98
@@ -9096,7 +9096,7 @@ CODE_01C0B4:
     LDA.w $187B,X                           ;$01C0E7 |
     LSR                                     ;$01C0EA |
     LSR                                     ;$01C0EB |
-    STA.w $141C                             ;$01C0EC |
+    STA.w SecretGoalTape_141C               ;$01C0EC |
     LDA.b #$0C                              ;$01C0EF |
     STA.w SPCIO2_1DFB                       ;$01C0F1 |
     LDA.b #$FF                              ;$01C0F4 |
@@ -9222,7 +9222,7 @@ CODE_01C1CB:
     LDA.w SpriteYPosHigh_14D4,X             ;$01C1E0 |
     STA.b InteractionPtYPos_98+1            ;$01C1E3 |
     LDA.b #$03                              ;$01C1E5 |
-    STA $9C                                 ;$01C1E7 |
+    STA.b TileGenerate_9C                   ;$01C1E7 |
     JSL generate_tile                       ;$01C1E9 |
 Return01C1ED:
     RTS
@@ -13772,7 +13772,7 @@ CODE_01E320:
     LDA.w SpriteYPosHigh_14D4,X             ;$01E336 |
     STA.b InteractionPtYPos_98+1            ;$01E339 |
     LDA.b #$08                              ;$01E33B |
-    STA $9C                                 ;$01E33D |
+    STA.b TileGenerate_9C                   ;$01E33D |
     JSL generate_tile                       ;$01E33F |
 CODE_01E343:
     LDA.b SpriteNumber_9E,X
@@ -14846,9 +14846,9 @@ draw_yoshi_01EA70:
 +   BRA .player_in_air_01EB21               ;$01EB0A |
 
 .tongue_in_01EB0C:
-    LDA.w $18AF
+    LDA.w YoshiDuckTimer_18AF
     BEQ .not_squatting_01EB16               ;$01EB0F |
-    DEC.w $18AF                             ;$01EB11 |
+    DEC.w YoshiDuckTimer_18AF               ;$01EB11 |
     BRA .yoshi_squatting_01EB1C             ;$01EB14 |
 
 .not_squatting_01EB16:
@@ -14911,7 +14911,7 @@ draw_yoshi_01EA70:
     LDA.b #$01                              ;$01EB85 ||
     STA.w CarryYoshiLevels_0DC1             ;$01EB87 || can carry Yoshi over levels flag
     LDA.w $15F6,X                           ;$01EB8A ||
-    STA.w $13C7                             ;$01EB8D || persist Yoshi color
+    STA.w YoshiColor_13C7                   ;$01EB8D || persist Yoshi color
     LDA.w SpriteDir_157C,X                  ;$01EB90 ||
     EOR.b #$01                              ;$01EB93 ||
     STA.b PlayerDir_76                      ;$01EB95 |/ make player face the same direction as Yoshi
@@ -14922,7 +14922,7 @@ draw_yoshi_01EA70:
     BEQ +                                   ;$01EB9D |\ skip Yoshi physics if:
     LDA.w SpriteInPipeMode_1419             ;$01EB9F || - mounted
     BEQ +                                   ;$01EBA2 || - entering a pipe
-    LDA.w $1405                             ;$01EBA4 || - about to warp to another room
+    LDA.w DrawYoshiInPipe_1405              ;$01EBA4 || - about to warp to another room
     BNE .skip_yoshi_physics_01EBB0          ;$01EBA7 ||
     LDA.b #!Priority1_10                    ;$01EBA9 ||
     STA.b SpriteYXPPCCCT_64                 ;$01EBAB ||
@@ -15146,7 +15146,7 @@ SetOnYoshi:
     STZ.b PlayerXSpeed_7B                   ;$01ED4D |
     STZ.b PlayerYSpeed_7D                   ;$01ED4F |
     LDA.b #$0C                              ;$01ED51 |
-    STA.w $18AF                             ;$01ED53 |
+    STA.w YoshiDuckTimer_18AF               ;$01ED53 |
     LDA.b #$01                              ;$01ED56 |
     STA.b SpritePhase_C2,X                  ;$01ED58 |
     LDA.b #$02                              ;$01ED5A |
@@ -15475,7 +15475,7 @@ process_yoshi_head_01EF18:
     LDA.b #$2A                              ;$01EFEE | 2A: open mouth
     STA.w $0302,Y                           ;$01EFF0 |
 .tongue_in_01EFF3:
-    LDA.w $18AE
+    LDA.w YoshiStartEatTimer_18AE
     BEQ .not_releasing_tongue_01EFFD        ;$01EFF6 |
 .close_eyes_01EFF8:
     LDA.b #$0C                              ;$01EFF8 | 0C: closed eyes, about to open mouth
@@ -15483,7 +15483,7 @@ process_yoshi_head_01EF18:
     STA.w $0302,Y
 .not_releasing_tongue_01EFFD:
     LDA.w $1564,X
-    LDY.w $18AC                             ;$01F000 | Timer on when Yoshi will swallow the sprite in his mouth
+    LDY.w YoshiSwallowTimer_18AC            ;$01F000 | Timer on when Yoshi will swallow the sprite in his mouth
     BEQ .no_sprite_in_mouth_01F00F          ;$01F003 |
     CPY.b #$26                              ;$01F005 |
     BCS .swallow_sprite_OAM_01F038          ;$01F007 |
@@ -15581,10 +15581,10 @@ process_yoshi_tongue_01F0A2:
     LDA.w $14A3                             ;$01F0B3 | A timer for Yoshi's tongue stretching out
     CMP.b #$10                              ;$01F0B6 |
     BNE +                                   ;$01F0B8 |\
-    LDA.w $18AE                             ;$01F0BA ||
+    LDA.w YoshiStartEatTimer_18AE           ;$01F0BA ||
     BNE +                                   ;$01F0BD || if not set yet
     LDA.b #$06                              ;$01F0BF || prepare Yoshi's tongue to come out after the player hits him
-    STA.w $18AE                             ;$01F0C1 |/
+    STA.w YoshiStartEatTimer_18AE           ;$01F0C1 |/
 +   LDA.w $1594,X                           ;$01F0C4 |
     JSL execute_pointer                     ;$01F0C7 |
 
@@ -15658,7 +15658,7 @@ normal_mouth_01F14B:
     BEQ +                                   ;$01F14E |\ if Yoshi went to the Sky Levels
     LDA.b #$02                              ;$01F150 || set the wings
     STA.w YoshiHasWings_141E                ;$01F152 |/
-+   LDA.w $18AC                             ;$01F155 |
++   LDA.w YoshiSwallowTimer_18AC            ;$01F155 |
     BEQ .try_swallow_sprite_01F1A2          ;$01F158 |\ if Yoshi has a sprite on mouth:
     LDY.w $160E,X                           ;$01F15A ||
     LDA.w $009E,y                           ;$01F15D ||
@@ -15701,9 +15701,9 @@ normal_mouth_01F14B:
     LDA.b Frame_14
     AND.b #$03                              ;$01F1A4 |
     BNE .process_hitting_yoshi_01F1C6       ;$01F1A6 |\ every 4 frames
-    LDA.w $18AC                             ;$01F1A8 || if Yoshi has a sprite in his mouth
+    LDA.w YoshiSwallowTimer_18AC            ;$01F1A8 || if Yoshi has a sprite in his mouth
     BEQ .process_hitting_yoshi_01F1C6       ;$01F1AB ||
-    DEC.w $18AC                             ;$01F1AD || decrease its timer
+    DEC.w YoshiSwallowTimer_18AC            ;$01F1AD || decrease its timer
     BNE .process_hitting_yoshi_01F1C6       ;$01F1B0 ||\
     LDY.w $160E,X                           ;$01F1B2 ||| when timer reaches zero
     LDA.b #$00                              ;$01F1B5 ||| swallow (erase) the sprite
@@ -15715,9 +15715,9 @@ normal_mouth_01F14B:
     JMP process_eaten_berry_01F0D3          ;$01F1C3 |/
 
 .process_hitting_yoshi_01F1C6:
-    LDA.w $18AE
+    LDA.w YoshiStartEatTimer_18AE
     BEQ .not_hitting_yoshi_01F1DF           ;$01F1C9 |
-    DEC.w $18AE                             ;$01F1CB |
+    DEC.w YoshiStartEatTimer_18AE           ;$01F1CB |
     BNE .return_01F1DE                      ;$01F1CE |\
     INC.w $1594,X                           ;$01F1D0 || change to the Extending Tongue routine
     STZ.w $151C,X                           ;$01F1D3 ||
@@ -15733,12 +15733,12 @@ normal_mouth_01F14B:
     BNE .return_01F1DE                      ;$01F1E3 |
     BIT.b byetudlrPress_16                  ;$01F1E5 |
     BVC .return_01F1DE                      ;$01F1E7 | if pressed Y/X:
-    LDA.w $18AC                             ;$01F1E9 |
+    LDA.w YoshiSwallowTimer_18AC            ;$01F1E9 |
     BNE .spit_sprite_on_mouth_01F1F1        ;$01F1EC |
     JMP hit_yoshi_to_release_tongue_01F309  ;$01F1EE |
 
 .spit_sprite_on_mouth_01F1F1:
-    STZ.w $18AC
+    STZ.w YoshiSwallowTimer_18AC
     LDY.w $160E,X                           ;$01F1F4 |
     PHY                                     ;$01F1F7 |
     PHY                                     ;$01F1F8 |
@@ -15922,7 +15922,7 @@ retracting_tongue_01F332:
     LDA.b #$07                              ;$01F356 | otherwise, hold sprite on mouth
     STA.w SpriteStatus_14C8,Y               ;$01F358 |
     LDA.b #$FF                              ;$01F35B |
-    STA.w $18AC                             ;$01F35D |
+    STA.w YoshiSwallowTimer_18AC            ;$01F35D |
     LDA.w $009E,y                           ;$01F360 |
     CMP.b #$0D                              ;$01F363 |
     BCS +                                   ;$01F365 |\
@@ -16437,7 +16437,7 @@ maybe_hurt_yoshi_01F6DD:
     STA.b SpriteXSpeed_B6,X                 ;$01F735 | Make Yoshi run away from Mario
     STZ.w $1594,X                           ;$01F737 |
     STZ.w $151C,X                           ;$01F73A | Clear tongue-related addresses
-    STZ.w $18AE                             ;$01F73D | GLITCH: does not clear $14A3, making it possible to release the tongue while running
+    STZ.w YoshiStartEatTimer_18AE           ;$01F73D | GLITCH: does not clear $14A3, making it possible to release the tongue while running
     STZ.w CarryYoshiLevels_0DC1             ;$01F740 | Don't let Mario carry Yoshi to the next level or overworld
     LDA.b #$30                              ;$01F743 |
     STA.w $1497                             ;$01F745 | How long to make Mario invincible after being knocked off Yoshi

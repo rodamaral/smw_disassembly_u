@@ -226,7 +226,7 @@ CODE_048246:
     AND.b #$20                              ;$048249 | check whether select was pressed by both joypads
     BRA CODE_048261                         ;$04824B | and do nothing with this info
 
-    LDA.w $0DBA,X                           ;$04824D | possibly unreachable debug code
+    LDA.w SavedPlayerYoshi_0DBA,X           ;$04824D | possibly unreachable debug code
     INC A                                   ;$048250 |
     INC A                                   ;$048251 |
     CMP.b #$04                              ;$048252 |
@@ -237,7 +237,7 @@ ADDR_048258:
     BCC ADDR_04825E                         ;$04825A |
     LDA.b #$00                              ;$04825C |
 ADDR_04825E:
-    STA.w $0DBA,X
+    STA.w SavedPlayerYoshi_0DBA,X
 CODE_048261:
     DEX
     BPL CODE_048246                         ;$048262 |
@@ -966,7 +966,7 @@ CODE_04894F:
     TYA                                     ;$048952 |
     LSR                                     ;$048953 |
     TAY                                     ;$048954 |
-    LDA.w $0DBA,Y                           ;$048955 |
+    LDA.w SavedPlayerYoshi_0DBA,Y           ;$048955 |
     BEQ CODE_048962                         ;$048958 |
     STA $0E                                 ;$04895A |
     STZ $0F                                 ;$04895C |
@@ -1747,9 +1747,9 @@ CODE_0491B1:
     STA.w $0DBE                             ;$0491C1 |
     LDA.w $0DB8,X                           ;$0491C4 |
     STA.b Powerup_19                        ;$0491C7 |
-    LDA.w $0DBA,X                           ;$0491C9 |
+    LDA.w SavedPlayerYoshi_0DBA,X           ;$0491C9 |
     STA.w CarryYoshiLevels_0DC1             ;$0491CC |
-    STA.w $13C7                             ;$0491CF |
+    STA.w YoshiColor_13C7                   ;$0491CF |
     STA.w RidingYoshi_187A                  ;$0491D2 |
     LDA.w $0DBC,X                           ;$0491D5 |
     STA.w $0DC2                             ;$0491D8 |
@@ -3090,9 +3090,9 @@ CODE_049DD1:
     STA.w $0DBE                             ;$049DE3 |
     LDA.w $0DB8,X                           ;$049DE6 |
     STA.b Powerup_19                        ;$049DE9 |
-    LDA.w $0DBA,X                           ;$049DEB |
+    LDA.w SavedPlayerYoshi_0DBA,X           ;$049DEB |
     STA.w CarryYoshiLevels_0DC1             ;$049DEE |
-    STA.w $13C7                             ;$049DF1 |
+    STA.w YoshiColor_13C7                   ;$049DF1 |
     STA.w RidingYoshi_187A                  ;$049DF4 |
     LDA.w $0DBC,X                           ;$049DF7 |
     STA.w $0DC2                             ;$049DFA |
