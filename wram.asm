@@ -1347,7 +1347,7 @@ IRQNMICommand_0D9B: skip 1
 ; === $7E0D9C ===
 ; 1 byte
 ; unused
-WRAM_0D9C: skip 1
+skip 1
 
 ThroughMain_0D9D: skip 1
 ThroughSub_0D9E: skip 1

@@ -767,49 +767,49 @@ DATA_008649:
 update_controllers:                         ;        \ 
     LDA.w $4218                             ;$008650 |\ Load controller 1 low byte data
     AND.b #$F0                              ;$008653 | | Filter out potentially invalid bits
-    STA.w $0DA4                             ;$008655 | | Store the filtered value in $0DA4 and Y
+    STA.w axlr0000P1Hold_0DA4               ;$008655 | | Store the filtered value in $0DA4 and Y
     TAY                                     ;$008658 | |
-    EOR.w $0DAC                             ;$008659 | | Flip any disabled bits off
-    AND.w $0DA4                             ;$00865C | | Reset any disabled bits turned on
-    STA.w $0DA8                             ;$00865F | | Store controller data
-    STY.w $0DAC                             ;$008662 |/
+    EOR.w axlr0000P1Mask_0DAC               ;$008659 | | Flip any disabled bits off
+    AND.w axlr0000P1Hold_0DA4               ;$00865C | | Reset any disabled bits turned on
+    STA.w axlr0000P1Frame_0DA8              ;$00865F | | Store controller data
+    STY.w axlr0000P1Mask_0DAC               ;$008662 |/
     LDA.w $4219                             ;$008665 |\ Load controller 1 high byte data
-    STA.w $0DA2                             ;$008668 | | Store the raw value in $0DA2 and Y
+    STA.w byetudlrP1Hold_0DA2               ;$008668 | | Store the raw value in $0DA2 and Y
     TAY                                     ;$00866B | |
-    EOR.w $0DAA                             ;$00866C | | Flip any disabled bits off
-    AND.w $0DA2                             ;$00866F | | Reset any disabled bits turned on
-    STA.w $0DA6                             ;$008672 | | Store controller data
-    STY.w $0DAA                             ;$008675 |/
+    EOR.w byetudlrP1Mask_0DAA               ;$00866C | | Flip any disabled bits off
+    AND.w byetudlrP1Hold_0DA2               ;$00866F | | Reset any disabled bits turned on
+    STA.w byetudlrP1Frame_0DA6              ;$008672 | | Store controller data
+    STY.w byetudlrP1Mask_0DAA               ;$008675 |/
     LDA.w $421A                             ;$008678 |\ Load controller 2 low byte data
     AND.b #$F0                              ;$00867B | | Filter out potentially invalid bits
-    STA.w $0DA5                             ;$00867D | | Store the filtered value in $0DA5 and Y
+    STA.w axlr0000P2Hold_0DA5               ;$00867D | | Store the filtered value in $0DA5 and Y
     TAY                                     ;$008680 | |
-    EOR.w $0DAD                             ;$008681 | | Flip any disabled bits off
-    AND.w $0DA5                             ;$008684 | | Reset any disabled bits turned on
-    STA.w $0DA9                             ;$008687 | | Store controller data
-    STY.w $0DAD                             ;$00868A |/
+    EOR.w axlr0000P2Mask_0DAD               ;$008681 | | Flip any disabled bits off
+    AND.w axlr0000P2Hold_0DA5               ;$008684 | | Reset any disabled bits turned on
+    STA.w axlr0000P2Frame_0DA9              ;$008687 | | Store controller data
+    STY.w axlr0000P2Mask_0DAD               ;$00868A |/
     LDA.w $421B                             ;$00868D |\ Load controller 2 high byte data
-    STA.w $0DA3                             ;$008690 | | Store the raw value in $0DA3 and Y
+    STA.w byetudlrP2Hold_0DA3               ;$008690 | | Store the raw value in $0DA3 and Y
     TAY                                     ;$008693 | |
-    EOR.w $0DAB                             ;$008694 | | Flip any disabled bits off
-    AND.w $0DA3                             ;$008697 | | Reset any disabled bits turned on
-    STA.w $0DA7                             ;$00869A | | Store controller data
-    STY.w $0DAB                             ;$00869D |/
+    EOR.w byetudlrP2Mask_0DAB               ;$008694 | | Flip any disabled bits off
+    AND.w byetudlrP2Hold_0DA3               ;$008697 | | Reset any disabled bits turned on
+    STA.w byetudlrP2Frame_0DA7              ;$00869A | | Store controller data
+    STY.w byetudlrP2Mask_0DAB               ;$00869D |/
     LDX.w $0DA0                             ;$0086A0 |\ Check for the second controller
     BPL .single_controller                  ;$0086A3 |/
     LDX.w CurrentPlayer_0DB3                ;$0086A5 | Load current player
 .single_controller                          ;        |
-    LDA.w $0DA4,X                           ;$0086A8 |\ Update $15 t0 current button press high byte
+    LDA.w axlr0000P1Hold_0DA4,X             ;$0086A8 |\ Update $15 t0 current button press high byte
     AND.b #$C0                              ;$0086AB | | Share bit 6 with X/Y
-    ORA.w $0DA2,X                           ;$0086AD | | 
+    ORA.w byetudlrP1Hold_0DA2,X             ;$0086AD | | 
     STA.b byetudlrHold_15                   ;$0086B0 |/
-    LDA.w $0DA4,X                           ;$0086B2 |\ Update $17 to current button press low byte
+    LDA.w axlr0000P1Hold_0DA4,X             ;$0086B2 |\ Update $17 to current button press low byte
     STA.b axlr0000Hold_17                   ;$0086B5 |/
-    LDA.w $0DA8,X                           ;$0086B7 |\ Update $16 t0 current frame press high byte
+    LDA.w axlr0000P1Frame_0DA8,X            ;$0086B7 |\ Update $16 t0 current frame press high byte
     AND.b #$40                              ;$0086BA | | Share bit 6 with X/Y
-    ORA.w $0DA6,X                           ;$0086BC | | 
+    ORA.w byetudlrP1Frame_0DA6,X            ;$0086BC | | 
     STA.b byetudlrPress_16                  ;$0086BF |/
-    LDA.w $0DA8,X                           ;$0086C1 |\ Update $18 to current frame press low byte
+    LDA.w axlr0000P1Frame_0DA8,X            ;$0086C1 |\ Update $18 to current frame press low byte
     STA.b axlr0000Press_18                  ;$0086C4 |/
     RTS                                     ;$0086C6 /
 
@@ -4122,9 +4122,9 @@ GM14_main_level_00A1DA:
     BRA .level_paused_00A25B                ;$00A247 |
 
 .unreachable:
-    BIT.w $0DA7                             ;$00A249 |
+    BIT.w byetudlrP2Frame_0DA7              ;$00A249 |
     BVS +                                   ;$00A24C |
-    LDA.w $0DA3                             ;$00A24E |
+    LDA.w byetudlrP2Hold_0DA3               ;$00A24E |
     BPL .level_paused_00A25B                ;$00A251 |
     LDA.b Frame_13                          ;$00A253 |
     AND.b #$0F                              ;$00A255 |

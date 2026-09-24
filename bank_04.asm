@@ -222,7 +222,7 @@ GameMode_0E_Prim:
     PLB                                     ;$048243 |
     LDX.b #$01                              ;$048244 |
 CODE_048246:
-    LDA.w $0DA6,X
+    LDA.w byetudlrP1Frame_0DA6,X
     AND.b #$20                              ;$048249 | check whether select was pressed by both joypads
     BRA CODE_048261                         ;$04824B | and do nothing with this info
 
@@ -393,8 +393,8 @@ CODE_048356:
     LDA.w $0DD8                             ;$048361 |
     BNE CODE_04839A                         ;$048364 |
 CODE_048366:
-    LDA.w $0DA8
-    ORA.w $0DA9                             ;$048369 |
+    LDA.w axlr0000P1Frame_0DA8
+    ORA.w axlr0000P2Frame_0DA9              ;$048369 |
     AND.b #$30                              ;$04836C |
     BEQ CODE_048375                         ;$04836E |
     LDA.b #$01                              ;$048370 |
@@ -7567,8 +7567,8 @@ DATA_04F50F:
     db $7E,$B8,$7D,$F8
 
 CODE_04F513:
-    LDA.w $0DA6
-    ORA.w $0DA7                             ;$04F516 |
+    LDA.w byetudlrP1Frame_0DA6
+    ORA.w byetudlrP2Frame_0DA7              ;$04F516 |
     AND.b #$10                              ;$04F519 |
     BEQ CODE_04F52B                         ;$04F51B |
     LDX.w CurrentPlayer_0DB3                ;$04F51D |
@@ -7578,10 +7578,10 @@ CODE_04F513:
     RTS                                     ;$04F52A |
 
 CODE_04F52B:
-    LDA.w $0DA6
+    LDA.w byetudlrP1Frame_0DA6
     AND.b #$C0                              ;$04F52E |
     BNE CODE_04F53B                         ;$04F530 |
-    LDA.w $0DA7                             ;$04F532 |
+    LDA.w byetudlrP2Frame_0DA7              ;$04F532 |
     AND.b #$C0                              ;$04F535 |
     BEQ CODE_04F56C                         ;$04F537 |
     EOR.b #$C0                              ;$04F539 |
