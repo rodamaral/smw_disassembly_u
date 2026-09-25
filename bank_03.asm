@@ -2870,7 +2870,7 @@ SmushRex:
     RTS                                     ;$0395C9 |
 
 RexWins:
-    LDA.w $1497
+    LDA.w FlashingTimer_1497
     ORA.w RidingYoshi_187A                  ;$0395CD |
     BNE NoRexContact                        ;$0395D0 |
     JSR SubHorzPosBnk3                      ;$0395D2 |

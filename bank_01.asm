@@ -4315,7 +4315,7 @@ HandleSprCarried:
     BNE CODE_019F83                         ;$019F77 |
     LDA.w SpriteInPipeMode_1419             ;$019F79 |
     BNE CODE_019F83                         ;$019F7C |
-    LDA.w $1499                             ;$019F7E |
+    LDA.w FaceScreenTimer_1499              ;$019F7E |
     BEQ CODE_019F86                         ;$019F81 |
 CODE_019F83:
     STZ.w $15EA,X
@@ -4487,7 +4487,7 @@ CODE_01A0A6:
     LDA.b #$10
     STA.w SpritePlayerContact_154C,X        ;$01A0A8 |
     LDA.b #$0C                              ;$01A0AB |
-    STA.w $149A                             ;$01A0AD |
+    STA.w KickTimer_149A                    ;$01A0AD |
     RTS                                     ;$01A0B0 |
 
 CODE_01A0B1:
@@ -4496,7 +4496,7 @@ CODE_01A0B1:
     BNE CODE_01A0B8                         ;$01A0B5 |
     INY                                     ;$01A0B7 |
 CODE_01A0B8:
-    LDA.w $1499
+    LDA.w FaceScreenTimer_1499
     BEQ CODE_01A0C4                         ;$01A0BB |
     INY                                     ;$01A0BD |
     INY                                     ;$01A0BE |
@@ -5668,7 +5668,7 @@ CODE_01A8E6:
     RTS                                     ;$01A8F8 |
 
 CODE_01A8F9:
-    LDA.w $1497
+    LDA.w FlashingTimer_1497
     BNE Return01A91B                        ;$01A8FC |
     LDA.w RidingYoshi_187A                  ;$01A8FE |
     BNE Return01A91B                        ;$01A901 |
@@ -6851,7 +6851,7 @@ CODE_01B10A:
 
 kick_kill_sprite_01B12A:
     LDA.b #$10
-    STA.w $149A                             ;$01B12C |
+    STA.w KickTimer_149A                    ;$01B12C |
     LDA.b #$03                              ;$01B12F |
     STA.w SPCIO0_1DF9                       ;$01B131 |
     JSR SubHorizPos                         ;$01B134 |
@@ -8265,7 +8265,7 @@ ClimbingDoor:
     JSL GenTileFromSpr2                     ;$01BADE |
     LDA.b #$1F                              ;$01BAE2 |
     STA.w $1540,X                           ;$01BAE4 |
-    STA.w $149D                             ;$01BAE7 |
+    STA.w NetDoorTimer_149D                 ;$01BAE7 |
     LDA.b PlayerXPos_94                     ;$01BAEA |
     SEC                                     ;$01BAEC |
     SBC.b #$10                              ;$01BAED |
@@ -8280,7 +8280,7 @@ CODE_01BAF5:
     JSR CODE_01BC1D                         ;$01BB01 |
     JSL CheckForContact                     ;$01BB04 |
     BCC CODE_01BB16                         ;$01BB08 |
-    LDA.w $149E                             ;$01BB0A |
+    LDA.w PunchNetTimer_149E                ;$01BB0A |
     CMP.b #$01                              ;$01BB0D |
     BNE CODE_01BB16                         ;$01BB0F |
     LDA.b #$06                              ;$01BB11 |
@@ -9712,8 +9712,8 @@ GiveMarioMushroom:
     LDA.b #!AniGrowing_02
     STA.b PlayerAnimation_71                ;$01C563 |
     LDA.b #$2F                              ;$01C565 |
-    STA.w $1496,Y                           ;$01C567 |
-    STA.b SpriteLock_9D                     ;$01C56A |
+    STA.w PlayerAniTimer_1496,Y             ;$01C567 | NOTE: the Y index seems to be a typo
+    STA.b SpriteLock_9D                     ;$01C56A | Luckly, it's normally zero
     JMP CODE_01C56F                         ;$01C56C |
 
 CODE_01C56F:
@@ -9758,7 +9758,7 @@ CODE_01C5AE:
     LDA.b #!AniGetCape_03                   ;$01C5B4 |
     STA.b PlayerAnimation_71                ;$01C5B6 |
     LDA.b #$18                              ;$01C5B8 |
-    STA.w $1496                             ;$01C5BA |
+    STA.w PlayerAniTimer_1496               ;$01C5BA |
     LDY.b #$03                              ;$01C5BD |
 CODE_01C5BF:
     LDA.w $17C0,Y
@@ -14161,7 +14161,7 @@ CODE_01E5EB:
 
 CODE_01E604:
     JSL HurtMario
-    LDA.w $1497                             ;$01E608 |
+    LDA.w FlashingTimer_1497                ;$01E608 |
     BNE Return01E610                        ;$01E60B |
     JSR FaceMario                           ;$01E60D |
 Return01E610:
@@ -16434,7 +16434,7 @@ maybe_hurt_yoshi_01F6DD:
     STZ.w YoshiStartEatTimer_18AE           ;$01F73D | GLITCH: does not clear $14A3, making it possible to release the tongue while running
     STZ.w CarryYoshiLevels_0DC1             ;$01F740 | Don't let Mario carry Yoshi to the next level or overworld
     LDA.b #$30                              ;$01F743 |
-    STA.w $1497                             ;$01F745 | How long to make Mario invincible after being knocked off Yoshi
+    STA.w FlashingTimer_1497                ;$01F745 | How long to make Mario invincible after being knocked off Yoshi
     JSR adjust_player_y_off_yoshi_01EDCC    ;$01F748 |
 .return_01F74B:
     RTS

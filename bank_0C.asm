@@ -2340,9 +2340,9 @@ CODE_0CA75A:
     PLB                                     ;$0CA763 |
 CODE_0CA764:
     STZ.w $13F9
-    LDA.w $1496                             ;$0CA767 |
+    LDA.w PlayerAniTimer_1496               ;$0CA767 |
     BEQ CODE_0CA76F                         ;$0CA76A |
-    DEC.w $1496                             ;$0CA76C |
+    DEC.w PlayerAniTimer_1496               ;$0CA76C |
 CODE_0CA76F:
     LDA.w $14A2
     BEQ Return0CA777                        ;$0CA772 |

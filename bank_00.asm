@@ -4618,7 +4618,7 @@ CODE_00A67D:
     DEX                                     ;$00A680 |
     BNE CODE_00A67D                         ;$00A681 |
     ASL.w UnusedStarCounter_13CB            ;$00A683 |
-    STZ.w $149A                             ;$00A686 |
+    STZ.w KickTimer_149A                    ;$00A686 |
     STZ.w PickUpItemTimer_1498              ;$00A689 |
     STZ.w ColorFadeTimer_1495               ;$00A68C |
     STZ.w SpriteInPipeMode_1419             ;$00A68F |
@@ -7898,9 +7898,9 @@ CODE_00C98B:
     JSR CODE_00CA3E                         ;$00C992 |
     INC.w $1B99                             ;$00C995 |
     LDA.b #$40                              ;$00C998 |
-    STA.w $1492                             ;$00C99A |
+    STA.w PlayerPeaceSign_1492              ;$00C99A |
     ASL                                     ;$00C99D |
-    STA.w $1494                             ;$00C99E |
+    STA.w ColorFadeDir_1494                 ;$00C99E |
     STZ.w ColorFadeTimer_1495               ;$00C9A1 |
 CODE_00C9A4:
     JMP no_special_collision
@@ -7910,9 +7910,9 @@ DATA_00C9A7:
 
 CODE_00C9AF:
     JSR SetMarioPeaceImg
-    LDA.w $1492                             ;$00C9B2 |
+    LDA.w PlayerPeaceSign_1492              ;$00C9B2 |
     BEQ CODE_00C9C2                         ;$00C9B5 |
-    DEC.w $1492                             ;$00C9B7 |
+    DEC.w PlayerPeaceSign_1492              ;$00C9B7 |
     BNE Return00C9C1                        ;$00C9BA |
     LDA.b #$11                              ;$00C9BC |
     STA.w SPCIO2_1DFB                       ;$00C9BE |
@@ -8217,7 +8217,7 @@ no_animation:                               ;        \
     LSR                                     ;$00CC86 |\ If the debug action is $01,
     BEQ .instant_run                        ;$00CC87 |/ do instant running.
     LDA.b #$FF                              ;$00CC89 |\ Make the player invincible.
-    STA.w $1497                             ;$00CC8B |/
+    STA.w FlashingTimer_1497                ;$00CC8B |/
     LDA.b byetudlrHold_15                   ;$00CC8E |\
     AND.b #$03                              ;$00CC90 | | Isolate the left and right controller flags,
     ASL                                     ;$00CC92 | |
@@ -8244,7 +8244,7 @@ no_animation:                               ;        \
 .instant_run                                ;        \
     LDA.b #$70                              ;$00CCB3 |\
     STA.w $13E4                             ;$00CCB5 | | Set the maximum dash time
-    STA.w $149F                             ;$00CCB8 |/ and flying time.
+    STA.w TakeoffTimer_149F                 ;$00CCB8 |/ and flying time.
 .skip_debug                                 ;        |
     LDA.w EndLevelTimer_1493                ;$00CCBB | If $1493 is non-zero,
     BEQ .not_ending_level                   ;$00CCBE |
@@ -8624,7 +8624,7 @@ CODE_00CF62:
 CODE_00CF6B:
     LDY.b PlayerIsDucking_73
     BNE CODE_00CF85                         ;$00CF6D |
-    LDA.w $149C                             ;$00CF6F |
+    LDA.w ShootFireTimer_149C               ;$00CF6F |
     BEQ CODE_00CF7E                         ;$00CF72 |
     LDA.b #$3F                              ;$00CF74 |
     LDY.b PlayerInAir_72                    ;$00CF76 |
@@ -8634,7 +8634,7 @@ CODE_00CF6B:
 
 CODE_00CF7E:
     LDA.b #$0E
-    LDY.w $149A                             ;$00CF80 |
+    LDY.w KickTimer_149A                    ;$00CF80 |
     BEQ CODE_00CF88                         ;$00CF83 |
 CODE_00CF85:
     JMP CODE_00D01A
@@ -8644,7 +8644,7 @@ CODE_00CF88:
     LDY.w PickUpItemTimer_1498              ;$00CF8A |
     BNE CODE_00CF85                         ;$00CF8D |
     LDA.b #$0F                              ;$00CF8F |
-    LDY.w $1499                             ;$00CF91 |
+    LDY.w FaceScreenTimer_1499              ;$00CF91 |
     BNE CODE_00CF85                         ;$00CF94 |
     LDA.b #$00                              ;$00CF96 |
     LDX.w PlayerInCloud_18C2                ;$00CF98 |
@@ -8691,7 +8691,7 @@ CODE_00CFD4:
     STA.w $13E5                             ;$00CFE0 |
 CODE_00CFE3:
     LDA.w $13DB
-    LDY.w $1496                             ;$00CFE6 |
+    LDY.w PlayerAniTimer_1496               ;$00CFE6 |
     BNE CODE_00D003                         ;$00CFE9 |
     DEC A                                   ;$00CFEB |
     BPL CODE_00CFF3                         ;$00CFEC |
@@ -8706,7 +8706,7 @@ CODE_00CFF3:
     ORA.w $13E5                             ;$00CFF8 |
     TAY                                     ;$00CFFB |
     LDA.w DATA_00DC7C,Y                     ;$00CFFC |
-    STA.w $1496                             ;$00CFFF |
+    STA.w PlayerAniTimer_1496               ;$00CFFF |
 CODE_00D002:
     XBA
 CODE_00D003:
@@ -8813,9 +8813,9 @@ death_animation:
     LDA.b Frame_13                          ;$00D0BD |\
     AND.b #$03                              ;$00D0BF | | Every four frames,
     BNE .no_decrement                       ;$00D0C1 | |
-    DEC.w $1496                             ;$00D0C3 | | decrease the player animation timer.
+    DEC.w PlayerAniTimer_1496               ;$00D0C3 | | decrease the player animation timer.
 .no_decrement                               ;        |/
-    LDA.w $1496                             ;$00D0C6 |\ If it's not zero,
+    LDA.w PlayerAniTimer_1496               ;$00D0C6 |\ If it's not zero,
     BNE .not_done                           ;$00D0C9 |/ keep letting the player fall.
     LDA.b #$80                              ;$00D0CB |\ Exit the level without events occuring.
     STA.w LevelExitMode_0DD5                ;$00D0CD |/
@@ -8867,7 +8867,7 @@ growing_hurt_poses:
     db $46,$3D,$46,$3D
 
 hurt_animation:
-    LDA.w $1496                             ;$00D129 \ If the animation timer has ended,
+    LDA.w PlayerAniTimer_1496               ;$00D129 \ If the animation timer has ended,
     BEQ set_invincibility                   ;$00D12C | set temporary invincibility.
     LSR                                     ;$00D12E |\
     LSR                                     ;$00D12F | | Divide the timer by four,
@@ -8876,19 +8876,19 @@ set_growing_poses:                          ;        | |
     LDA.w growing_hurt_poses,Y              ;$00D131 | | and set the player's pose based on the timer
     STA.w PlayerPose_13E0                   ;$00D134 |/ and the sequence of hurt poses.
 decrement_animation_timer:                  ;        |
-    LDA.w $1496                             ;$00D137 |\ If the animation timer is nonzero,
+    LDA.w PlayerAniTimer_1496               ;$00D137 |\ If the animation timer is nonzero,
     BEQ .return                             ;$00D13A | |
-    DEC.w $1496                             ;$00D13C |/ decrement it.
+    DEC.w PlayerAniTimer_1496               ;$00D13C |/ decrement it.
 .return                                     ;        |
     RTS                                     ;$00D13F /
 
 set_invincibility:
     LDA.b #$7F                              ;$00D140 \ Set invincibility for $7F frames.
-    STA.w $1497                             ;$00D142 |
+    STA.w FlashingTimer_1497                ;$00D142 |
     BRA reset_animation                     ;$00D145 / Reset the animation.
 
 mushroom_animation:
-    LDA.w $1496                             ;$00D147 \ If the animation timer has ended,
+    LDA.w PlayerAniTimer_1496               ;$00D147 \ If the animation timer has ended,
     BEQ .set_powerup                        ;$00D14A | set the player's powerup.
     LSR                                     ;$00D14C |\
     LSR                                     ;$00D14D | | Divide the timer by four,
@@ -8910,7 +8910,7 @@ return_00D15E:                              ;        |
 cape_animation:
     LDA.b #!Hide_All_7F                     ;$00D15F \ Hide all of the player.
     STA.b PlayerHiddenTiles_78              ;$00D161 |
-    DEC.w $1496                             ;$00D163 |\ Decrement the animation timer.
+    DEC.w PlayerAniTimer_1496               ;$00D163 |\ Decrement the animation timer.
     BNE return_00D15E                       ;$00D166 |/ If it's not zero, return.
     LDA.b Powerup_19                        ;$00D168 |\ If the player is small or big,
     LSR                                     ;$00D16A | |
@@ -8971,9 +8971,9 @@ CODE_00D1B2:
     LDX.w CarryingFlagMirror_148F           ;$00D1CC |
     BEQ CODE_00D1DB                         ;$00D1CF |
     EOR.b #$1C                              ;$00D1D1 |
-    DEC.w $1499                             ;$00D1D3 |
+    DEC.w FaceScreenTimer_1499              ;$00D1D3 |
     BPL CODE_00D1DB                         ;$00D1D6 |
-    INC.w $1499                             ;$00D1D8 |
+    INC.w FaceScreenTimer_1499              ;$00D1D8 |
 CODE_00D1DB:
     LDX.b PipeTimer_88
     CPX.b #$1D                              ;$00D1DD |
@@ -9308,10 +9308,10 @@ land_physics:
     LDY.w $13E4                             ;$00D66A |
     CPY.b #$70                              ;$00D66D |
     BCC .CODE_00D67D                        ;$00D66F |
-    LDA.w $149F                             ;$00D671 |
+    LDA.w TakeoffTimer_149F                 ;$00D671 |
     BNE .CODE_00D67B                        ;$00D674 |
     LDA.b #$50                              ;$00D676 |
-    STA.w $149F                             ;$00D678 |
+    STA.w TakeoffTimer_149F                 ;$00D678 |
 .CODE_00D67B:
     LDA.b #$0C
 .CODE_00D67D:
@@ -9372,10 +9372,10 @@ land_physics:
     BEQ .CODE_00D6EC                        ;$00D6D9 |
     LDY.w CarryingFlagMirror_148F           ;$00D6DB |
     BEQ .CODE_00D6EA                        ;$00D6DE |
-    LDY.w $1499                             ;$00D6E0 |
+    LDY.w FaceScreenTimer_1499              ;$00D6E0 |
     BNE .CODE_00D6EC                        ;$00D6E3 |
     LDY.b #$08                              ;$00D6E5 |
-    STY.w $1499                             ;$00D6E7 |
+    STY.w FaceScreenTimer_1499              ;$00D6E7 |
 .CODE_00D6EA:
     STA.b PlayerDir_76
 .CODE_00D6EC:
@@ -9538,7 +9538,7 @@ CODE_00D7FF:
     BNE CODE_00D811                         ;$00D806 |
     LDA.b PlayerYSpeed_7D                   ;$00D808 |
     BMI CODE_00D811                         ;$00D80A |
-    LDA.w $149F                             ;$00D80C |
+    LDA.w TakeoffTimer_149F                 ;$00D80C |
     BNE CODE_00D814                         ;$00D80F |
 CODE_00D811:
     JMP CODE_00D8CD
@@ -9674,9 +9674,9 @@ CODE_00D8E7:
     CMP.b #$0C                              ;$00D8EF |
     BNE CODE_00D8FD                         ;$00D8F1 |
     LDY.b #$01                              ;$00D8F3 |
-    CPY.w $149F                             ;$00D8F5 |
+    CPY.w TakeoffTimer_149F                 ;$00D8F5 |
     BCC CODE_00D8FF                         ;$00D8F8 |
-    INC.w $149F                             ;$00D8FA |
+    INC.w TakeoffTimer_149F                 ;$00D8FA |
 CODE_00D8FD:
     LDY.b #$00
 CODE_00D8FF:
@@ -9933,9 +9933,9 @@ Return00DA8C:
 
 CODE_00DA8D:
     LDA.b #$18
-    LDY.w $149C                             ;$00DA8F |
+    LDY.w ShootFireTimer_149C               ;$00DA8F |
     BNE CODE_00DA9F                         ;$00DA92 |
-    LDA.w $1496                             ;$00DA94 |
+    LDA.w PlayerAniTimer_1496               ;$00DA94 |
     LSR                                     ;$00DA97 |
     LSR                                     ;$00DA98 |
     AND.b #$03                              ;$00DA99 |
@@ -9952,9 +9952,9 @@ CODE_00DAA5:
 CODE_00DAA9:
     LDA.b #$0E
     STA.w SPCIO0_1DF9                       ;$00DAAB |
-    LDA.w $1496                             ;$00DAAE |
+    LDA.w PlayerAniTimer_1496               ;$00DAAE |
     ORA.b #$10                              ;$00DAB1 |
-    STA.w $1496                             ;$00DAB3 |
+    STA.w PlayerAniTimer_1496               ;$00DAB3 |
     RTS                                     ;$00DAB6 |
 
 DATA_00DAB7:
@@ -9993,7 +9993,7 @@ CODE_00DB17:
     STZ.b PlayerYSpeed_7D                   ;$00DB19 |
     STZ.w $13DF                             ;$00DB1B |
     STZ.w $140D                             ;$00DB1E |
-    LDY.w $149D                             ;$00DB21 |
+    LDY.w NetDoorTimer_149D                 ;$00DB21 |
     BEQ CODE_00DB7D                         ;$00DB24 |
     LDA.w $1878                             ;$00DB26 |
     BPL CODE_00DB2E                         ;$00DB29 |
@@ -10050,7 +10050,7 @@ CODE_00DB7D:
     STZ.b PlayerXSpeed_7B
     STZ.b PlayerXSubpeed_7A                 ;$00DB7F |
     LDX.w $13F9                             ;$00DB81 |
-    LDA.w $149E                             ;$00DB84 |
+    LDA.w PunchNetTimer_149E                ;$00DB84 |
     BEQ CODE_00DB96                         ;$00DB87 |
     TXA                                     ;$00DB89 |
     INC A                                   ;$00DB8A |
@@ -10088,7 +10088,7 @@ CODE_00DBAC:
     EOR.b #$01                              ;$00DBC1 |
     STA.b PlayerDir_76                      ;$00DBC3 |
     LDA.b #$08                              ;$00DBC5 |
-    STA.w $149E                             ;$00DBC7 |
+    STA.w PunchNetTimer_149E                ;$00DBC7 |
 CODE_00DBCA:
     LDA.w ClimbingImgs,X
     STA.w PlayerPose_13E0                   ;$00DBCD |
@@ -10140,9 +10140,9 @@ CODE_00DC11:
 CODE_00DC16:
     ORA.b PlayerXSpeed_7B
     BEQ Return00DC2C                        ;$00DC18 |
-    LDA.w $1496                             ;$00DC1A |
+    LDA.w PlayerAniTimer_1496               ;$00DC1A |
     ORA.b #$08                              ;$00DC1D |
-    STA.w $1496                             ;$00DC1F |
+    STA.w PlayerAniTimer_1496               ;$00DC1F |
     AND.b #$07                              ;$00DC22 |
     BNE Return00DC2C                        ;$00DC24 |
     LDA.b PlayerDir_76                      ;$00DC26 |
@@ -10553,14 +10553,14 @@ draw_mario_and_yoshi_00E2BD:
     ADC.w #$0001                            ;$00E366 |
 +   STA.b PlayerYPosScrRel_80               ;$00E369 |
     SEP #$20                                ;$00E36B |
-    LDA.w $1497                             ;$00E36D |
+    LDA.w FlashingTimer_1497                ;$00E36D |
     BEQ .CODE_00E385                        ;$00E370 |
     LSR                                     ;$00E372 |
     LSR                                     ;$00E373 |
     LSR                                     ;$00E374 |
     TAY                                     ;$00E375 |
     LDA.w DATA_00E292,Y                     ;$00E376 |
-    AND.w $1497                             ;$00E379 |
+    AND.w FlashingTimer_1497                ;$00E379 |
     ORA.b SpriteLock_9D                     ;$00E37C |
     ORA.w PlayerIsFrozen_13FB               ;$00E37E |
     BNE .CODE_00E385                        ;$00E381 |
@@ -12456,7 +12456,7 @@ CODE_00F40A:
     EOR.b #$01                              ;$00F427 |
     STA.b PlayerDir_76                      ;$00F429 |
     LDA.b #$08                              ;$00F42B |
-    STA.w $1499                             ;$00F42D |
+    STA.w FaceScreenTimer_1499              ;$00F42D |
 CODE_00F430:
     INX
     STX.w SpriteInPipeMode_1419             ;$00F431 |
@@ -12702,7 +12702,7 @@ check_y_position:
 HurtMario:
     LDA.b PlayerAnimation_71
     BNE Return00F628                        ;$00F5B9 |
-    LDA.w $1497                             ;$00F5BB |
+    LDA.w FlashingTimer_1497                ;$00F5BB |
     ORA.w StarTimer_1490                    ;$00F5BE |
     ORA.w EndLevelTimer_1493                ;$00F5C1 |
     BNE Return00F628                        ;$00F5C4 |
@@ -12727,7 +12727,7 @@ CancelSoaring:
     LDA.b #$01                              ;$00F5E7 |
     STA.w $140D                             ;$00F5E9 |
     LDA.b #$30                              ;$00F5EC |
-    STA.w $1497                             ;$00F5EE |
+    STA.w FlashingTimer_1497                ;$00F5EE |
     BRA CODE_00F622                         ;$00F5F1 |
 
 PowerDown:
@@ -12753,7 +12753,7 @@ kill_player_no_speed:                       ;        |
     STZ.w $140D                             ;$00F618 | Disable spin jumping.
     LDA.b #$30                              ;$00F61B |\
 CODE_00F61D:                                ;        | | Set the player animation timer
-    STA.w $1496                             ;$00F61D | | and the sprite lock timer.
+    STA.w PlayerAniTimer_1496               ;$00F61D | | and the sprite lock timer.
     STA.b SpriteLock_9D                     ;$00F620 |/
 CODE_00F622:                                ;        |
     STZ.w $1407                             ;$00F622 | Stop flying.
@@ -13033,7 +13033,7 @@ ProcessVerticalScroll00F7F4:
     BCS .CODE_00F845                        ;$00F831 |
     LDA.w YoshiHasWingsGfx_1410             ;$00F833 |
     LSR                                     ;$00F836 |
-    ORA.w $149F                             ;$00F837 |
+    ORA.w TakeoffTimer_149F                 ;$00F837 |
     ORA.b PlayerClimb_74                    ;$00F83A |
     ORA.w PBalloonFlag_13F3                 ;$00F83C |
     ORA.w PlayerInCloud_18C2                ;$00F83F |
@@ -13937,7 +13937,7 @@ shoot_fireball:
     LDA.b #$06                              ;$00FEB5 |\ Play the fireball shoot sound.
     STA.w SPCIO3_1DFC                       ;$00FEB7 |/
     LDA.b #$0A                              ;$00FEBA |\ Set the time to show the shooting pose.
-    STA.w $149C                             ;$00FEBC |/
+    STA.w ShootFireTimer_149C               ;$00FEBC |/
     LDA.b #$05                              ;$00FEBF |\ Set the extended sprite number.
     STA.w $170B,X                           ;$00FEC1 |/
     LDA.b #$30                              ;$00FEC4 |\ Set the fireball's Y speed.

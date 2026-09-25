@@ -4898,8 +4898,8 @@ hurt_yoshi_02A473:
     PHX
     LDX.w YoshiSlot_18DF                    ;$02A474 |
     LDA.b #$10                              ;$02A477 |
-    STA.w Sprite_163E-1,X                   ;$02A479 | TODO: if Yoshi despawned and $187A is somehow set
-    LDA.b #$03                              ;$02A47C | this could result in a glitch that changes properties of slot B
+    STA.w Sprite_163E-1,X                   ;$02A479 | GLITCH: if Yoshi despaws and $187A is somehow set
+    LDA.b #$03                              ;$02A47C | this changes properties of slot B
     STA.w SPCIO1_1DFA                       ;$02A47E |
     LDA.b #$13                              ;$02A481 |
     STA.w SPCIO3_1DFC                       ;$02A483 |
@@ -4917,7 +4917,7 @@ hurt_yoshi_02A473:
     STZ.w Sprite_151C-1,X                   ;$02A4A1 |
     STZ.w YoshiStartEatTimer_18AE           ;$02A4A4 |
     LDA.b #$30                              ;$02A4A7 |
-    STA.w $1497                             ;$02A4A9 |
+    STA.w FlashingTimer_1497                ;$02A4A9 |
     PLX                                     ;$02A4AC |
     RTS                                     ;$02A4AD |
 

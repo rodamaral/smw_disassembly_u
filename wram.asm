@@ -1641,20 +1641,20 @@ RandomNumber_148D: skip 2
 CarryingFlagMirror_148F: skip 1
 StarTimer_1490: skip 1
 SpriteXMovement_1491: skip 1
-PlayerPeaceSign_1492: skip 1
-EndLevelTimer_1493: skip 1
-ColorFadeDir_1494: skip 1
-ColorFadeTimer_1495: skip 1
-PlayerAniTimer_1496: skip 1
-IFrameTimer_1497: skip 1
-PickUpItemTimer_1498: skip 1
-FaceScreenTimer_1499: skip 1
-KickingTimer_149A: skip 1
-CyclePaletteTimer_149B: skip 1
-ShootFireTimer_149C: skip 1
-NetDoorTimer_149D: skip 1
-PunchNetTimer_149E: skip 1
-TakeoffTimer_149F: skip 1
+PlayerPeaceSign_1492: skip 1 ;done
+EndLevelTimer_1493: skip 1; done
+ColorFadeDir_1494: skip 1 ;done
+ColorFadeTimer_1495: skip 1 ;done
+PlayerAniTimer_1496: skip 1 ;done
+FlashingTimer_1497: skip 1 ;done
+PickUpItemTimer_1498: skip 1 ;done
+FaceScreenTimer_1499: skip 1 ;done
+KickTimer_149A: skip 1 ;done
+CyclePaletteTimer_149B: skip 1 ;done
+ShootFireTimer_149C: skip 1 ;done
+NetDoorTimer_149D: skip 1 ;done
+PunchNetTimer_149E: skip 1 ;done
+TakeoffTimer_149F: skip 1 ;done
 RunTakeoffTimer_14A0: skip 1
 SkidTurnTimer_14A1: skip 1
 CapeAniTimer_14A2: skip 1
@@ -1968,7 +1968,7 @@ IggyLarryPlatWait_1906: skip 1
 IggyLarryPlatPhase_1907: skip 1
 ; 7E1908 unused
 skip 1
-BlockSnakeActive_19009: skip 1
+BlockSnakeActive_1909: skip 1
 BooCloudTimer_190A: skip 1
 BooTransparency_190B: skip 1
 DirectCoinTimer_190C: skip 1

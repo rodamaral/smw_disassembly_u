@@ -651,9 +651,9 @@ CODE_0485A7:
     JSL draw_mario_and_yoshi_00E2BD         ;$0485CF |
     LDA.b #$06                              ;$0485D3 |
     STA.w $0D84                             ;$0485D5 |
-    LDA.w $1496                             ;$0485D8 |
+    LDA.w PlayerAniTimer_1496               ;$0485D8 |
     BEQ CODE_0485E0                         ;$0485DB |
-    DEC.w $1496                             ;$0485DD |
+    DEC.w PlayerAniTimer_1496               ;$0485DD |
 CODE_0485E0:
     LDA.w $14A2
     BEQ CODE_0485E8                         ;$0485E3 |
@@ -6635,8 +6635,8 @@ CODE_04EA5A:
     JMP CODE_04E9F9                         ;$04EA5F |
 
 CODE_04EA62:
-    STZ.w $1495
-    STZ.w $1494                             ;$04EA65 |
+    STZ.w ColorFadeTimer_1495
+    STZ.w ColorFadeDir_1494                 ;$04EA65 |
     LDX.b #$6F                              ;$04EA68 |
 CODE_04EA6A:
     LDA.w $0703,X
@@ -6671,7 +6671,7 @@ CODE_04EA8B:
     RTS                                     ;$04EAA3 |
 
 CODE_04EAA4:
-    LDA.w $1495
+    LDA.w ColorFadeTimer_1495
     CMP.b #$40                              ;$04EAA7 |
     BCC CODE_04EAC9                         ;$04EAA9 |
     INC.w $1B86                             ;$04EAAB |
@@ -6753,7 +6753,7 @@ CODE_04EB32:
 CODE_04EB46:
     STY $8A
 CODE_04EB48:
-    LDA.w $1495
+    LDA.w ColorFadeTimer_1495
     JSL CODE_00B006                         ;$04EB4B |
     DEC $8A                                 ;$04EB4F |
     BNE CODE_04EB48                         ;$04EB51 |
