@@ -4552,9 +4552,9 @@ ZeroSpriteTables:
     STZ.w $1626,X                           ;$07F74E |
     STZ.w SpriteAnimationTimer_1570,X       ;$07F751 |
     STZ.b SpriteXSpeed_B6,X                 ;$07F754 |
-    STZ.w $14F8,X                           ;$07F756 |
+    STZ.w SpriteXPosSpx_14F8,X              ;$07F756 |
     STZ.b SpriteYSpeed_AA,X                 ;$07F759 |
-    STZ.w $14EC,X                           ;$07F75B |
+    STZ.w SpriteYPosSpx_14EC,X              ;$07F75B |
     STZ.w $15DC,X                           ;$07F75E |
     STZ.w $15D0,X                           ;$07F761 |
     STZ.w $163E,X                           ;$07F764 |

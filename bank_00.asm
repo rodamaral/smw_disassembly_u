@@ -13277,7 +13277,7 @@ Empty00F9F5:
 
     LDX.b #$0B                              ;$00FA10 |
 ADDR_00FA12:
-    STZ.w $14C8,X
+    STZ.w SpriteStatus_14C8,X
     DEX                                     ;$00FA15 |
     BPL ADDR_00FA12                         ;$00FA16 |
     RTL                                     ;$00FA18 |
@@ -13658,7 +13658,7 @@ CODE_00FCD5:
 CODE_00FCEC:
     LDX.b #$0B
 CODE_00FCEE:
-    STZ.w $14C8,X
+    STZ.w SpriteStatus_14C8,X
     DEX                                     ;$00FCF1 |
     BPL CODE_00FCEE                         ;$00FCF2 |
     RTS                                     ;$00FCF4 |

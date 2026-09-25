@@ -2067,7 +2067,7 @@ CODE_038F81:
     STA.w $0302,Y                           ;$038FA0 |
     PLX                                     ;$038FA3 |
 CODE_038FA4:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$038FA7 |
     BNE Return038FF1                        ;$038FA9 |
     LDA.b SpriteLock_9D                     ;$038FAB |
@@ -2584,7 +2584,7 @@ CODE_03932C:
     RTS                                     ;$039386 |
 
 CODE_039387:
-    STZ.w $14C8,X
+    STZ.w SpriteStatus_14C8,X
     RTS                                     ;$03938A |
 
 GenTileFromSpr1:
@@ -3347,7 +3347,7 @@ CODE_03990A:
     DEY                                     ;$03990D |
     BPL CODE_03990A                         ;$03990E |
 CODE_039910:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$039913 |
     BEQ CODE_03991A                         ;$039915 |
     JMP DrawReznor                          ;$039917 |
@@ -5010,8 +5010,8 @@ CODE_03A4FD:
     LDA.w $151C,X                           ;$03A502 |
     CMP.b #$08                              ;$03A505 |
     BNE CODE_03A51A                         ;$03A507 |
-    INC.w $14B8                             ;$03A509 |
-    LDA.w $14B8                             ;$03A50C |
+    INC.w BowserAttackType_14B8             ;$03A509 |
+    LDA.w BowserAttackType_14B8             ;$03A50C |
     CMP.b #$03                              ;$03A50F |
     BEQ CODE_03A51A                         ;$03A511 |
     LDA.b #$FF                              ;$03A513 |
@@ -5019,14 +5019,14 @@ CODE_03A4FD:
     BRA Return03A52C                        ;$03A518 |
 
 CODE_03A51A:
-    STZ.w $14B8
-    LDA.w SpriteStatus_14C8                 ;$03A51D |
+    STZ.w BowserAttackType_14B8
+    LDA.w SpriteStatus_14C8                 ;$03A51D | NOTE: hardcoded slot 0
     BEQ CODE_03A527                         ;$03A520 |
-    LDA.w $14C9                             ;$03A522 |
+    LDA.w SpriteStatus_14C8+1               ;$03A522 | NOTE: hardcoded slot 1
     BNE Return03A52C                        ;$03A525 |
 CODE_03A527:
     LDA.b #$FF
-    STA.w $14B1                             ;$03A529 |
+    STA.w BowserWaitTimer_14B1              ;$03A529 |
 Return03A52C:
     RTS
 
@@ -5118,7 +5118,7 @@ CODE_03A619:
 
 CODE_03A61D:
     LDA.b #$08
-    STA.w $14D0                             ;$03A61F |
+    STA.w SpriteStatus_14C8+8               ;$03A61F | NOTE: hardcoded slot 8
     LDA.b #!BowserBall_A1                   ;$03A622 |
     STA.b SpriteNumber_9E+8                 ;$03A624 | NOTE: hardcoded slot 8
     LDA.b SpriteXPosLow_E4,X                ;$03A626 |
@@ -5127,17 +5127,17 @@ CODE_03A61D:
     STA.b SpriteXPosLow_E4+8                ;$03A62B | NOTE: hardcoded slot 8
     LDA.w SpriteXPosHigh_14E0,X             ;$03A62D |
     ADC.b #$00                              ;$03A630 |
-    STA.w $14E8                             ;$03A632 |
+    STA.w SpriteXPosHigh_14E0+8             ;$03A632 | NOTE: hardcoded slot 8
     LDA.b SpriteYPosLow_D8,X                ;$03A635 |
     CLC                                     ;$03A637 |
     ADC.b #$40                              ;$03A638 |
     STA.b SpriteYPosLow_D8+8                ;$03A63A | NOTE: hardcoded slot 8
     LDA.w SpriteYPosHigh_14D4,X             ;$03A63C |
     ADC.b #$00                              ;$03A63F |
-    STA.w $14DC                             ;$03A641 |
+    STA.w SpriteYPosHigh_14D4+8             ;$03A641 | NOTE: hardcoded slot 8
     PHX                                     ;$03A644 |
     LDX.b #$08                              ;$03A645 |
-    JSL InitSpriteTables                    ;$03A647 |
+    JSL InitSpriteTables                    ;$03A647 | init slot 8
     PLX                                     ;$03A64B |
     RTS                                     ;$03A64C |
 
@@ -5881,26 +5881,26 @@ CODE_03AC5A:
 
 CODE_03AC63:
     LDA.b #$08
-    STA.w $14D0                             ;$03AC65 |
+    STA.w SpriteStatus_14C8+8               ;$03AC65 | NOTE: hardcoded slot 8
     LDA.b #!Peach_7C                        ;$03AC68 |
     STA.b SpriteNumber_9E+8                 ;$03AC6A | NOTE: hardcoded slot 8
     LDA.b SpriteXPosLow_E4,X                ;$03AC6C |
     CLC                                     ;$03AC6E |
     ADC.b #$08                              ;$03AC6F |
-    STA $EC                                 ;$03AC71 |
+    STA.b SpriteXPosLow_E4+8                ;$03AC71 | NOTE: hardcoded slot 8
     LDA.w SpriteXPosHigh_14E0,X             ;$03AC73 |
     ADC.b #$00                              ;$03AC76 |
-    STA.w $14E8                             ;$03AC78 |
+    STA.w SpriteXPosHigh_14E0+8             ;$03AC78 | NOTE: hardcoded slot 8
     LDA.b SpriteYPosLow_D8,X                ;$03AC7B |
     CLC                                     ;$03AC7D |
     ADC.b #$47                              ;$03AC7E |
-    STA $E0                                 ;$03AC80 |
+    STA.b SpriteYPosLow_D8+8                ;$03AC80 | NOTE: hardcoded slot 8
     LDA.w SpriteYPosHigh_14D4,X             ;$03AC82 |
     ADC.b #$00                              ;$03AC85 |
-    STA.w $14DC                             ;$03AC87 |
+    STA.w SpriteYPosHigh_14D4+8             ;$03AC87 | NOTE: hardcoded slot 8
     PHX                                     ;$03AC8A |
     LDX.b #$08                              ;$03AC8B |
-    JSL InitSpriteTables                    ;$03AC8D |
+    JSL InitSpriteTables                    ;$03AC8D | init slot 8
     PLX                                     ;$03AC91 |
     RTS                                     ;$03AC92 |
 
@@ -7465,7 +7465,7 @@ CODE_03B8A8:
     LDA $00
     BPL Return03B8C2                        ;$03B8AA |
 OffScrEraseSprBnk3:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$03B8AF |
     BCC OffScrKillSprBnk3                   ;$03B8B1 |
     LDY.w $161A,X                           ;$03B8B3 |
@@ -7474,7 +7474,7 @@ OffScrEraseSprBnk3:
     LDA.b #$00                              ;$03B8BA |
     STA.w $1938,Y                           ;$03B8BC |
 OffScrKillSprBnk3:
-    STZ.w $14C8,X
+    STZ.w SpriteStatus_14C8,X
 Return03B8C2:
     RTS
 
@@ -8115,7 +8115,7 @@ TriggerInivis1Up:
     PHX
     LDX.b #$0B                              ;$03C2DA |
 CODE_03C2DC:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     BEQ Generate1Up                         ;$03C2DF |
     DEX                                     ;$03C2E1 |
     BPL CODE_03C2DC                         ;$03C2E2 |

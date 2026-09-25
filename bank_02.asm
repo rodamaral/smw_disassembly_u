@@ -1144,7 +1144,7 @@ CODE_0288FD:
 GenSpriteFromBlk:
     LDX.b #$0B
 CODE_028907:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     BEQ CODE_028922                         ;$02890A |
     DEX                                     ;$02890C |
     CPX.b #$FF                              ;$02890D |
@@ -2749,7 +2749,7 @@ GroundPound:
     PLB                                     ;$0294CB |
     LDX.b #$09                              ;$0294CC |
 KillSprLoopStart:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$0294D1 |
     BCC GroundPoundNextSpr                  ;$0294D3 |
     LDA.w $1588,X                           ;$0294D5 |
@@ -5509,7 +5509,7 @@ CODE_02A90F:
 CODE_02A916:
     STX $0F
 CODE_02A918:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     BEQ CODE_02A93C                         ;$02A91B |
     DEX                                     ;$02A91D |
     CPX $06                                 ;$02A91E |
@@ -5694,8 +5694,8 @@ DATA_02AA68:
     db $50,$90,$D0,$10
 
 CODE_02AA6C:
-    LDA.b #$07
-    STA.w $14CB                             ;$02AA6E |
+    LDA.b #!StatusMouth_07
+    STA.w SpriteStatus_14C8+3               ;$02AA6E | NOTE: hardcoded slot 3
     LDX.b #$03                              ;$02AA71 |
 CODE_02AA73:
     LDA.b #$05
@@ -6798,7 +6798,7 @@ GenerateDolphin:
     LDA.w DATA_02B265,Y                     ;$02B278 |
     STA $00                                 ;$02B27B |
 CODE_02B27D:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     BEQ CODE_02B288                         ;$02B280 |
     DEX                                     ;$02B282 |
     CPX $00                                 ;$02B283 |
@@ -7373,7 +7373,7 @@ CODE_02B6A7:
     LDA.b SpritePhase_C2,X
     BNE PokeyAlive                          ;$02B6A9 |
 CODE_02B6AB:
-    STZ.w $14C8,X
+    STZ.w SpriteStatus_14C8,X
     RTS                                     ;$02B6AE |
 
 PokeyAlive:
@@ -8282,7 +8282,7 @@ CODE_02BD23:
 CODE_02BD2C:
     JSR CODE_02BF5C
 CODE_02BD2F:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$02BD32 |
     BEQ CODE_02BD3F                         ;$02BD34 |
     STZ.w $1528,X                           ;$02BD36 |
@@ -9000,7 +9000,7 @@ DATA_02C22A:
     db $03,$01
 
 CODE_02C22C:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$02C22F |
     BNE CODE_02C217                         ;$02C231 |
     LDA.w $15AC,X                           ;$02C233 |
@@ -10877,7 +10877,7 @@ CODE_02D076:
     LDA $00
     BPL Return02D090                        ;$02D078 |
 OffScrEraseSprBnk2:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$02D07D |
     BCC OffScrKillSprBnk2                   ;$02D07F |
     LDY.w $161A,X                           ;$02D081 |
@@ -10886,7 +10886,7 @@ OffScrEraseSprBnk2:
     LDA.b #$00                              ;$02D088 |
     STA.w $1938,Y                           ;$02D08A |
 OffScrKillSprBnk2:
-    STZ.w $14C8,X
+    STZ.w SpriteStatus_14C8,X
 Return02D090:
     RTS
 
@@ -11189,8 +11189,8 @@ UpdateYPosNoGrvtyB1:
     ASL                                     ;$02D298 |
     ASL                                     ;$02D299 |
     CLC                                     ;$02D29A |
-    ADC.w $14EC,X                           ;$02D29B |
-    STA.w $14EC,X                           ;$02D29E |
+    ADC.w SpriteYPosSpx_14EC,X              ;$02D29B |
+    STA.w SpriteYPosSpx_14EC,X              ;$02D29E |
     PHP                                     ;$02D2A1 |
     PHP                                     ;$02D2A2 |
     LDY.b #$00                              ;$02D2A3 |
@@ -12087,7 +12087,7 @@ CODE_02D8E4:
 CODE_02D8F3:
     JSR CODE_02D9D6
 CODE_02D8F6:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$02                              ;$02D8F9 |
     BNE CODE_02D904                         ;$02D8FB |
     LDA.b #$08                              ;$02D8FD |
@@ -14305,7 +14305,7 @@ PipeLakituMain:
     RTL                                     ;$02E93C |
 
 CODE_02E93D:
-    LDA.w $14C8,X
+    LDA.w SpriteStatus_14C8,X
     CMP.b #$02                              ;$02E940 |
     BNE CODE_02E94C                         ;$02E942 |
     LDA.b #$02                              ;$02E944 |

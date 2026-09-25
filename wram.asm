@@ -1673,19 +1673,25 @@ TimersStart_14AD: ;done
 BlueSwitchTimer_14AD: skip 1 ;done
 SilverSwitchTimer_14AE: skip 1 ;done
 OnOffSwitch_14AF: skip 1 ;done
+
 LakituCloudTempXPos_14B0:
 IggyLarryRotCenterX_14B0:
-BrSwingCenterXPos_14B0:
+BrSwingCenterXPos_14B0: skip 1
+
 BowserWaitTimer_14B1: skip 1
-BowserAttackTimer_14B2: skip 1
+
+BowserAttackTimer_14B2:
 LakituCloudTempYPos_14B2:
 IggyLarryRotCenterY_14B2:
 BrSwingCenterYPos_14B2:
 BowserFlyawayCounter_14B2: skip 1
+
 ClownCarTeardropPos_14B3: skip 1
+
 IggyLarryPlatIntXPos_14B4:
 BrSwingXDist_14B4:
 BowserMusicIndex_14B4: skip 1
+
 BowserHurtState_14B5: skip 1
 IggyLarryPlatIntYPos_14B6:
 BrSwingYDist_14B6:
@@ -1708,11 +1714,26 @@ skip 1
 BrSwingCosine_14C5: skip 2
 ; 7E14C7 unused
 skip 1
-SpriteStatus_14C8: skip 12
-SpriteYPosHigh_14D4: skip 12
-SpriteXPosHigh_14E0: skip 12
-SpriteYPosSpx_14EC: skip 12
-SpriteXPosSpx_14F8: skip 12
+SpriteStatus_14C8: skip 12 ;done
+; Valid values
+!StatusEmpty_00 = $00
+!StatusInit_01 = $01
+!StatusFall_02 = $02
+!StatusSmush_03 = $03
+!StatusSpinkill_04 = $04
+!StatusLavA_05 = $05
+!StatusCoin_06 = $06
+!StatusMouth_07 = $07
+!StatusNormal_08 = $08
+!StatusCarryable_09 = $09
+!StatusKicked_0A = $0A
+!StatusCarried_0B = $0B
+!StatusPowerup_0C = $0C
+
+SpriteYPosHigh_14D4: skip 12 ;done
+SpriteXPosHigh_14E0: skip 12 ;done
+SpriteYPosSpx_14EC: skip 12 ;done
+SpriteXPosSpx_14F8: skip 12 ;done
 SpriteMisc_1504: skip 12
 SpriteMisc_1510: skip 12
 Sprite_151C: skip 12
