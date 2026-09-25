@@ -951,7 +951,7 @@ BlockBounce:
 NotBreakable:
     LDY.b #$03
 FindTurningBlkSlot:
-    LDA.w $1699,Y
+    LDA.w BounceSprNumber_1699,Y
     BEQ CODE_028807                         ;$028797 |
     DEY                                     ;$028799 |
     BPL FindTurningBlkSlot                  ;$02879A |
@@ -961,7 +961,7 @@ FindTurningBlkSlot:
     STA.w $18CD                             ;$0287A3 |
 CODE_0287A6:
     LDY.w $18CD
-    LDA.w $1699,Y                           ;$0287A9 |
+    LDA.w BounceSprNumber_1699,Y            ;$0287A9 |
     CMP.b #$07                              ;$0287AC |
     BNE NoResetTurningBlk                   ;$0287AE |
     LDA.b InteractionPtXPos_9A              ;$0287B0 |
@@ -972,19 +972,19 @@ CODE_0287A6:
     PHA                                     ;$0287B8 |
     LDA.b InteractionPtYPos_98+1            ;$0287B9 |
     PHA                                     ;$0287BB |
-    LDA.w $16A5,Y                           ;$0287BC |
+    LDA.w BounceSprXPosLow_16A5,Y           ;$0287BC |
     STA.b InteractionPtXPos_9A              ;$0287BF |
-    LDA.w $16AD,Y                           ;$0287C1 |
+    LDA.w BounceSprXPosHigh_16AD,Y          ;$0287C1 |
     STA.b InteractionPtXPos_9A+1            ;$0287C4 |
-    LDA.w $16A1,Y                           ;$0287C6 |
+    LDA.w BounceSprYPosLow_16A1,Y           ;$0287C6 |
     CLC                                     ;$0287C9 |
     ADC.b #$0C                              ;$0287CA |
     AND.b #$F0                              ;$0287CC |
     STA.b InteractionPtYPos_98              ;$0287CE |
-    LDA.w $16A9,Y                           ;$0287D0 |
+    LDA.w BounceSprYPosHigh_16A9,Y          ;$0287D0 |
     ADC.b #$00                              ;$0287D3 |
     STA.b InteractionPtYPos_98+1            ;$0287D5 |
-    LDA.w $16C1,Y                           ;$0287D7 |
+    LDA.w BounceSprTile_16C1,Y              ;$0287D7 |
     STA.b TileGenerate_9C                   ;$0287DA |
     LDA $04                                 ;$0287DC |
     PHA                                     ;$0287DE |
@@ -1036,34 +1036,34 @@ CODE_028823:
 CODE_02882A:
     LDA $04
     INC A                                   ;$02882C |
-    STA.w $1699,Y                           ;$02882D |
+    STA.w BounceSprNumber_1699,Y            ;$02882D |
     LDA.b #$00                              ;$028830 |
-    STA.w $169D,Y                           ;$028832 |
+    STA.w BounceSprInit_169D,Y              ;$028832 |
     LDA.b InteractionPtXPos_9A              ;$028835 |
-    STA.w $16A5,Y                           ;$028837 |
+    STA.w BounceSprXPosLow_16A5,Y           ;$028837 |
     LDA.b InteractionPtXPos_9A+1            ;$02883A |
-    STA.w $16AD,Y                           ;$02883C |
+    STA.w BounceSprXPosHigh_16AD,Y          ;$02883C |
     LDA.b InteractionPtYPos_98              ;$02883F |
-    STA.w $16A1,Y                           ;$028841 |
+    STA.w BounceSprYPosLow_16A1,Y           ;$028841 |
     LDA.b InteractionPtYPos_98+1            ;$028844 |
-    STA.w $16A9,Y                           ;$028846 |
+    STA.w BounceSprYPosHigh_16A9,Y          ;$028846 |
     LDA.w $1933                             ;$028849 |
     LSR                                     ;$02884C |
     ROR                                     ;$02884D |
     STA $08                                 ;$02884E |
     LDX $06                                 ;$028850 |
     LDA.w BlockBounceSpeedY,X               ;$028852 |
-    STA.w $16B1,Y                           ;$028855 |
+    STA.w BounceSprYSpeed_16B1,Y            ;$028855 |
     LDA.w BlockBounceSpeedX,X               ;$028858 |
-    STA.w $16B5,Y                           ;$02885B |
+    STA.w BounceSprXSpeed_16B5,Y            ;$02885B |
     TXA                                     ;$02885E |
     ORA $08                                 ;$02885F |
-    STA.w $16C9,Y                           ;$028861 |
+    STA.w BounceSprFlags_16C9,Y             ;$028861 |
     LDA $07                                 ;$028864 |
-    STA.w $16C1,Y                           ;$028866 |
+    STA.w BounceSprTile_16C1,Y              ;$028866 |
     LDA.b #$08                              ;$028869 |
-    STA.w $16C5,Y                           ;$02886B |
-    LDA.w $1699,Y                           ;$02886E |
+    STA.w BounceSprTimer_16C5,Y             ;$02886B |
+    LDA.w BounceSprNumber_1699,Y            ;$02886E |
     CMP.b #$07                              ;$028871 |
     BNE CODE_02887A                         ;$028873 |
     LDA.b #$FF                              ;$028875 |
@@ -1474,7 +1474,7 @@ MinorExtendedSprites028B67:
 CODE_028B69:
     LDA.w $17F0,X
     BEQ CODE_028B74                         ;$028B6C |
-    STX.w $1698                             ;$028B6E |
+    STX.w CurrentMinorSprite_1698           ;$028B6E |
     JSR CODE_028B94                         ;$028B71 |
 CODE_028B74:
     DEX
@@ -1795,7 +1795,7 @@ CODE_028D8B:
     LDX.b #$0C                              ;$028DB4 |
 CODE_028DB6:
     LDA.w WaterSplashTiles,X
-    LDX.w $1698                             ;$028DB9 |
+    LDX.w CurrentMinorSprite_1698           ;$028DB9 |
     STA.w $0202,Y                           ;$028DBC |
     LDA.b SpriteYXPPCCCT_64                 ;$028DBF |
     ORA.b #$02                              ;$028DC1 |
@@ -1891,7 +1891,7 @@ CODE_028E66:
     TAY                                     ;$028E6C |
     LDA.b #$00                              ;$028E6D |
     STA.w OAMTileSize_0420,Y                ;$028E6F |
-    LDX.w $1698                             ;$028E72 |
+    LDX.w CurrentMinorSprite_1698           ;$028E72 |
     RTS                                     ;$028E75 |
 
 CODE_028E76:
@@ -1984,7 +1984,7 @@ CODE_028F11:
     LDA.b SpriteYXPPCCCT_64                 ;$028F17 |
     ORA.b #$06                              ;$028F19 |
     STA.w $0203,Y                           ;$028F1B |
-    LDX.w $1698                             ;$028F1E |
+    LDX.w CurrentMinorSprite_1698           ;$028F1E |
     TYA                                     ;$028F21 |
     LSR                                     ;$028F22 |
     LSR                                     ;$028F23 |
@@ -2031,7 +2031,7 @@ CODE_028F4D:
     LDA.b SpriteYXPPCCCT_64                 ;$028F73 |
     ORA.b #$05                              ;$028F75 |
     STA.w $0203,Y                           ;$028F77 |
-    LDX.w $1698                             ;$028F7A |
+    LDX.w CurrentMinorSprite_1698           ;$028F7A |
     TYA                                     ;$028F7D |
     LSR                                     ;$028F7E |
     LSR                                     ;$028F7F |
@@ -2107,7 +2107,7 @@ CODE_028FDD:
     LDA.b Frame_14                          ;$029001 |
     LSR                                     ;$029003 |
     CLC                                     ;$029004 |
-    ADC.w $1698                             ;$029005 |
+    ADC.w CurrentMinorSprite_1698           ;$029005 |
     AND.b #$07                              ;$029008 |
     TAX                                     ;$02900A |
     LDA.w BrokenBlock2,X                    ;$02900B |
@@ -2120,7 +2120,7 @@ CODE_029018:
     EOR.w DATA_028B8C,X
     ORA.b SpriteYXPPCCCT_64                 ;$02901B |
     STA.w $0203,Y                           ;$02901D |
-    LDX.w $1698                             ;$029020 |
+    LDX.w CurrentMinorSprite_1698           ;$029020 |
     TYA                                     ;$029023 |
     LSR                                     ;$029024 |
     LSR                                     ;$029025 |
@@ -2140,7 +2140,7 @@ MultipleCoinBlock02902D:
 CODE_02903B:
     LDX.b #$03
 CODE_02903D:
-    STX.w $1698
+    STX.w CurrentMinorSprite_1698
     JSR CODE_02904D                         ;$029040 |
     JSR CODE_029398                         ;$029043 |
     JSR CODE_0296C0                         ;$029046 |
@@ -2150,13 +2150,13 @@ Return02904C:
     RTS
 
 CODE_02904D:
-    LDA.w $1699,X
+    LDA.w BounceSprNumber_1699,X
     BEQ Return02904C                        ;$029050 |
     LDY.b SpriteLock_9D                     ;$029052 |
     BNE CODE_02905E                         ;$029054 |
-    LDY.w $16C5,X                           ;$029056 |
+    LDY.w BounceSprTimer_16C5,X             ;$029056 |
     BEQ CODE_02905E                         ;$029059 |
-    DEC.w $16C5,X                           ;$02905B |
+    DEC.w BounceSprTimer_16C5,X             ;$02905B |
 CODE_02905E:
     JSL execute_pointer
 
@@ -2176,34 +2176,34 @@ DATA_029072:
 TurnBlockSpr:
     LDA.b SpriteLock_9D
     BNE Return0290CD                        ;$029078 |
-    LDA.w $169D,X                           ;$02907A |
+    LDA.w BounceSprInit_169D,X              ;$02907A |
     BNE CODE_029085                         ;$02907D |
-    INC.w $169D,X                           ;$02907F |
+    INC.w BounceSprInit_169D,X              ;$02907F |
     JSR InvisSldFromBncSpr                  ;$029082 |
 CODE_029085:
-    LDA.w $16C5,X
+    LDA.w BounceSprTimer_16C5,X
     BEQ CODE_0290BB                         ;$029088 |
     CMP.b #$01                              ;$02908A |
     BNE CODE_0290A8                         ;$02908C |
-    LDA.w $16A1,X                           ;$02908E |
+    LDA.w BounceSprYPosLow_16A1,X           ;$02908E |
     CLC                                     ;$029091 |
     ADC.b #$08                              ;$029092 |
     AND.b #$F0                              ;$029094 |
-    STA.w $16A1,X                           ;$029096 |
-    LDA.w $16A9,X                           ;$029099 |
+    STA.w BounceSprYPosLow_16A1,X           ;$029096 |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$029099 |
     ADC.b #$00                              ;$02909C |
-    STA.w $16A9,X                           ;$02909E |
+    STA.w BounceSprYPosHigh_16A9,X          ;$02909E |
     LDA.b #$05                              ;$0290A1 |
     JSR TileFromBounceSpr1                  ;$0290A3 |
     BRA CODE_0290BB                         ;$0290A6 |
 
 CODE_0290A8:
     JSR CODE_02B526
-    LDY.w $16C9,X                           ;$0290AB |
-    LDA.w $16B1,X                           ;$0290AE |
+    LDY.w BounceSprFlags_16C9,X             ;$0290AB |
+    LDA.w BounceSprYSpeed_16B1,X            ;$0290AE |
     CLC                                     ;$0290B1 |
     ADC.w DATA_029072,Y                     ;$0290B2 |
-    STA.w $16B1,X                           ;$0290B5 |
+    STA.w BounceSprYSpeed_16B1,X            ;$0290B5 |
     JSR BounceSprGfx                        ;$0290B8 |
 CODE_0290BB:
     LDA.w $18CE,X
@@ -2212,9 +2212,9 @@ CODE_0290BB:
     RTS                                     ;$0290C3 |
 
 CODE_0290C4:
-    LDA.w $16C1,X
+    LDA.w BounceSprTile_16C1,X
     JSR TileFromBounceSpr1                  ;$0290C7 |
-    STZ.w $1699,X                           ;$0290CA |
+    STZ.w BounceSprNumber_1699,X            ;$0290CA |
 Return0290CD:
     RTS
 
@@ -2234,12 +2234,12 @@ BounceBlockSpr:
     JSR BounceSprGfx
     LDA.b SpriteLock_9D                     ;$0290E1 |
     BNE Return0290CD                        ;$0290E3 |
-    LDA.w $169D,X                           ;$0290E5 |
+    LDA.w BounceSprInit_169D,X              ;$0290E5 |
     BNE CODE_02910B                         ;$0290E8 |
-    INC.w $169D,X                           ;$0290EA |
+    INC.w BounceSprInit_169D,X              ;$0290EA |
     JSR CODE_029265                         ;$0290ED |
     JSR InvisSldFromBncSpr                  ;$0290F0 |
-    LDA.w $16C9,X                           ;$0290F3 |
+    LDA.w BounceSprFlags_16C9,X             ;$0290F3 |
     AND.b #$03                              ;$0290F6 |
     TAY                                     ;$0290F8 |
     LDA.w DATA_0290D6,Y                     ;$0290F9 |
@@ -2254,18 +2254,18 @@ CODE_029102:
 CODE_02910B:
     JSR CODE_02B526
     JSR CODE_02B51A                         ;$02910E |
-    LDA.w $16C9,X                           ;$029111 |
+    LDA.w BounceSprFlags_16C9,X             ;$029111 |
     AND.b #$03                              ;$029114 |
     TAY                                     ;$029116 |
-    LDA.w $16B1,X                           ;$029117 |
+    LDA.w BounceSprYSpeed_16B1,X            ;$029117 |
     CLC                                     ;$02911A |
     ADC.w DATA_0290CE,Y                     ;$02911B |
-    STA.w $16B1,X                           ;$02911E |
-    LDA.w $16B5,X                           ;$029121 |
+    STA.w BounceSprYSpeed_16B1,X            ;$02911E |
+    LDA.w BounceSprXSpeed_16B5,X            ;$029121 |
     CLC                                     ;$029124 |
     ADC.w DATA_0290D2,Y                     ;$029125 |
-    STA.w $16B5,X                           ;$029128 |
-    LDA.w $16C9,X                           ;$02912B |
+    STA.w BounceSprXSpeed_16B5,X            ;$029128 |
+    LDA.w BounceSprFlags_16C9,X             ;$02912B |
     AND.b #$03                              ;$02912E |
     CMP.b #$03                              ;$029130 |
     BNE CODE_02915E                         ;$029132 |
@@ -2278,11 +2278,11 @@ CODE_02910B:
     LDA.b #$30                              ;$029141 |
 CODE_029143:
     STA $00
-    LDA.w $16A1,X                           ;$029145 |
+    LDA.w BounceSprYPosLow_16A1,X           ;$029145 |
     SEC                                     ;$029148 |
     SBC $00                                 ;$029149 |
     STA.b PlayerYPos_96                     ;$02914B |
-    LDA.w $16A9,X                           ;$02914D |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$02914D |
     SBC.b #$00                              ;$029150 |
     STA.b PlayerYPos_96+1                   ;$029152 |
     LDA.b #$01                              ;$029154 |
@@ -2290,9 +2290,9 @@ CODE_029143:
     STA.w NoteBlockActive_1402              ;$029159 |
     STZ.b PlayerYSpeed_7D                   ;$02915C |
 CODE_02915E:
-    LDA.w $16C5,X
+    LDA.w BounceSprTimer_16C5,X
     BNE Return02919C                        ;$029161 |
-    LDA.w $16C9,X                           ;$029163 |
+    LDA.w BounceSprFlags_16C9,X             ;$029163 |
     AND.b #$03                              ;$029166 |
     CMP.b #$03                              ;$029168 |
     BNE CODE_029182                         ;$02916A |
@@ -2309,7 +2309,7 @@ CODE_02915E:
     STA.w SPCIO3_1DFC                       ;$02917F |
 CODE_029182:
     JSR TileFromBounceSpr0
-    LDY.w $1699,X                           ;$029185 |
+    LDY.w BounceSprNumber_1699,X            ;$029185 |
     CPY.b #$06                              ;$029188 |
     BCC CODE_029199                         ;$02918A |
     LDA.b #$0B                              ;$02918C |
@@ -2318,7 +2318,7 @@ CODE_029182:
     EOR.b #$01                              ;$029194 |
     STA.w OnOffSwitch_14AF                  ;$029196 |
 CODE_029199:
-    STZ.w $1699,X
+    STZ.w BounceSprNumber_1699,X
 Return02919C:
     RTS
 
@@ -2326,7 +2326,7 @@ DATA_02919D:
     db $01,$00
 
 TileFromBounceSpr0:
-    LDA.w $16C1,X
+    LDA.w BounceSprTile_16C1,X
     CMP.b #$0A                              ;$0291A2 |
     BEQ CODE_0291AA                         ;$0291A4 |
     CMP.b #$0B                              ;$0291A6 |
@@ -2344,23 +2344,23 @@ InvisSldFromBncSpr:
     LDA.b #$09
 TileFromBounceSpr1:
     STA.b TileGenerate_9C
-    LDA.w $16A5,X                           ;$0291BC |
+    LDA.w BounceSprXPosLow_16A5,X           ;$0291BC |
     CLC                                     ;$0291BF |
     ADC.b #$08                              ;$0291C0 |
     AND.b #$F0                              ;$0291C2 |
     STA.b InteractionPtXPos_9A              ;$0291C4 |
-    LDA.w $16AD,X                           ;$0291C6 |
+    LDA.w BounceSprXPosHigh_16AD,X          ;$0291C6 |
     ADC.b #$00                              ;$0291C9 |
     STA.b InteractionPtXPos_9A+1            ;$0291CB |
-    LDA.w $16A1,X                           ;$0291CD |
+    LDA.w BounceSprYPosLow_16A1,X           ;$0291CD |
     CLC                                     ;$0291D0 |
     ADC.b #$08                              ;$0291D1 |
     AND.b #$F0                              ;$0291D3 |
     STA.b InteractionPtYPos_98              ;$0291D5 |
-    LDA.w $16A9,X                           ;$0291D7 |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$0291D7 |
     ADC.b #$00                              ;$0291DA |
     STA.b InteractionPtYPos_98+1            ;$0291DC |
-    LDA.w $16C9,X                           ;$0291DE |
+    LDA.w BounceSprFlags_16C9,X             ;$0291DE |
     ASL                                     ;$0291E1 |
     ROL                                     ;$0291E2 |
     AND.b #$01                              ;$0291E3 |
@@ -2377,7 +2377,7 @@ BounceSpriteTiles:
 
 BounceSprGfx:
     LDY.b #$00
-    LDA.w $16C9,X                           ;$0291FA |
+    LDA.w BounceSprFlags_16C9,X             ;$0291FA |
     BPL CODE_029201                         ;$0291FD |
     LDY.b #$04                              ;$0291FF |
 CODE_029201:
@@ -2389,23 +2389,23 @@ CODE_029201:
     STA $04                                 ;$02920E |
     LDA.w $001B,y                           ;$029210 |
     STA $05                                 ;$029213 |
-    LDA.w $16A1,X                           ;$029215 |
+    LDA.w BounceSprYPosLow_16A1,X           ;$029215 |
     CMP $02                                 ;$029218 |
-    LDA.w $16A9,X                           ;$02921A |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$02921A |
     SBC $04                                 ;$02921D |
     BNE Return0291EC                        ;$02921F |
-    LDA.w $16A5,X                           ;$029221 |
+    LDA.w BounceSprXPosLow_16A5,X           ;$029221 |
     CMP $03                                 ;$029224 |
-    LDA.w $16AD,X                           ;$029226 |
+    LDA.w BounceSprXPosHigh_16AD,X          ;$029226 |
     SBC $05                                 ;$029229 |
     BNE Return0291EC                        ;$02922B |
     LDY.w DATA_0291ED,X                     ;$02922D |
-    LDA.w $16A1,X                           ;$029230 |
+    LDA.w BounceSprYPosLow_16A1,X           ;$029230 |
     SEC                                     ;$029233 |
     SBC $02                                 ;$029234 |
     STA $01                                 ;$029236 |
     STA.w $0201,Y                           ;$029238 |
-    LDA.w $16A5,X                           ;$02923B |
+    LDA.w BounceSprXPosLow_16A5,X           ;$02923B |
     SEC                                     ;$02923E |
     SBC $03                                 ;$02923F |
     STA $00                                 ;$029241 |
@@ -2413,7 +2413,7 @@ CODE_029201:
     LDA.w $1901,X                           ;$029246 |
     ORA.b SpriteYXPPCCCT_64                 ;$029249 |
     STA.w $0203,Y                           ;$02924B |
-    LDA.w $1699,X                           ;$02924E |
+    LDA.w BounceSprNumber_1699,X            ;$02924E |
     TAX                                     ;$029251 |
     LDA.w BounceSpriteTiles,X               ;$029252 |
     STA.w $0202,Y                           ;$029255 |
@@ -2423,33 +2423,33 @@ CODE_029201:
     TAY                                     ;$02925B |
     LDA.b #$02                              ;$02925C |
     STA.w OAMTileSize_0420,Y                ;$02925E |
-    LDX.w $1698                             ;$029261 |
+    LDX.w CurrentMinorSprite_1698           ;$029261 |
     RTS                                     ;$029264 |
 
 CODE_029265:
     LDA.b #$01
-    LDY.w $16C9,X                           ;$029267 |
+    LDY.w BounceSprFlags_16C9,X             ;$029267 |
     STY $0F                                 ;$02926A |
     BPL CODE_02926F                         ;$02926C |
     ASL                                     ;$02926E |
 CODE_02926F:
     AND.b ScreenMode_5B
     BEQ CODE_0292CA                         ;$029271 |
-    LDA.w $16A1,X                           ;$029273 |
+    LDA.w BounceSprYPosLow_16A1,X           ;$029273 |
     SEC                                     ;$029276 |
     SBC.b #$03                              ;$029277 |
     AND.b #$F0                              ;$029279 |
     STA $00                                 ;$02927B |
-    LDA.w $16A9,X                           ;$02927D |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$02927D |
     SBC.b #$00                              ;$029280 |
     CMP.b LevelScreens_5D                   ;$029282 |
     BCS Return0292C9                        ;$029284 |
     STA $03                                 ;$029286 |
     AND.b #$10                              ;$029288 |
     STA $08                                 ;$02928A |
-    LDA.w $16A5,X                           ;$02928C |
+    LDA.w BounceSprXPosLow_16A5,X           ;$02928C |
     STA $01                                 ;$02928F |
-    LDA.w $16AD,X                           ;$029291 |
+    LDA.w BounceSprXPosHigh_16AD,X          ;$029291 |
     CMP.b #$02                              ;$029294 |
     BCS Return0292C9                        ;$029296 |
     STA $02                                 ;$029298 |
@@ -2482,19 +2482,19 @@ Return0292C9:
     RTS
 
 CODE_0292CA:
-    LDA.w $16A1,X
+    LDA.w BounceSprYPosLow_16A1,X
     SEC                                     ;$0292CD |
     SBC.b #$03                              ;$0292CE |
     AND.b #$F0                              ;$0292D0 |
     STA $00                                 ;$0292D2 |
-    LDA.w $16A9,X                           ;$0292D4 |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$0292D4 |
     SBC.b #$00                              ;$0292D7 |
     CMP.b #$02                              ;$0292D9 |
     BCS Return0292C9                        ;$0292DB |
     STA $02                                 ;$0292DD |
-    LDA.w $16A5,X                           ;$0292DF |
+    LDA.w BounceSprXPosLow_16A5,X           ;$0292DF |
     STA $01                                 ;$0292E2 |
-    LDA.w $16AD,X                           ;$0292E4 |
+    LDA.w BounceSprXPosHigh_16AD,X          ;$0292E4 |
     CMP.b LevelScreens_5D                   ;$0292E7 |
     BCS Return0292C9                        ;$0292E9 |
     STA $03                                 ;$0292EB |
@@ -2524,7 +2524,7 @@ CODE_029316:
 CODE_02931A:
     LDA.b #$7E
     STA $07                                 ;$02931C |
-    LDX.w $1698                             ;$02931E |
+    LDX.w CurrentMinorSprite_1698           ;$02931E |
     LDA [$05]                               ;$029321 |
     STA.w Map16_1693                        ;$029323 | Bounce Sprites, exceto turn block, X: 0, fim do level, Y: 0, 1FF. Pega finalzinho da parte debaixo de horizontal
     INC $07                                 ;$029326 |
@@ -2533,21 +2533,21 @@ CODE_02931A:
     LDA.w Map16_1693                        ;$02932C |
     CMP.b #$2B                              ;$02932F |
     BNE Return029355                        ;$029331 |
-    LDA.w $16A1,X                           ;$029333 |
+    LDA.w BounceSprYPosLow_16A1,X           ;$029333 |
     PHA                                     ;$029336 |
     SBC.b #$03                              ;$029337 |
     AND.b #$F0                              ;$029339 |
-    STA.w $16A1,X                           ;$02933B |
-    LDA.w $16A9,X                           ;$02933E |
+    STA.w BounceSprYPosLow_16A1,X           ;$02933B |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$02933E |
     PHA                                     ;$029341 |
     SBC.b #$00                              ;$029342 |
-    STA.w $16A9,X                           ;$029344 |
+    STA.w BounceSprYPosHigh_16A9,X          ;$029344 |
     JSR InvisSldFromBncSpr                  ;$029347 |
     JSR ADDR_029356                         ;$02934A |
     PLA                                     ;$02934D |
-    STA.w $16A9,X                           ;$02934E |
+    STA.w BounceSprYPosHigh_16A9,X          ;$02934E |
     PLA                                     ;$029351 |
-    STA.w $16A1,X                           ;$029352 |
+    STA.w BounceSprYPosLow_16A1,X           ;$029352 |
 Return029355:
     RTS
 
@@ -2563,15 +2563,15 @@ ADDR_029361:
     LDA.b #$01
     STA.w $17D0,Y                           ;$029363 |
     JSL CODE_05B34A                         ;$029366 |
-    LDA.w $16A5,X                           ;$02936A |
+    LDA.w BounceSprXPosLow_16A5,X           ;$02936A |
     STA.w $17E0,Y                           ;$02936D |
-    LDA.w $16AD,X                           ;$029370 |
+    LDA.w BounceSprXPosHigh_16AD,X          ;$029370 |
     STA.w $17EC,Y                           ;$029373 |
-    LDA.w $16A1,X                           ;$029376 |
+    LDA.w BounceSprYPosLow_16A1,X           ;$029376 |
     STA.w $17D4,Y                           ;$029379 |
-    LDA.w $16A9,X                           ;$02937C |
+    LDA.w BounceSprYPosHigh_16A9,X          ;$02937C |
     STA.w $17E8,Y                           ;$02937F |
-    LDA.w $16C9,X                           ;$029382 |
+    LDA.w BounceSprFlags_16C9,X             ;$029382 |
     ASL                                     ;$029385 |
     ROL                                     ;$029386 |
     AND.b #$01                              ;$029387 |
@@ -2597,7 +2597,7 @@ CODE_029398:
     LDA.w $18F8,X                           ;$0293A2 |
     CMP.b #$03                              ;$0293A5 |
     BCS Return029391                        ;$0293A7 |
-    LDY.w $1698                             ;$0293A9 |
+    LDY.w CurrentMinorSprite_1698           ;$0293A9 |
     STZ $0E                                 ;$0293AC |
 CODE_0293AE:
     LDX.b #$0B
@@ -2636,13 +2636,13 @@ CODE_0293EE:
     BCC CODE_0293F7                         ;$0293F2 |
     JSR CODE_029404                         ;$0293F4 |
 CODE_0293F7:
-    LDY.w $1698
+    LDY.w CurrentMinorSprite_1698
     DEX                                     ;$0293FA |
     BMI CODE_029400                         ;$0293FB |
     JMP CODE_0293B0                         ;$0293FD |
 
 CODE_029400:
-    LDX.w $1698
+    LDX.w CurrentMinorSprite_1698
     RTS                                     ;$029403 |
 
 CODE_029404:
@@ -3403,7 +3403,7 @@ CODE_02996F:
     LSR                                     ;$02998A |
     TAX                                     ;$02998B |
     LDA.w DATA_029922,X                     ;$02998C |
-    LDX.w $1698                             ;$02998F |
+    LDX.w CurrentMinorSprite_1698           ;$02998F |
     STA.w $0202,Y                           ;$029992 |
     TYA                                     ;$029995 |
     LSR                                     ;$029996 |
@@ -3430,7 +3430,7 @@ CODE_02999F:
     LSR                                     ;$0299BD |
     TAX                                     ;$0299BE |
     LDA.w DATA_029922,X                     ;$0299BF |
-    LDX.w $1698                             ;$0299C2 |
+    LDX.w CurrentMinorSprite_1698           ;$0299C2 |
     STA.w $0302,Y                           ;$0299C5 |
     TYA                                     ;$0299C8 |
     LSR                                     ;$0299C9 |
@@ -7153,20 +7153,20 @@ CODE_02B51A:
     ADC.b #$04                              ;$02B51C |
     TAX                                     ;$02B51E |
     JSR CODE_02B526                         ;$02B51F |
-    LDX.w $1698                             ;$02B522 |
+    LDX.w CurrentMinorSprite_1698           ;$02B522 |
     RTS                                     ;$02B525 |
 
 CODE_02B526:
-    LDA.w $16B1,X
+    LDA.w BounceSprYSpeed_16B1,X
     ASL                                     ;$02B529 |
     ASL                                     ;$02B52A |
     ASL                                     ;$02B52B |
     ASL                                     ;$02B52C |
     CLC                                     ;$02B52D |
-    ADC.w $16B9,X                           ;$02B52E |
-    STA.w $16B9,X                           ;$02B531 |
+    ADC.w BounceSprXPosSpx_16B9,X           ;$02B52E |
+    STA.w BounceSprXPosSpx_16B9,X           ;$02B531 |
     PHP                                     ;$02B534 |
-    LDA.w $16B1,X                           ;$02B535 |
+    LDA.w BounceSprYSpeed_16B1,X            ;$02B535 |
     LSR                                     ;$02B538 |
     LSR                                     ;$02B539 |
     LSR                                     ;$02B53A |
@@ -7178,11 +7178,11 @@ CODE_02B526:
     DEY                                     ;$02B544 |
 CODE_02B545:
     PLP
-    ADC.w $16A1,X                           ;$02B546 |
-    STA.w $16A1,X                           ;$02B549 |
+    ADC.w BounceSprYPosLow_16A1,X           ;$02B546 |
+    STA.w BounceSprYPosLow_16A1,X           ;$02B549 |
     TYA                                     ;$02B54C |
-    ADC.w $16A9,X                           ;$02B54D |
-    STA.w $16A9,X                           ;$02B550 |
+    ADC.w BounceSprYPosHigh_16A9,X          ;$02B54D |
+    STA.w BounceSprYPosHigh_16A9,X          ;$02B550 |
     RTS                                     ;$02B553 |
 
 CODE_02B554:
@@ -7258,7 +7258,7 @@ CODE_02B5BC:
     ADC.b #$0C                              ;$02B5BE |
     TAX                                     ;$02B5C0 |
     JSR CODE_02B5C8                         ;$02B5C1 |
-    LDX.w $1698                             ;$02B5C4 |
+    LDX.w CurrentMinorSprite_1698           ;$02B5C4 |
     RTS                                     ;$02B5C7 |
 
 CODE_02B5C8:

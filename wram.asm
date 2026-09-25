@@ -1792,20 +1792,21 @@ SpriteInterIndex_1695: skip 1 ;done
 ; 7E1696 unused
 skip 1
 SpriteStompCounter_1697: skip 1 ;done
-MinorSpriteProcIndex_1698: skip 1
-BounceSpriteNumber_1699: skip 4
-BounceSpriteInit_169D: skip 4
-BounceSpriteYPosLow_16A1: skip 4
-BounceSpriteXPosLow_16A5: skip 4
-BounceSpriteYPosHigh_16A9: skip 4
-BounceSpriteXPosHigh_16AD: skip 4
-BounceSpriteYSpeed_16B1: skip 4
-BounceSpriteXSpeed_16B5: skip 4
-BounceSpriteXPosSpx_16B9: skip 4
-BounceSpriteYPosSpx_16BD: skip 4 ; unused
-BounceSpriteTile_16C1: skip 4
-BounceSpriteTimer_16C5: skip 4
-BounceSpriteFlags_16C9: skip 4
+CurrentMinorSprite_1698: skip 1;
+BounceSprNumber_1699: skip 4 ;done
+BounceSprInit_169D: skip 4 ;done
+BounceSprYPosLow_16A1: skip 4 ;done
+BounceSprXPosLow_16A5: skip 4 ;done
+BounceSprYPosHigh_16A9: skip 4 ;done
+BounceSprXPosHigh_16AD: skip 4 ;done
+BounceSprYSpeed_16B1: skip 4 ;done
+BounceSprXSpeed_16B5: skip 4 ;done
+BounceSprXPosSpx_16B9: skip 4 ;done
+; 7E16BD: unused
+skip 4
+BounceSprTile_16C1: skip 4 ;done
+BounceSprTimer_16C5: skip 4 ;done
+BounceSprFlags_16C9: skip 4 ;done
 QuakeSpriteNumber_16CD: skip 4
 QuakeSpriteXPosLow_16D1: skip 4
 QuakeSpriteXPosHigh_16D5: skip 4
