@@ -4770,7 +4770,7 @@ CODE_07FC3E:
 CODE_07FC47:
     LDY.b #$07
 CODE_07FC49:
-    LDA.w $170B,Y
+    LDA.w ExtSprNumber_170B,Y
     BEQ CODE_07FC52                         ;$07FC4C |
     DEY                                     ;$07FC4E |
     BPL CODE_07FC49                         ;$07FC4F |
@@ -4778,30 +4778,30 @@ CODE_07FC49:
 
 CODE_07FC52:
     LDA.b #$10
-    STA.w $170B,Y                           ;$07FC54 |
+    STA.w ExtSprNumber_170B,Y               ;$07FC54 |
     PHX                                     ;$07FC57 |
     LDX.w CurrentSprite_15E9                ;$07FC58 |
     LDA.b SpriteYPosLow_D8,X                ;$07FC5B |
     CLC                                     ;$07FC5D |
     ADC.b #$04                              ;$07FC5E |
-    STA.w $1715,Y                           ;$07FC60 |
+    STA.w ExtSprYPosLow_1715,Y              ;$07FC60 |
     LDA.w SpriteYPosHigh_14D4,X             ;$07FC63 |
     ADC.b #$00                              ;$07FC66 |
-    STA.w $1729,Y                           ;$07FC68 |
+    STA.w ExtSprYPosHigh_1729,Y             ;$07FC68 |
     LDA.b SpriteXPosLow_E4,X                ;$07FC6B |
     CLC                                     ;$07FC6D |
     ADC.b #$04                              ;$07FC6E |
-    STA.w $171F,Y                           ;$07FC70 |
+    STA.w ExtSprXPosLow_171F,Y              ;$07FC70 |
     LDA.w SpriteXPosHigh_14E0,X             ;$07FC73 |
     ADC.b #$00                              ;$07FC76 |
-    STA.w $1733,Y                           ;$07FC78 |
+    STA.w ExtSprXPosHigh_1733,Y             ;$07FC78 |
     PLX                                     ;$07FC7B |
     LDA.l DATA_07FC33,X                     ;$07FC7C |
-    STA.w $1747,Y                           ;$07FC80 |
+    STA.w ExtSprXSpeed_1747,Y               ;$07FC80 |
     LDA.l DATA_07FC37,X                     ;$07FC83 |
-    STA.w $173D,Y                           ;$07FC87 |
+    STA.w ExtSprYSpeed_173D,Y               ;$07FC87 |
     LDA.b #$17                              ;$07FC8A |
-    STA.w $176F,Y                           ;$07FC8C |
+    STA.w ExtSprTimer_176F,Y                ;$07FC8C |
     RTL                                     ;$07FC8F |
 
 Empty07FC90:

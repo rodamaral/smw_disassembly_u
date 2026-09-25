@@ -3343,7 +3343,7 @@ ReznorNoLevelEnd:
     LDY.b #$07                              ;$039906 |
     LDA.b #$00                              ;$039908 |
 CODE_03990A:
-    STA.w $170B,Y
+    STA.w ExtSprNumber_170B,Y
     DEY                                     ;$03990D |
     BPL CODE_03990A                         ;$03990E |
 CODE_039910:
@@ -3602,7 +3602,7 @@ Return039AF7:
 ReznorFireRt:
     LDY.b #$07
 CODE_039AFA:
-    LDA.w $170B,Y
+    LDA.w ExtSprNumber_170B,Y
     BEQ FoundRznrFireSlot                   ;$039AFD |
     DEY                                     ;$039AFF |
     BPL CODE_039AFA                         ;$039B00 |
@@ -3612,26 +3612,26 @@ FoundRznrFireSlot:
     LDA.b #$10
     STA.w SPCIO0_1DF9                       ;$039B05 |
     LDA.b #$02                              ;$039B08 |
-    STA.w $170B,Y                           ;$039B0A |
+    STA.w ExtSprNumber_170B,Y               ;$039B0A |
     LDA.b SpriteXPosLow_E4,X                ;$039B0D |
     PHA                                     ;$039B0F |
     SEC                                     ;$039B10 |
     SBC.b #$08                              ;$039B11 |
-    STA.w $171F,Y                           ;$039B13 |
+    STA.w ExtSprXPosLow_171F,Y              ;$039B13 |
     STA.b SpriteXPosLow_E4,X                ;$039B16 |
     LDA.w SpriteXPosHigh_14E0,X             ;$039B18 |
     SBC.b #$00                              ;$039B1B |
-    STA.w $1733,Y                           ;$039B1D |
+    STA.w ExtSprXPosHigh_1733,Y             ;$039B1D |
     LDA.b SpriteYPosLow_D8,X                ;$039B20 |
     PHA                                     ;$039B22 |
     SEC                                     ;$039B23 |
     SBC.b #$14                              ;$039B24 |
     STA.b SpriteYPosLow_D8,X                ;$039B26 |
-    STA.w $1715,Y                           ;$039B28 |
+    STA.w ExtSprYPosLow_1715,Y              ;$039B28 |
     LDA.w SpriteYPosHigh_14D4,X             ;$039B2B |
     PHA                                     ;$039B2E |
     SBC.b #$00                              ;$039B2F |
-    STA.w $1729,Y                           ;$039B31 |
+    STA.w ExtSprYPosHigh_1729,Y             ;$039B31 |
     STA.w SpriteYPosHigh_14D4,X             ;$039B34 |
     LDA.b #$10                              ;$039B37 |
     JSR CODE_0397F9                         ;$039B39 |
@@ -3642,9 +3642,9 @@ FoundRznrFireSlot:
     PLA                                     ;$039B43 |
     STA.b SpriteXPosLow_E4,X                ;$039B44 |
     LDA $00                                 ;$039B46 |
-    STA.w $173D,Y                           ;$039B48 |
+    STA.w ExtSprYSpeed_173D,Y               ;$039B48 |
     LDA $01                                 ;$039B4B |
-    STA.w $1747,Y                           ;$039B4D |
+    STA.w ExtSprXSpeed_1747,Y               ;$039B4D |
     RTS                                     ;$039B50 |
 
 ReznorTileDispX:
@@ -8324,7 +8324,7 @@ CODE_03C44E:
     BNE Return03C460                        ;$03C454 |
     LDY.b #$07                              ;$03C456 |
 CODE_03C458:
-    LDA.w $170B,Y
+    LDA.w ExtSprNumber_170B,Y
     BEQ CODE_03C461                         ;$03C45B |
     DEY                                     ;$03C45D |
     BPL CODE_03C458                         ;$03C45E |
@@ -8333,25 +8333,25 @@ Return03C460:
 
 CODE_03C461:
     LDA.b #$06
-    STA.w $170B,Y                           ;$03C463 |
+    STA.w ExtSprNumber_170B,Y               ;$03C463 |
     LDA.b SpriteYPosLow_D8,X                ;$03C466 |
     SEC                                     ;$03C468 |
     SBC.b #$10                              ;$03C469 |
-    STA.w $1715,Y                           ;$03C46B |
+    STA.w ExtSprYPosLow_1715,Y              ;$03C46B |
     LDA.w SpriteYPosHigh_14D4,X             ;$03C46E |
     SBC.b #$00                              ;$03C471 |
-    STA.w $1729,Y                           ;$03C473 |
+    STA.w ExtSprYPosHigh_1729,Y             ;$03C473 |
     LDA.b SpriteXPosLow_E4,X                ;$03C476 |
-    STA.w $171F,Y                           ;$03C478 |
+    STA.w ExtSprXPosLow_171F,Y              ;$03C478 |
     LDA.w SpriteXPosHigh_14E0,X             ;$03C47B |
-    STA.w $1733,Y                           ;$03C47E |
+    STA.w ExtSprXPosHigh_1733,Y             ;$03C47E |
     LDA.w SpriteDir_157C,X                  ;$03C481 |
     LSR                                     ;$03C484 |
     LDA.b #$18                              ;$03C485 |
     BCC CODE_03C48B                         ;$03C487 |
     LDA.b #$E8                              ;$03C489 |
 CODE_03C48B:
-    STA.w $1747,Y
+    STA.w ExtSprXSpeed_1747,Y
     RTL                                     ;$03C48E |
 
 DATA_03C48F:

@@ -1793,7 +1793,7 @@ SpriteInterIndex_1695: skip 1 ;done
 ; 7E1696 unused
 skip 1
 SpriteStompCounter_1697: skip 1 ;done
-CurrentMinorSprite_1698: skip 1;
+CurrentMinorSprite_1698: skip 1 ;done
 BounceSprNumber_1699: skip 4 ;done
 BounceSprInit_169D: skip 4 ;done
 BounceSprYPosLow_16A1: skip 4 ;done
@@ -1821,7 +1821,7 @@ ScoreSprYPosHigh_16F9: skip 6 ;done
 ScoreSprTimer_16FF: skip 6 ;done
 ScoreSprLayer_1705: skip 6 ;done
 
-ExtSpriteNumber_170B: skip 10
+ExtSprNumber_170B: skip 10 ;done
 ; Valid values
 !EmptyExt_00 = $00
 !SmokePuff_01 = $01
@@ -1843,17 +1843,17 @@ ExtSpriteNumber_170B: skip 10
 !YoshiFireball_11 = $11
 !WaterBubble_12 = $12
 
-ExtSpriteYPosLow_1715: skip 10
-ExtSpriteXPosLow_171F: skip 10
-ExtSpriteYPosHigh_1729: skip 10
-ExtSpriteXPosHigh_1733: skip 10
-ExtSpriteYSpeed_173D: skip 10
-ExtSpriteXSpeed_1747: skip 10
-ExtSpriteYPosSpx_1751: skip 10
-ExtSpriteXPosSpx_175B: skip 10
-ExtSpriteMisc_1765: skip 10
-ExtSpriteTimer_176F: skip 10
-ExtSpritePriority_1779: skip 10
+ExtSprYPosLow_1715: skip 10 ;done
+ExtSprXPosLow_171F: skip 10 ;done
+ExtSprYPosHigh_1729: skip 10 ;done
+ExtSprXPosHigh_1733: skip 10 ;done
+ExtSprYSpeed_173D: skip 10 ;done
+ExtSprXSpeed_1747: skip 10 ;done
+ExtSprYPosSpx_1751: skip 10 ;done
+ExtSprXPosSpx_175B: skip 10 ;done
+ExtSprMisc_1765: skip 10 ;done
+ExtSprTimer_176F: skip 10 ;done
+ExtSprPriority_1779: skip 10 ;done
 ShooterNumber_1783: skip 8
 ShooterYPosLow_178B: skip 8
 ShooterYPosHigh_1793: skip 8

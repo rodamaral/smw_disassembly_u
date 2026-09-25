@@ -13387,7 +13387,7 @@ LvlEndNextSprite:
     LDY.b #$07                              ;$00FAD4 |
     LDA.b #$00                              ;$00FAD6 |
 CODE_00FAD8:
-    STA.w $170B,Y
+    STA.w ExtSprNumber_170B,Y
     DEY                                     ;$00FADB |
     BPL CODE_00FAD8                         ;$00FADC |
     RTL                                     ;$00FADE |
@@ -13687,7 +13687,7 @@ CODE_00FD12:
     BNE Return00FD23                        ;$00FD17 |
     LDX.b #$07                              ;$00FD19 |
 CODE_00FD1B:
-    LDA.w $170B,X
+    LDA.w ExtSprNumber_170B,X
     BEQ CODE_00FD26                         ;$00FD1E |
     DEX                                     ;$00FD20 |
     BPL CODE_00FD1B                         ;$00FD21 |
@@ -13699,15 +13699,15 @@ DATA_00FD24:
 
 CODE_00FD26:
     LDA.b #$12
-    STA.w $170B,X                           ;$00FD28 |
+    STA.w ExtSprNumber_170B,X               ;$00FD28 |
     LDY.b PlayerDir_76                      ;$00FD2B |
     LDA.b PlayerXPos_94                     ;$00FD2D |
     CLC                                     ;$00FD2F |
     ADC.w DATA_00FD24,Y                     ;$00FD30 |
-    STA.w $171F,X                           ;$00FD33 |
+    STA.w ExtSprXPosLow_171F,X              ;$00FD33 |
     LDA.b PlayerXPos_94+1                   ;$00FD36 |
     ADC.b #$00                              ;$00FD38 |
-    STA.w $1733,X                           ;$00FD3A |
+    STA.w ExtSprXPosHigh_1733,X             ;$00FD3A |
     LDA.b Powerup_19                        ;$00FD3D |
     BEQ CODE_00FD47                         ;$00FD3F |
     LDA.b #$04                              ;$00FD41 |
@@ -13718,11 +13718,11 @@ CODE_00FD47:
 CODE_00FD49:
     CLC
     ADC.b PlayerYPos_96                     ;$00FD4A |
-    STA.w $1715,X                           ;$00FD4C |
+    STA.w ExtSprYPosLow_1715,X              ;$00FD4C |
     LDA.b PlayerYPos_96+1                   ;$00FD4F |
     ADC.b #$00                              ;$00FD51 |
-    STA.w $1729,X                           ;$00FD53 |
-    STZ.w $176F,X                           ;$00FD56 |
+    STA.w ExtSprYPosHigh_1729,X             ;$00FD53 |
+    STZ.w ExtSprTimer_176F,X                ;$00FD56 |
     RTS                                     ;$00FD59 |
 
 smoke_sparkle:
@@ -13827,7 +13827,7 @@ CODE_00FDFE:
     BNE CODE_00FE05                         ;$00FE02 |
     DEY                                     ;$00FE04 |
 CODE_00FE05:
-    LDA.w $170B,Y
+    LDA.w ExtSprNumber_170B,Y
     BEQ CODE_00FE16                         ;$00FE08 |
 CODE_00FE0A:
     DEY
@@ -13843,27 +13843,27 @@ DATA_00FE12:
 
 CODE_00FE16:
     LDA.b #$12
-    STA.w $170B,Y                           ;$00FE18 |
+    STA.w ExtSprNumber_170B,Y               ;$00FE18 |
     TYA                                     ;$00FE1B |
     ASL                                     ;$00FE1C |
     ASL                                     ;$00FE1D |
     ASL                                     ;$00FE1E |
     ADC.b #$F7                              ;$00FE1F |
-    STA.w $1765,Y                           ;$00FE21 |
+    STA.w ExtSprMisc_1765,Y                 ;$00FE21 |
     LDA.b PlayerYPos_96                     ;$00FE24 |
     ADC.w DATA_00FE0E,Y                     ;$00FE26 |
-    STA.w $1715,Y                           ;$00FE29 |
+    STA.w ExtSprYPosLow_1715,Y              ;$00FE29 |
     LDA.b PlayerYPos_96+1                   ;$00FE2C |
     ADC.b #$00                              ;$00FE2E |
-    STA.w $1729,Y                           ;$00FE30 |
+    STA.w ExtSprYPosHigh_1729,Y             ;$00FE30 |
     LDA.b PlayerXPos_94                     ;$00FE33 |
     ADC.w DATA_00FE12,Y                     ;$00FE35 |
-    STA.w $171F,Y                           ;$00FE38 |
+    STA.w ExtSprXPosLow_171F,Y              ;$00FE38 |
     LDA.b PlayerXPos_94+1                   ;$00FE3B |
     ADC.b #$00                              ;$00FE3D |
-    STA.w $1733,Y                           ;$00FE3F |
+    STA.w ExtSprXPosHigh_1733,Y             ;$00FE3F |
     LDA.b #$00                              ;$00FE42 |
-    STA.w $176F,Y                           ;$00FE44 |
+    STA.w ExtSprTimer_176F,Y                ;$00FE44 |
     JMP CODE_00FE0A                         ;$00FE47 |
 
 CODE_00FE4A:
@@ -13926,7 +13926,7 @@ fireball_y_offsets:
 shoot_fireball:
     LDX.b #$09                              ;$00FEA8 \ Initialize the loop counter.
 .loop                                       ;        |
-    LDA.w $170B,X                           ;$00FEAA |\ If the extended sprite slot is free,
+    LDA.w ExtSprNumber_170B,X               ;$00FEAA |\ If the extended sprite slot is free,
     BEQ .spawn_fireball                     ;$00FEAD |/ spawn a fireball.
     DEX                                     ;$00FEAF |\ Otherwise,
     CPX.b #$07                              ;$00FEB0 | | check extended sprite slot $08 before quitting.
@@ -13939,12 +13939,12 @@ shoot_fireball:
     LDA.b #$0A                              ;$00FEBA |\ Set the time to show the shooting pose.
     STA.w ShootFireTimer_149C               ;$00FEBC |/
     LDA.b #$05                              ;$00FEBF |\ Set the extended sprite number.
-    STA.w $170B,X                           ;$00FEC1 |/
+    STA.w ExtSprNumber_170B,X               ;$00FEC1 |/
     LDA.b #$30                              ;$00FEC4 |\ Set the fireball's Y speed.
-    STA.w $173D,X                           ;$00FEC6 |/
+    STA.w ExtSprYSpeed_173D,X               ;$00FEC6 |/
     LDY.b PlayerDir_76                      ;$00FEC9 |\ Set the fireball's X speed
     LDA.w fireball_x_speeds,Y               ;$00FECB | | depending on the player's direction.
-    STA.w $1747,X                           ;$00FECE |/
+    STA.w ExtSprXSpeed_1747,X               ;$00FECE |/
     LDA.w RidingYoshi_187A                  ;$00FED1 |\ If on Yoshi,
     BEQ .not_on_yoshi                       ;$00FED4 | | use the next two position offsets.
     INY                                     ;$00FED6 | |
@@ -13957,19 +13957,19 @@ shoot_fireball:
     LDA.b PlayerXPos_94                     ;$00FEDF |\ Offset the fireball's X position
     CLC                                     ;$00FEE1 | | based on the player's current X position,
     ADC.w fireball_x_offsets,Y              ;$00FEE2 | |
-    STA.w $171F,X                           ;$00FEE5 |/
+    STA.w ExtSprXPosLow_171F,X              ;$00FEE5 |/
     LDA.b PlayerXPos_94+1                   ;$00FEE8 |\ and offset the fireball's X position high byte.
     ADC.w fireball_x_high_offsets,Y         ;$00FEEA | |
-    STA.w $1733,X                           ;$00FEED |/
+    STA.w ExtSprXPosHigh_1733,X             ;$00FEED |/
     LDA.b PlayerYPos_96                     ;$00FEF0 |\ Offset the fireball's Y position
     CLC                                     ;$00FEF2 | | based on the player's current Y position,
     ADC.w fireball_y_offsets,Y              ;$00FEF3 | |
-    STA.w $1715,X                           ;$00FEF6 |/
+    STA.w ExtSprYPosLow_1715,X              ;$00FEF6 |/
     LDA.b PlayerYPos_96+1                   ;$00FEF9 |\ and offset the fireball's Y position high byte.
     ADC.b #$00                              ;$00FEFB | |
-    STA.w $1729,X                           ;$00FEFD |/
+    STA.w ExtSprYPosHigh_1729,X             ;$00FEFD |/
     LDA.w $13F9                             ;$00FF00 |\ Set the fireball's layer.
-    STA.w $1779,X                           ;$00FF03 |/
+    STA.w ExtSprPriority_1779,X             ;$00FF03 |/
     RTS                                     ;$00FF06 /
 
 ADDR_00FF07:

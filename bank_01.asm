@@ -2223,7 +2223,7 @@ Return018EEE:
 
 CODE_018EEF:
     LDY.b #$07
--   LDA.w $170B,Y                           ;$018EF1 |
+-   LDA.w ExtSprNumber_170B,Y               ;$018EF1 |
     BEQ CODE_018F07                         ;$018EF4 |
     DEY                                     ;$018EF6 |
     BPL -                                   ;$018EF7 |
@@ -2289,21 +2289,21 @@ CODE_018F64:
     LDA.b SpriteXPosLow_E4,X                ;$018F6C |
     CLC                                     ;$018F6E |
     ADC.b #$04                              ;$018F6F |
-    STA.w $171F,Y                           ;$018F71 |
+    STA.w ExtSprXPosLow_171F,Y              ;$018F71 |
     LDA.w SpriteXPosHigh_14E0,X             ;$018F74 |
     ADC.b #$00                              ;$018F77 |
-    STA.w $1733,Y                           ;$018F79 |
+    STA.w ExtSprXPosHigh_1733,Y             ;$018F79 |
     LDA.b SpriteYPosLow_D8,X                ;$018F7C |
     CLC                                     ;$018F7E |
     ADC.b #$08                              ;$018F7F |
-    STA.w $1715,Y                           ;$018F81 |
+    STA.w ExtSprYPosLow_1715,Y              ;$018F81 |
     LDA.w SpriteYPosHigh_14D4,X             ;$018F84 |
     ADC.b #$00                              ;$018F87 |
-    STA.w $1729,Y                           ;$018F89 |
+    STA.w ExtSprYPosHigh_1729,Y             ;$018F89 |
     LDA.b #$03                              ;$018F8C |
-    STA.w $170B,Y                           ;$018F8E |
+    STA.w ExtSprNumber_170B,Y               ;$018F8E |
     LDA.b #$FF                              ;$018F91 |
-    STA.w $176F,Y                           ;$018F93 |
+    STA.w ExtSprTimer_176F,Y                ;$018F93 |
 Return018F96:
     RTS
 
@@ -11715,16 +11715,16 @@ CODE_01D3B1:
     LDY.b #$0A                              ;$01D3B8 |
 CODE_01D3BA:
     STY.w SpriteInterIndex_1695
-    LDA.w $170B,Y                           ;$01D3BD |
+    LDA.w ExtSprNumber_170B,Y               ;$01D3BD |
     CMP.b #$05                              ;$01D3C0 |
     BNE CODE_01D405                         ;$01D3C2 |
-    LDA.w $171F,Y                           ;$01D3C4 |
+    LDA.w ExtSprXPosLow_171F,Y              ;$01D3C4 |
     STA $00                                 ;$01D3C7 |
-    LDA.w $1733,Y                           ;$01D3C9 |
+    LDA.w ExtSprXPosHigh_1733,Y             ;$01D3C9 |
     STA $08                                 ;$01D3CC |
-    LDA.w $1715,Y                           ;$01D3CE |
+    LDA.w ExtSprYPosLow_1715,Y              ;$01D3CE |
     STA $01                                 ;$01D3D1 |
-    LDA.w $1729,Y                           ;$01D3D3 |
+    LDA.w ExtSprYPosHigh_1729,Y             ;$01D3D3 |
     STA $09                                 ;$01D3D6 |
     LDA.b #$08                              ;$01D3D8 |
     STA $02                                 ;$01D3DA |
@@ -11735,9 +11735,9 @@ CODE_01D3BA:
     JSL CheckForContact                     ;$01D3E3 |
     BCC CODE_01D405                         ;$01D3E7 |
     LDA.b #$01                              ;$01D3E9 |
-    STA.w $170B,Y                           ;$01D3EB |
+    STA.w ExtSprNumber_170B,Y               ;$01D3EB |
     LDA.b #$0F                              ;$01D3EE |
-    STA.w $176F,Y                           ;$01D3F0 |
+    STA.w ExtSprTimer_176F,Y                ;$01D3F0 |
     LDA.b #$01                              ;$01D3F3 |
     STA.w SPCIO0_1DF9                       ;$01D3F5 |
     INC.w SpriteKill_1626,X                 ;$01D3F8 |
@@ -15806,17 +15806,17 @@ normal_mouth_01F14B:
 spawn_yoshi_fireball_01F295:
     JSR CODE_018EEF
     LDA.b #$11                              ;$01F298 |
-    STA.w $170B,Y                           ;$01F29A |
+    STA.w ExtSprNumber_170B,Y               ;$01F29A |
     LDA.b SpriteXPosLow_E4,X                ;$01F29D |
-    STA.w $171F,Y                           ;$01F29F |
+    STA.w ExtSprXPosLow_171F,Y              ;$01F29F |
     LDA.w SpriteXPosHigh_14E0,X             ;$01F2A2 |
-    STA.w $1733,Y                           ;$01F2A5 |
+    STA.w ExtSprXPosHigh_1733,Y             ;$01F2A5 |
     LDA.b SpriteYPosLow_D8,X                ;$01F2A8 |
-    STA.w $1715,Y                           ;$01F2AA |
+    STA.w ExtSprYPosLow_1715,Y              ;$01F2AA |
     LDA.w SpriteYPosHigh_14D4,X             ;$01F2AD |
-    STA.w $1729,Y                           ;$01F2B0 |
+    STA.w ExtSprYPosHigh_1729,Y             ;$01F2B0 |
     LDA.b #$00                              ;$01F2B3 |
-    STA.w $1779,Y                           ;$01F2B5 |
+    STA.w ExtSprPriority_1779,Y             ;$01F2B5 |
     PHX                                     ;$01F2B8 |
     LDA.w SpriteDir_157C,X                  ;$01F2B9 |
     LSR                                     ;$01F2BC |
@@ -15825,11 +15825,11 @@ spawn_yoshi_fireball_01F295:
     BCC +                                   ;$01F2C2 |
     EOR.b #$FF                              ;$01F2C4 |
     INC A                                   ;$01F2C6 |
-+   STA.w $1747,Y                           ;$01F2C7 |
++   STA.w ExtSprXSpeed_1747,Y               ;$01F2C7 |
     LDA.w DATA_01F2DC,X                     ;$01F2CA |
-    STA.w $173D,Y                           ;$01F2CD |
+    STA.w ExtSprYSpeed_173D,Y               ;$01F2CD |
     LDA.b #$A0                              ;$01F2D0 |
-    STA.w $176F,Y                           ;$01F2D2 |
+    STA.w ExtSprTimer_176F,Y                ;$01F2D2 |
     PLX                                     ;$01F2D5 |
     DEC $00                                 ;$01F2D6 |
     RTS                                     ;$01F2D8 |
@@ -17268,15 +17268,15 @@ CODE_01FD0A:
     LDY.b #$0A
 CODE_01FD0C:
     STY.w SpriteInterIndex_1695
-    LDA.w $170B,Y                           ;$01FD0F |
+    LDA.w ExtSprNumber_170B,Y               ;$01FD0F |
     CMP.b #$05                              ;$01FD12 |
     BNE CODE_01FD4A                         ;$01FD14 |
-    LDA.w $171F,Y                           ;$01FD16 |
+    LDA.w ExtSprXPosLow_171F,Y              ;$01FD16 |
     SEC                                     ;$01FD19 |
     SBC.b Layer1XPos_1A                     ;$01FD1A |
     STA $04                                 ;$01FD1C |
     STZ $0A                                 ;$01FD1E |
-    LDA.w $1715,Y                           ;$01FD20 |
+    LDA.w ExtSprYPosLow_1715,Y              ;$01FD20 |
     SEC                                     ;$01FD23 |
     SBC.b Layer1YPos_1C                     ;$01FD24 |
     STA $05                                 ;$01FD26 |
@@ -17287,9 +17287,9 @@ CODE_01FD0C:
     JSL CheckForContact                     ;$01FD30 |
     BCC CODE_01FD4A                         ;$01FD34 |
     LDA.b #$01                              ;$01FD36 |
-    STA.w $170B,Y                           ;$01FD38 |
+    STA.w ExtSprNumber_170B,Y               ;$01FD38 |
     LDA.b #$0F                              ;$01FD3B |
-    STA.w $176F,Y                           ;$01FD3D |
+    STA.w ExtSprTimer_176F,Y                ;$01FD3D |
     LDA.b #$01                              ;$01FD40 |
     STA.w SPCIO0_1DF9                       ;$01FD42 |
     LDA.b #$10                              ;$01FD45 |
