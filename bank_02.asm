@@ -588,7 +588,7 @@ CODE_0284D8:
     BNE Return0284E7                        ;$0284DB |
     LDY.b #$0B                              ;$0284DD |
 CODE_0284DF:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_0284E8                         ;$0284E2 |
     DEY                                     ;$0284E4 |
     BPL CODE_0284DF                         ;$0284E5 |
@@ -602,18 +602,18 @@ CODE_0284E8:
     AND.b #$F0                              ;$0284ED |
     CLC                                     ;$0284EF |
     ADC.b #$03                              ;$0284F0 |
-    STA.w $17FC,Y                           ;$0284F2 |
+    STA.w MinorSprYPosLow_17FC,Y            ;$0284F2 |
     LDA.b SpriteXPosLow_E4,X                ;$0284F5 |
     CLC                                     ;$0284F7 |
     ADC $02                                 ;$0284F8 |
-    STA.w $1808,Y                           ;$0284FA |
+    STA.w MinorSprXPosLow_1808,Y            ;$0284FA |
     LDA.w SpriteXPosHigh_14E0,X             ;$0284FD |
     ADC.b #$00                              ;$028500 |
     STA.w $18EA,Y                           ;$028502 |
     LDA.b #$07                              ;$028505 |
-    STA.w $17F0,Y                           ;$028507 |
+    STA.w MinorSprNumber_17F0,Y             ;$028507 |
     LDA $00                                 ;$02850A |
-    STA.w $1850,Y                           ;$02850C |
+    STA.w MinorSprTimer_1850,Y              ;$02850C |
     RTL                                     ;$02850F |
 
 DATA_028510:
@@ -699,7 +699,7 @@ CODE_02859B:
 CODE_0285BA:
     LDY.b #$0B
 CODE_0285BC:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_0285C5                         ;$0285BF |
     DEY                                     ;$0285C1 |
     BPL CODE_0285BC                         ;$0285C2 |
@@ -707,15 +707,15 @@ CODE_0285BC:
 
 CODE_0285C5:
     LDA.b #$05
-    STA.w $17F0,Y                           ;$0285C7 |
+    STA.w MinorSprNumber_17F0,Y             ;$0285C7 |
     LDA.b #$00                              ;$0285CA |
-    STA.w $1820,Y                           ;$0285CC |
+    STA.w MinorSprYSpeed_1820,Y             ;$0285CC |
     LDA $00                                 ;$0285CF |
-    STA.w $17FC,Y                           ;$0285D1 |
+    STA.w MinorSprYPosLow_17FC,Y            ;$0285D1 |
     LDA $02                                 ;$0285D4 |
-    STA.w $1808,Y                           ;$0285D6 |
+    STA.w MinorSprXPosLow_1808,Y            ;$0285D6 |
     LDA.b #$17                              ;$0285D9 |
-    STA.w $1850,Y                           ;$0285DB |
+    STA.w MinorSprTimer_1850,Y              ;$0285DB |
     RTL                                     ;$0285DE |
 
 CODE_0285DF:
@@ -723,7 +723,7 @@ CODE_0285DF:
     BNE Return0285EE                        ;$0285E2 |
     LDY.b #$0B                              ;$0285E4 |
 CODE_0285E6:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_0285EF                         ;$0285E9 |
     DEY                                     ;$0285EB |
     BPL CODE_0285E6                         ;$0285EC |
@@ -733,16 +733,16 @@ Return0285EE:
 CODE_0285EF:
     JSL GetRand
     LDA.b #$04                              ;$0285F3 |
-    STA.w $17F0,Y                           ;$0285F5 |
+    STA.w MinorSprNumber_17F0,Y             ;$0285F5 |
     LDA.b #$00                              ;$0285F8 |
-    STA.w $1820,Y                           ;$0285FA |
+    STA.w MinorSprYSpeed_1820,Y             ;$0285FA |
     LDA.w $148D                             ;$0285FD |
     AND.b #$0F                              ;$028600 |
     SEC                                     ;$028602 |
     SBC.b #$03                              ;$028603 |
     CLC                                     ;$028605 |
     ADC.b SpriteXPosLow_E4,X                ;$028606 |
-    STA.w $1808,Y                           ;$028608 |
+    STA.w MinorSprXPosLow_1808,Y            ;$028608 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02860B |
     ADC.b #$00                              ;$02860E |
     STA.w $18EA,Y                           ;$028610 |
@@ -752,12 +752,12 @@ CODE_0285EF:
     ADC.b #$07                              ;$028619 |
     CLC                                     ;$02861B |
     ADC.b SpriteYPosLow_D8,X                ;$02861C |
-    STA.w $17FC,Y                           ;$02861E |
+    STA.w MinorSprYPosLow_17FC,Y            ;$02861E |
     LDA.w SpriteYPosHigh_14D4,X             ;$028621 |
     ADC.b #$00                              ;$028624 |
-    STA.w $1814,Y                           ;$028626 |
+    STA.w MinorSprYPosHigh_1814,Y           ;$028626 |
     LDA.b #$17                              ;$028629 |
-    STA.w $1850,Y                           ;$02862B |
+    STA.w MinorSprTimer_1850,Y              ;$02862B |
     RTL                                     ;$02862E |
 
 spawn_throw_block:
@@ -791,7 +791,7 @@ ShatterBlock:
     LDY.b #$03                              ;$028666 |
     LDX.b #$0B                              ;$028668 |
 CODE_02866A:
-    LDA.w $17F0,X
+    LDA.w MinorSprNumber_17F0,X
     BEQ CODE_02867F                         ;$02866D |
 CODE_02866F:
     DEX
@@ -806,27 +806,27 @@ CODE_02867F:
     LDA.b #$07
     STA.w SPCIO3_1DFC                       ;$028681 |
     LDA.b #$01                              ;$028684 |
-    STA.w $17F0,X                           ;$028686 |
+    STA.w MinorSprNumber_17F0,X             ;$028686 |
     LDA.b InteractionPtXPos_9A              ;$028689 |
     CLC                                     ;$02868B |
     ADC.w DATA_028746,Y                     ;$02868C |
-    STA.w $1808,X                           ;$02868F |
+    STA.w MinorSprXPosLow_1808,X            ;$02868F |
     LDA.b InteractionPtXPos_9A+1            ;$028692 |
     ADC.b #$00                              ;$028694 |
     STA.w $18EA,X                           ;$028696 |
     LDA.b InteractionPtYPos_98              ;$028699 |
     CLC                                     ;$02869B |
     ADC.w DATA_028742,Y                     ;$02869C |
-    STA.w $17FC,X                           ;$02869F |
+    STA.w MinorSprYPosLow_17FC,X            ;$02869F |
     LDA.b InteractionPtYPos_98+1            ;$0286A2 |
     ADC.b #$00                              ;$0286A4 |
-    STA.w $1814,X                           ;$0286A6 |
+    STA.w MinorSprYPosHigh_1814,X           ;$0286A6 |
     LDA.w DATA_02874A,Y                     ;$0286A9 |
-    STA.w $1820,X                           ;$0286AC |
+    STA.w MinorSprYSpeed_1820,X             ;$0286AC |
     LDA.w DATA_02874E,Y                     ;$0286AF |
-    STA.w $182C,X                           ;$0286B2 |
+    STA.w MinorSprXSpeed_182C,X             ;$0286B2 |
     LDA $00                                 ;$0286B5 |
-    STA.w $1850,X                           ;$0286B7 |
+    STA.w MinorSprTimer_1850,X              ;$0286B7 |
     DEY                                     ;$0286BA |
     BPL CODE_02866F                         ;$0286BB |
     PLX                                     ;$0286BD |
@@ -1472,7 +1472,7 @@ minor_sprites_and_loading_028AB1:
 MinorExtendedSprites028B67:
     LDX.b #$0B
 CODE_028B69:
-    LDA.w $17F0,X
+    LDA.w MinorSprNumber_17F0,X
     BEQ CODE_028B74                         ;$028B6C |
     STX.w CurrentMinorSprite_1698           ;$028B6E |
     JSR CODE_028B94                         ;$028B71 |
@@ -1526,7 +1526,7 @@ UnusedYoshiSmoke:
 ADDR_028BC0:
     LDY.b #$0B
 ADDR_028BC2:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ ADDR_028BCB                         ;$028BC5 |
     DEY                                     ;$028BC7 |
     BPL ADDR_028BC2                         ;$028BC8 |
@@ -1534,16 +1534,16 @@ ADDR_028BC2:
 
 ADDR_028BCB:
     LDA.b #$0B
-    STA.w $17F0,Y                           ;$028BCD |
+    STA.w MinorSprNumber_17F0,Y             ;$028BCD |
     LDA.b #$00                              ;$028BD0 |
-    STA.w $1850,Y                           ;$028BD2 |
+    STA.w MinorSprTimer_1850,Y              ;$028BD2 |
     LDA.b SpriteYPosLow_D8,X                ;$028BD5 |
     CLC                                     ;$028BD7 |
     ADC.b #$1C                              ;$028BD8 |
-    STA.w $17FC,Y                           ;$028BDA |
+    STA.w MinorSprYPosLow_17FC,Y            ;$028BDA |
     LDA.w SpriteYPosHigh_14D4,X             ;$028BDD |
     ADC.b #$00                              ;$028BE0 |
-    STA.w $1814,Y                           ;$028BE2 |
+    STA.w MinorSprYPosHigh_1814,Y           ;$028BE2 |
     LDA.b PlayerXPos_94                     ;$028BE5 |
     STA $02                                 ;$028BE7 |
     LDA.b PlayerXPos_94+1                   ;$028BE9 |
@@ -1551,11 +1551,11 @@ ADDR_028BCB:
     PHX                                     ;$028BED |
     LDX $00                                 ;$028BEE |
     LDA.w DATA_028C09,X                     ;$028BF0 |
-    STA.w $182C,Y                           ;$028BF3 |
+    STA.w MinorSprXSpeed_182C,Y             ;$028BF3 |
     LDA $02                                 ;$028BF6 |
     CLC                                     ;$028BF8 |
     ADC.w DATA_028C0B,X                     ;$028BF9 |
-    STA.w $1808,Y                           ;$028BFC |
+    STA.w MinorSprXPosLow_1808,Y            ;$028BFC |
     LDA $03                                 ;$028BFF |
     ADC.w DATA_028C0D,X                     ;$028C01 |
     STA.w $18EA,Y                           ;$028C04 |
@@ -1572,9 +1572,9 @@ DATA_028C0D:
     db $00,$FF
 
 ADDR_028C0F:
-    LDA.w $1850,X
+    LDA.w MinorSprTimer_1850,X
     BNE ADDR_028C61                         ;$028C12 |
-    LDA.w $182C,X                           ;$028C14 |
+    LDA.w MinorSprXSpeed_182C,X             ;$028C14 |
     BEQ ADDR_028C66                         ;$028C17 |
     BPL ADDR_028C20                         ;$028C19 |
     CLC                                     ;$028C1B |
@@ -1585,7 +1585,7 @@ ADDR_028C20:
     SEC
     SBC.b #$08                              ;$028C21 |
 ADDR_028C23:
-    STA.w $182C,X
+    STA.w MinorSprXSpeed_182C,X
     JSR CODE_02B5BC                         ;$028C26 |
     TXA                                     ;$028C29 |
     EOR.b Frame_13                          ;$028C2A |
@@ -1593,7 +1593,7 @@ ADDR_028C23:
     BNE Return028C60                        ;$028C2E |
     LDY.b #$0B                              ;$028C30 |
 ADDR_028C32:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ ADDR_028C3B                         ;$028C35 |
     DEY                                     ;$028C37 |
     BPL ADDR_028C32                         ;$028C38 |
@@ -1601,26 +1601,26 @@ ADDR_028C32:
 
 ADDR_028C3B:
     LDA.b #$0B
-    STA.w $17F0,Y                           ;$028C3D |
-    STA.w $1820,Y                           ;$028C40 |
-    LDA.w $1808,X                           ;$028C43 |
-    STA.w $1808,Y                           ;$028C46 |
+    STA.w MinorSprNumber_17F0,Y             ;$028C3D |
+    STA.w MinorSprYSpeed_1820,Y             ;$028C40 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028C43 |
+    STA.w MinorSprXPosLow_1808,Y            ;$028C46 |
     LDA.w $18EA,X                           ;$028C49 |
     STA.w $18EA,Y                           ;$028C4C |
-    LDA.w $17FC,X                           ;$028C4F |
-    STA.w $17FC,Y                           ;$028C52 |
-    LDA.w $1814,X                           ;$028C55 |
-    STA.w $1814,Y                           ;$028C58 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028C4F |
+    STA.w MinorSprYPosLow_17FC,Y            ;$028C52 |
+    LDA.w MinorSprYPosHigh_1814,X           ;$028C55 |
+    STA.w MinorSprYPosHigh_1814,Y           ;$028C58 |
     LDA.b #$10                              ;$028C5B |
-    STA.w $1850,Y                           ;$028C5D |
+    STA.w MinorSprTimer_1850,Y              ;$028C5D |
 Return028C60:
     RTS
 
 ADDR_028C61:
-    DEC.w $1850,X
+    DEC.w MinorSprTimer_1850,X
     BNE ADDR_028C6E                         ;$028C64 |
 ADDR_028C66:
-    STZ.w $17F0,X
+    STZ.w MinorSprNumber_17F0,X
     RTS                                     ;$028C69 |
 
 DATA_028C6A:
@@ -1628,18 +1628,18 @@ DATA_028C6A:
 
 ADDR_028C6E:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028C71 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028C71 |
     SEC                                     ;$028C74 |
     SBC.b Layer1XPos_1A                     ;$028C75 |
     STA $00                                 ;$028C77 |
     LDA.w $18EA,X                           ;$028C79 |
     SBC.b Layer1XPos_1A+1                   ;$028C7C |
     BNE ADDR_028C66                         ;$028C7E |
-    LDA.w $17FC,X                           ;$028C80 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028C80 |
     SEC                                     ;$028C83 |
     SBC.b Layer1YPos_1C                     ;$028C84 |
     STA $01                                 ;$028C86 |
-    LDA.w $1814,X                           ;$028C88 |
+    LDA.w MinorSprYPosHigh_1814,X           ;$028C88 |
     SBC.b Layer1YPos_1C+1                   ;$028C8B |
     BNE ADDR_028C66                         ;$028C8D |
     LDA $00                                 ;$028C8F |
@@ -1647,7 +1647,7 @@ ADDR_028C6E:
     LDA $01                                 ;$028C94 |
     STA.w $0201,Y                           ;$028C96 |
     PHX                                     ;$028C99 |
-    LDA.w $1850,X                           ;$028C9A |
+    LDA.w MinorSprTimer_1850,X              ;$028C9A |
     LSR                                     ;$028C9D |
     LSR                                     ;$028C9E |
     TAX                                     ;$028C9F |
@@ -1672,18 +1672,18 @@ BooStreamTiles:
 CODE_028CC4:
     LDA.b SpriteLock_9D
     BNE CODE_028CFF                         ;$028CC6 |
-    LDA.w $1808,X                           ;$028CC8 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028CC8 |
     CLC                                     ;$028CCB |
     ADC.b #$04                              ;$028CCC |
     STA $04                                 ;$028CCE |
     LDA.w $18EA,X                           ;$028CD0 |
     ADC.b #$00                              ;$028CD3 |
     STA $0A                                 ;$028CD5 |
-    LDA.w $17FC,X                           ;$028CD7 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028CD7 |
     CLC                                     ;$028CDA |
     ADC.b #$04                              ;$028CDB |
     STA $05                                 ;$028CDD |
-    LDA.w $1814,X                           ;$028CDF |
+    LDA.w MinorSprYPosHigh_1814,X           ;$028CDF |
     ADC.b #$00                              ;$028CE2 |
     STA $0B                                 ;$028CE4 |
     LDA.b #$08                              ;$028CE6 |
@@ -1694,11 +1694,11 @@ CODE_028CC4:
     BCC CODE_028CFA                         ;$028CF4 |
     JSL HurtMario                           ;$028CF6 |
 CODE_028CFA:
-    DEC.w $1850,X
+    DEC.w MinorSprTimer_1850,X
     BEQ CODE_028D62                         ;$028CFD |
 CODE_028CFF:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028D02 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028D02 |
     SEC                                     ;$028D05 |
     SBC.b Layer1XPos_1A                     ;$028D06 |
     STA $00                                 ;$028D08 |
@@ -1707,7 +1707,7 @@ CODE_028CFF:
     BNE Return028D41                        ;$028D0F |
     LDA $00                                 ;$028D11 |
     STA.w OAMMirror_0200,Y                  ;$028D13 |
-    LDA.w $17FC,X                           ;$028D16 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028D16 |
     SEC                                     ;$028D19 |
     SBC.b Layer1YPos_1C                     ;$028D1A |
     CMP.b #$F0                              ;$028D1C |
@@ -1715,7 +1715,7 @@ CODE_028CFF:
     STA.w $0201,Y                           ;$028D20 |
     LDA.w BooStreamTiles,X                  ;$028D23 |
     STA.w $0202,Y                           ;$028D26 |
-    LDA.w $182C,X                           ;$028D29 |
+    LDA.w MinorSprXSpeed_182C,X             ;$028D29 |
     LSR                                     ;$028D2C |
     AND.b #$40                              ;$028D2D |
     EOR.b #$40                              ;$028D2F |
@@ -1736,16 +1736,16 @@ WaterSplashTiles:
     db $64,$64,$64,$64,$66
 
 CODE_028D4F:
-    LDA.w $1808,X
+    LDA.w MinorSprXPosLow_1808,X
     CMP.b Layer1XPos_1A                     ;$028D52 |
     LDA.w $18EA,X                           ;$028D54 |
     SBC.b Layer1XPos_1A+1                   ;$028D57 |
     BNE CODE_028D62                         ;$028D59 |
-    LDA.w $1850,X                           ;$028D5B |
+    LDA.w MinorSprTimer_1850,X              ;$028D5B |
     CMP.b #$20                              ;$028D5E |
     BNE CODE_028D66                         ;$028D60 |
 CODE_028D62:
-    STZ.w $17F0,X
+    STZ.w MinorSprNumber_17F0,X
     RTS                                     ;$028D65 |
 
 CODE_028D66:
@@ -1755,9 +1755,9 @@ CODE_028D66:
     AND.b #$01                              ;$028D6C |
     ORA.b SpriteLock_9D                     ;$028D6E |
     BNE CODE_028D75                         ;$028D70 |
-    INC.w $17FC,X                           ;$028D72 |
+    INC.w MinorSprYPosLow_17FC,X            ;$028D72 |
 CODE_028D75:
-    LDA.w $1850,X
+    LDA.w MinorSprTimer_1850,X
     SEC                                     ;$028D78 |
     SBC.b #$10                              ;$028D79 |
     LSR                                     ;$028D7B |
@@ -1773,7 +1773,7 @@ CODE_028D89:
     STA $00
 CODE_028D8B:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028D8E |
+    LDA.w MinorSprXPosLow_1808,X            ;$028D8E |
     CLC                                     ;$028D91 |
     ADC $00                                 ;$028D92 |
     SEC                                     ;$028D94 |
@@ -1781,13 +1781,13 @@ CODE_028D8B:
     CMP.b #$F0                              ;$028D97 |
     BCS CODE_028D62                         ;$028D99 |
     STA.w OAMMirror_0200,Y                  ;$028D9B |
-    LDA.w $17FC,X                           ;$028D9E |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028D9E |
     SEC                                     ;$028DA1 |
     SBC.b Layer1YPos_1C                     ;$028DA2 |
     CMP.b #$E8                              ;$028DA4 |
     BCS CODE_028D62                         ;$028DA6 |
     STA.w $0201,Y                           ;$028DA8 |
-    LDA.w $1850,X                           ;$028DAB |
+    LDA.w MinorSprTimer_1850,X              ;$028DAB |
     LSR                                     ;$028DAE |
     TAX                                     ;$028DAF |
     CPX.b #$0C                              ;$028DB0 |
@@ -1808,7 +1808,7 @@ CODE_028DB6:
     STA.w OAMTileSize_0420,Y                ;$028DCC |
     LDA.b SpriteLock_9D                     ;$028DCF |
     BNE Return028DD6                        ;$028DD1 |
-    INC.w $1850,X                           ;$028DD3 |
+    INC.w MinorSprTimer_1850,X              ;$028DD3 |
 Return028DD6:
     RTS
 
@@ -1818,39 +1818,39 @@ RipVanFishZsTiles:
 CODE_028DDB:
     LDA.b SpriteLock_9D
     BNE CODE_028E20                         ;$028DDD |
-    LDA.w $1850,X                           ;$028DDF |
+    LDA.w MinorSprTimer_1850,X              ;$028DDF |
     BEQ CODE_028DE7                         ;$028DE2 |
-    DEC.w $1850,X                           ;$028DE4 |
+    DEC.w MinorSprTimer_1850,X              ;$028DE4 |
 CODE_028DE7:
-    LDA.w $1850,X
+    LDA.w MinorSprTimer_1850,X
     AND.b #$00                              ;$028DEA |
     BNE CODE_028DFE                         ;$028DEC |
-    LDA.w $1850,X                           ;$028DEE |
-    INC.w $182C,X                           ;$028DF1 |
+    LDA.w MinorSprTimer_1850,X              ;$028DEE |
+    INC.w MinorSprXSpeed_182C,X             ;$028DF1 |
     AND.b #$10                              ;$028DF4 |
     BNE CODE_028DFE                         ;$028DF6 |
-    DEC.w $182C,X                           ;$028DF8 |
-    DEC.w $182C,X                           ;$028DFB |
+    DEC.w MinorSprXSpeed_182C,X             ;$028DF8 |
+    DEC.w MinorSprXSpeed_182C,X             ;$028DFB |
 CODE_028DFE:
-    LDA.w $182C,X
+    LDA.w MinorSprXSpeed_182C,X
     PHA                                     ;$028E01 |
-    LDY.w $17F0,X                           ;$028E02 |
+    LDY.w MinorSprNumber_17F0,X             ;$028E02 |
     CPY.b #$09                              ;$028E05 |
     BNE CODE_028E0F                         ;$028E07 |
     EOR.b #$FF                              ;$028E09 |
     INC A                                   ;$028E0B |
-    STA.w $182C,X                           ;$028E0C |
+    STA.w MinorSprXSpeed_182C,X             ;$028E0C |
 CODE_028E0F:
     JSR CODE_02B5BC
     PLA                                     ;$028E12 |
-    STA.w $182C,X                           ;$028E13 |
-    LDA.w $1850,X                           ;$028E16 |
+    STA.w MinorSprXSpeed_182C,X             ;$028E13 |
+    LDA.w MinorSprTimer_1850,X              ;$028E16 |
     AND.b #$03                              ;$028E19 |
     BNE CODE_028E20                         ;$028E1B |
-    DEC.w $17FC,X                           ;$028E1D |
+    DEC.w MinorSprYPosLow_17FC,X            ;$028E1D |
 CODE_028E20:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028E23 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028E23 |
     SEC                                     ;$028E26 |
     SBC.b Layer1XPos_1A                     ;$028E27 |
     CMP.b #$08                              ;$028E29 |
@@ -1858,7 +1858,7 @@ CODE_028E20:
     CMP.b #$FC                              ;$028E2D |
     BCS CODE_028E76                         ;$028E2F |
     STA.w OAMMirror_0200,Y                  ;$028E31 |
-    LDA.w $17FC,X                           ;$028E34 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028E34 |
     SEC                                     ;$028E37 |
     SBC.b Layer1YPos_1C                     ;$028E38 |
     CMP.b #$F0                              ;$028E3A |
@@ -1867,14 +1867,14 @@ CODE_028E20:
     LDA.b SpriteYXPPCCCT_64                 ;$028E41 |
     ORA.b #$03                              ;$028E43 |
     STA.w $0203,Y                           ;$028E45 |
-    LDA.w $1850,X                           ;$028E48 |
+    LDA.w MinorSprTimer_1850,X              ;$028E48 |
     CMP.b #$14                              ;$028E4B |
     BEQ CODE_028E76                         ;$028E4D |
-    LDA.w $17F0,X                           ;$028E4F |
+    LDA.w MinorSprNumber_17F0,X             ;$028E4F |
     CMP.b #$08                              ;$028E52 |
     LDA.b #$7F                              ;$028E54 |
     BCS CODE_028E66                         ;$028E56 |
-    LDA.w $1850,X                           ;$028E58 |
+    LDA.w MinorSprTimer_1850,X              ;$028E58 |
     LSR                                     ;$028E5B |
     LSR                                     ;$028E5C |
     LSR                                     ;$028E5D |
@@ -1895,29 +1895,29 @@ CODE_028E66:
     RTS                                     ;$028E75 |
 
 CODE_028E76:
-    STZ.w $17F0,X
+    STZ.w MinorSprNumber_17F0,X
     RTS                                     ;$028E79 |
 
 DATA_028E7A:
     db $03,$43,$83,$C3
 
 CODE_028E7E:
-    DEC.w $1850,X
-    LDA.w $1850,X                           ;$028E81 |
+    DEC.w MinorSprTimer_1850,X
+    LDA.w MinorSprTimer_1850,X              ;$028E81 |
     AND.b #$3F                              ;$028E84 |
     BEQ CODE_028ED7                         ;$028E86 |
     JSR CODE_02B5BC                         ;$028E88 |
     JSR CODE_02B5C8                         ;$028E8B |
-    INC.w $1820,X                           ;$028E8E |
-    INC.w $1820,X                           ;$028E91 |
+    INC.w MinorSprYSpeed_1820,X             ;$028E8E |
+    INC.w MinorSprYSpeed_1820,X             ;$028E91 |
     LDY.w BrokenBlock,X                     ;$028E94 |
-    LDA.w $17FC,X                           ;$028E97 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028E97 |
     SEC                                     ;$028E9A |
     SBC.b Layer1YPos_1C                     ;$028E9B |
     CMP.b #$F0                              ;$028E9D |
     BCS CODE_028ED7                         ;$028E9F |
     STA.w $0201,Y                           ;$028EA1 |
-    LDA.w $1808,X                           ;$028EA4 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028EA4 |
     SEC                                     ;$028EA7 |
     SBC.b Layer1XPos_1A                     ;$028EA8 |
     CMP.b #$F8                              ;$028EAA |
@@ -1925,7 +1925,7 @@ CODE_028E7E:
     STA.w OAMMirror_0200,Y                  ;$028EAE |
     LDA.b #$6F                              ;$028EB1 |
     STA.w $0202,Y                           ;$028EB3 |
-    LDA.w $1850,X                           ;$028EB6 |
+    LDA.w MinorSprTimer_1850,X              ;$028EB6 |
     AND.b #$C0                              ;$028EB9 |
     ORA.b #$03                              ;$028EBB |
     ORA.b SpriteYXPPCCCT_64                 ;$028EBD |
@@ -1942,7 +1942,7 @@ StarSparkleTiles:
     db $66,$6E,$FF,$6D,$6C,$5C
 
 CODE_028ED2:
-    LDA.w $1850,X
+    LDA.w MinorSprTimer_1850,X
     BNE CODE_028EDA                         ;$028ED5 |
 CODE_028ED7:
     JMP CODE_028F87
@@ -1950,24 +1950,24 @@ CODE_028ED7:
 CODE_028EDA:
     LDY.b SpriteLock_9D
     BNE CODE_028EE1                         ;$028EDC |
-    DEC.w $1850,X                           ;$028EDE |
+    DEC.w MinorSprTimer_1850,X              ;$028EDE |
 CODE_028EE1:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028EE4 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028EE4 |
     SEC                                     ;$028EE7 |
     SBC.b Layer1XPos_1A                     ;$028EE8 |
     CMP.b #$F0                              ;$028EEA |
     BCS CODE_028ED7                         ;$028EEC |
     STA.w OAMMirror_0200,Y                  ;$028EEE |
-    LDA.w $17FC,X                           ;$028EF1 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028EF1 |
     SEC                                     ;$028EF4 |
     SBC.b Layer1YPos_1C                     ;$028EF5 |
     CMP.b #$F0                              ;$028EF7 |
     BCS CODE_028ED7                         ;$028EF9 |
     STA.w $0201,Y                           ;$028EFB |
-    LDA.w $17F0,X                           ;$028EFE |
+    LDA.w MinorSprNumber_17F0,X             ;$028EFE |
     PHA                                     ;$028F01 |
-    LDA.w $1850,X                           ;$028F02 |
+    LDA.w MinorSprTimer_1850,X              ;$028F02 |
     LSR                                     ;$028F05 |
     LSR                                     ;$028F06 |
     LSR                                     ;$028F07 |
@@ -1997,31 +1997,31 @@ LavaSplashTiles:
     db $D7,$C7,$D6,$C6
 
 CODE_028F2F:
-    LDA.w $1808,X
+    LDA.w MinorSprXPosLow_1808,X
     CMP.b Layer1XPos_1A                     ;$028F32 |
     LDA.w $18EA,X                           ;$028F34 |
     SBC.b Layer1XPos_1A+1                   ;$028F37 |
     BNE CODE_028F87                         ;$028F39 |
-    LDA.w $1850,X                           ;$028F3B |
+    LDA.w MinorSprTimer_1850,X              ;$028F3B |
     BEQ CODE_028F87                         ;$028F3E |
     LDY.b SpriteLock_9D                     ;$028F40 |
     BNE CODE_028F4D                         ;$028F42 |
-    DEC.w $1850,X                           ;$028F44 |
+    DEC.w MinorSprTimer_1850,X              ;$028F44 |
     JSR CODE_02B5C8                         ;$028F47 |
-    INC.w $1820,X                           ;$028F4A |
+    INC.w MinorSprYSpeed_1820,X             ;$028F4A |
 CODE_028F4D:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028F50 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028F50 |
     SEC                                     ;$028F53 |
     SBC.b Layer1XPos_1A                     ;$028F54 |
     STA.w OAMMirror_0200,Y                  ;$028F56 |
-    LDA.w $17FC,X                           ;$028F59 |
+    LDA.w MinorSprYPosLow_17FC,X            ;$028F59 |
     CMP.b #$F0                              ;$028F5C |
     BCS CODE_028F87                         ;$028F5E |
     SEC                                     ;$028F60 |
     SBC.b Layer1YPos_1C                     ;$028F61 |
     STA.w $0201,Y                           ;$028F63 |
-    LDA.w $1850,X                           ;$028F66 |
+    LDA.w MinorSprTimer_1850,X              ;$028F66 |
     LSR                                     ;$028F69 |
     LSR                                     ;$028F6A |
     LSR                                     ;$028F6B |
@@ -2041,7 +2041,7 @@ CODE_028F4D:
     RTS                                     ;$028F86 |
 
 CODE_028F87:
-    STZ.w $17F0,X
+    STZ.w MinorSprNumber_17F0,X
     RTS                                     ;$028F8A |
 
 CODE_028F8B:
@@ -2051,45 +2051,45 @@ CODE_028F8B:
     AND.b #$03                              ;$028F91 |
     BEQ CODE_028FAB                         ;$028F93 |
     LDY.b #$00                              ;$028F95 |
-    LDA.w $182C,X                           ;$028F97 |
+    LDA.w MinorSprXSpeed_182C,X             ;$028F97 |
     BPL CODE_028F9D                         ;$028F9A |
     DEY                                     ;$028F9C |
 CODE_028F9D:
     CLC
-    ADC.w $1808,X                           ;$028F9E |
-    STA.w $1808,X                           ;$028FA1 |
+    ADC.w MinorSprXPosLow_1808,X            ;$028F9E |
+    STA.w MinorSprXPosLow_1808,X            ;$028FA1 |
     TYA                                     ;$028FA4 |
     ADC.w $18EA,X                           ;$028FA5 |
     STA.w $18EA,X                           ;$028FA8 |
 CODE_028FAB:
     LDY.b #$00
-    LDA.w $1820,X                           ;$028FAD |
+    LDA.w MinorSprYSpeed_1820,X             ;$028FAD |
     BPL CODE_028FB3                         ;$028FB0 |
     DEY                                     ;$028FB2 |
 CODE_028FB3:
     CLC
-    ADC.w $17FC,X                           ;$028FB4 |
-    STA.w $17FC,X                           ;$028FB7 |
+    ADC.w MinorSprYPosLow_17FC,X            ;$028FB4 |
+    STA.w MinorSprYPosLow_17FC,X            ;$028FB7 |
     TYA                                     ;$028FBA |
-    ADC.w $1814,X                           ;$028FBB |
-    STA.w $1814,X                           ;$028FBE |
+    ADC.w MinorSprYPosHigh_1814,X           ;$028FBB |
+    STA.w MinorSprYPosHigh_1814,X           ;$028FBE |
     LDA.b Frame_13                          ;$028FC1 |
     AND.b #$03                              ;$028FC3 |
     BNE CODE_028FCA                         ;$028FC5 |
-    INC.w $1820,X                           ;$028FC7 |
+    INC.w MinorSprYSpeed_1820,X             ;$028FC7 |
 CODE_028FCA:
-    LDA.w $17FC,X
+    LDA.w MinorSprYPosLow_17FC,X
     SEC                                     ;$028FCD |
     SBC.b Layer1YPos_1C                     ;$028FCE |
     STA $00                                 ;$028FD0 |
-    LDA.w $1814,X                           ;$028FD2 |
+    LDA.w MinorSprYPosHigh_1814,X           ;$028FD2 |
     SBC.b Layer1YPos_1C+1                   ;$028FD5 |
     BEQ CODE_028FDD                         ;$028FD7 |
     BPL CODE_028F87                         ;$028FD9 |
     BMI Return02902C                        ;$028FDB |
 CODE_028FDD:
     LDY.w BrokenBlock,X
-    LDA.w $1808,X                           ;$028FE0 |
+    LDA.w MinorSprXPosLow_1808,X            ;$028FE0 |
     SEC                                     ;$028FE3 |
     SBC.b Layer1XPos_1A                     ;$028FE4 |
     STA $01                                 ;$028FE6 |
@@ -2102,7 +2102,7 @@ CODE_028FDD:
     CMP.b #$F0                              ;$028FF6 |
     BCS CODE_028F87                         ;$028FF8 |
     STA.w $0201,Y                           ;$028FFA |
-    LDA.w $1850,X                           ;$028FFD |
+    LDA.w MinorSprTimer_1850,X              ;$028FFD |
     PHA                                     ;$029000 |
     LDA.b Frame_14                          ;$029001 |
     LSR                                     ;$029003 |
@@ -3309,7 +3309,7 @@ CODE_0298CA:
     BNE Return029921                        ;$0298D8 |
     LDY.b #$0B                              ;$0298DA |
 CODE_0298DC:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_0298F1                         ;$0298DF |
     DEY                                     ;$0298E1 |
     BPL CODE_0298DC                         ;$0298E2 |
@@ -3321,7 +3321,7 @@ CODE_0298EE:
     LDY.w $185D
 CODE_0298F1:
     LDA.b #$02
-    STA.w $17F0,Y                           ;$0298F3 |
+    STA.w MinorSprNumber_17F0,Y             ;$0298F3 |
     LDA.w SmokeSprYPos_17C4,X               ;$0298F6 |
     STA $01                                 ;$0298F9 |
     LDA.w SmokeSprXPos_17C8,X               ;$0298FB |
@@ -3335,14 +3335,14 @@ CODE_0298F1:
     LDA.w DATA_0298C2,X                     ;$029909 |
     CLC                                     ;$02990C |
     ADC $00                                 ;$02990D |
-    STA.w $1808,Y                           ;$02990F |
+    STA.w MinorSprXPosLow_1808,Y            ;$02990F |
     LDA.w DATA_0298C6,X                     ;$029912 |
     CLC                                     ;$029915 |
     ADC $01                                 ;$029916 |
-    STA.w $17FC,Y                           ;$029918 |
+    STA.w MinorSprYPosLow_17FC,Y            ;$029918 |
     PLX                                     ;$02991B |
     LDA.b #$17                              ;$02991C |
-    STA.w $1850,Y                           ;$02991E |
+    STA.w MinorSprTimer_1850,Y              ;$02991E |
 Return029921:
     RTS
 
@@ -7262,16 +7262,16 @@ CODE_02B5BC:
     RTS                                     ;$02B5C7 |
 
 CODE_02B5C8:
-    LDA.w $1820,X
+    LDA.w MinorSprYSpeed_1820,X
     ASL                                     ;$02B5CB |
     ASL                                     ;$02B5CC |
     ASL                                     ;$02B5CD |
     ASL                                     ;$02B5CE |
     CLC                                     ;$02B5CF |
-    ADC.w $1838,X                           ;$02B5D0 |
-    STA.w $1838,X                           ;$02B5D3 |
+    ADC.w MinorSprYPosSpx_1838,X            ;$02B5D0 |
+    STA.w MinorSprYPosSpx_1838,X            ;$02B5D3 |
     PHP                                     ;$02B5D6 |
-    LDA.w $1820,X                           ;$02B5D7 |
+    LDA.w MinorSprYSpeed_1820,X             ;$02B5D7 |
     LSR                                     ;$02B5DA |
     LSR                                     ;$02B5DB |
     LSR                                     ;$02B5DC |
@@ -7281,8 +7281,8 @@ CODE_02B5C8:
     ORA.b #$F0                              ;$02B5E2 |
 CODE_02B5E4:
     PLP
-    ADC.w $17FC,X                           ;$02B5E5 |
-    STA.w $17FC,X                           ;$02B5E8 |
+    ADC.w MinorSprYPosLow_17FC,X            ;$02B5E5 |
+    STA.w MinorSprYPosLow_17FC,X            ;$02B5E8 |
     RTS                                     ;$02B5EB |
 
 Empty02B5EC:
@@ -8817,7 +8817,7 @@ CODE_02C0DB:
     STA.w Sprite_1528,X                     ;$02C0ED |
     LDY.b #$0B                              ;$02C0F0 |
 CODE_02C0F2:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_02C107                         ;$02C0F5 |
     DEY                                     ;$02C0F7 |
     BPL CODE_02C0F2                         ;$02C0F8 |
@@ -8829,19 +8829,19 @@ CODE_02C104:
     LDY.w $185D
 CODE_02C107:
     PLA
-    STA.w $17F0,Y                           ;$02C108 |
+    STA.w MinorSprNumber_17F0,Y             ;$02C108 |
     LDA.b SpriteXPosLow_E4,X                ;$02C10B |
     CLC                                     ;$02C10D |
     ADC.b #$06                              ;$02C10E |
-    STA.w $1808,Y                           ;$02C110 |
+    STA.w MinorSprXPosLow_1808,Y            ;$02C110 |
     LDA.b SpriteYPosLow_D8,X                ;$02C113 |
     CLC                                     ;$02C115 |
     ADC.b #$00                              ;$02C116 |
-    STA.w $17FC,Y                           ;$02C118 |
+    STA.w MinorSprYPosLow_17FC,Y            ;$02C118 |
     LDA.b #$7F                              ;$02C11B |
-    STA.w $1850,Y                           ;$02C11D |
+    STA.w MinorSprTimer_1850,Y              ;$02C11D |
     LDA.b #$FA                              ;$02C120 |
-    STA.w $182C,Y                           ;$02C122 |
+    STA.w MinorSprXSpeed_182C,Y             ;$02C122 |
 Return02C125:
     RTL
 

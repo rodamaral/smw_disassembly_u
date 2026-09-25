@@ -16519,7 +16519,7 @@ CODE_01F7C8:
     LDY.b #$03                              ;$01F7DB |
     LDX.b #$0B                              ;$01F7DD |
 CODE_01F7DF:
-    LDA.w $17F0,X
+    LDA.w MinorSprNumber_17F0,X
     BEQ CODE_01F7F4                         ;$01F7E2 |
 CODE_01F7E4:
     DEX
@@ -16532,21 +16532,21 @@ CODE_01F7F1:
     LDX.w $185D
 CODE_01F7F4:
     LDA.b #$03
-    STA.w $17F0,X                           ;$01F7F6 |
+    STA.w MinorSprNumber_17F0,X             ;$01F7F6 |
     LDA $00                                 ;$01F7F9 |
     CLC                                     ;$01F7FB |
     ADC.w DATA_01F831,Y                     ;$01F7FC |
-    STA.w $1808,X                           ;$01F7FF |
+    STA.w MinorSprXPosLow_1808,X            ;$01F7FF |
     LDA $02                                 ;$01F802 |
     CLC                                     ;$01F804 |
     ADC.w DATA_01F82D,Y                     ;$01F805 |
-    STA.w $17FC,X                           ;$01F808 |
+    STA.w MinorSprYPosLow_17FC,X            ;$01F808 |
     LDA $03                                 ;$01F80B |
-    STA.w $1814,X                           ;$01F80D |
+    STA.w MinorSprYPosHigh_1814,X           ;$01F80D |
     LDA.w DATA_01F835,Y                     ;$01F810 |
-    STA.w $1820,X                           ;$01F813 |
+    STA.w MinorSprYSpeed_1820,X             ;$01F813 |
     LDA.w DATA_01F839,Y                     ;$01F816 |
-    STA.w $182C,X                           ;$01F819 |
+    STA.w MinorSprXSpeed_182C,X             ;$01F819 |
     TYA                                     ;$01F81C |
     ASL                                     ;$01F81D |
     ASL                                     ;$01F81E |
@@ -16555,7 +16555,7 @@ CODE_01F7F4:
     ASL                                     ;$01F821 |
     ASL                                     ;$01F822 |
     ORA.b #$28                              ;$01F823 |
-    STA.w $1850,X                           ;$01F825 |
+    STA.w MinorSprTimer_1850,X              ;$01F825 |
     DEY                                     ;$01F828 |
     BPL CODE_01F7E4                         ;$01F829 |
     PLX                                     ;$01F82B |

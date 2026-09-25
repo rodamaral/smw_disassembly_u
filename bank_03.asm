@@ -2136,7 +2136,7 @@ CODE_03900B:
 CODE_039020:
     LDY.b #$0B
 CODE_039022:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_039037                         ;$039025 |
     DEY                                     ;$039027 |
     BPL CODE_039022                         ;$039028 |
@@ -2148,19 +2148,19 @@ ADDR_039034:
     LDY.w $185D
 CODE_039037:
     LDA.b #$0A
-    STA.w $17F0,Y                           ;$039039 |
+    STA.w MinorSprNumber_17F0,Y             ;$039039 |
     LDA.b SpriteXPosLow_E4,X                ;$03903C |
-    STA.w $1808,Y                           ;$03903E |
+    STA.w MinorSprXPosLow_1808,Y            ;$03903E |
     LDA.w SpriteXPosHigh_14E0,X             ;$039041 |
     STA.w $18EA,Y                           ;$039044 |
     LDA.b SpriteYPosLow_D8,X                ;$039047 |
-    STA.w $17FC,Y                           ;$039049 |
+    STA.w MinorSprYPosLow_17FC,Y            ;$039049 |
     LDA.w SpriteYPosHigh_14D4,X             ;$03904C |
-    STA.w $1814,Y                           ;$03904F |
+    STA.w MinorSprYPosHigh_1814,Y           ;$03904F |
     LDA.b #$30                              ;$039052 |
-    STA.w $1850,Y                           ;$039054 |
+    STA.w MinorSprTimer_1850,Y              ;$039054 |
     LDA.b SpriteXSpeed_B6,X                 ;$039057 |
-    STA.w $182C,Y                           ;$039059 |
+    STA.w MinorSprXSpeed_182C,Y             ;$039059 |
     RTS                                     ;$03905C |
 
 FishinBooAccelX:
@@ -6025,7 +6025,7 @@ CODE_03AD63:
     BNE Return03AD73                        ;$03AD67 |
     LDY.b #$0B                              ;$03AD69 |
 CODE_03AD6B:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_03AD74                         ;$03AD6E |
     DEY                                     ;$03AD70 |
     BPL CODE_03AD6B                         ;$03AD71 |
@@ -6034,7 +6034,7 @@ Return03AD73:
 
 CODE_03AD74:
     LDA.b #$05
-    STA.w $17F0,Y                           ;$03AD76 |
+    STA.w MinorSprNumber_17F0,Y             ;$03AD76 |
     JSL GetRand                             ;$03AD79 |
     STZ $00                                 ;$03AD7D |
     AND.b #$1F                              ;$03AD7F |
@@ -6045,21 +6045,21 @@ CODE_03AD74:
 CODE_03AD88:
     CLC
     ADC.b SpriteXPosLow_E4,X                ;$03AD89 |
-    STA.w $1808,Y                           ;$03AD8B |
+    STA.w MinorSprXPosLow_1808,Y            ;$03AD8B |
     LDA.w SpriteXPosHigh_14E0,X             ;$03AD8E |
     ADC $00                                 ;$03AD91 |
     STA.w $18EA,Y                           ;$03AD93 |
     LDA.w $148E                             ;$03AD96 |
     AND.b #$1F                              ;$03AD99 |
     ADC.b SpriteYPosLow_D8,X                ;$03AD9B |
-    STA.w $17FC,Y                           ;$03AD9D |
+    STA.w MinorSprYPosLow_17FC,Y            ;$03AD9D |
     LDA.w SpriteYPosHigh_14D4,X             ;$03ADA0 |
     ADC.b #$00                              ;$03ADA3 |
-    STA.w $1814,Y                           ;$03ADA5 |
+    STA.w MinorSprYPosHigh_1814,Y           ;$03ADA5 |
     LDA.b #$00                              ;$03ADA8 |
-    STA.w $1820,Y                           ;$03ADAA |
+    STA.w MinorSprYSpeed_1820,Y             ;$03ADAA |
     LDA.b #$17                              ;$03ADAD |
-    STA.w $1850,Y                           ;$03ADAF |
+    STA.w MinorSprTimer_1850,Y              ;$03ADAF |
     RTS                                     ;$03ADB2 |
 
 CODE_03ADB3:

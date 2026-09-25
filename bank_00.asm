@@ -13775,7 +13775,7 @@ CODE_00FDA5:
     BEQ CODE_00FDB3                         ;$00FDA7 |
     LDY.b #$0B                              ;$00FDA9 |
 CODE_00FDAB:
-    LDA.w $17F0,Y
+    LDA.w MinorSprNumber_17F0,Y
     BEQ CODE_00FDB4                         ;$00FDAE |
     DEY                                     ;$00FDB0 |
     BPL CODE_00FDAB                         ;$00FDB1 |
@@ -13800,21 +13800,21 @@ CODE_00FDC3:
     AND.b #$F0                              ;$00FDCA |
     CLC                                     ;$00FDCC |
     ADC.b #$03                              ;$00FDCD |
-    STA.w $17FC,Y                           ;$00FDCF |
+    STA.w MinorSprYPosLow_17FC,Y            ;$00FDCF |
     LDA.b PlayerYPos_96+1                   ;$00FDD2 |
     ADC.b #$00                              ;$00FDD4 |
     PLP                                     ;$00FDD6 |
     ADC.w DATA_00FDA1,X                     ;$00FDD7 |
-    STA.w $1814,Y                           ;$00FDDA |
+    STA.w MinorSprYPosHigh_1814,Y           ;$00FDDA |
     PLX                                     ;$00FDDD |
     LDA.b PlayerXPos_94                     ;$00FDDE |
-    STA.w $1808,Y                           ;$00FDE0 |
+    STA.w MinorSprXPosLow_1808,Y            ;$00FDE0 |
     LDA.b PlayerXPos_94+1                   ;$00FDE3 |
     STA.w $18EA,Y                           ;$00FDE5 |
     LDA.b #$07                              ;$00FDE8 |
-    STA.w $17F0,Y                           ;$00FDEA |
+    STA.w MinorSprNumber_17F0,Y             ;$00FDEA |
     LDA.b #$00                              ;$00FDED |
-    STA.w $1850,Y                           ;$00FDEF |
+    STA.w MinorSprTimer_1850,Y              ;$00FDEF |
     LDA.b PlayerYSpeed_7D                   ;$00FDF2 |
     BMI Return00FE0D                        ;$00FDF4 |
     STZ.b PlayerYSpeed_7D                   ;$00FDF6 |

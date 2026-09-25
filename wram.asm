@@ -1906,19 +1906,19 @@ CoinSpriteYPosHigh_17E8: skip 4 ;done
 CoinsPriteXPosHigh_17EC: skip 4 ;done
 
 
-MinExtSpriteNumber_17F0: skip 12
-MinExtSpriteYPosLow_17FC: skip 12
-MinExtSpriteXPosLow_1808: skip 12
-MinExtSpriteYPosHigh_1814: skip 12
-MinExtSpriteYSpeed_1820: skip 12
-MinExtSpriteXSpeed_182C: skip 12
-MinExtSpriteYPosSpx_1838: skip 12
-MinExtSpriteXPosSpx_1844: skip 12
-MinExtSpriteTimer_1850: skip 12
+MinorSprNumber_17F0: skip 12 ;done
+MinorSprYPosLow_17FC: skip 12 ;done
+MinorSprXPosLow_1808: skip 12 ;done
+MinorSprYPosHigh_1814: skip 12 ;done
+MinorSprYSpeed_1820: skip 12 ;done
+MinorSprXSpeed_182C: skip 12 ;done
+MinorSprYPosSpx_1838: skip 12 ;done
+MinorSprXPosSpx_1844: skip 12 ; unreferenced, maybe unused?
+MinorSprTimer_1850: skip 12 ;done
 
 
 PlayerDisableObjInt_185C: skip 1
-MinExtSpriteSlotIdx_185D: skip 1
+MinorSprSlotIdx_185D: skip 1
 TileGenerateTrackA_185E: skip 1
 SprMap16TouchVertLow_185F: skip 1
 SprMap16TouchHorizLow_1860: skip 1
