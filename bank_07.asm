@@ -4537,8 +4537,8 @@ ZeroSpriteTables:
     STZ.w $164A,X
     STZ.w $1632,X                           ;$07F725 |
     STZ.b SpritePhase_C2,X                  ;$07F728 |
-    STZ.w $151C,X                           ;$07F72A |
-    STZ.w $1528,X                           ;$07F72D |
+    STZ.w Sprite_151C,X                     ;$07F72A |
+    STZ.w Sprite_1528,X                     ;$07F72D |
     STZ.w $1534,X                           ;$07F730 |
     STZ.w SpriteDir_157C,X                  ;$07F733 |
     STZ.w $1588,X                           ;$07F736 |
@@ -4566,7 +4566,7 @@ ZeroSpriteTables:
     STZ.w $187B,X                           ;$07F776 |
     STZ.w $160E,X                           ;$07F779 |
     STZ.w $1594,X                           ;$07F77C |
-    STZ.w $1504,X                           ;$07F77F |
+    STZ.w Sprite_1504,X                     ;$07F77F |
     STZ.w $1FD6,X                           ;$07F782 |
     LDA.b #$01                              ;$07F785 |
     STA.w $15A0,X                           ;$07F787 |

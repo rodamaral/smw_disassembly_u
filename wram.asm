@@ -1734,15 +1734,15 @@ SpriteYPosHigh_14D4: skip 12 ;done
 SpriteXPosHigh_14E0: skip 12 ;done
 SpriteYPosSpx_14EC: skip 12 ;done
 SpriteXPosSpx_14F8: skip 12 ;done
-SpriteMisc_1504: skip 12
-SpriteMisc_1510: skip 12
-Sprite_151C: skip 12
-SpriteMisc_1528: skip 12
-SpriteMisc_1534: skip 12
-SpriteMisc_1540: skip 12
+Sprite_1504: skip 12;
+Sprite_1510: skip 12;
+Sprite_151C: skip 12;
+Sprite_1528: skip 12;
+Sprite_1534: skip 12
+SpriteStun_1540: skip 12
 SpritePlayerContact_154C: skip 12
-SpriteMisc_1558: skip 12
-SpriteMisc_1564: skip 12
+SpriteLava_1558: skip 12
+SpriteSpriteContact_1564: skip 12
 SpriteAnimationTimer_1570: skip 12
 SpriteDir_157C: skip 12
 ; Valid values
@@ -1761,10 +1761,10 @@ skip 1
 CurrentSprite_15E9: skip 1
 SpriteOAMIndex_15EA: skip 12
 SpriteOBJAttribute_15F6: skip 12
-SpriteMisc_1602: skip 12
+SpriteAnimation_1602: skip 12
 SpriteMisc_160E: skip 12
 SpriteLoadIndex_161A: skip 12
-SpriteMisc_1626: skip 12
+SpriteKill_1626: skip 12
 SpriteBehindScene_1632: skip 12
 Sprite_163E: skip 12
 SpriteInLiquid_164A: skip 12
