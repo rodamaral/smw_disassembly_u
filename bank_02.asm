@@ -5855,7 +5855,7 @@ CODE_02AB81:
     STA.w $18FF                             ;$02AB90 |
 CODE_02AB93:
     LDX.w $18FF
-    LDY.w $17B3,X                           ;$02AB96 |
+    LDY.w ShooterLoadIndex_17B3,X           ;$02AB96 |
     LDA.b #$00                              ;$02AB99 |
     STA.w $1938,Y                           ;$02AB9B |
 CODE_02AB9E:
@@ -5863,40 +5863,40 @@ CODE_02AB9E:
     LDA $04                                 ;$02ABA0 |
     SEC                                     ;$02ABA2 |
     SBC.b #$C8                              ;$02ABA3 |
-    STA.w $1783,X                           ;$02ABA5 |
+    STA.w ShooterNumber_1783,X              ;$02ABA5 |
     LDA.b ScreenMode_5B                     ;$02ABA8 |
     LSR                                     ;$02ABAA |
     BCC CODE_02ABC7                         ;$02ABAB |
     LDA.b [SpriteDataPtr_CE],Y              ;$02ABAD |
     PHA                                     ;$02ABAF |
     AND.b #$F0                              ;$02ABB0 |
-    STA.w $179B,X                           ;$02ABB2 |
+    STA.w ShooterXPosLow_179B,X             ;$02ABB2 |
     PLA                                     ;$02ABB5 |
     AND.b #$01                              ;$02ABB6 |
-    STA.w $17A3,X                           ;$02ABB8 |
+    STA.w ShooterXPosHigh_17A3,X            ;$02ABB8 |
     LDA $00                                 ;$02ABBB |
-    STA.w $178B,X                           ;$02ABBD |
+    STA.w ShooterYPosLow_178B,X             ;$02ABBD |
     LDA $01                                 ;$02ABC0 |
-    STA.w $1793,X                           ;$02ABC2 |
+    STA.w ShooterYPosHigh_1793,X            ;$02ABC2 |
     BRA CODE_02ABDF                         ;$02ABC5 |
 
 CODE_02ABC7:
     LDA.b [SpriteDataPtr_CE],Y
     PHA                                     ;$02ABC9 |
     AND.b #$F0                              ;$02ABCA |
-    STA.w $178B,X                           ;$02ABCC |
+    STA.w ShooterYPosLow_178B,X             ;$02ABCC |
     PLA                                     ;$02ABCF |
     AND.b #$01                              ;$02ABD0 |
-    STA.w $1793,X                           ;$02ABD2 |
+    STA.w ShooterYPosHigh_1793,X            ;$02ABD2 |
     LDA $00                                 ;$02ABD5 |
-    STA.w $179B,X                           ;$02ABD7 |
+    STA.w ShooterXPosLow_179B,X             ;$02ABD7 |
     LDA $01                                 ;$02ABDA |
-    STA.w $17A3,X                           ;$02ABDC |
+    STA.w ShooterXPosHigh_17A3,X            ;$02ABDC |
 CODE_02ABDF:
     LDA $02
-    STA.w $17B3,X                           ;$02ABE1 |
+    STA.w ShooterLoadIndex_17B3,X           ;$02ABE1 |
     LDA.b #$10                              ;$02ABE4 |
-    STA.w $17AB,X                           ;$02ABE6 |
+    STA.w ShooterTimer_17AB,X               ;$02ABE6 |
     INY                                     ;$02ABE9 |
     INY                                     ;$02ABEA |
     INY                                     ;$02ABEB |
@@ -6944,15 +6944,15 @@ ShooterSprites02B387:
     LDX.b #$07                              ;$02B38B |
 CODE_02B38D:
     STX.w CurrentSprite_15E9
-    LDA.w $1783,X                           ;$02B390 |
+    LDA.w ShooterNumber_1783,X              ;$02B390 |
     BEQ CODE_02B3A7                         ;$02B393 |
-    LDY.w $17AB,X                           ;$02B395 |
+    LDY.w ShooterTimer_17AB,X               ;$02B395 |
     BEQ CODE_02B3A4                         ;$02B398 |
     PHA                                     ;$02B39A |
     LDA.b Frame_13                          ;$02B39B |
     LSR                                     ;$02B39D |
     BCC CODE_02B3A3                         ;$02B39E |
-    DEC.w $17AB,X                           ;$02B3A0 |
+    DEC.w ShooterTimer_17AB,X               ;$02B3A0 |
 CODE_02B3A3:
     PLA
 CODE_02B3A4:
@@ -6973,21 +6973,21 @@ ShooterPtrs:
     dw Return02B3AA
 
 LaunchTorpedo:
-    LDA.w $17AB,X
+    LDA.w ShooterTimer_17AB,X
     BNE Return02B42C                        ;$02B3B9 |
     LDA.b #$50                              ;$02B3BB |
-    STA.w $17AB,X                           ;$02B3BD |
-    LDA.w $178B,X                           ;$02B3C0 |
+    STA.w ShooterTimer_17AB,X               ;$02B3BD |
+    LDA.w ShooterYPosLow_178B,X             ;$02B3C0 |
     CMP.b Layer1YPos_1C                     ;$02B3C3 |
-    LDA.w $1793,X                           ;$02B3C5 |
+    LDA.w ShooterYPosHigh_1793,X            ;$02B3C5 |
     SBC.b Layer1YPos_1C+1                   ;$02B3C8 |
     BNE Return02B3AA                        ;$02B3CA |
-    LDA.w $179B,X                           ;$02B3CC |
+    LDA.w ShooterXPosLow_179B,X             ;$02B3CC |
     CMP.b Layer1XPos_1A                     ;$02B3CF |
-    LDA.w $17A3,X                           ;$02B3D1 |
+    LDA.w ShooterXPosHigh_17A3,X            ;$02B3D1 |
     SBC.b Layer1XPos_1A+1                   ;$02B3D4 |
     BNE Return02B3AA                        ;$02B3D6 |
-    LDA.w $179B,X                           ;$02B3D8 |
+    LDA.w ShooterXPosLow_179B,X             ;$02B3D8 |
     SEC                                     ;$02B3DB |
     SBC.b Layer1XPos_1A                     ;$02B3DC |
     CLC                                     ;$02B3DE |
@@ -7000,13 +7000,13 @@ LaunchTorpedo:
     STA.w SpriteStatus_14C8,Y               ;$02B3ED |
     LDA.b #$44                              ;$02B3F0 |
     STA.w $009E,y                           ;$02B3F2 |
-    LDA.w $179B,X                           ;$02B3F5 |
+    LDA.w ShooterXPosLow_179B,X             ;$02B3F5 |
     STA.w SpriteXPosLow_E4,y                ;$02B3F8 |
-    LDA.w $17A3,X                           ;$02B3FB |
+    LDA.w ShooterXPosHigh_17A3,X            ;$02B3FB |
     STA.w SpriteXPosHigh_14E0,Y             ;$02B3FE |
-    LDA.w $178B,X                           ;$02B401 |
+    LDA.w ShooterYPosLow_178B,X             ;$02B401 |
     STA.w SpriteYPosLow_D8,Y                ;$02B404 |
-    LDA.w $1793,X                           ;$02B407 |
+    LDA.w ShooterYPosHigh_1793,X            ;$02B407 |
     STA.w SpriteYPosHigh_14D4,Y             ;$02B40A |
     PHX                                     ;$02B40D |
     TYX                                     ;$02B40E |
@@ -7030,18 +7030,18 @@ Return02B42C:
 CODE_02B42D:
     LDA.b #$08
     STA.w ExtSprNumber_170B,Y               ;$02B42F |
-    LDA.w $179B,X                           ;$02B432 |
+    LDA.w ShooterXPosLow_179B,X             ;$02B432 |
     CLC                                     ;$02B435 |
     ADC.b #$08                              ;$02B436 |
     STA.w ExtSprXPosLow_171F,Y              ;$02B438 |
-    LDA.w $17A3,X                           ;$02B43B |
+    LDA.w ShooterXPosHigh_17A3,X            ;$02B43B |
     ADC.b #$00                              ;$02B43E |
     STA.w ExtSprXPosHigh_1733,Y             ;$02B440 |
-    LDA.w $178B,X                           ;$02B443 |
+    LDA.w ShooterYPosLow_178B,X             ;$02B443 |
     SEC                                     ;$02B446 |
     SBC.b #$09                              ;$02B447 |
     STA.w ExtSprYPosLow_1715,Y              ;$02B449 |
-    LDA.w $1793,X                           ;$02B44C |
+    LDA.w ShooterYPosHigh_1793,X            ;$02B44C |
     SBC.b #$00                              ;$02B44F |
     STA.w ExtSprYPosHigh_1729,Y             ;$02B451 |
     LDA.b #$90                              ;$02B454 |
@@ -7057,21 +7057,21 @@ DATA_02B464:
     db $01,$FF
 
 ShootBullet:
-    LDA.w $17AB,X
+    LDA.w ShooterTimer_17AB,X
     BNE Return02B4DD                        ;$02B469 |
     LDA.b #$60                              ;$02B46B |
-    STA.w $17AB,X                           ;$02B46D |
-    LDA.w $178B,X                           ;$02B470 |
+    STA.w ShooterTimer_17AB,X               ;$02B46D |
+    LDA.w ShooterYPosLow_178B,X             ;$02B470 |
     CMP.b Layer1YPos_1C                     ;$02B473 |
-    LDA.w $1793,X                           ;$02B475 |
+    LDA.w ShooterYPosHigh_1793,X            ;$02B475 |
     SBC.b Layer1YPos_1C+1                   ;$02B478 |
     BNE Return02B4DD                        ;$02B47A |
-    LDA.w $179B,X                           ;$02B47C |
+    LDA.w ShooterXPosLow_179B,X             ;$02B47C |
     CMP.b Layer1XPos_1A                     ;$02B47F |
-    LDA.w $17A3,X                           ;$02B481 |
+    LDA.w ShooterXPosHigh_17A3,X            ;$02B481 |
     SBC.b Layer1XPos_1A+1                   ;$02B484 |
     BNE Return02B4DD                        ;$02B486 |
-    LDA.w $179B,X                           ;$02B488 |
+    LDA.w ShooterXPosLow_179B,X             ;$02B488 |
     SEC                                     ;$02B48B |
     SBC.b Layer1XPos_1A                     ;$02B48C |
     CLC                                     ;$02B48E |
@@ -7079,7 +7079,7 @@ ShootBullet:
     CMP.b #$10                              ;$02B491 |
     BCC Return02B4DD                        ;$02B493 |
     LDA.b PlayerXPos_94                     ;$02B495 |
-    SBC.w $179B,X                           ;$02B497 |
+    SBC.w ShooterXPosLow_179B,X             ;$02B497 |
     CLC                                     ;$02B49A |
     ADC.b #$11                              ;$02B49B |
     CMP.b #$22                              ;$02B49D |
@@ -7092,15 +7092,15 @@ ShootBullet:
     STA.w SpriteStatus_14C8,Y               ;$02B4AE |
     LDA.b #$1C                              ;$02B4B1 |
     STA.w $009E,y                           ;$02B4B3 |
-    LDA.w $179B,X                           ;$02B4B6 |
+    LDA.w ShooterXPosLow_179B,X             ;$02B4B6 |
     STA.w SpriteXPosLow_E4,y                ;$02B4B9 |
-    LDA.w $17A3,X                           ;$02B4BC |
+    LDA.w ShooterXPosHigh_17A3,X            ;$02B4BC |
     STA.w SpriteXPosHigh_14E0,Y             ;$02B4BF |
-    LDA.w $178B,X                           ;$02B4C2 |
+    LDA.w ShooterYPosLow_178B,X             ;$02B4C2 |
     SEC                                     ;$02B4C5 |
     SBC.b #$01                              ;$02B4C6 |
     STA.w SpriteYPosLow_D8,Y                ;$02B4C8 |
-    LDA.w $1793,X                           ;$02B4CB |
+    LDA.w ShooterYPosHigh_1793,X            ;$02B4CB |
     SBC.b #$00                              ;$02B4CE |
     STA.w SpriteYPosHigh_14D4,Y             ;$02B4D0 |
     PHX                                     ;$02B4D3 |
@@ -7126,16 +7126,16 @@ ShooterSmokeDispX:
 SetShooterSmoke:
     LDA.b #$01
     STA.w $17C0,Y                           ;$02B4ED |
-    LDA.w $178B,X                           ;$02B4F0 |
+    LDA.w ShooterYPosLow_178B,X             ;$02B4F0 |
     STA.w $17C4,Y                           ;$02B4F3 |
     LDA.b #$1B                              ;$02B4F6 |
     STA.w $17CC,Y                           ;$02B4F8 |
-    LDA.w $179B,X                           ;$02B4FB |
+    LDA.w ShooterXPosLow_179B,X             ;$02B4FB |
     PHA                                     ;$02B4FE |
     LDA.b PlayerXPos_94                     ;$02B4FF |
-    CMP.w $179B,X                           ;$02B501 |
+    CMP.w ShooterXPosLow_179B,X             ;$02B501 |
     LDA.b PlayerXPos_94+1                   ;$02B504 |
-    SBC.w $17A3,X                           ;$02B506 |
+    SBC.w ShooterXPosHigh_17A3,X            ;$02B506 |
     LDX.b #$00                              ;$02B509 |
     BCC CODE_02B50E                         ;$02B50B |
     INX                                     ;$02B50D |

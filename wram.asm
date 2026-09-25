@@ -1854,14 +1854,14 @@ ExtSprXPosSpx_175B: skip 10 ;done
 ExtSprMisc_1765: skip 10 ;done
 ExtSprTimer_176F: skip 10 ;done
 ExtSprPriority_1779: skip 10 ;done
-ShooterNumber_1783: skip 8
-ShooterYPosLow_178B: skip 8
-ShooterYPosHigh_1793: skip 8
-ShooterXPosLow_179B: skip 8
-ShooterXPosHigh_17A3: skip 8
-ShooterTimer_17AB: skip 8
-ShooterLoadIndex_17B3: skip 8
-LoadingLevelNumber_17BB: skip 1
+ShooterNumber_1783: skip 8 ;done
+ShooterYPosLow_178B: skip 8 ;done
+ShooterYPosHigh_1793: skip 8 ;done
+ShooterXPosLow_179B: skip 8 ;done
+ShooterXPosHigh_17A3: skip 8 ;done
+ShooterTimer_17AB: skip 8 ;done
+ShooterLoadIndex_17B3: skip 8 ;done
+LoadingLevelNumber_17BB: skip 1 ;done
 Layer1DYPos_17BC: skip 1
 Layer1DXPos_17BD: skip 1
 Layer2DYPos_17BE: skip 1
