@@ -657,7 +657,7 @@ PorcuPuffer:
 CODE_03855E:
     LDA.b SpriteXSpeed_B6,X
     PHA                                     ;$038560 |
-    LDA.w $17BD                             ;$038561 |
+    LDA.w Layer1DXPos_17BD                  ;$038561 |
     ASL                                     ;$038564 |
     ASL                                     ;$038565 |
     ASL                                     ;$038566 |
@@ -1320,7 +1320,7 @@ CODE_0389FF:
     BNE Return038A20                        ;$038A14 |
     LDY.b #$03                              ;$038A16 |
 CODE_038A18:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_038A21                         ;$038A1B |
     DEY                                     ;$038A1D |
     BPL CODE_038A18                         ;$038A1E |
@@ -1329,17 +1329,17 @@ Return038A20:
 
 CODE_038A21:
     LDA.b #$03
-    STA.w $17C0,Y                           ;$038A23 |
+    STA.w SmokeSprNumber_17C0,Y             ;$038A23 |
     LDA.b SpriteXPosLow_E4,X                ;$038A26 |
     CLC                                     ;$038A28 |
     ADC $00                                 ;$038A29 |
-    STA.w $17C8,Y                           ;$038A2B |
+    STA.w SmokeSprXPos_17C8,Y               ;$038A2B |
     LDA.b SpriteYPosLow_D8,X                ;$038A2E |
     CLC                                     ;$038A30 |
     ADC $01                                 ;$038A31 |
-    STA.w $17C4,Y                           ;$038A33 |
+    STA.w SmokeSprYPos_17C4,Y               ;$038A33 |
     LDA.b #$13                              ;$038A36 |
-    STA.w $17CC,Y                           ;$038A38 |
+    STA.w SmokeSprTimer_17CC,Y              ;$038A38 |
     RTS                                     ;$038A3B |
 
 BowserStatue:
@@ -2233,7 +2233,7 @@ CODE_0390C9:
     PHA                                     ;$0390CB |
     LDY.w $18BF                             ;$0390CC |
     BNE CODE_0390DC                         ;$0390CF |
-    LDA.w $17BD                             ;$0390D1 |
+    LDA.w Layer1DXPos_17BD                  ;$0390D1 |
     ASL                                     ;$0390D4 |
     ASL                                     ;$0390D5 |
     ASL                                     ;$0390D6 |

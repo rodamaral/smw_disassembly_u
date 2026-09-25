@@ -3609,14 +3609,14 @@ scroll_commands_and_layer_3_05BC00:
     SEC                                     ;$05BC0F |
     SBC.b Layer1XPos_1A                     ;$05BC10 |
     CLC                                     ;$05BC12 |
-    ADC.w $17BD                             ;$05BC13 |
-    STA.w $17BD                             ;$05BC16 |
+    ADC.w Layer1DXPos_17BD                  ;$05BC13 |
+    STA.w Layer1DXPos_17BD                  ;$05BC16 |
     LDA.w $1464                             ;$05BC19 |
     SEC                                     ;$05BC1C |
     SBC.b Layer1YPos_1C                     ;$05BC1D |
     CLC                                     ;$05BC1F |
-    ADC.w $17BC                             ;$05BC20 |
-    STA.w $17BC                             ;$05BC23 |
+    ADC.w Layer1DYPos_17BC                  ;$05BC20 |
+    STA.w Layer1DYPos_17BC                  ;$05BC23 |
     LDA.w $1466                             ;$05BC26 |
     SEC                                     ;$05BC29 |
     SBC.b Layer2XPos_1E                     ;$05BC2A |
@@ -3624,11 +3624,11 @@ scroll_commands_and_layer_3_05BC00:
     DEY                                     ;$05BC2F |
     BNE +                                   ;$05BC30 |
     TYA                                     ;$05BC32 |
-+   STA.w $17BF                             ;$05BC33 |
++   STA.w Layer2DXPos_17BF                  ;$05BC33 |
     LDA.w $1468                             ;$05BC36 |
     SEC                                     ;$05BC39 |
     SBC.b Layer2YPos_20                     ;$05BC3A |
-    STA.w $17BE                             ;$05BC3C |
+    STA.w Layer2DYPos_17BE                  ;$05BC3C |
     LDA.w $13D5                             ;$05BC3F |
     BNE +                                   ;$05BC42 |
     JSR process_layer_3_05C40C              ;$05BC44 |
@@ -4742,7 +4742,7 @@ process_layer_3_05C40C:
     CLC                                     ;$05C471 |
     ADC.b Layer3XPos_22                     ;$05C472 |
     STA.b Layer3XPos_22                     ;$05C474 |
-    LDA.w $17BD                             ;$05C476 |
+    LDA.w Layer1DXPos_17BD                  ;$05C476 |
     AND.w #$00FF                            ;$05C479 |
     CMP.w #$0080                            ;$05C47C |
     BCC +                                   ;$05C47F |
@@ -4808,7 +4808,7 @@ process_layer_3_05C40C:
 .CODE_05C4EC:
     LDA.b Layer3XPos_22
     SEC                                     ;$05C4EE |
-    ADC.w $17BD                             ;$05C4EF |
+    ADC.w Layer1DXPos_17BD                  ;$05C4EF |
     STA.b Layer3XPos_22                     ;$05C4F2 |
     LDA.b #$01                              ;$05C4F4 |
     STA.b Layer3XPos_22+1                   ;$05C4F6 |
@@ -5196,7 +5196,7 @@ CODE_05C7D0:
     STA.w $144A
     LDX.b #$04                              ;$05C7D3 |
     JSR CODE_05C4F9                         ;$05C7D5 |
-    LDA.w $17BD                             ;$05C7D8 |
+    LDA.w Layer1DXPos_17BD                  ;$05C7D8 |
     AND.w #$00FF                            ;$05C7DB |
     CMP.w #$0080                            ;$05C7DE |
     BCC CODE_05C7E6                         ;$05C7E1 |
@@ -6323,7 +6323,7 @@ CODE_05D7B3:
     LDX.b PlayerYPos_96+1                   ;$05D7BB |
 CODE_05D7BD:
     LDA.w $19B8,X
-    STA.w $17BB                             ;$05D7C0 |
+    STA.w LoadingLevelNumber_17BB           ;$05D7C0 |
     STA $0E                                 ;$05D7C3 |
     LDA.w $0DD6                             ;$05D7C5 |
     LSR                                     ;$05D7C8 |
@@ -6342,7 +6342,7 @@ CODE_05D7D2:
     LDY $0E                                 ;$05D7E0 |
     LDA.w DATA_05F800,Y                     ;$05D7E2 |
     STA $0E                                 ;$05D7E5 |
-    STA.w $17BB                             ;$05D7E7 |
+    STA.w LoadingLevelNumber_17BB           ;$05D7E7 |
     LDA.w DATA_05FA00,Y                     ;$05D7EA |
     STA $00                                 ;$05D7ED |
     AND.b #$0F                              ;$05D7EF |
@@ -6447,7 +6447,7 @@ CODE_05D8A2:
     SEC                                     ;$05D8A6 |
     SBC.b #$24                              ;$05D8A7 |
 CODE_05D8A9:
-    STA.w $17BB
+    STA.w LoadingLevelNumber_17BB
     STA $0E                                 ;$05D8AC |
     LDA.w OWPlayerSubmap_1F11,Y             ;$05D8AE |
     BEQ CODE_05D8B5                         ;$05D8B1 |

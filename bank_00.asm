@@ -11772,7 +11772,7 @@ CODE_00EF3B:
     INC.w $140E                             ;$00EF3F |
     PHA                                     ;$00EF42 |
     REP #$20                                ;$00EF43 |
-    LDA.w $17BE                             ;$00EF45 |
+    LDA.w Layer2DYPos_17BE                  ;$00EF45 |
     AND.w #$FF00                            ;$00EF48 |
     BPL CODE_00EF50                         ;$00EF4B |
     ORA.w #$00FF                            ;$00EF4D |
@@ -12978,19 +12978,19 @@ update_screen_position_00F6DB:
     LDA.b Layer1XPos_1A                     ;$00F7C4 |
     SEC                                     ;$00F7C6 |
     SBC.w $1462                             ;$00F7C7 |
-    STA.w $17BD                             ;$00F7CA |
+    STA.w Layer1DXPos_17BD                  ;$00F7CA |
     LDA.b Layer1YPos_1C                     ;$00F7CD |
     SEC                                     ;$00F7CF |
     SBC.w $1464                             ;$00F7D0 |
-    STA.w $17BC                             ;$00F7D3 |
+    STA.w Layer1DYPos_17BC                  ;$00F7D3 |
     LDA.b Layer2XPos_1E                     ;$00F7D6 |
     SEC                                     ;$00F7D8 |
     SBC.w $1466                             ;$00F7D9 |
-    STA.w $17BF                             ;$00F7DC |
+    STA.w Layer2DXPos_17BF                  ;$00F7DC |
     LDA.b Layer2YPos_20                     ;$00F7DF |
     SEC                                     ;$00F7E1 |
     SBC.w $1468                             ;$00F7E2 |
-    STA.w $17BE                             ;$00F7E5 |
+    STA.w Layer2DYPos_17BE                  ;$00F7E5 |
     LDX.b #$07                              ;$00F7E8 |
 -   LDA.b Layer1XPos_1A,X                   ;$00F7EA |
     STA.w $1462,X                           ;$00F7EC |
@@ -13474,7 +13474,7 @@ CODE_00FB5F:
     STA.w SPCIO0_1DF9                       ;$00FB7F |
     LDX.b #$03                              ;$00FB82 |
 CODE_00FB84:
-    LDA.w $17C0,X
+    LDA.w SmokeSprNumber_17C0,X
     BEQ CODE_00FB8D                         ;$00FB87 |
     DEX                                     ;$00FB89 |
     BPL CODE_00FB84                         ;$00FB8A |
@@ -13482,13 +13482,13 @@ CODE_00FB84:
 
 CODE_00FB8D:
     LDA.b #$01
-    STA.w $17C0,X                           ;$00FB8F |
+    STA.w SmokeSprNumber_17C0,X             ;$00FB8F |
     LDA.w SpriteYPosLow_D8,Y                ;$00FB92 |
-    STA.w $17C4,X                           ;$00FB95 |
+    STA.w SmokeSprYPos_17C4,X               ;$00FB95 |
     LDA.w SpriteXPosLow_E4,y                ;$00FB98 |
-    STA.w $17C8,X                           ;$00FB9B |
+    STA.w SmokeSprXPos_17C8,X               ;$00FB9B |
     LDA.b #$1B                              ;$00FB9E |
-    STA.w $17CC,X                           ;$00FBA0 |
+    STA.w SmokeSprTimer_17CC,X              ;$00FBA0 |
     RTS                                     ;$00FBA3 |
 
 LvlEndSmokeTiles:
@@ -13504,7 +13504,7 @@ LvlEndSprCoins:
 
 LvlEndSprCoinsRt:
     LDY.b #$00
-    LDA.w $17BD                             ;$00FBB6 |
+    LDA.w Layer1DXPos_17BD                  ;$00FBB6 |
     BPL CODE_00FBBC                         ;$00FBB9 |
     DEY                                     ;$00FBBB |
 CODE_00FBBC:
@@ -13731,7 +13731,7 @@ smoke_sparkle:
     BNE .return                             ;$00FD5E |
     LDY.b #$03                              ;$00FD60 |
 .loop                                       ;        |
-    LDA.w $17C0,Y                           ;$00FD62 |
+    LDA.w SmokeSprNumber_17C0,Y             ;$00FD62 |
     BEQ .found_smoke_slot                   ;$00FD65 |
     DEY                                     ;$00FD67 |
     BPL .loop                               ;$00FD68 |
@@ -13740,28 +13740,28 @@ smoke_sparkle:
 
 .found_smoke_slot
     LDA.b #$05
-    STA.w $17C0,Y                           ;$00FD6D |
+    STA.w SmokeSprNumber_17C0,Y             ;$00FD6D |
     LDA.b InteractionPtXPos_9A              ;$00FD70 |
     AND.b #$F0                              ;$00FD72 |
-    STA.w $17C8,Y                           ;$00FD74 |
+    STA.w SmokeSprXPos_17C8,Y               ;$00FD74 |
     LDA.b InteractionPtYPos_98              ;$00FD77 |
     AND.b #$F0                              ;$00FD79 |
-    STA.w $17C4,Y                           ;$00FD7B |
+    STA.w SmokeSprYPos_17C4,Y               ;$00FD7B |
     LDA.w $1933                             ;$00FD7E |
     BEQ CODE_00FD97                         ;$00FD81 |
     LDA.b InteractionPtXPos_9A              ;$00FD83 |
     SEC                                     ;$00FD85 |
     SBC.b LayerXDiff_26                     ;$00FD86 |
     AND.b #$F0                              ;$00FD88 |
-    STA.w $17C8,Y                           ;$00FD8A |
+    STA.w SmokeSprXPos_17C8,Y               ;$00FD8A |
     LDA.b InteractionPtYPos_98              ;$00FD8D |
     SEC                                     ;$00FD8F |
     SBC.b LayerYDiff_28                     ;$00FD90 |
     AND.b #$F0                              ;$00FD92 |
-    STA.w $17C4,Y                           ;$00FD94 |
+    STA.w SmokeSprYPos_17C4,Y               ;$00FD94 |
 CODE_00FD97:
     LDA.b #$10
-    STA.w $17CC,Y                           ;$00FD99 |
+    STA.w SmokeSprTimer_17CC,Y              ;$00FD99 |
     RTS                                     ;$00FD9C |
 
 DATA_00FD9D:
@@ -13885,7 +13885,7 @@ CODE_00FE4A:
 CODE_00FE67:
     LDY.b #$03
 CODE_00FE69:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_00FE72                         ;$00FE6C |
     DEY                                     ;$00FE6E |
     BNE CODE_00FE69                         ;$00FE6F |
@@ -13894,10 +13894,10 @@ Return00FE71:
 
 CODE_00FE72:
     LDA.b #$03
-    STA.w $17C0,Y                           ;$00FE74 |
+    STA.w SmokeSprNumber_17C0,Y             ;$00FE74 |
     LDA.b PlayerXPos_94                     ;$00FE77 |
     ADC.b #$04                              ;$00FE79 |
-    STA.w $17C8,Y                           ;$00FE7B |
+    STA.w SmokeSprXPos_17C8,Y               ;$00FE7B |
     LDA.b PlayerYPos_96                     ;$00FE7E |
     ADC.b #$1A                              ;$00FE80 |
     PHX                                     ;$00FE82 |
@@ -13905,10 +13905,10 @@ CODE_00FE72:
     BEQ CODE_00FE8A                         ;$00FE86 |
     ADC.b #$10                              ;$00FE88 |
 CODE_00FE8A:
-    STA.w $17C4,Y
+    STA.w SmokeSprYPos_17C4,Y
     PLX                                     ;$00FE8D |
     LDA.b #$13                              ;$00FE8E |
-    STA.w $17CC,Y                           ;$00FE90 |
+    STA.w SmokeSprTimer_17CC,Y              ;$00FE90 |
     RTS                                     ;$00FE93 |
 
 fireball_x_speeds:
@@ -13974,7 +13974,7 @@ shoot_fireball:
 
 ADDR_00FF07:
     REP #$20
-    LDA.w $17BC                             ;$00FF09 |
+    LDA.w Layer1DYPos_17BC                  ;$00FF09 |
     AND.w #$FF00                            ;$00FF0C |
     BPL ADDR_00FF14                         ;$00FF0F |
     ORA.w #$00FF                            ;$00FF11 |
@@ -13983,7 +13983,7 @@ ADDR_00FF14:
     CLC                                     ;$00FF15 |
     ADC.b PlayerXPos_94                     ;$00FF16 |
     STA.b PlayerXPos_94                     ;$00FF18 |
-    LDA.w $17BB                             ;$00FF1A |
+    LDA.w LoadingLevelNumber_17BB           ;$00FF1A |
     AND.w #$FF00                            ;$00FF1D |
     BPL ADDR_00FF25                         ;$00FF20 |
     ORA.w #$00FF                            ;$00FF22 |

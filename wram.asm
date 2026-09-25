@@ -1654,7 +1654,7 @@ CarryingFlagMirror_148F: skip 1
 StarTimer_1490: skip 1
 SpriteXMovement_1491: skip 1
 PlayerPeaceSign_1492: skip 1 ;done
-EndLevelTimer_1493: skip 1; done
+EndLevelTimer_1493: skip 1;done
 ColorFadeDir_1494: skip 1 ;done
 ColorFadeTimer_1495: skip 1 ;done
 PlayerAniTimer_1496: skip 1 ;done
@@ -1726,6 +1726,8 @@ skip 1
 BrSwingCosine_14C5: skip 2
 ; 7E14C7 unused
 skip 1
+
+
 SpriteStatus_14C8: skip 12 ;done
 ; Valid values
 !StatusEmpty_00 = $00
@@ -1786,6 +1788,8 @@ dscccccc_1662: skip 12 ;done
 lwcfpppg_166E: skip 12 ;done
 dpmksPiS_167A: skip 12 ;done
 dnctswye_1686: skip 12 ;done
+
+
 SpriteMemorySetting_1692: skip 1 ;done
 Map16_1693: skip 1 ;done
 SpriteBlockOffset_1694: skip 1 ;done
@@ -1794,6 +1798,8 @@ SpriteInterIndex_1695: skip 1 ;done
 skip 1
 SpriteStompCounter_1697: skip 1 ;done
 CurrentMinorSprite_1698: skip 1 ;done
+
+
 BounceSprNumber_1699: skip 4 ;done
 BounceSprInit_169D: skip 4 ;done
 BounceSprYPosLow_16A1: skip 4 ;done
@@ -1808,11 +1814,15 @@ skip 4
 BounceSprTile_16C1: skip 4 ;done
 BounceSprTimer_16C5: skip 4 ;done
 BounceSprFlags_16C9: skip 4 ;done
+
+
 QuakeSprNumber_16CD: skip 4 ;done
 QuakeSprXPosLow_16D1: skip 4 ;done
 QuakeSprXPosHigh_16D5: skip 4 ;done
 QuakeSprYPosLow_16D9: skip 4 ;done
 QuakeSprYPosHigh_16DD: skip 4 ;done
+
+
 ScoreSprNumber_16E1: skip 6 ;done
 ScoreSprYPosLow_16E7: skip 6 ;done
 ScoreSprXPosLow_16ED: skip 6 ;done
@@ -1820,6 +1830,7 @@ ScoreSprXPosHigh_16F3: skip 6 ;done
 ScoreSprYPosHigh_16F9: skip 6 ;done
 ScoreSprTimer_16FF: skip 6 ;done
 ScoreSprLayer_1705: skip 6 ;done
+
 
 ExtSprNumber_170B: skip 10 ;done
 ; Valid values
@@ -1854,6 +1865,8 @@ ExtSprXPosSpx_175B: skip 10 ;done
 ExtSprMisc_1765: skip 10 ;done
 ExtSprTimer_176F: skip 10 ;done
 ExtSprPriority_1779: skip 10 ;done
+
+
 ShooterNumber_1783: skip 8 ;done
 ShooterYPosLow_178B: skip 8 ;done
 ShooterYPosHigh_1793: skip 8 ;done
@@ -1861,12 +1874,15 @@ ShooterXPosLow_179B: skip 8 ;done
 ShooterXPosHigh_17A3: skip 8 ;done
 ShooterTimer_17AB: skip 8 ;done
 ShooterLoadIndex_17B3: skip 8 ;done
+
+
 LoadingLevelNumber_17BB: skip 1 ;done
-Layer1DYPos_17BC: skip 1
-Layer1DXPos_17BD: skip 1
-Layer2DYPos_17BE: skip 1
-Layer2DXPos_17BF: skip 1
-SmokeSpriteNumber_17C0: skip 4
+Layer1DYPos_17BC: skip 1 ;done
+Layer1DXPos_17BD: skip 1 ;done
+Layer2DYPos_17BE: skip 1 ;done
+Layer2DXPos_17BF: skip 1 ;done
+
+SmokeSprNumber_17C0: skip 4 ;done
 ; Valid values
 !FreeSmoke_00 = $00
 !PuffSmoke_01 = $01
@@ -1875,17 +1891,21 @@ SmokeSpriteNumber_17C0: skip 4
 !UnusedSmoke_04 = $04
 !Glitter_05 = $05
 
-SmokeSpriteYPos_17C4: skip 4
-SmokeSpriteXPos_17C8: skip 4
-SmokeSpriteTimer_17CC: skip 4
-CoinSpriteExists_17D0: skip 4
-CoinSpriteYPosLow_17D4: skip 4
-CoinSpriteYSpeed_17D8: skip 4
-CoinSpriteYPosSpx_17DC: skip 4
-CoinSpriteXPosLow_17E0: skip 4
-CoinSpriteLayer_17E4: skip 4
-CoinSpriteYPosHigh_17E8: skip 4
-CoinsPriteXPosHigh_17EC: skip 4
+SmokeSprYPos_17C4: skip 4 ;done
+SmokeSprXPos_17C8: skip 4 ;done
+SmokeSprTimer_17CC: skip 4 ;done
+
+
+CoinSpriteExists_17D0: skip 4 ;done
+CoinSpriteYPosLow_17D4: skip 4 ;done
+CoinSpriteYSpeed_17D8: skip 4 ;done
+CoinSpriteYPosSpx_17DC: skip 4 ;done
+CoinSpriteXPosLow_17E0: skip 4 ;done
+CoinSpriteLayer_17E4: skip 4 ;done
+CoinSpriteYPosHigh_17E8: skip 4 ;done
+CoinsPriteXPosHigh_17EC: skip 4 ;done
+
+
 MinExtSpriteNumber_17F0: skip 12
 MinExtSpriteYPosLow_17FC: skip 12
 MinExtSpriteXPosLow_1808: skip 12
@@ -1895,6 +1915,8 @@ MinExtSpriteXSpeed_182C: skip 12
 MinExtSpriteYPosSpx_1838: skip 12
 MinExtSpriteXPosSpx_1844: skip 12
 MinExtSpriteTimer_1850: skip 12
+
+
 PlayerDisableObjInt_185C: skip 1
 MinExtSpriteSlotIdx_185D: skip 1
 TileGenerateTrackA_185E: skip 1
@@ -1933,12 +1955,12 @@ Empty_18A6: skip 1
 Map16TileDestroy_18A7: skip 1
 BossPillarFalling_18A8: skip 2
 BossPillarYPos_18AA: skip 2
-YoshiSwallowTimer_18AC: skip 1 ; done
-YoshiWalkingTimer_18AD: skip 1 ; done
-YoshiStartEatTimer_18AE: skip 1 ; done
-YoshiDuckTimer_18AF: skip 1 ; done
-YoshiXPos_18B0: skip 2 ; done
-YoshiYPos_18B2: skip 2 ; done
+YoshiSwallowTimer_18AC: skip 1 ;done
+YoshiWalkingTimer_18AD: skip 1 ;done
+YoshiStartEatTimer_18AE: skip 1 ;done
+YoshiDuckTimer_18AF: skip 1 ;done
+YoshiXPos_18B0: skip 2 ;done
+YoshiYPos_18B2: skip 2 ;done
 ; 7E18B4 unused
 skip 1
 StandingOnCage_18B5: skip 1

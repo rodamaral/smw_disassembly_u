@@ -87,7 +87,7 @@ CODE_018063:
     BNE Return018072                        ;$018066 |
     LDY.b #$03                              ;$018068 |
 CODE_01806A:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_018073                         ;$01806D |
     DEY                                     ;$01806F |
     BPL CODE_01806A                         ;$018070 |
@@ -96,15 +96,15 @@ Return018072:
 
 CODE_018073:
     LDA.b #$03
-    STA.w $17C0,Y                           ;$018075 |
+    STA.w SmokeSprNumber_17C0,Y             ;$018075 |
     LDA.b SpriteXPosLow_E4,X                ;$018078 |
     ADC $00                                 ;$01807A |
-    STA.w $17C8,Y                           ;$01807C |
+    STA.w SmokeSprXPos_17C8,Y               ;$01807C |
     LDA.b SpriteYPosLow_D8,X                ;$01807F |
     ADC $01                                 ;$018081 |
-    STA.w $17C4,Y                           ;$018083 |
+    STA.w SmokeSprYPos_17C4,Y               ;$018083 |
     LDA.b #$13                              ;$018086 |
-    STA.w $17CC,Y                           ;$018088 |
+    STA.w SmokeSprTimer_17CC,Y              ;$018088 |
     RTS                                     ;$01808B |
 
 standard_and_cluster_sprites_01808C:
@@ -2542,7 +2542,7 @@ CODE_019140:
     AND.b #$03                              ;$0191A3 |
     BNE CODE_0191BE                         ;$0191A5 |
     LDY.b #$00                              ;$0191A7 |
-    LDA.w $17BF                             ;$0191A9 |
+    LDA.w Layer2DXPos_17BF                  ;$0191A9 |
     EOR.b #$FF                              ;$0191AC |
     INC A                                   ;$0191AE |
     BPL CODE_0191B2                         ;$0191AF |
@@ -6025,20 +6025,20 @@ CODE_01AB72:
     PHY                                     ;$01AB77 |
     LDY.b #$03                              ;$01AB78 |
 CODE_01AB7A:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_01AB83                         ;$01AB7D |
     DEY                                     ;$01AB7F |
     BPL CODE_01AB7A                         ;$01AB80 |
     INY                                     ;$01AB82 |
 CODE_01AB83:
     LDA.b #$02
-    STA.w $17C0,Y                           ;$01AB85 |
+    STA.w SmokeSprNumber_17C0,Y             ;$01AB85 |
     LDA.b SpriteXPosLow_E4,X                ;$01AB88 |
-    STA.w $17C8,Y                           ;$01AB8A |
+    STA.w SmokeSprXPos_17C8,Y               ;$01AB8A |
     LDA.b SpriteYPosLow_D8,X                ;$01AB8D |
-    STA.w $17C4,Y                           ;$01AB8F |
+    STA.w SmokeSprYPos_17C4,Y               ;$01AB8F |
     LDA.b #$08                              ;$01AB92 |
-    STA.w $17CC,Y                           ;$01AB94 |
+    STA.w SmokeSprTimer_17CC,Y              ;$01AB94 |
     PLY                                     ;$01AB97 |
 Return01AB98:
     RTL
@@ -6049,16 +6049,16 @@ DisplayContactGfx:
     PHY                                     ;$01AB9E |
     LDY.b #$03                              ;$01AB9F |
 CODE_01ABA1:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_01ABAA                         ;$01ABA4 |
     DEY                                     ;$01ABA6 |
     BPL CODE_01ABA1                         ;$01ABA7 |
     INY                                     ;$01ABA9 |
 CODE_01ABAA:
     LDA.b #$02
-    STA.w $17C0,Y                           ;$01ABAC |
+    STA.w SmokeSprNumber_17C0,Y             ;$01ABAC |
     LDA.b PlayerXPos_94                     ;$01ABAF |
-    STA.w $17C8,Y                           ;$01ABB1 |
+    STA.w SmokeSprXPos_17C8,Y               ;$01ABB1 |
     LDA.w RidingYoshi_187A                  ;$01ABB4 |
     CMP.b #$01                              ;$01ABB7 |
     LDA.b #$14                              ;$01ABB9 |
@@ -6067,9 +6067,9 @@ CODE_01ABAA:
 CODE_01ABBF:
     CLC
     ADC.b PlayerYPos_96                     ;$01ABC0 |
-    STA.w $17C4,Y                           ;$01ABC2 |
+    STA.w SmokeSprYPos_17C4,Y               ;$01ABC2 |
     LDA.b #$08                              ;$01ABC5 |
-    STA.w $17CC,Y                           ;$01ABC7 |
+    STA.w SmokeSprTimer_17CC,Y              ;$01ABC7 |
     PLY                                     ;$01ABCA |
 Return01ABCB:
     RTL
@@ -8616,7 +8616,7 @@ MagiKoopasMagicGfx:
 CODE_01BD98:
     LDY.b #$03
 CODE_01BD9A:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_01BDA3                         ;$01BD9D |
     DEY                                     ;$01BD9F |
     BPL CODE_01BD9A                         ;$01BDA0 |
@@ -8624,13 +8624,13 @@ CODE_01BD9A:
 
 CODE_01BDA3:
     LDA.b #$01
-    STA.w $17C0,Y                           ;$01BDA5 |
+    STA.w SmokeSprNumber_17C0,Y             ;$01BDA5 |
     LDA.b SpriteXPosLow_E4,X                ;$01BDA8 |
-    STA.w $17C8,Y                           ;$01BDAA |
+    STA.w SmokeSprXPos_17C8,Y               ;$01BDAA |
     LDA.b SpriteYPosLow_D8,X                ;$01BDAD |
-    STA.w $17C4,Y                           ;$01BDAF |
+    STA.w SmokeSprYPos_17C4,Y               ;$01BDAF |
     LDA.b #$1B                              ;$01BDB2 |
-    STA.w $17CC,Y                           ;$01BDB4 |
+    STA.w SmokeSprTimer_17CC,Y              ;$01BDB4 |
     RTS                                     ;$01BDB7 |
 
 InitMagikoopa:
@@ -9655,7 +9655,7 @@ try_give_powerup_or_coin_01C4BF:
 +   JSL GivePoints                          ;$01C4EC |
 create_glitter_sprites_01C4F0:
     LDY.b #$03                              ;$01C4F0 |
--   LDA.w $17C0,Y                           ;$01C4F2 |
+-   LDA.w SmokeSprNumber_17C0,Y             ;$01C4F2 |
     BEQ create_glitter_sprite_01C4FB        ;$01C4F5 |
     DEY                                     ;$01C4F7 |
     BPL -                                   ;$01C4F8 |
@@ -9664,13 +9664,13 @@ return_01C4FA:
 
 create_glitter_sprite_01C4FB:
     LDA.b #$05
-    STA.w $17C0,Y                           ;$01C4FD |
+    STA.w SmokeSprNumber_17C0,Y             ;$01C4FD |
     LDA.b SpriteXPosLow_E4,X                ;$01C500 |
-    STA.w $17C8,Y                           ;$01C502 |
+    STA.w SmokeSprXPos_17C8,Y               ;$01C502 |
     LDA.b SpriteYPosLow_D8,X                ;$01C505 |
-    STA.w $17C4,Y                           ;$01C507 |
+    STA.w SmokeSprYPos_17C4,Y               ;$01C507 |
     LDA.b #$10                              ;$01C50A |
-    STA.w $17CC,Y                           ;$01C50C |
+    STA.w SmokeSprTimer_17CC,Y              ;$01C50C |
     RTS                                     ;$01C50F |
 
 ItemBoxSprite:
@@ -9761,7 +9761,7 @@ CODE_01C5AE:
     STA.w PlayerAniTimer_1496               ;$01C5BA |
     LDY.b #$03                              ;$01C5BD |
 CODE_01C5BF:
-    LDA.w $17C0,Y
+    LDA.w SmokeSprNumber_17C0,Y
     BEQ CODE_01C5D4                         ;$01C5C2 |
     DEY                                     ;$01C5C4 |
     BPL CODE_01C5BF                         ;$01C5C5 |
@@ -9773,15 +9773,15 @@ CODE_01C5D1:
     LDY.w $1863
 CODE_01C5D4:
     LDA.b #$81
-    STA.w $17C0,Y                           ;$01C5D6 |
+    STA.w SmokeSprNumber_17C0,Y             ;$01C5D6 |
     LDA.b #$1B                              ;$01C5D9 |
-    STA.w $17CC,Y                           ;$01C5DB |
+    STA.w SmokeSprTimer_17CC,Y              ;$01C5DB |
     LDA.b PlayerYPos_96                     ;$01C5DE |
     CLC                                     ;$01C5E0 |
     ADC.b #$08                              ;$01C5E1 |
-    STA.w $17C4,Y                           ;$01C5E3 |
+    STA.w SmokeSprYPos_17C4,Y               ;$01C5E3 |
     LDA.b PlayerXPos_94                     ;$01C5E6 |
-    STA.w $17C8,Y                           ;$01C5E8 |
+    STA.w SmokeSprXPos_17C8,Y               ;$01C5E8 |
 Return01C5EB:
     RTL
 
@@ -11213,16 +11213,16 @@ CODE_01D00F:
     BCC Return01D042                        ;$01D013 |
     LDA.w SpriteOffscreenX_15A0,X           ;$01D015 |
     BNE CODE_01D032                         ;$01D018 |
-    LDA.b #$01                              ;$01D01A |
-    STA.w $17C0                             ;$01D01C |
+    LDA.b #!PuffSmoke_01                    ;$01D01A |
+    STA.w SmokeSprNumber_17C0               ;$01D01C |  NOTE: hardcoded smoke slot 0
     LDA.b SpriteXPosLow_E4,X                ;$01D01F |
     SBC.b #$08                              ;$01D021 |
-    STA.w $17C8                             ;$01D023 |
+    STA.w SmokeSprXPos_17C8                 ;$01D023 |  NOTE: hardcoded smoke slot 0
     LDA.b SpriteYPosLow_D8,X                ;$01D026 |
     ADC.b #$08                              ;$01D028 |
-    STA.w $17C4                             ;$01D02A |
+    STA.w SmokeSprYPos_17C4                 ;$01D02A |  NOTE: hardcoded smoke slot 0
     LDA.b #$1B                              ;$01D02D |
-    STA.w $17CC                             ;$01D02F |
+    STA.w SmokeSprTimer_17CC                ;$01D02F |  NOTE: hardcoded smoke slot 0
 CODE_01D032:
     LDA.b #$D0
     STA.b SpriteYPosLow_D8,X                ;$01D034 |
@@ -14680,7 +14680,7 @@ CODE_01E9E6:
     PHA                                     ;$01E9E8 |
     LDY.w $18BF                             ;$01E9E9 |
     BNE CODE_01E9F9                         ;$01E9EC |
-    LDA.w $17BD                             ;$01E9EE |
+    LDA.w Layer1DXPos_17BD                  ;$01E9EE |
     ASL                                     ;$01E9F1 |
     ASL                                     ;$01E9F2 |
     ASL                                     ;$01E9F3 |
