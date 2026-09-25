@@ -12360,19 +12360,19 @@ CODE_00F38A:
     PHA
     JSL get_score_sprite_slot_02AD34        ;$00F38B |
     PLA                                     ;$00F38F |
-    STA.w $16E1,Y                           ;$00F390 |
+    STA.w ScoreSprNumber_16E1,Y             ;$00F390 |
     LDA.b PlayerXPos_94                     ;$00F393 |
-    STA.w $16ED,Y                           ;$00F395 |
+    STA.w ScoreSprXPosLow_16ED,Y            ;$00F395 |
     LDA.b PlayerXPos_94+1                   ;$00F398 |
-    STA.w $16F3,Y                           ;$00F39A |
+    STA.w ScoreSprXPosHigh_16F3,Y           ;$00F39A |
     LDA.b PlayerYPos_96                     ;$00F39D |
-    STA.w $16E7,Y                           ;$00F39F |
+    STA.w ScoreSprYPosLow_16E7,Y            ;$00F39F |
     LDA.b PlayerYPos_96+1                   ;$00F3A2 |
-    STA.w $16F9,Y                           ;$00F3A4 |
+    STA.w ScoreSprYPosHigh_16F9,Y           ;$00F3A4 |
     LDA.b #$30                              ;$00F3A7 |
-    STA.w $16FF,Y                           ;$00F3A9 |
+    STA.w ScoreSprTimer_16FF,Y              ;$00F3A9 |
     LDA.b #$00                              ;$00F3AC |
-    STA.w $1705,Y                           ;$00F3AE |
+    STA.w ScoreSprLayer_1705,Y              ;$00F3AE |
     RTL                                     ;$00F3B1 |
 
 get_level_bit_flag:

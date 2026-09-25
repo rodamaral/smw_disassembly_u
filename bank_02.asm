@@ -840,18 +840,18 @@ YoshiStompRoutine:
     PLB                                     ;$0286C6 |
     JSR SprBlkInteract                      ;$0286C7 |
     LDA.b #$02                              ;$0286CA |
-    STA.w $16CD,Y                           ;$0286CC |
+    STA.w QuakeSprNumber_16CD,Y             ;$0286CC |
     LDA.b PlayerXPos_94                     ;$0286CF |
-    STA.w $16D1,Y                           ;$0286D1 |
+    STA.w QuakeSprXPosLow_16D1,Y            ;$0286D1 |
     LDA.b PlayerXPos_94+1                   ;$0286D4 |
-    STA.w $16DD,Y                           ;$0286D6 |
+    STA.w QuakeSprYPosHigh_16DD,Y           ;$0286D6 |
     LDA.b PlayerYPos_96                     ;$0286D9 |
     CLC                                     ;$0286DB |
     ADC.b #$20                              ;$0286DC |
-    STA.w $16D9,Y                           ;$0286DE |
+    STA.w QuakeSprYPosLow_16D9,Y            ;$0286DE |
     LDA.b PlayerYPos_96+1                   ;$0286E1 |
     ADC.b #$00                              ;$0286E3 |
-    STA.w $16DD,Y                           ;$0286E5 |
+    STA.w QuakeSprYPosHigh_16DD,Y           ;$0286E5 |
     JSR CODE_029BE4                         ;$0286E8 |
     PLB                                     ;$0286EB |
 Return0286EC:
@@ -860,39 +860,39 @@ Return0286EC:
 SprBlkInteract:
     LDY.b #$03
 CODE_0286EF:
-    LDA.w $16CD,Y
+    LDA.w QuakeSprNumber_16CD,Y
     BEQ CODE_0286F8                         ;$0286F2 |
     DEY                                     ;$0286F4 |
     BPL CODE_0286EF                         ;$0286F5 |
     INY                                     ;$0286F7 |
 CODE_0286F8:
     LDA.b InteractionPtXPos_9A
-    STA.w $16D1,Y                           ;$0286FA |
+    STA.w QuakeSprXPosLow_16D1,Y            ;$0286FA |
     LDA.b InteractionPtXPos_9A+1            ;$0286FD |
-    STA.w $16D5,Y                           ;$0286FF |
+    STA.w QuakeSprXPosHigh_16D5,Y           ;$0286FF |
     LDA.b InteractionPtYPos_98              ;$028702 |
-    STA.w $16D9,Y                           ;$028704 |
+    STA.w QuakeSprYPosLow_16D9,Y            ;$028704 |
     LDA.b InteractionPtYPos_98+1            ;$028707 |
-    STA.w $16DD,Y                           ;$028709 |
+    STA.w QuakeSprYPosHigh_16DD,Y           ;$028709 |
     LDA.w $1933                             ;$02870C |
     BEQ CODE_02872F                         ;$02870F |
     LDA.b InteractionPtXPos_9A              ;$028711 |
     SEC                                     ;$028713 |
     SBC.b LayerXDiff_26                     ;$028714 |
-    STA.w $16D1,Y                           ;$028716 |
+    STA.w QuakeSprXPosLow_16D1,Y            ;$028716 |
     LDA.b InteractionPtXPos_9A+1            ;$028719 |
     SBC.b LayerXDiff_26+1                   ;$02871B |
-    STA.w $16D5,Y                           ;$02871D |
+    STA.w QuakeSprXPosHigh_16D5,Y           ;$02871D |
     LDA.b InteractionPtYPos_98              ;$028720 |
     SEC                                     ;$028722 |
     SBC.b LayerYDiff_28                     ;$028723 |
-    STA.w $16D9,Y                           ;$028725 |
+    STA.w QuakeSprYPosLow_16D9,Y            ;$028725 |
     LDA.b InteractionPtYPos_98+1            ;$028728 |
     SBC.b LayerYDiff_28+1                   ;$02872A |
-    STA.w $16DD,Y                           ;$02872C |
+    STA.w QuakeSprYPosHigh_16DD,Y           ;$02872C |
 CODE_02872F:
     LDA.b #$01
-    STA.w $16CD,Y                           ;$028731 |
+    STA.w QuakeSprNumber_16CD,Y             ;$028731 |
     LDA.b #$06                              ;$028734 |
     STA.w $18F8,Y                           ;$028736 |
     RTS                                     ;$028739 |
@@ -2585,12 +2585,12 @@ DATA_029392:
     db $F8,$08
 
 CODE_029394:
-    STZ.w $16CD,X
+    STZ.w QuakeSprNumber_16CD,X
 Return029397:
     RTS
 
 CODE_029398:
-    LDA.w $16CD,X
+    LDA.w QuakeSprNumber_16CD,X
     BEQ Return029397                        ;$02939B |
     DEC.w $18F8,X                           ;$02939D |
     BEQ CODE_029394                         ;$0293A0 |
@@ -2971,22 +2971,22 @@ DATA_029660:
 
 CODE_029663:
     PHX
-    LDA.w $16CD,Y                           ;$029664 |
+    LDA.w QuakeSprNumber_16CD,Y             ;$029664 |
     TAX                                     ;$029667 |
-    LDA.w $16D1,Y                           ;$029668 |
+    LDA.w QuakeSprXPosLow_16D1,Y            ;$029668 |
     CLC                                     ;$02966B |
     ADC.w Return029656,X                    ;$02966C |
     STA $00                                 ;$02966F |
-    LDA.w $16D5,Y                           ;$029671 |
+    LDA.w QuakeSprXPosHigh_16D5,Y           ;$029671 |
     ADC.w DATA_029658,X                     ;$029674 |
     STA $08                                 ;$029677 |
     LDA.w DATA_02965A,X                     ;$029679 |
     STA $02                                 ;$02967C |
-    LDA.w $16D9,Y                           ;$02967E |
+    LDA.w QuakeSprYPosLow_16D9,Y            ;$02967E |
     CLC                                     ;$029681 |
     ADC.w DATA_02965C,X                     ;$029682 |
     STA $01                                 ;$029685 |
-    LDA.w $16DD,Y                           ;$029687 |
+    LDA.w QuakeSprYPosHigh_16DD,Y           ;$029687 |
     ADC.w DATA_02965E,X                     ;$02968A |
     STA $09                                 ;$02968D |
     LDA.w DATA_029660,X                     ;$02968F |
@@ -3561,19 +3561,19 @@ CODE_029A71:
 CODE_029AA8:
     JSL get_score_sprite_slot_02AD34
     LDA.b #$01                              ;$029AAC |
-    STA.w $16E1,Y                           ;$029AAE |
+    STA.w ScoreSprNumber_16E1,Y             ;$029AAE |
     LDA.w $17D4,X                           ;$029AB1 |
-    STA.w $16E7,Y                           ;$029AB4 |
+    STA.w ScoreSprYPosLow_16E7,Y            ;$029AB4 |
     LDA.w $17E8,X                           ;$029AB7 |
-    STA.w $16F9,Y                           ;$029ABA |
+    STA.w ScoreSprYPosHigh_16F9,Y           ;$029ABA |
     LDA.w $17E0,X                           ;$029ABD |
-    STA.w $16ED,Y                           ;$029AC0 |
+    STA.w ScoreSprXPosLow_16ED,Y            ;$029AC0 |
     LDA.w $17EC,X                           ;$029AC3 |
-    STA.w $16F3,Y                           ;$029AC6 |
+    STA.w ScoreSprXPosHigh_16F3,Y           ;$029AC6 |
     LDA.b #$30                              ;$029AC9 |
-    STA.w $16FF,Y                           ;$029ACB |
+    STA.w ScoreSprTimer_16FF,Y              ;$029ACB |
     LDA.w $17E4,X                           ;$029ACE |
-    STA.w $1705,Y                           ;$029AD1 |
+    STA.w ScoreSprLayer_1705,Y              ;$029AD1 |
     JSR CODE_029ADA                         ;$029AD4 |
     JMP CODE_0299E3                         ;$029AD7 |
 
@@ -4873,19 +4873,19 @@ player_extspr_interaction_02A3F6:
     STA.w SmokeSpriteTimer_17CC,Y           ;$02A43A ||||
     JSL get_score_sprite_slot_02AD34        ;$02A43D ||||
     LDA.b #$05                              ;$02A441 |||| Y: score sprite slot
-    STA.w ScoreSpriteNumber_16E1,Y          ;$02A443 ||||
+    STA.w ScoreSprNumber_16E1,Y             ;$02A443 ||||
     LDA.w ExtSpriteYPosLow_1715,X           ;$02A446 ||||
-    STA.w ScoreSpriteYPosLow_16E7,Y         ;$02A449 ||||
+    STA.w ScoreSprYPosLow_16E7,Y            ;$02A449 ||||
     LDA.w ExtSpriteYPosHigh_1729,X          ;$02A44C ||||
-    STA.w ScoreSpriteYPosHigh_16F9,Y        ;$02A44F ||||
+    STA.w ScoreSprYPosHigh_16F9,Y           ;$02A44F ||||
     LDA.w ExtSpriteXPosLow_171F,X           ;$02A452 ||||
-    STA.w ScoreSpriteXPosLow_16ED,Y         ;$02A455 ||||
+    STA.w ScoreSprXPosLow_16ED,Y            ;$02A455 ||||
     LDA.w ExtSpriteXPosHigh_1733,X          ;$02A458 ||||
-    STA.w ScoreSpriteXPosHigh_16F3,Y        ;$02A45B ||||
+    STA.w ScoreSprXPosHigh_16F3,Y           ;$02A45B ||||
     LDA.b #$30                              ;$02A45E ||||
-    STA.w ScoreSpriteTimer_16FF,Y           ;$02A460 ||||
+    STA.w ScoreSprTimer_16FF,Y              ;$02A460 ||||
     LDA.b #$00                              ;$02A463 ||||
-    STA.w ScoreSpriteLayer_1705,Y           ;$02A465 ||||
+    STA.w ScoreSprLayer_1705,Y              ;$02A465 ||||
 .return_02A468:
     RTS
 
@@ -6055,47 +6055,47 @@ CODE_02ACEF:
     PHA                                     ;$02ACF0 |
     JSL get_score_sprite_slot_02AD34        ;$02ACF1 |
     PLA                                     ;$02ACF5 |
-    STA.w $16E1,Y                           ;$02ACF6 |
+    STA.w ScoreSprNumber_16E1,Y             ;$02ACF6 |
     LDA.b SpriteYPosLow_D8,X                ;$02ACF9 |
     SEC                                     ;$02ACFB |
     SBC.b #$08                              ;$02ACFC |
-    STA.w $16E7,Y                           ;$02ACFE |
+    STA.w ScoreSprYPosLow_16E7,Y            ;$02ACFE |
     PHA                                     ;$02AD01 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02AD02 |
     SBC.b #$00                              ;$02AD05 |
-    STA.w $16F9,Y                           ;$02AD07 |
+    STA.w ScoreSprYPosHigh_16F9,Y           ;$02AD07 |
     PLA                                     ;$02AD0A |
     SEC                                     ;$02AD0B |
     SBC.b Layer1YPos_1C                     ;$02AD0C |
     CMP.b #$F0                              ;$02AD0E |
     BCC CODE_02AD22                         ;$02AD10 |
-    LDA.w $16E7,Y                           ;$02AD12 |
+    LDA.w ScoreSprYPosLow_16E7,Y            ;$02AD12 |
     ADC.b #$10                              ;$02AD15 |
-    STA.w $16E7,Y                           ;$02AD17 |
-    LDA.w $16F9,Y                           ;$02AD1A |
+    STA.w ScoreSprYPosLow_16E7,Y            ;$02AD17 |
+    LDA.w ScoreSprYPosHigh_16F9,Y           ;$02AD1A |
     ADC.b #$00                              ;$02AD1D |
-    STA.w $16F9,Y                           ;$02AD1F |
+    STA.w ScoreSprYPosHigh_16F9,Y           ;$02AD1F |
 CODE_02AD22:
     LDA.b SpriteXPosLow_E4,X
-    STA.w $16ED,Y                           ;$02AD24 |
+    STA.w ScoreSprXPosLow_16ED,Y            ;$02AD24 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02AD27 |
-    STA.w $16F3,Y                           ;$02AD2A |
+    STA.w ScoreSprXPosHigh_16F3,Y           ;$02AD2A |
     LDA.b #$30                              ;$02AD2D |
-    STA.w $16FF,Y                           ;$02AD2F |
+    STA.w ScoreSprTimer_16FF,Y              ;$02AD2F |
     PLY                                     ;$02AD32 |
     RTL                                     ;$02AD33 |
 
 get_score_sprite_slot_02AD34:
     LDY.b #$05
--   LDA.w ScoreSpriteNumber_16E1,Y          ;$02AD36 |
+-   LDA.w ScoreSprNumber_16E1,Y             ;$02AD36 |
     BEQ ++                                  ;$02AD39 |
     DEY                                     ;$02AD3B |
     BPL -                                   ;$02AD3C |
-    DEC.w ScoreSpriteIndex_18F7             ;$02AD3E |
+    DEC.w ScoreSprIndex_18F7                ;$02AD3E |
     BPL +                                   ;$02AD41 |
     LDA.b #$05                              ;$02AD43 |
-    STA.w ScoreSpriteIndex_18F7             ;$02AD45 |
-+   LDY.w ScoreSpriteIndex_18F7             ;$02AD48 |
+    STA.w ScoreSprIndex_18F7                ;$02AD45 |
++   LDY.w ScoreSprIndex_18F7                ;$02AD48 |
 ++  RTL                                     ;$02AD4B |
 
 PointTile1:
@@ -6137,7 +6137,7 @@ CODE_02ADB8:
     LDX.b #$05
 CODE_02ADBA:
     STX.w CurrentSprite_15E9
-    LDA.w $16E1,X                           ;$02ADBD |
+    LDA.w ScoreSprNumber_16E1,X             ;$02ADBD |
     BEQ CODE_02ADC5                         ;$02ADC0 |
     JSR CODE_02ADC9                         ;$02ADC2 |
 CODE_02ADC5:
@@ -6151,9 +6151,9 @@ CODE_02ADC9:
     BEQ CODE_02ADD0                         ;$02ADCA |
     JMP CODE_02AE5B                         ;$02ADCD |
 CODE_02ADD0:
-    LDA.w $16FF,X                           ;$02ADD0 |
+    LDA.w ScoreSprTimer_16FF,X              ;$02ADD0 |
     BNE CODE_02ADE4                         ;$02ADD3 |
-    STZ.w $16E1,X                           ;$02ADD5 |
+    STZ.w ScoreSprNumber_16E1,X             ;$02ADD5 |
     RTS                                     ;$02ADD8 |
 
 CoinsToGive:
@@ -6164,10 +6164,10 @@ attributes2Upand3Up:
     db $04,$06
 
 CODE_02ADE4:
-    DEC.w $16FF,X                           ;$02ADE4 |
+    DEC.w ScoreSprTimer_16FF,X              ;$02ADE4 |
     CMP.b #$2A                              ;$02ADE7 |
     BNE CODE_02AE38                         ;$02ADE9 |
-    LDY.w $16E1,X                           ;$02ADEB |
+    LDY.w ScoreSprNumber_16E1,X             ;$02ADEB |
     CPY.b #$0D                              ;$02ADEE |
     BCC CODE_02AE12                         ;$02ADF0 |
     CPY.b #$11                              ;$02ADF2 |
@@ -6206,7 +6206,7 @@ CODE_02AE12:
 CODE_02AE35:
     LDX.w CurrentSprite_15E9
 CODE_02AE38:
-    LDA.w $16FF,X
+    LDA.w ScoreSprTimer_16FF,X
     LSR                                     ;$02AE3B |
     LSR                                     ;$02AE3C |
     LSR                                     ;$02AE3D |
@@ -6215,18 +6215,18 @@ CODE_02AE38:
     LDA.b Frame_13                          ;$02AE40 |
     AND.w PointSpeedY,Y                     ;$02AE42 |
     BNE CODE_02AE5B                         ;$02AE45 |
-    LDA.w $16E7,X                           ;$02AE47 |
+    LDA.w ScoreSprYPosLow_16E7,X            ;$02AE47 |
     TAY                                     ;$02AE4A |
     SEC                                     ;$02AE4B |
     SBC.b Layer1YPos_1C                     ;$02AE4C |
     CMP.b #$04                              ;$02AE4E |
     BCC CODE_02AE5B                         ;$02AE50 |
-    DEC.w $16E7,X                           ;$02AE52 |
+    DEC.w ScoreSprYPosLow_16E7,X            ;$02AE52 |
     TYA                                     ;$02AE55 |
     BNE CODE_02AE5B                         ;$02AE56 |
-    DEC.w $16F9,X                           ;$02AE58 |
+    DEC.w ScoreSprYPosHigh_16F9,X           ;$02AE58 |
 CODE_02AE5B:
-    LDA.w $1705,X
+    LDA.w ScoreSprLayer_1705,X
     ASL                                     ;$02AE5E |
     ASL                                     ;$02AE5F |
     TAY                                     ;$02AE60 |
@@ -6236,25 +6236,25 @@ CODE_02AE5B:
     LDA.w $001A,y                           ;$02AE68 |
     STA $04                                 ;$02AE6B |
     SEP #$20                                ;$02AE6D |
-    LDA.w $16ED,X                           ;$02AE6F |
+    LDA.w ScoreSprXPosLow_16ED,X            ;$02AE6F |
     CLC                                     ;$02AE72 |
     ADC.b #$0C                              ;$02AE73 |
     PHP                                     ;$02AE75 |
     SEC                                     ;$02AE76 |
     SBC $04                                 ;$02AE77 |
-    LDA.w $16F3,X                           ;$02AE79 |
+    LDA.w ScoreSprXPosHigh_16F3,X           ;$02AE79 |
     SBC $05                                 ;$02AE7C |
     PLP                                     ;$02AE7E |
     ADC.b #$00                              ;$02AE7F |
     BNE Return02AEFB                        ;$02AE81 |
-    LDA.w $16ED,X                           ;$02AE83 |
+    LDA.w ScoreSprXPosLow_16ED,X            ;$02AE83 |
     CMP $04                                 ;$02AE86 |
-    LDA.w $16F3,X                           ;$02AE88 |
+    LDA.w ScoreSprXPosHigh_16F3,X           ;$02AE88 |
     SBC $05                                 ;$02AE8B |
     BNE Return02AEFB                        ;$02AE8D |
-    LDA.w $16E7,X                           ;$02AE8F |
+    LDA.w ScoreSprYPosLow_16E7,X            ;$02AE8F |
     CMP $02                                 ;$02AE92 |
-    LDA.w $16F9,X                           ;$02AE94 |
+    LDA.w ScoreSprYPosHigh_16F9,X           ;$02AE94 |
     SBC $03                                 ;$02AE97 |
     BNE Return02AEFB                        ;$02AE99 |
     LDY.w DATA_02AD9E,X                     ;$02AE9B |
@@ -6262,12 +6262,12 @@ CODE_02AE5B:
     BVC CODE_02AEA5                         ;$02AEA1 |
     LDY.b #$04                              ;$02AEA3 |
 CODE_02AEA5:
-    LDA.w $16E7,X
+    LDA.w ScoreSprYPosLow_16E7,X
     SEC                                     ;$02AEA8 |
     SBC $02                                 ;$02AEA9 |
     STA.w $0201,Y                           ;$02AEAB |
     STA.w $0205,Y                           ;$02AEAE |
-    LDA.w $16ED,X                           ;$02AEB1 |
+    LDA.w ScoreSprXPosLow_16ED,X            ;$02AEB1 |
     SEC                                     ;$02AEB4 |
     SBC $04                                 ;$02AEB5 |
     STA.w OAMMirror_0200,Y                  ;$02AEB7 |
@@ -6275,7 +6275,7 @@ CODE_02AEA5:
     ADC.b #$08                              ;$02AEBB |
     STA.w $0204,Y                           ;$02AEBD |
     PHX                                     ;$02AEC0 |
-    LDA.w $16E1,X                           ;$02AEC1 |
+    LDA.w ScoreSprNumber_16E1,X             ;$02AEC1 |
     TAX                                     ;$02AEC4 |
     LDA.w PointTile1,X                      ;$02AEC5 |
     STA.w $0202,Y                           ;$02AEC8 |
@@ -6283,7 +6283,7 @@ CODE_02AEA5:
     STA.w $0206,Y                           ;$02AECE |
     PLX                                     ;$02AED1 |
     PHY                                     ;$02AED2 |
-    LDY.w $16E1,X                           ;$02AED3 |
+    LDY.w ScoreSprNumber_16E1,X             ;$02AED3 |
     CPY.b #$0E                              ;$02AED6 |
     LDA.b #$08                              ;$02AED8 |
     BCC CODE_02AEDF                         ;$02AEDA |
@@ -6300,7 +6300,7 @@ CODE_02AEDF:
     LDA.b #$00                              ;$02AEEC |
     STA.w OAMTileSize_0420,Y                ;$02AEEE |
     STA.w $0421,Y                           ;$02AEF1 |
-    LDA.w $16E1,X                           ;$02AEF4 |
+    LDA.w ScoreSprNumber_16E1,X             ;$02AEF4 |
     CMP.b #$11                              ;$02AEF7 |
     BCS ADDR_02AEFC                         ;$02AEF9 |
 Return02AEFB:
@@ -6308,13 +6308,13 @@ Return02AEFB:
 
 ADDR_02AEFC:
     LDY.b #$4C
-    LDA.w $16ED,X                           ;$02AEFE |
+    LDA.w ScoreSprXPosLow_16ED,X            ;$02AEFE |
     SEC                                     ;$02AF01 |
     SBC $04                                 ;$02AF02 |
     SEC                                     ;$02AF04 |
     SBC.b #$08                              ;$02AF05 |
     STA.w OAMMirror_0200,Y                  ;$02AF07 |
-    LDA.w $16E7,X                           ;$02AF0A |
+    LDA.w ScoreSprYPosLow_16E7,X            ;$02AF0A |
     SEC                                     ;$02AF0D |
     SBC $02                                 ;$02AF0E |
     STA.w $0201,Y                           ;$02AF10 |
@@ -6331,7 +6331,7 @@ ADDR_02AEFC:
     STA.w OAMTileSize_0420,Y                ;$02AF25 |
     RTS                                     ;$02AF28 |
 
-    STZ.w $16E1,X                           ;$02AF29 |
+    STZ.w ScoreSprNumber_16E1,X             ;$02AF29 |
     RTS                                     ;$02AF2C |
 
 DATA_02AF2D:
@@ -17356,20 +17356,20 @@ DATA_02FF64:
 CODE_02FF6C:
     JSL get_score_sprite_slot_02AD34
     LDA.b #$0D                              ;$02FF70 |
-    STA.w $16E1,Y                           ;$02FF72 |
+    STA.w ScoreSprNumber_16E1,Y             ;$02FF72 |
     LDA.w $1E02,X                           ;$02FF75 |
     SEC                                     ;$02FF78 |
     SBC.b #$08                              ;$02FF79 |
-    STA.w $16E7,Y                           ;$02FF7B |
+    STA.w ScoreSprYPosLow_16E7,Y            ;$02FF7B |
     LDA.w $1E2A,X                           ;$02FF7E |
     SBC.b #$00                              ;$02FF81 |
-    STA.w $16F9,Y                           ;$02FF83 |
+    STA.w ScoreSprYPosHigh_16F9,Y           ;$02FF83 |
     LDA.w $1E16,X                           ;$02FF86 |
-    STA.w $16ED,Y                           ;$02FF89 |
+    STA.w ScoreSprXPosLow_16ED,Y            ;$02FF89 |
     LDA.w $1E3E,X                           ;$02FF8C |
-    STA.w $16F3,Y                           ;$02FF8F |
+    STA.w ScoreSprXPosHigh_16F3,Y           ;$02FF8F |
     LDA.b #$30                              ;$02FF92 |
-    STA.w $16FF,Y                           ;$02FF94 |
+    STA.w ScoreSprTimer_16FF,Y              ;$02FF94 |
     RTS                                     ;$02FF97 |
 
 CODE_02FF98:

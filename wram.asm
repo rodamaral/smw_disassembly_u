@@ -10,6 +10,7 @@ ORG $7E0000
 ; scratch RAM
 ; TODO: eventually create a label for each purpose
 ; TODO: Only 8A-8F not done
+; TODO: $00XX
 skip 16
 
 ; === $7E0010 ===
@@ -1807,18 +1808,19 @@ skip 4
 BounceSprTile_16C1: skip 4 ;done
 BounceSprTimer_16C5: skip 4 ;done
 BounceSprFlags_16C9: skip 4 ;done
-QuakeSpriteNumber_16CD: skip 4
-QuakeSpriteXPosLow_16D1: skip 4
-QuakeSpriteXPosHigh_16D5: skip 4
-QuakeSpriteYPosLow_16D9: skip 4
-QuakeSpriteYPosHigh_16DD: skip 4
-ScoreSpriteNumber_16E1: skip 6
-ScoreSpriteYPosLow_16E7: skip 6
-ScoreSpriteXPosLow_16ED: skip 6
-ScoreSpriteXPosHigh_16F3: skip 6
-ScoreSpriteYPosHigh_16F9: skip 6
-ScoreSpriteTimer_16FF: skip 6
-ScoreSpriteLayer_1705: skip 6
+QuakeSprNumber_16CD: skip 4 ;done
+QuakeSprXPosLow_16D1: skip 4 ;done
+QuakeSprXPosHigh_16D5: skip 4 ;done
+QuakeSprYPosLow_16D9: skip 4 ;done
+QuakeSprYPosHigh_16DD: skip 4 ;done
+ScoreSprNumber_16E1: skip 6 ;done
+ScoreSprYPosLow_16E7: skip 6 ;done
+ScoreSprXPosLow_16ED: skip 6 ;done
+ScoreSprXPosHigh_16F3: skip 6 ;done
+ScoreSprYPosHigh_16F9: skip 6 ;done
+ScoreSprTimer_16FF: skip 6 ;done
+ScoreSprLayer_1705: skip 6 ;done
+
 ExtSpriteNumber_170B: skip 10
 ; Valid values
 !EmptyExt_00 = $00
@@ -1989,7 +1991,7 @@ SmokeSpriteSlotFull_18E9: skip 1
 MinExtSpriteXPosHigh_18EA: skip 12
 ; 7E18F6 unused
 skip 1
-ScoreSpriteIndex_18F7: skip 1
+ScoreSprIndex_18F7: skip 1
 BounceSpriteIntTimer_18F8: skip 4
 ExtSpriteSlotIdx_18FC: skip 1
 ChuckIsWhistling_18FD: skip 1
