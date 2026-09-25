@@ -29,7 +29,7 @@ reset_start:
     SEC                                     ;$008040 | | Decrement by four for new address
     SBC.w #$0004                            ;$008041 | |
     TAY                                     ;$008044 | |
-    DEX                                     ;$008045 | | Decrememnt loop
+    DEX                                     ;$008045 | | Decremeent loop
     DEX                                     ;$008046 | |
     DEX                                     ;$008047 | |
     BPL .RAM_routine_upload                 ;$008048 | |
@@ -13134,37 +13134,37 @@ boss_room_collision:
     BIT.w IRQNMICommand_0D9B                ;$00F8F5 |
     BVC CODE_00F94E                         ;$00F8F8 |
     JSR level_collision                     ;$00F8FA |
-    LDA.w $13FC                             ;$00F8FD |
+    LDA.w ActiveBoss_13FC                   ;$00F8FD |
     ASL                                     ;$00F900 |
     TAX                                     ;$00F901 |
     PHX                                     ;$00F902 |
     LDY.b PlayerYSpeed_7D                   ;$00F903 |
-    BPL CODE_00F91E                         ;$00F905 |
+    BPL .CODE_00F91E                        ;$00F905 |
     REP #$20                                ;$00F907 |
     LDA.b PlayerYPos_96                     ;$00F909 |
     CMP.w boss_ceiling_height,X             ;$00F90B |
-    BPL CODE_00F91E                         ;$00F90E |
+    BPL .CODE_00F91E                        ;$00F90E |
     LDA.w boss_ceiling_height,X             ;$00F910 |
     STA.b PlayerYPos_96                     ;$00F913 |
     SEP #$20                                ;$00F915 |
     STZ.b PlayerYSpeed_7D                   ;$00F917 |
     LDA.b #$01                              ;$00F919 |
     STA.w SPCIO0_1DF9                       ;$00F91B |
-CODE_00F91E:
+.CODE_00F91E:
     SEP #$20
     PLX                                     ;$00F920 |
     LDA.w boss_ceiling_height,X             ;$00F921 |
     CMP.b #$2A                              ;$00F924 |
-    BNE Return00F94D                        ;$00F926 |
+    BNE .return_00F94D                      ;$00F926 |
     REP #$20                                ;$00F928 |
     LDY.b #$00                              ;$00F92A |
-    LDA.w $1617                             ;$00F92C |
+    LDA.w SpriteMisc_160E+9                 ;$00F92C | NOTE: hardcoded slot 9
     AND.w #$00FF                            ;$00F92F |
     INC A                                   ;$00F932 |
     CMP.b PlayerXPos_94                     ;$00F933 |
-    BEQ CODE_00F94A                         ;$00F935 |
-    BMI CODE_00F94A                         ;$00F937 |
-    LDA.w $153D                             ;$00F939 |
+    BEQ .CODE_00F94A                        ;$00F935 |
+    BMI .CODE_00F94A                        ;$00F937 |
+    LDA.w Sprite_1534+9                     ;$00F939 | NOTE: hardcoded slot 9
     AND.w #$00FF                            ;$00F93C |
     STA $00                                 ;$00F93F |
     INY                                     ;$00F941 |
@@ -13172,10 +13172,10 @@ CODE_00F91E:
     CLC                                     ;$00F944 |
     ADC.w #$000F                            ;$00F945 |
     CMP $00                                 ;$00F948 |
-CODE_00F94A:
+.CODE_00F94A:
     JMP CODE_00E9C8
 
-Return00F94D:
+.return_00F94D:
     RTS
 
 CODE_00F94E:
@@ -13337,7 +13337,7 @@ FlatPalaceSwitch:
     JSL InitSpriteTables                    ;$00FA75 |
     PLX                                     ;$00FA79 |
     LDA.b #$5F                              ;$00FA7A |
-    STA.w $1540,Y                           ;$00FA7C |
+    STA.w SpriteStun_1540,Y                 ;$00FA7C |
     RTS                                     ;$00FA7F |
 
 TriggerGoalTape:
@@ -13362,7 +13362,7 @@ CODE_00FAA3:
     LDA.w $009E,y
     CMP.b #$7B                              ;$00FAA6 |
     BEQ CODE_00FAB2                         ;$00FAA8 |
-    LDA.w $15A0,Y                           ;$00FAAA |
+    LDA.w SpriteOffscreenX_15A0,Y           ;$00FAAA |
     ORA.w $186C,Y                           ;$00FAAD |
     BNE CODE_00FAC5                         ;$00FAB0 |
 CODE_00FAB2:
@@ -13370,7 +13370,7 @@ CODE_00FAB2:
     AND.b #$20                              ;$00FAB5 |
     BNE CODE_00FAC5                         ;$00FAB7 |
     LDA.b #$10                              ;$00FAB9 |
-    STA.w $1540,Y                           ;$00FABB |
+    STA.w SpriteStun_1540,Y                 ;$00FABB |
     LDA.b #$06                              ;$00FABE |
     STA.w SpriteStatus_14C8,Y               ;$00FAC0 |
     BRA LvlEndNextSprite                    ;$00FAC3 |
@@ -13461,7 +13461,7 @@ CODE_00FB5F:
     TYX
     JSL InitSpriteTables                    ;$00FB60 |
     LDA $0F                                 ;$00FB64 |
-    STA.w $1594,Y                           ;$00FB66 |
+    STA.w Sprite_1594,Y                     ;$00FB66 |
     LDA.b #$0C                              ;$00FB69 |
     STA.w SpriteStatus_14C8,Y               ;$00FB6B |
     LDA.b #$D0                              ;$00FB6E |
@@ -13514,7 +13514,7 @@ CODE_00FBBC:
     TYA                                     ;$00FBC1 |
     ADC.w SpriteXPosHigh_14E0,X             ;$00FBC2 |
     STA.w SpriteXPosHigh_14E0,X             ;$00FBC5 |
-    LDA.w $1540,X                           ;$00FBC8 |
+    LDA.w SpriteStun_1540,X                 ;$00FBC8 |
     BEQ CODE_00FBF0                         ;$00FBCB |
     CMP.b #$01                              ;$00FBCD |
     BNE CODE_00FBD5                         ;$00FBCF |
@@ -13523,12 +13523,12 @@ CODE_00FBBC:
 CODE_00FBD5:
     PHX
     LDA.b #$04                              ;$00FBD6 |
-    STA.w $15F6,X                           ;$00FBD8 |
+    STA.w SpriteYXPPCCCT_15F6,X             ;$00FBD8 |
     JSL GenericSprGfxRt2                    ;$00FBDB |
-    LDA.w $1540,X                           ;$00FBDF |
+    LDA.w SpriteStun_1540,X                 ;$00FBDF |
     LSR                                     ;$00FBE2 |
     LSR                                     ;$00FBE3 |
-    LDY.w $15EA,X                           ;$00FBE4 |
+    LDY.w SpriteOAMIndex_15EA,X             ;$00FBE4 |
     TAX                                     ;$00FBE7 |
     LDA.w LvlEndSmokeTiles,X                ;$00FBE8 |
     STA.w $0302,Y                           ;$00FBEB |
@@ -13570,10 +13570,10 @@ ADDR_00FC25:
     LDA.b #$01                              ;$00FC33 |
     STA.w CarryYoshiLevels_0DC1             ;$00FC35 |
     STZ.w YoshiHasWings_141E                ;$00FC38 |
-    LDA.w $15F6,Y                           ;$00FC3B |
+    LDA.w SpriteYXPPCCCT_15F6,Y             ;$00FC3B |
     AND.b #$F1                              ;$00FC3E |
     ORA.b #$0A                              ;$00FC40 |
-    STA.w $15F6,Y                           ;$00FC42 |
+    STA.w SpriteYXPPCCCT_15F6,Y             ;$00FC42 |
     LDA.w RidingYoshi_187A                  ;$00FC45 |
     BNE Return00FC72                        ;$00FC48 |
     LDA.b Layer1XPos_1A                     ;$00FC4A |
@@ -13638,11 +13638,11 @@ CODE_00FC98:
     LDA.b #$04                              ;$00FCC0 |
     STA.w $1FE2,X                           ;$00FCC2 |
     LDA.w YoshiColor_13C7                   ;$00FCC5 |
-    STA.w $15F6,X                           ;$00FCC8 |
+    STA.w SpriteYXPPCCCT_15F6,X             ;$00FCC8 |
     LDA.w YoshiHeavenFlag_1B95              ;$00FCCB |
     BEQ CODE_00FCD5                         ;$00FCCE |
     LDA.b #$06                              ;$00FCD0 |
-    STA.w $15F6,X                           ;$00FCD2 |
+    STA.w SpriteYXPPCCCT_15F6,X             ;$00FCD2 |
 CODE_00FCD5:
     INC.w RidingYoshi_187A
     INC.b SpritePhase_C2,X                  ;$00FCD8 |

@@ -933,9 +933,11 @@ SpriteLock_9D: skip 1
 ; sprite ID table
 SpriteNumber_9E: skip 12
 ; Valid values
+!Lakitu_1E = $1E
 !Yoshi_35 = $35
 !Peach_7C = $7C
-!BonusGame_7C = $82
+!ChangingItem_81 = $81
+!BonusGame_7C = $82 ; TODO: _82
 !BowserBall_A1 = $A1
 !Reznor_A9 = $A9
 
@@ -1743,33 +1745,34 @@ SpriteYPosHigh_14D4: skip 12 ;done
 SpriteXPosHigh_14E0: skip 12 ;done
 SpriteYPosSpx_14EC: skip 12 ;done
 SpriteXPosSpx_14F8: skip 12 ;done
-Sprite_1504: skip 12;
-Sprite_1510: skip 12;
-Sprite_151C: skip 12;
-Sprite_1528: skip 12;
-Sprite_1534: skip 12
-SpriteStun_1540: skip 12
-SpritePlayerContact_154C: skip 12
-SpriteLava_1558: skip 12
-SpriteSpriteContact_1564: skip 12
-SpriteAnimationTimer_1570: skip 12
-SpriteDir_157C: skip 12
+Sprite_1504: skip 12 ;done
+Sprite_1510: skip 12 ;done
+Sprite_151C: skip 12 ;done
+Sprite_1528: skip 12 ;done
+Sprite_1534: skip 12 ;done
+SpriteStun_1540: skip 12 ;done
+SpritePlayerContact_154C: skip 12 ;done
+SpriteLava_1558: skip 12 ;done
+SpriteSprContact_1564: skip 12 ;done
+SpriteAnimationTimer_1570: skip 12 ;done
+SpriteDir_157C: skip 12 ;done
 ; Valid values
 !SpriteDir_Left = 0
 !SpriteDir_Right = 1
-SpriteBlocked_1588: skip 12
-Sprite_1594: skip 12
-SpriteOffscreenX_15A0: skip 12
-SpriteTurnTimer_15AC: skip 12
-SpriteSlope_15B8: skip 12
-SpriteWayOffscreenX_15C4: skip 12
-SpriteOnYoshiTongue_15D0: skip 12
-SpriteDisableObjInt_15DC: skip 12
+SpriteBlocked_1588: skip 12 ;done
+; TODO: use YoshiMouthRt_1594 when appropriate
+Sprite_1594: skip 12 ;done
+SpriteOffscreenX_15A0: skip 12 ;done
+SpriteTurnTimer_15AC: skip 12 ;done
+SpriteSlope_15B8: skip 12 ;done
+SpriteWayOffscreenX_15C4: skip 12 ;done
+SpriteOnTongue_15D0: skip 12 ;done
+SpriteDisableObjInt_15DC: skip 12 ;done
 ; 7E15E8 unused
 skip 1
-CurrentSprite_15E9: skip 1
-SpriteOAMIndex_15EA: skip 12
-SpriteYXPPCCCT_15F6: skip 12
+CurrentSprite_15E9: skip 1 ;done
+SpriteOAMIndex_15EA: skip 12 ;done
+SpriteYXPPCCCT_15F6: skip 12 ;done
 SpriteAnimation_1602: skip 12
 SpriteMisc_160E: skip 12
 SpriteLoadIndex_161A: skip 12

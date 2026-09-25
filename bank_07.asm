@@ -4266,10 +4266,10 @@ DATA_07F1AA:
     db $25,$26,$27,$28,$29,$30,$40,$50
 
 CODE_07F1CA:
-    LDA.w $1540,X
+    LDA.w SpriteStun_1540,X
     STA $04                                 ;$07F1CD |
     STZ $02                                 ;$07F1CF |
-    LDA.w $1594,X                           ;$07F1D1 |
+    LDA.w Sprite_1594,X                     ;$07F1D1 |
     LSR                                     ;$07F1D4 |
     LSR                                     ;$07F1D5 |
     TAX                                     ;$07F1D6 |
@@ -4351,7 +4351,7 @@ DATA_07F24E:
 
 CODE_07F252:
     PHX
-    LDA.w $1594,X                           ;$07F253 |
+    LDA.w Sprite_1594,X                     ;$07F253 |
     LSR                                     ;$07F256 |
     LSR                                     ;$07F257 |
     TAX                                     ;$07F258 |
@@ -4539,15 +4539,15 @@ ZeroSpriteTables:
     STZ.b SpritePhase_C2,X                  ;$07F728 |
     STZ.w Sprite_151C,X                     ;$07F72A |
     STZ.w Sprite_1528,X                     ;$07F72D |
-    STZ.w $1534,X                           ;$07F730 |
+    STZ.w Sprite_1534,X                     ;$07F730 |
     STZ.w SpriteDir_157C,X                  ;$07F733 |
-    STZ.w $1588,X                           ;$07F736 |
-    STZ.w $15C4,X                           ;$07F739 |
+    STZ.w SpriteBlocked_1588,X              ;$07F736 |
+    STZ.w SpriteWayOffscreenX_15C4,X        ;$07F739 |
     STZ.w $1602,X                           ;$07F73C |
-    STZ.w $1540,X                           ;$07F73F |
+    STZ.w SpriteStun_1540,X                 ;$07F73F |
     STZ.w SpritePlayerContact_154C,X        ;$07F742 |
-    STZ.w $1558,X                           ;$07F745 |
-    STZ.w $1564,X                           ;$07F748 |
+    STZ.w SpriteLava_1558,X                 ;$07F745 |
+    STZ.w SpriteSprContact_1564,X           ;$07F748 |
     STZ.w $1FE2,X                           ;$07F74B |
     STZ.w $1626,X                           ;$07F74E |
     STZ.w SpriteAnimationTimer_1570,X       ;$07F751 |
@@ -4555,8 +4555,8 @@ ZeroSpriteTables:
     STZ.w SpriteXPosSpx_14F8,X              ;$07F756 |
     STZ.b SpriteYSpeed_AA,X                 ;$07F759 |
     STZ.w SpriteYPosSpx_14EC,X              ;$07F75B |
-    STZ.w $15DC,X                           ;$07F75E |
-    STZ.w $15D0,X                           ;$07F761 |
+    STZ.w SpriteDisableObjInt_15DC,X        ;$07F75E |
+    STZ.w SpriteOnTongue_15D0,X             ;$07F761 |
     STZ.w $163E,X                           ;$07F764 |
     STZ.w $1656,X                           ;$07F767 |
     STZ.w $1662,X                           ;$07F76A |
@@ -4565,11 +4565,11 @@ ZeroSpriteTables:
     STZ.w $1686,X                           ;$07F773 |
     STZ.w $187B,X                           ;$07F776 |
     STZ.w $160E,X                           ;$07F779 |
-    STZ.w $1594,X                           ;$07F77C |
+    STZ.w Sprite_1594,X                     ;$07F77C |
     STZ.w Sprite_1504,X                     ;$07F77F |
     STZ.w $1FD6,X                           ;$07F782 |
     LDA.b #$01                              ;$07F785 |
-    STA.w $15A0,X                           ;$07F787 |
+    STA.w SpriteOffscreenX_15A0,X           ;$07F787 |
     RTL                                     ;$07F78A |
 
 LoadSpriteTables:
@@ -4580,7 +4580,7 @@ LoadSpriteTables:
     LDA.l Sprite166EVals,X                  ;$07F790 |
     AND.b #$0F                              ;$07F794 |
     PLX                                     ;$07F796 |
-    STA.w $15F6,X                           ;$07F797 |
+    STA.w SpriteYXPPCCCT_15F6,X             ;$07F797 |
     JSL LoadTweakerBytes                    ;$07F79A |
     PLY                                     ;$07F79E |
     RTL                                     ;$07F79F |

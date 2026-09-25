@@ -1398,7 +1398,7 @@ CODE_0C9FEA:
     STA.b SpriteYPosLow_D8                  ;$0CA00D | NOTE: hardcoded slot 0
     STZ.w SpriteYPosHigh_14D4               ;$0CA00F | NOTE: hardcoded slot 0
     LDA.b #$A0                              ;$0CA012 |
-    STA.w $15EA                             ;$0CA014 | NOTE: hardcoded slot 0
+    STA.w SpriteOAMIndex_15EA               ;$0CA014 | NOTE: hardcoded slot 0
     JSR CODE_0CA778                         ;$0CA017 |
     LDX.w $1602                             ;$0CA01A | NOTE: hardcoded slot 0
     LDA.b #$51                              ;$0CA01D |
@@ -1697,7 +1697,7 @@ CODE_0CA24F:
     LDA.b #$01                              ;$0CA281 |
     STA.w SpriteYPosHigh_14D4               ;$0CA283 | NOTE: hardcoded slot 0
     LDA.b #$30                              ;$0CA286 |
-    STA.w $15EA                             ;$0CA288 | NOTE: hardcoded slot 0
+    STA.w SpriteOAMIndex_15EA               ;$0CA288 | NOTE: hardcoded slot 0
     JSR CODE_0CA778                         ;$0CA28B |
     STZ $01                                 ;$0CA28E |
     LDA.w $0B50                             ;$0CA290 |
