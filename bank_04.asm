@@ -437,7 +437,7 @@ CODE_04839A:
 CODE_0483BD:
     LDY.b #$18
 CODE_0483BF:
-    STY $12
+    STY.b StripeImage_12
     BRA CODE_04840D                         ;$0483C1 |
 
 CODE_0483C3:
@@ -5523,7 +5523,7 @@ CODE_04DC42:
     LDA.w #$07FF                            ;$04DC57 |
     LDX.w #$F7DF                            ;$04DC5A |
     LDY.w #$C800                            ;$04DC5D |
-    MVN $7E,$0C                             ;$04DC60 |
+    MVN !Bank_7E,!Bank_0C                   ;$04DC60 |
     PLB                                     ;$04DC63 |
     JSR CODE_04D7F2                         ;$04DC64 |
     SEP #$30                                ;$04DC67 |

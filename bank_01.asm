@@ -9753,7 +9753,7 @@ GiveMarioCape:
 
 CODE_01C5AE:
     LDA.b PlayerYPosScrRel_80+1
-    ORA $7F                                 ;$01C5B0 |
+    ORA.b PlayerXPosScrRel_7E+1             ;$01C5B0 |
     BNE Return01C5EB                        ;$01C5B2 |
     LDA.b #!AniGetCape_03                   ;$01C5B4 |
     STA.b PlayerAnimation_71                ;$01C5B6 |
@@ -10495,7 +10495,7 @@ CODE_01CACB:
     RTS                                     ;$01CB1F |
 
 CODE_01CB20:
-    LDA $37
+    LDA.b Mode7Angle_36+1
     STA.w $1866                             ;$01CB22 |
     PHX                                     ;$01CB25 |
     REP #$30                                ;$01CB26 |
@@ -13024,67 +13024,65 @@ DATA_01DD51:
     db $F0,$F0,$F8,$F8,$F8,$F8,$F0,$F0
     db $F0,$F0,$00,$00,$F0,$F0,$F0
 
-DATA_01DD90:
+bonus_sprite_low_y_01DD90:
     db $F0
 
 DATA_01DD91:
     db $50,$78,$A0,$A0,$A0,$78,$50,$50
-DATA_01DD99:
+bonus_sprite_low_x_01DD99:
     db $78
 
 DATA_01DD9A:
     db $F0,$F0,$F0,$18,$40,$40,$40,$18
-DATA_01DDA2:
+bonus_sprite_dir_01DDA2:
     db $18,$03,$00,$00,$01,$01,$02,$02
     db $03,$FF
 
 InitBonusGame:
-    LDA.w $1B94
-    BEQ CODE_01DDB5                         ;$01DDAF |
+    LDA.w DisableBonusSprite_1B94
+    BEQ .CODE_01DDB5                        ;$01DDAF |
     STZ.w SpriteStatus_14C8,X               ;$01DDB1 |
     RTS                                     ;$01DDB4 |
 
-CODE_01DDB5:
-    LDX.b #$09
-CODE_01DDB7:
-    LDA.b #$08
-    STA.w SpriteStatus_14C8,X               ;$01DDB9 |
-    LDA.b #$82                              ;$01DDBC |
-    STA.w SpriteNumber_9E,X                 ;$01DDBE |
-    LDA.w DATA_01DD90,X                     ;$01DDC1 |
-    STA.b SpriteXPosLow_E4,X                ;$01DDC4 |
-    LDA.b #$00                              ;$01DDC6 |
-    STA.w SpriteXPosHigh_14E0,X             ;$01DDC8 |
-    LDA.w DATA_01DD99,X                     ;$01DDCB |
-    STA.b SpriteYPosLow_D8,X                ;$01DDCE |
-    ASL                                     ;$01DDD0 |
-    LDA.b #$00                              ;$01DDD1 |
-    BCS CODE_01DDD6                         ;$01DDD3 |
-    INC A                                   ;$01DDD5 |
-CODE_01DDD6:
-    STA.w SpriteYPosHigh_14D4,X
-    JSL InitSpriteTables                    ;$01DDD9 |
-    LDA.w DATA_01DDA2,X                     ;$01DDDD |
-    STA.w SpriteDir_157C,X                  ;$01DDE0 |
-    TXA                                     ;$01DDE3 |
-    CLC                                     ;$01DDE4 |
-    ADC.b Frame_13                          ;$01DDE5 |
-    AND.b #$07                              ;$01DDE7 |
-    STA.w SpriteAnimationTimer_1570,X       ;$01DDE9 |
-    DEX                                     ;$01DDEC |
-    BNE CODE_01DDB7                         ;$01DDED |
-    STZ.w $188F                             ;$01DDEF |
-    STZ.w $1890                             ;$01DDF2 |
+.CODE_01DDB5:
+    LDX.b #$09                              ;$01DDB7 | X: current slot
+-   LDA.b #$08                              ;$01DDB7 |\
+    STA.w SpriteStatus_14C8,X               ;$01DDB9 || create Bonus Game sprites for slots 9 to 0
+    LDA.b #!BonusGame_7C                    ;$01DDBC ||
+    STA.w SpriteNumber_9E,X                 ;$01DDBE ||
+    LDA.w bonus_sprite_low_y_01DD90,X       ;$01DDC1 ||
+    STA.b SpriteXPosLow_E4,X                ;$01DDC4 ||
+    LDA.b #$00                              ;$01DDC6 ||
+    STA.w SpriteXPosHigh_14E0,X             ;$01DDC8 ||
+    LDA.w bonus_sprite_low_x_01DD99,X       ;$01DDCB ||
+    STA.b SpriteYPosLow_D8,X                ;$01DDCE ||
+    ASL                                     ;$01DDD0 ||
+    LDA.b #$00                              ;$01DDD1 ||
+    BCS +                                   ;$01DDD3 ||\
+    INC A                                   ;$01DDD5 ||/
++   STA.w SpriteYPosHigh_14D4,X             ;$01DDD6 ||
+    JSL InitSpriteTables                    ;$01DDD9 ||
+    LDA.w bonus_sprite_dir_01DDA2,X         ;$01DDDD ||
+    STA.w SpriteDir_157C,X                  ;$01DDE0 ||
+    TXA                                     ;$01DDE3 ||
+    CLC                                     ;$01DDE4 ||
+    ADC.b Frame_13                          ;$01DDE5 ||
+    AND.b #$07                              ;$01DDE7 ||
+    STA.w SpriteAnimationTimer_1570,X       ;$01DDE9 ||
+    DEX                                     ;$01DDEC ||
+    BNE -                                   ;$01DDED |/
+    STZ.w BonusGameComplete_188F            ;$01DDEF |
+    STZ.w BonusGame1UpCount_1890            ;$01DDF2 |
     JSL GetRand                             ;$01DDF5 |
     EOR.b Frame_13                          ;$01DDF9 |
     ADC.b Frame_14                          ;$01DDFB |
     AND.b #$07                              ;$01DDFD |
     TAY                                     ;$01DDFF |
     LDA.w DATA_01DE21,Y                     ;$01DE00 |
-    STA.w $1579                             ;$01DE03 |
+    STA.w SpriteAnimationTimer_1570+9       ;$01DE03 | NOTE: hardcoded slot 9
     LDA.b #$01                              ;$01DE06 |
-    STA $CB                                 ;$01DE08 |
-    INC.w $1B94                             ;$01DE0A |
+    STA.b SpritePhase_C2+9                  ;$01DE08 | NOTE: hardcoded slot 9
+    INC.w DisableBonusSprite_1B94           ;$01DE0A |
     LDX.w CurrentSprite_15E9                ;$01DE0D |
     RTS                                     ;$01DE10 |
 
@@ -17096,7 +17094,7 @@ CODE_01FBD5:
     BRA CODE_01FBEE                         ;$01FBD7 |
 
 CODE_01FBD9:
-    LDA $37
+    LDA.b Mode7Angle_36+1
     BNE CODE_01FBE7                         ;$01FBDB |
     LDY $00                                 ;$01FBDD |
     LDA.w DATA_01FADD,Y                     ;$01FBDF |

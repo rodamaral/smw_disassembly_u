@@ -10634,7 +10634,7 @@ CODE_03DFAE:
     ADC.l DATA_03DEBB,X                     ;$03DFB7 |
     CLC                                     ;$03DFBB |
     ADC.b Layer1XPos_1A,X                   ;$03DFBC |
-    STA $3A,X                               ;$03DFBE |
+    STA.b Mode7XPos_3A,X                    ;$03DFBE |
     SEP #$20                                ;$03DFC0 |
     PLX                                     ;$03DFC2 |
     RTS                                     ;$03DFC3 |

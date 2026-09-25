@@ -5035,10 +5035,10 @@ ADDR_05C696:
 
 ADDR_05C69E:
     LDA.w #$8502
-    EOR.b SpriteYXPPCCCT_64,X             ;$05C6A1 | TODO: investigate index usage
+    EOR.b SpriteYXPPCCCT_64,X               ;$05C6A1 | TODO: investigate index usage
     LSR.b SpritePhase_C2,X                  ;$05C6A3 |
     JSR $40AE                               ;$05C6A5 |
-    TRB $D0                                 ;$05C6A8 |
+    TRB.b SpriteDataPtr_CE+2                ;$05C6A8 |
     JSL $1446AD                             ;$05C6AA |
     CMP.w #$0080                            ;$05C6AE |
     BEQ ADDR_05C6B4                         ;$05C6B1 |
@@ -6483,9 +6483,9 @@ CODE_05D8B7:
     LDA.w Ptrs05EC00,Y                      ;$05D8EB |
     STA.b SpriteDataPtr_CE                  ;$05D8EE |
     LDA.w $EC01,Y                           ;$05D8F0 |
-    STA $CF                                 ;$05D8F3 |
+    STA.b SpriteDataPtr_CE+1                ;$05D8F3 |
     LDA.b #$07                              ;$05D8F5 |
-    STA $D0                                 ;$05D8F7 |
+    STA.b SpriteDataPtr_CE+2                ;$05D8F7 |
     LDA.b [SpriteDataPtr_CE]                ;$05D8F9 |
     AND.b #$3F                              ;$05D8FB |
     STA.w SpriteMemorySetting_1692          ;$05D8FD |
@@ -6686,9 +6686,9 @@ CODE_05DA60:
     LDA.b #$EE                              ;$05DA7E |
     STA.b SpriteDataPtr_CE                  ;$05DA80 |
     LDA.b #$C3                              ;$05DA82 |
-    STA $CF                                 ;$05DA84 |
+    STA.b SpriteDataPtr_CE+1                ;$05DA84 |
     LDA.b #$07                              ;$05DA86 |
-    STA $D0                                 ;$05DA88 |
+    STA.b SpriteDataPtr_CE+2                ;$05DA88 |
     LDA.b [SpriteDataPtr_CE]                ;$05DA8A |
     AND.b #$3F                              ;$05DA8C |
     STA.w SpriteMemorySetting_1692          ;$05DA8E |

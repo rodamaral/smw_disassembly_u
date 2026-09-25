@@ -1392,15 +1392,15 @@ CODE_0C9FEA:
     STA.w PlayerXSpeed_7B                   ;$0C9FFE |
     JSR CODE_0CA75A                         ;$0CA001 |
     LDA.b #$52                              ;$0CA004 |
-    STA.b SpriteXPosLow_E4                  ;$0CA006 | WARN: unindexed table
-    STZ.w SpriteXPosHigh_14E0               ;$0CA008 | WARN: unindexed table
+    STA.b SpriteXPosLow_E4                  ;$0CA006 | NOTE: hardcoded slot 0
+    STZ.w SpriteXPosHigh_14E0               ;$0CA008 | NOTE: hardcoded slot 0
     LDA.b #$8F                              ;$0CA00B |
-    STA.b SpriteYPosLow_D8                  ;$0CA00D | WARN: unindexed table
-    STZ.w SpriteYPosHigh_14D4               ;$0CA00F | WARN: unindexed table
+    STA.b SpriteYPosLow_D8                  ;$0CA00D | NOTE: hardcoded slot 0
+    STZ.w SpriteYPosHigh_14D4               ;$0CA00F | NOTE: hardcoded slot 0
     LDA.b #$A0                              ;$0CA012 |
-    STA.w $15EA                             ;$0CA014 | WARN: unindexed table
+    STA.w $15EA                             ;$0CA014 | NOTE: hardcoded slot 0
     JSR CODE_0CA778                         ;$0CA017 |
-    LDX.w $1602                             ;$0CA01A | WARN: unindexed table
+    LDX.w $1602                             ;$0CA01A | NOTE: hardcoded slot 0
     LDA.b #$51                              ;$0CA01D |
     STA $00                                 ;$0CA01F |
     STZ $01                                 ;$0CA021 |
@@ -1645,7 +1645,7 @@ CODE_0CA1F6:
     JSR CODE_0CA7B4                         ;$0CA212 |
     LDA.w $1442                             ;$0CA215 |
     BNE CODE_0CA22D                         ;$0CA218 |
-    LDA.b SpriteXPosLow_E4                  ;$0CA21A | WARN: unindexed table
+    LDA.b SpriteXPosLow_E4                  ;$0CA21A | NOTE: hardcoded slot 0
     STA $00                                 ;$0CA21C |
     LDA.b #$9F                              ;$0CA21E |
     STA $02                                 ;$0CA220 |
@@ -1688,16 +1688,16 @@ CODE_0CA24F:
     LDA.w $0B50                             ;$0CA26D |
     CLC                                     ;$0CA270 |
     ADC.b #$30                              ;$0CA271 |
-    STA.b SpriteXPosLow_E4                  ;$0CA273 | WARN: unindexed table
+    STA.b SpriteXPosLow_E4                  ;$0CA273 | NOTE: hardcoded slot 0
     LDA.w $0B6E                             ;$0CA275 |
     ADC.b #$00                              ;$0CA278 |
-    STA.w SpriteXPosHigh_14E0               ;$0CA27A | WARN: unindexed table
+    STA.w SpriteXPosHigh_14E0               ;$0CA27A | NOTE: hardcoded slot 0
     LDA.b #$60                              ;$0CA27D |
-    STA.b SpriteYPosLow_D8                  ;$0CA27F | WARN: unindexed table
+    STA.b SpriteYPosLow_D8                  ;$0CA27F | NOTE: hardcoded slot 0
     LDA.b #$01                              ;$0CA281 |
-    STA.w SpriteYPosHigh_14D4               ;$0CA283 | WARN: unindexed table
+    STA.w SpriteYPosHigh_14D4               ;$0CA283 | NOTE: hardcoded slot 0
     LDA.b #$30                              ;$0CA286 |
-    STA.w $15EA                             ;$0CA288 | WARN: unindexed table
+    STA.w $15EA                             ;$0CA288 | NOTE: hardcoded slot 0
     JSR CODE_0CA778                         ;$0CA28B |
     STZ $01                                 ;$0CA28E |
     LDA.w $0B50                             ;$0CA290 |
@@ -2027,7 +2027,7 @@ CODE_0CA4E9:
     ASL                                     ;$0CA50E |
     TAY                                     ;$0CA50F |
 CODE_0CA510:
-    LDA.b SpriteXPosLow_E4                  ;$0CA510 |  WARN: unindexed table
+    LDA.b SpriteXPosLow_E4                  ;$0CA510 |  NOTE: hardcoded slot 0
     STA $00                                 ;$0CA512 |
     LDA.b #$9F                              ;$0CA514 |
     STA $02                                 ;$0CA516 |
@@ -2253,7 +2253,7 @@ CODE_0CA6B0:
     LDA.w DATA_0CA311,Y                     ;$0CA6D2 |
     ASL                                     ;$0CA6D5 |
     TAY                                     ;$0CA6D6 |
-    LDA.b SpriteXPosLow_E4                  ;$0CA6D7 |  WARN: unindexed table
+    LDA.b SpriteXPosLow_E4                  ;$0CA6D7 |  NOTE: hardcoded slot 0
     STA $00                                 ;$0CA6D9 |
     LDA.w $0B42                             ;$0CA6DB |
     STA $02                                 ;$0CA6DE |
@@ -2353,17 +2353,17 @@ Return0CA777:
 CODE_0CA778:
     LDX.b #$00
     STX.w CurrentSprite_15E9                ;$0CA77A |
-    LDA.b #$35                              ;$0CA77D |
-    STA $9E                                 ;$0CA77F |
+    LDA.b #!Yoshi_35                        ;$0CA77D |
+    STA.b SpriteNumber_9E                   ;$0CA77F | NOTE: hardcoded slot 0
     LDA.w $1602                             ;$0CA781 |
     PHA                                     ;$0CA784 |
     JSL InitSpriteTables                    ;$0CA785 |
     PLA                                     ;$0CA789 |
     STA.w $1602                             ;$0CA78A |
     LDA.b #$02                              ;$0CA78D |
-    STA.b SpritePhase_C2                    ;$0CA78F | WARN: unindexed table
+    STA.b SpritePhase_C2                    ;$0CA78F | NOTE: hardcoded slot 0
     LDA.b #$01                              ;$0CA791 |
-    STA.w SpriteDir_157C                    ;$0CA793 | WARN: unindexed table
+    STA.w SpriteDir_157C                    ;$0CA793 | NOTE: hardcoded slot 0
     LDA.w $1456                             ;$0CA796 |
     CLC                                     ;$0CA799 |
     ADC.b #$38                              ;$0CA79A |

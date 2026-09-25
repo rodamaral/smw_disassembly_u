@@ -5930,34 +5930,33 @@ CODE_02AC13:
     LDX $00                                 ;$02AC16 |
     BMI CODE_02AC48                         ;$02AC18 |
     STZ.w SpriteStatus_14C8,X               ;$02AC1A |
-    LDA.b #$0B                              ;$02AC1D |
-    STA.w SpriteStatus_14C8                 ;$02AC1F | WARN: unindexed table
+    LDA.b #!StatusCarried_0B                ;$02AC1D |
+    STA.w SpriteStatus_14C8                 ;$02AC1F | NOTE: hardcoded slot 0
     LDA.b SpriteNumber_9E,X                 ;$02AC22 |
-    STA $9E                                 ;$02AC24 | WARN: unindexed table
+    STA.b SpriteNumber_9E                   ;$02AC24 | NOTE: hardcoded slot 0
     LDA.b SpriteXPosLow_E4,X                ;$02AC26 |
-    STA.b SpriteXPosLow_E4                  ;$02AC28 | WARN: unindexed table
+    STA.b SpriteXPosLow_E4                  ;$02AC28 | NOTE: hardcoded slot 0
     LDA.w SpriteXPosHigh_14E0,X             ;$02AC2A |
-    STA.w SpriteXPosHigh_14E0               ;$02AC2D | WARN: unindexed table
+    STA.w SpriteXPosHigh_14E0               ;$02AC2D | NOTE: hardcoded slot 0
     LDA.b SpriteYPosLow_D8,X                ;$02AC30 |
-    STA.b SpriteYPosLow_D8                  ;$02AC32 | WARN: unindexed table
+    STA.b SpriteYPosLow_D8                  ;$02AC32 | NOTE: hardcoded slot 0
     LDA.w SpriteYPosHigh_14D4,X             ;$02AC34 |
-    STA.w SpriteYPosHigh_14D4               ;$02AC37 | WARN: unindexed table
-    LDA.w $15F6,X                           ;$02AC3A |
+    STA.w SpriteYPosHigh_14D4               ;$02AC37 | NOTE: hardcoded slot 0
+    LDA.w SpriteYXPPCCCT_15F6,X             ;$02AC3A |
     PHA                                     ;$02AC3D |
     LDX.b #$00                              ;$02AC3E |
-    JSL InitSpriteTables                    ;$02AC40 |
+    JSL InitSpriteTables                    ;$02AC40 | init sprite slot 0
     PLA                                     ;$02AC44 |
-    STA.w $15F6                             ;$02AC45 | WARN: unindexed table
+    STA.w SpriteYXPPCCCT_15F6               ;$02AC45 | NOTE: hardcoded slot 0
 CODE_02AC48:
     REP #$10
     LDX.w #$027A                            ;$02AC4A |
-CODE_02AC4D:
-    STZ.w $1693,X                           ;$02AC4D | level initialization
+-   STZ.w Map16TileNumber_1693,X            ;$02AC4D | level initialization
     DEX                                     ;$02AC50 |
-    BPL CODE_02AC4D                         ;$02AC51 |
+    BPL -                                   ;$02AC51 |
     SEP #$10                                ;$02AC53 |
-    STZ.w $143E                             ;$02AC55 |
-    STZ.w $143F                             ;$02AC58 |
+    STZ.w Layer1ScrollCmd_143E              ;$02AC55 |
+    STZ.w Layer2ScrollCmd_143F              ;$02AC58 |
     RTS                                     ;$02AC5B |
 
 CODE_02AC5C:
@@ -10713,7 +10712,7 @@ CODE_02CF52:
     CMP.b #!AniHurt_01                      ;$02CF54 |
     BCS Return02CF51                        ;$02CF56 |
     LDA.b PlayerYPosScrRel_80+1             ;$02CF58 |
-    ORA $7F                                 ;$02CF5A |
+    ORA.b PlayerXPosScrRel_7E+1             ;$02CF5A |
     ORA.w $15A0,X                           ;$02CF5C |
     ORA.w $186C,X                           ;$02CF5F |
     BNE Return02CF51                        ;$02CF62 |

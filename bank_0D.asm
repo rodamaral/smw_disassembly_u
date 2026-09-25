@@ -2041,7 +2041,7 @@ CODE_0DA97D:
     TAY                                     ;$0DA984 |
     BCC Return0DA991                        ;$0DA985 |
 CODE_0DA987:
-    LDA $6C
+    LDA.b Map16LowPtr_6B+1
     ADC.b #$00                              ;$0DA989 |
     STA.b Map16LowPtr_6B+1                  ;$0DA98B |
     STA.b Map16HighPtr_6E+1                 ;$0DA98D |
@@ -2993,7 +2993,7 @@ Return0DAFDE:
     RTS
 
 CODE_0DAFDF:
-    LDA $6C
+    LDA.b Map16LowPtr_6B+1
     SBC.b #$00                              ;$0DAFE1 |
     STA.b Map16LowPtr_6B+1                  ;$0DAFE3 |
     STA.b Map16HighPtr_6E+1                 ;$0DAFE5 |
@@ -6585,7 +6585,7 @@ PtrsLong0DD99A:
     dl CODE_0DB49E
     dl CODE_0DB51F
     dl CODE_0DB547
-    dl CODE_0DB1C8
+    dl CODE_0DB1C8 ; 20
     dl CODE_0DB3E3
     dl CODE_0DB3E3
     dl CODE_0DB3E3
@@ -6601,7 +6601,7 @@ PtrsLong0DD99A:
     dl CODE_0DB3E3
     dl CODE_0DB3E3
     dl CODE_0DB3E3
-    dl CODE_0DB3E3
+    dl CODE_0DB3E3 ;30
     dl CODE_0DB3E3
     dl CODE_0DB3E3
     dl CODE_0DB916
@@ -7471,7 +7471,7 @@ CODE_0DE016:
     LDA $00                                 ;$0DE033 |
     LDX $02                                 ;$0DE035 |
     LDY $04                                 ;$0DE037 |
-    MVN $7E,$7E                             ;$0DE039 |
+    MVN !Bank_7E,!Bank_7E                   ;$0DE039 |
     PLB                                     ;$0DE03C |
     LDA.w #$01B0                            ;$0DE03D |
     STA $00                                 ;$0DE040 |
@@ -7481,7 +7481,7 @@ CODE_0DE016:
     LDA $00                                 ;$0DE048 |
     LDX $02                                 ;$0DE04A |
     LDY $06                                 ;$0DE04C |
-    MVN $7F,$7F                             ;$0DE04E |
+    MVN !Bank_7F,!Bank_7F                   ;$0DE04E |
     PLB                                     ;$0DE051 |
     SEP #$30                                ;$0DE052 |
     DEC.b LvlLoadObjSize_59                 ;$0DE054 |

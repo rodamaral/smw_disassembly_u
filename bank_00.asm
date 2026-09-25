@@ -3461,7 +3461,7 @@ CODE_009D22:
     LDY.b #$12                              ;$009D24 |
     INC.w GameMode_0100                     ;$009D26 |
 CODE_009D29:
-    STY $12
+    STY.b StripeImage_12
     LDX.b #$00                              ;$009D2B |
     JMP CODE_009ED4                         ;$009D2D |
 
@@ -13726,7 +13726,7 @@ CODE_00FD49:
     RTS                                     ;$00FD59 |
 
 smoke_sparkle:
-    LDA $7F                                 ;$00FD5A \ Don't draw the sparkle if the player is offscreen.
+    LDA.b PlayerXPosScrRel_7E+1             ;$00FD5A \ Don't draw the sparkle if the player is offscreen.
     ORA.b PlayerYPosScrRel_80+1             ;$00FD5C |
     BNE .return                             ;$00FD5E |
     LDY.b #$03                              ;$00FD60 |
@@ -13870,7 +13870,7 @@ CODE_00FE4A:
     LDA.b Frame_13
     AND.b #$03                              ;$00FE4C |
     ORA.b PlayerInAir_72                    ;$00FE4E |
-    ORA $7F                                 ;$00FE50 |
+    ORA.b PlayerXPosScrRel_7E+1             ;$00FE50 |
     ORA.b PlayerYPosScrRel_80+1             ;$00FE52 |
     ORA.b SpriteLock_9D                     ;$00FE54 |
     BNE Return00FE71                        ;$00FE56 |

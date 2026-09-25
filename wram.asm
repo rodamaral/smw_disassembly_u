@@ -1,8 +1,15 @@
 ; incsrc "hardware_registers.asm"
 
+; Constants:
+!Bank_0C = $0C
+!Bank_7E = $7E
+!Bank_7F = $7F
+
 ORG $7E0000
 
 ; scratch RAM
+; TODO: eventually create a label for each purpose
+; TODO: Only 8A-8F not done
 skip 16
 
 ; === $7E0010 ===
@@ -926,7 +933,9 @@ SpriteLock_9D: skip 1
 ; sprite ID table
 SpriteNumber_9E: skip 12
 ; Valid values
+!Yoshi_35 = $35
 !Peach_7C = $7C
+!BonusGame_7C = $82
 !BowserBall_A1 = $A1
 !Reznor_A9 = $A9
 
@@ -1760,7 +1769,7 @@ SpriteDisableObjInt_15DC: skip 12
 skip 1
 CurrentSprite_15E9: skip 1
 SpriteOAMIndex_15EA: skip 12
-SpriteOBJAttribute_15F6: skip 12
+SpriteYXPPCCCT_15F6: skip 12
 SpriteAnimation_1602: skip 12
 SpriteMisc_160E: skip 12
 SpriteLoadIndex_161A: skip 12
