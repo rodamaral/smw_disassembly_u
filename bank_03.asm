@@ -4722,7 +4722,7 @@ CODE_03A279:
     BEQ CODE_03A2AD                         ;$03A2A8 |
     JSR CODE_03AF59                         ;$03A2AA |
 CODE_03A2AD:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BEQ CODE_03A2B5                         ;$03A2B0 |
     JSR CODE_03A3E2                         ;$03A2B2 |
 CODE_03A2B5:
@@ -5822,7 +5822,7 @@ CODE_03ABEB:
     LDY.b #$1B                              ;$03ABF3 |
     STY.w SPCIO2_1DFB                       ;$03ABF5 |
 CODE_03ABF8:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BNE Return03AC02                        ;$03ABFB |
     LDA.b #$12                              ;$03ABFD |
     STA.w SpriteSprContact_1564,X           ;$03ABFF |
@@ -8642,7 +8642,7 @@ DATA_03C792:
     db $C0,$C0,$FF,$C0
 
 CODE_03C796:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BEQ CODE_03C7A7                         ;$03C799 |
     DEC A                                   ;$03C79B |
     BNE Return03C7A6                        ;$03C79C |
@@ -8741,7 +8741,7 @@ DATA_03C841:
     db $08,$10,$0C,$05
 
 CODE_03C845:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     CMP.b #$01                              ;$03C848 |
     BNE CODE_03C85B                         ;$03C84A |
     LDY.w Sprite_1534,X                     ;$03C84C |

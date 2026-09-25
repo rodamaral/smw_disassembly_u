@@ -9763,7 +9763,7 @@ DATA_02C79B:
     db $20,$E0
 
 CODE_02C79D:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BNE Return02C80F                        ;$02C7A0 |
     JSL MarioSprInteract                    ;$02C7A2 |
     BCC Return02C80F                        ;$02C7A6 |
@@ -10931,7 +10931,7 @@ DATA_02D0D2:
     db $00,$FF
 
 try_auto_eat_berry_02D0D4:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BNE +                                   ;$02D0D7 | if Yoshi has a swallowing animation timer
     LDA.w Sprite_160E,X                     ;$02D0D9 | or no sprite / null sprite in tongue, return
     BPL +                                   ;$02D0DC |

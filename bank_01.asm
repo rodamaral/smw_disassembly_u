@@ -13479,7 +13479,7 @@ CODE_01E106:
     BNE CODE_01E115                         ;$01E10F |
     JSL CODE_0285DF                         ;$01E111 |
 CODE_01E115:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BNE CODE_01E12A                         ;$01E118 |
     LDA.b SpriteYSpeed_AA,X                 ;$01E11A |
     BMI CODE_01E125                         ;$01E11C |
@@ -14345,7 +14345,7 @@ Return01E75A:
     RTS
 
 PSwitch:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     CMP.b #$01                              ;$01E75E |
     BNE Return01E76E                        ;$01E760 |
     STA.w OWPlayerSubmap_1F11               ;$01E762 |
@@ -15474,7 +15474,7 @@ process_yoshi_head_01EF18:
 .treat_as_not_mounted_01EFFA:
     STA.w $0302,Y
 .not_releasing_tongue_01EFFD:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     LDY.w YoshiSwallowTimer_18AC            ;$01F000 | Timer on when Yoshi will swallow the sprite in his mouth
     BEQ .no_sprite_in_mouth_01F00F          ;$01F003 |
     CPY.b #$26                              ;$01F005 |
@@ -15483,7 +15483,7 @@ process_yoshi_head_01EF18:
     AND.b #$18                              ;$01F00B |
     BNE .swallow_sprite_OAM_01F038          ;$01F00D | show normal mouth during some frames
 .no_sprite_in_mouth_01F00F:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     CMP.b #$00                              ;$01F012 |
     BEQ .return_01EFDA                      ;$01F014 |
     LDY.b #$00                              ;$01F016 | 00: default mouth
@@ -17142,7 +17142,7 @@ CODE_01FC25:
     LDA.b #$06
     STA.w SpriteAnimation_1602,X            ;$01FC27 |
 CODE_01FC2A:
-    LDA.w $1564,X
+    LDA.w SpriteSprContact_1564,X
     BEQ CODE_01FC46                         ;$01FC2D |
     PHA                                     ;$01FC2F |
     LSR                                     ;$01FC30 |
