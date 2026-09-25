@@ -1655,24 +1655,24 @@ ShootFireTimer_149C: skip 1 ;done
 NetDoorTimer_149D: skip 1 ;done
 PunchNetTimer_149E: skip 1 ;done
 TakeoffTimer_149F: skip 1 ;done
-RunTakeoffTimer_14A0: skip 1
-SkidTurnTimer_14A1: skip 1
-CapeAniTimer_14A2: skip 1
-YoshiTongueTimer_14A3: skip 1
-CapePumpTimer_14A4: skip 1
-CapeFloatTimer_14A5: skip 1
-CapeSpinTimer_14A6: skip 1
-ReznorBridgeTimer_14A7: skip 1
-EmptyTimer14A8_14A8: skip 1
-GroundPoundTimer_14A9: skip 1
-YoshiWingGrabTimer_14AA: skip 1
-BonusTimer_14AB: skip 1
+RunTakeoffTimer_14A0: skip 1 ;done
+SkidTurnTimer_14A1: skip 1 ;done
+CapeAniTimer_14A2: skip 1 ;done
+YoshiTongueTimer_14A3: skip 1 ;done
+CapePumpTimer_14A4: skip 1 ;done
+CapeFloatTimer_14A5: skip 1 ;done
+CapeSpinTimer_14A6: skip 1 ;done
+ReznorBridgeTimer_14A7: skip 1 ;done
+UnusedTimer_14A8: skip 1 ;done
+UnusedGroundPoundTimer_14A9: skip 1 ;done
+UnusedYoshiWingTimer_14AA: skip 1 ;done
+BonusTimer_14AB: skip 1 ;done
 ; 7E14AC unused
 skip 1
-TimersStart_14AD:
-BlueSwitchTimer_14AD: skip 1
-SilverSwitchTimer_14AE: skip 1
-OnOffSwitch_14AF: skip 1
+TimersStart_14AD: ;done
+BlueSwitchTimer_14AD: skip 1 ;done
+SilverSwitchTimer_14AE: skip 1 ;done
+OnOffSwitch_14AF: skip 1 ;done
 LakituCloudTempXPos_14B0:
 IggyLarryRotCenterX_14B0:
 BrSwingCenterXPos_14B0:

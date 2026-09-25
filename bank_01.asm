@@ -12331,11 +12331,11 @@ CODE_01D83A:
     BEQ CODE_01D851                         ;$01D844 |
     CMP.b #$95                              ;$01D846 |
     BNE CODE_01D856                         ;$01D848 |
-    LDA.w $14AF                             ;$01D84A |
+    LDA.w OnOffSwitch_14AF                  ;$01D84A |
     BEQ CODE_01D861                         ;$01D84D |
     BNE CODE_01D856                         ;$01D84F |
 CODE_01D851:
-    LDA.w $14AF
+    LDA.w OnOffSwitch_14AF
     BNE CODE_01D861                         ;$01D854 |
 CODE_01D856:
     LDA.w $1693
@@ -15572,7 +15572,7 @@ process_yoshi_tongue_01F0A2:
 +   LDA.w YoshiHasWingsGfx_1410             ;$01F0AC |
     CMP.b #$01                              ;$01F0AF | would mean that the player with a fire flower powerup can shoot fireballs while on Yoshi
     BEQ Return01F0A1                        ;$01F0B1 | (never occurs in the game)
-    LDA.w $14A3                             ;$01F0B3 | A timer for Yoshi's tongue stretching out
+    LDA.w YoshiTongueTimer_14A3             ;$01F0B3 | A timer for Yoshi's tongue stretching out
     CMP.b #$10                              ;$01F0B6 |
     BNE +                                   ;$01F0B8 |\
     LDA.w YoshiStartEatTimer_18AE           ;$01F0BA ||
@@ -15873,7 +15873,7 @@ DATA_01F307:
 
 hit_yoshi_to_release_tongue_01F309:
     LDA.b #$12
-    STA.w $14A3                             ;$01F30B |
+    STA.w YoshiTongueTimer_14A3             ;$01F30B |
     LDA.b #$21                              ;$01F30E |
     STA.w SPCIO3_1DFC                       ;$01F310 |
     RTS                                     ;$01F313 |
@@ -16376,7 +16376,7 @@ yoshi_sprites_interaction_01F622:
     STA.w SPCIO3_1DFC                       ;$01F6CA |/
 give_yoshi_wings_01F6CD:
     LDA.b #$40                              ;$01F6CD | 
-    STA.w $14AA                             ;$01F6CF | Unused timer
+    STA.w UnusedYoshiWingTimer_14AA         ;$01F6CF | Unused timer
     LDA.b #$02                              ;$01F6D2 |
     STA.w YoshiHasWings_141E                ;$01F6D4 | set Yoshi Wings
     LDA.b #$00                              ;$01F6D7 |

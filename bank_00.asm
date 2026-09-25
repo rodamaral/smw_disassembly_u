@@ -7408,9 +7408,9 @@ timers_and_animation_00C47E:
     LDA.b #$24                              ;$00C557 |
     STA.w SPCIO3_1DFC                       ;$00C559 | P-Switch time running out
 +   LDX.b #$06                              ;$00C55C |
--   LDA.w $14A8,X                           ;$00C55E |
+-   LDA.w UnusedTimer_14A8,X                ;$00C55E |
     BEQ +                                   ;$00C561 |
-    DEC.w $14A8,X                           ;$00C563 | decrement $14A8-$14AE every 4th frame
+    DEC.w UnusedTimer_14A8,X                ;$00C563 | decrement $14A8-$14AE every 4th frame
 +   DEX                                     ;$00C566 |
     BNE -                                   ;$00C567 |
 .skip_timers_00C569:
@@ -8378,7 +8378,7 @@ yoshi_poses:
     db $20,$21,$27,$28
 
 set_yoshi_pose:                             ;        \
-    LDX.w $14A3                             ;$00CDAD |\ If Yoshi isn't sticking his tongue out,
+    LDX.w YoshiTongueTimer_14A3             ;$00CDAD |\ If Yoshi isn't sticking his tongue out,
     BEQ .load_pose                          ;$00CDB0 |/ skip to loading the pose.
     LDY.b #$03                              ;$00CDB2 | Get ready to lose pose $27.
     CPX.b #$0C                              ;$00CDB4 |\ If he's still at the beginning of sticking his tongue out,
@@ -8505,7 +8505,7 @@ DATA_00CEA9:
     db $02,$07,$06,$09,$02,$07,$06,$09
 
 set_player_pose:
-    LDA.w $14A2                             ;$00CEB1 |
+    LDA.w CapeAniTimer_14A2                 ;$00CEB1 |
     BNE lbl14A2Not0                         ;$00CEB4 |
     LDX.w $13DF                             ;$00CEB6 |
     LDA.b PlayerInAir_72                    ;$00CEB9 |
@@ -8572,10 +8572,10 @@ CODE_00CF0A:
     BEQ CODE_00CF13                         ;$00CF10 |
     ASL                                     ;$00CF12 |
 CODE_00CF13:
-    STA.w $14A2
+    STA.w CapeAniTimer_14A2
 lbl14A2Not0:
     LDA.w $140D
-    ORA.w $14A6                             ;$00CF19 |
+    ORA.w CapeSpinTimer_14A6                ;$00CF19 |
     BEQ CODE_00CF4E                         ;$00CF1C |
     STZ.b PlayerIsDucking_73                ;$00CF1E |
     LDA.b Frame_14                          ;$00CF20 |
@@ -8651,7 +8651,7 @@ CODE_00CF88:
     BNE MarioAnimNoAbs1                     ;$00CF9B |
     LDA.b PlayerInAir_72                    ;$00CF9D |
     BEQ CODE_00CFB7                         ;$00CF9F |
-    LDY.w $14A0                             ;$00CFA1 |
+    LDY.w RunTakeoffTimer_14A0              ;$00CFA1 |
     BNE CODE_00CFBC                         ;$00CFA4 |
     LDY.w $1407                             ;$00CFA6 |
     BEQ CODE_00CFAE                         ;$00CFA9 |
@@ -8772,7 +8772,7 @@ powerup_physics:                            ;        \
     ORA.w $140D                             ;$00D071 | | nor spin jumping,
     BNE .return                             ;$00D074 |/
     LDA.b #$12                              ;$00D076 |\ then set the cape spin timer
-    STA.w $14A6                             ;$00D078 |/
+    STA.w CapeSpinTimer_14A6                ;$00D078 |/
     LDA.b #$04                              ;$00D07B |\ and play the cape spin sound.
     STA.w SPCIO3_1DFC                       ;$00D07D |/
     RTS                                     ;$00D080 /
@@ -8991,9 +8991,9 @@ CODE_00D1F0:
     BRA CODE_00D22D                         ;$00D1F2 |
 
 CODE_00D1F4:
-    LDA.w $14A2
+    LDA.w CapeAniTimer_14A2
     BEQ CODE_00D1FC                         ;$00D1F7 |
-    DEC.w $14A2                             ;$00D1F9 |
+    DEC.w CapeAniTimer_14A2                 ;$00D1F9 |
 CODE_00D1FC:
     JMP decrement_animation_timer
 
@@ -9388,7 +9388,7 @@ land_physics:
     BEQ .CODE_00D713                        ;$00D6F6 |
     EOR.w MarioAccel2,X                     ;$00D6F8 |
     BPL .CODE_00D713                        ;$00D6FB |
-    LDA.w $14A1                             ;$00D6FD |
+    LDA.w SkidTurnTimer_14A1                ;$00D6FD |
     BNE .CODE_00D713                        ;$00D700 |
     LDA.b LevelIsSlippery_86                ;$00D702 |
     BNE .CODE_00D70E                        ;$00D704 |
@@ -9417,7 +9417,7 @@ land_physics:
     LDA.b PlayerInAir_72                    ;$00D727 |
     BNE .CODE_00D732                        ;$00D729 |
     LDA.b #$10                              ;$00D72B |
-    STA.w $14A0                             ;$00D72D |
+    STA.w RunTakeoffTimer_14A0              ;$00D72D |
     BRA .CODE_00D736                        ;$00D730 |
 
 .CODE_00D732:
@@ -9583,7 +9583,7 @@ CODE_00D850:
     CPX.w $1408                             ;$00D851 |
     BNE CODE_00D85B                         ;$00D854 |
 CODE_00D856:
-    LDA.w $14A4
+    LDA.w CapePumpTimer_14A4
     BNE CODE_00D87E                         ;$00D859 |
 CODE_00D85B:
     BIT.b byetudlrHold_15
@@ -9602,7 +9602,7 @@ CODE_00D861:
     BNE CODE_00D87B                         ;$00D877 |
     LDA.b #$02                              ;$00D879 |
 CODE_00D87B:
-    STA.w $14A4
+    STA.w CapePumpTimer_14A4
 CODE_00D87E:
     STX.w $1408
     LDY.w $1407                             ;$00D881 |
@@ -9680,12 +9680,12 @@ CODE_00D8E7:
 CODE_00D8FD:
     LDY.b #$00
 CODE_00D8FF:
-    LDA.w $14A5
+    LDA.w CapeFloatTimer_14A5
     BNE CODE_00D90D                         ;$00D902 |
     LDA.b byetudlrHold_15,X                 ;$00D904 | X = 0 with the cape
     BPL CODE_00D924                         ;$00D906 | X = 1 mounted on Yoshi with wings
     LDA.b #$10                              ;$00D908 |
-    STA.w $14A5                             ;$00D90A |
+    STA.w CapeFloatTimer_14A5               ;$00D90A |
 CODE_00D90D:
     LDA.b PlayerYSpeed_7D
     BPL CODE_00D91B                         ;$00D90F |
@@ -9924,7 +9924,7 @@ CODE_00DA79:
 CODE_00DA7C:
     JSR powerup_physics
     JSL set_player_pose                     ;$00DA7F |
-    LDA.w $14A6                             ;$00DA83 |
+    LDA.w CapeSpinTimer_14A6                ;$00DA83 |
     BNE Return00DA8C                        ;$00DA86 |
     LDA.b PlayerInAir_72                    ;$00DA88 |
     BNE CODE_00DA8D                         ;$00DA8A |
@@ -11560,7 +11560,7 @@ CODE_00EDB9:
     CPY.b #$1C                              ;$00EDC9 |
     BCC CODE_00EDD5                         ;$00EDCB |
     LDA.b #$08                              ;$00EDCD |
-    STA.w $14A1                             ;$00EDCF |
+    STA.w SkidTurnTimer_14A1                ;$00EDCF |
     JMP CODE_00EED1                         ;$00EDD2 |
 
 CODE_00EDD5:

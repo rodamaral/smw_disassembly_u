@@ -2344,9 +2344,9 @@ CODE_0CA764:
     BEQ CODE_0CA76F                         ;$0CA76A |
     DEC.w PlayerAniTimer_1496               ;$0CA76C |
 CODE_0CA76F:
-    LDA.w $14A2
+    LDA.w CapeAniTimer_14A2
     BEQ Return0CA777                        ;$0CA772 |
-    DEC.w $14A2                             ;$0CA774 |
+    DEC.w CapeAniTimer_14A2                 ;$0CA774 |
 Return0CA777:
     RTS
 

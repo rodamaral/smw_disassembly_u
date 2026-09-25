@@ -655,9 +655,9 @@ CODE_0485A7:
     BEQ CODE_0485E0                         ;$0485DB |
     DEC.w PlayerAniTimer_1496               ;$0485DD |
 CODE_0485E0:
-    LDA.w $14A2
+    LDA.w CapeAniTimer_14A2
     BEQ CODE_0485E8                         ;$0485E3 |
-    DEC.w $14A2                             ;$0485E5 |
+    DEC.w CapeAniTimer_14A2                 ;$0485E5 |
 CODE_0485E8:
     LDA.b #$18
     STA $00                                 ;$0485EA |

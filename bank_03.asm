@@ -9998,7 +9998,7 @@ BreakBridge:
     LDA.b #$B0                              ;$03D72D |
     STA.b InteractionPtYPos_98              ;$03D72F |
     STZ.b InteractionPtYPos_98+1            ;$03D731 |
-    LDA.w $14A7                             ;$03D733 |
+    LDA.w ReznorBridgeTimer_14A7            ;$03D733 |
     BEQ CODE_03D74A                         ;$03D736 |
     CMP.b #$3C                              ;$03D738 |
     BNE CODE_03D757                         ;$03D73A |
@@ -10011,7 +10011,7 @@ BreakBridge:
 CODE_03D74A:
     JSR CODE_03D766
     LDA.b #$40                              ;$03D74D |
-    STA.w $14A7                             ;$03D74F |
+    STA.w ReznorBridgeTimer_14A7            ;$03D74F |
     LDA.b #$07                              ;$03D752 |
     STA.w SPCIO3_1DFC                       ;$03D754 |
 CODE_03D757:

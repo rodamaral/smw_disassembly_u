@@ -5003,7 +5003,7 @@ ADDR_05C659:
     BEQ ADDR_05C674                         ;$05C65C |
     DEC.w $1441                             ;$05C65E |
     CMP.w #$B020                            ;$05C661 |
-    ASL.w $14A5                             ;$05C664 |
+    ASL.w CapeFloatTimer_14A5               ;$05C664 |
     AND.w #$D001                            ;$05C667 |
     PHP                                     ;$05C66A |
     LDA.w $1464                             ;$05C66B |
@@ -5105,7 +5105,7 @@ DATA_05C723:
     db $FF,$FF,$01,$00
 
 CODE_05C727:
-    LDX.w $14AF
+    LDX.w OnOffSwitch_14AF
     BEQ CODE_05C72E                         ;$05C72A |
     LDX.b #$02                              ;$05C72C |
 CODE_05C72E:
@@ -5137,7 +5137,7 @@ CODE_05C74A:
     STA.w ScreenShakeTimer_1887             ;$05C766 |
 CODE_05C769:
     LDX.b #$00
-    STX.w $14AF                             ;$05C76B |
+    STX.w OnOffSwitch_14AF                  ;$05C76B |
     BRA CODE_05C784                         ;$05C76E |
 
 CODE_05C770:

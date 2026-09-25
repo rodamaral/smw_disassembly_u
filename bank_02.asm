@@ -2314,9 +2314,9 @@ CODE_029182:
     BCC CODE_029199                         ;$02918A |
     LDA.b #$0B                              ;$02918C |
     STA.w SPCIO0_1DF9                       ;$02918E |
-    LDA.w $14AF                             ;$029191 |
+    LDA.w OnOffSwitch_14AF                  ;$029191 |
     EOR.b #$01                              ;$029194 |
-    STA.w $14AF                             ;$029196 |
+    STA.w OnOffSwitch_14AF                  ;$029196 |
 CODE_029199:
     STZ.w $1699,X
 Return02919C:
@@ -2743,7 +2743,7 @@ CODE_0294B0:
 GroundPound:
     LDA.b #$30
     STA.w ScreenShakeTimer_1887             ;$0294C3 |
-    STZ.w $14A9                             ;$0294C6 |
+    STZ.w UnusedGroundPoundTimer_14A9       ;$0294C6 |
     PHB                                     ;$0294C9 |
     PHK                                     ;$0294CA |
     PLB                                     ;$0294CB |
@@ -11059,7 +11059,7 @@ try_eat_berry_tile_02D0E6:
     SEC                                     ;$02D1CA |
     SBC.b #$44                              ;$02D1CB |
     STA.w $18D6                             ;$02D1CD | set berry type
-    STZ.w $14A3                             ;$02D1D0 | reset tongue stretching out
+    STZ.w YoshiTongueTimer_14A3             ;$02D1D0 | reset tongue stretching out
     LDY.w DuckingYoshi_18DC                 ;$02D1D3 |
     LDA.w DATA_02D1F1,Y                     ;$02D1D6 |
     STA.w $1602,X                           ;$02D1D9 |
