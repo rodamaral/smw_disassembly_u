@@ -2140,12 +2140,12 @@ CODE_039022:
     BEQ CODE_039037                         ;$039025 |
     DEY                                     ;$039027 |
     BPL CODE_039022                         ;$039028 |
-    DEC.w $185D                             ;$03902A |
+    DEC.w MinorSprSlotIdx_185D              ;$03902A |
     BPL ADDR_039034                         ;$03902D |
     LDA.b #$0B                              ;$03902F |
-    STA.w $185D                             ;$039031 |
+    STA.w MinorSprSlotIdx_185D              ;$039031 |
 ADDR_039034:
-    LDY.w $185D
+    LDY.w MinorSprSlotIdx_185D
 CODE_039037:
     LDA.b #$0A
     STA.w MinorSprNumber_17F0,Y             ;$039039 |

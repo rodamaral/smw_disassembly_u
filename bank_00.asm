@@ -10893,7 +10893,7 @@ DATA_00E91F:
 
 level_collision:
     JSR reset_collision_flags               ;$00E92B \ Reset the collision flags.
-    LDA.w $185C                             ;$00E92E |\ If the fall through layers flag isn't set,
+    LDA.w PlayerDisableObjInt_185C          ;$00E92E |\ If the fall through layers flag isn't set,
     BEQ .collision                          ;$00E931 |/ process collision.
     JSR CODE_00EE1D                         ;$00E933 |
     BRA no_layer_collision                  ;$00E936 /

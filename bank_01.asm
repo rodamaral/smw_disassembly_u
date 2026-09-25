@@ -2500,14 +2500,14 @@ CODE_019140:
     STZ.w SpriteBlockOffset_1694
     STZ.w SpriteBlocked_1588,X              ;$019143 |
     STZ.w SpriteSlope_15B8,X                ;$019146 |
-    STZ.w $185E                             ;$019149 |
+    STZ.w SpriteLayer_185E                  ;$019149 |
     LDA.w SpriteInLiquid_164A,X             ;$01914C |
     STA.w SpriteInterIndex_1695             ;$01914F |
     STZ.w SpriteInLiquid_164A,X             ;$019152 |
     JSR CODE_019211                         ;$019155 |
     LDA.b ScreenMode_5B                     ;$019158 |
     BPL CODE_0191BE                         ;$01915A |
-    INC.w $185E                             ;$01915C |
+    INC.w SpriteLayer_185E                  ;$01915C |
     LDA.b SpriteXPosLow_E4,X                ;$01915F |
     CLC                                     ;$019161 |
     ADC.b LayerXDiff_26                     ;$019162 |
@@ -2637,7 +2637,7 @@ CODE_019258:
 CODE_01925B:
     LDA.w dnctswye_1686,X
     BMI Return019210                        ;$01925E |
-    LDA.w $185E                             ;$019260 |
+    LDA.w SpriteLayer_185E                  ;$019260 |
     BEQ CODE_01926F                         ;$019263 |
     BIT.w $190E                             ;$019265 |
     BVS Return0192C0                        ;$019268 |
@@ -2680,7 +2680,7 @@ CODE_01928E:
     JSR CODE_019425                         ;$0192A4 |
     LDA.w Map16_1693                        ;$0192A7 |
     STA.w $18A7                             ;$0192AA |
-    LDA.w $185E                             ;$0192AD |
+    LDA.w SpriteLayer_185E                  ;$0192AD |
     BEQ CODE_0192BA                         ;$0192B0 |
     LDA.w SpriteBlocked_1588,X              ;$0192B2 |
     ORA.b #$40                              ;$0192B5 |
@@ -2728,7 +2728,7 @@ CODE_0192F9:
     JSR CODE_019425
     LDA.w Map16_1693                        ;$0192FC |
     STA.w $1868                             ;$0192FF |
-    LDA.w $185E                             ;$019302 |
+    LDA.w SpriteLayer_185E                  ;$019302 |
     BEQ Return01930F                        ;$019305 |
     LDA.w SpriteBlocked_1588,X              ;$019307 |
     ORA.b #$20                              ;$01930A |
@@ -2877,7 +2877,7 @@ CODE_019405:
     STA.b SpriteYPosLow_D8,X                ;$019412 |
 CODE_019414:
     JSR CODE_019435
-    LDA.w $185E                             ;$019417 |
+    LDA.w SpriteLayer_185E                             ;$019417 |
     BEQ Return019424                        ;$01941A |
     LDA.w SpriteBlocked_1588,X              ;$01941C |
     ORA.b #$80                              ;$01941F |
@@ -2910,7 +2910,7 @@ CODE_019441:
     ADC $0F                                 ;$01944A |
     TAY                                     ;$01944C |
 CODE_01944D:
-    LDA.w $185E
+    LDA.w SpriteLayer_185E
     INC A                                   ;$019450 |
     AND.b ScreenMode_5B                     ;$019451 |
     BEQ CODE_0194BF                         ;$019453 |
@@ -2944,7 +2944,7 @@ CODE_01944D:
     STA $00                                 ;$019489 |
     LDX $0D                                 ;$01948B |
     LDA.l DATA_00BA80,X                     ;$01948D |
-    LDY.w $185E                             ;$019491 |
+    LDY.w SpriteLayer_185E                  ;$019491 |
     BEQ CODE_01949A                         ;$019494 |
     LDA.l DATA_00BA8E,X                     ;$019496 |
 CODE_01949A:
@@ -2952,7 +2952,7 @@ CODE_01949A:
     ADC $00                                 ;$01949B |
     STA $05                                 ;$01949D |
     LDA.l DATA_00BABC,X                     ;$01949F |
-    LDY.w $185E                             ;$0194A3 |
+    LDY.w SpriteLayer_185E                  ;$0194A3 |
     BEQ CODE_0194AC                         ;$0194A6 |
     LDA.l DATA_00BACA,X                     ;$0194A8 |
 CODE_0194AC:
@@ -3003,7 +3003,7 @@ CODE_0194BF:
     STA $00                                 ;$0194FC |
     LDX $0B                                 ;$0194FE |
     LDA.l DATA_00BA60,X                     ;$019500 |
-    LDY.w $185E                             ;$019504 |
+    LDY.w SpriteLayer_185E                  ;$019504 |
     BEQ CODE_01950D                         ;$019507 |
     LDA.l DATA_00BA70,X                     ;$019509 |
 CODE_01950D:
@@ -3011,7 +3011,7 @@ CODE_01950D:
     ADC $00                                 ;$01950E |
     STA $05                                 ;$019510 |
     LDA.l DATA_00BA9C,X                     ;$019512 |
-    LDY.w $185E                             ;$019516 |
+    LDY.w SpriteLayer_185E                  ;$019516 |
     BEQ CODE_01951F                         ;$019519 |
     LDA.l DATA_00BAAC,X                     ;$01951B |
 CODE_01951F:
@@ -6442,7 +6442,7 @@ CODE_01AE38:
     PHX                                     ;$01AE42 |
     JSL CODE_02887D                         ;$01AE43 |
     PLX                                     ;$01AE47 |
-    LDY.w $185E                             ;$01AE48 |
+    LDY.w FlyingBlock_185E                  ;$01AE48 | seems to track a sprite slot
     LDA.b #$01                              ;$01AE4B |
     STA.w Sprite_1528,Y                     ;$01AE4D |
     LDA.w $009E,y                           ;$01AE50 |
@@ -7508,37 +7508,37 @@ CODE_01B5B5:
 CODE_01B5B8:
     PLA
     STA $00                                 ;$01B5B9 |
-    STZ.w $185E                             ;$01B5BB |
-    BCC CODE_01B5E7                         ;$01B5BE |
+    STZ.w PlayerOnPlatform_185E             ;$01B5BB |
+    BCC .CODE_01B5E7                        ;$01B5BE |
     LDA.b SpriteNumber_9E,X                 ;$01B5C0 |
-    CMP.b #$5D                              ;$01B5C2 |
-    BCC CODE_01B5DA                         ;$01B5C4 |
+    CMP.b #!SmallOrangePlat_5D              ;$01B5C2 |
+    BCC .CODE_01B5DA                        ;$01B5C4 |
     LDY.b #$03                              ;$01B5C6 |
     LDA.b Powerup_19                        ;$01B5C8 |
-    BNE CODE_01B5CD                         ;$01B5CA |
+    BNE .CODE_01B5CD                        ;$01B5CA |
     DEY                                     ;$01B5CC |
-CODE_01B5CD:
+.CODE_01B5CD:
     STY $00
     LDA.b SpriteYSpeed_AA,X                 ;$01B5CF |
     CMP $00                                 ;$01B5D1 |
-    BPL CODE_01B5DA                         ;$01B5D3 |
+    BPL .CODE_01B5DA                        ;$01B5D3 |
     CLC                                     ;$01B5D5 |
     ADC.b #$02                              ;$01B5D6 |
     STA.b SpriteYSpeed_AA,X                 ;$01B5D8 |
-CODE_01B5DA:
-    INC.w $185E
+.CODE_01B5DA:
+    INC.w PlayerOnPlatform_185E
     LDA $00                                 ;$01B5DD |
     CMP.b #$20                              ;$01B5DF |
-    BCC CODE_01B5E7                         ;$01B5E1 |
+    BCC .CODE_01B5E7                        ;$01B5E1 |
     LSR                                     ;$01B5E3 |
     LSR                                     ;$01B5E4 |
     STA.b SpriteYSpeed_AA,X                 ;$01B5E5 |
-CODE_01B5E7:
-    LDA.w $185E
+.CODE_01B5E7:
+    LDA.w PlayerOnPlatform_185E
     CMP.w Sprite_151C,X                     ;$01B5EA |
     STA.w Sprite_151C,X                     ;$01B5ED |
     BEQ CODE_01B610                         ;$01B5F0 |
-    LDA.w $185E                             ;$01B5F2 |
+    LDA.w PlayerOnPlatform_185E             ;$01B5F2 |
     BNE CODE_01B610                         ;$01B5F5 |
     LDA.b PlayerYSpeed_7D                   ;$01B5F7 |
     BPL CODE_01B610                         ;$01B5F9 |
@@ -7568,7 +7568,7 @@ CODE_01B61F:
     SBC.b #$01                              ;$01B620 |
     STA.b SpriteYSpeed_AA,X                 ;$01B622 |
 CODE_01B624:
-    LDY.w $185E
+    LDY.w PlayerOnPlatform_185E
     BEQ CODE_01B631                         ;$01B627 |
     LDY.b #$05                              ;$01B629 |
     LDA.b Powerup_19                        ;$01B62B |
@@ -11890,26 +11890,26 @@ DATA_01D4EB:
 ParachuteSprites:
     LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$01D4FE |
-    BEQ CODE_01D505                         ;$01D500 |
+    BEQ .CODE_01D505                        ;$01D500 |
     JMP CODE_01D671                         ;$01D502 |
 
-CODE_01D505:
+.CODE_01D505:
     LDA.b SpriteLock_9D
-    BNE CODE_01D558                         ;$01D507 |
+    BNE .CODE_01D558                        ;$01D507 |
     LDA.w SpriteStun_1540,X                 ;$01D509 |
-    BNE CODE_01D558                         ;$01D50C |
+    BNE .CODE_01D558                        ;$01D50C |
     LDA.b Frame_13                          ;$01D50E |
     LSR                                     ;$01D510 |
-    BCC CODE_01D51A                         ;$01D511 |
+    BCC .CODE_01D51A                        ;$01D511 |
     INC.b SpriteYPosLow_D8,X                ;$01D513 |
-    BNE CODE_01D51A                         ;$01D515 |
+    BNE .CODE_01D51A                        ;$01D515 |
     INC.w SpriteYPosHigh_14D4,X             ;$01D517 |
-CODE_01D51A:
+.CODE_01D51A:
     LDA.w Sprite_151C,X
-    BNE CODE_01D558                         ;$01D51D |
+    BNE .CODE_01D558                        ;$01D51D |
     LDA.b Frame_13                          ;$01D51F |
     LSR                                     ;$01D521 |
-    BCC CODE_01D53A                         ;$01D522 |
+    BCC .CODE_01D53A                        ;$01D522 |
     LDA.b SpritePhase_C2,X                  ;$01D524 |
     AND.b #$01                              ;$01D526 |
     TAY                                     ;$01D528 |
@@ -11918,28 +11918,28 @@ CODE_01D51A:
     ADC.w DATA_01D4E7,Y                     ;$01D52D |
     STA.w SpriteAnimationTimer_1570,X       ;$01D530 |
     CMP.w DATA_01D4E9,Y                     ;$01D533 |
-    BNE CODE_01D53A                         ;$01D536 |
+    BNE .CODE_01D53A                        ;$01D536 |
     INC.b SpritePhase_C2,X                  ;$01D538 |
-CODE_01D53A:
+.CODE_01D53A:
     LDA.b SpriteXSpeed_B6,X
     PHA                                     ;$01D53C |
     LDY.w SpriteAnimationTimer_1570,X       ;$01D53D |
     LDA.b SpritePhase_C2,X                  ;$01D540 |
     LSR                                     ;$01D542 |
     LDA.w DATA_01D4EB,Y                     ;$01D543 |
-    BCC CODE_01D54B                         ;$01D546 |
+    BCC .CODE_01D54B                        ;$01D546 |
     EOR.b #$FF                              ;$01D548 |
     INC A                                   ;$01D54A |
-CODE_01D54B:
+.CODE_01D54B:
     CLC
     ADC.b SpriteXSpeed_B6,X                 ;$01D54C |
     STA.b SpriteXSpeed_B6,X                 ;$01D54E |
     JSR SubSprXPosNoGrvty                   ;$01D550 |
     PLA                                     ;$01D553 |
     STA.b SpriteXSpeed_B6,X                 ;$01D554 |
-    BRA CODE_01D558                         ;$01D556 |
+    BRA .CODE_01D558                        ;$01D556 |
 
-CODE_01D558:
+.CODE_01D558:
     JSR SubOffscreen0Bnk1
     JMP CODE_01D5B3                         ;$01D55B |
 
@@ -11965,13 +11965,13 @@ DATA_01D5B0:
     db $01,$05,$00
 
 CODE_01D5B3:
-    STZ.w $185E
+    STZ.w Parachute_185E
     LDY.b #$F0                              ;$01D5B6 |
     LDA.w SpriteStun_1540,X                 ;$01D5B8 |
     BEQ CODE_01D5C7                         ;$01D5BB |
     LSR                                     ;$01D5BD |
     EOR.b #$0F                              ;$01D5BE |
-    STA.w $185E                             ;$01D5C0 |
+    STA.w Parachute_185E                    ;$01D5C0 |
     CLC                                     ;$01D5C3 |
     ADC.b #$F0                              ;$01D5C4 |
     TAY                                     ;$01D5C6 |
@@ -12016,11 +12016,10 @@ CODE_01D5C7:
     STZ $00                                 ;$01D61A |
     LDA.w DATA_01D59E,Y                     ;$01D61C |
     SEC                                     ;$01D61F |
-    SBC.w $185E                             ;$01D620 |
-    BPL CODE_01D627                         ;$01D623 |
+    SBC.w Parachute_185E                    ;$01D620 |
+    BPL +                                   ;$01D623 |
     DEC $00                                 ;$01D625 |
-CODE_01D627:
-    CLC
++   CLC                                     ;$01D627 |
     ADC.b SpriteYPosLow_D8,X                ;$01D628 |
     STA.b SpriteYPosLow_D8,X                ;$01D62A |
     LDA.w SpriteYPosHigh_14D4,X             ;$01D62C |
@@ -12533,11 +12532,11 @@ CODE_01D989:
 
 CODE_01D9A7:
     LDA.b SpriteNumber_9E,X 
-    CMP.b #$64                              ;$01D9A9 |
-    BEQ CODE_01D9D3                         ;$01D9AB |
-    CMP.b #$65                              ;$01D9AD |
+    CMP.b #!Rope_64                         ;$01D9A9 |
+    BEQ rope_mechanism_01D9D3               ;$01D9AB |
+    CMP.b #!ChainsawUp_65                   ;$01D9AD |
     BCC CODE_01D9D0                         ;$01D9AF |
-    CMP.b #$68                              ;$01D9B1 |
+    CMP.b #!FuzzyLine_68                    ;$01D9B1 |
     BNE CODE_01D9BA                         ;$01D9B3 |
     JSR CODE_01DBD4                         ;$01D9B5 |
     BRA CODE_01D9C1                         ;$01D9B8 |
@@ -12559,7 +12558,7 @@ CODE_01D9CD:
 CODE_01D9D0:
     JMP CODE_01DAA2
 
-CODE_01D9D3:
+rope_mechanism_01D9D3:
     JSR CODE_01DC54
     LDA.b SpriteXPosLow_E4,X                ;$01D9D6 |
     PHA                                     ;$01D9D8 |
@@ -12571,7 +12570,7 @@ CODE_01D9D3:
     SBC.b SpriteYPosLow_D8,X                ;$01D9E1 |
     EOR.b #$FF                              ;$01D9E3 |
     INC A                                   ;$01D9E5 |
-    STA.w $185E                             ;$01D9E6 |
+    STA.w PlayerYPosLine_185E               ;$01D9E6 |
     PLA                                     ;$01D9E9 |
     SEC                                     ;$01D9EA |
     SBC.b SpriteXPosLow_E4,X                ;$01D9EB |
@@ -12593,7 +12592,7 @@ Return01DA09:
 
 CODE_01DA0A:
     LDA.w SpriteStatus_14C8,X
-    BEQ CODE_01DA37                         ;$01DA0D |
+    BEQ .CODE_01DA37                        ;$01DA0D |
     LDA.w CarryingFlag_1470                 ;$01DA0F |
     ORA.w RidingYoshi_187A                  ;$01DA12 |
     BNE CODE_01D9FE                         ;$01DA15 |
@@ -12602,26 +12601,26 @@ CODE_01DA0A:
     LDA.w SpritePlayerContact_154C,X        ;$01DA1C |
     BNE Return01DA8F                        ;$01DA1F |
     LDA.w PlayerClimbFlag_18BE              ;$01DA21 |
-    BNE CODE_01DA2F                         ;$01DA24 |
+    BNE .CODE_01DA2F                        ;$01DA24 |
     LDA.b byetudlrHold_15                   ;$01DA26 |
     AND.b #$08                              ;$01DA28 |
     BEQ Return01DA8F                        ;$01DA2A |
     STA.w PlayerClimbFlag_18BE              ;$01DA2C |
-CODE_01DA2F:
+.CODE_01DA2F:
     BIT.b byetudlrPress_16
-    BPL CODE_01DA3F                         ;$01DA31 |
+    BPL .CODE_01DA3F                        ;$01DA31 |
     LDA.b #$B0                              ;$01DA33 |
     STA.b PlayerYSpeed_7D                   ;$01DA35 |
-CODE_01DA37:
+.CODE_01DA37:
     STZ.w PlayerClimbFlag_18BE
     LDA.b #$10                              ;$01DA3A |
     STA.w SpritePlayerContact_154C,X        ;$01DA3C |
-CODE_01DA3F:
+.CODE_01DA3F:
     LDY.b #$00
-    LDA.w $185E                             ;$01DA41 |
-    BPL CODE_01DA47                         ;$01DA44 |
+    LDA.w PlayerYPosLine_185E               ;$01DA41 |
+    BPL .CODE_01DA47                        ;$01DA44 |
     DEY                                     ;$01DA46 |
-CODE_01DA47:
+.CODE_01DA47:
     CLC
     ADC.b PlayerYPos_96                     ;$01DA48 |
     STA.b PlayerYPos_96                     ;$01DA4A |
@@ -12637,9 +12636,9 @@ CODE_01DA47:
     SEC                                     ;$01DA5E |
     SBC $00                                 ;$01DA5F |
     CMP.w #$0000                            ;$01DA61 |
-    BPL CODE_01DA68                         ;$01DA64 |
+    BPL .CODE_01DA68                        ;$01DA64 |
     INC.b PlayerYPos_96                     ;$01DA66 |
-CODE_01DA68:
+.CODE_01DA68:
     SEP #$20
     LDA.w $18B6                             ;$01DA6A |
     JSR CODE_01DA90                         ;$01DA6D |
@@ -15359,7 +15358,7 @@ handle_off_yoshi_01EE61:
 ; If Yoshi is eating a berry, generate its tile and perform the berry-eating side effect.
 process_yoshi_head_01EF18:
     LDY.w SpriteAnimation_1602,X
-    STY.w $185E                             ;$01EF1B |
+    STY.w YoshiAnimationMirror_185E         ;$01EF1B |
     LDA.w YoshiHeadTiles,Y                  ;$01EF1E |
     STA.w SpriteAnimation_1602,X            ;$01EF21 |
     STA $0F                                 ;$01EF24 |
@@ -15399,7 +15398,7 @@ process_yoshi_head_01EF18:
     JSR SubSprGfx2Entry1                    ;$01EF6B |
     PHX                                     ;$01EF6E |
     LDY.w SpriteOAMIndex_15EA,X             ;$01EF6F |
-    LDX.w $185E                             ;$01EF72 |
+    LDX.w YoshiAnimationMirror_185E         ;$01EF72 |
     LDA.w $0301,Y                           ;$01EF75 |
     CLC                                     ;$01EF78 |
     ADC.w YoshiHeadDispY,X                  ;$01EF79 |
@@ -15413,7 +15412,7 @@ process_yoshi_head_01EF18:
     STA.w SpriteXPosHigh_14E0,X             ;$01EF88 |
     PLA                                     ;$01EF8B |
     STA.b SpriteXPosLow_E4,X                ;$01EF8C | restore Yoshi's X position
-    LDY.w $185E                             ;$01EF8E |
+    LDY.w YoshiAnimationMirror_185E         ;$01EF8E |
     LDA.w YoshiBodyTiles,Y                  ;$01EF91 |
     STA.w SpriteAnimation_1602,X            ;$01EF94 |
     LDA.b SpriteYPosLow_D8,X                ;$01EF97 |
@@ -16008,7 +16007,7 @@ draw_yoshi_tongue_01F3FE:
     BNE Return01F3FD                        ;$01F407 |
     LDY.w SpriteAnimation_1602,X            ;$01F409 |
     LDA.w DATA_01F61A,Y                     ;$01F40C |
-    STA.w $185E                             ;$01F40F |
+    STA.w YoshiAnimationMirror_185E         ;$01F40F |
     CLC                                     ;$01F412 |
     ADC.b SpriteYPosLow_D8,X                ;$01F413 |
     SEC                                     ;$01F415 |
@@ -16144,7 +16143,7 @@ process_tongue_01F4B2:
 +   STZ $01                                 ;$01F4FD |
     LDA $00                                 ;$01F4FF |
     CLC                                     ;$01F501 |
-    ADC.w $185E                             ;$01F502 |
+    ADC.w YoshiAnimationMirror_185E         ;$01F502 | TODO: actually, seems to be an Y offset for the head
     BPL +                                   ;$01F505 |
     DEC $01                                 ;$01F507 |
 +   CLC                                     ;$01F509 |
@@ -16185,7 +16184,7 @@ process_tongue_01F4B2:
     ADC.w SpriteXPosHigh_14E0,X             ;$01F546 |
     STA $08                                 ;$01F549 | tongue X position, high
     PLY                                     ;$01F54B |
-    LDA.w $185E                             ;$01F54C |
+    LDA.w YoshiAnimationMirror_185E         ;$01F54C |
     CLC                                     ;$01F54F |
     ADC.b #$02                              ;$01F550 |
     CLC                                     ;$01F552 |
@@ -16234,41 +16233,41 @@ process_tongue_01F4B2:
 .lick_sprite_01F5A7:
     LDA.w $009E,y                           ;$01F5A7 |
     CMP.b #$70                              ;$01F5AA |
-    BNE .skip_pokey_01F5FB                  ;$01F5AC |
-    STY.w $185E                             ;$01F5AE | split Pokey into 2 sprites
-    LDA $01                                 ;$01F5B1 |
-    SEC                                     ;$01F5B3 |
-    SBC.w SpriteYPosLow_D8,Y                ;$01F5B4 |
-    CLC                                     ;$01F5B7 |
-    ADC.b #$00                              ;$01F5B8 |
-    PHX                                     ;$01F5BA |
-    TYX                                     ;$01F5BB |
-    JSL RemovePokeySegment                  ;$01F5BC |
-    PLX                                     ;$01F5C0 |
-    JSL FindFreeSprSlot                     ;$01F5C1 |
-    BMI .return_01F609                      ;$01F5C5 |
-    LDA.b #$08                              ;$01F5C7 |
-    STA.w SpriteStatus_14C8,Y               ;$01F5C9 |
-    LDA.b #$70                              ;$01F5CC |
-    STA.w $009E,y                           ;$01F5CE |
-    LDA $00                                 ;$01F5D1 |
-    STA.w SpriteXPosLow_E4,y                ;$01F5D3 |
-    LDA $08                                 ;$01F5D6 |
-    STA.w SpriteXPosHigh_14E0,Y             ;$01F5D8 |
-    LDA $01                                 ;$01F5DB |
-    STA.w SpriteYPosLow_D8,Y                ;$01F5DD |
-    LDA $09                                 ;$01F5E0 |
-    STA.w SpriteYPosHigh_14D4,Y             ;$01F5E2 |
-    PHX                                     ;$01F5E5 |
-    TYX                                     ;$01F5E6 |
-    JSL InitSpriteTables                    ;$01F5E7 |
-    LDX.w $185E                             ;$01F5EB |
-    LDA.b SpritePhase_C2,X                  ;$01F5EE |
-    AND $0D                                 ;$01F5F0 |
-    STA.w $00C2,y                           ;$01F5F2 |
-    LDA.b #$01                              ;$01F5F5 |
-    STA.w Sprite_1534,Y                     ;$01F5F7 |
-    PLX                                     ;$01F5FA |
+    BNE .skip_pokey_01F5FB                  ;$01F5AC |\
+    STY.w PokeySlot_185E                    ;$01F5AE || split Pokey into 2 sprites
+    LDA $01                                 ;$01F5B1 ||
+    SEC                                     ;$01F5B3 ||
+    SBC.w SpriteYPosLow_D8,Y                ;$01F5B4 ||
+    CLC                                     ;$01F5B7 ||
+    ADC.b #$00                              ;$01F5B8 ||
+    PHX                                     ;$01F5BA ||
+    TYX                                     ;$01F5BB ||
+    JSL RemovePokeySegment                  ;$01F5BC ||
+    PLX                                     ;$01F5C0 ||
+    JSL FindFreeSprSlot                     ;$01F5C1 ||
+    BMI .return_01F609                      ;$01F5C5 ||\
+    LDA.b #$08                              ;$01F5C7 |||
+    STA.w SpriteStatus_14C8,Y               ;$01F5C9 |||
+    LDA.b #$70                              ;$01F5CC |||
+    STA.w $009E,y                           ;$01F5CE |||
+    LDA $00                                 ;$01F5D1 |||
+    STA.w SpriteXPosLow_E4,y                ;$01F5D3 |||
+    LDA $08                                 ;$01F5D6 |||
+    STA.w SpriteXPosHigh_14E0,Y             ;$01F5D8 |||
+    LDA $01                                 ;$01F5DB |||
+    STA.w SpriteYPosLow_D8,Y                ;$01F5DD |||
+    LDA $09                                 ;$01F5E0 |||
+    STA.w SpriteYPosHigh_14D4,Y             ;$01F5E2 |||
+    PHX                                     ;$01F5E5 |||
+    TYX                                     ;$01F5E6 |||
+    JSL InitSpriteTables                    ;$01F5E7 |||
+    LDX.w PokeySlot_185E                    ;$01F5EB |||
+    LDA.b SpritePhase_C2,X                  ;$01F5EE |||
+    AND $0D                                 ;$01F5F0 |||
+    STA.w $00C2,y                           ;$01F5F2 |||
+    LDA.b #$01                              ;$01F5F5 |||
+    STA.w Sprite_1534,Y                     ;$01F5F7 ||/
+    PLX                                     ;$01F5FA |/
 .skip_pokey_01F5FB:
     TYA
     STA.w Sprite_160E,X                     ;$01F5FC | mark Yoshi with this sprite on tongue/mouth
@@ -16524,12 +16523,12 @@ CODE_01F7DF:
 CODE_01F7E4:
     DEX
     BPL CODE_01F7DF                         ;$01F7E5 |
-    DEC.w $185D                             ;$01F7E7 |
+    DEC.w MinorSprSlotIdx_185D              ;$01F7E7 |
     BPL CODE_01F7F1                         ;$01F7EA |
     LDA.b #$0B                              ;$01F7EC |
-    STA.w $185D                             ;$01F7EE |
+    STA.w MinorSprSlotIdx_185D              ;$01F7EE |
 CODE_01F7F1:
-    LDX.w $185D
+    LDX.w MinorSprSlotIdx_185D
 CODE_01F7F4:
     LDA.b #$03
     STA.w MinorSprNumber_17F0,X             ;$01F7F6 |

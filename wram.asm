@@ -936,9 +936,16 @@ SpriteNumber_9E: skip 12
 ; Valid values
 !Lakitu_1E = $1E
 !Yoshi_35 = $35
+!SmallOrangePlat_5D = $5D
+!Rope_64 = $64
+!ChainsawUp_65 = $65
+!FuzzyLine_68 = $68
 !Peach_7C = $7C
 !ChangingItem_81 = $81
 !BonusGame_7C = $82 ; TODO: _82
+!CharginChuck_91 = $91
+!SplittinChuck_92 = $92
+!BouncinChuck_93 = $93
 !BowserBall_A1 = $A1
 !Reznor_A9 = $A9
 
@@ -1919,7 +1926,25 @@ MinorSprTimer_1850: skip 12 ;done
 
 PlayerDisableObjInt_185C: skip 1
 MinorSprSlotIdx_185D: skip 1
-TileGenerateTrackA_185E: skip 1
+
+; Sometimes used to keep track of a tile to generate at $00:BEB0 (before storing to $7E:009C)
+; may be used in conjunction with $7E:18B6
+TileGenerateTrack_185E:
+; used to determine the player Y position when they're on the line guided rope
+PlayerYPosLine_185E:
+; used to determine positions and such of Yoshi's tiles
+YoshiAnimationMirror_185E:
+; In the sprite/object interaction routine, it's also used to indicate which layer the sprite is touching. 00 = layer 1; 01 = layer 2.
+SpriteLayer_185E:
+FishingLakitu_185E: ; 00-FF
+FlyingBlock_185E: ; slot of item
+PlayerOnPlatform_185E: ; used by floating platforms
+Parachute_185E: ; TODO: used by floating platforms
+PokeySlot_185E: ; TODO: slot of the original pokey when Yoshi licks one segment
+FireballSlot_185E:
+ChuckSplitFlag_185E: ; during the split routine, used to determine whether it is the first or second Chuck being generated
+skip 1
+
 SprMap16TouchVertLow_185F: skip 1
 SprMap16TouchHorizLow_1860: skip 1
 SpriteToOverwrite_1861: skip 1
