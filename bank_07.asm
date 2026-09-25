@@ -4534,8 +4534,8 @@ Sprite190FVals:
     db $40
 
 ZeroSpriteTables:
-    STZ.w $164A,X
-    STZ.w $1632,X                           ;$07F725 |
+    STZ.w SpriteInLiquid_164A,X
+    STZ.w SpriteBehindScene_1632,X          ;$07F725 |
     STZ.b SpritePhase_C2,X                  ;$07F728 |
     STZ.w Sprite_151C,X                     ;$07F72A |
     STZ.w Sprite_1528,X                     ;$07F72D |
@@ -4543,13 +4543,13 @@ ZeroSpriteTables:
     STZ.w SpriteDir_157C,X                  ;$07F733 |
     STZ.w SpriteBlocked_1588,X              ;$07F736 |
     STZ.w SpriteWayOffscreenX_15C4,X        ;$07F739 |
-    STZ.w $1602,X                           ;$07F73C |
+    STZ.w SpriteAnimation_1602,X            ;$07F73C |
     STZ.w SpriteStun_1540,X                 ;$07F73F |
     STZ.w SpritePlayerContact_154C,X        ;$07F742 |
     STZ.w SpriteLava_1558,X                 ;$07F745 |
     STZ.w SpriteSprContact_1564,X           ;$07F748 |
     STZ.w $1FE2,X                           ;$07F74B |
-    STZ.w $1626,X                           ;$07F74E |
+    STZ.w SpriteKill_1626,X                 ;$07F74E |
     STZ.w SpriteAnimationTimer_1570,X       ;$07F751 |
     STZ.b SpriteXSpeed_B6,X                 ;$07F754 |
     STZ.w SpriteXPosSpx_14F8,X              ;$07F756 |
@@ -4557,14 +4557,14 @@ ZeroSpriteTables:
     STZ.w SpriteYPosSpx_14EC,X              ;$07F75B |
     STZ.w SpriteDisableObjInt_15DC,X        ;$07F75E |
     STZ.w SpriteOnTongue_15D0,X             ;$07F761 |
-    STZ.w $163E,X                           ;$07F764 |
-    STZ.w $1656,X                           ;$07F767 |
-    STZ.w $1662,X                           ;$07F76A |
-    STZ.w $166E,X                           ;$07F76D |
-    STZ.w $167A,X                           ;$07F770 |
-    STZ.w $1686,X                           ;$07F773 |
+    STZ.w Sprite_163E,X                     ;$07F764 |
+    STZ.w sSjJcccc_1656,X                   ;$07F767 |
+    STZ.w dscccccc_1662,X                   ;$07F76A |
+    STZ.w lwcfpppg_166E,X                   ;$07F76D |
+    STZ.w dpmksPiS_167A,X                   ;$07F770 |
+    STZ.w dnctswye_1686,X                   ;$07F773 |
     STZ.w $187B,X                           ;$07F776 |
-    STZ.w $160E,X                           ;$07F779 |
+    STZ.w Sprite_160E,X                     ;$07F779 |
     STZ.w Sprite_1594,X                     ;$07F77C |
     STZ.w Sprite_1504,X                     ;$07F77F |
     STZ.w $1FD6,X                           ;$07F782 |
@@ -4591,15 +4591,15 @@ LoadTweakerBytes:
     TXY                                     ;$07F7A2 |
     LDX.b SpriteNumber_9E,Y                 ;$07F7A3 |
     LDA.l Sprite1656Vals,X                  ;$07F7A5 |
-    STA.w $1656,Y                           ;$07F7A9 |
+    STA.w sSjJcccc_1656,Y                   ;$07F7A9 |
     LDA.l Sprite1662Vals,X                  ;$07F7AC |
-    STA.w $1662,Y                           ;$07F7B0 |
+    STA.w dscccccc_1662,Y                   ;$07F7B0 |
     LDA.l Sprite166EVals,X                  ;$07F7B3 |
-    STA.w $166E,Y                           ;$07F7B7 |
+    STA.w lwcfpppg_166E,Y                   ;$07F7B7 |
     LDA.l Sprite167AVals,X                  ;$07F7BA |
-    STA.w $167A,Y                           ;$07F7BE |
+    STA.w dpmksPiS_167A,Y                   ;$07F7BE |
     LDA.l Sprite1686Vals,X                  ;$07F7C1 |
-    STA.w $1686,Y                           ;$07F7C5 |
+    STA.w dnctswye_1686,Y                   ;$07F7C5 |
     LDA.l Sprite190FVals,X                  ;$07F7C8 |
     STA.w $190F,Y                           ;$07F7CC |
     PLX                                     ;$07F7CF |

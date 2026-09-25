@@ -1400,7 +1400,7 @@ CODE_0C9FEA:
     LDA.b #$A0                              ;$0CA012 |
     STA.w SpriteOAMIndex_15EA               ;$0CA014 | NOTE: hardcoded slot 0
     JSR CODE_0CA778                         ;$0CA017 |
-    LDX.w $1602                             ;$0CA01A | NOTE: hardcoded slot 0
+    LDX.w SpriteAnimation_1602              ;$0CA01A | NOTE: hardcoded slot 0
     LDA.b #$51                              ;$0CA01D |
     STA $00                                 ;$0CA01F |
     STZ $01                                 ;$0CA021 |
@@ -2355,11 +2355,11 @@ CODE_0CA778:
     STX.w CurrentSprite_15E9                ;$0CA77A |
     LDA.b #!Yoshi_35                        ;$0CA77D |
     STA.b SpriteNumber_9E                   ;$0CA77F | NOTE: hardcoded slot 0
-    LDA.w $1602                             ;$0CA781 |
+    LDA.w SpriteAnimation_1602              ;$0CA781 | NOTE: hardcoded slot 0
     PHA                                     ;$0CA784 |
     JSL InitSpriteTables                    ;$0CA785 |
     PLA                                     ;$0CA789 |
-    STA.w $1602                             ;$0CA78A |
+    STA.w SpriteAnimation_1602              ;$0CA78A |
     LDA.b #$02                              ;$0CA78D |
     STA.b SpritePhase_C2                    ;$0CA78F | NOTE: hardcoded slot 0
     LDA.b #$01                              ;$0CA791 |
@@ -2369,12 +2369,12 @@ CODE_0CA778:
     ADC.b #$38                              ;$0CA79A |
     STA.w $1456                             ;$0CA79C |
     BCC CODE_0CA7AF                         ;$0CA79F |
-    LDA.w $1602                             ;$0CA7A1 |
+    LDA.w SpriteAnimation_1602              ;$0CA7A1 | NOTE: hardcoded slot 0
     INC A                                   ;$0CA7A4 |
-    STA.w $1602                             ;$0CA7A5 |
+    STA.w SpriteAnimation_1602              ;$0CA7A5 | NOTE: hardcoded slot 0
     CMP.b #$03                              ;$0CA7A8 |
     BCC CODE_0CA7AF                         ;$0CA7AA |
-    STZ.w $1602                             ;$0CA7AC |
+    STZ.w SpriteAnimation_1602              ;$0CA7AC | NOTE: hardcoded slot 0
 CODE_0CA7AF:
     LDA.b #$01
     STA.w YoshiSlotMirror_18E2              ;$0CA7B1 |

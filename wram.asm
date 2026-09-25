@@ -1773,25 +1773,25 @@ skip 1
 CurrentSprite_15E9: skip 1 ;done
 SpriteOAMIndex_15EA: skip 12 ;done
 SpriteYXPPCCCT_15F6: skip 12 ;done
-SpriteAnimation_1602: skip 12
-SpriteMisc_160E: skip 12
-SpriteLoadIndex_161A: skip 12
-SpriteKill_1626: skip 12
-SpriteBehindScene_1632: skip 12
-Sprite_163E: skip 12
-SpriteInLiquid_164A: skip 12
-SpriteTweakerA_1656: skip 12
-SpriteTweakerB_1662: skip 12
-SpriteTweakerC_166E: skip 12
-SpriteTweakerD_167A: skip 12
-SpriteTweakerE_1686: skip 12
-SpriteMemorySetting_1692: skip 1
-Map16TileNumber_1693: skip 1
-SpriteBlockOffset_1694: skip 1
-SpriteInterIndex_1695: skip 1
+SpriteAnimation_1602: skip 12 ;done
+Sprite_160E: skip 12 ;done
+SpriteLoadIndex_161A: skip 12 ;done
+SpriteKill_1626: skip 12 ;done
+SpriteBehindScene_1632: skip 12 ;done
+Sprite_163E: skip 12 ;done
+SpriteInLiquid_164A: skip 12 ;done
+sSjJcccc_1656: skip 12 ;done
+dscccccc_1662: skip 12 ;done
+lwcfpppg_166E: skip 12 ;done
+dpmksPiS_167A: skip 12 ;done
+dnctswye_1686: skip 12 ;done
+SpriteMemorySetting_1692: skip 1 ;done
+Map16_1693: skip 1 ;done
+SpriteBlockOffset_1694: skip 1 ;done
+SpriteInterIndex_1695: skip 1 ;done
 ; 7E1696 unused
 skip 1
-SpriteStompCounter_1697: skip 1
+SpriteStompCounter_1697: skip 1 ;done
 MinorSpriteProcIndex_1698: skip 1
 BounceSpriteNumber_1699: skip 4
 BounceSpriteInit_169D: skip 4

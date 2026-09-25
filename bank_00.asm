@@ -11348,7 +11348,7 @@ normal_collision:
     JSR process_horizontal_pipe             ;$00EC54 |
     PHX                                     ;$00EC57 |
     JSR process_throw_block                 ;$00EC58 |
-    LDY.w $1693                             ;$00EC5B |
+    LDY.w Map16_1693                        ;$00EC5B |
     PLX                                     ;$00EC5E |
 .CODE_00EC5F                                ;        |
     LDA.b #$03                              ;$00EC5F |
@@ -11361,7 +11361,7 @@ normal_collision:
 .center_in_block                            ;        |
     LDA.w NoteBlockActive_1402              ;$00EC6F |
     BEQ .on_note_block                      ;$00EC72 |
-    LDA.w $1693                             ;$00EC74 |
+    LDA.w Map16_1693                        ;$00EC74 |
     CMP.b #$52                              ;$00EC77 |
     BEQ .skip_side_head                     ;$00EC79 |
 .on_note_block                              ;        |
@@ -11369,7 +11369,7 @@ normal_collision:
     TSB.b PlayerBlocked_77                  ;$00EC7E |
     AND.b #!Block_Sides_03                  ;$00EC80 |
     TAY                                     ;$00EC82 |
-    LDA.w $1693                             ;$00EC83 |
+    LDA.w Map16_1693                        ;$00EC83 |
     JSL CODE_00F127                         ;$00EC86 |
 .skip_side_head                             ;        |
     JSR process_collision_point             ;$00EC8A | Process the head collision point.
@@ -11378,7 +11378,7 @@ normal_collision:
     JSR process_page_0_tiles                ;$00EC91 |
     LDY.b PlayerYSpeed_7D                   ;$00EC94 |
     BPL CODE_00ECA3                         ;$00EC96 |
-    LDA.w $1693                             ;$00EC98 |
+    LDA.w Map16_1693                        ;$00EC98 |
     CMP.b #$21                              ;$00EC9B |
     BCC CODE_00ECA3                         ;$00EC9D |
     CMP.b #$25                              ;$00EC9F |
@@ -11442,7 +11442,7 @@ CODE_00ECFA:
     TYA                                     ;$00ECFF |
     LDY.b #$00                              ;$00ED00 |
     JSL CODE_00F127                         ;$00ED02 |
-    LDA.w $1693                             ;$00ED06 |
+    LDA.w Map16_1693                        ;$00ED06 |
     CMP.b #$1E                              ;$00ED09 |
     BEQ CODE_00ED3B                         ;$00ED0B |
 CODE_00ED0D:
@@ -11594,7 +11594,7 @@ CODE_00EDF7:
     CMP.b #$0E                              ;$00EE02 |
     BNE CODE_00EE11                         ;$00EE04 |
 CODE_00EE06:
-    LDY.w $1693
+    LDY.w Map16_1693
     CPY.b #$59                              ;$00EE09 |
     BCC CODE_00EE11                         ;$00EE0B |
     CPY.b #$5C                              ;$00EE0D |
@@ -11627,7 +11627,7 @@ Return00EE39:
     RTS
 
 CODE_00EE3A:
-    LDY.w $1693
+    LDY.w Map16_1693
     LDA.w $1931                             ;$00EE3D |
     CMP.b #$02                              ;$00EE40 |
     BEQ CODE_00EE48                         ;$00EE42 |
@@ -11647,7 +11647,7 @@ CODE_00EE48:
 CODE_00EE57:
     JSR process_throw_block
     LDY.b #$03                              ;$00EE5A |
-    LDA.w $1693                             ;$00EE5C |
+    LDA.w Map16_1693                        ;$00EE5C |
     CMP.b #$1E                              ;$00EE5F |
     BNE CODE_00EE78                         ;$00EE61 |
     LDX $8F                                 ;$00EE63 |
@@ -11812,11 +11812,11 @@ CODE_00EF68:
     LDA.b #$25                              ;$00EF90 |
     STA.w SPCIO3_1DFC                       ;$00EF92 |
 CODE_00EF95:
-    STZ.w $1697
+    STZ.w SpriteStompCounter_1697
     RTS                                     ;$00EF98 |
 
 CODE_00EF99:
-    STZ.w $1697
+    STZ.w SpriteStompCounter_1697
     STZ.w $1407                             ;$00EF9C |
     CPY.b #$05                              ;$00EF9F |
     BCS CallGroundPound                     ;$00EFA1 |
@@ -11838,7 +11838,7 @@ Return00EFBB:
     RTS
 
 CODE_00EFBC:
-    LDX.w $1693
+    LDX.w Map16_1693
     CPX.b #$CE                              ;$00EFBF |
     BCC Return00EFE7                        ;$00EFC1 |
     CPX.b #$D2                              ;$00EFC3 |
@@ -12467,7 +12467,7 @@ CODE_00F430:
 CODE_00F43E:
     PLX
 CODE_00F43F:
-    LDY.w $1693
+    LDY.w Map16_1693
 Return00F442:
     RTS
 
@@ -12561,12 +12561,12 @@ collision:
     LDA.b #$7E                              ;$00F4CF | |
     STA $02                                 ;$00F4D1 |/
     LDA [$00]                               ;$00F4D3 |\ set $1693 to low byte of map16 tile,
-    STA.w $1693                             ;$00F4D5 |/ NOTE: X,Y no level, para Mario (pontos de interacao)
+    STA.w Map16_1693                        ;$00F4D5 |/ NOTE: X,Y no level, para Mario (pontos de interacao)
     INC $02                                 ;$00F4D8 | and set pointer to map16 high byte table.
     PLX                                     ;$00F4DA | Restore collision point index.
     LDA [$00]                               ;$00F4DB |
     JSL conditional_map16                   ;$00F4DD | Process "conditional" map16.
-    LDY.w $1693                             ;$00F4E1 | Set Y to low byte of map16 tile,
+    LDY.w Map16_1693                        ;$00F4E1 | Set Y to low byte of map16 tile,
     CMP.b #$00                              ;$00F4E4 | and check if high byte is $00.
     RTS                                     ;$00F4E6 /
 
@@ -12627,13 +12627,13 @@ collision:
 conditional_map16:
     TAY                                     ;$00F545 \ If map16 page != 0,
     BNE .map16_page_01                      ;$00F546 | process map16 page 1 code.
-    LDY.w $1693                             ;$00F548 |
+    LDY.w Map16_1693                        ;$00F548 |
     CPY.b #$29                              ;$00F54B | If it's an invisible ? block
     BNE .not_029                            ;$00F54D | 
     LDY.w BlueSwitchTimer_14AD              ;$00F54F | and the blue P-switch is active,
     BEQ .return                             ;$00F552 |
     LDA.b #$24                              ;$00F554 |
-    STA.w $1693                             ;$00F556 | act like a real ? block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = 129 e p-switch ativo, para Mario (pontos de interacao)
+    STA.w Map16_1693                        ;$00F556 | act like a real ? block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = 129 e p-switch ativo, para Mario (pontos de interacao)
     RTL                                     ;$00F559 /
 
 .not_029
@@ -12653,11 +12653,11 @@ conditional_map16:
     BEQ .return                             ;$00F56F |
 .act_like_used_block                        ;        |
     LDA.b #$32                              ;$00F571 |
-    STA.w $1693                             ;$00F573 | act like a used block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = Switch Palace, para Mario (pontos de interacao)
+    STA.w Map16_1693                        ;$00F573 | act like a used block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = Switch Palace, para Mario (pontos de interacao)
     RTL                                     ;$00F576 /
 
 .map16_page_01
-    LDY.w $1693                             ;$00F577 \  ! $1693 does not get uninitialized value :(
+    LDY.w Map16_1693                        ;$00F577 \  ! $1693 does not get uninitialized value :(
     CPY.b #$32                              ;$00F57A | If it's a used block
     BNE .not_132                            ;$00F57C |
     LDY.w BlueSwitchTimer_14AD              ;$00F57E | and the blue P-switch is active,
@@ -12671,7 +12671,7 @@ conditional_map16:
     BEQ .return                             ;$00F58B |
 .act_like_coin                              ;        |
     LDY.b #$2B                              ;$00F58D |
-    STY.w $1693                             ;$00F58F | act like a coin. X: 0 a fim do level | Y: 0 a 1FF, se map16 = used block ou muncher com P-Switch, para Mario (pontos de interacao)
+    STY.w Map16_1693                        ;$00F58F | act like a coin. X: 0 a fim do level | Y: 0 a 1FF, se map16 = used block ou muncher com P-Switch, para Mario (pontos de interacao)
 .not_switch                                 ;        |
     LDA.b #$00                              ;$00F592 | Set map16 page 0.
 .return                                     ;        |
@@ -13158,7 +13158,7 @@ boss_room_collision:
     BNE .return_00F94D                      ;$00F926 |
     REP #$20                                ;$00F928 |
     LDY.b #$00                              ;$00F92A |
-    LDA.w SpriteMisc_160E+9                 ;$00F92C | NOTE: hardcoded slot 9
+    LDA.w Sprite_160E+9                     ;$00F92C | NOTE: hardcoded slot 9
     AND.w #$00FF                            ;$00F92F |
     INC A                                   ;$00F932 |
     CMP.b PlayerXPos_94                     ;$00F933 |
@@ -13366,7 +13366,7 @@ CODE_00FAA3:
     ORA.w $186C,Y                           ;$00FAAD |
     BNE CODE_00FAC5                         ;$00FAB0 |
 CODE_00FAB2:
-    LDA.w $1686,Y
+    LDA.w dnctswye_1686,Y
     AND.b #$20                              ;$00FAB5 |
     BNE CODE_00FAC5                         ;$00FAB7 |
     LDA.b #$10                              ;$00FAB9 |
@@ -13649,7 +13649,7 @@ CODE_00FCD5:
     LDA.b PlayerDir_76                      ;$00FCDA |
     EOR.b #$01                              ;$00FCDC |
     STA.w SpriteDir_157C,X                  ;$00FCDE |
-    DEC.w $160E,X                           ;$00FCE1 |
+    DEC.w Sprite_160E,X                     ;$00FCE1 |
     INX                                     ;$00FCE4 |
     STX.w YoshiSlot_18DF                    ;$00FCE5 |
     STX.w YoshiSlotMirror_18E2              ;$00FCE8 |

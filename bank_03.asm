@@ -102,7 +102,7 @@ BooBossPtrs:
 
 CODE_0380BE:
     LDA.b #$03
-    STA.w $1602,X                           ;$0380C0 |
+    STA.w SpriteAnimation_1602,X            ;$0380C0 |
     INC.w SpriteAnimationTimer_1570,X       ;$0380C3 |
     LDA.w SpriteAnimationTimer_1570,X       ;$0380C6 |
     CMP.b #$90                              ;$0380C9 |
@@ -156,11 +156,11 @@ CODE_038106:
     STA.w SpriteAnimationTimer_1570,X       ;$03810F |
 CODE_038112:
     LDA.b #$03
-    STA.w $1602,X                           ;$038114 |
+    STA.w SpriteAnimation_1602,X            ;$038114 |
     BRA CODE_03811F                         ;$038117 |
 
 CODE_038119:
-    STZ.w $1602,X
+    STZ.w SpriteAnimation_1602,X
     JSR CODE_0381E4                         ;$03811C |
 CODE_03811F:
     LDA.w SpriteTurnTimer_15AC,X
@@ -185,7 +185,7 @@ CODE_038140:
     LSR                                     ;$038142 |
     TAY                                     ;$038143 |
     LDA.w DATA_038102,Y                     ;$038144 |
-    STA.w $1602,X                           ;$038147 |
+    STA.w SpriteAnimation_1602,X            ;$038147 |
 CODE_03814A:
     LDA.b Frame_14
     AND.b #$07                              ;$03814C |
@@ -241,7 +241,7 @@ CODE_0381AE:
     EOR.w SpriteYXPPCCCT_15F6,X             ;$0381B0 |
     STA.w SpriteYXPPCCCT_15F6,X             ;$0381B3 |
     LDA.b #$03                              ;$0381B6 |
-    STA.w $1602,X                           ;$0381B8 |
+    STA.w SpriteAnimation_1602,X            ;$0381B8 |
     RTS                                     ;$0381BB |
 
 CODE_0381BC:
@@ -419,13 +419,13 @@ CODE_0383A0:
     LSR                                     ;$0383B7 |
     ADC.b #$02                              ;$0383B8 |
 CODE_0383BA:
-    STA.w $1602,X
+    STA.w SpriteAnimation_1602,X
     JSL GenericSprGfxRt2                    ;$0383BD |
     RTS                                     ;$0383C1 |
 
 CODE_0383C2:
     JSR GetDrawInfoBnk3
-    LDA.w $1602,X                           ;$0383C5 |
+    LDA.w SpriteAnimation_1602,X            ;$0383C5 |
     STA $06                                 ;$0383C8 |
     ASL                                     ;$0383CA |
     ASL                                     ;$0383CB |
@@ -487,7 +487,7 @@ CODE_038418:
     CPX.b #$14                              ;$038429 |
     BNE CODE_0383E0                         ;$03842B |
     LDX.w CurrentSprite_15E9                ;$03842D |
-    LDA.w $1602,X                           ;$038430 |
+    LDA.w SpriteAnimation_1602,X            ;$038430 |
     CMP.b #$03                              ;$038433 |
     BNE CODE_03844B                         ;$038435 |
     LDA.w SpriteLava_1558,X                 ;$038437 |
@@ -669,7 +669,7 @@ CODE_03855E:
     STA.b SpriteXSpeed_B6,X                 ;$038571 |
     JSL CODE_019138                         ;$038573 |
     LDY.b #$04                              ;$038577 |
-    LDA.w $164A,X                           ;$038579 |
+    LDA.w SpriteInLiquid_164A,X             ;$038579 |
     BEQ CODE_038580                         ;$03857C |
     LDY.b #$FC                              ;$03857E |
 CODE_038580:
@@ -748,12 +748,12 @@ FlyingTurnBlocks:
     INC.w Sprite_1534,X                     ;$038605 |
     AND.b #$01                              ;$038608 |
     BNE CODE_03861E                         ;$03860A |
-    DEC.w $1602,X                           ;$03860C |
-    LDA.w $1602,X                           ;$03860F |
+    DEC.w SpriteAnimation_1602,X            ;$03860C |
+    LDA.w SpriteAnimation_1602,X            ;$03860F |
     CMP.b #$FF                              ;$038612 |
     BNE CODE_03861E                         ;$038614 |
     LDA.b #$FF                              ;$038616 |
-    STA.w $1602,X                           ;$038618 |
+    STA.w SpriteAnimation_1602,X            ;$038618 |
     INC.w SpriteDir_157C,X                  ;$03861B |
 CODE_03861E:
     LDA.w SpriteDir_157C,X
@@ -784,7 +784,7 @@ CODE_038636:
     LDA.b #$08                              ;$038654 |
     STA.w $1B9A                             ;$038656 |
     LDA.b #$7F                              ;$038659 |
-    STA.w $1602,X                           ;$03865B |
+    STA.w SpriteAnimation_1602,X            ;$03865B |
     LDY.b #$09                              ;$03865E |
 CODE_038660:
     CPY.w CurrentSprite_15E9
@@ -798,7 +798,7 @@ CODE_03866C:
     INY                                     ;$03866F |
 CODE_038670:
     LDA.b #$7F
-    STA.w $1602,Y                           ;$038672 |
+    STA.w SpriteAnimation_1602,Y            ;$038672 |
 Return038675:
     RTS
 
@@ -881,7 +881,7 @@ GrayLavaPlatform:
     LDA.w SpriteStun_1540,X                 ;$038709 |
     DEC A                                   ;$03870C |
     BNE CODE_03871B                         ;$03870D |
-    LDY.w $161A,X                           ;$03870F |
+    LDY.w SpriteLoadIndex_161A,X            ;$03870F |
     LDA.b #$00                              ;$038712 |
     STA.w $1938,Y                           ;$038714 |
     STZ.w SpriteStatus_14C8,X               ;$038717 |
@@ -1110,7 +1110,7 @@ Swooper:
     JSL GenericSprGfxRt2
     LDY.w SpriteOAMIndex_15EA,X             ;$0388A7 |
     PHX                                     ;$0388AA |
-    LDA.w $1602,X                           ;$0388AB |
+    LDA.w SpriteAnimation_1602,X            ;$0388AB |
     TAX                                     ;$0388AE |
     LDA.w BatTiles,X                        ;$0388AF |
     STA.w $0302,Y                           ;$0388B2 |
@@ -1189,7 +1189,7 @@ CODE_03892B:
     LSR                                     ;$03892F |
     LSR                                     ;$038930 |
     INC A                                   ;$038931 |
-    STA.w $1602,X                           ;$038932 |
+    STA.w SpriteAnimation_1602,X            ;$038932 |
     RTS                                     ;$038935 |
 
 CODE_038936:
@@ -1369,14 +1369,14 @@ Return038A68:
     RTS
 
 CODE_038A69:
-    ASL.w $167A,X
-    LSR.w $167A,X                           ;$038A6C |
+    ASL.w dpmksPiS_167A,X
+    LSR.w dpmksPiS_167A,X                   ;$038A6C |
     JSL MarioSprInteract                    ;$038A6F |
-    STZ.w $1602,X                           ;$038A73 |
+    STZ.w SpriteAnimation_1602,X            ;$038A73 |
     LDA.b SpriteYSpeed_AA,X                 ;$038A76 |
     CMP.b #$10                              ;$038A78 |
     BPL CODE_038A7F                         ;$038A7A |
-    INC.w $1602,X                           ;$038A7C |
+    INC.w SpriteAnimation_1602,X            ;$038A7C |
 CODE_038A7F:
     JSL UpdateSpritePos
     LDA.w SpriteBlocked_1588,X              ;$038A83 |
@@ -1485,7 +1485,7 @@ BwsrStatueGfxProp:
 
 BowserStatueGfx:
     JSR GetDrawInfoBnk3
-    LDA.w $1602,X                           ;$038B40 |
+    LDA.w SpriteAnimation_1602,X            ;$038B40 |
     STA $04                                 ;$038B43 |
     EOR.b #$01                              ;$038B45 |
     DEC A                                   ;$038B47 |
@@ -2181,10 +2181,10 @@ FishinBoo:
     BNE Return0390EA                        ;$03906A |
     JSL MarioSprInteract                    ;$03906C |
     JSR SubHorzPosBnk3                      ;$039070 |
-    STZ.w $1602,X                           ;$039073 |
+    STZ.w SpriteAnimation_1602,X            ;$039073 |
     LDA.w SpriteTurnTimer_15AC,X            ;$039076 |
     BEQ CODE_039086                         ;$039079 |
-    INC.w $1602,X                           ;$03907B |
+    INC.w SpriteAnimation_1602,X            ;$03907B |
     CMP.b #$10                              ;$03907E |
     BNE CODE_039086                         ;$039080 |
     TYA                                     ;$039082 |
@@ -2258,7 +2258,7 @@ DATA_0390EF:
 CODE_0390F3:
     LDA.w SpriteDir_157C,X
     ASL                                     ;$0390F6 |
-    ADC.w $1602,X                           ;$0390F7 |
+    ADC.w SpriteAnimation_1602,X            ;$0390F7 |
     TAY                                     ;$0390FA |
     LDA.b SpriteXPosLow_E4,X                ;$0390FB |
     CLC                                     ;$0390FD |
@@ -2313,7 +2313,7 @@ DATA_03917C:
 
 FishinBooGfx:
     JSR GetDrawInfoBnk3
-    LDA.w $1602,X                           ;$039183 |
+    LDA.w SpriteAnimation_1602,X            ;$039183 |
     STA $04                                 ;$039186 |
     LDA.w SpriteDir_157C,X                  ;$039188 |
     STA $02                                 ;$03918B |
@@ -2517,7 +2517,7 @@ CODE_0392F8:
     BCS CODE_03930E                         ;$039309 |
     LDA.w CrtEatBlkData2,Y                  ;$03930B |
 CODE_03930E:
-    STA.w $1602,X
+    STA.w SpriteAnimation_1602,X
     PHA                                     ;$039311 |
     LSR                                     ;$039312 |
     LSR                                     ;$039313 |
@@ -2530,7 +2530,7 @@ CODE_03930E:
 CODE_03931F:
     LDA.b #$0D
     JSR GenTileFromSpr1                     ;$039321 |
-    LDA.w $1602,X                           ;$039324 |
+    LDA.w SpriteAnimation_1602,X            ;$039324 |
     CMP.b #$FF                              ;$039327 |
     BEQ CODE_039387                         ;$039329 |
 Return03932B:
@@ -2810,7 +2810,7 @@ CODE_03954A:
     LSR
     AND.b #$01                              ;$03954B |
 CODE_03954D:
-    STA.w $1602,X
+    STA.w SpriteAnimation_1602,X
     LDA.w SpriteBlocked_1588,X              ;$039550 |
     AND.b #$04                              ;$039553 |
     BEQ RexInAir                            ;$039555 |
@@ -2866,7 +2866,7 @@ MarioBeatsRex:
 SmushRex:
     LDA.b #$0C
     STA.w $1FE2,X                           ;$0395C3 |
-    STZ.w $1662,X                           ;$0395C6 |
+    STZ.w dscccccc_1662,X                   ;$0395C6 |
     RTS                                     ;$0395C9 |
 
 RexWins:
@@ -2923,10 +2923,10 @@ RexKilledSpeed:
 
 RexPoints:
     PHY
-    LDA.w $1697                             ;$039629 |
+    LDA.w SpriteStompCounter_1697           ;$039629 |
     CLC                                     ;$03962C |
-    ADC.w $1626,X                           ;$03962D |
-    INC.w $1697                             ;$039630 |
+    ADC.w SpriteKill_1626,X                 ;$03962D |
+    INC.w SpriteStompCounter_1697           ;$039630 |
     TAY                                     ;$039633 |
     INY                                     ;$039634 |
     CPY.b #$08                              ;$039635 |
@@ -2962,15 +2962,15 @@ RexGfxRt:
     LDA.w SpriteLava_1558,X
     BEQ RexGfxAlive                         ;$039681 |
     LDA.b #$05                              ;$039683 |
-    STA.w $1602,X                           ;$039685 |
+    STA.w SpriteAnimation_1602,X            ;$039685 |
 RexGfxAlive:
     LDA.w $1FE2,X
     BEQ RexNotHalfSmushed                   ;$03968B |
     LDA.b #$02                              ;$03968D |
-    STA.w $1602,X                           ;$03968F |
+    STA.w SpriteAnimation_1602,X            ;$03968F |
 RexNotHalfSmushed:
     JSR GetDrawInfoBnk3
-    LDA.w $1602,X                           ;$039695 |
+    LDA.w SpriteAnimation_1602,X            ;$039695 |
     ASL                                     ;$039698 |
     STA $03                                 ;$039699 |
     LDA.w SpriteDir_157C,X                  ;$03969B |
@@ -3070,7 +3070,7 @@ CODE_03972F:
     NOP                                     ;$039735 |
     LSR                                     ;$039736 |
     AND.b #$01                              ;$039737 |
-    STA.w $1602,X                           ;$039739 |
+    STA.w SpriteAnimation_1602,X            ;$039739 |
     LDA.w SpriteStun_1540,X                 ;$03973C |
     BEQ CODE_039756                         ;$03973F |
     AND.b #$01                              ;$039741 |
@@ -3092,7 +3092,7 @@ CODE_039756:
     RTS                                     ;$03975D |
 
 CODE_03975E:
-    STZ.w $1602,X
+    STZ.w SpriteAnimation_1602,X
     LDA.w SpriteStun_1540,X                 ;$039761 |
     BEQ CODE_039776                         ;$039764 |
     AND.b #$03                              ;$039766 |
@@ -3140,7 +3140,7 @@ CODE_03979E:
     LDA.w SpriteDir_157C,X                  ;$0397A4 |
     ASL                                     ;$0397A7 |
     STA $02                                 ;$0397A8 |
-    LDA.w $1602,X                           ;$0397AA |
+    LDA.w SpriteAnimation_1602,X            ;$0397AA |
     ASL                                     ;$0397AD |
     STA $03                                 ;$0397AE |
     LDA.w SpriteOAMIndex_15EA,X             ;$0397B0 |
@@ -3318,7 +3318,7 @@ ReznorSignCode:
     SEP #$20                                ;$0398D0 |
     CPX.b #$07                              ;$0398D2 |
     BNE CODE_039910                         ;$0398D4 |
-    LDA.w $163E,X                           ;$0398D6 |
+    LDA.w Sprite_163E,X                     ;$0398D6 |
     BEQ ReznorNoLevelEnd                    ;$0398D9 |
     DEC A                                   ;$0398DB |
     BNE CODE_039910                         ;$0398DC |
@@ -3338,7 +3338,7 @@ ReznorNoLevelEnd:
     CMP.b #$04                              ;$0398F9 |
     BNE CODE_039910                         ;$0398FB |
     LDA.b #$90                              ;$0398FD |
-    STA.w $163E,X                           ;$0398FF |
+    STA.w Sprite_163E,X                     ;$0398FF |
     JSL KillMostSprites                     ;$039902 |
     LDY.b #$07                              ;$039906 |
     LDA.b #$00                              ;$039908 |
@@ -3522,7 +3522,7 @@ NoSetRenrTurnTime:
     BPL HitPlatSide                         ;$039A56 |
 HitPlatBottom:
     LDA.b #$29
-    STA.w $1662,X                           ;$039A5A |
+    STA.w dscccccc_1662,X                   ;$039A5A |
     LDA.b #$0F                              ;$039A5D |
     STA.w SpriteSprContact_1564,X           ;$039A5F |
     LDA.b #$10                              ;$039A62 |
@@ -3540,7 +3540,7 @@ HitPlatSide:
 HitReznor:
     JSL HurtMario
 DrawReznor:
-    STZ.w $1602,X
+    STZ.w SpriteAnimation_1602,X
     LDA.w SpriteDir_157C,X                  ;$039A7E |
     PHA                                     ;$039A81 |
     LDY.w SpriteTurnTimer_15AC,X            ;$039A82 |
@@ -3551,7 +3551,7 @@ DrawReznor:
     STA.w SpriteDir_157C,X                  ;$039A8D |
 ReznorTurning:
     LDA.b #$02
-    STA.w $1602,X                           ;$039A92 |
+    STA.w SpriteAnimation_1602,X            ;$039A92 |
 ReznorNoTurning:
     LDA.w SpriteLava_1558,X
     BEQ ReznorNoFiring                      ;$039A98 |
@@ -3560,7 +3560,7 @@ ReznorNoTurning:
     JSR ReznorFireRt                        ;$039A9E |
 ReznorFiring:
     LDA.b #$01
-    STA.w $1602,X                           ;$039AA3 |
+    STA.w SpriteAnimation_1602,X            ;$039AA3 |
 ReznorNoFiring:
     JSR ReznorGfxRt
     PLA                                     ;$039AA9 |
@@ -3664,7 +3664,7 @@ ReznorGfxRt:
     LDA.w Sprite_151C,X
     BNE DrawReznorPlats                     ;$039B78 |
     JSR GetDrawInfoBnk3                     ;$039B7A |
-    LDA.w $1602,X                           ;$039B7D |
+    LDA.w SpriteAnimation_1602,X            ;$039B7D |
     ASL                                     ;$039B80 |
     ASL                                     ;$039B81 |
     STA $03                                 ;$039B82 |
@@ -3814,7 +3814,7 @@ CODE_039C74:
     EOR.b #$01                              ;$039C84 |
     STA.w SpriteDir_157C,X                  ;$039C86 |
 CODE_039C89:
-    STZ.w $1602,X
+    STZ.w SpriteAnimation_1602,X
     LDA.w SpriteBlocked_1588,X              ;$039C8C |
     AND.b #$03                              ;$039C8F |
     TAY                                     ;$039C91 |
@@ -3918,7 +3918,7 @@ CODE_039D66:
     LDA.w DinoFlameTable,Y                  ;$039D67 |
     PHA                                     ;$039D6A |
     AND.b #$0F                              ;$039D6B |
-    STA.w $1602,X                           ;$039D6D |
+    STA.w SpriteAnimation_1602,X            ;$039D6D |
     PLA                                     ;$039D70 |
     LSR                                     ;$039D71 |
     LSR                                     ;$039D72 |
@@ -3962,7 +3962,7 @@ DinoFlame6:
     db $0C,$24,$0C,$24
 
 DinoFlameClipping:
-    LDA.w $1602,X
+    LDA.w SpriteAnimation_1602,X
     SEC                                     ;$039DB9 |
     SBC.b #$02                              ;$039DBA |
     TAY                                     ;$039DBC |
@@ -3998,7 +3998,7 @@ DinoSetGfxFrame:
     LSR                                     ;$039DF7 |
     LSR                                     ;$039DF8 |
     LSR                                     ;$039DF9 |
-    STA.w $1602,X                           ;$039DFA |
+    STA.w SpriteAnimation_1602,X            ;$039DFA |
     RTS                                     ;$039DFD |
 
 DinoTorchTileDispX:
@@ -4034,7 +4034,7 @@ DinoGfxRt:
     JSR GetDrawInfoBnk3
     LDA.w SpriteDir_157C,X                  ;$039E4C |
     STA $02                                 ;$039E4F |
-    LDA.w $1602,X                           ;$039E51 |
+    LDA.w SpriteAnimation_1602,X            ;$039E51 |
     STA $04                                 ;$039E54 |
     LDA.b SpriteNumber_9E,X                 ;$039E56 |
     CMP.b #$6F                              ;$039E58 |
@@ -4086,7 +4086,7 @@ CODE_039E6C:
 CODE_039EA9:
     LDA.w Sprite_151C,X
     STA $03                                 ;$039EAC |
-    LDA.w $1602,X                           ;$039EAE |
+    LDA.w SpriteAnimation_1602,X            ;$039EAE |
     STA $04                                 ;$039EB1 |
     PHX                                     ;$039EB3 |
     LDA.b Frame_14                          ;$039EB4 |
@@ -4280,7 +4280,7 @@ DATA_039FED:
     db $10,$F0
 
 CODE_039FEF:
-    STZ.w $1602,X
+    STZ.w SpriteAnimation_1602,X
     LDA.w SpriteStun_1540,X                 ;$039FF2 |
     BEQ CODE_03A002                         ;$039FF5 |
     DEC A                                   ;$039FF7 |
@@ -4317,7 +4317,7 @@ CODE_03A038:
     ADC.b #$06                              ;$03A03B |
     CMP.b #$0C                              ;$03A03D |
     BCS Return03A044                        ;$03A03F |
-    INC.w $1602,X                           ;$03A041 |
+    INC.w SpriteAnimation_1602,X            ;$03A041 |
 Return03A044:
     RTS
 
@@ -4368,10 +4368,10 @@ DATA_03A09B:
     db $45,$05
 
 CODE_03A09D:
-    LDA.w $1602,X
+    LDA.w SpriteAnimation_1602,X
     ASL                                     ;$03A0A0 |
     ASL                                     ;$03A0A1 |
-    ADC.w $1602,X                           ;$03A0A2 |
+    ADC.w SpriteAnimation_1602,X            ;$03A0A2 |
     STA $03                                 ;$03A0A5 |
     LDA.w SpriteDir_157C,X                  ;$03A0A7 |
     STA $02                                 ;$03A0AA |
@@ -5401,10 +5401,10 @@ CODE_03A7F6:
     TYX                                     ;$03A820 |
     JSL InitSpriteTables                    ;$03A821 |
     INC.b SpritePhase_C2,X                  ;$03A825 |
-    ASL.w $1686,X                           ;$03A827 |
-    LSR.w $1686,X                           ;$03A82A |
+    ASL.w dnctswye_1686,X                   ;$03A827 |
+    LSR.w dnctswye_1686,X                   ;$03A82A |
     LDA.b #$39                              ;$03A82D |
-    STA.w $1662,X                           ;$03A82F |
+    STA.w dscccccc_1662,X                   ;$03A82F |
     PLX                                     ;$03A832 |
     PLA                                     ;$03A833 |
     LSR                                     ;$03A834 |
@@ -5868,11 +5868,11 @@ Return03AC4C:
     RTS
 
 CODE_03AC4D:
-    LDA.w $164A,X
+    LDA.w SpriteInLiquid_164A,X
     BNE CODE_03AC5A                         ;$03AC50 |
     LDA.b #$1C                              ;$03AC52 |
     STA.w SPCIO2_1DFB                       ;$03AC54 |
-    INC.w $164A,X                           ;$03AC57 |
+    INC.w SpriteInLiquid_164A,X             ;$03AC57 |
 CODE_03AC5A:
     LDA.b #$FE
     STA.w SpriteXPosHigh_14E0,X             ;$03AC5C |
@@ -5928,7 +5928,7 @@ PrincessPeach:
     LDA.b #$0C                              ;$03ACB3 |
     STA.w SpritePlayerContact_154C,X        ;$03ACB5 |
 CODE_03ACB8:
-    LDY.w $1602,X
+    LDY.w SpriteAnimation_1602,X
     LDA.w SpritePlayerContact_154C,X        ;$03ACBB |
     BEQ CODE_03ACC1                         ;$03ACBE |
     INY                                     ;$03ACC0 |
@@ -5983,7 +5983,7 @@ CODE_03AD18:
     STZ.b SpriteXSpeed_B6,X
     STZ.b PlayerXSpeed_7B                   ;$03AD1A |
     LDA.b #$04                              ;$03AD1C |
-    STA.w $1602,X                           ;$03AD1E |
+    STA.w SpriteAnimation_1602,X            ;$03AD1E |
     LDA.b SpritePhase_C2,X                  ;$03AD21 |
     JSL execute_pointer                     ;$03AD23 |
 
@@ -5999,7 +5999,7 @@ PeachPtrs:
 
 CODE_03AD37:
     LDA.b #$06
-    STA.w $1602,X                           ;$03AD39 |
+    STA.w SpriteAnimation_1602,X            ;$03AD39 |
     JSL UpdateYPosNoGrvty                   ;$03AD3C |
     LDA.b SpriteYSpeed_AA,X                 ;$03AD40 |
     CMP.b #$08                              ;$03AD42 |
@@ -6090,7 +6090,7 @@ CODE_03ADDD:
     AND.b #$08                              ;$03ADDF |
     BNE CODE_03ADE8                         ;$03ADE1 |
     LDA.b #$08                              ;$03ADE3 |
-    STA.w $1602,X                           ;$03ADE5 |
+    STA.w SpriteAnimation_1602,X            ;$03ADE5 |
 CODE_03ADE8:
     JSR CODE_03ADCC
     PHP                                     ;$03ADEB |
@@ -6152,7 +6152,7 @@ CODE_03AE3F:
     STA.w SpritePlayerContact_154C,X        ;$03AE48 |
 CODE_03AE4B:
     LDA.b #$0A
-    STA.w $1602,X                           ;$03AE4D |
+    STA.w SpriteAnimation_1602,X            ;$03AE4D |
     PLA                                     ;$03AE50 |
     CMP.b #$68                              ;$03AE51 |
     BNE Return03AE5A                        ;$03AE53 |
@@ -6438,7 +6438,7 @@ CODE_03B078:
     LDA.w SpritePlayerContact_154C,X        ;$03B08E |
     BNE Return03B0DB                        ;$03B091 |
     LDA.b #$24                              ;$03B093 |
-    STA.w $1662,X                           ;$03B095 |
+    STA.w dscccccc_1662,X                   ;$03B095 |
     JSL MarioSprInteract                    ;$03B098 |
     BCC CODE_03B0BD                         ;$03B09C |
     JSR CODE_03B0D6                         ;$03B09E |
@@ -6457,12 +6457,12 @@ CODE_03B0B6:
     LDA.b #$01                              ;$03B0B8 |
     STA.w SPCIO0_1DF9                       ;$03B0BA |
 CODE_03B0BD:
-    INC.w $1662,X
+    INC.w dscccccc_1662,X
     JSL MarioSprInteract                    ;$03B0C0 |
     BCC CODE_03B0C9                         ;$03B0C4 |
     JSR CODE_03B0D2                         ;$03B0C6 |
 CODE_03B0C9:
-    INC.w $1662,X
+    INC.w dscccccc_1662,X
     JSL MarioSprInteract                    ;$03B0CC |
     BCC Return03B0DB                        ;$03B0D0 |
 CODE_03B0D2:
@@ -6496,11 +6496,11 @@ CODE_03B0F3:
     JSL GetSpriteClippingB                  ;$03B0F5 |
     PLX                                     ;$03B0F9 |
     LDA.b #$24                              ;$03B0FA |
-    STA.w $1662,X                           ;$03B0FC |
+    STA.w dscccccc_1662,X                   ;$03B0FC |
     JSL GetSpriteClippingA                  ;$03B0FF |
     JSL CheckForContact                     ;$03B103 |
     BCS CODE_03B142                         ;$03B107 |
-    INC.w $1662,X                           ;$03B109 |
+    INC.w dscccccc_1662,X                   ;$03B109 |
     JSL GetSpriteClippingA                  ;$03B10C |
     JSL CheckForContact                     ;$03B110 |
     BCC Return03B160                        ;$03B114 |
@@ -6743,7 +6743,7 @@ CODE_03B2F9:
     AND.b #$0C                              ;$03B2FF |
     LSR                                     ;$03B301 |
     LSR                                     ;$03B302 |
-    STA.w $1602,X                           ;$03B303 |
+    STA.w SpriteAnimation_1602,X            ;$03B303 |
 Return03B306:
     RTS
 
@@ -6787,7 +6787,7 @@ CODE_03B369:
     LDY.b #$04
 CODE_03B36B:
     TYA
-    STA.w $1602,X                           ;$03B36C |
+    STA.w SpriteAnimation_1602,X            ;$03B36C |
     LDA.w SpriteStun_1540,X                 ;$03B36F |
     CMP.b #$30                              ;$03B372 |
     BCS CODE_03B37F                         ;$03B374 |
@@ -6803,7 +6803,7 @@ CODE_03B37F:
     CLC                                     ;$03B388 |
     ADC.b #$0C                              ;$03B389 |
     TAY                                     ;$03B38B |
-    LDA.w $1602,X                           ;$03B38C |
+    LDA.w SpriteAnimation_1602,X            ;$03B38C |
     ASL                                     ;$03B38F |
     ASL                                     ;$03B390 |
     STA $03                                 ;$03B391 |
@@ -7167,7 +7167,7 @@ GetSpriteClippingA:
     PHY
     PHX                                     ;$03B6A0 |
     TXY                                     ;$03B6A1 |
-    LDA.w $1662,X                           ;$03B6A2 |
+    LDA.w dscccccc_1662,X                   ;$03B6A2 |
     AND.b #$3F                              ;$03B6A5 |
     TAX                                     ;$03B6A7 |
     STZ $0F                                 ;$03B6A8 |
@@ -7204,7 +7204,7 @@ GetSpriteClippingB:
     PHY
     PHX                                     ;$03B6E6 |
     TXY                                     ;$03B6E7 |
-    LDA.w $1662,X                           ;$03B6E8 |
+    LDA.w dscccccc_1662,X                   ;$03B6E8 |
     AND.b #$3F                              ;$03B6EB |
     TAX                                     ;$03B6ED |
     STZ $0F                                 ;$03B6EE |
@@ -7302,7 +7302,7 @@ CODE_03B774:
     STA.w SpriteWayOffscreenX_15C4,X        ;$03B78B |
     BNE CODE_03B7CF                         ;$03B78E |
     LDY.b #$00                              ;$03B790 |
-    LDA.w $1662,X                           ;$03B792 |
+    LDA.w dscccccc_1662,X                   ;$03B792 |
     AND.b #$20                              ;$03B795 |
     BEQ CODE_03B79A                         ;$03B797 |
     INY                                     ;$03B799 |
@@ -7437,7 +7437,7 @@ CODE_03B85F:
     ADC.b #$00                              ;$03B872 |
     CMP.b #$02                              ;$03B874 |
     BPL OffScrEraseSprBnk3                  ;$03B876 |
-    LDA.w $167A,X                           ;$03B878 |
+    LDA.w dpmksPiS_167A,X                   ;$03B878 |
     AND.b #$04                              ;$03B87B |
     BNE Return03B8C2                        ;$03B87D |
     LDA.b Frame_13                          ;$03B87F |
@@ -7468,7 +7468,7 @@ OffScrEraseSprBnk3:
     LDA.w SpriteStatus_14C8,X
     CMP.b #$08                              ;$03B8AF |
     BCC OffScrKillSprBnk3                   ;$03B8B1 |
-    LDY.w $161A,X                           ;$03B8B3 |
+    LDY.w SpriteLoadIndex_161A,X            ;$03B8B3 |
     CPY.b #$FF                              ;$03B8B6 |
     BEQ OffScrKillSprBnk3                   ;$03B8B8 |
     LDA.b #$00                              ;$03B8BA |
@@ -7479,7 +7479,7 @@ Return03B8C2:
     RTS
 
 VerticalLevelBnk3:
-    LDA.w $167A,X
+    LDA.w dpmksPiS_167A,X
     AND.b #$04                              ;$03B8C6 |
     BNE Return03B8C2                        ;$03B8C8 |
     LDA.b Frame_13                          ;$03B8CA |
@@ -7772,12 +7772,12 @@ DATA_03C02B:
     db $74,$75,$77,$76
 
 CODE_03C02F:
-    LDY.w $160E,X
+    LDY.w Sprite_160E,X
     LDA.b #$00                              ;$03C032 |
     STA.w SpriteStatus_14C8,Y               ;$03C034 |
     LDA.b #$06                              ;$03C037 |
     STA.w SPCIO0_1DF9                       ;$03C039 |
-    LDA.w $160E,Y                           ;$03C03C |
+    LDA.w Sprite_160E,Y                     ;$03C03C |
     BNE CODE_03C09B                         ;$03C03F |
     LDA.w $009E,y                           ;$03C041 |
     CMP.b #$81                              ;$03C044 |
@@ -7817,8 +7817,8 @@ ADDR_03C05C:
     AND.b #$FE                              ;$03C088 |
     STA.w SpriteYXPPCCCT_15F6,X             ;$03C08A |
     LDA.b #$0C                              ;$03C08D |
-    STA.w $1602,X                           ;$03C08F |
-    DEC.w $160E,X                           ;$03C092 |
+    STA.w SpriteAnimation_1602,X            ;$03C08F |
+    DEC.w Sprite_160E,X                     ;$03C092 |
     LDA.b #$40                              ;$03C095 |
     STA.w YoshiGrowingTimer_18E8            ;$03C097 |
     RTS                                     ;$03C09A |
@@ -8205,7 +8205,7 @@ CODE_03C385:
     BMI CODE_03C38C                         ;$03C389 |
     INC A                                   ;$03C38B |
 CODE_03C38C:
-    STA.w $1602,X
+    STA.w SpriteAnimation_1602,X
 Return03C38F:
     RTS
 
@@ -8262,10 +8262,10 @@ CODE_03C3DA:
     ADC.w SpriteDir_157C,X                  ;$03C3EC |
     STA $02                                 ;$03C3EF |
     PHX                                     ;$03C3F1 |
-    LDA.w $1602,X                           ;$03C3F2 |
+    LDA.w SpriteAnimation_1602,X            ;$03C3F2 |
     PHA                                     ;$03C3F5 |
     ASL                                     ;$03C3F6 |
-    ADC.w $1602,X                           ;$03C3F7 |
+    ADC.w SpriteAnimation_1602,X            ;$03C3F7 |
     STA $03                                 ;$03C3FA |
     PLX                                     ;$03C3FC |
     LDA.w DATA_03C3D7,X                     ;$03C3FD |
@@ -8825,7 +8825,7 @@ CODE_03C8E4:
     AND.b #$FF                              ;$03C8E7 |
     TAY                                     ;$03C8E9 |
     LDA.w DATA_03C8F1,Y                     ;$03C8EA |
-    STA.w $1602,X                           ;$03C8ED |
+    STA.w SpriteAnimation_1602,X            ;$03C8ED |
     RTS                                     ;$03C8F0 |
 
 DATA_03C8F1:
@@ -8860,7 +8860,7 @@ CODE_03C958:
     BCC CODE_03C962                         ;$03C95F |
     INC A                                   ;$03C961 |
 CODE_03C962:
-    STA.w $1602,X
+    STA.w SpriteAnimation_1602,X
     JSR CODE_03C9E9                         ;$03C965 |
     RTS                                     ;$03C968 |
 
@@ -8927,7 +8927,7 @@ CODE_03C9E9:
     STA $05                                 ;$03C9EC |
     LDA.w SpriteAnimationTimer_1570,X       ;$03C9EE |
     STA $06                                 ;$03C9F1 |
-    LDA.w $1602,X                           ;$03C9F3 |
+    LDA.w SpriteAnimation_1602,X            ;$03C9F3 |
     STA $07                                 ;$03C9F6 |
     LDA.b SpriteXPosLow_E4,X                ;$03C9F8 |
     STA $08                                 ;$03C9FA |
@@ -9251,7 +9251,7 @@ CODE_03CC09:
     PHB
     PHK                                     ;$03CC0A |
     PLB                                     ;$03CC0B |
-    STZ.w $1662,X                           ;$03CC0C |
+    STZ.w dscccccc_1662,X                   ;$03CC0C |
     JSR CODE_03CC14                         ;$03CC0F |
     PLB                                     ;$03CC12 |
     RTL                                     ;$03CC13 |
@@ -9305,9 +9305,9 @@ CODE_03CC8A:
     BNE CODE_03CC9D                         ;$03CC92 |
     JSL GetRand                             ;$03CC94 |
     AND.b #$0F                              ;$03CC98 |
-    STA.w $160E,X                           ;$03CC9A |
+    STA.w Sprite_160E,X                     ;$03CC9A |
 CODE_03CC9D:
-    LDA.w $160E,X
+    LDA.w Sprite_160E,X
     ORA.w SpriteAnimationTimer_1570,X       ;$03CCA0 |
     TAY                                     ;$03CCA3 |
     LDA.w DATA_03CC5A,Y                     ;$03CCA4 |
@@ -9336,7 +9336,7 @@ CODE_03CCCC:
     STA.w SpriteStun_1540,X                 ;$03CCD3 |
     INC.w Sprite_151C,X                     ;$03CCD6 |
     LDA.w DATA_03CC51,Y                     ;$03CCD9 |
-    STA.w $1602,X                           ;$03CCDC |
+    STA.w SpriteAnimation_1602,X            ;$03CCDC |
 Return03CCDF:
     RTS
 
@@ -9360,8 +9360,8 @@ CODE_03CCE8:
     STA.w SpriteAnimationTimer_1570,Y       ;$03CCFC |
     LDA.b SpritePhase_C2,X                  ;$03CCFF |
     STA.w $00C2,y                           ;$03CD01 |
-    LDA.w $160E,X                           ;$03CD04 |
-    STA.w $160E,Y                           ;$03CD07 |
+    LDA.w Sprite_160E,X                     ;$03CD04 |
+    STA.w Sprite_160E,Y                     ;$03CD07 |
     LDA.b SpriteXPosLow_E4,X                ;$03CD0A |
     STA.w SpriteXPosLow_E4,y                ;$03CD0C |
     LDA.w SpriteXPosHigh_14E0,X             ;$03CD0F |
@@ -9427,7 +9427,7 @@ CODE_03CDDA:
     ORA $00                                 ;$03CDE5 |
     TAY                                     ;$03CDE7 |
     LDA.w DATA_03CD37,Y                     ;$03CDE8 |
-    STA.w $1602,X                           ;$03CDEB |
+    STA.w SpriteAnimation_1602,X            ;$03CDEB |
     RTS                                     ;$03CDEE |
 
 CODE_03CDEF:
@@ -9475,7 +9475,7 @@ CODE_03CE38:
     LSR                                     ;$03CE3A |
     LSR                                     ;$03CE3B |
     AND.b #$01                              ;$03CE3C |
-    STA.w $1602,X                           ;$03CE3E |
+    STA.w SpriteAnimation_1602,X            ;$03CE3E |
     RTS                                     ;$03CE41 |
 
 CODE_03CE42:
@@ -9489,7 +9489,7 @@ CODE_03CE4B:
     LSR                                     ;$03CE4D |
     TAY                                     ;$03CE4E |
     LDA.w DATA_03CE56,Y                     ;$03CE4F |
-    STA.w $1602,X                           ;$03CE52 |
+    STA.w SpriteAnimation_1602,X            ;$03CE52 |
     RTS                                     ;$03CE55 |
 
 DATA_03CE56:
@@ -9782,17 +9782,17 @@ DATA_03D46D:
 
 CODE_03D484:
     JSR GetDrawInfoBnk3
-    LDA.w $1602,X                           ;$03D487 |
+    LDA.w SpriteAnimation_1602,X            ;$03D487 |
     ASL                                     ;$03D48A |
     ASL                                     ;$03D48B |
-    ADC.w $1602,X                           ;$03D48C |
-    ADC.w $1602,X                           ;$03D48F |
+    ADC.w SpriteAnimation_1602,X            ;$03D48C |
+    ADC.w SpriteAnimation_1602,X            ;$03D48F |
     STA $02                                 ;$03D492 |
     LDA.b SpritePhase_C2,X                  ;$03D494 |
     CMP.b #$06                              ;$03D496 |
     BEQ CODE_03D4DF                         ;$03D498 |
     PHX                                     ;$03D49A |
-    LDA.w $1602,X                           ;$03D49B |
+    LDA.w SpriteAnimation_1602,X            ;$03D49B |
     TAX                                     ;$03D49E |
     LDA.w DATA_03D456,X                     ;$03D49F |
     TAX                                     ;$03D4A2 |
@@ -9836,7 +9836,7 @@ CODE_03D4DD:
 
 CODE_03D4DF:
     PHX
-    LDA.w $1602,X                           ;$03D4E0 |
+    LDA.w SpriteAnimation_1602,X            ;$03D4E0 |
     TAX                                     ;$03D4E3 |
     LDA.w DATA_03D46D,X                     ;$03D4E4 |
     TAX                                     ;$03D4E7 |
