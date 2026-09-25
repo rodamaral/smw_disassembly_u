@@ -2626,7 +2626,7 @@ CODE_0293D8:
     JSL GetSpriteClippingA                  ;$0293DE |
     LDA $0E                                 ;$0293E2 |
     BEQ CODE_0293EB                         ;$0293E4 |
-    JSR CODE_029696                         ;$0293E6 |
+    JSR get_cape_clipping_029696            ;$0293E6 |
     BRA CODE_0293EE                         ;$0293E9 |
 
 CODE_0293EB:
@@ -2935,19 +2935,18 @@ Return029630:
 CapeExtSpriteInteract029631:
     LDX.b #$07
 -   STX.w CurrentSprite_15E9                ;$029633 |
-    LDA.w $170B,X                           ;$029636 |
-    CMP.b #$02                              ;$029639 |
-    BCC .NextExtendedSprite029653           ;$02963B |
-    JSR CODE_02A519                         ;$02963D |
-    JSR CODE_029696                         ;$029640 |
-    JSL CheckForContact                     ;$029643 |
-    BCC .NextExtendedSprite029653           ;$029647 |
-    LDA.w $170B,X                           ;$029649 |
-    CMP.b #$12                              ;$02964C |
-    BEQ .NextExtendedSprite029653           ;$02964E |
-    JSR CODE_02A4DE                         ;$029650 |
-.NextExtendedSprite029653:
-    DEX
+    LDA.w ExtSpriteNumber_170B,X            ;$029636 |
+    CMP.b #!ReznorFireball_02               ;$029639 |
+    BCC +                                   ;$02963B |\
+    JSR get_ext_sprite_clipping_02A519      ;$02963D ||
+    JSR get_cape_clipping_029696            ;$029640 ||
+    JSL CheckForContact                     ;$029643 ||
+    BCC +                                   ;$029647 ||\
+    LDA.w ExtSpriteNumber_170B,X            ;$029649 |||
+    CMP.b #!WaterBubble_12                  ;$02964C |||
+    BEQ +                                   ;$02964E |||\
+    JSR kill_extended_sprite_02A4DE         ;$029650 ||||
++   DEX                                     ;$029653 |
     BPL -                                   ;$029654 |
 Return029656:
     RTS
@@ -2995,19 +2994,19 @@ CODE_029663:
     PLX                                     ;$029694 |
     RTS                                     ;$029695 |
 
-CODE_029696:
-    LDA.w $13E9
+get_cape_clipping_029696:
+    LDA.w CapeInteractionXPos_13E9
     SEC                                     ;$029699 |
     SBC.b #$02                              ;$02969A |
     STA $00                                 ;$02969C |
-    LDA.w $13EA                             ;$02969E |
+    LDA.w CapeInteractionXPos_13E9+1        ;$02969E |
     SBC.b #$00                              ;$0296A1 |
     STA $08                                 ;$0296A3 |
     LDA.b #$14                              ;$0296A5 |
     STA $02                                 ;$0296A7 |
-    LDA.w $13EB                             ;$0296A9 |
+    LDA.w CapeInteractionYPos_13EB          ;$0296A9 |
     STA $01                                 ;$0296AC |
-    LDA.w $13EC                             ;$0296AE |
+    LDA.w CapeInteractionYPos_13EB+1        ;$0296AE |
     STA $09                                 ;$0296B1 |
     LDA.b #$10                              ;$0296B3 |
     STA $03                                 ;$0296B5 |
@@ -3560,7 +3559,7 @@ CODE_029A71:
     RTS                                     ;$029AA7 |
 
 CODE_029AA8:
-    JSL CODE_02AD34
+    JSL get_score_sprite_slot_02AD34
     LDA.b #$01                              ;$029AAC |
     STA.w $16E1,Y                           ;$029AAE |
     LDA.w $17D4,X                           ;$029AB1 |
@@ -3697,7 +3696,7 @@ CODE_029B99:
 CODE_029BA5:
     LDA.b SpriteLock_9D
     BNE Return029BD9                        ;$029BA7 |
-    JSR CODE_02A3F6                         ;$029BA9 |
+    JSR player_extspr_interaction_02A3F6    ;$029BA9 |
     JSR CODE_02B554                         ;$029BAC |
     JSR CODE_02B560                         ;$029BAF |
     LDA.b Frame_13                          ;$029BB2 |
@@ -3885,7 +3884,7 @@ ADDR_029CE3:
     STA.w $173D,X                           ;$029CEF |
     INC.w $1765,X                           ;$029CF2 |
 ADDR_029CF5:
-    JSR CODE_02A3F6                         ;$029CF5 | check for contact with Player
+    JSR player_extspr_interaction_02A3F6    ;$029CF5 | check for contact with Player
 CODE_029CF8:
     LDA.w $1715,X
     SEC                                     ;$029CFB |
@@ -3968,7 +3967,7 @@ ADDR_029D99:
     RTS                                     ;$029D9C |
 
 UnusedExtendedSpr:
-    JSR CODE_02A3F6
+    JSR player_extspr_interaction_02A3F6
     LDY.w $1747,X                           ;$029DA0 |
     LDA.w SpriteStatus_14C8,Y               ;$029DA3 |
     CMP.b #$08                              ;$029DA6 |
@@ -4342,7 +4341,7 @@ CODE_02A045:
     LDA.b #$01
     STA.w SPCIO0_1DF9                       ;$02A047 |
     LDA.b #$0F                              ;$02A04A |
-    JMP CODE_02A4E0                         ;$02A04C |
+    JMP kill_extended_sprite_02A4E0         ;$02A04C |
 
 ADDR_02A04F:
     LDY.w DATA_029FA5,X
@@ -4415,7 +4414,7 @@ FireRtLoopStart:
     EOR.w $1779,Y                           ;$02A0CF |
     BNE FireRtNextSprite                    ;$02A0D2 |
     JSL GetSpriteClippingA                  ;$02A0D4 |
-    JSR CODE_02A547                         ;$02A0D8 |
+    JSR get_fireball_clipping_02A547        ;$02A0D8 |
     JSL CheckForContact                     ;$02A0DB |
     BCC FireRtNextSprite                    ;$02A0DF |
     LDA.w $170B,Y                           ;$02A0E1 |
@@ -4497,7 +4496,7 @@ ReznorFireball:
     BNE CODE_02A178                         ;$02A16D |
     JSR CODE_02B554                         ;$02A16F |
     JSR CODE_02B560                         ;$02A172 |
-    JSR CODE_02A3F6                         ;$02A175 |
+    JSR player_extspr_interaction_02A3F6    ;$02A175 |
 CODE_02A178:
     LDA.w IRQNMICommand_0D9B
     BPL CODE_02A1A4                         ;$02A17B |
@@ -4599,7 +4598,7 @@ FlameRemnant:
     BNE Return02A253                        ;$02A22B |
     BEQ CODE_02A232                         ;$02A22D |
 CODE_02A22F:
-    JSR CODE_02A3F6
+    JSR player_extspr_interaction_02A3F6
 CODE_02A232:
     JSR CODE_02A1A4
     LDY.w DATA_02A153,X                     ;$02A235 |
@@ -4628,7 +4627,7 @@ Baseball:
     BNE CODE_02A267                         ;$02A262 |
     INC.w $1765,X                           ;$02A264 |
 CODE_02A267:
-    JSR CODE_02A3F6
+    JSR player_extspr_interaction_02A3F6
 CODE_02A26A:
     LDA.w $170B,X
     CMP.b #$0D                              ;$02A26D |
@@ -4710,7 +4709,7 @@ Hammer:
     INC.w $173D,X                           ;$02A300 |
     INC.w $173D,X                           ;$02A303 |
 CODE_02A306:
-    JSR CODE_02A3F6
+    JSR player_extspr_interaction_02A3F6
     INC.w $1765,X                           ;$02A309 |
 CODE_02A30C:
     LDA.w $170B,X
@@ -4844,60 +4843,58 @@ ADDR_02A3B1:
     STA.w $0460,Y                           ;$02A3F2 |
     RTS                                     ;$02A3F5 |
 
-CODE_02A3F6:
-    LDA.w $13F9
-    EOR.w $1779,X                           ;$02A3F9 |
-    BNE Return02A468                        ;$02A3FC |
-    JSL GetMarioClipping                    ;$02A3FE |
-    JSR CODE_02A519                         ;$02A402 |
-    JSL CheckForContact                     ;$02A405 |
-    BCC Return02A468                        ;$02A409 |
-    LDA.w $170B,X                           ;$02A40B |
-    CMP.b #$0A                              ;$02A40E |
-    BNE CODE_02A469                         ;$02A410 |
-    JSL CODE_05B34A                         ;$02A412 |
-    INC.w $18E3                             ;$02A416 |
-    STZ.w $170B,X                           ;$02A419 |
-    LDY.b #$03                              ;$02A41C |
-ADDR_02A41E:
-    LDA.w $17C0,Y
-    BEQ ADDR_02A427                         ;$02A421 |
-    DEY                                     ;$02A423 |
-    BPL ADDR_02A41E                         ;$02A424 |
-    INY                                     ;$02A426 |
-ADDR_02A427:
-    LDA.b #$05
-    STA.w $17C0,Y                           ;$02A429 |
-    LDA.w $171F,X                           ;$02A42C |
-    STA.w $17C8,Y                           ;$02A42F |
-    LDA.w $1715,X                           ;$02A432 |
-    STA.w $17C4,Y                           ;$02A435 |
-    LDA.b #$0A                              ;$02A438 |
-    STA.w $17CC,Y                           ;$02A43A |
-    JSL CODE_02AD34                         ;$02A43D |
-    LDA.b #$05                              ;$02A441 |
-    STA.w $16E1,Y                           ;$02A443 |
-    LDA.w $1715,X                           ;$02A446 |
-    STA.w $16E7,Y                           ;$02A449 |
-    LDA.w $1729,X                           ;$02A44C |
-    STA.w $16F9,Y                           ;$02A44F |
-    LDA.w $171F,X                           ;$02A452 |
-    STA.w $16ED,Y                           ;$02A455 |
-    LDA.w $1733,X                           ;$02A458 |
-    STA.w $16F3,Y                           ;$02A45B |
-    LDA.b #$30                              ;$02A45E |
-    STA.w $16FF,Y                           ;$02A460 |
-    LDA.b #$00                              ;$02A463 |
-    STA.w $1705,Y                           ;$02A465 |
-Return02A468:
+player_extspr_interaction_02A3F6:
+    LDA.w PlayerBehindNet_13F9
+    EOR.w ExtSpritePriority_1779,X          ;$02A3F9 |
+    BNE .return_02A468                      ;$02A3FC |\
+    JSL GetMarioClipping                    ;$02A3FE ||
+    JSR get_ext_sprite_clipping_02A519      ;$02A402 ||
+    JSL CheckForContact                     ;$02A405 ||
+    BCC .return_02A468                      ;$02A409 ||\
+    LDA.w ExtSpriteNumber_170B,X            ;$02A40B |||
+    CMP.b #!CoinCloudGame_0A                ;$02A40E |||
+    BNE CODE_02A469                         ;$02A410 |||\
+    JSL CODE_05B34A                         ;$02A412 ||||
+    INC.w GameCloudCoinCount_18E3           ;$02A416 ||||
+    STZ.w ExtSpriteNumber_170B,X            ;$02A419 ||||
+    LDY.b #$03                              ;$02A41C |||| Y: smoke sprite slot
+-   LDA.w SmokeSpriteNumber_17C0,Y          ;$02A41E |||| get free smoke sprite slot
+    BEQ +                                   ;$02A421 |||| or overwrite slot 0 if all are taken
+    DEY                                     ;$02A423 ||||
+    BPL -                                   ;$02A424 ||||
+    INY                                     ;$02A426 ||||
++   LDA.b #!Glitter_05                      ;$02A427 ||||
+    STA.w SmokeSpriteNumber_17C0,Y          ;$02A429 ||||
+    LDA.w ExtSpriteXPosLow_171F,X           ;$02A42C ||||
+    STA.w SmokeSpriteXPos_17C8,Y            ;$02A42F ||||
+    LDA.w ExtSpriteYPosLow_1715,X           ;$02A432 ||||
+    STA.w SmokeSpriteYPos_17C4,Y            ;$02A435 ||||
+    LDA.b #$0A                              ;$02A438 ||||
+    STA.w SmokeSpriteTimer_17CC,Y           ;$02A43A ||||
+    JSL get_score_sprite_slot_02AD34        ;$02A43D ||||
+    LDA.b #$05                              ;$02A441 |||| Y: score sprite slot
+    STA.w ScoreSpriteNumber_16E1,Y          ;$02A443 ||||
+    LDA.w ExtSpriteYPosLow_1715,X           ;$02A446 ||||
+    STA.w ScoreSpriteYPosLow_16E7,Y         ;$02A449 ||||
+    LDA.w ExtSpriteYPosHigh_1729,X          ;$02A44C ||||
+    STA.w ScoreSpriteYPosHigh_16F9,Y        ;$02A44F ||||
+    LDA.w ExtSpriteXPosLow_171F,X           ;$02A452 ||||
+    STA.w ScoreSpriteXPosLow_16ED,Y         ;$02A455 ||||
+    LDA.w ExtSpriteXPosHigh_1733,X          ;$02A458 ||||
+    STA.w ScoreSpriteXPosHigh_16F3,Y        ;$02A45B ||||
+    LDA.b #$30                              ;$02A45E ||||
+    STA.w ScoreSpriteTimer_16FF,Y           ;$02A460 ||||
+    LDA.b #$00                              ;$02A463 ||||
+    STA.w ScoreSpriteLayer_1705,Y           ;$02A465 ||||
+.return_02A468:
     RTS
 
 CODE_02A469:
     LDA.w StarTimer_1490
     BNE CODE_02A4B5                         ;$02A46C |
     LDA.w RidingYoshi_187A                  ;$02A46E |
-    BEQ CODE_02A4AE                         ;$02A471 |
-CODE_02A473:
+    BEQ hurt_mario_02A4AE                   ;$02A471 |
+hurt_yoshi_02A473:
     PHX
     LDX.w YoshiSlot_18DF                    ;$02A474 |
     LDA.b #$10                              ;$02A477 |
@@ -4914,7 +4911,7 @@ CODE_02A473:
     STA.b PlayerYSpeed_7D                   ;$02A492 |
     STZ.b PlayerXSpeed_7B                   ;$02A494 |
     LDY.w SpriteDir_157C-1,X                ;$02A496 |
-    LDA.w DATA_02A4B3,Y                     ;$02A499 |
+    LDA.w hurt_yoshi_x_speeds_02A4B3,Y      ;$02A499 |
     STA.b SpriteXSpeed_B6-1,X               ;$02A49C |
     STZ.w Sprite_1594-1,X                   ;$02A49E |
     STZ.w Sprite_151C-1,X                   ;$02A4A1 |
@@ -4924,92 +4921,92 @@ CODE_02A473:
     PLX                                     ;$02A4AC |
     RTS                                     ;$02A4AD |
 
-CODE_02A4AE:
+hurt_mario_02A4AE:
     JSL HurtMario
     RTS                                     ;$02A4B2 |
 
-DATA_02A4B3:
+hurt_yoshi_x_speeds_02A4B3:
     db $10,$F0
 
 CODE_02A4B5:
-    LDA.w $170B,X
-    CMP.b #$04                              ;$02A4B8 |
-    BEQ CODE_02A4DE                         ;$02A4BA |
-    LDA.w $171F,X                           ;$02A4BC |
+    LDA.w ExtSpriteNumber_170B,X
+    CMP.b #!Hammer_04                       ;$02A4B8 |
+    BEQ kill_extended_sprite_02A4DE         ;$02A4BA |
+    LDA.w ExtSpriteXPosLow_171F,X           ;$02A4BC |
     SEC                                     ;$02A4BF |
     SBC.b #$04                              ;$02A4C0 |
-    STA.w $171F,X                           ;$02A4C2 |
-    LDA.w $1733,X                           ;$02A4C5 |
+    STA.w ExtSpriteXPosLow_171F,X           ;$02A4C2 |
+    LDA.w ExtSpriteXPosHigh_1733,X          ;$02A4C5 |
     SBC.b #$00                              ;$02A4C8 |
-    STA.w $1733,X                           ;$02A4CA |
-    LDA.w $1715,X                           ;$02A4CD |
+    STA.w ExtSpriteXPosHigh_1733,X          ;$02A4CA |
+    LDA.w ExtSpriteYPosLow_1715,X           ;$02A4CD |
     SEC                                     ;$02A4D0 |
     SBC.b #$04                              ;$02A4D1 |
-    STA.w $1715,X                           ;$02A4D3 |
-    LDA.w $1729,X                           ;$02A4D6 |
+    STA.w ExtSpriteYPosLow_1715,X           ;$02A4D3 |
+    LDA.w ExtSpriteYPosHigh_1729,X          ;$02A4D6 |
     SBC.b #$00                              ;$02A4D9 |
-    STA.w $1729,X                           ;$02A4DB |
-CODE_02A4DE:
+    STA.w ExtSpriteYPosHigh_1729,X          ;$02A4DB |
+kill_extended_sprite_02A4DE:
     LDA.b #$07
-CODE_02A4E0:
-    STA.w $176F,X
-    LDA.b #$01                              ;$02A4E3 |
-    STA.w $170B,x                           ;$02A4E5 |
+kill_extended_sprite_02A4E0:
+    STA.w ExtSpriteTimer_176F,X
+    LDA.b #!SmokePuff_01                    ;$02A4E3 |
+    STA.w ExtSpriteNumber_170B,x            ;$02A4E5 |
     RTS                                     ;$02A4E8 |
 
-DATA_02A4E9:
+ext_clipping_off_x_02A4E9:
     db $03,$03,$04,$03,$04,$00,$00,$00
     db $04,$03
 
-DATA_02A4F3:
+ext_clipping_off_y_02A4F3:
     db $03,$03,$03,$03,$04,$03,$04,$00
     db $00,$00,$02,$03
 
-DATA_02A4FF:
+ext_clipping_width_02A4FF:
     db $03,$03,$01,$01,$08,$01,$08,$00
     db $00,$0F,$08,$01
 
-DATA_02A50B:
+ext_clipping_height_02A50B:
     db $01,$01,$01,$01,$08,$01,$08,$00
     db $00,$0F,$0C,$01,$01,$01
 
-CODE_02A519:
-    LDY.w $170B,X
-    LDA.w $171F,X                           ;$02A51C |
+get_ext_sprite_clipping_02A519:
+    LDY.w ExtSpriteNumber_170B,X
+    LDA.w ExtSpriteXPosLow_171F,X           ;$02A51C |
     CLC                                     ;$02A51F |
-    ADC.w $A4E7,Y                           ;$02A520 |
+    ADC.w ext_clipping_off_x_02A4E9-2,Y     ;$02A520 |
     STA $04                                 ;$02A523 |
-    LDA.w $1733,X                           ;$02A525 |
+    LDA.w ExtSpriteXPosHigh_1733,X          ;$02A525 |
     ADC.b #$00                              ;$02A528 |
     STA $0A                                 ;$02A52A |
-    LDA.w DATA_02A4FF,Y                     ;$02A52C |
+    LDA.w ext_clipping_width_02A4FF,Y       ;$02A52C |
     STA $06                                 ;$02A52F |
-    LDA.w $1715,X                           ;$02A531 |
+    LDA.w ExtSpriteYPosLow_1715,X           ;$02A531 |
     CLC                                     ;$02A534 |
-    ADC.w DATA_02A4F3,Y                     ;$02A535 |
+    ADC.w ext_clipping_off_y_02A4F3,Y       ;$02A535 |
     STA $05                                 ;$02A538 |
-    LDA.w $1729,X                           ;$02A53A |
+    LDA.w ExtSpriteYPosHigh_1729,X          ;$02A53A |
     ADC.b #$00                              ;$02A53D |
     STA $0B                                 ;$02A53F |
-    LDA.w DATA_02A50B,Y                     ;$02A541 |
+    LDA.w ext_clipping_height_02A50B,Y      ;$02A541 |
     STA $07                                 ;$02A544 |
     RTS                                     ;$02A546 |
 
-CODE_02A547:
-    LDA.w $171F,Y
+get_fireball_clipping_02A547:
+    LDA.w ExtSpriteXPosLow_171F,Y
     SEC                                     ;$02A54A |
     SBC.b #$02                              ;$02A54B |
     STA $00                                 ;$02A54D |
-    LDA.w $1733,Y                           ;$02A54F |
+    LDA.w ExtSpriteXPosHigh_1733,Y          ;$02A54F |
     SBC.b #$00                              ;$02A552 |
     STA $08                                 ;$02A554 |
     LDA.b #$0C                              ;$02A556 |
     STA $02                                 ;$02A558 |
-    LDA.w $1715,Y                           ;$02A55A |
+    LDA.w ExtSpriteYPosLow_1715,Y           ;$02A55A |
     SEC                                     ;$02A55D |
     SBC.b #$04                              ;$02A55E |
     STA $01                                 ;$02A560 |
-    LDA.w $1729,Y                           ;$02A562 |
+    LDA.w ExtSpriteYPosHigh_1729,Y          ;$02A562 |
     SBC.b #$00                              ;$02A565 |
     STA $09                                 ;$02A567 |
     LDA.b #$13                              ;$02A569 |
@@ -6057,7 +6054,7 @@ CODE_02ACE6:
 CODE_02ACEF:
     PHY
     PHA                                     ;$02ACF0 |
-    JSL CODE_02AD34                         ;$02ACF1 |
+    JSL get_score_sprite_slot_02AD34        ;$02ACF1 |
     PLA                                     ;$02ACF5 |
     STA.w $16E1,Y                           ;$02ACF6 |
     LDA.b SpriteYPosLow_D8,X                ;$02ACF9 |
@@ -6089,21 +6086,18 @@ CODE_02AD22:
     PLY                                     ;$02AD32 |
     RTL                                     ;$02AD33 |
 
-CODE_02AD34:
+get_score_sprite_slot_02AD34:
     LDY.b #$05
-CODE_02AD36:
-    LDA.w $16E1,Y
-    BEQ Return02AD4B                        ;$02AD39 |
+-   LDA.w ScoreSpriteNumber_16E1,Y          ;$02AD36 |
+    BEQ ++                                  ;$02AD39 |
     DEY                                     ;$02AD3B |
-    BPL CODE_02AD36                         ;$02AD3C |
-    DEC.w $18F7                             ;$02AD3E |
-    BPL CODE_02AD48                         ;$02AD41 |
+    BPL -                                   ;$02AD3C |
+    DEC.w ScoreSpriteIndex_18F7             ;$02AD3E |
+    BPL +                                   ;$02AD41 |
     LDA.b #$05                              ;$02AD43 |
-    STA.w $18F7                             ;$02AD45 |
-CODE_02AD48:
-    LDY.w $18F7
-Return02AD4B:
-    RTL
+    STA.w ScoreSpriteIndex_18F7             ;$02AD45 |
++   LDY.w ScoreSpriteIndex_18F7             ;$02AD48 |
+++  RTL                                     ;$02AD4B |
 
 PointTile1:
     db $00,$83,$83,$83,$83,$44,$54,$46
@@ -16603,10 +16597,10 @@ CODE_02F9AE:
     TXA
     EOR.b Frame_13                          ;$02F9AF |
     AND.b #$03                              ;$02F9B1 |
-    BNE Return02F9FE                        ;$02F9B3 |
+    BNE return_02F9FE                       ;$02F9B3 |
     LDA.w $0F4A,X                           ;$02F9B5 |
     CMP.b #$10                              ;$02F9B8 |
-    BCC Return02F9FE                        ;$02F9BA |
+    BCC return_02F9FE                       ;$02F9BA |
     LDA.w $1E16,X                           ;$02F9BC |
     CLC                                     ;$02F9BF |
     ADC.b #$02                              ;$02F9C0 |
@@ -16628,18 +16622,18 @@ CODE_02F9AE:
     STA $0B                                 ;$02F9E4 |
     JSL GetMarioClipping                    ;$02F9E6 |
     JSL CheckForContact                     ;$02F9EA |
-    BCC Return02F9FE                        ;$02F9EE |
+    BCC return_02F9FE                       ;$02F9EE |
     LDA.w StarTimer_1490                    ;$02F9F0 |
     BNE ADDR_02F9A6                         ;$02F9F3 |
-CODE_02F9F5:
+hurt_mario_or_yoshi_02F9F5:
     LDA.w RidingYoshi_187A
-    BNE CODE_02F9FF                         ;$02F9F8 |
+    BNE hurt_yoshi_02F9FF                   ;$02F9F8 |
     JSL HurtMario                           ;$02F9FA |
-Return02F9FE:
+return_02F9FE:
     RTS
 
-CODE_02F9FF:
-    JMP CODE_02A473
+hurt_yoshi_02F9FF:
+    JMP hurt_yoshi_02A473
 
 DATA_02FA02:
     db $03,$07,$07,$07,$0F,$07,$07,$0F
@@ -17264,7 +17258,7 @@ CODE_02FEB0:
     CMP $04                                 ;$02FEBB |
     SEP #$20                                ;$02FEBD |
     BCS Return02FEC4                        ;$02FEBF |
-    JSR CODE_02F9F5                         ;$02FEC1 |
+    JSR hurt_mario_or_yoshi_02F9F5          ;$02FEC1 |
 Return02FEC4:
     RTS
 
@@ -17361,7 +17355,7 @@ DATA_02FF64:
     db $90,$94,$98,$9C,$A0,$A4,$A8,$AC
 
 CODE_02FF6C:
-    JSL CODE_02AD34
+    JSL get_score_sprite_slot_02AD34
     LDA.b #$0D                              ;$02FF70 |
     STA.w $16E1,Y                           ;$02FF72 |
     LDA.w $1E02,X                           ;$02FF75 |

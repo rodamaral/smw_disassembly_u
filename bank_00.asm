@@ -12358,7 +12358,7 @@ CODE_00F388:
     LDA.b #$0D
 CODE_00F38A:
     PHA
-    JSL CODE_02AD34                         ;$00F38B |
+    JSL get_score_sprite_slot_02AD34        ;$00F38B |
     PLA                                     ;$00F38F |
     STA.w $16E1,Y                           ;$00F390 |
     LDA.b PlayerXPos_94                     ;$00F393 |

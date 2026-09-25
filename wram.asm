@@ -1786,6 +1786,27 @@ ScoreSpriteYPosHigh_16F9: skip 6
 ScoreSpriteTimer_16FF: skip 6
 ScoreSpriteLayer_1705: skip 6
 ExtSpriteNumber_170B: skip 10
+; Valid values
+!EmptyExt_00 = $00
+!SmokePuff_01 = $01
+!ReznorFireball_02 = $02
+!FlameHoppingFlame_03 = $03
+!Hammer_04 = $04
+!PlayerFireball_05 = $05
+!BoneDryBones_06 = $06
+!LavaSplash_07 = $07
+!TedShooterArm_08 = $08
+!UnknownFlickeringObject_09 = $09
+!CoinCloudGame_0A = $0A
+!PiranhaPlantFireball_0B = $0B
+!LotusFiery_0C = $0C
+!Baseball_0D = $0D
+!WigglerFlower_0E = $0E
+!TrailSmoke_0F = $0F
+!SpinjumpStars_10 = $10
+!YoshiFireball_11 = $11
+!WaterBubble_12 = $12
+
 ExtSpriteYPosLow_1715: skip 10
 ExtSpriteXPosLow_171F: skip 10
 ExtSpriteYPosHigh_1729: skip 10
@@ -1795,7 +1816,7 @@ ExtSpriteXSpeed_1747: skip 10
 ExtSpriteYPosSpx_1751: skip 10
 ExtSpriteXPosSpx_175B: skip 10
 ExtSpriteMisc_1765: skip 10
-ExtSpriteMisc_176F: skip 10
+ExtSpriteTimer_176F: skip 10
 ExtSpritePriority_1779: skip 10
 ShooterNumber_1783: skip 8
 ShooterYPosLow_178B: skip 8
@@ -1810,6 +1831,14 @@ Layer1DXPos_17BD: skip 1
 Layer2DYPos_17BE: skip 1
 Layer2DXPos_17BF: skip 1
 SmokeSpriteNumber_17C0: skip 4
+; Valid values
+!FreeSmoke_00 = $00
+!PuffSmoke_01 = $01
+!ContactGraphic_02 = $02
+!FeetSmoke_03 = $03
+!UnusedSmoke_04 = $04
+!Glitter_05 = $05
+
 SmokeSpriteYPos_17C4: skip 4
 SmokeSpriteXPos_17C8: skip 4
 SmokeSpriteTimer_17CC: skip 4
@@ -1926,7 +1955,7 @@ SmokeSpriteSlotFull_18E9: skip 1
 MinExtSpriteXPosHigh_18EA: skip 12
 ; 7E18F6 unused
 skip 1
-ScoreSpriteSlotIdx_18F7: skip 1
+ScoreSpriteIndex_18F7: skip 1
 BounceSpriteIntTimer_18F8: skip 4
 ExtSpriteSlotIdx_18FC: skip 1
 ChuckIsWhistling_18FD: skip 1
