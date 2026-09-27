@@ -2676,7 +2676,7 @@ CODE_0096FA:
     LDA.b #$20                              ;$009708 |
     STA.b LastScreenHoriz_5E                ;$00970A |
     JSR CODE_00A796                         ;$00970C |
-    INC.w $1404                             ;$00970F |
+    INC.w ScreenScrollAtWill_1404           ;$00970F |
     JSL update_screen_position_00F6DB       ;$009712 |
     JSL CODE_05801E                         ;$009716 |
     LDA.w OverworldOverride_0109            ;$00971A |
@@ -2947,7 +2947,7 @@ CODE_009925:
     LDX.b #$C0                              ;$00994F |
     LDA.b #$A0                              ;$009951 |
     BCC CODE_00995B                         ;$009953 |
-    STZ.w $1411                             ;$009955 |
+    STZ.w HorizLayer1Setting_1411           ;$009955 |
     JMP CODE_009A17                         ;$009958 |
 
 CODE_00995B:
@@ -3810,7 +3810,7 @@ load_layer3_009FB8:
     TAX                                     ;$009FCB |
     LDA.w DATA_009F88,X                     ;$009FCC |
     BMI CODE_009FEA                         ;$009FCF |
-    STA.w $1403                             ;$009FD1 |
+    STA.w Layer3TideSetting_1403            ;$009FD1 |
     LSR                                     ;$009FD4 |
     PHP                                     ;$009FD5 |
     JSR CODE_00A045                         ;$009FD6 |
@@ -4766,7 +4766,7 @@ Return00A795:
 
 CODE_00A796:
     REP #$20
-    LDY.w $1414                             ;$00A798 |
+    LDY.w VertLayer2Setting_1414            ;$00A798 |
     BEQ CODE_00A7B9                         ;$00A79B |
     DEY                                     ;$00A79D |
     BNE CODE_00A7A7                         ;$00A79E |
@@ -7812,7 +7812,7 @@ CODE_00C8EC:
     INC A                                   ;$00C8F0 |
     STA.b PlayerYPos_96                     ;$00C8F1 |
     STZ.b PlayerInAir_72                    ;$00C8F3 |
-    STZ.w $140D                             ;$00C8F5 |
+    STZ.w SpinJumpFlag_140D                 ;$00C8F5 |
 CODE_00C8F8:
     JMP use_land_physics
 
@@ -7894,7 +7894,7 @@ CODE_00C984:
 CODE_00C98B:
     LDA.b PlayerXSpeed_7B
     BNE CODE_00C9A4                         ;$00C98D |
-    STZ.w $1411                             ;$00C98F |
+    STZ.w HorizLayer1Setting_1411           ;$00C98F |
     JSR CODE_00CA3E                         ;$00C992 |
     INC.w $1B99                             ;$00C995 |
     LDA.b #$40                              ;$00C998 |
@@ -8405,13 +8405,13 @@ return_00CDDC:                              ;        |
     RTS                                     ;$00CDDC /
 
 screen_scrolling:
-    LDA.w $1411
+    LDA.w HorizLayer1Setting_1411
     BEQ return_00CDDC                       ;$00CDE0 |
     LDY.w $13FE                             ;$00CDE2 |
     LDA.w $13FD                             ;$00CDE5 |
     STA.b SpriteLock_9D                     ;$00CDE8 |
     BNE CODE_00CE4C                         ;$00CDEA |
-    LDA.w $1400                             ;$00CDEC |
+    LDA.w CameraProperMove_1400             ;$00CDEC |
     BEQ CODE_00CDF6                         ;$00CDEF |
     STZ.w $13FE                             ;$00CDF1 |
     BRA CODE_00CE48                         ;$00CDF4 |
@@ -8430,8 +8430,8 @@ ScrollScreen:
     LSR
     LSR                                     ;$00CE09 |
     LSR                                     ;$00CE0A |
-    INC.w $1401                             ;$00CE0B |
-    LDX.w $1401                             ;$00CE0E |
+    INC.w CameraScrollTimer_1401            ;$00CE0B |
+    LDX.w CameraScrollTimer_1401            ;$00CE0E |
     CPX.b #$10                              ;$00CE11 |
     BCC CODE_00CE4C                         ;$00CE13 |
     TAX                                     ;$00CE15 |
@@ -8463,7 +8463,7 @@ CODE_00CE44:
 CODE_00CE48:
     TAY
 CODE_00CE49:
-    STZ.w $1401
+    STZ.w CameraScrollTimer_1401
 CODE_00CE4C:
     LDX.b #$00
     LDA.b PlayerDir_76                      ;$00CE4E |
@@ -8483,7 +8483,7 @@ CODE_00CE6D:
     STX.w $13FD
 CODE_00CE70:
     STA.w $142A
-    STX.w $1400                             ;$00CE73 |
+    STX.w CameraProperMove_1400             ;$00CE73 |
     SEP #$20                                ;$00CE76 |
 CODE_00CE78:
     RTS
@@ -8574,7 +8574,7 @@ CODE_00CF0A:
 CODE_00CF13:
     STA.w CapeAniTimer_14A2
 lbl14A2Not0:
-    LDA.w $140D
+    LDA.w SpinJumpFlag_140D
     ORA.w CapeSpinTimer_14A6                ;$00CF19 |
     BEQ CODE_00CF4E                         ;$00CF1C |
     STZ.b PlayerIsDucking_73                ;$00CF1E |
@@ -8653,7 +8653,7 @@ CODE_00CF88:
     BEQ CODE_00CFB7                         ;$00CF9F |
     LDY.w RunTakeoffTimer_14A0              ;$00CFA1 |
     BNE CODE_00CFBC                         ;$00CFA4 |
-    LDY.w $1407                             ;$00CFA6 |
+    LDY.w FlightPhase_1407                  ;$00CFA6 |
     BEQ CODE_00CFAE                         ;$00CFA9 |
     LDA.w CODE_00CE78,Y                     ;$00CFAB |
 CODE_00CFAE:
@@ -8769,7 +8769,7 @@ powerup_physics:                            ;        \
     BVC .return                             ;$00D06A |/
     LDA.b PlayerIsDucking_73                ;$00D06C |\ and the player is neither ducking,
     ORA.w RidingYoshi_187A                  ;$00D06E | | nor on Yoshi,
-    ORA.w $140D                             ;$00D071 | | nor spin jumping,
+    ORA.w SpinJumpFlag_140D                 ;$00D071 | | nor spin jumping,
     BNE .return                             ;$00D074 |/
     LDA.b #$12                              ;$00D076 |\ then set the cape spin timer
     STA.w CapeSpinTimer_14A6                ;$00D078 |/
@@ -8785,7 +8785,7 @@ powerup_physics:                            ;        \
     BNE .return                             ;$00D08A |/
     BIT.b byetudlrPress_16                  ;$00D08C |\ and X or Y are tapped,
     BVS .shoot_fireball                     ;$00D08E |/ shoot a fireball.
-    LDA.w $140D                             ;$00D090 |\ If the player is spinjumping,
+    LDA.w SpinJumpFlag_140D                 ;$00D090 |\ If the player is spinjumping,
     BEQ .return                             ;$00D093 |/
     INC.w $13E2                             ;$00D095 | increment the spinjump fireball timer.
     LDA.w $13E2                             ;$00D098 |\ Every 16 frames,
@@ -8920,9 +8920,9 @@ cape_animation:
 flower_animation:                           ;        \
     LDA.w PlayerSlopePose_13ED              ;$00D16F |\ If the player is cape-sliding on the ground
     AND.b #$80                              ;$00D172 | |
-    ORA.w $1407                             ;$00D174 | | or flying in the air,
+    ORA.w FlightPhase_1407                  ;$00D174 | | or flying in the air,
     BEQ CODE_00D187                         ;$00D177 |/
-    STZ.w $1407                             ;$00D179 |\ stop flying,
+    STZ.w FlightPhase_1407                  ;$00D179 |\ stop flying,
     LDA.w PlayerSlopePose_13ED              ;$00D17C | |
     AND.b #$7F                              ;$00D17F | |
     STA.w PlayerSlopePose_13ED              ;$00D181 | | stop cape-sliding on the ground,
@@ -9287,7 +9287,7 @@ land_physics:
     LDA.w CarryingFlagMirror_148F           ;$00D640 |
     BNE .CODE_00D65E                        ;$00D643 |
     INC A                                   ;$00D645 |
-    STA.w $140D                             ;$00D646 |
+    STA.w SpinJumpFlag_140D                 ;$00D646 |
     LDA.b #$04                              ;$00D649 |
     STA.w SPCIO3_1DFC                       ;$00D64B |
     LDY.b PlayerDir_76                      ;$00D64E |
@@ -9349,7 +9349,7 @@ land_physics:
 .CODE_00D6B1:
     STZ.w PlayerSlopePose_13ED
     AND.b #$01                              ;$00D6B4 |
-    LDY.w $1407                             ;$00D6B6 |
+    LDY.w FlightPhase_1407                  ;$00D6B6 |
     BEQ .CODE_00D6D5                        ;$00D6B9 |
     CMP.b PlayerDir_76                      ;$00D6BB |
     BEQ .CODE_00D6C3                        ;$00D6BD |
@@ -9520,13 +9520,13 @@ DATA_00D7D9:
     db $C8,$02,$01
 
 aerial_physics:
-    LDY.w $1407                             ;$00D7E4 |
+    LDY.w FlightPhase_1407                  ;$00D7E4 |
     BNE CODE_00D824                         ;$00D7E7 |
     LDA.b PlayerInAir_72                    ;$00D7E9 |
     BEQ CODE_00D811                         ;$00D7EB |
     LDA.w CarryingFlagMirror_148F           ;$00D7ED |
     ORA.w RidingYoshi_187A                  ;$00D7F0 |
-    ORA.w $140D                             ;$00D7F3 |
+    ORA.w SpinJumpFlag_140D                 ;$00D7F3 |
     BNE CODE_00D811                         ;$00D7F6 |
     LDA.w PlayerSlopePose_13ED              ;$00D7F8 |
     BMI CODE_00D7FF                         ;$00D7FB |
@@ -9547,7 +9547,7 @@ CODE_00D814:
     STZ.b PlayerIsDucking_73
     LDA.b #$0B                              ;$00D816 |
     STA.b PlayerInAir_72                    ;$00D818 |
-    STZ.w $1409                             ;$00D81A |
+    STZ.w MaxStageOfFlight_1409             ;$00D81A |
     JSR CODE_00D94F                         ;$00D81D |
     LDX.b #$02                              ;$00D820 |
     BRA CODE_00D85B                         ;$00D822 |
@@ -9557,7 +9557,7 @@ CODE_00D824:
     BCC CODE_00D82B                         ;$00D826 |
     JSR CODE_00D94F                         ;$00D828 |
 CODE_00D82B:
-    LDX.w $1408
+    LDX.w NextFlightPhase_1408
     CPX.b #$04                              ;$00D82E |
     BEQ CODE_00D856                         ;$00D830 |
     LDX.b #$03                              ;$00D832 |
@@ -9567,7 +9567,7 @@ CODE_00D82B:
     AND.b #$03                              ;$00D83A |
     TAY                                     ;$00D83C |
     BNE CODE_00D849                         ;$00D83D |
-    LDA.w $1407                             ;$00D83F |
+    LDA.w FlightPhase_1407                  ;$00D83F |
     CMP.b #$04                              ;$00D842 |
     BCS CODE_00D856                         ;$00D844 |
     DEX                                     ;$00D846 |
@@ -9580,7 +9580,7 @@ CODE_00D849:
     EOR.b #$01                              ;$00D84E |
 CODE_00D850:
     TAX
-    CPX.w $1408                             ;$00D851 |
+    CPX.w NextFlightPhase_1408              ;$00D851 |
     BNE CODE_00D85B                         ;$00D854 |
 CODE_00D856:
     LDA.w CapePumpTimer_14A4
@@ -9590,22 +9590,22 @@ CODE_00D85B:
     BVS CODE_00D861                         ;$00D85D |
     LDX.b #$04                              ;$00D85F |
 CODE_00D861:
-    LDA.w $1407
+    LDA.w FlightPhase_1407
     CMP.w DATA_00D7D4,X                     ;$00D864 |
     BEQ CODE_00D87E                         ;$00D867 |
     CLC                                     ;$00D869 |
     ADC.w CapeSpeed,X                       ;$00D86A |
-    STA.w $1407                             ;$00D86D |
+    STA.w FlightPhase_1407                  ;$00D86D |
     LDA.b #$08                              ;$00D870 |
-    LDY.w $1409                             ;$00D872 |
+    LDY.w MaxStageOfFlight_1409             ;$00D872 |
     CPY.b #$C8                              ;$00D875 |
     BNE CODE_00D87B                         ;$00D877 |
     LDA.b #$02                              ;$00D879 |
 CODE_00D87B:
     STA.w CapePumpTimer_14A4
 CODE_00D87E:
-    STX.w $1408
-    LDY.w $1407                             ;$00D881 |
+    STX.w NextFlightPhase_1408
+    LDY.w FlightPhase_1407                  ;$00D881 |
     BEQ CODE_00D8CD                         ;$00D884 |
     LDA.b PlayerYSpeed_7D                   ;$00D886 |
     BPL CODE_00D892                         ;$00D888 |
@@ -9622,7 +9622,7 @@ CODE_00D89A:
     PHA
     CPY.b #$01                              ;$00D89B |
     BNE CODE_00D8C6                         ;$00D89D |
-    LDX.w $1409                             ;$00D89F |
+    LDX.w MaxStageOfFlight_1409             ;$00D89F |
     BEQ CODE_00D8C4                         ;$00D8A2 |
     LDA.b PlayerYSpeed_7D                   ;$00D8A4 |
     BMI CODE_00D8AF                         ;$00D8A6 |
@@ -9631,10 +9631,10 @@ CODE_00D89A:
     BRA CODE_00D8B9                         ;$00D8AD |
 
 CODE_00D8AF:
-    CMP.w $1409
+    CMP.w MaxStageOfFlight_1409
     BCS CODE_00D8B9                         ;$00D8B2 |
     STX.b PlayerYSpeed_7D                   ;$00D8B4 |
-    STZ.w $1409                             ;$00D8B6 |
+    STZ.w MaxStageOfFlight_1409             ;$00D8B6 |
 CODE_00D8B9:
     LDX.b PlayerDir_76
     LDA.b PlayerXSpeed_7B                   ;$00D8BB |
@@ -9728,7 +9728,7 @@ CODE_00D94C:
     RTS                                     ;$00D94E |
 
 CODE_00D94F:
-    STZ.w $140A
+    STZ.w Unused_140A
     LDA.b PlayerYSpeed_7D                   ;$00D952 |
     BPL CODE_00D958                         ;$00D954 |
     LDA.b #$00                              ;$00D956 |
@@ -9738,9 +9738,9 @@ CODE_00D958:
     LSR                                     ;$00D95A |
     TAY                                     ;$00D95B |
     LDA.w DATA_00D7D9,Y                     ;$00D95C |
-    CMP.w $1409                             ;$00D95F |
+    CMP.w MaxStageOfFlight_1409             ;$00D95F |
     BPL Return00D967                        ;$00D962 |
-    STA.w $1409                             ;$00D964 |
+    STA.w MaxStageOfFlight_1409             ;$00D964 |
 Return00D967:
     RTS
 
@@ -9770,8 +9770,8 @@ DATA_00D984:
 water_physics:
     STZ.w PlayerSlopePose_13ED              ;$00D988 |
     STZ.b PlayerIsDucking_73                ;$00D98B |
-    STZ.w $1407                             ;$00D98D |
-    STZ.w $140D                             ;$00D990 |
+    STZ.w FlightPhase_1407                  ;$00D98D |
+    STZ.w SpinJumpFlag_140D                 ;$00D990 |
     LDY.b PlayerYSpeed_7D                   ;$00D993 |
     LDA.w CarryingFlagMirror_148F           ;$00D995 |
     BEQ CODE_00D9EB                         ;$00D998 |
@@ -9895,7 +9895,7 @@ CODE_00DA48:
     TAX                                     ;$00DA51 |
     PLA                                     ;$00DA52 |
     ORA $00                                 ;$00DA53 |
-    LDY.w $1403                             ;$00DA55 |
+    LDY.w Layer3TideSetting_1403            ;$00DA55 |
     BEQ CODE_00DA5D                         ;$00DA58 |
     CLC                                     ;$00DA5A |
     ADC.b #$04                              ;$00DA5B |
@@ -9912,7 +9912,7 @@ CODE_00DA64:
 CODE_00DA69:
     LDY.b #$00
     TYX                                     ;$00DA6B |
-    LDA.w $1403                             ;$00DA6C |
+    LDA.w Layer3TideSetting_1403            ;$00DA6C |
     BEQ CODE_00DA79                         ;$00DA6F |
     LDX.b #$1E                              ;$00DA71 |
     LDA.b PlayerInAir_72                    ;$00DA73 |
@@ -9992,7 +9992,7 @@ CODE_00DB17:
     STZ.b PlayerInAir_72
     STZ.b PlayerYSpeed_7D                   ;$00DB19 |
     STZ.w $13DF                             ;$00DB1B |
-    STZ.w $140D                             ;$00DB1E |
+    STZ.w SpinJumpFlag_140D                 ;$00DB1E |
     LDY.w NetDoorTimer_149D                 ;$00DB21 |
     BEQ CODE_00DB7D                         ;$00DB24 |
     LDA.w NetDoorPlayerXOffset_1878         ;$00DB26 |
@@ -10976,7 +10976,7 @@ CODE_00E9C8:
     SEP #$20
     BEQ CODE_00E9FB                         ;$00E9CA |
     BPL CODE_00E9FB                         ;$00E9CC |
-    LDA.w $1411                             ;$00E9CE |
+    LDA.w HorizLayer1Setting_1411           ;$00E9CE |
     BNE CODE_00E9F6                         ;$00E9D1 |
     LDA.b #!Block_Screen_80                 ;$00E9D3 |
     TSB.b PlayerBlocked_77                  ;$00E9D5 |
@@ -11078,7 +11078,7 @@ CODE_00EA75:
     LDA.w CarryingFlagMirror_148F           ;$00EA84 |
     BNE CODE_00EA92                         ;$00EA87 |
     INC A                                   ;$00EA89 |
-    STA.w $140D                             ;$00EA8A |
+    STA.w SpinJumpFlag_140D                 ;$00EA8A |
     LDA.b #$04                              ;$00EA8D |
     STA.w SPCIO3_1DFC                       ;$00EA8F |
 CODE_00EA92:
@@ -11102,7 +11102,7 @@ reset_collision_flags:
     STZ.w $13EE                             ;$00EAAE |/
     STZ $8A                                 ;$00EAB1 | the collision points' swimming flags,
     STZ.b InteractionPtsClimbable_8B        ;$00EAB3 | the collision points' climbing flags,
-    STZ.w $140E                             ;$00EAB5 | and the layer 2 touched flag.
+    STZ.w Layer2Touched_140E                ;$00EAB5 | and the layer 2 touched flag.
     RTS                                     ;$00EAB8 /
 
 DATA_00EAB9:
@@ -11654,7 +11654,7 @@ CODE_00EE57:
     BEQ CODE_00EE83                         ;$00EE65 |
     LDX.b Powerup_19                        ;$00EE67 |
     BEQ CODE_00EE83                         ;$00EE69 |
-    LDX.w $140D                             ;$00EE6B |
+    LDX.w SpinJumpFlag_140D                 ;$00EE6B |
     BEQ CODE_00EE83                         ;$00EE6E |
     LDA.b #$21                              ;$00EE70 |
     JSL CODE_00F17F                         ;$00EE72 |
@@ -11769,7 +11769,7 @@ CODE_00EF38:
 CODE_00EF3B:
     LDX $8E
     BPL CODE_00EF60                         ;$00EF3D |
-    INC.w $140E                             ;$00EF3F |
+    INC.w Layer2Touched_140E                ;$00EF3F |
     PHA                                     ;$00EF42 |
     REP #$20                                ;$00EF43 |
     LDA.w Layer2DYPos_17BE                  ;$00EF45 |
@@ -11796,11 +11796,11 @@ CODE_00EF68:
     STZ.w $18B5
     STZ.b PlayerInAir_72                    ;$00EF6B |
     STZ.b PlayerClimb_74                    ;$00EF6D |
-    STZ.w $1406                             ;$00EF6F |
-    STZ.w $140D                             ;$00EF72 |
+    STZ.w BouncingFlag_1406                 ;$00EF6F |
+    STZ.w SpinJumpFlag_140D                 ;$00EF72 |
     LDA.b #!Block_Bottom_04                 ;$00EF75 |
     TSB.b PlayerBlocked_77                  ;$00EF77 |
-    LDY.w $1407                             ;$00EF79 |
+    LDY.w FlightPhase_1407                  ;$00EF79 |
     BNE CODE_00EF99                         ;$00EF7C |
     LDA.w RidingYoshi_187A                  ;$00EF7E |
     BEQ CODE_00EF95                         ;$00EF81 |
@@ -11817,7 +11817,7 @@ CODE_00EF95:
 
 CODE_00EF99:
     STZ.w SpriteStompCounter_1697
-    STZ.w $1407                             ;$00EF9C |
+    STZ.w FlightPhase_1407                  ;$00EF9C |
     CPY.b #$05                              ;$00EF9F |
     BCS CallGroundPound                     ;$00EFA1 |
     LDA.b Powerup_19                        ;$00EFA3 |
@@ -11908,7 +11908,7 @@ CODE_00F01B:
     STA.w SPCIO3_1DFC                       ;$00F026 |
     LDA.b #$80                              ;$00F029 |
     STA.b PlayerYSpeed_7D                   ;$00F02B |
-    STA.w $1406                             ;$00F02D |
+    STA.w BouncingFlag_1406                 ;$00F02D |
     PLA                                     ;$00F030 |
     PLA                                     ;$00F031 |
     JMP CODE_00EE35                         ;$00F032 |
@@ -12719,13 +12719,13 @@ CODE_00F5D5:
     BEQ kill_player                         ;$00F5D7 |
     CMP.b #$02                              ;$00F5D9 |
     BNE PowerDown                           ;$00F5DB |
-    LDA.w $1407                             ;$00F5DD |
+    LDA.w FlightPhase_1407                  ;$00F5DD |
     BEQ PowerDown                           ;$00F5E0 |
 CancelSoaring:
     LDY.b #$0F
     STY.w SPCIO0_1DF9                       ;$00F5E4 |
     LDA.b #$01                              ;$00F5E7 |
-    STA.w $140D                             ;$00F5E9 |
+    STA.w SpinJumpFlag_140D                 ;$00F5E9 |
     LDA.b #$30                              ;$00F5EC |
     STA.w FlashingTimer_1497                ;$00F5EE |
     BRA CODE_00F622                         ;$00F5F1 |
@@ -12750,13 +12750,13 @@ kill_player_no_speed:                       ;        |
     STA.w MusicBackup_0DDA                  ;$00F611 |
     LDA.b #!AniDeath_09                     ;$00F614 |\ Set the player death animation.
     STA.b PlayerAnimation_71                ;$00F616 |/
-    STZ.w $140D                             ;$00F618 | Disable spin jumping.
+    STZ.w SpinJumpFlag_140D                 ;$00F618 | Disable spin jumping.
     LDA.b #$30                              ;$00F61B |\
 CODE_00F61D:                                ;        | | Set the player animation timer
     STA.w PlayerAniTimer_1496               ;$00F61D | | and the sprite lock timer.
     STA.b SpriteLock_9D                     ;$00F620 |/
 CODE_00F622:                                ;        |
-    STZ.w $1407                             ;$00F622 | Stop flying.
+    STZ.w FlightPhase_1407                  ;$00F622 | Stop flying.
     STZ.w Unused_188A                       ;$00F625 |
 Return00F628:                               ;        |
     RTL                                     ;$00F628 /
@@ -12877,7 +12877,7 @@ update_screen_position_00F6DB:
     JMP .UpdateVerticalLevelScreen00F75C    ;$00F70A | if vertical layer 1
 +:  LDA.w #$00C0                            ;$00F70D |
     JSR ProcessVerticalScroll00F7F4         ;$00F710 |
-    LDY.w $1411                             ;$00F713 |
+    LDY.w HorizLayer1Setting_1411           ;$00F713 |
     BEQ .CODE_00F75A                        ;$00F716 |
     LDY.b #$02                              ;$00F718 |
     LDA.b PlayerXPos_94                     ;$00F71A |
@@ -12920,7 +12920,7 @@ update_screen_position_00F6DB:
     XBA                                     ;$00F75F |
     AND.w #$FF00                            ;$00F760 |
     JSR ProcessVerticalScroll00F7F4         ;$00F763 |
-    LDY.w $1411                             ;$00F766 |
+    LDY.w HorizLayer1Setting_1411           ;$00F766 |
     BEQ .CODE_00F79D                                ;$00F769 |
     LDY.b #$00                              ;$00F76B |
     LDA.b PlayerXPos_94                     ;$00F76D |
@@ -12948,7 +12948,7 @@ update_screen_position_00F6DB:
 .CODE_00F79B:
     STA.b Layer1XPos_1A
 .CODE_00F79D:
-    LDY.w $1413
+    LDY.w HorizLayer2Setting_1413
     BEQ .CODE_00F7AA                        ;$00F7A0 |
     LDA.b Layer1XPos_1A                     ;$00F7A2 |
     DEY                                     ;$00F7A4 |
@@ -12957,7 +12957,7 @@ update_screen_position_00F6DB:
 .CODE_00F7A8:
     STA.b Layer2XPos_1E
 .CODE_00F7AA:
-    LDY.w $1414
+    LDY.w VertLayer2Setting_1414
     BEQ .CODE_00F7C2                        ;$00F7AD |
     LDA.b Layer1YPos_1C                     ;$00F7AF |
     DEY                                     ;$00F7B1 |
@@ -13000,7 +13000,7 @@ update_screen_position_00F6DB:
     RTL                                     ;$00F7F3 |
 
 ProcessVerticalScroll00F7F4:
-    LDX.w $1412
+    LDX.w VertLayer1Setting_1412
     BNE +                                   ;$00F7F7 | return if vertical scroll is not enabled
     RTS                                     ;$00F7F9 |
 +   STA $04                                 ;$00F7FA |
@@ -13024,7 +13024,7 @@ ProcessVerticalScroll00F7F4:
 +   LDA $02                                 ;$00F81F |
     BMI .CODE_00F82A                        ;$00F821 |
     LDX.b #$00                              ;$00F823 |
-    STX.w $1404                             ;$00F825 |
+    STX.w ScreenScrollAtWill_1404           ;$00F825 |
     BRA .CODE_00F883                        ;$00F828 |
 .CODE_00F82A:
     SEP #$20
@@ -13037,7 +13037,7 @@ ProcessVerticalScroll00F7F4:
     ORA.b PlayerClimb_74                    ;$00F83A |
     ORA.w PBalloonFlag_13F3                 ;$00F83C |
     ORA.w PlayerInCloud_18C2                ;$00F83F |
-    ORA.w $1406                             ;$00F842 |
+    ORA.w BouncingFlag_1406                 ;$00F842 |
 .CODE_00F845:
     TAX
     REP #$20                                ;$00F846 |
@@ -13053,7 +13053,7 @@ ProcessVerticalScroll00F7F4:
     LDX.b PlayerInAir_72                    ;$00F85A |
     BNE .CODE_00F869                        ;$00F85C |
 .CODE_00F85E:
-    LDX.w $1412
+    LDX.w VertLayer1Setting_1412
     DEX                                     ;$00F861 |
     BEQ .CODE_00F875                        ;$00F862 |
     LDX.w $13F1                             ;$00F864 |
@@ -13065,11 +13065,11 @@ ProcessVerticalScroll00F7F4:
     LDY.b #$04                              ;$00F871 |
     BRA .CODE_00F881                        ;$00F873 |
 .CODE_00F875:
-    LDX.w $1404
+    LDX.w ScreenScrollAtWill_1404
     BNE .CODE_00F881                        ;$00F878 |
     LDX.b PlayerInAir_72                    ;$00F87A |
     BNE .Return00F8AA                       ;$00F87C |
-    INC.w $1404                             ;$00F87E |
+    INC.w ScreenScrollAtWill_1404           ;$00F87E |
 .CODE_00F881:
     LDA $02
 .CODE_00F883:
@@ -13117,7 +13117,7 @@ CODE_00F8C3:
     ADC.w DATA_00F6CF,Y                     ;$00F8D4 |
     BEQ Return00F8DE                        ;$00F8D7 |
     STA $02                                 ;$00F8D9 |
-    STY.w $1400                             ;$00F8DB |
+    STY.w CameraProperMove_1400             ;$00F8DB |
 Return00F8DE:
     RTS
 

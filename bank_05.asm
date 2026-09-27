@@ -616,10 +616,10 @@ CODE_058590:
     LSR                                     ;$0585BD |
     CMP.b #$03                              ;$0585BE |
     BNE HeaderVHscroll                      ;$0585C0 |
-    STZ.w $1411                             ;$0585C2 |
+    STZ.w HorizLayer1Setting_1411           ;$0585C2 |
     LDA.b #$00                              ;$0585C5 |
 HeaderVHscroll:
-    STA.w $1412
+    STA.w VertLayer1Setting_1412
     LDA.b Layer1DataPtr_65                  ;$0585CA |
     CLC                                     ;$0585CC |
     ADC.b #$05                              ;$0585CD |
@@ -3640,7 +3640,7 @@ Return05BC49:
 
 set_current_tide_offsets_05BC4A:
     REP #$20
-    LDY.w $1403                             ;$05BC4C |
+    LDY.w Layer3TideSetting_1403            ;$05BC4C |
     BNE .CODE_05BC5F                        ;$05BC4F |
     LDA.w $1466                             ;$05BC51 |
     SEC                                     ;$05BC54 |
@@ -3776,7 +3776,7 @@ Return05BD35:
     RTS
 
 CODE_05BD36:
-    STZ.w $1411
+    STZ.w HorizLayer1Setting_1411
     LDA.w $1440                             ;$05BD39 |
     ASL                                     ;$05BD3C |
     TAY                                     ;$05BD3D |
@@ -3960,7 +3960,7 @@ reset_layer3_05BE8A:
     RTL                                     ;$05BEA5 |
 
 CODE_05BEA6:
-    STZ.w $1411
+    STZ.w HorizLayer1Setting_1411
     LDA.w $1440                             ;$05BEA9 |
     ASL                                     ;$05BEAC |
     TAY                                     ;$05BEAD |
@@ -4008,7 +4008,7 @@ CODE_05BEF7:
     JMP CODE_05BDC9                         ;$05BF07 |
 
 CODE_05BF0A:
-    STZ.w $1414
+    STZ.w VertLayer2Setting_1414
     LDA.w $1440                             ;$05BF0D |
     ASL                                     ;$05BF10 |
     TAY                                     ;$05BF11 |
@@ -4074,7 +4074,7 @@ CODE_05BF6A:
     JMP CODE_05C32B                         ;$05BF94 |
 
 ADDR_05BF97:
-    STZ.w $1411
+    STZ.w HorizLayer1Setting_1411
     REP #$20                                ;$05BF9A |
     STZ.b Layer1XPos_1A                     ;$05BF9C |
     STZ.w $1462                             ;$05BF9E |
@@ -4090,7 +4090,7 @@ ADDR_05BF97:
     RTS                                     ;$05BFB9 |
 
 ADDR_05BFBA:
-    STZ.w $1411
+    STZ.w HorizLayer1Setting_1411
     REP #$20                                ;$05BFBD |
     STZ.b Layer2XPos_1E                     ;$05BFBF |
     STZ.w $1466                             ;$05BFC1 |
@@ -4128,7 +4128,7 @@ DATA_05C001:
     db $80,$00,$00,$01
 
 CODE_05C005:
-    STZ.w $1411
+    STZ.w HorizLayer1Setting_1411
     LDA.w $1440                             ;$05C008 |
     ASL                                     ;$05C00B |
     TAY                                     ;$05C00C |
@@ -4143,7 +4143,7 @@ CODE_05C01A:
     LDA.w #$0D00                            ;$05C01C |
     JSR CODE_05BFD2                         ;$05C01F |
 CODE_05C022:
-    STZ.w $1413
+    STZ.w HorizLayer2Setting_1413
     REP #$20                                ;$05C025 |
     STZ.w $144A                             ;$05C027 |
     STZ.w $144C                             ;$05C02A |
@@ -4693,7 +4693,7 @@ DATA_05C40A:
     db $30,$A0
 
 process_layer_3_05C40C:
-    LDA.w $1403
+    LDA.w Layer3TideSetting_1403
     BEQ +                                   ;$05C40F |
     JMP .not_a_tide_05C494                  ;$05C411 |
 +   REP #$20                                ;$05C414 |
@@ -5262,7 +5262,7 @@ CODE_05C84C:
     BNE CODE_05C830                         ;$05C850 |
     SEP #$20                                ;$05C852 |
     LDA.w $1442                             ;$05C854 |
-    ORA.w $140E                             ;$05C857 |
+    ORA.w Layer2Touched_140E                ;$05C857 |
     STA.w $1442                             ;$05C85A |
     BEQ CODE_05C87D                         ;$05C85D |
     REP #$20                                ;$05C85F |
@@ -6502,11 +6502,11 @@ CODE_05D8B7:
     LSR                                     ;$05D913 |
     TAX                                     ;$05D914 |
     LDA.l DATA_05D720,X                     ;$05D915 |
-    STA.w $1413                             ;$05D919 |
+    STA.w HorizLayer2Setting_1413           ;$05D919 |
     LDA.l DATA_05D710,X                     ;$05D91C |
-    STA.w $1414                             ;$05D920 |
+    STA.w VertLayer2Setting_1414            ;$05D920 |
     LDA.b #$01                              ;$05D923 |
-    STA.w $1411                             ;$05D925 |
+    STA.w HorizLayer1Setting_1411           ;$05D925 |
     LDA.w DATA_05F200,Y                     ;$05D928 |
     AND.b #$C0                              ;$05D92B |
     CLC                                     ;$05D92D |
@@ -6576,7 +6576,7 @@ CODE_05D9A1:
     INC A                                   ;$05D9B0 |
     STA.b LastScreenVert_5F                 ;$05D9B1 |
     LDA.b #$01                              ;$05D9B3 |
-    STA.w $1412                             ;$05D9B5 |
+    STA.w VertLayer1Setting_1412            ;$05D9B5 |
 CODE_05D9B8:
     LDA.w SublevelCount_141A
     BNE CODE_05D9EC                         ;$05D9BB |
@@ -6621,13 +6621,13 @@ CODE_05DA01:
     STA.b PlayerYPos_96+1                   ;$05DA03 |
     STA.b Layer1YPos_1C+1                   ;$05DA05 |
     SEP #$10                                ;$05DA07 |
-    LDY.w $1414                             ;$05DA09 |
+    LDY.w VertLayer2Setting_1414            ;$05DA09 |
     CPY.b #$03                              ;$05DA0C |
     BEQ CODE_05DA12                         ;$05DA0E |
     STA.b Layer2YPos_20+1                   ;$05DA10 |
 CODE_05DA12:
     LDA.b #$01
-    STA.w $1412                             ;$05DA14 |
+    STA.w VertLayer1Setting_1412            ;$05DA14 |
 CODE_05DA17:
     SEP #$30
     LDA.w Translevel_13BF                   ;$05DA19 |
@@ -6695,9 +6695,9 @@ CODE_05DA60:
     LDA.b [SpriteDataPtr_CE]                ;$05DA91 |
     AND.b #$C0                              ;$05DA93 |
     STA.w $190E                             ;$05DA95 |
-    STZ.w $1413                             ;$05DA98 |
-    STZ.w $1414                             ;$05DA9B |
-    STZ.w $1411                             ;$05DA9E |
+    STZ.w HorizLayer2Setting_1413           ;$05DA98 |
+    STZ.w VertLayer2Setting_1414            ;$05DA9B |
+    STZ.w HorizLayer1Setting_1411           ;$05DA9E |
     STZ.b ScreenMode_5B                     ;$05DAA1 |
     LDA.l DATA_05D78A,X                     ;$05DAA3 |
     STA.w $1BE3                             ;$05DAA7 |

@@ -5647,7 +5647,7 @@ CODE_01A8C9:
     LDA.w sSjJcccc_1656,X
     AND.b #$10                              ;$01A8CC |
     BNE CODE_01A91C                         ;$01A8CE |
-    LDA.w $140D                             ;$01A8D0 |
+    LDA.w SpinJumpFlag_140D                 ;$01A8D0 |
     ORA.w RidingYoshi_187A                  ;$01A8D3 |
     BEQ CODE_01A8E6                         ;$01A8D6 |
 CODE_01A8D8:
@@ -5687,7 +5687,7 @@ Return01A91B:
     RTS
 
 CODE_01A91C:
-    LDA.w $140D
+    LDA.w SpinJumpFlag_140D
     ORA.w RidingYoshi_187A                  ;$01A91F |
     BEQ CODE_01A947                         ;$01A922 |
 CODE_01A924:
@@ -5778,7 +5778,7 @@ CODE_01A9BE:
     SBC.b #$04                              ;$01A9C1 |
     CMP.b #$0D                              ;$01A9C3 |
     BCS CODE_01A9CC                         ;$01A9C5 |
-    LDA.w $1407                             ;$01A9C7 |
+    LDA.w FlightPhase_1407                  ;$01A9C7 |
     BNE CODE_01A9D3                         ;$01A9CA |
 CODE_01A9CC:
     LDA.w sSjJcccc_1656,X
@@ -5855,7 +5855,7 @@ Return01AA41:
     RTL
 
 CODE_01AA42:
-    LDA.w $140D
+    LDA.w SpinJumpFlag_140D
     ORA.w RidingYoshi_187A                  ;$01AA45 |
     BEQ CODE_01AA58                         ;$01AA48 |
     LDA.b PlayerYSpeed_7D                   ;$01AA4A |
@@ -9812,7 +9812,7 @@ StarPalValues:
 CODE_01C61A:
     JSR get_draw_info_bnk1_01A365
     STZ $0A                                 ;$01C61D |
-    LDA.w $140F                             ;$01C61F |
+    LDA.w ReznorOAMIndex_140F               ;$01C61F |
     BNE CODE_01C636                         ;$01C622 |
     LDA.w IRQNMICommand_0D9B                ;$01C624 |
     CMP.b #!IRQNMIBowser_C1                 ;$01C627 |
@@ -10910,7 +10910,7 @@ CODE_01CE1E:
     LDA.w SpriteMisc_187B,X
     CMP.b #$01                              ;$01CE21 |
     BNE CODE_01CE34                         ;$01CE23 |
-    STZ.w $1411                             ;$01CE25 |
+    STZ.w HorizLayer1Setting_1411           ;$01CE25 |
     INC.w BossPillarFalling_18A8            ;$01CE28 |
     STZ.w BossPillarYPos_18AA               ;$01CE2B |
     INC.b SpriteLock_9D                     ;$01CE2E |
@@ -14228,7 +14228,7 @@ CODE_01E664:
     LDA.b axlr0000Hold_17                   ;$01E68F |
     BPL CODE_01E69A                         ;$01E691 |
     LDA.b #$01                              ;$01E693 |
-    STA.w $140D                             ;$01E695 |
+    STA.w SpinJumpFlag_140D                 ;$01E695 |
     BRA CODE_01E69E                         ;$01E698 |
 
 CODE_01E69A:
@@ -14238,7 +14238,7 @@ CODE_01E69E:
     LDA.b #$0B
     STA.b PlayerInAir_72                    ;$01E6A0 |
     LDY.b #$80                              ;$01E6A2 |
-    STY.w $1406                             ;$01E6A4 |
+    STY.w BouncingFlag_1406                 ;$01E6A4 |
 CODE_01E6A7:
     STY.b PlayerYSpeed_7D
     LDA.b #$08                              ;$01E6A9 |

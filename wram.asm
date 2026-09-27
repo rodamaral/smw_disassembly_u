@@ -1525,35 +1525,35 @@ ActiveBoss_13FC: skip 1
 CameraIsScrolling_13FD: skip 1
 CameraScrollDir_13FE: skip 1
 CameraScrollPlayerDir_13FF: skip 1
-CameraProperMove_1400: skip 1
-CameraScrollTimer_1401: skip 1
-NoteBlockActive_1402: skip 1
+CameraProperMove_1400: skip 1 ;done
+CameraScrollTimer_1401: skip 1 ;done
+NoteBlockActive_1402: skip 1 ;done
 
 ; === $7E1403 ===
 ; 1 byte
 ; which layer 3 tide setting is enabled
-Layer3TideSetting_1403: skip 1
+Layer3TideSetting_1403: skip 1 ;done
 ; Valid values
 !Tide_UpAndDown = 1
 !Tide_Stationary = 2
 
-ScreenScrollAtWill_1404: skip 1
+ScreenScrollAtWill_1404: skip 1 ;done
 DrawYoshiInPipe_1405: skip 1 ;done
-BouncingOnBoard_1406: skip 1
-FlightPhase_1407: skip 1
-NextFlightPhase_1408: skip 1
+BouncingFlag_1406: skip 1 ;done
+FlightPhase_1407: skip 1 ;done
+NextFlightPhase_1408: skip 1 ;done
 MaxStageOfFlight_1409: skip 1
-Empty_140A: skip 1
+Unused_140A: skip 1 ;done
 ; 7E140B - 7E140C unused
 skip 2
-SpinJumpFlag_140D: skip 1
-Layer2Touched_140E: skip 1
-ReznorOAMIndex_140F: skip 1
+SpinJumpFlag_140D: skip 1 ;done
+Layer2Touched_140E: skip 1 ;done
+ReznorOAMIndex_140F: skip 1 ;done
 YoshiHasWingsGfx_1410: skip 1 ;done
-HorizLayer1Setting_1411: skip 1
-VertLayer1Setting_1412: skip 1
-HorizLayer2Setting_1413: skip 1
-VertLayer2Setting_1414: skip 1
+HorizLayer1Setting_1411: skip 1 ;done
+VertLayer1Setting_1412: skip 1 ;done
+HorizLayer2Setting_1413: skip 1 ;done
+VertLayer2Setting_1414: skip 1 ;done
 ; 7E1415 - 7E1416 unused
 skip 2
 BackgroundVertOffset_1417: skip 2 ;done

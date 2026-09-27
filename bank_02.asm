@@ -3354,7 +3354,7 @@ CODE_029927:
     BNE CODE_029941                         ;$02992A |
     BIT.w IRQNMICommand_0D9B                ;$02992C |
     BVC CODE_02993E                         ;$02992F |
-    LDA.w $140F                             ;$029931 |
+    LDA.w ReznorOAMIndex_140F               ;$029931 |
     BNE CODE_02993E                         ;$029934 |
     LDY.w DATA_0296BC,X                     ;$029936 |
     LDA.b #$F0                              ;$029939 |
@@ -3373,7 +3373,7 @@ CODE_02994F:
     LDA.b SpriteNumber_9E+7                 ;$029951 | NOTE: hardcoded slot 7
     CMP.b #!Reznor_A9                       ;$029951 |
     BEQ CODE_02996C                         ;$029953 |
-    LDA.w $140F                             ;$029955 |
+    LDA.w ReznorOAMIndex_140F               ;$029955 |
     BNE CODE_02996C                         ;$029958 |
     LDA.w IRQNMICommand_0D9B                ;$02995A |
     BPL CODE_02996C                         ;$02995D |
@@ -4746,7 +4746,7 @@ DATA_02A34B:
 smoke_pull_02A34F:
     LDA.w ExtSprTimer_176F,X
     BEQ CODE_02A344                         ;$02A352 |
-    LDA.w $140F                             ;$02A354 |
+    LDA.w ReznorOAMIndex_140F               ;$02A354 |
     BNE CODE_02A362                         ;$02A357 |
     LDA.w IRQNMICommand_0D9B                ;$02A359 |
     BPL CODE_02A362                         ;$02A35C |
@@ -5010,7 +5010,7 @@ CODE_02A56E:
     STZ $0E                                 ;$02A570 |
     STZ $0B                                 ;$02A572 |
     STZ.w SpriteBlockOffset_1694            ;$02A574 | reset scratch memory
-    LDA.w $140F                             ;$02A577 |
+    LDA.w ReznorOAMIndex_140F               ;$02A577 |
     BNE CODE_02A5BC                         ;$02A57A |
     LDA.w IRQNMICommand_0D9B                ;$02A57C |
     BPL CODE_02A5BC                         ;$02A57F |

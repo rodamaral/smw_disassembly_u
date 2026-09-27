@@ -2852,7 +2852,7 @@ MarioBeatsRex:
     JSR RexPoints
     JSL BoostMarioSpeed                     ;$0395A3 |
     JSL DisplayContactGfx                   ;$0395A7 |
-    LDA.w $140D                             ;$0395AB |
+    LDA.w SpinJumpFlag_140D                 ;$0395AB |
     ORA.w RidingYoshi_187A                  ;$0395AE |
     BNE RexSpinKill                         ;$0395B1 |
     INC.b SpritePhase_C2,X                  ;$0395B3 |
@@ -3284,7 +3284,7 @@ ReboundSpeedX:
     db $20,$E0
 
 Reznor:
-    INC.w $140F
+    INC.w ReznorOAMIndex_140F
     LDA.b SpriteLock_9D                     ;$039893 |
     BEQ ReznorNotLocked                     ;$039895 |
     JMP DrawReznor                          ;$039897 |
