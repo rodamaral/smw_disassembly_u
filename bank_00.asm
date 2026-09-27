@@ -9995,7 +9995,7 @@ CODE_00DB17:
     STZ.w $140D                             ;$00DB1E |
     LDY.w NetDoorTimer_149D                 ;$00DB21 |
     BEQ CODE_00DB7D                         ;$00DB24 |
-    LDA.w $1878                             ;$00DB26 |
+    LDA.w NetDoorPlayerXOffset_1878         ;$00DB26 |
     BPL CODE_00DB2E                         ;$00DB29 |
     EOR.b #$FF                              ;$00DB2B |
     INC A                                   ;$00DB2D |
@@ -10004,7 +10004,7 @@ CODE_00DB2E:
     CPY.b #$1E                              ;$00DB2F |
     BCC CODE_00DB45                         ;$00DB31 |
     LDA.w DATA_00DADF,X                     ;$00DB33 |
-    BIT.w $1878                             ;$00DB36 |
+    BIT.w NetDoorPlayerXOffset_1878         ;$00DB36 |
     BPL CODE_00DB3E                         ;$00DB39 |
     EOR.b #$FF                              ;$00DB3B |
     INC A                                   ;$00DB3D |
@@ -10016,7 +10016,7 @@ CODE_00DB45:
     TXA
     ASL                                     ;$00DB46 |
     TAX                                     ;$00DB47 |
-    LDA.w $1878                             ;$00DB48 |
+    LDA.w NetDoorPlayerXOffset_1878         ;$00DB48 |
     CPY.b #$08                              ;$00DB4B |
     BCS CODE_00DB51                         ;$00DB4D |
     EOR.b #$80                              ;$00DB4F |
@@ -10038,7 +10038,7 @@ CODE_00DB5D:
     ORA.w $13F0                             ;$00DB68 |
     TAY                                     ;$00DB6B |
     LDA.w DATA_00DABD,Y                     ;$00DB6C |
-    BIT.w $1878                             ;$00DB6F |
+    BIT.w NetDoorPlayerXOffset_1878         ;$00DB6F |
     BMI CODE_00DB76                         ;$00DB72 |
     EOR.b #$01                              ;$00DB74 |
 CODE_00DB76:
@@ -12757,7 +12757,7 @@ CODE_00F61D:                                ;        | | Set the player animatio
     STA.b SpriteLock_9D                     ;$00F620 |/
 CODE_00F622:                                ;        |
     STZ.w $1407                             ;$00F622 | Stop flying.
-    STZ.w $188A                             ;$00F625 |
+    STZ.w Unused_188A                       ;$00F625 |
 Return00F628:                               ;        |
     RTL                                     ;$00F628 /
 
@@ -13342,7 +13342,7 @@ FlatPalaceSwitch:
 
 TriggerGoalTape:
     STZ.w PBalloonFlag_13F3
-    STZ.w $1891                             ;$00FA83 |
+    STZ.w PBalloonTimer_1891                ;$00FA83 |
     STZ.w $18C0                             ;$00FA86 |
     STZ.w $18B9                             ;$00FA89 |
     STZ.w $18DD                             ;$00FA8C |
@@ -13363,7 +13363,7 @@ CODE_00FAA3:
     CMP.b #$7B                              ;$00FAA6 |
     BEQ CODE_00FAB2                         ;$00FAA8 |
     LDA.w SpriteOffscreenX_15A0,Y           ;$00FAAA |
-    ORA.w $186C,Y                           ;$00FAAD |
+    ORA.w SpriteOffscreenVert_186C,Y        ;$00FAAD |
     BNE CODE_00FAC5                         ;$00FAB0 |
 CODE_00FAB2:
     LDA.w dnctswye_1686,Y

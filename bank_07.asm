@@ -4563,7 +4563,7 @@ ZeroSpriteTables:
     STZ.w lwcfpppg_166E,X                   ;$07F76D |
     STZ.w dpmksPiS_167A,X                   ;$07F770 |
     STZ.w dnctswye_1686,X                   ;$07F773 |
-    STZ.w $187B,X                           ;$07F776 |
+    STZ.w SpriteMisc_187B,X                 ;$07F776 |
     STZ.w Sprite_160E,X                     ;$07F779 |
     STZ.w Sprite_1594,X                     ;$07F77C |
     STZ.w Sprite_1504,X                     ;$07F77F |

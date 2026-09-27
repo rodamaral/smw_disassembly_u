@@ -16,11 +16,11 @@ ReleaseItembox028008:
     BEQ .SpawnSprite028042                  ;$02801C |
     DEX                                     ;$02801E |
     BPL -                                   ;$02801F |
-    DEC.w $1861                             ;$028021 |
+    DEC.w SpriteOverwrite_1861              ;$028021 |
     BPL +                                   ;$028024 |
     LDA.b #$01                              ;$028026 |
-    STA.w $1861                             ;$028028 |
-+   LDA.w $1861                             ;$02802B |
+    STA.w SpriteOverwrite_1861              ;$028028 |
++   LDA.w SpriteOverwrite_1861              ;$02802B |
     CLC                                     ;$02802E |
     ADC.b #$0A                              ;$02802F |
     TAX                                     ;$028031 |
@@ -246,25 +246,25 @@ DATA_028226:
 
 CODE_02827D:
     LDA.b Layer1XPos_1A
-    STA.w $188D                             ;$02827F |
+    STA.w BossBGSpriteXCalc_188D            ;$02827F |
     EOR.b #$FF                              ;$028282 |
     INC A                                   ;$028284 |
     STA $05                                 ;$028285 |
     LDA.b Layer1XPos_1A+1                   ;$028287 |
     LSR                                     ;$028289 |
-    ROR.w $188D                             ;$02828A |
+    ROR.w BossBGSpriteXCalc_188D            ;$02828A |
     PHA                                     ;$02828D |
-    LDA.w $188D                             ;$02828E |
+    LDA.w BossBGSpriteXCalc_188D            ;$02828E |
     EOR.b #$FF                              ;$028291 |
     INC A                                   ;$028293 |
     STA $06                                 ;$028294 |
     PLA                                     ;$028296 |
     LSR                                     ;$028297 |
-    ROR.w $188D                             ;$028298 |
-    LDA.w $188D                             ;$02829B |
+    ROR.w BossBGSpriteXCalc_188D            ;$028298 |
+    LDA.w BossBGSpriteXCalc_188D            ;$02829B |
     EOR.b #$FF                              ;$02829E |
     INC A                                   ;$0282A0 |
-    STA.w $188D                             ;$0282A1 |
+    STA.w BossBGSpriteXCalc_188D            ;$0282A1 |
     REP #$10                                ;$0282A4 |
     LDY.w #$0164                            ;$0282A6 |
     LDA.b #$66                              ;$0282A9 |
@@ -313,7 +313,7 @@ CODE_0282D8:
     SBC $07                                 ;$028300 |
     STA.w $020D,Y                           ;$028302 |
     LDX $0A                                 ;$028305 |
-    LDA.w $188C                             ;$028307 |
+    LDA.w BossBGSpriteUpdate_188C           ;$028307 |
     BNE CODE_028318                         ;$02830A |
     LDA.l DATA_028226,X                     ;$02830C |
     STA.w $020E,Y                           ;$028310 |
@@ -374,7 +374,7 @@ CODE_028367:
 CODE_028374:
     SEP #$10
     LDA.b #$01                              ;$028376 |
-    STA.w $188C                             ;$028378 |
+    STA.w BossBGSpriteUpdate_188C           ;$028378 |
     LDA.w $1884                             ;$02837B |
     CMP.b #$01                              ;$02837E |
     BNE CODE_028398                         ;$028380 |
@@ -452,22 +452,22 @@ CODE_0283F8:
     LSR                                     ;$0283FE |
     LSR                                     ;$0283FF |
     SEC                                     ;$028400 |
-    ADC.w $18AA,X                           ;$028401 |
+    ADC.w BossPillarYPos_18AA,X             ;$028401 |
     CMP.b #$B0                              ;$028404 |
     BCC CODE_028435                         ;$028406 |
-    ASL.w $18A8,X                           ;$028408 |
+    ASL.w BossPillarFalling_18A8,X          ;$028408 |
     SEC                                     ;$02840B |
-    ROR.w $18A8,X                           ;$02840C |
+    ROR.w BossPillarFalling_18A8,X          ;$02840C |
     LDA.b #$30                              ;$02840F |
     STA.w ScreenShakeTimer_1887             ;$028411 |
     LDA.b #$09                              ;$028414 |
     STA.w SPCIO3_1DFC                       ;$028416 |
     CPX.b #$00                              ;$028419 |
     BNE CODE_02842A                         ;$02841B |
-    LDA.w $18A9                             ;$02841D |
+    LDA.w BossPillarFalling_18A8+1          ;$02841D |
     BNE CODE_02842A                         ;$028420 |
-    INC.w $18A9                             ;$028422 |
-    STZ.w $18AB                             ;$028425 |
+    INC.w BossPillarFalling_18A8+1          ;$028422 |
+    STZ.w BossPillarYPos_18AA+1             ;$028425 |
     BRA CODE_028433                         ;$028428 |
 
 CODE_02842A:
@@ -478,7 +478,7 @@ CODE_02842A:
 CODE_028433:
     LDA.b #$B0
 CODE_028435:
-    STA.w $18AA,X
+    STA.w BossPillarYPos_18AA,X
     RTS                                     ;$028438 |
 
 CODE_028439:
@@ -488,7 +488,7 @@ CODE_028439:
 CODE_028440:
     LDA.b #$F0
     STA.w $0201,Y                           ;$028442 |
-    LDA.w $18AA,X                           ;$028445 |
+    LDA.w BossPillarYPos_18AA,X             ;$028445 |
     SEC                                     ;$028448 |
     SBC.b Layer1YPos_1C                     ;$028449 |
     SEC                                     ;$02844B |
@@ -546,7 +546,7 @@ Return02849E:
 
 IsOffScreenBnk2:
     LDA.w SpriteOffscreenX_15A0,X
-    ORA.w $186C,X                           ;$0284A2 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$0284A2 |
     RTS                                     ;$0284A5 |
 
 CODE_0284A6:
@@ -625,7 +625,7 @@ DATA_028520:
 
 CODE_028528:
     JSR IsOffScreenBnk2
-    LDA.w $186C,X                           ;$02852B |
+    LDA.w SpriteOffscreenVert_186C,X        ;$02852B |
     BNE Return0284E7                        ;$02852E |
     LDA.b #$04                              ;$028530 |
     STA $00                                 ;$028532 |
@@ -1083,10 +1083,10 @@ CODE_028885:
     BCC CODE_0288DC                         ;$02888D |
     CMP.b #$07                              ;$02888F | 07: generate a multi-coin
     BNE CODE_02889D                         ;$028891 |
-    LDA.w $186B                             ;$028893 |
+    LDA.w MulticoinTimer_186B               ;$028893 |
     BNE CODE_02889D                         ;$028896 |
     LDA.b #$FF                              ;$028898 |
-    STA.w $186B                             ;$02889A |
+    STA.w MulticoinTimer_186B               ;$02889A |
 CODE_02889D:
     JSR CODE_028A66
 Return0288A0:
@@ -1149,12 +1149,12 @@ CODE_028907:
     DEX                                     ;$02890C |
     CPX.b #$FF                              ;$02890D |
     BNE CODE_028907                         ;$02890F |
-    DEC.w $1861                             ;$028911 |
+    DEC.w SpriteOverwrite_1861              ;$028911 |
     BPL CODE_02891B                         ;$028914 |
     LDA.b #$01                              ;$028916 |
-    STA.w $1861                             ;$028918 |
+    STA.w SpriteOverwrite_1861              ;$028918 |
 CODE_02891B:
-    LDA.w $1861
+    LDA.w SpriteOverwrite_1861
     CLC                                     ;$02891E |
     ADC.b #$0A                              ;$02891F |
     TAX                                     ;$028921 |
@@ -1352,12 +1352,12 @@ CODE_028A68:
     BEQ CODE_028A7D                         ;$028A6B |
     DEX                                     ;$028A6D |
     BPL CODE_028A68                         ;$028A6E |
-    DEC.w $1865                             ;$028A70 |
+    DEC.w CoinSprSlotIdx_1865               ;$028A70 |
     BPL ADDR_028A7A                         ;$028A73 |
     LDA.b #$03                              ;$028A75 |
-    STA.w $1865                             ;$028A77 |
+    STA.w CoinSprSlotIdx_1865               ;$028A77 |
 ADDR_028A7A:
-    LDX.w $1865
+    LDX.w CoinSprSlotIdx_1865
 CODE_028A7D:
     JSL CODE_05B34A
     INC.w CoinSpriteExists_17D0,X           ;$028A81 |
@@ -2136,7 +2136,7 @@ MultipleCoinBlock02902D:
     BCC CODE_02903B                         ;$029032 |
     LDA.b SpriteLock_9D                     ;$029034 |
     BNE CODE_02903B                         ;$029036 |
-    DEC.w $186B                             ;$029038 |
+    DEC.w MulticoinTimer_186B               ;$029038 |
 CODE_02903B:
     LDX.b #$03
 CODE_02903D:
@@ -2335,7 +2335,7 @@ CODE_0291AA:
     LDY.w $186B
     CPY.b #$01                              ;$0291AD |
     BNE CODE_0291B6                         ;$0291AF |
-    STZ.w $186B                             ;$0291B1 |
+    STZ.w MulticoinTimer_186B               ;$0291B1 |
     LDA.b #$0D                              ;$0291B4 |
 CODE_0291B6:
     BRA TileFromBounceSpr1
@@ -5661,7 +5661,7 @@ ADDR_02AA35:
     STZ.w $1E66,X
     STZ.w $0F86,X                           ;$02AA38 |
     LDA.b #$08                              ;$02AA3B |
-    STA.w $1892,X                           ;$02AA3D |
+    STA.w ClusterSprNumber_1892,X           ;$02AA3D |
     JSL GetRand                             ;$02AA40 |
     CLC                                     ;$02AA44 |
     ADC.b Layer1XPos_1A                     ;$02AA45 |
@@ -5691,7 +5691,7 @@ CODE_02AA6C:
     LDX.b #$03                              ;$02AA71 |
 CODE_02AA73:
     LDA.b #$05
-    STA.w $1892,X                           ;$02AA75 |
+    STA.w ClusterSprNumber_1892,X           ;$02AA75 |
     LDA.w DATA_02AA68,X                     ;$02AA78 |
     STA.w $1E16,X                           ;$02AA7B |
     LDA.b #$F0                              ;$02AA7E |
@@ -5709,7 +5709,7 @@ CODE_02AA8D:
     LDX.b #$13                              ;$02AA90 |
 CODE_02AA92:
     LDA.b #$07
-    STA.w $1892,X                           ;$02AA94 |
+    STA.w ClusterSprNumber_1892,X           ;$02AA94 |
     LDA.w DATA_02AA0B,X                     ;$02AA97 |
     PHA                                     ;$02AA9A |
     AND.b #$F0                              ;$02AA9B |
@@ -5753,7 +5753,7 @@ CODE_02AAD7:
     STZ.w $1E66,X
     STZ.w $0F86,X                           ;$02AADA |
     LDA.b #$03                              ;$02AADD |
-    STA.w $1892,X                           ;$02AADF |
+    STA.w ClusterSprNumber_1892,X           ;$02AADF |
     JSL GetRand                             ;$02AAE2 |
     CLC                                     ;$02AAE6 |
     ADC.b Layer1XPos_1A                     ;$02AAE7 |
@@ -5790,10 +5790,10 @@ CODE_02AB20:
     STA $0E                                 ;$02AB24 |
     LDX.b #$13                              ;$02AB26 |
 CODE_02AB28:
-    LDA.w $1892,X
+    LDA.w ClusterSprNumber_1892,X
     BNE CODE_02AB71                         ;$02AB2B |
     LDA.b #$04                              ;$02AB2D |
-    STA.w $1892,X                           ;$02AB2F |
+    STA.w ClusterSprNumber_1892,X           ;$02AB2F |
     LDA.w $18BA                             ;$02AB32 |
     STA.w $0F86,X                           ;$02AB35 |
     LDA $0E                                 ;$02AB38 |
@@ -8799,7 +8799,7 @@ CODE_02C0D9:
 CODE_02C0DB:
     TAY
     LDA.w SpriteOffscreenX_15A0,X           ;$02C0DC |
-    ORA.w $186C,X                           ;$02C0DF |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02C0DF |
     BNE Return02C125                        ;$02C0E2 |
     TYA                                     ;$02C0E4 |
     DEC.w Sprite_1528,X                     ;$02C0E5 |
@@ -8955,12 +8955,12 @@ ChucksMain:
     PHB
     PHK                                     ;$02C1F6 |
     PLB                                     ;$02C1F7 |
-    LDA.w $187B,X                           ;$02C1F8 |
+    LDA.w SpriteMisc_187B,X                 ;$02C1F8 |
     PHA                                     ;$02C1FB |
     JSR CODE_02C22C                         ;$02C1FC |
     PLA                                     ;$02C1FF |
     BNE CODE_02C211                         ;$02C200 |
-    CMP.w $187B,X                           ;$02C202 |
+    CMP.w SpriteMisc_187B,X                 ;$02C202 |
     BEQ CODE_02C211                         ;$02C205 |
     LDA.w Sprite_163E,X                     ;$02C207 |
     BNE CODE_02C211                         ;$02C20A |
@@ -9030,9 +9030,9 @@ CODE_02C274:
     AND.b #$03                              ;$02C277 |
     BEQ CODE_02C2F4                         ;$02C279 |
     LDA.w SpriteOffscreenX_15A0,X           ;$02C27B |
-    ORA.w $186C,X                           ;$02C27E |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02C27E |
     BNE CODE_02C2E4                         ;$02C281 |
-    LDA.w $187B,X                           ;$02C283 |
+    LDA.w SpriteMisc_187B,X                 ;$02C283 |
     BEQ CODE_02C2E4                         ;$02C286 |
     LDA.b SpriteXPosLow_E4,X                ;$02C288 |
     SEC                                     ;$02C28A |
@@ -9044,7 +9044,7 @@ CODE_02C274:
     LDA.w SpriteBlocked_1588,X              ;$02C294 |
     AND.b #$40                              ;$02C297 |
     BNE CODE_02C2E4                         ;$02C299 |
-    LDA.w $18A7                             ;$02C29B |
+    LDA.w Map16TileDestroy_18A7             ;$02C29B |
     CMP.b #$2E                              ;$02C29E |
     BEQ CODE_02C2A6                         ;$02C2A0 |
     CMP.b #$1E                              ;$02C2A2 |
@@ -9238,7 +9238,7 @@ CODE_02C3F5:
 CODE_02C3FE:
     LDA.w SpriteStun_1540,X
     BNE CODE_02C40C                         ;$02C401 |
-    LDY.w $187B,X                           ;$02C403 |
+    LDY.w SpriteMisc_187B,X                 ;$02C403 |
     LDA.w DATA_02C3B3,Y                     ;$02C406 |
     STA.w SpriteStun_1540,X                 ;$02C409 |
 CODE_02C40C:
@@ -9306,7 +9306,7 @@ BaseballSpeed:
 
 CODE_02C466:
     LDA.w SpriteLava_1558,X
-    ORA.w $186C,X                           ;$02C469 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02C469 |
     BNE Return02C439                        ;$02C46C |
     LDY.b #$07                              ;$02C46E |
 CODE_02C470:
@@ -9557,7 +9557,7 @@ DATA_02C639:
 CODE_02C63B:
     LDA.b #$03
     STA.w SpriteAnimation_1602,X            ;$02C63D |
-    STZ.w $187B,X                           ;$02C640 |
+    STZ.w SpriteMisc_187B,X                 ;$02C640 |
     LDA.w SpriteStun_1540,X                 ;$02C643 |
     AND.b #$0F                              ;$02C646 |
     BNE CODE_02C668                         ;$02C648 |
@@ -9568,7 +9568,7 @@ CODE_02C63B:
     CMP.b #$50                              ;$02C652 |
     BCS CODE_02C668                         ;$02C654 |
     JSR CODE_02C556                         ;$02C656 |
-    INC.w $187B,X                           ;$02C659 |
+    INC.w SpriteMisc_187B,X                 ;$02C659 |
 CODE_02C65C:
     LDA.b #$02
     STA.b SpritePhase_C2,X                  ;$02C65E |
@@ -9639,7 +9639,7 @@ CODE_02C6BA:
     BNE CODE_02C6D7                         ;$02C6CD |
     LDA.b #$20                              ;$02C6CF |
     STA.w SpriteStun_1540,X                 ;$02C6D1 |
-    STA.w $187B,X                           ;$02C6D4 |
+    STA.w SpriteMisc_187B,X                 ;$02C6D4 |
 CODE_02C6D7:
     LDA.w SpriteStun_1540,X
     BNE CODE_02C6EC                         ;$02C6DA |
@@ -9656,7 +9656,7 @@ CODE_02C6EC:
     LDA.w SpriteBlocked_1588,X              ;$02C6F5 |
     AND.b #$04                              ;$02C6F8 |
     BEQ CODE_02C713                         ;$02C6FA |
-    LDA.w $187B,X                           ;$02C6FC |
+    LDA.w SpriteMisc_187B,X                 ;$02C6FC |
     BEQ CODE_02C70E                         ;$02C6FF |
     LDA.b Frame_14                          ;$02C701 |
     AND.b #$07                              ;$02C703 |
@@ -9671,7 +9671,7 @@ CODE_02C70E:
     STA.b SpriteXSpeed_B6,X                 ;$02C711 |
 CODE_02C713:
     LDA.b Frame_13
-    LDY.w $187B,X                           ;$02C715 |
+    LDY.w SpriteMisc_187B,X                 ;$02C715 |
     BNE CODE_02C71B                         ;$02C718 |
     LSR                                     ;$02C71A |
 CODE_02C71B:
@@ -9739,7 +9739,7 @@ CODE_02C785:
     STA.w SpriteStun_1540,X                 ;$02C787 |
     LDA.b #$02                              ;$02C78A |
     STA.b SpritePhase_C2,X                  ;$02C78C |
-    INC.w $187B,X                           ;$02C78E |
+    INC.w SpriteMisc_187B,X                 ;$02C78E |
     JMP CODE_02C556                         ;$02C791 |
 
 CODE_02C794:
@@ -10705,7 +10705,7 @@ CODE_02CF52:
     LDA.b PlayerYPosScrRel_80+1             ;$02CF58 |
     ORA.b PlayerXPosScrRel_7E+1             ;$02CF5A |
     ORA.w SpriteOffscreenX_15A0,X           ;$02CF5C |
-    ORA.w $186C,X                           ;$02CF5F |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02CF5F |
     BNE Return02CF51                        ;$02CF62 |
     LDA.b PlayerXPosScrRel_7E               ;$02CF64 |
     CLC                                     ;$02CF66 |
@@ -10912,7 +10912,7 @@ CODE_02D0C3:
     BMI OffScrEraseSprBnk2                  ;$02D0C7 |
 IsSprOffScreenBnk2:
     LDA.w SpriteOffscreenX_15A0,X
-    ORA.w $186C,X                           ;$02D0CC |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02D0CC |
     RTS                                     ;$02D0CF |
 
 DATA_02D0D0:
@@ -11326,7 +11326,7 @@ DATA_02D376:
 ; $01 = Sprite Y position relative to the screen border
 ; Also sets $15A0, $15C4, and $186C
 GetDrawInfo2:
-    STZ.w $186C,X
+    STZ.w SpriteOffscreenVert_186C,X
     STZ.w SpriteOffscreenX_15A0,X           ;$02D37B |
     LDA.b SpriteXPosLow_E4,X                ;$02D37E |
     CMP.b Layer1XPos_1A                     ;$02D380 |
@@ -11367,9 +11367,9 @@ CODE_02D3B2:
     LSR $00                                 ;$02D3C3 |
     SBC.b Layer1YPos_1C+1                   ;$02D3C5 |
     BEQ CODE_02D3D2                         ;$02D3C7 |
-    LDA.w $186C,X                           ;$02D3C9 |
+    LDA.w SpriteOffscreenVert_186C,X        ;$02D3C9 |
     ORA.w DATA_02D376,Y                     ;$02D3CC |
-    STA.w $186C,X                           ;$02D3CF |
+    STA.w SpriteOffscreenVert_186C,X        ;$02D3CF |
 CODE_02D3D2:
     DEY
     BPL CODE_02D3B2                         ;$02D3D3 |
@@ -11719,7 +11719,7 @@ CODE_02D653:
     LDX.w CurrentSprite_15E9                ;$02D686 |
     LDA $04                                 ;$02D689 |
     STA.w $4202                             ;$02D68B |
-    LDA.w $187B,X                           ;$02D68E |
+    LDA.w SpriteMisc_187B,X                 ;$02D68E |
     LDY $05                                 ;$02D691 |
     BNE CODE_02D6A3                         ;$02D693 |
     STA.w $4203                             ;$02D695 |
@@ -11736,7 +11736,7 @@ CODE_02D6AA:
     STA $04
     LDA $06                                 ;$02D6AC |
     STA.w $4202                             ;$02D6AE |
-    LDA.w $187B,X                           ;$02D6B1 |
+    LDA.w SpriteMisc_187B,X                 ;$02D6B1 |
     LDY $07                                 ;$02D6B4 |
     BNE CODE_02D6C6                         ;$02D6B6 |
     STA.w $4203                             ;$02D6B8 |
@@ -12003,7 +12003,7 @@ CODE_02D870:
 CODE_02D876:
     STA.w $4205
     STZ.w $4204                             ;$02D879 |
-    LDA.w $187B,X                           ;$02D87C |
+    LDA.w SpriteMisc_187B,X                 ;$02D87C |
     LSR                                     ;$02D87F |
     STA.w $4206                             ;$02D880 |
     JSR CODE_02D800                         ;$02D883 |
@@ -12305,7 +12305,7 @@ CODE_02DA92:
     LDA.w SpriteAnimationTimer_1570,X       ;$02DA97 |
     AND.w HammerFreq,Y                      ;$02DA9A |
     ORA.w SpriteOffscreenX_15A0,X           ;$02DA9D |
-    ORA.w $186C,X                           ;$02DAA0 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02DAA0 |
     ORA.w SpriteStun_1540,X                 ;$02DAA3 |
     BNE Return02DAE8                        ;$02DAA6 |
     LDA.b #$03                              ;$02DAA8 |
@@ -12695,7 +12695,7 @@ CODE_02DD4B:
     BNE CODE_02DD6F                         ;$02DD54 |
     PHA                                     ;$02DD56 |
     LDA.w SpriteOffscreenX_15A0,X           ;$02DD57 |
-    ORA.w $186C,X                           ;$02DD5A |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02DD5A |
     BNE CODE_02DD6E                         ;$02DD5D |
     LDA.b #$30                              ;$02DD5F |
     STA.w ScreenShakeTimer_1887             ;$02DD61 |
@@ -12863,7 +12863,7 @@ CODE_02DEB0:
     LDA.b #$22                              ;$02DED1 |
     STA.w SpriteStun_1540,X                 ;$02DED3 |
     LDA.w SpriteOffscreenX_15A0,X           ;$02DED6 |
-    ORA.w $186C,X                           ;$02DED9 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02DED9 |
     BNE CODE_02DEEA                         ;$02DEDC |
     LDA.b SpriteXPosLow_E4,X                ;$02DEDE |
     STA.b InteractionPtXPos_9A              ;$02DEE0 |
@@ -12912,7 +12912,7 @@ CODE_02DF2C:
     STA $01                                 ;$02DF33 |
     LDY.b #$09                              ;$02DF35 |
 CODE_02DF37:
-    LDA.w $1892,Y
+    LDA.w ClusterSprNumber_1892,Y
     BEQ CODE_02DF4C                         ;$02DF3A |
     DEY                                     ;$02DF3C |
     BPL CODE_02DF37                         ;$02DF3D |
@@ -12950,7 +12950,7 @@ CODE_02DF4C:
     SBC.b Layer1XPos_1A+1                   ;$02DF81 |
     BNE Return02DF8A                        ;$02DF83 |
     LDA.b #$06                              ;$02DF85 |
-    STA.w $1892,Y                           ;$02DF87 |
+    STA.w ClusterSprNumber_1892,Y           ;$02DF87 |
 Return02DF8A:
     RTS
 
@@ -13093,7 +13093,7 @@ DATA_02E075:
 
 CODE_02E079:
     LDA.w SpriteOffscreenX_15A0,X
-    ORA.w $186C,X                           ;$02E07C |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02E07C |
     BNE Return02E0C4                        ;$02E07F |
     LDA.b #$03                              ;$02E081 |
     STA $00                                 ;$02E083 |
@@ -13264,7 +13264,7 @@ CODE_02E1A4:
     CMP.b #$40                              ;$02E1AD |
     BNE CODE_02E1F7                         ;$02E1AF |
     LDA.w SpriteOffscreenX_15A0,X           ;$02E1B1 |
-    ORA.w $186C,X                           ;$02E1B4 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$02E1B4 |
     BNE CODE_02E1F7                         ;$02E1B7 |
     LDA.b #$10                              ;$02E1B9 |
     JSR CODE_02E1C0                         ;$02E1BB |
@@ -13425,15 +13425,15 @@ CODE_02E2DE:
     BNE CODE_02E2F3                         ;$02E2E4 |
     LDA.w $18D7                             ;$02E2E6 |
     BNE CODE_02E2FF                         ;$02E2E9 |
-    LDA.w $185F                             ;$02E2EB |
+    LDA.w SprMap16TouchVertLow_185F         ;$02E2EB |
     CMP.b #$25                              ;$02E2EE |
     BNE CODE_02E2FF                         ;$02E2F0 |
     RTS                                     ;$02E2F2 |
 
 CODE_02E2F3:
-    LDA.w $1862
+    LDA.w SprMap16TouchHorizHigh_1862
     BNE CODE_02E2FF                         ;$02E2F6 |
-    LDA.w $1860                             ;$02E2F8 |
+    LDA.w SprMap16TouchHorizLow_1860        ;$02E2F8 |
     CMP.b #$25                              ;$02E2FB |
     BEQ Return02E302                        ;$02E2FD |
 CODE_02E2FF:
@@ -16698,7 +16698,7 @@ CODE_02FA98:
     LDY.w $0F86,X
     LDA.w $0FBA,Y                           ;$02FA9B |
     BEQ CODE_02FAA4                         ;$02FA9E |
-    STZ.w $1892,X                           ;$02FAA0 |
+    STZ.w ClusterSprNumber_1892,X           ;$02FAA0 |
     RTS                                     ;$02FAA3 |
 
 CODE_02FAA4:
@@ -16997,7 +16997,7 @@ CODE_02FCD9:
 CODE_02FCE2:
     LDA.b SpriteLock_9D
     BNE CODE_02FD46                         ;$02FCE4 |
-    LDA.w $1892,X                           ;$02FCE6 |
+    LDA.w ClusterSprNumber_1892,X           ;$02FCE6 |
     CMP.b #$08                              ;$02FCE9 |
     BEQ CODE_02FD46                         ;$02FCEB |
     LDA.w $0F9A,X                           ;$02FCED |
@@ -17087,7 +17087,7 @@ CODE_02FD81:
     TAY                                     ;$02FD8B |
     LDA.b #$02                              ;$02FD8C |
     STA.w $0460,Y                           ;$02FD8E |
-    LDA.w $1892,X                           ;$02FD91 |
+    LDA.w ClusterSprNumber_1892,X           ;$02FD91 |
     CMP.b #$08                              ;$02FD94 |
     BNE Return02FDB7                        ;$02FD96 |
     LDY.w DATA_02FF50,X                     ;$02FD98 |
@@ -17175,7 +17175,7 @@ CODE_02FE29:
     ADC.b #$20                              ;$02FE32 |
     CMP $00                                 ;$02FE34 |
     BCS CODE_02FE48                         ;$02FE36 |
-    STZ.w $1892,X                           ;$02FE38 |
+    STZ.w ClusterSprNumber_1892,X           ;$02FE38 |
     JSR CODE_02FF6C                         ;$02FE3B |
     DEC.w $1920                             ;$02FE3E |
     BNE CODE_02FE48                         ;$02FE41 |
@@ -17301,7 +17301,7 @@ ADDR_02FF0E:
     LDA.b #$00                              ;$02FF15 |
     STA.w $1938,Y                           ;$02FF17 |
 ADDR_02FF1A:
-    STZ.w $1892,X
+    STZ.w ClusterSprNumber_1892,X
 Return02FF1D:
     RTS
 

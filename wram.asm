@@ -1924,8 +1924,8 @@ MinorSprXPosSpx_1844: skip 12 ; unreferenced, maybe unused?
 MinorSprTimer_1850: skip 12 ;done
 
 
-PlayerDisableObjInt_185C: skip 1
-MinorSprSlotIdx_185D: skip 1
+PlayerDisableObjInt_185C: skip 1 ;done
+MinorSprSlotIdx_185D: skip 1 ;done
 
 ; TODO: clarify more this sratch RAM
 ; Sometimes used to keep track of a tile to generate at $00:BEB0 (before storing to $7E:009C)
@@ -1947,43 +1947,46 @@ FireballSlot_185E:
 ChuckSplitFlag_185E: ; during the split routine, used to determine whether it is the first or second Chuck being generated
 BooCloudTimerMirror_185E:
 FlameYPosIdx_185E:
-skip 1
+skip 1 ;done
 
-SprMap16TouchVertLow_185F: skip 1
-SprMap16TouchHorizLow_1860: skip 1
-SpriteToOverwrite_1861: skip 1
-SprMap16TouchHorizHigh_1862: skip 1
-SmokeSpriteSlotIdx_1863: skip 1
+SprMap16TouchVertLow_185F: skip 1 ;done
+SprMap16TouchHorizLow_1860: skip 1 ;done
+SpriteOverwrite_1861: skip 1 ;done
+SprMap16TouchHorizHigh_1862: skip 1 ;done
+SmokeSprSlotIdx_1863: skip 1 ;done
 ; 7E1864 unused
 skip 1
-CoinSpriteSlotIdx_1865: skip 1
-BrSwingAngleParity_1866: skip 2
-Map16TileHittable_1868: skip 1
+CoinSprSlotIdx_1865: skip 1 ;done
+BrPlatAngleParity_1866: skip 2 ;done
+Map16MirrorHittable_1868: skip 1 ;done
 ; 7E1869 - 7E186A unused
 skip 2
-MulticoinTimer_186B: skip 1
-SpriteOffscreenVert_186C: skip 12
-NetDoorPlayerXOffset_1878: skip 1
+MulticoinTimer_186B: skip 1 ;done
+SpriteOffscreenVert_186C: skip 12 ;done
+NetDoorPlayerXOffset_1878: skip 1 ;done
 ; 7E1879 unused
 skip 1
-RidingYoshi_187A: skip 1
-SpriteMisc_187B: skip 12
-ScreenShakeTimer_1887: skip 1
-ScreenShakeYOffset_1888: skip 2
-Empty_188A: skip 1
-PlayerYOffset_188B: skip 1
-BossBGSpriteUpdate_188C: skip 1
-BossBGSpriteXCalc_188D: skip 1
+RidingYoshi_187A: skip 1 ;done
+SpriteMisc_187B: skip 12 ;done
+ScreenShakeTimer_1887: skip 1 ;done
+ScreenShakeYOffset_1888: skip 2 ;done
+Unused_188A: skip 1 ;done
+PlayerYOffset_188B: skip 1 ;done
+BossBGSpriteUpdate_188C: skip 1 ;done
+BossBGSpriteXCalc_188D: skip 1 ;done
 ; 7E188E unused
 skip 1
-BonusGameComplete_188F: skip 1
-BonusGame1UpCount_1890: skip 1
-PBalloonTimer_1891: skip 1
-ClusterSprNumber_1892: skip 20
-Empty_18A6: skip 1
-Map16TileDestroy_18A7: skip 1
-BossPillarFalling_18A8: skip 2
-BossPillarYPos_18AA: skip 2
+BonusGameComplete_188F: skip 1 ;done
+BonusGame1UpCount_1890: skip 1 ;done
+PBalloonTimer_1891: skip 1 ;done
+ClusterSprNumber_1892: skip 20 ;done
+
+; this value is read, but never written, except during RAM cleaup
+; sets Y, but likely unused
+Empty_18A6: skip 1 ;done
+Map16TileDestroy_18A7: skip 1 ;done
+BossPillarFalling_18A8: skip 2 ;done
+BossPillarYPos_18AA: skip 2 ;done
 YoshiSwallowTimer_18AC: skip 1 ;done
 YoshiWalkingTimer_18AD: skip 1 ;done
 YoshiStartEatTimer_18AE: skip 1 ;done

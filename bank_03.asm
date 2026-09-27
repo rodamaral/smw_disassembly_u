@@ -2075,7 +2075,7 @@ CODE_038FA4:
     TXA                                     ;$038FAF |
     EOR.b Frame_14                          ;$038FB0 |
     AND.b #$07                              ;$038FB2 |
-    ORA.w $186C,X                           ;$038FB4 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$038FB4 |
     BNE CODE_038FC2                         ;$038FB7 |
     LDA.b SpriteNumber_9E,X                 ;$038FB9 |
     CMP.b #$B0                              ;$038FBB |
@@ -4429,7 +4429,7 @@ CODE_03A0F1:
     LDA.b #$00                              ;$03A105 |
     STA.w SpriteXPosHigh_14E0,X             ;$03A107 |
     LDA.b #$02                              ;$03A10A |
-    STA.w $187B,X                           ;$03A10C |
+    STA.w SpriteMisc_187B,X                 ;$03A10C |
     LDA.b #$03                              ;$03A10F |
     STA.b SpritePhase_C2,X                  ;$03A111 |
     JSL CODE_03DD7D                         ;$03A113 |
@@ -5155,13 +5155,13 @@ CODE_03A661:
     BNE CODE_03A691                         ;$03A66F |
     LDA.b #$50                              ;$03A671 |
     STA.w $14B0                             ;$03A673 |
-    DEC.w $187B,X                           ;$03A676 |
+    DEC.w SpriteMisc_187B,X                 ;$03A676 |
     BNE CODE_03A691                         ;$03A679 |
     LDA.w Sprite_151C,X                     ;$03A67B |
     CMP.b #$09                              ;$03A67E |
     BEQ CODE_03A6C0                         ;$03A680 |
     LDA.b #$02                              ;$03A682 |
-    STA.w $187B,X                           ;$03A684 |
+    STA.w SpriteMisc_187B,X                 ;$03A684 |
     LDA.b #$01                              ;$03A687 |
     STA.w Sprite_151C,X                     ;$03A689 |
     LDA.b #$80                              ;$03A68C |
@@ -6141,7 +6141,7 @@ CODE_03AE32:
     LDA.w SpriteStun_1540,X
     BNE CODE_03AE3F                         ;$03AE35 |
     INC.b SpritePhase_C2,X                  ;$03AE37 |
-    STZ.w $188A                             ;$03AE39 |
+    STZ.w Unused_188A                       ;$03AE39 |
     STZ.w PlayerYOffset_188B                ;$03AE3C |
 CODE_03AE3F:
     CMP.b #$50
@@ -6516,7 +6516,7 @@ CODE_03B0F3:
     LDA.w Sprite_151C,X                     ;$03B12E |
     CMP.b #$09                              ;$03B131 |
     BNE CODE_03B142                         ;$03B133 |
-    LDA.w $187B,X                           ;$03B135 |
+    LDA.w SpriteMisc_187B,X                 ;$03B135 |
     CMP.b #$01                              ;$03B138 |
     BNE CODE_03B142                         ;$03B13A |
     PHY                                     ;$03B13C |
@@ -7282,7 +7282,7 @@ DATA_03B75E:
     db $01,$02
 
 GetDrawInfoBnk3:
-    STZ.w $186C,X
+    STZ.w SpriteOffscreenVert_186C,X
     STZ.w SpriteOffscreenX_15A0,X           ;$03B763 |
     LDA.b SpriteXPosLow_E4,X                ;$03B766 |
     CMP.b Layer1XPos_1A                     ;$03B768 |
@@ -7323,9 +7323,9 @@ CODE_03B79A:
     LSR $00                                 ;$03B7AB |
     SBC.b Layer1YPos_1C+1                   ;$03B7AD |
     BEQ CODE_03B7BA                         ;$03B7AF |
-    LDA.w $186C,X                           ;$03B7B1 |
+    LDA.w SpriteOffscreenVert_186C,X        ;$03B7B1 |
     ORA.w DATA_03B75E,Y                     ;$03B7B4 |
-    STA.w $186C,X                           ;$03B7B7 |
+    STA.w SpriteOffscreenVert_186C,X        ;$03B7B7 |
 CODE_03B7BA:
     DEY
     BPL CODE_03B79A                         ;$03B7BB |
@@ -7514,7 +7514,7 @@ CODE_03B8F5:
     BMI OffScrEraseSprBnk3                  ;$03B8F9 |
 IsSprOffScreenBnk3:
     LDA.w SpriteOffscreenX_15A0,X
-    ORA.w $186C,X                           ;$03B8FE |
+    ORA.w SpriteOffscreenVert_186C,X        ;$03B8FE |
     RTS                                     ;$03B901 |
 
 MagiKoopaPals:
@@ -8324,7 +8324,7 @@ CODE_03C414:
 
 CODE_03C44E:
     LDA.w SpriteOffscreenX_15A0,X
-    ORA.w $186C,X                           ;$03C451 |
+    ORA.w SpriteOffscreenVert_186C,X        ;$03C451 |
     BNE Return03C460                        ;$03C454 |
     LDY.b #$07                              ;$03C456 |
 CODE_03C458:
