@@ -1310,7 +1310,7 @@ CODE_048DDF:
     JSR OW_TilePos_Calc                     ;$048E0B |
     REP #$10                                ;$048E0E |
     LDX $04                                 ;$048E10 |
-    LDA.l $7ED000,X                         ;$048E12 |
+    LDA.l OWLayer1Translevel_D000,X         ;$048E12 |
     AND.w #$00FF                            ;$048E16 |
     TAX                                     ;$048E19 |
     LDA.w OWLevelSettings_1EA2,X            ;$048E1A |
@@ -1365,7 +1365,7 @@ CODE_048E55:
     JSR OW_TilePos_Calc                     ;$048E73 |
     STZ $00                                 ;$048E76 |
     LDX $04                                 ;$048E78 |
-    LDA.l $7ED000,X                         ;$048E7A |
+    LDA.l OWLayer1Translevel_D000,X         ;$048E7A |
     AND.w #$00FF                            ;$048E7E |
     ASL                                     ;$048E81 |
     TAX                                     ;$048E82 |
@@ -1376,7 +1376,7 @@ CODE_048E55:
     BMI CODE_048E9E                         ;$048E8D |
     CPX.w #$0800                            ;$048E8F |
     BCS CODE_048E9E                         ;$048E92 |
-    LDA.l $7EC800,X                         ;$048E94 |
+    LDA.l Map16TilesLow_C800,X              ;$048E94 |
     AND.w #$00FF                            ;$048E98 |
     STA.w $13C1                             ;$048E9B |
 CODE_048E9E:
@@ -1465,7 +1465,7 @@ CODE_048F13:
     BPL CODE_048F5F                         ;$048F3F |
     REP #$20                                ;$048F41 |
     LDX $04                                 ;$048F43 |
-    LDA.l $7ED000,X                         ;$048F45 |
+    LDA.l OWLayer1Translevel_D000,X         ;$048F45 |
     AND.w #$00FF                            ;$048F49 |
     TAX                                     ;$048F4C |
     LDA.w OWLevelSettings_1EA2,X            ;$048F4D |
@@ -1480,7 +1480,7 @@ CODE_048F56:
 CODE_048F5F:
     REP #$20
     LDX $04                                 ;$048F61 |
-    LDA.l $7ED000,X                         ;$048F63 |
+    LDA.l OWLayer1Translevel_D000,X         ;$048F63 |
     AND.w #$00FF                            ;$048F67 |
     TAX                                     ;$048F6A |
     LDA.w OWLevelSettings_1EA2,X            ;$048F6B |
@@ -1582,7 +1582,7 @@ CODE_049003:
     JSR OW_TilePos_Calc                     ;$049020 |
     REP #$10                                ;$049023 |
     LDX $04                                 ;$049025 |
-    LDA.l $7EC800,X                         ;$049027 |
+    LDA.l Map16TilesLow_C800,X              ;$049027 |
     AND.w #$00FF                            ;$04902B |
     STA.w $13C1                             ;$04902E |
     SEP #$30                                ;$049031 |
@@ -1791,7 +1791,7 @@ CODE_0491E9:
     STZ $09                                 ;$04921A |
     REP #$30                                ;$04921C |
     LDX $04                                 ;$04921E |
-    LDA.l $7ED000,X                         ;$049220 |
+    LDA.l OWLayer1Translevel_D000,X         ;$049220 |
     AND.w #$00FF                            ;$049224 |
     LDY.w #$000A                            ;$049227 |
 CODE_04922A:
@@ -1805,7 +1805,7 @@ CODE_04923B:
     DEY
     DEY                                     ;$04923C |
     BPL CODE_04922A                         ;$04923D |
-    LDA.l $7ED800,X                         ;$04923F |
+    LDA.l OWLayer2Directions_D800,X         ;$04923F |
     AND.w #$00FF                            ;$049243 |
     LDX $08                                 ;$049246 |
     BEQ CODE_04924E                         ;$049248 |
@@ -1857,7 +1857,7 @@ CODE_04928C:
     PHA                                     ;$049294 |
     STZ $06                                 ;$049295 |
     LDX $04                                 ;$049297 |
-    LDA.l $7ED000,X                         ;$049299 |
+    LDA.l OWLayer1Translevel_D000,X         ;$049299 |
     AND.w #$00FF                            ;$04929D |
     TAX                                     ;$0492A0 |
     PLA                                     ;$0492A1 |
@@ -1899,7 +1899,7 @@ CODE_0492CB:
     BMI CODE_049301                         ;$0492E2 |
     CMP.w #$0800                            ;$0492E4 |
     BCS CODE_049301                         ;$0492E7 |
-    LDA.l $7EC800,X                         ;$0492E9 |
+    LDA.l Map16TilesLow_C800,X              ;$0492E9 |
     AND.w #$00FF                            ;$0492ED |
     BEQ CODE_049301                         ;$0492F0 |
     CMP.w #$0056                            ;$0492F2 |
@@ -1914,7 +1914,7 @@ CODE_049301:
     STZ.w $1B78
     STZ.w $1B7A                             ;$049304 |
     LDX $08                                 ;$049307 |
-    LDA.l $7ED000,X                         ;$049309 |
+    LDA.l OWLayer1Translevel_D000,X         ;$049309 |
     AND.w #$00FF                            ;$04930D |
     STA $00                                 ;$049310 |
     LDX.w #$0009                            ;$049312 |
@@ -2211,7 +2211,7 @@ CODE_049522:
     JSR OW_TilePos_Calc                     ;$04953B |
     STZ $00                                 ;$04953E |
     LDX $04                                 ;$049540 |
-    LDA.l $7ED000,X                         ;$049542 |
+    LDA.l OWLayer1Translevel_D000,X         ;$049542 |
     AND.w #$00FF                            ;$049546 |
     ASL                                     ;$049549 |
     TAX                                     ;$04954A |
@@ -2281,7 +2281,7 @@ CODE_0495CE:
     BMI ADDR_049575                         ;$0495D0 |
     CMP.w #$0800                            ;$0495D2 |
     BCS ADDR_049575                         ;$0495D5 |
-    LDA.l $7EC800,X                         ;$0495D7 |
+    LDA.l Map16TilesLow_C800,X              ;$0495D7 |
     AND.w #$00FF                            ;$0495DB |
 CODE_0495DE:
     STA.w $13C1
@@ -2395,7 +2395,7 @@ CODE_0496A5:
     TAY                                     ;$0496BB |
     STZ $06                                 ;$0496BC |
     LDX $04                                 ;$0496BE |
-    LDA.l $7ED000,X                         ;$0496C0 |
+    LDA.l OWLayer1Translevel_D000,X         ;$0496C0 |
     AND.w #$00FF                            ;$0496C4 |
     TAX                                     ;$0496C7 |
     LDA.w DATA_04941E,Y                     ;$0496C8 |
@@ -2737,7 +2737,7 @@ CODE_049903:
     JSR OW_TilePos_Calc                     ;$049933 |
     REP #$10                                ;$049936 |
     LDX $04                                 ;$049938 |
-    LDA.l $7ED800,X                         ;$04993A |
+    LDA.l OWLayer2Directions_D800,X         ;$04993A |
     AND.w #$00FF                            ;$04993E |
     LDX $08                                 ;$049941 |
     BEQ CODE_049949                         ;$049943 |
@@ -2750,7 +2750,7 @@ CODE_049949:
     ASL                                     ;$04994C |
     TAY                                     ;$04994D |
     LDX $04                                 ;$04994E |
-    LDA.l $7ED000,X                         ;$049950 |
+    LDA.l OWLayer1Translevel_D000,X         ;$049950 |
     AND.w #$00FF                            ;$049954 |
     TAX                                     ;$049957 |
     LDA.w DATA_04941E,Y                     ;$049958 |
@@ -2974,18 +2974,18 @@ DATA_049CED:
     db $C6,$01
 
 CODE_049D07:
-    LDA.l $7F837B
+    LDA.l DynStripeImgSize_7F837B
     TAX                                     ;$049D0B |
     CLC                                     ;$049D0C |
     ADC.w #$0026                            ;$049D0D |
     STA $02                                 ;$049D10 |
     CLC                                     ;$049D12 |
     ADC.w #$0004                            ;$049D13 |
-    STA.l $7F837B                           ;$049D16 |
+    STA.l DynStripeImgSize_7F837B           ;$049D16 |
     LDA.w #$2500                            ;$049D1A |
-    STA.l $7F837F,X                         ;$049D1D |
+    STA.l DynamicStripeImage_7F837D+2,X     ;$049D1D |
     LDA.w #$8B50                            ;$049D21 |
-    STA.l $7F837D,X                         ;$049D24 |
+    STA.l DynamicStripeImage_7F837D,X       ;$049D24 |
     LDA $01                                 ;$049D28 |
     AND.w #$007F                            ;$049D2A |
     ASL                                     ;$049D2D |
@@ -5076,37 +5076,37 @@ CODE_04D76A:
 
 CODE_04D770:
     STA.l Map16TilesHigh_7FC800,X
-    STA.l $7FC9B0,X                         ;$04D774 |
-    STA.l $7FCB60,X                         ;$04D778 |
-    STA.l $7FCD10,X                         ;$04D77C |
-    STA.l $7FCEC0,X                         ;$04D780 |
-    STA.l $7FD070,X                         ;$04D784 |
-    STA.l $7FD220,X                         ;$04D788 |
-    STA.l $7FD3D0,X                         ;$04D78C |
-    STA.l $7FD580,X                         ;$04D790 |
-    STA.l $7FD730,X                         ;$04D794 |
-    STA.l $7FD8E0,X                         ;$04D798 |
-    STA.l $7FDA90,X                         ;$04D79C |
-    STA.l $7FDC40,X                         ;$04D7A0 |
-    STA.l $7FDDF0,X                         ;$04D7A4 |
-    STA.l $7FDFA0,X                         ;$04D7A8 |
-    STA.l $7FE150,X                         ;$04D7AC |
-    STA.l $7FE300,X                         ;$04D7B0 |
-    STA.l $7FE4B0,X                         ;$04D7B4 |
-    STA.l $7FE660,X                         ;$04D7B8 |
-    STA.l $7FE810,X                         ;$04D7BC |
-    STA.l $7FE9C0,X                         ;$04D7C0 |
-    STA.l $7FEB70,X                         ;$04D7C4 |
-    STA.l $7FED20,X                         ;$04D7C8 |
-    STA.l $7FEED0,X                         ;$04D7CC |
-    STA.l $7FF080,X                         ;$04D7D0 |
-    STA.l $7FF230,X                         ;$04D7D4 |
-    STA.l $7FF3E0,X                         ;$04D7D8 |
-    STA.l $7FF590,X                         ;$04D7DC |
-    STA.l $7FF740,X                         ;$04D7E0 |
-    STA.l $7FF8F0,X                         ;$04D7E4 |
-    STA.l $7FFAA0,X                         ;$04D7E8 |
-    STA.l $7FFC50,X                         ;$04D7EC |
+    STA.l Map16TilesHigh_7FC800+$1B0,X      ;$04D774 |
+    STA.l Map16TilesHigh_7FC800+(2*$1B0),X  ;$04D778 |
+    STA.l Map16TilesHigh_7FC800+(3*$1B0),X  ;$04D77C |
+    STA.l Map16TilesHigh_7FC800+(4*$1B0),X  ;$04D780 |
+    STA.l Map16TilesHigh_7FC800+(5*$1B0),X  ;$04D784 |
+    STA.l Map16TilesHigh_7FC800+(6*$1B0),X  ;$04D788 |
+    STA.l Map16TilesHigh_7FC800+(7*$1B0),X  ;$04D78C |
+    STA.l Map16TilesHigh_7FC800+(8*$1B0),X  ;$04D790 |
+    STA.l Map16TilesHigh_7FC800+(9*$1B0),X  ;$04D794 |
+    STA.l Map16TilesHigh_7FC800+(10*$1B0),X ;$04D798 |
+    STA.l Map16TilesHigh_7FC800+(11*$1B0),X ;$04D79C |
+    STA.l Map16TilesHigh_7FC800+(12*$1B0),X ;$04D7A0 |
+    STA.l Map16TilesHigh_7FC800+(13*$1B0),X ;$04D7A4 |
+    STA.l Map16TilesHigh_7FC800+(14*$1B0),X ;$04D7A8 |
+    STA.l Map16TilesHigh_7FC800+(15*$1B0),X ;$04D7AC |
+    STA.l Map16TilesHigh_7FC800+(16*$1B0),X ;$04D7B0 |
+    STA.l Map16TilesHigh_7FC800+(17*$1B0),X ;$04D7B4 |
+    STA.l Map16TilesHigh_7FC800+(18*$1B0),X ;$04D7B8 |
+    STA.l Map16TilesHigh_7FC800+(19*$1B0),X ;$04D7BC |
+    STA.l Map16TilesHigh_7FC800+(20*$1B0),X ;$04D7C0 |
+    STA.l Map16TilesHigh_7FC800+(21*$1B0),X ;$04D7C4 |
+    STA.l Map16TilesHigh_7FC800+(22*$1B0),X ;$04D7C8 |
+    STA.l Map16TilesHigh_7FC800+(23*$1B0),X ;$04D7CC |
+    STA.l Map16TilesHigh_7FC800+(24*$1B0),X ;$04D7D0 |
+    STA.l Map16TilesHigh_7FC800+(25*$1B0),X ;$04D7D4 |
+    STA.l Map16TilesHigh_7FC800+(26*$1B0),X ;$04D7D8 |
+    STA.l Map16TilesHigh_7FC800+(27*$1B0),X ;$04D7DC |
+    STA.l Map16TilesHigh_7FC800+(28*$1B0),X ;$04D7E0 |
+    STA.l Map16TilesHigh_7FC800+(29*$1B0),X ;$04D7E4 |
+    STA.l Map16TilesHigh_7FC800+(30*$1B0),X ;$04D7E8 |
+    STA.l Map16TilesHigh_7FC800+(31*$1B0),X ;$04D7EC |
     INX                                     ;$04D7F0 |
     RTS                                     ;$04D7F1 |
 
@@ -5308,7 +5308,7 @@ CODE_04DABA:
 CODE_04DAC6:
     INY
     LDA [$00],Y                             ;$04DAC7 |
-    STA.l $7F4000,X                         ;$04DAC9 |
+    STA.l OWLayer2Tilemap_7F4000,X          ;$04DAC9 |
     INX                                     ;$04DACD |
     INX                                     ;$04DACE |
     DEC $03                                 ;$04DACF |
@@ -5322,7 +5322,7 @@ CODE_04DAD6:
     INY                                     ;$04DADC |
     LDA [$00],Y                             ;$04DADD |
 CODE_04DADF:
-    STA.l $7F4000,X
+    STA.l OWLayer2Tilemap_7F4000,X
     INX                                     ;$04DAE3 |
     INX                                     ;$04DAE4 |
     DEC $03                                 ;$04DAE5 |
@@ -5593,7 +5593,7 @@ CODE_04DCB6:
     STA $01                                 ;$04DCE6 |
 CODE_04DCE8:
     LDX $00
-    LDA.l $7EC800,X                         ;$04DCEA |
+    LDA.l Map16TilesLow_C800,X              ;$04DCEA |
     STA $02                                 ;$04DCEE |
     REP #$20                                ;$04DCF0 |
     LDA.l Map16TilesHigh_7FC800,X           ;$04DCF2 |
@@ -5616,19 +5616,19 @@ CODE_04DCE8:
     ORA $02                                 ;$04DD10 |
     TAX                                     ;$04DD12 |
     LDA.b [Layer1DataPtr_65],Y              ;$04DD13 |
-    STA.l $7EE400,X                         ;$04DD15 |
+    STA.l OWLayer1VramBuffer_E400,X         ;$04DD15 |
     INY                                     ;$04DD19 |
     INY                                     ;$04DD1A |
     LDA.b [Layer1DataPtr_65],Y              ;$04DD1B |
-    STA.l $7EE440,X                         ;$04DD1D |
+    STA.l OWLayer2Directions_D800+$C40,X    ;$04DD1D |
     INY                                     ;$04DD21 |
     INY                                     ;$04DD22 |
     LDA.b [Layer1DataPtr_65],Y              ;$04DD23 |
-    STA.l $7EE402,X                         ;$04DD25 |
+    STA.l OWLayer2Directions_D800+$C02,X    ;$04DD25 |
     INY                                     ;$04DD29 |
     INY                                     ;$04DD2A |
     LDA.b [Layer1DataPtr_65],Y              ;$04DD2B |
-    STA.l $7EE442,X                         ;$04DD2D |
+    STA.l OWLayer2Directions_D800+$C42,X    ;$04DD2D |
     SEP #$20                                ;$04DD31 |
     INC $00                                 ;$04DD33 |
     LDA $00                                 ;$04DD35 |
@@ -5660,7 +5660,7 @@ CODE_04DD57:
     BNE CODE_04DD71                         ;$04DD60 |
 CODE_04DD62:
     LDA [$02],Y
-    STA.l $7F0000,X                         ;$04DD64 |
+    STA.l OWEventTilemap_7F0000,X           ;$04DD64 |
     INY                                     ;$04DD68 |
     INX                                     ;$04DD69 |
     DEC $05                                 ;$04DD6A |
@@ -5673,7 +5673,7 @@ CODE_04DD71:
     STA $05                                 ;$04DD75 |
     LDA [$02],Y                             ;$04DD77 |
 CODE_04DD79:
-    STA.l $7F0000,X
+    STA.l OWEventTilemap_7F0000,X
     INX                                     ;$04DD7D |
     DEC $05                                 ;$04DD7E |
     BPL CODE_04DD79                         ;$04DD80 |
@@ -5992,10 +5992,10 @@ CODE_04E4D5:
 CODE_04E4DC:
     SEP #$20
     LDA [$09],Y                             ;$04E4DE |
-    STA.l $7F4000,X                         ;$04E4E0 |
+    STA.l OWLayer2Tilemap_7F4000,X          ;$04E4E0 |
     INX                                     ;$04E4E4 |
     LDA [$06],Y                             ;$04E4E5 |
-    STA.l $7F4000,X                         ;$04E4E7 |
+    STA.l OWLayer2Tilemap_7F4000,X          ;$04E4E7 |
     INY                                     ;$04E4EB |
     INX                                     ;$04E4EC |
     REP #$20                                ;$04E4ED |
@@ -6038,10 +6038,10 @@ CODE_04E525:
 CODE_04E52C:
     SEP #$20
     LDA [$09],Y                             ;$04E52E |
-    STA.l $7F4000,X                         ;$04E530 |
+    STA.l OWLayer2Tilemap_7F4000,X          ;$04E530 |
     INX                                     ;$04E534 |
     LDA [$06],Y                             ;$04E535 |
-    STA.l $7F4000,X                         ;$04E537 |
+    STA.l OWLayer2Tilemap_7F4000,X          ;$04E537 |
     INY                                     ;$04E53B |
     INX                                     ;$04E53C |
     REP #$20                                ;$04E53D |
@@ -6304,9 +6304,9 @@ CODE_04E74F:
     JSR CODE_04E824
 CODE_04E752:
     LDA.w #$00FF
-    STA.l $7F837D,X                         ;$04E755 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E755 |
     TXA                                     ;$04E759 |
-    STA.l $7F837B                           ;$04E75A |
+    STA.l DynStripeImgSize_7F837B           ;$04E75A |
     JSR CODE_04E496                         ;$04E75E |
     SEP #$30                                ;$04E761 |
     LDA.b #$15                              ;$04E763 |
@@ -6317,11 +6317,11 @@ CODE_04E752:
 CODE_04E76C:
     LDA.w #$0001
     STA $06                                 ;$04E76F |
-    LDA.l $7F837B                           ;$04E771 |
+    LDA.l DynStripeImgSize_7F837B           ;$04E771 |
     TAX                                     ;$04E775 |
 CODE_04E776:
     LDA $02
-    STA.l $7F837D,X                         ;$04E778 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E778 |
     INX                                     ;$04E77C |
     INX                                     ;$04E77D |
     LDY.w #$0300                            ;$04E77E |
@@ -6341,7 +6341,7 @@ CODE_04E776:
     TAY                                     ;$04E79A |
 CODE_04E79B:
     TYA
-    STA.l $7F837D,X                         ;$04E79C |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E79C |
     INX                                     ;$04E7A0 |
     INX                                     ;$04E7A1 |
     LDA.w #$0001                            ;$04E7A2 |
@@ -6350,7 +6350,7 @@ CODE_04E79B:
 CODE_04E7A9:
     LDA [$0C],Y
     AND $0A                                 ;$04E7AB |
-    STA.l $7F837D,X                         ;$04E7AD |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E7AD |
     INX                                     ;$04E7B1 |
     INX                                     ;$04E7B2 |
     INY                                     ;$04E7B3 |
@@ -6372,14 +6372,14 @@ CODE_04E7A9:
     CLC                                     ;$04E7CF |
     ADC.w #$0400                            ;$04E7D0 |
     XBA                                     ;$04E7D3 |
-    STA.l $7F837D,X                         ;$04E7D4 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E7D4 |
     INX                                     ;$04E7D8 |
     INX                                     ;$04E7D9 |
     LDA $08                                 ;$04E7DA |
     ASL                                     ;$04E7DC |
     DEC A                                   ;$04E7DD |
     XBA                                     ;$04E7DE |
-    STA.l $7F837D,X                         ;$04E7DF |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E7DF |
     INX                                     ;$04E7E3 |
     INX                                     ;$04E7E4 |
 CODE_04E7E5:
@@ -6423,11 +6423,11 @@ Return04E823:
 CODE_04E824:
     LDA.w #$0005
     STA $06                                 ;$04E827 |
-    LDA.l $7F837B                           ;$04E829 |
+    LDA.l DynStripeImgSize_7F837B           ;$04E829 |
     TAX                                     ;$04E82D |
 CODE_04E82E:
     LDA $02
-    STA.l $7F837D,X                         ;$04E830 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E830 |
     INX                                     ;$04E834 |
     INX                                     ;$04E835 |
     LDY.w #$0B00                            ;$04E836 |
@@ -6451,7 +6451,7 @@ CODE_04E82E:
     STA $08                                 ;$04E859 |
 CODE_04E85B:
     TYA
-    STA.l $7F837D,X                         ;$04E85C |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E85C |
     INX                                     ;$04E860 |
     INX                                     ;$04E861 |
     LDA.w #$0005                            ;$04E862 |
@@ -6460,7 +6460,7 @@ CODE_04E85B:
 CODE_04E869:
     LDA [$0C],Y
     AND $0A                                 ;$04E86B |
-    STA.l $7F837D,X                         ;$04E86D |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E86D |
     INX                                     ;$04E871 |
     INX                                     ;$04E872 |
     INY                                     ;$04E873 |
@@ -6482,14 +6482,14 @@ CODE_04E869:
     CLC                                     ;$04E88F |
     ADC.w #$0400                            ;$04E890 |
     XBA                                     ;$04E893 |
-    STA.l $7F837D,X                         ;$04E894 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E894 |
     INX                                     ;$04E898 |
     INX                                     ;$04E899 |
     LDA $08                                 ;$04E89A |
     ASL                                     ;$04E89C |
     DEC A                                   ;$04E89D |
     XBA                                     ;$04E89E |
-    STA.l $7F837D,X                         ;$04E89F |
+    STA.l DynamicStripeImage_7F837D,X       ;$04E89F |
     INX                                     ;$04E8A3 |
     INX                                     ;$04E8A4 |
 CODE_04E8A5:
@@ -6627,7 +6627,7 @@ CODE_04EA4E:
     REP #$10                                ;$04EA50 |
     LDX $04                                 ;$04EA52 |
     LDA $00                                 ;$04EA54 |
-    STA.l $7EC800,X                         ;$04EA56 |
+    STA.l Map16TilesLow_C800,X              ;$04EA56 |
 CODE_04EA5A:
     SEP #$30
     PLX                                     ;$04EA5C |
@@ -6712,10 +6712,10 @@ CODE_04EAED:
     STA.w $0351,Y                           ;$04EAF1 |
     LDA.l DATA_0C8000,X                     ;$04EAF4 |
     STA.w $0352,Y                           ;$04EAF8 |
-    LDA.l $7F0000,X                         ;$04EAFB |
+    LDA.l OWEventTilemap_7F0000,X           ;$04EAFB |
     AND.b #$C0                              ;$04EAFF |
     STA $04                                 ;$04EB01 |
-    LDA.l $7F0000,X                         ;$04EB03 |
+    LDA.l OWEventTilemap_7F0000,X           ;$04EB03 |
     AND.b #$1C                              ;$04EB07 |
     LSR                                     ;$04EB09 |
     ORA $04                                 ;$04EB0A |
@@ -6979,7 +6979,7 @@ CODE_04EDAB:
     SEP #$20                                ;$04EDC5 |
     LDA.l DATA_04DA33,X                     ;$04EDC7 |
     PLX                                     ;$04EDCB |
-    STA.l $7EC800,X                         ;$04EDCC |
+    STA.l Map16TilesLow_C800,X              ;$04EDCC |
     LDA.b #$04                              ;$04EDD0 |
     STA $0C                                 ;$04EDD2 |
     REP #$20                                ;$04EDD4 |
@@ -6990,16 +6990,16 @@ CODE_04EDAB:
     ASL                                     ;$04EDDE |
     ASL                                     ;$04EDDF |
     TAY                                     ;$04EDE0 |
-    LDA.l $7F837B                           ;$04EDE1 |
+    LDA.l DynStripeImgSize_7F837B           ;$04EDE1 |
     TAX                                     ;$04EDE5 |
 CODE_04EDE6:
     LDA $00
-    STA.l $7F837D,X                         ;$04EDE8 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04EDE8 |
     CLC                                     ;$04EDEC |
     ADC.w #$2000                            ;$04EDED |
     STA.l $7F8385,X                         ;$04EDF0 |
     LDA.w #$0300                            ;$04EDF4 |
-    STA.l $7F837F,X                         ;$04EDF7 |
+    STA.l DynamicStripeImage_7F837D+2,X     ;$04EDF7 |
     STA.l $7F8387,X                         ;$04EDFB |
     LDA [$0A],Y                             ;$04EDFF |
     STA.l $7F8381,X                         ;$04EE01 |
@@ -7020,7 +7020,7 @@ CODE_04EDE6:
     TXA                                     ;$04EE24 |
     CLC                                     ;$04EE25 |
     ADC.w #$0010                            ;$04EE26 |
-    STA.l $7F837B                           ;$04EE29 |
+    STA.l DynStripeImgSize_7F837B           ;$04EE29 |
     SEP #$30                                ;$04EE2D |
     RTS                                     ;$04EE2F |
 
@@ -7055,9 +7055,9 @@ CODE_04EE68:
     JSR CODE_04E824
 CODE_04EE6B:
     LDA.w #$00FF
-    STA.l $7F837D,X                         ;$04EE6E |
+    STA.l DynamicStripeImage_7F837D,X       ;$04EE6E |
     TXA                                     ;$04EE72 |
-    STA.l $7F837B                           ;$04EE73 |
+    STA.l DynStripeImgSize_7F837B           ;$04EE73 |
     SEP #$30                                ;$04EE77 |
     RTS                                     ;$04EE79 |
 
@@ -7086,7 +7086,7 @@ CODE_04EEAA:
     TAX                                     ;$04EEC7 |
     LDA.l DATA_04E587,X                     ;$04EEC8 |
     STA $00                                 ;$04EECC |
-    LDA.l $7F837B                           ;$04EECE |
+    LDA.l DynStripeImgSize_7F837B           ;$04EECE |
     TAX                                     ;$04EED2 |
     LDA.w $13D0                             ;$04EED3 |
     AND.w #$00FF                            ;$04EED6 |
@@ -7097,7 +7097,7 @@ CODE_04EEAA:
     ASL                                     ;$04EEE0 |
     TAY                                     ;$04EEE1 |
     LDA $00                                 ;$04EEE2 |
-    STA.l $7F837D,X                         ;$04EEE4 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04EEE4 |
     CLC                                     ;$04EEE8 |
     ADC.w #$2000                            ;$04EEE9 |
     STA.l $7F8385,X                         ;$04EEEC |
@@ -7107,7 +7107,7 @@ CODE_04EEAA:
     XBA                                     ;$04EEF5 |
     STA $00                                 ;$04EEF6 |
     LDA.w #$0300                            ;$04EEF8 |
-    STA.l $7F837F,X                         ;$04EEFB |
+    STA.l DynamicStripeImage_7F837D+2,X     ;$04EEFB |
     STA.l $7F8387,X                         ;$04EEFF |
     LDA [$0A],Y                             ;$04EF03 |
     STA.l $7F8381,X                         ;$04EF05 |
@@ -7275,23 +7275,23 @@ CODE_04F29B:
 CODE_04F2B0:
     LDY.w $0DD6
     LDA.w $1F17,Y                           ;$04F2B3 |
-    STA.l $7EB978,X                         ;$04F2B6 |
+    STA.l SwitchAniXPosLow_B978,X           ;$04F2B6 |
     LDA.w $1F18,Y                           ;$04F2BA |
-    STA.l $7EB900,X                         ;$04F2BD |
+    STA.l SwitchAniXPosHigh_B900,X          ;$04F2BD |
     LDA.w $1F19,Y                           ;$04F2C1 |
-    STA.l $7EB9A0,X                         ;$04F2C4 |
+    STA.l SwitchAniYPosLow_B9A0,X           ;$04F2C4 |
     LDA.w $1F1A,Y                           ;$04F2C8 |
-    STA.l $7EB928,X                         ;$04F2CB |
+    STA.l SwitchAniYPosHigh_B928,X          ;$04F2CB |
     LDA.b #$00                              ;$04F2CF |
-    STA.l $7EB9C8,X                         ;$04F2D1 |
-    STA.l $7EB950,X                         ;$04F2D5 |
+    STA.l SwitchAniZPosLow_B9C8,X           ;$04F2D1 |
+    STA.l SwitchAniYPosHigh_B928+$28,X      ;$04F2D5 |
     LDY $00                                 ;$04F2D9 |
     LDA.w DATA_04F280,Y                     ;$04F2DB |
-    STA.l $7EB9F0,X                         ;$04F2DE |
+    STA.l SwitchAniXSpeed_B9F0,X            ;$04F2DE |
     LDA.w DATA_04F288,Y                     ;$04F2E2 |
-    STA.l $7EBA18,X                         ;$04F2E5 |
+    STA.l SwitchAniYSpeed_BA18,X            ;$04F2E5 |
     LDA.b #$D0                              ;$04F2E9 |
-    STA.l $7EBA40,X                         ;$04F2EB |
+    STA.l SwitchAniZSpeed_BA40,X            ;$04F2EB |
     INX                                     ;$04F2EF |
     DEC $00                                 ;$04F2F0 |
     BPL CODE_04F2B0                         ;$04F2F2 |
@@ -7324,7 +7324,7 @@ CODE_04F31E:
     JSR CODE_04F397                         ;$04F324 |
     JSR CODE_04F397                         ;$04F327 |
     PLX                                     ;$04F32A |
-    LDA.l $7EBA40,X                         ;$04F32B |
+    LDA.l SwitchAniZSpeed_BA40,X            ;$04F32B |
     CLC                                     ;$04F32F |
     ADC.b #$01                              ;$04F330 |
     BMI CODE_04F33A                         ;$04F332 |
@@ -7332,10 +7332,10 @@ CODE_04F31E:
     BCC CODE_04F33A                         ;$04F336 |
     LDA.b #$40                              ;$04F338 |
 CODE_04F33A:
-    STA.l $7EBA40,X
-    LDA.l $7EB950,X                         ;$04F33E |
+    STA.l SwitchAniZSpeed_BA40,X
+    LDA.l SwitchAniYPosHigh_B928+$28,X      ;$04F33E |
     XBA                                     ;$04F342 |
-    LDA.l $7EB9C8,X                         ;$04F343 |
+    LDA.l SwitchAniZPosLow_B9C8,X           ;$04F343 |
     REP #$20                                ;$04F347 |
     CLC                                     ;$04F349 |
     ADC $02                                 ;$04F34A |
@@ -7389,15 +7389,15 @@ CODE_04F397:
     TAX                                     ;$04F39B |
 CODE_04F39C:
     PHY
-    LDA.l $7EB9F0,X                         ;$04F39D |
+    LDA.l SwitchAniXSpeed_B9F0,X            ;$04F39D |
     ASL                                     ;$04F3A1 |
     ASL                                     ;$04F3A2 |
     ASL                                     ;$04F3A3 |
     ASL                                     ;$04F3A4 |
     CLC                                     ;$04F3A5 |
-    ADC.l $7EBA68,X                         ;$04F3A6 |
-    STA.l $7EBA68,X                         ;$04F3AA |
-    LDA.l $7EB9F0,X                         ;$04F3AE |
+    ADC.l SwitchAniXSpx_BA68,X              ;$04F3A6 |
+    STA.l SwitchAniXSpx_BA68,X              ;$04F3AA |
+    LDA.l SwitchAniXSpeed_B9F0,X            ;$04F3AE |
     PHP                                     ;$04F3B2 |
     LSR                                     ;$04F3B3 |
     LSR                                     ;$04F3B4 |
@@ -7409,12 +7409,12 @@ CODE_04F39C:
     ORA.b #$F0                              ;$04F3BC |
     DEY                                     ;$04F3BE |
 CODE_04F3BF:
-    ADC.l $7EB978,X
-    STA.l $7EB978,X                         ;$04F3C3 |
+    ADC.l SwitchAniXPosLow_B978,X
+    STA.l SwitchAniXPosLow_B978,X           ;$04F3C3 |
     XBA                                     ;$04F3C7 |
     TYA                                     ;$04F3C8 |
-    ADC.l $7EB900,X                         ;$04F3C9 |
-    STA.l $7EB900,X                         ;$04F3CD |
+    ADC.l SwitchAniXPosHigh_B900,X          ;$04F3C9 |
+    STA.l SwitchAniXPosHigh_B900,X          ;$04F3CD |
     XBA                                     ;$04F3D1 |
     PLY                                     ;$04F3D2 |
     REP #$20                                ;$04F3D3 |
@@ -7629,12 +7629,12 @@ CODE_04F56C:
     LDY.b #$50                              ;$04F594 |
     TYA                                     ;$04F596 |
     CLC                                     ;$04F597 |
-    ADC.l $7F837B                           ;$04F598 |
-    STA.l $7F837B                           ;$04F59C |
+    ADC.l DynStripeImgSize_7F837B           ;$04F598 |
+    STA.l DynStripeImgSize_7F837B           ;$04F59C |
     TAX                                     ;$04F5A0 |
 CODE_04F5A1:
     LDA.w DATA_04F4B2,Y
-    STA.l $7F837D,X                         ;$04F5A4 |
+    STA.l DynamicStripeImage_7F837D,X       ;$04F5A4 |
     DEX                                     ;$04F5A8 |
     DEY                                     ;$04F5A9 |
     BPL CODE_04F5A1                         ;$04F5AA |

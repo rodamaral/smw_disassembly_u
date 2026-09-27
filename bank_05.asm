@@ -13,8 +13,8 @@ CODE_05801E:
     LDX.w #$0000                            ;$058023 |
 CODE_058026:
     LDA.b #$25
-    STA.l $7EB900,X                         ;$058028 |
-    STA.l $7EBB00,X                         ;$05802C |
+    STA.l SwitchAniXPosHigh_B900,X          ;$058028 |
+    STA.l SwitchAniZSpx_BAB8+$48,X          ;$05802C |
     INX                                     ;$058030 |
     CPX.w #$0200                            ;$058031 |
     BNE CODE_058026                         ;$058034 |
@@ -32,8 +32,8 @@ CODE_05804E:
     LDX.w #$0000
     TYA                                     ;$058051 |
 CODE_058052:
-    STA.l $7EBD00,X
-    STA.l $7EBF00,X                         ;$058056 |
+    STA.l Layer2TilemapHigh_BD00,X
+    STA.l Layer2TilemapHigh_BD00+$200,X     ;$058056 |
     INX                                     ;$05805A |
     CPX.w #$0200                            ;$05805B |
     BNE CODE_058052                         ;$05805E |
@@ -338,66 +338,66 @@ CODE_0582C5:
     RTS                                     ;$0582C7 |
 
 CODE_0582C8:
-    STA.l $7EC800,X
-    STA.l $7ECA00,X                         ;$0582CC |
-    STA.l $7ECC00,X                         ;$0582D0 |
-    STA.l $7ECE00,X                         ;$0582D4 |
-    STA.l $7ED000,X                         ;$0582D8 |
-    STA.l $7ED200,X                         ;$0582DC |
-    STA.l $7ED400,X                         ;$0582E0 |
-    STA.l $7ED600,X                         ;$0582E4 |
-    STA.l $7ED800,X                         ;$0582E8 |
-    STA.l $7EDA00,X                         ;$0582EC |
-    STA.l $7EDC00,X                         ;$0582F0 |
-    STA.l $7EDE00,X                         ;$0582F4 |
-    STA.l $7EE000,X                         ;$0582F8 |
-    STA.l $7EE200,X                         ;$0582FC |
-    STA.l $7EE400,X                         ;$058300 |
-    STA.l $7EE600,X                         ;$058304 |
-    STA.l $7EE800,X                         ;$058308 |
-    STA.l $7EEA00,X                         ;$05830C |
-    STA.l $7EEC00,X                         ;$058310 |
-    STA.l $7EEE00,X                         ;$058314 |
-    STA.l $7EF000,X                         ;$058318 |
-    STA.l $7EF200,X                         ;$05831C |
-    STA.l $7EF400,X                         ;$058320 |
-    STA.l $7EF600,X                         ;$058324 |
-    STA.l $7EF800,X                         ;$058328 |
-    STA.l $7EFA00,X                         ;$05832C |
-    STA.l $7EFC00,X                         ;$058330 |
-    STA.l $7EFE00,X                         ;$058334 |
+    STA.l Map16TilesLow_C800,X
+    STA.l Map16TilesLow_C800+$200,X         ;$0582CC |
+    STA.l Map16TilesLow_C800+$400,X         ;$0582D0 |
+    STA.l Map16TilesLow_C800+$600,X         ;$0582D4 |
+    STA.l OWLayer1Translevel_D000,X           ;$0582D8 |
+    STA.l OWLayer1Translevel_D000+$200,X    ;$0582DC |
+    STA.l OWLayer1Translevel_D000+$400,X    ;$0582E0 |
+    STA.l OWLayer1Translevel_D000+$600,X    ;$0582E4 |
+    STA.l OWLayer2Directions_D800,X         ;$0582E8 |
+    STA.l OWLayer2Directions_D800+$200,X    ;$0582EC |
+    STA.l OWLayer2Directions_D800+$400,X    ;$0582F0 |
+    STA.l OWLayer2Directions_D800+$600,X    ;$0582F4 |
+    STA.l OWLayer2Directions_D800+$800,X    ;$0582F8 |
+    STA.l OWLayer2Directions_D800+$A00,X    ;$0582FC |
+    STA.l OWLayer1VramBuffer_E400,X         ;$058300 |
+    STA.l OWLayer1VramBuffer_E400+$200,X    ;$058304 |
+    STA.l OWLayer1VramBuffer_E400+$400,X    ;$058308 |
+    STA.l OWLayer1VramBuffer_E400+$600,X    ;$05830C |
+    STA.l OWLayer1VramBuffer_E400+$800,X    ;$058310 |
+    STA.l OWLayer1VramBuffer_E400+$A00,X    ;$058314 |
+    STA.l OWLayer1VramBuffer_E400+$C00,X    ;$058318 |
+    STA.l OWLayer1VramBuffer_E400+$E00,X    ;$05831C |
+    STA.l OWLayer1VramBuffer_E400+$1000,X   ;$058320 |
+    STA.l OWLayer1VramBuffer_E400+$1200,X   ;$058324 |
+    STA.l OWLayer1VramBuffer_E400+$1400,X   ;$058328 |
+    STA.l OWLayer1VramBuffer_E400+$1600,X   ;$05832C |
+    STA.l OWLayer1VramBuffer_E400+$1800,X   ;$058330 |
+    STA.l OWLayer1VramBuffer_E400+$1A00,X   ;$058334 |
     INX                                     ;$058338 |
     RTS                                     ;$058339 |
 
 CODE_05833A:
     STA.l Map16TilesHigh_7FC800,X
-    STA.l $7FCA00,X                         ;$05833E |
-    STA.l $7FCC00,X                         ;$058342 |
-    STA.l $7FCE00,X                         ;$058346 |
-    STA.l $7FD000,X                         ;$05834A |
-    STA.l $7FD200,X                         ;$05834E |
-    STA.l $7FD400,X                         ;$058352 |
-    STA.l $7FD600,X                         ;$058356 |
-    STA.l $7FD800,X                         ;$05835A |
-    STA.l $7FDA00,X                         ;$05835E |
-    STA.l $7FDC00,X                         ;$058362 |
-    STA.l $7FDE00,X                         ;$058366 |
-    STA.l $7FE000,X                         ;$05836A |
-    STA.l $7FE200,X                         ;$05836E |
-    STA.l $7FE400,X                         ;$058372 |
-    STA.l $7FE600,X                         ;$058376 |
-    STA.l $7FE800,X                         ;$05837A |
-    STA.l $7FEA00,X                         ;$05837E |
-    STA.l $7FEC00,X                         ;$058382 |
-    STA.l $7FEE00,X                         ;$058386 |
-    STA.l $7FF000,X                         ;$05838A |
-    STA.l $7FF200,X                         ;$05838E |
-    STA.l $7FF400,X                         ;$058392 |
-    STA.l $7FF600,X                         ;$058396 |
-    STA.l $7FF800,X                         ;$05839A |
-    STA.l $7FFA00,X                         ;$05839E |
-    STA.l $7FFC00,X                         ;$0583A2 |
-    STA.l $7FFE00,X                         ;$0583A6 |
+    STA.l Map16TilesHigh_7FC800+$200,X      ;$05833E |
+    STA.l Map16TilesHigh_7FC800+$400,X      ;$058342 |
+    STA.l Map16TilesHigh_7FC800+$600,X      ;$058346 |
+    STA.l Map16TilesHigh_7FC800+$800,X      ;$05834A |
+    STA.l Map16TilesHigh_7FC800+$A00,X      ;$05834E |
+    STA.l Map16TilesHigh_7FC800+$C00,X      ;$058352 |
+    STA.l Map16TilesHigh_7FC800+$E00,X      ;$058356 |
+    STA.l Map16TilesHigh_7FC800+$1000,X     ;$05835A |
+    STA.l Map16TilesHigh_7FC800+$1200,X     ;$05835E |
+    STA.l Map16TilesHigh_7FC800+$1400,X     ;$058362 |
+    STA.l Map16TilesHigh_7FC800+$1600,X     ;$058366 |
+    STA.l Map16TilesHigh_7FC800+$1800,X     ;$05836A |
+    STA.l Map16TilesHigh_7FC800+$1A00,X     ;$05836E |
+    STA.l Map16TilesHigh_7FC800+$1C00,X     ;$058372 |
+    STA.l Map16TilesHigh_7FC800+$1E00,X     ;$058376 |
+    STA.l Map16TilesHigh_7FC800+$2000,X     ;$05837A |
+    STA.l Map16TilesHigh_7FC800+$2200,X     ;$05837E |
+    STA.l Map16TilesHigh_7FC800+$2400,X     ;$058382 |
+    STA.l Map16TilesHigh_7FC800+$2600,X     ;$058386 |
+    STA.l Map16TilesHigh_7FC800+$2800,X     ;$05838A |
+    STA.l Map16TilesHigh_7FC800+$2A00,X     ;$05838E |
+    STA.l Map16TilesHigh_7FC800+$2C00,X     ;$058392 |
+    STA.l Map16TilesHigh_7FC800+$2E00,X     ;$058396 |
+    STA.l Map16TilesHigh_7FC800+$3000,X     ;$05839A |
+    STA.l Map16TilesHigh_7FC800+$3200,X     ;$05839E |
+    STA.l Map16TilesHigh_7FC800+$3400,X     ;$0583A2 |
+    STA.l Map16TilesHigh_7FC800+$3600,X     ;$0583A6 |
     INX                                     ;$0583AA |
     RTS                                     ;$0583AB |
 
@@ -3024,14 +3024,14 @@ CODE_05B191:
     LDA.w DATA_05A5A7,X                     ;$05B1E0 |
     STA $00                                 ;$05B1E3 |
     REP #$10                                ;$05B1E5 |
-    LDA.l $7F837B                           ;$05B1E7 |
+    LDA.l DynStripeImgSize_7F837B           ;$05B1E7 |
     TAX                                     ;$05B1EB |
     LDY.w #$000E                            ;$05B1EC | Y: loop counter
 .loop_05B1EF:
     LDA.w DATA_05A580,Y                     ;        |\
-    STA.l $7F837D,X                         ;$05B1F2 ||
+    STA.l DynamicStripeImage_7F837D,X       ;$05B1F2 ||
     LDA.w #$2300                            ;$05B1F6 ||
-    STA.l $7F837F,X                         ;$05B1F9 ||
+    STA.l DynamicStripeImage_7F837D+2,X     ;$05B1F9 ||
     PHY                                     ;$05B1FD ||
     SEP #$20                                ;$05B1FE ||
     LDA.b #$12                              ;$05B200 ||
@@ -3063,9 +3063,9 @@ CODE_05B191:
     DEY                                     ;$05B232 ||
     BPL .loop_05B1EF                        ;$05B233 |/
     LDA.w #$00FF                            ;$05B235 |
-    STA.l $7F837D,X                         ;$05B238 |
+    STA.l DynamicStripeImage_7F837D,X       ;$05B238 |
     TXA                                     ;$05B23C |
-    STA.l $7F837B                           ;$05B23D |
+    STA.l DynStripeImgSize_7F837B           ;$05B23D |
     SEP #$30                                ;$05B241 |
     LDA.b #$01                              ;$05B243 |
     STA.w $13D5                             ;$05B245 |
@@ -5600,17 +5600,17 @@ CODE_05CC84:
     LDY.w #$004A                            ;$05CC93 |
     TYA                                     ;$05CC96 |
     CLC                                     ;$05CC97 |
-    ADC.l $7F837B                           ;$05CC98 |
+    ADC.l DynStripeImgSize_7F837B           ;$05CC98 |
     TAX                                     ;$05CC9C |
 CODE_05CC9D:
     LDA.w DATA_05CC16,Y
-    STA.l $7F837D,X                         ;$05CCA0 |
+    STA.l DynamicStripeImage_7F837D,X       ;$05CCA0 |
     DEX                                     ;$05CCA4 |
     DEX                                     ;$05CCA5 |
     DEY                                     ;$05CCA6 |
     DEY                                     ;$05CCA7 |
     BPL CODE_05CC9D                         ;$05CCA8 |
-    LDA.l $7F837B                           ;$05CCAA |
+    LDA.l DynStripeImgSize_7F837B           ;$05CCAA |
     TAX                                     ;$05CCAE |
     SEP #$20                                ;$05CCAF |
     LDA.w CurrentPlayer_0DB3                ;$05CCB1 |
@@ -5628,7 +5628,7 @@ CODE_05CCC8:
     LDY.w #$0002
     LDA.b #$04                              ;$05CCCB |
     CLC                                     ;$05CCCD |
-    ADC.l $7F837B                           ;$05CCCE |
+    ADC.l DynStripeImgSize_7F837B           ;$05CCCE |
     TAX                                     ;$05CCD2 |
 CODE_05CCD3:
     LDA.w $0F31,Y
@@ -5637,7 +5637,7 @@ CODE_05CCD3:
     DEX                                     ;$05CCDB |
     DEX                                     ;$05CCDC |
     BPL CODE_05CCD3                         ;$05CCDD |
-    LDA.l $7F837B                           ;$05CCDF |
+    LDA.l DynStripeImgSize_7F837B           ;$05CCDF |
     TAX                                     ;$05CCE3 |
 CODE_05CCE4:
     LDA.l $7F83AF,X
@@ -5677,9 +5677,9 @@ CODE_05CD26:
     STA.w $1424                             ;$05CD2D |
     LDA.b #$4A                              ;$05CD30 |
     CLC                                     ;$05CD32 |
-    ADC.l $7F837B                           ;$05CD33 |
+    ADC.l DynStripeImgSize_7F837B           ;$05CD33 |
     INC A                                   ;$05CD37 |
-    STA.l $7F837B                           ;$05CD38 |
+    STA.l DynStripeImgSize_7F837B           ;$05CD38 |
     SEP #$30                                ;$05CD3C |
     RTS                                     ;$05CD3E |
 
@@ -5706,15 +5706,15 @@ CODE_05CD76:
     LDY.b #$22                              ;$05CD80 |
     TYA                                     ;$05CD82 |
     CLC                                     ;$05CD83 |
-    ADC.l $7F837B                           ;$05CD84 |
+    ADC.l DynStripeImgSize_7F837B           ;$05CD84 |
     TAX                                     ;$05CD88 |
 CODE_05CD89:
     LDA.w DATA_05CD3F,Y
-    STA.l $7F837D,X                         ;$05CD8C |
+    STA.l DynamicStripeImage_7F837D,X       ;$05CD8C |
     DEX                                     ;$05CD90 |
     DEY                                     ;$05CD91 |
     BPL CODE_05CD89                         ;$05CD92 |
-    LDA.l $7F837B                           ;$05CD94 |
+    LDA.l DynStripeImgSize_7F837B           ;$05CD94 |
     TAX                                     ;$05CD98 |
     LDA.w BonusStarsGained_1900             ;$05CD99 |
     AND.b #$0F                              ;$05CD9C |
@@ -5740,9 +5740,9 @@ CODE_05CD89:
 CODE_05CDC9:
     LDA.b #$22
     CLC                                     ;$05CDCB |
-    ADC.l $7F837B                           ;$05CDCC |
+    ADC.l DynStripeImgSize_7F837B           ;$05CDCC |
     INC A                                   ;$05CDD0 |
-    STA.l $7F837B                           ;$05CDD1 |
+    STA.l DynStripeImgSize_7F837B           ;$05CDD1 |
 CODE_05CDD5:
     DEC.w $13D6
     BPL Return05CDE8                        ;$05CDD8 |
@@ -5763,9 +5763,9 @@ DATA_05CDEB:
     db $01,$00
 
 CODE_05CDFD:
-    LDA.l $7F837B,X
+    LDA.l DynStripeImgSize_7F837B,X
     AND.w #$FF00                            ;$05CE01 |
-    STA.l $7F837B,X                         ;$05CE04 |
+    STA.l DynStripeImgSize_7F837B,X         ;$05CE04 |
 CODE_05CE08:
     PHX
     TYX                                     ;$05CE09 |
@@ -5782,9 +5782,9 @@ CODE_05CE08:
     STA $02                                 ;$05CE1E |
     LDA $04                                 ;$05CE20 |
     STA $00                                 ;$05CE22 |
-    LDA.l $7F837B,X                         ;$05CE24 |
+    LDA.l DynStripeImgSize_7F837B,X         ;$05CE24 |
     INC A                                   ;$05CE28 |
-    STA.l $7F837B,X                         ;$05CE29 |
+    STA.l DynStripeImgSize_7F837B,X         ;$05CE29 |
     BRA CODE_05CE08                         ;$05CE2D |
 
 CODE_05CE2F:
@@ -5929,13 +5929,13 @@ CODE_05CF4D:
     LDY.b #$1E
     TYA                                     ;$05CF4F |
     CLC                                     ;$05CF50 |
-    ADC.l $7F837B                           ;$05CF51 |
+    ADC.l DynStripeImgSize_7F837B           ;$05CF51 |
     TAX                                     ;$05CF55 |
     INC A                                   ;$05CF56 |
     STA $0A                                 ;$05CF57 |
 CODE_05CF59:
     LDA.w DATA_05CEA3,Y
-    STA.l $7F837D,X                         ;$05CF5C |
+    STA.l DynamicStripeImage_7F837D,X       ;$05CF5C |
     DEX                                     ;$05CF60 |
     DEX                                     ;$05CF61 |
     DEY                                     ;$05CF62 |
@@ -5944,17 +5944,17 @@ CODE_05CF59:
     LDA.w $0F40                             ;$05CF66 |
     BEQ CODE_05CFA0                         ;$05CF69 |
     STZ $00                                 ;$05CF6B |
-    LDA.l $7F837B                           ;$05CF6D |
+    LDA.l DynStripeImgSize_7F837B           ;$05CF6D |
     CLC                                     ;$05CF71 |
     ADC.w #$0006                            ;$05CF72 |
     TAX                                     ;$05CF75 |
     LDY.b #$00                              ;$05CF76 |
     JSR CODE_05CDFD                         ;$05CF78 |
-    LDA.l $7F837B                           ;$05CF7B |
+    LDA.l DynStripeImgSize_7F837B           ;$05CF7B |
     CLC                                     ;$05CF7F |
     ADC.w #$0008                            ;$05CF80 |
     STA $00                                 ;$05CF83 |
-    LDA.l $7F837B                           ;$05CF85 |
+    LDA.l DynStripeImgSize_7F837B           ;$05CF85 |
     TAX                                     ;$05CF89 |
 CODE_05CF8A:
     LDA.l $7F8381,X
@@ -5971,7 +5971,7 @@ CODE_05CFA0:
     REP #$10                                ;$05CFA2 |
     LDA.w $1424                             ;$05CFA4 |
     BEQ CODE_05CFDC                         ;$05CFA7 |
-    LDA.l $7F837B                           ;$05CFA9 |
+    LDA.l DynStripeImgSize_7F837B           ;$05CFA9 |
     TAX                                     ;$05CFAD |
     LDA.w BonusStarsGained_1900             ;$05CFAE |
     AND.b #$0F                              ;$05CFB1 |
@@ -5996,7 +5996,7 @@ CODE_05CFDC:
     REP #$20
     SEP #$10                                ;$05CFDE |
     LDA $0A                                 ;$05CFE0 |
-    STA.l $7F837B                           ;$05CFE2 |
+    STA.l DynStripeImgSize_7F837B           ;$05CFE2 |
     SEP #$30                                ;$05CFE6 |
     PLB                                     ;$05CFE8 |
 Return05CFE9:
@@ -6425,7 +6425,7 @@ CODE_05D83E:
     TAX                                     ;$05D898 |
 CODE_05D899:
     SEP #$20
-    LDA.l $7ED000,X                         ;$05D89B |
+    LDA.l OWLayer1Translevel_D000,X         ;$05D89B |
     STA.w Translevel_13BF                   ;$05D89F |
 CODE_05D8A2:
     CMP.b #$25
@@ -6862,7 +6862,7 @@ CODE_05DBF2:
     LDX.b #$08                              ;$05DBF5 |
 CODE_05DBF7:
     LDA.w DATA_05DBC9,X
-    STA.l $7F837D,X                         ;$05DBFA |
+    STA.l DynamicStripeImage_7F837D,X       ;$05DBFA |
     DEX                                     ;$05DBFE |
     BPL CODE_05DBF7                         ;$05DBFF |
     LDX.b #$00                              ;$05DC01 |
@@ -6888,7 +6888,7 @@ CODE_05DC23:
     LDA.b #$39                              ;$05DC2A |
     STA.l $7F8382                           ;$05DC2C |
     LDA.b #$08                              ;$05DC30 |
-    STA.l $7F837B                           ;$05DC32 |
+    STA.l DynStripeImgSize_7F837B           ;$05DC32 |
     SEP #$20                                ;$05DC36 |
     PLB                                     ;$05DC38 |
     RTL                                     ;$05DC39 |

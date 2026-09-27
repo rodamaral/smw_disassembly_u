@@ -2241,48 +2241,48 @@ CreditsUpdateBG_1FFE: skip 1
 skip 1
 
 NonMirroredWRAM_2000:
-MarioGraphics_200: skip 23808
-AnimatedTiles_7D00: skip 15360
-Layer2TilemapLow_B900:
-SwitchAniXPosHigh_B900: skip 40
-SwitchAniYPosHigh_B928: skip 40
-SwitchAniZPosHigh_B970: skip 40
-SwitchAniXPosLow_B978:  skip 40
-SwitchAniYPosLow_B9A0:  skip 40
-SwitchAniZPosLow_B9C8:  skip 40
-SwitchAniXSpeed_B9F0:   skip 40
-SwitchAniYSpeed_BA18:   skip 40
-SwitchAniZSpeed_BA40:   skip 40
-SwitchAniXSpx_BA68:     skip 40
+MarioGraphics_2000: skip 23808 ;done
+AnimatedTiles_7D00: skip 15360 ;unreferenced
+Layer2TilemapLow_B900: ;; TODO
+SwitchAniXPosHigh_B900: skip 40 ;done
+SwitchAniYPosHigh_B928: skip 40 ;done
+SwitchAniZPosHigh_B970: skip 40 ;done
+SwitchAniXPosLow_B978:  skip 40 ;done
+SwitchAniYPosLow_B9A0:  skip 40 ;done
+SwitchAniZPosLow_B9C8:  skip 40 ;done
+SwitchAniXSpeed_B9F0:   skip 40 ;done
+SwitchAniYSpeed_BA18:   skip 40 ;done
+SwitchAniZSpeed_BA40:   skip 40 ;done
+SwitchAniXSpx_BA68:     skip 40 ;done
 SwitchAniYSpx_BA90:     skip 40 ; unused?
 SwitchAniZSpx_BAB8:     skip 40 ; unused?
 skip 544
-Layer2TilemapHigh_BD00: skip 1024
+Layer2TilemapHigh_BD00: skip 1024 ;done
 ; 7EC100 - 7EC67F unused
 skip 1408
-Mode7BossTilemap_C680: skip 96
+Mode7BossTilemap_C680: skip 96 ;done
 ; 7EC6E0 - 7EC7FF unused
 skip 288
-Map16TilesLow_C800: skip 2048
-OWLayer1Translevel_D000: skip 2048
-OWLayer2Directions_D800: skip 3072
-OWLayer1VramBuffer_E400: skip 7168
+Map16TilesLow_C800: skip 2048 ;done
+OWLayer1Translevel_D000: skip 2048 ;done
+OWLayer2Directions_D800: skip 3072 ;done
+OWLayer1VramBuffer_E400: skip 7168 ;done
 
 ORG $7F0000
 
-OWEventTilemap_7F0000: skip 3328
+OWEventTilemap_7F0000: skip 3328 ;done
 ; 7F0D00 - 7F3FFF unused
 skip 13056
-OWLayer2Tilemap_7F: skip 16384
-OAM_reset_7F8000: skip 387
+OWLayer2Tilemap_7F4000: skip 16384 ;done
+OAM_reset_7F8000: skip 387 ;done
 ; 7F8183 - 7F837A unused
 skip 504
-DynStripeImgSize_7F837B: skip 2
-DynamicStripeImage_7F837D: skip 784
+DynStripeImgSize_7F837B: skip 2 ;done
+DynamicStripeImage_7F837D: skip 784 ;done, except offsets
 ; 7F868D - 7F977A unused
 skip 4334
-MarioStartGraphics_7F977B: skip 768
-WigglerTable_7F9A7B: skip 512
+MarioStartGraphics_7F977B: skip 768 ;done
+WigglerTable_7F9A7B: skip 512 ; unreferenced
 ; 7F9C7B - 7FC7FF unused
 skip 11141
-Map16TilesHigh_7FC800: skip 14336
+Map16TilesHigh_7FC800: skip 14336 ;done

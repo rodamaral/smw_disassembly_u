@@ -10067,20 +10067,20 @@ CODE_03D798:
     TAX                                     ;$03D79C |
     SEP #$20                                ;$03D79D |
     LDA.b #$25                              ;$03D79F |
-    STA.l $7EC800,X                         ;$03D7A1 |
+    STA.l Map16TilesLow_C800,X              ;$03D7A1 |
     LDA.b #$00                              ;$03D7A5 |
     STA.l Map16TilesHigh_7FC800,X           ;$03D7A7 |
     REP #$20                                ;$03D7AB |
-    LDA.l $7F837B                           ;$03D7AD |
+    LDA.l DynStripeImgSize_7F837B           ;$03D7AD |
     TAX                                     ;$03D7B1 |
     LDA.w #$C05A                            ;$03D7B2 |
     CLC                                     ;$03D7B5 |
     ADC $00                                 ;$03D7B6 |
-    STA.l $7F837D,X                         ;$03D7B8 |
+    STA.l DynamicStripeImage_7F837D,X       ;$03D7B8 |
     ORA.w #$2000                            ;$03D7BC |
     STA.l $7F8383,X                         ;$03D7BF |
     LDA.w #$0240                            ;$03D7C3 |
-    STA.l $7F837F,X                         ;$03D7C6 |
+    STA.l DynamicStripeImage_7F837D+2,X     ;$03D7C6 |
     STA.l $7F8385,X                         ;$03D7CA |
     LDA.w #$38FC                            ;$03D7CE |
     STA.l $7F8381,X                         ;$03D7D1 |
@@ -10090,7 +10090,7 @@ CODE_03D798:
     TXA                                     ;$03D7E0 |
     CLC                                     ;$03D7E1 |
     ADC.w #$000C                            ;$03D7E2 |
-    STA.l $7F837B                           ;$03D7E5 |
+    STA.l DynStripeImgSize_7F837B           ;$03D7E5 |
     SEP #$30                                ;$03D7E9 |
     RTS                                     ;$03D7EB |
 
@@ -10395,7 +10395,7 @@ CODE_03DDD7:
     LDX.b #$5F
 CODE_03DDD9:
     LDA.b #$FF
-    STA.l $7EC680,X                         ;$03DDDB |
+    STA.l Mode7BossTilemap_C680,X           ;$03DDDB |
     DEX                                     ;$03DDDF |
     BPL CODE_03DDD9                         ;$03DDE0 |
     PLB                                     ;$03DDE2 |
@@ -10546,11 +10546,11 @@ CODE_03DEDF:
     ASL                                     ;$03DF0C |
     TAX                                     ;$03DF0D |
     LDA.l DATA_03DEBF,X                     ;$03DF0E |
-    STA.l $7EC681                           ;$03DF12 |
+    STA.l Mode7BossTilemap_C680+1           ;$03DF12 |
     LDA.l DATA_03DEC7,X                     ;$03DF16 |
-    STA.l $7EC683                           ;$03DF1A |
+    STA.l Mode7BossTilemap_C680+3           ;$03DF1A |
     LDA.l DATA_03DECF,X                     ;$03DF1E |
-    STA.l $7EC685                           ;$03DF22 |
+    STA.l Mode7BossTilemap_C680+5           ;$03DF22 |
     LDA.w #$0008                            ;$03DF26 |
     STA $06                                 ;$03DF29 |
     LDX.w #$0380                            ;$03DF2B |
@@ -10597,7 +10597,7 @@ CODE_03DF69:
     DEY                                     ;$03DF74 |
     DEY                                     ;$03DF75 |
 CODE_03DF76:
-    STA.l $7EC680,X
+    STA.l Mode7BossTilemap_C680,X
     INX                                     ;$03DF7A |
     DEC $04                                 ;$03DF7B |
     BPL CODE_03DF69                         ;$03DF7D |

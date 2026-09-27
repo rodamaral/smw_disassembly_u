@@ -699,8 +699,8 @@ CODE_0C9405:
     LDX.w #$0000
     TYA                                     ;$0C9408 |
 CODE_0C9409:
-    STA.l $7EBD00,X
-    STA.l $7EBF00,X                         ;$0C940D |
+    STA.l Layer2TilemapHigh_BD00,X
+    STA.l Layer2TilemapHigh_BD00+$200,X     ;$0C940D |
     INX                                     ;$0C9411 |
     CPX.w #$0200                            ;$0C9412 |
     BNE CODE_0C9409                         ;$0C9415 |
@@ -842,22 +842,22 @@ CODE_0C94EB:
     TAX                                     ;$0C9516 |
     LDA.b [Layer2DataPtr_68],Y              ;$0C9517 |
     AND.b Layer1DataPtr_65                  ;$0C9519 |
-    STA.l $7F4000,X                         ;$0C951B |
+    STA.l OWLayer2Tilemap_7F4000,X          ;$0C951B |
     INY                                     ;$0C951F |
     INY                                     ;$0C9520 |
     LDA.b [Layer2DataPtr_68],Y              ;$0C9521 |
     AND.b Layer1DataPtr_65                  ;$0C9523 |
-    STA.l $7F4040,X                         ;$0C9525 |
+    STA.l OWLayer2Tilemap_7F4000+$40,X      ;$0C9525 |
     INY                                     ;$0C9529 |
     INY                                     ;$0C952A |
     LDA.b [Layer2DataPtr_68],Y              ;$0C952B |
     AND.b Layer1DataPtr_65                  ;$0C952D |
-    STA.l $7F4002,X                         ;$0C952F |
+    STA.l OWLayer2Tilemap_7F4000+2,X        ;$0C952F |
     INY                                     ;$0C9533 |
     INY                                     ;$0C9534 |
     LDA.b [Layer2DataPtr_68],Y              ;$0C9535 |
     AND.b Layer1DataPtr_65                  ;$0C9537 |
-    STA.l $7F4042,X                         ;$0C9539 |
+    STA.l OWLayer2Tilemap_7F4000+$42,X      ;$0C9539 |
     INC $00                                 ;$0C953D |
     INC $04                                 ;$0C953F |
     DEC $08                                 ;$0C9541 |
@@ -1225,19 +1225,19 @@ DATA_0C9EAC:
 
 CODE_0C9EB1:
     REP #$30
-    LDA.l $7F837B                           ;$0C9EB3 |
+    LDA.l DynStripeImgSize_7F837B           ;$0C9EB3 |
     TAX                                     ;$0C9EB7 |
     LDY.w #$0000                            ;$0C9EB8 |
     SEP #$20                                ;$0C9EBB |
     LDA.b StaffRollLinePos_65+1             ;$0C9EBD |
-    STA.l $7F837D,X                         ;$0C9EBF |
+    STA.l DynamicStripeImage_7F837D,X       ;$0C9EBF |
     LDA.b StaffRollLinePos_65               ;$0C9EC3 |
-    STA.l $7F837E,X                         ;$0C9EC5 |
+    STA.l DynamicStripeImage_7F837D+1,X     ;$0C9EC5 |
     INX                                     ;$0C9EC9 |
     INX                                     ;$0C9ECA |
 CODE_0C9ECB:
     LDA.w DATA_0C9EAC,Y
-    STA.l $7F837D,X                         ;$0C9ECE |
+    STA.l DynamicStripeImage_7F837D,X       ;$0C9ECE |
     INX                                     ;$0C9ED2 |
     INY                                     ;$0C9ED3 |
     CPY.w #$0005                            ;$0C9ED4 |
@@ -1245,7 +1245,7 @@ CODE_0C9ECB:
     REP #$20                                ;$0C9ED9 |
     DEX                                     ;$0C9EDB |
     TXA                                     ;$0C9EDC |
-    STA.l $7F837B                           ;$0C9EDD |
+    STA.l DynStripeImgSize_7F837B           ;$0C9EDD |
     LDA.b StaffRollCurLine_67               ;$0C9EE1 |
     AND.w #$00FF                            ;$0C9EE3 |
     ASL                                     ;$0C9EE6 |
@@ -1265,23 +1265,23 @@ CODE_0C9ECB:
     INY                                     ;$0C9F03 |
     INY                                     ;$0C9F04 |
     LDA.b StaffRollLinePos_65+1             ;$0C9F05 |
-    STA.l $7F837D,X                         ;$0C9F07 |
+    STA.l DynamicStripeImage_7F837D,X       ;$0C9F07 |
     LDA.b StaffRollLinePos_65               ;$0C9F0B |
     CLC                                     ;$0C9F0D |
     ADC $02                                 ;$0C9F0E |
-    STA.l $7F837E,X                         ;$0C9F10 |
+    STA.l DynamicStripeImage_7F837D+1,X     ;$0C9F10 |
     INX                                     ;$0C9F14 |
     INX                                     ;$0C9F15 |
     LDA $01                                 ;$0C9F16 |
-    STA.l $7F837D,X                         ;$0C9F18 |
+    STA.l DynamicStripeImage_7F837D,X       ;$0C9F18 |
     LDA $00                                 ;$0C9F1C |
-    STA.l $7F837E,X                         ;$0C9F1E |
+    STA.l DynamicStripeImage_7F837D+1,X     ;$0C9F1E |
     INX                                     ;$0C9F22 |
     INX                                     ;$0C9F23 |
     REP #$20                                ;$0C9F24 |
 CODE_0C9F26:
     LDA.w DATA_0C95C7,Y
-    STA.l $7F837D,X                         ;$0C9F29 |
+    STA.l DynamicStripeImage_7F837D,X       ;$0C9F29 |
     INX                                     ;$0C9F2D |
     INX                                     ;$0C9F2E |
     INY                                     ;$0C9F2F |
@@ -1290,9 +1290,9 @@ CODE_0C9F26:
     DEC $00                                 ;$0C9F33 |
     BPL CODE_0C9F26                         ;$0C9F35 |
     LDA.w #$00FF                            ;$0C9F37 |
-    STA.l $7F837D,X                         ;$0C9F3A |
+    STA.l DynamicStripeImage_7F837D,X       ;$0C9F3A |
     TXA                                     ;$0C9F3E |
-    STA.l $7F837B                           ;$0C9F3F |
+    STA.l DynStripeImgSize_7F837B           ;$0C9F3F |
 CODE_0C9F43:
     REP #$20
     SEP #$10                                ;$0C9F45 |
@@ -3032,12 +3032,12 @@ CODE_0CADF6:
     LDA.b #$0D                              ;$0CAE24 |
     STA.w $0002                             ;$0CAE26 |
     LDY.b #$00                              ;$0CAE29 |
-    LDA.l $7F837B                           ;$0CAE2B |
+    LDA.l DynStripeImgSize_7F837B           ;$0CAE2B |
     TAX                                     ;$0CAE2F |
 CODE_0CAE30:
     REP #$20
     LDA [$00],Y                             ;$0CAE32 |
-    STA.l $7F837D,X                         ;$0CAE34 |
+    STA.l DynamicStripeImage_7F837D,X       ;$0CAE34 |
     INY                                     ;$0CAE38 |
     INY                                     ;$0CAE39 |
     INX                                     ;$0CAE3A |
@@ -3045,7 +3045,7 @@ CODE_0CAE30:
     CMP.w #$FFFF                            ;$0CAE3C |
     BNE CODE_0CAE30                         ;$0CAE3F |
     TXA                                     ;$0CAE41 |
-    STA.l $7F837B                           ;$0CAE42 |
+    STA.l DynStripeImgSize_7F837B           ;$0CAE42 |
     SEP #$20                                ;$0CAE46 |
 CODE_0CAE48:
     PLX
@@ -5393,18 +5393,18 @@ CODE_0CD1D0:
     LDY.b #$28
     TYA                                     ;$0CD1D2 |
     CLC                                     ;$0CD1D3 |
-    ADC.l $7F837B                           ;$0CD1D4 |
+    ADC.l DynStripeImgSize_7F837B           ;$0CD1D4 |
     TAX                                     ;$0CD1D8 |
 CODE_0CD1D9:
     LDA.w DATA_0CD1A7,Y
-    STA.l $7F837D,X                         ;$0CD1DC |
+    STA.l DynamicStripeImage_7F837D,X       ;$0CD1DC |
     DEX                                     ;$0CD1E0 |
     DEY                                     ;$0CD1E1 |
     BPL CODE_0CD1D9                         ;$0CD1E2 |
     LDA.b #$28                              ;$0CD1E4 |
     CLC                                     ;$0CD1E6 |
-    ADC.l $7F837B                           ;$0CD1E7 |
-    STA.l $7F837B                           ;$0CD1EB |
+    ADC.l DynStripeImgSize_7F837B           ;$0CD1E7 |
+    STA.l DynStripeImgSize_7F837B           ;$0CD1EB |
     RTS                                     ;$0CD1EF |
 
 DATA_0CD1F0:
@@ -5423,23 +5423,23 @@ DATA_0CD1FF:
     db $21,$98,$21,$B8,$21,$D8
 
 CODE_0CD22D:
-    LDA.l $7F837B
+    LDA.l DynStripeImgSize_7F837B
     STA $01                                 ;$0CD231 |
     LDY.b #$0C                              ;$0CD233 |
     TYA                                     ;$0CD235 |
     CLC                                     ;$0CD236 |
-    ADC.l $7F837B                           ;$0CD237 |
+    ADC.l DynStripeImgSize_7F837B           ;$0CD237 |
     TAX                                     ;$0CD23B |
 CODE_0CD23C:
     LDA.w DATA_0CD1F0,Y
-    STA.l $7F837D,X                         ;$0CD23F |
+    STA.l DynamicStripeImage_7F837D,X       ;$0CD23F |
     DEX                                     ;$0CD243 |
     DEY                                     ;$0CD244 |
     BPL CODE_0CD23C                         ;$0CD245 |
     LDA.b #$0C                              ;$0CD247 |
     CLC                                     ;$0CD249 |
-    ADC.l $7F837B                           ;$0CD24A |
-    STA.l $7F837B                           ;$0CD24E |
+    ADC.l DynStripeImgSize_7F837B           ;$0CD24A |
+    STA.l DynStripeImgSize_7F837B           ;$0CD24E |
     LDA.b PlayerXPos_94                     ;$0CD252 |
     SEC                                     ;$0CD254 |
     SBC.b #$A0                              ;$0CD255 |
@@ -5455,7 +5455,7 @@ CODE_0CD23C:
     LDX $01                                 ;$0CD265 |
     REP #$20                                ;$0CD267 |
     LDA.w DATA_0CD1FD,Y                     ;$0CD269 |
-    STA.l $7F837D,X                         ;$0CD26C |
+    STA.l DynamicStripeImage_7F837D,X       ;$0CD26C |
     LDA.w DATA_0CD1FF,Y                     ;$0CD270 |
     STA.l $7F8383,X                         ;$0CD273 |
     SEP #$20                                ;$0CD277 |
