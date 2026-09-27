@@ -7237,38 +7237,42 @@ CODE_03B715:
     PLY                                     ;$03B729 |
     RTL                                     ;$03B72A |
 
+
+
+; Scratch RAM usage:
+; Inputs: $00 to $0B
+; Writes: $0C and $0F
+; Returns: carry set if contact, clear if not
 CheckForContact:
     PHX
     LDX.b #$01                              ;$03B72C |
-CODE_03B72E:
-    LDA $00,X
+-   LDA $00,X                               ;$03B72E | $01: ylow of 1st  | $00: xlow of 1st
     SEC                                     ;$03B730 |
-    SBC $04,X                               ;$03B731 |
+    SBC $04,X                               ;$03B731 | $05: ylow of 2nd  | $04: xlow of 2nd
     PHA                                     ;$03B733 |
-    LDA $08,X                               ;$03B734 |
-    SBC $0A,X                               ;$03B736 |
+    LDA $08,X                               ;$03B734 | $09: yhigh of 1st | $08: xhigh of 1st
+    SBC $0A,X                               ;$03B736 | $0B: yhigh of 2nd | $0A: xhigh of 2nd
     STA $0C                                 ;$03B738 |
     PLA                                     ;$03B73A |
     CLC                                     ;$03B73B |
     ADC.b #$80                              ;$03B73C |
     LDA $0C                                 ;$03B73E |
     ADC.b #$00                              ;$03B740 |
-    BNE CODE_03B75A                         ;$03B742 |
-    LDA $04,X                               ;$03B744 |
+    BNE +                                   ;$03B742 | Return no contact if pos1 - pos2
+    LDA $04,X                               ;$03B744 |   is between -128px and 127px
     SEC                                     ;$03B746 |
     SBC $00,X                               ;$03B747 |
     CLC                                     ;$03B749 |
-    ADC $06,X                               ;$03B74A |
+    ADC $06,X                               ;$03B74A | $07: height os 2nd | $06:  width of 2nd
     STA $0F                                 ;$03B74C |
-    LDA $02,X                               ;$03B74E |
+    LDA $02,X                               ;$03B74E | $03: height of 1st | $02: height of 1st
     CLC                                     ;$03B750 |
     ADC $06,X                               ;$03B751 |
     CMP $0F                                 ;$03B753 |
-    BCC CODE_03B75A                         ;$03B755 |
+    BCC +                                   ;$03B755 | Return no contact if dimensions don't intercept
     DEX                                     ;$03B757 |
-    BPL CODE_03B72E                         ;$03B758 |
-CODE_03B75A:
-    PLX
+    BPL -                                   ;$03B758 | loop for horizontal check
++   PLX                                     ;$03B75A |
     RTL                                     ;$03B75B |
 
 DATA_03B75C:

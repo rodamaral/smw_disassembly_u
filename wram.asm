@@ -1927,6 +1927,7 @@ MinorSprTimer_1850: skip 12 ;done
 PlayerDisableObjInt_185C: skip 1
 MinorSprSlotIdx_185D: skip 1
 
+; TODO: clarify more this sratch RAM
 ; Sometimes used to keep track of a tile to generate at $00:BEB0 (before storing to $7E:009C)
 ; may be used in conjunction with $7E:18B6
 TileGenerateTrack_185E:
@@ -1934,15 +1935,18 @@ TileGenerateTrack_185E:
 PlayerYPosLine_185E:
 ; used to determine positions and such of Yoshi's tiles
 YoshiAnimationMirror_185E:
-; In the sprite/object interaction routine, it's also used to indicate which layer the sprite is touching. 00 = layer 1; 01 = layer 2.
+; In the sprite/object interaction routine, it's also used to indicate which layer the sprite is touching. 00 = layer 1; 01 = layer 2
 SpriteLayer_185E:
-FishingLakitu_185E: ; 00-FF
-FlyingBlock_185E: ; slot of item
-PlayerOnPlatform_185E: ; used by floating platforms
-Parachute_185E: ; TODO: used by floating platforms
-PokeySlot_185E: ; TODO: slot of the original pokey when Yoshi licks one segment
+LakituBaitRelY_185E:
+GrowingPipeTile_185E:
+FlyingBlock_185E:
+PlayerOnPlatform_185E:
+Parachute_185E:
+PokeySlot_185E:
 FireballSlot_185E:
 ChuckSplitFlag_185E: ; during the split routine, used to determine whether it is the first or second Chuck being generated
+BooCloudTimerMirror_185E:
+FlameYPosIdx_185E:
 skip 1
 
 SprMap16TouchVertLow_185F: skip 1
@@ -1975,7 +1979,7 @@ skip 1
 BonusGameComplete_188F: skip 1
 BonusGame1UpCount_1890: skip 1
 PBalloonTimer_1891: skip 1
-ClusterSpriteNumber_1892: skip 20
+ClusterSprNumber_1892: skip 20
 Empty_18A6: skip 1
 Map16TileDestroy_18A7: skip 1
 BossPillarFalling_18A8: skip 2
@@ -2160,14 +2164,14 @@ LastUsedMusic_1DFF: skip 1
 ; 7E1E00 unused
 skip 1
 DebugFreeRoam_1E01: skip 1
-ClusterSpriteYPosLow_1E02: skip 20
-ClusterSpriteXPosLow_1E16: skip 20
-ClusterSpriteYPosHigh_1E2A: skip 20
-ClusterSpriteXPosHigh_1E3E: skip 20
-ClusterSpriteMisc_1E52: skip 20
-ClusterSpriteMisc_1E66: skip 20
-ClusterSpriteMisc_1E7A: skip 20
-ClusterSpriteMisc_1E8E: skip 20
+ClusterSprYPosLow_1E02: skip 20
+ClusterSprXPosLow_1E16: skip 20
+ClusterSprYPosHigh_1E2A: skip 20
+ClusterSprXPosHigh_1E3E: skip 20
+ClusterSprMisc_1E52: skip 20
+ClusterSprMisc_1E66: skip 20
+ClusterSprMisc_1E7A: skip 20
+ClusterSprMisc_1E8E: skip 20
 OWLevelSettings_1EA2: skip 96
 OWEventsActivated_1F02: skip 15
 OWPlayerSubmap_1F11: skip 2

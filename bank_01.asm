@@ -12579,23 +12579,23 @@ rope_mechanism_01D9D3:
     STA.w $18B6                             ;$01D9F0 |
     LDA.b PlayerBlocked_77                  ;$01D9F3 |
     AND.b #!Block_Sides_03                  ;$01D9F5 |
-    BNE Return01DA09                        ;$01D9F7 |
+    BNE .return_01DA09                      ;$01D9F7 |
     JSR CODE_01A80F                         ;$01D9F9 |
-    BCS CODE_01DA0A                         ;$01D9FC |
-CODE_01D9FE:
+    BCS .CODE_01DA0A                        ;$01D9FC |
+.CODE_01D9FE:
     LDA.w Sprite_163E,X
-    BEQ Return01DA09                        ;$01DA01 |
+    BEQ .return_01DA09                      ;$01DA01 |
     STZ.w Sprite_163E,X                     ;$01DA03 |
     STZ.w PlayerClimbFlag_18BE              ;$01DA06 |
-Return01DA09:
+.return_01DA09:
     RTS
 
-CODE_01DA0A:
+.CODE_01DA0A:
     LDA.w SpriteStatus_14C8,X
     BEQ .CODE_01DA37                        ;$01DA0D |
     LDA.w CarryingFlag_1470                 ;$01DA0F |
     ORA.w RidingYoshi_187A                  ;$01DA12 |
-    BNE CODE_01D9FE                         ;$01DA15 |
+    BNE .CODE_01D9FE                        ;$01DA15 |
     LDA.b #$03                              ;$01DA17 |
     STA.w Sprite_163E,X                     ;$01DA19 |
     LDA.w SpritePlayerContact_154C,X        ;$01DA1C |
