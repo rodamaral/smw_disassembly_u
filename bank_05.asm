@@ -2908,7 +2908,7 @@ DATA_05B108:
 DATA_05B10A:
     db $04,$FC
 
-CODE_05B10C:
+message_box_triggered_05B10C:
     PHB
     PHK                                     ;$05B10D |
     PLB                                     ;$05B10E |
@@ -2917,7 +2917,7 @@ CODE_05B10C:
     CMP.w DATA_05B108,X                     ;$05B115 |
     BNE CODE_05B191                         ;$05B118 |
     TXA                                     ;$05B11A |
-    BEQ CODE_05B132                         ;$05B11B |
+    BEQ .CODE_05B132                        ;$05B11B |
     STZ.w MessageBoxTrigger_1426            ;$05B11D |
     STZ.w $1B88                             ;$05B120 |
     STZ.b Layer12Window_41                  ;$05B123 |
@@ -2928,22 +2928,22 @@ CODE_05B10C:
     STA.b ColorAddition_44                  ;$05B12E |
     BRA CODE_05B18E                         ;$05B130 |
 
-CODE_05B132:
+.CODE_05B132:
     LDA.w OverworldOverride_0109
-    ORA.w $13D2                             ;$05B135 |
+    ORA.w SwitchPalaceColor_13D2            ;$05B135 |
     BEQ CODE_05B16E                         ;$05B138 |
-    LDA.w $1DF5                             ;$05B13A |
+    LDA.w SwitchPalaceTimer_1DF5            ;$05B13A |
     BEQ CODE_05B16E                         ;$05B13D |
     LDA.b Frame_13                          ;$05B13F |
     AND.b #$03                              ;$05B141 |
     BNE CODE_05B18E                         ;$05B143 |
-    DEC.w $1DF5                             ;$05B145 |
+    DEC.w SwitchPalaceTimer_1DF5            ;$05B145 |
     BNE CODE_05B18E                         ;$05B148 |
-    LDA.w $13D2                             ;$05B14A |
+    LDA.w SwitchPalaceColor_13D2            ;$05B14A |
     BEQ CODE_05B16E                         ;$05B14D |
     PLB                                     ;$05B14F |
     INC.w OWLoadEventFlag_1DE9              ;$05B150 |
-    LDA.b #$01                              ;$05B153 |
+    LDA.b #!ExitNormal_01                   ;$05B153 |
     STA.w $13CE                             ;$05B155 |
     BRA CODE_05B165                         ;$05B158 |
 
@@ -2953,7 +2953,7 @@ CODE_05B15A:
     STA.w $1F19                             ;$05B15D |
 side_exit_level:
     STZ.w OverworldOverride_0109            ;$05B160 |
-    LDA.b #$00                              ;$05B163 |
+    LDA.b #!ExitNothing_00                  ;$05B163 |
 CODE_05B165:
     STA.w LevelExitMode_0DD5
     LDA.b #!FadeToOverworld_0B              ;$05B168 |
@@ -2966,67 +2966,58 @@ CODE_05B16E:
     BEQ CODE_05B18E                         ;$05B172 |
     EOR.b byetudlrPress_16                  ;$05B174 |
     AND.b #$F0                              ;$05B176 |
-    BEQ CODE_05B186                         ;$05B178 |
+    BEQ +                                   ;$05B178 |
     LDA.b axlr0000Hold_17                   ;$05B17A |
     AND.b #$C0                              ;$05B17C |
     BEQ CODE_05B18E                         ;$05B17E |
     EOR.b axlr0000Press_18                  ;$05B180 |
     AND.b #$C0                              ;$05B182 |
     BNE CODE_05B18E                         ;$05B184 |
-CODE_05B186:
-    LDA.w OverworldOverride_0109
++   LDA.w OverworldOverride_0109            ;$05B186 |
     BNE CODE_05B15A                         ;$05B189 |
-    INC.w $1B88                             ;$05B18B |
+    INC.w MessageBoxExpand_1B88             ;$05B18B |
 CODE_05B18E:
-    JMP CODE_05B299
+    JMP return_05B299
 
 CODE_05B191:
     CMP.w DATA_05B106,X
-    BNE CODE_05B1A0                         ;$05B194 |
+    BNE +                                   ;$05B194 |
     TXA                                     ;$05B196 |
-    BEQ CODE_05B1A3                         ;$05B197 |
+    BEQ .CODE_05B1A3                        ;$05B197 |
     JSR CODE_05B31B                         ;$05B199 |
     LDA.b #$09                              ;$05B19C |
     STA.b StripeImage_12                    ;$05B19E |
-CODE_05B1A0:
-    JMP CODE_05B250
++   JMP .CODE_05B250                        ;$05B1A0 |
 
-CODE_05B1A3:
+.CODE_05B1A3:
     LDX.b #$16
-CODE_05B1A5:
-    LDY.b #$01
+-   LDY.b #$01                              ;$05B1A5 |
     LDA.w DATA_05A590,X                     ;$05B1A7 |
-    BPL CODE_05B1AF                         ;$05B1AA |
+    BPL +                                   ;$05B1AA |
     INY                                     ;$05B1AC |
     AND.b #$7F                              ;$05B1AD |
-CODE_05B1AF:
-    CPY.w MessageBoxTrigger_1426
-    BNE CODE_05B1B9                         ;$05B1B2 |
++   CPY.w MessageBoxTrigger_1426            ;$05B1AF |
+    BNE +                                   ;$05B1B2 |
     CMP.w Translevel_13BF                   ;$05B1B4 |
-    BEQ CODE_05B1BC                         ;$05B1B7 |
-CODE_05B1B9:
-    DEX
-    BNE CODE_05B1A5                         ;$05B1BA |
-CODE_05B1BC:
-    LDY.w MessageBoxTrigger_1426
+    BEQ ++                                  ;$05B1B7 |
++   DEX                                     ;$05B1B9 |
+    BNE -                                   ;$05B1BA |
+++  LDY.w MessageBoxTrigger_1426            ;$05B1BC |
     CPY.b #$03                              ;$05B1BF |
-    BNE CODE_05B1C5                         ;$05B1C1 |
+    BNE +                                   ;$05B1C1 |
     LDX.b #$18                              ;$05B1C3 |
-CODE_05B1C5:
-    CPX.b #$04
-    BCS CODE_05B1D1                         ;$05B1C7 |
++   CPX.b #$04                              ;$05B1C5 |
+    BCS +                                   ;$05B1C7 |
     INX                                     ;$05B1C9 |
     STX.w $13D2                             ;$05B1CA |
     DEX                                     ;$05B1CD |
     JSR CODE_05B2EB                         ;$05B1CE |
-CODE_05B1D1:
-    CPX.b #$16
-    BNE CODE_05B1DB                         ;$05B1D3 |
++   CPX.b #$16                              ;$05B1D1 |
+    BNE +                                   ;$05B1D3 |
     LDA.w RidingYoshi_187A                  ;$05B1D5 |
-    BEQ CODE_05B1DB                         ;$05B1D8 |
+    BEQ +                                   ;$05B1D8 |
     INX                                     ;$05B1DA |
-CODE_05B1DB:
-    TXA
++   TXA                                     ;$05B1DB |
     ASL                                     ;$05B1DC |
     TAX                                     ;$05B1DD |
     REP #$20                                ;$05B1DE |
@@ -3035,44 +3026,42 @@ CODE_05B1DB:
     REP #$10                                ;$05B1E5 |
     LDA.l $7F837B                           ;$05B1E7 |
     TAX                                     ;$05B1EB |
-    LDY.w #$000E                            ;$05B1EC |
-CODE_05B1EF:
-    LDA.w DATA_05A580,Y
-    STA.l $7F837D,X                         ;$05B1F2 |
-    LDA.w #$2300                            ;$05B1F6 |
-    STA.l $7F837F,X                         ;$05B1F9 |
-    PHY                                     ;$05B1FD |
-    SEP #$20                                ;$05B1FE |
-    LDA.b #$12                              ;$05B200 |
-    STA $02                                 ;$05B202 |
-    STZ $03                                 ;$05B204 |
-    LDY $00                                 ;$05B206 |
-CODE_05B208:
-    LDA.b #$1F
-    BIT.w $0003                             ;$05B20A |
-    BMI CODE_05B218                         ;$05B20D |
-    LDA.w DATA_05A5D9,Y                     ;$05B20F |
-    STA.w $0003                             ;$05B212 |
-    AND.b #$7F                              ;$05B215 |
-    INY                                     ;$05B217 |
-CODE_05B218:
-    STA.l $7F8381,X
-    LDA.b #$39                              ;$05B21C |
-    STA.l $7F8382,X                         ;$05B21E |
-    INX                                     ;$05B222 |
-    INX                                     ;$05B223 |
-    DEC $02                                 ;$05B224 |
-    BNE CODE_05B208                         ;$05B226 |
-    STY $00                                 ;$05B228 |
-    REP #$20                                ;$05B22A |
-    INX                                     ;$05B22C |
-    INX                                     ;$05B22D |
-    INX                                     ;$05B22E |
-    INX                                     ;$05B22F |
-    PLY                                     ;$05B230 |
-    DEY                                     ;$05B231 |
-    DEY                                     ;$05B232 |
-    BPL CODE_05B1EF                         ;$05B233 |
+    LDY.w #$000E                            ;$05B1EC | Y: loop counter
+.loop_05B1EF:
+    LDA.w DATA_05A580,Y                     ;        |\
+    STA.l $7F837D,X                         ;$05B1F2 ||
+    LDA.w #$2300                            ;$05B1F6 ||
+    STA.l $7F837F,X                         ;$05B1F9 ||
+    PHY                                     ;$05B1FD ||
+    SEP #$20                                ;$05B1FE ||
+    LDA.b #$12                              ;$05B200 ||
+    STA $02                                 ;$05B202 ||
+    STZ $03                                 ;$05B204 ||
+    LDY $00                                 ;$05B206 ||
+-   LDA.b #$1F                              ;$05B208 ||\
+    BIT.w $0003                             ;$05B20A |||
+    BMI +                                   ;$05B20D |||\
+    LDA.w DATA_05A5D9,Y                     ;$05B20F ||||
+    STA.w $0003                             ;$05B212 ||||
+    AND.b #$7F                              ;$05B215 ||||
+    INY                                     ;$05B217 |||/
++   STA.l $7F8381,X                         ;$05B218 |||
+    LDA.b #$39                              ;$05B21C |||
+    STA.l $7F8382,X                         ;$05B21E |||
+    INX                                     ;$05B222 |||
+    INX                                     ;$05B223 |||
+    DEC $02                                 ;$05B224 |||
+    BNE -                                   ;$05B226 ||/
+    STY $00                                 ;$05B228 ||
+    REP #$20                                ;$05B22A ||
+    INX                                     ;$05B22C ||
+    INX                                     ;$05B22D ||
+    INX                                     ;$05B22E ||
+    INX                                     ;$05B22F ||
+    PLY                                     ;$05B230 ||
+    DEY                                     ;$05B231 ||
+    DEY                                     ;$05B232 ||
+    BPL .loop_05B1EF                        ;$05B233 |/
     LDA.w #$00FF                            ;$05B235 |
     STA.l $7F837D,X                         ;$05B238 |
     TXA                                     ;$05B23C |
@@ -3084,7 +3073,7 @@ CODE_05B218:
     STZ.b Layer3XPos_22+1                   ;$05B24A |
     STZ.b Layer3YPos_24                     ;$05B24C |
     STZ.b Layer3YPos_24+1                   ;$05B24E |
-CODE_05B250:
+.CODE_05B250:
     LDX.w $1B88
     LDA.w $1B89                             ;$05B253 |
     CLC                                     ;$05B256 |
@@ -3099,31 +3088,28 @@ CODE_05B250:
     REP #$20                                ;$05B267 |
     LDX.b #$00                              ;$05B269 |
     LDY.b #$50                              ;$05B26B |
-CODE_05B26D:
-    CPX.w $1B89
-    BCC CODE_05B275                         ;$05B270 |
-    LDA.w #$00FF                            ;$05B272 |
-CODE_05B275:
-    STA.w $04EC,Y
-    STA.w $053C,X                           ;$05B278 |
-    INX                                     ;$05B27B |
-    INX                                     ;$05B27C |
-    DEY                                     ;$05B27D |
-    DEY                                     ;$05B27E |
-    BNE CODE_05B26D                         ;$05B27F |
+-   CPX.w $1B89                             ;$05B26D |\
+    BCC +                                   ;$05B270 ||
+    LDA.w #$00FF                            ;$05B272 ||
++   STA.w $04EC,Y                           ;$05B275 ||
+    STA.w $053C,X                           ;$05B278 ||
+    INX                                     ;$05B27B ||
+    INX                                     ;$05B27C ||
+    DEY                                     ;$05B27D ||
+    DEY                                     ;$05B27E ||
+    BNE -                                   ;$05B27F |/
     SEP #$20                                ;$05B281 |
     LDA.b #$22                              ;$05B283 |
     STA.b Layer12Window_41                  ;$05B285 |
     LDY.w $13D2                             ;$05B287 |
-    BEQ CODE_05B28E                         ;$05B28A |
+    BEQ +                                   ;$05B28A |
     LDA.b #$20                              ;$05B28C |
-CODE_05B28E:
-    STA.b OBJCWWindow_43
++   STA.b OBJCWWindow_43                    ;$05B28E |
     LDA.b #$22                              ;$05B290 |
     STA.b ColorAddition_44                  ;$05B292 |
     LDA.b #$80                              ;$05B294 |
     STA.w $0D9F                             ;$05B296 |
-CODE_05B299:
+return_05B299:
     PLB
     RTL                                     ;$05B29A |
 

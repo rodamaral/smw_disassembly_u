@@ -2283,7 +2283,7 @@ CODE_00939E:
     LDA.b #$01                              ;$0093C0 |
     STA.w SPCIO3_1DFC                       ;$0093C2 |
     LDA.b #$40                              ;$0093C5 |
-    STA.w $1DF5                             ;$0093C7 |
+    STA.w NintendoPresentsTimer_1DF5        ;$0093C7 |
 CODE_0093CA:
     LDA.b #$0F
     STA.w $0DAE                             ;$0093CC |
@@ -2319,7 +2319,7 @@ ScreenSettings:
     RTS                                     ;$00940E |
 
 GM01_nintendo_main_00940F:
-    DEC.w $1DF5
+    DEC.w NintendoPresentsTimer_1DF5
     BNE Return00941A                        ;$009412 |
     JSR CODE_00B888                         ;$009414 |
 CODE_009417:
@@ -2337,9 +2337,9 @@ GM06_title_circle_00941B:
     JMP CODE_009C9F                         ;$00942B |
 
 CODE_00942E:
-    DEC.w $1DF5
+    DEC.w IntroSequenceTimer_1DF5
     BNE Return00941A                        ;$009431 |
-    INC.w $1DF5                             ;$009433 |
+    INC.w IntroSequenceTimer_1DF5           ;$009433 |
     LDA.w SpotlightSize_1433                ;$009436 |
     CLC                                     ;$009439 |
     ADC.b #$04                              ;$00943A |
@@ -3122,7 +3122,7 @@ GM04_title_load_2_009A8B:
     STA.b ColorAddition_44                  ;$009ABB |
     JSR CODE_009443                         ;$009ABD |
     LDA.b #$10                              ;$009AC0 |
-    STA.w $1DF5                             ;$009AC2 |
+    STA.w IntroSequenceTimer_1DF5           ;$009AC2 |
     JMP Mode04Finish                        ;$009AC5 |
 
 DATA_009AC8:
@@ -3359,10 +3359,10 @@ GM07_title_main_009C64:
     BNE CODE_009C9F                         ;$009C6A |
     JSR disable_controls                    ;$009C6C |
     LDX.w $1DF4                             ;$009C6F |
-    DEC.w $1DF5                             ;$009C72 |
+    DEC.w IntroSequenceTimer_1DF5           ;$009C72 |
     BNE .CODE_009C82                        ;$009C75 |
     LDA.w ItrCntrlrSqnc,X                   ;$009C77 |
-    STA.w $1DF5                             ;$009C7A |
+    STA.w IntroSequenceTimer_1DF5           ;$009C7A |
     INX                                     ;$009C7D |
     INX                                     ;$009C7E |
     STX.w $1DF4                             ;$009C7F |
@@ -3590,11 +3590,11 @@ GM0A_title_player_select_009DFA:
     LDA.b byetudlrPress_16
     ORA.b axlr0000Press_18                  ;$009DFC |
     AND.b #$40                              ;$009DFE |
-    BEQ CODE_009E08                         ;$009E00 |
+    BEQ .CODE_009E08                        ;$009E00 |
     DEC.w GameMode_0100                     ;$009E02 |
     JMP CODE_009B2C                         ;$009E05 |
 
-CODE_009E08:
+.CODE_009E08:
     LDY.b #$04
     JSR CODE_009ACB                         ;$009E0A |
     STX.w $0DB2                             ;$009E0D |
@@ -3607,10 +3607,10 @@ CODE_009E17:
     STA.w $0DB5                             ;$009E1E |
     LDX.w $0DB2                             ;$009E21 |
     LDA.b #$04                              ;$009E24 |
-CODE_009E26:
+.CODE_009E26:
     STA.w $0DB4,X
     DEX                                     ;$009E29 |
-    BPL CODE_009E26                         ;$009E2A |
+    BPL .CODE_009E26                        ;$009E2A |
     STA.w $0DBE                             ;$009E2C |
     STZ.w $0DBF                             ;$009E2F |
     STZ.w CarryYoshiLevels_0DC1             ;$009E32 |
@@ -3911,23 +3911,22 @@ DATA_00A079:
 
 GM0C_overworld_load_00A087:
     JSR TurnOffIO
-    LDA.w $1B9C                             ;$00A08A |
-    BEQ .CODE_00A093                        ;$00A08D |
+    LDA.w EnteringStarWarp_1B9C             ;$00A08A |
+    BEQ +                                   ;$00A08D |
     JSL CODE_04853B                         ;$00A08F |
-.CODE_00A093:
-    JSR Clear_1A_13D3
++   JSR Clear_1A_13D3                       ;$00A093 |
     LDA.w OverworldOverride_0109            ;$00A096 |
-    BEQ .CODE_00A0B0                        ;$00A099 |
+    BEQ .not_intro_level_00A0B0             ;$00A099 |
     LDA.b #$B0                              ;$00A09B |
-    STA.w $1DF5                             ;$00A09D |
+    STA.w SwitchPalaceTimer_1DF5            ;$00A09D |
     STZ.w OWPlayerSubmap_1F11               ;$00A0A0 |
     LDA.b #$F0                              ;$00A0A3 |
-    STA.w $0DB0                             ;$00A0A5 |
+    STA.w MosaicSize_0DB0                   ;$00A0A5 |
     LDA.b #!FadeLevelBlack_10               ;$00A0A8 |
     STA.w GameMode_0100                     ;$00A0AA |
     JMP Mode04Finish                        ;$00A0AD |
 
-.CODE_00A0B0:
+.not_intro_level_00A0B0:
     JSR CODE_0085FA
     JSR upload_music_bank_1                 ;$00A0B3 |
     JSR SetUpScreen                         ;$00A0B6 |
@@ -4069,7 +4068,7 @@ DATA_00A1D6:
 GM14_main_level_00A1DA:
     LDA.w MessageBoxTrigger_1426
     BEQ .message_box_not_triggered          ;$00A1DD |
-    JSL CODE_05B10C                         ;$00A1DF |
+    JSL message_box_triggered_05B10C        ;$00A1DF |
     RTS                                     ;$00A1E3 |
 
 .message_box_not_triggered:
@@ -4141,11 +4140,11 @@ GM14_main_level_00A1DA:
     LDA.w LevelExitMode_0DD5                ;$00A269 |
     BEQ +                                   ;$00A26C |
     BPL .Return00A289                       ;$00A26E | if level was just beaten and activated an OW event, do nothing
-+   LDA.b #$80                              ;$00A270 |
++   LDA.b #!ExitDeath_80                    ;$00A270 |
     BRA .skip_cheat_00A27E                  ;$00A272 |
 
 .unreachable_cheat:
-    LDA.b #$01                              ;$00A274 |
+    LDA.b #!ExitNormal_01                   ;$00A274 |
     BIT.b byetudlrHold_15                   ;$00A276 |
     BPL +                                   ;$00A278 |
     INC A                                   ;$00A27A |
@@ -7308,26 +7307,26 @@ timers_and_animation_00C47E:
     JSL CODE_01C580                         ;$00C485 | as $13CB was left off, this is normally unreachable
     STZ.w UnusedStarCounter_13CB            ;$00C489 |
 +   LDY.w KeyholeTimer_1434                 ;$00C48C |
-    BEQ .CODE_00C4BA                        ;$00C48F | if keyhole timer is set
-    STY.w PlayerIsFrozen_13FB               ;$00C491 |
-    STY.b SpriteLock_9D                     ;$00C494 |
-    LDX.w KeyholeDirection_1435             ;$00C496 |
-    LDA.w SpotlightSize_1433                ;$00C499 |
-    CMP.w DATA_00C470,X                     ;$00C49C |
-    BNE .CODE_00C4BC                        ;$00C49F |
-    DEY                                     ;$00C4A1 |
-    BNE +                                   ;$00C4A2 |
-    INC.w KeyholeDirection_1435             ;$00C4A4 |
-    TXA                                     ;$00C4A7 |
-    LSR                                     ;$00C4A8 |
-    BCC .CODE_00C4F8                        ;$00C4A9 |
-    JSR CODE_00FCEC                         ;$00C4AB |
-    LDA.b #$02                              ;$00C4AE |
-    LDY.b #!FadeToOverworld_0B              ;$00C4B0 |
-    JSR CODE_00C9FE                         ;$00C4B2 |
-    LDY.b #$00                              ;$00C4B5 |
-+   STY.w KeyholeTimer_1434                 ;$00C4B7 |
-.CODE_00C4BA:
+    BEQ .no_keyhole_timer_00C4BA            ;$00C48F |\ if keyhole timer is set:
+    STY.w PlayerIsFrozen_13FB               ;$00C491 ||
+    STY.b SpriteLock_9D                     ;$00C494 ||
+    LDX.w KeyholeDirection_1435             ;$00C496 ||
+    LDA.w SpotlightSize_1433                ;$00C499 ||
+    CMP.w DATA_00C470,X                     ;$00C49C ||
+    BNE .CODE_00C4BC                        ;$00C49F ||\
+    DEY                                     ;$00C4A1 |||
+    BNE +                                   ;$00C4A2 |||
+    INC.w KeyholeDirection_1435             ;$00C4A4 |||
+    TXA                                     ;$00C4A7 |||
+    LSR                                     ;$00C4A8 |||
+    BCC .CODE_00C4F8                        ;$00C4A9 |||
+    JSR CODE_00FCEC                         ;$00C4AB |||
+    LDA.b #!ExitSecret1_02                  ;$00C4AE ||| secret exit flag
+    LDY.b #!FadeToOverworld_0B              ;$00C4B0 |||
+    JSR beat_level_00C9FE                   ;$00C4B2 |||
+    LDY.b #$00                              ;$00C4B5 ||/
++   STY.w KeyholeTimer_1434                 ;$00C4B7 |/
+.no_keyhole_timer_00C4BA:
     BRA .CODE_00C4F8
 
 .CODE_00C4BC:
@@ -7440,43 +7439,43 @@ timers_and_animation_00C47E:
     PLB                                     ;$00C58E |
 .restore_noteblock_down_00C58F:
     STZ.w NoteBlockActive_1402              ;$00C58F |
-Return00C592:
+return_00C592:
     RTS
 
 execute_player_animation_00C593:
     LDA.b PlayerAnimation_71                ;$00C593 \ Execute animation code.
     JSL execute_pointer                     ;$00C595 /
 
-animation_pointers:
-    dw no_animation
-    dw hurt_animation
-    dw mushroom_animation
-    dw cape_animation
-    dw flower_animation
-    dw horizontal_pipe_animation
-    dw vertical_pipe_animation
-    dw slanted_pipe_animation
-    dw yoshi_wings_animation
-    dw death_animation
-    dw castle_enter_animation
-    dw UnknownAniB
-    dw castle_destroy_animation
-    dw Return00C592
+.animation_pointers:
+    dw no_animation                         ;$00C599 | 00 Normal; the player is able to move freely
+    dw hurt_animation                       ;$00C59B | 01 Being hurt and reducing to small Mario/Luigi
+    dw mushroom_animation                   ;$00C99D | 02
+    dw cape_animation                       ;$00C59F | 03 Get Feather animation (note: to make it work, also write to $1496)
+    dw flower_animation                     ;$00C5A1 | 04 Get Fire Flower animation (note: to make it work, also write to $149B)
+    dw horizontal_pipe_animation            ;$00C5A3 | 05
+    dw vertical_pipe_animation              ;$00C5A5 | 06
+    dw slanted_pipe_animation               ;$00C5A7 | 07
+    dw yoshi_wings_animation                ;$00C5A9 | 08 Shooting up into the sky (Yoshi Wings)
+    dw death_animation                      ;$00C5AB | 09
+    dw castle_enter_animation               ;$00C5AD | 0A No-Yoshi" entrance
+    dw .bowser_defeated_animation_00C5B5    ;$00C5AF | 0B Freeze player (used during the bowser defeated cutscene, and also disables HDMA)
+    dw castle_destroy_animation             ;$00C5B1 | 0C
+    dw return_00C592                        ;$00C5B3 | 0D Disable animation (used when entering doors or after a bonus game)
 
-UnknownAniB:
+.bowser_defeated_animation_00C5B5:
     STZ.w $13DE
     STZ.w PlayerSlopePose_13ED              ;$00C5B8 |
     LDA.w EndLevelTimer_1493                ;$00C5BB |
-    BEQ CODE_00C5CE                         ;$00C5BE |
+    BEQ ..CODE_00C5CE                       ;$00C5BE |
     JSL CODE_0CAB13                         ;$00C5C0 |
     LDA.w GameMode_0100                     ;$00C5C4 |
     CMP.b #!Level_14                        ;$00C5C7 |
-    BEQ CODE_00C5D1                         ;$00C5C9 |
-    JMP CODE_00C95B                         ;$00C5CB |
+    BEQ ..CODE_00C5D1                       ;$00C5C9 |
+    JMP normal_exit_level_00C95B            ;$00C5CB |
 
-CODE_00C5CE:
+..CODE_00C5CE:
     STZ.w $0D9F
-CODE_00C5D1:
+..CODE_00C5D1:
     LDA.b #$01
     STA.w $1B88                             ;$00C5D3 |
     LDA.b #$07                              ;$00C5D6 |
@@ -7837,106 +7836,100 @@ ending_level:
     STZ.w PlayerSlopePose_13ED              ;$00C91E |
     LDA.b ScreenMode_5B                     ;$00C921 |
     LSR                                     ;$00C923 |
-    BCS CODE_00C944                         ;$00C924 |
-    LDA.w CutsceneID_13C6                   ;$00C926 |
-    ORA.w $13D2                             ;$00C929 |
-    BEQ CODE_00C96B                         ;$00C92C |
-    LDA.b PlayerInAir_72                    ;$00C92E |
-    BEQ CODE_00C935                         ;$00C930 |
-    JSR not_frozen_physics                  ;$00C932 |
-CODE_00C935:
-    LDA.w $13D2
-    BNE CODE_00C948                         ;$00C938 |
-    JSR CODE_00B03E                         ;$00C93A |
-    LDA.w ColorFadeTimer_1495               ;$00C93D |
-    CMP.b #$40                              ;$00C940 |
-    BCC Return00C96A                        ;$00C942 |
-CODE_00C944:
-    JSL CODE_05CBFF
-CODE_00C948:
-    LDY.b #$01
+    BCS .CODE_00C944                        ;$00C924 |\
+    LDA.w CutsceneID_13C6                   ;$00C926 ||
+    ORA.w SwitchPalaceColor_13D2            ;$00C929 ||
+    BEQ ending_normal_level_00C96B          ;$00C92C ||
+    LDA.b PlayerInAir_72                    ;$00C92E ||
+    BEQ +                                   ;$00C930 ||
+    JSR not_frozen_physics                  ;$00C932 ||
++   LDA.w SwitchPalaceColor_13D2            ;$00C935 ||
+    BNE .CODE_00C948                        ;$00C938 ||
+    JSR CODE_00B03E                         ;$00C93A ||
+    LDA.w ColorFadeTimer_1495               ;$00C93D ||
+    CMP.b #$40                              ;$00C940 ||
+    BCC return_00C96A                       ;$00C942 |/
+.CODE_00C944:                               ;        |
+    JSL CODE_05CBFF                         ;        |
+.CODE_00C948:                               ;        |
+    LDY.b #$01                              ;        |
     STY.b SpriteLock_9D                     ;$00C94A |
     LDA.b Frame_13                          ;$00C94C |
     LSR                                     ;$00C94E |
-    BCC Return00C96A                        ;$00C94F |
-    DEC.w EndLevelTimer_1493                ;$00C951 |
-    BNE Return00C96A                        ;$00C954 |
-    LDA.w $13D2                             ;$00C956 |
-    BNE CODE_00C962                         ;$00C959 |
-CODE_00C95B:
+    BCC return_00C96A                       ;$00C94F |\ in odd frames:
+    DEC.w EndLevelTimer_1493                ;$00C951 ||
+    BNE return_00C96A                       ;$00C954 ||\
+    LDA.w SwitchPalaceColor_13D2            ;$00C956 ||| if $1493 ended
+    BNE set_switch_palace_message_00C962    ;$00C959 |/  either set the palace message or beat the level
+normal_exit_level_00C95B:
     LDY.b #!FadeToOverworld_0B
-    LDA.b #$01                              ;$00C95D |
-    JMP CODE_00C9FE                         ;$00C95F |
+    LDA.b #!ExitNormal_01                   ;$00C95D |
+    JMP beat_level_00C9FE                   ;$00C95F |
 
-CODE_00C962:
+set_switch_palace_message_00C962:
     LDA.b #$A0
-    STA.w $1DF5                             ;$00C964 |
+    STA.w SwitchPalaceTimer_1DF5            ;$00C964 |
     INC.w MessageBoxTrigger_1426            ;$00C967 |
-Return00C96A:
+return_00C96A:
     RTS
 
-CODE_00C96B:
+ending_normal_level_00C96B:
     JSR CODE_00AF17
-    LDA.w $1B99                             ;$00C96E |
+    LDA.w ShowPeaceSign_1B99                ;$00C96E |
     BNE CODE_00C9AF                         ;$00C971 |
     LDA.w EndLevelTimer_1493                ;$00C973 |
     CMP.b #$28                              ;$00C976 |
-    BCC CODE_00C984                         ;$00C978 |
+    BCC +                                   ;$00C978 |
     LDA.b #$01                              ;$00C97A |
     STA.b PlayerDir_76                      ;$00C97C |
     STA.b byetudlrHold_15                   ;$00C97E |
     LDA.b #$05                              ;$00C980 |
     STA.b PlayerXSpeed_7B                   ;$00C982 |
-CODE_00C984:
-    LDA.b PlayerInAir_72
-    BEQ CODE_00C98B                         ;$00C986 |
++   LDA.b PlayerInAir_72                    ;$00C984 |
+    BEQ +                                   ;$00C986 |
     JSR CODE_00D76B                         ;$00C988 |
-CODE_00C98B:
-    LDA.b PlayerXSpeed_7B
-    BNE CODE_00C9A4                         ;$00C98D |
++   LDA.b PlayerXSpeed_7B                   ;$00C98B |
+    BNE +                                   ;$00C98D |
     STZ.w HorizLayer1Setting_1411           ;$00C98F |
     JSR CODE_00CA3E                         ;$00C992 |
-    INC.w $1B99                             ;$00C995 |
+    INC.w ShowPeaceSign_1B99                ;$00C995 |
     LDA.b #$40                              ;$00C998 |
     STA.w PlayerPeaceSign_1492              ;$00C99A |
     ASL                                     ;$00C99D |
     STA.w ColorFadeDir_1494                 ;$00C99E |
     STZ.w ColorFadeTimer_1495               ;$00C9A1 |
-CODE_00C9A4:
-    JMP no_special_collision
++   JMP no_special_collision                ;$00C9A4 |
 
-DATA_00C9A7:
+levels_with_cutscene_00C9A7:
     db $25,$07,$40,$0E,$20,$1A,$34,$32
 
 CODE_00C9AF:
     JSR SetMarioPeaceImg
     LDA.w PlayerPeaceSign_1492              ;$00C9B2 |
-    BEQ CODE_00C9C2                         ;$00C9B5 |
+    BEQ .CODE_00C9C2                        ;$00C9B5 |
     DEC.w PlayerPeaceSign_1492              ;$00C9B7 |
-    BNE Return00C9C1                        ;$00C9BA |
+    BNE +                                   ;$00C9BA |
     LDA.b #$11                              ;$00C9BC |
     STA.w SPCIO2_1DFB                       ;$00C9BE |
-Return00C9C1:
-    RTS
++   RTS                                     ;$00C9C1 |
 
-CODE_00C9C2:
+.CODE_00C9C2:
     JSR CODE_00CA44
     LDA.b #$01                              ;$00C9C5 |
     STA.b byetudlrHold_15                   ;$00C9C7 |
     JSR no_special_collision                ;$00C9C9 |
     LDA.w SpotlightSize_1433                ;$00C9CC |
-    BNE Return00CA30                        ;$00C9CF |
+    BNE return_00CA30                       ;$00C9CF |
     LDA.w SecretGoalTape_141C               ;$00C9D1 |
     INC A                                   ;$00C9D4 |
     CMP.b #$03                              ;$00C9D5 |
-    BNE CODE_00C9DF                         ;$00C9D7 |
+    BNE +                                   ;$00C9D7 |
     LDA.b #$01                              ;$00C9D9 |
     STA.w OWPlayerSubmap_1F11               ;$00C9DB |
     LSR                                     ;$00C9DE |
-CODE_00C9DF:
-    LDY.b #!LoadOverworld_0C
++   LDY.b #!LoadOverworld_0C                ;$00C9DF |
     LDX.w BonusGameFlag_1425                ;$00C9E1 |
-    BEQ CODE_00C9F8                         ;$00C9E4 |
+    BEQ +                                   ;$00C9E4 |
     LDX.b #$FF                              ;$00C9E6 |
     STX.w BonusGameFlag_1425                ;$00C9E8 |
     LDX.b #$F0                              ;$00C9EB |
@@ -7944,38 +7937,35 @@ CODE_00C9DF:
     STZ.w EndLevelTimer_1493                ;$00C9F0 |
     STZ.w MusicBackup_0DDA                  ;$00C9F3 |
     LDY.b #!FadeLevelBlack_10               ;$00C9F6 |
-CODE_00C9F8:
-    STZ.w $0DAE
-    STZ.w $0DAF                             ;$00C9FB |
-CODE_00C9FE:
++   STZ.w Brightness_0DAE                   ;$00C9F8 |
+    STZ.w MosaicDirection_0DAF              ;$00C9FB |
+beat_level_00C9FE:
     STA.w LevelExitMode_0DD5
     LDA.w CutsceneID_13C6                   ;$00CA01 |
-    BEQ CODE_00CA25                         ;$00CA04 |
+    BEQ .not_a_cutscene_00CA25              ;$00CA04 |
     LDX.b #$08                              ;$00CA06 |
     LDA.w Translevel_13BF                   ;$00CA08 |
     CMP.b #$13                              ;$00CA0B |
-    BNE CODE_00CA12                         ;$00CA0D |
+    BNE +                                   ;$00CA0D |
     INC.w LevelExitMode_0DD5                ;$00CA0F |
-CODE_00CA12:
-    CMP.b #$31
-    BEQ CODE_00CA20                         ;$00CA14 |
-CODE_00CA16:
-    CMP.w DATA_00C9A7-1,X
-    BEQ CODE_00CA20                         ;$00CA19 |
-    DEX                                     ;$00CA1B |
-    BNE CODE_00CA16                         ;$00CA1C |
-    BRA CODE_00CA25                         ;$00CA1E |
++   CMP.b #$31                              ;$00CA12 |
+    BEQ .set_cutscene_00CA20                ;$00CA14 |
+-   CMP.w levels_with_cutscene_00C9A7-1,X   ;$00CA16 |\ loop through list of level numbers
+    BEQ .set_cutscene_00CA20                ;$00CA19 ||
+    DEX                                     ;$00CA1B ||
+    BNE -                                   ;$00CA1C |/
+    BRA .not_a_cutscene_00CA25              ;$00CA1E |
 
-CODE_00CA20:
+.set_cutscene_00CA20:
     STX.w CutsceneID_13C6
     LDY.b #!FadeToCutscene_18               ;$00CA23 |
-CODE_00CA25:
+.not_a_cutscene_00CA25:
     STY.w GameMode_0100
     INC.w OWLoadEventFlag_1DE9              ;$00CA28 |
-CODE_00CA2B:
+trigger_midway_00CA2B:
     LDA.b #$01
-    STA.w $13CE                             ;$00CA2D |
-Return00CA30:
+    STA.w MidwayFlag_13CE                   ;$00CA2D |
+return_00CA30:
     RTS
 
 SetMarioPeaceImg:
@@ -8817,7 +8807,7 @@ death_animation:
 .no_decrement                               ;        |/
     LDA.w PlayerAniTimer_1496               ;$00D0C6 |\ If it's not zero,
     BNE .not_done                           ;$00D0C9 |/ keep letting the player fall.
-    LDA.b #$80                              ;$00D0CB |\ Exit the level without events occuring.
+    LDA.b #!ExitDeath_80                    ;$00D0CB |\ Exit the level without events occuring.
     STA.w LevelExitMode_0DD5                ;$00D0CD |/
     LDA.w RemoveYoshiFlag_1B9B              ;$00D0D0 |\ If yoshi has not been left behind,
     BNE .keep_yoshi                         ;$00D0D3 | |
@@ -12254,7 +12244,7 @@ process_page_0_tiles_no_swim:
     JSR smoke_sparkle                       ;$00F2D5 | create the sparkle effect,
     LDA.w $13CD                             ;$00F2D8 |
     BEQ .no_trigger                         ;$00F2DB |
-    JSR CODE_00CA2B                         ;$00F2DD | trigger the midway point,
+    JSR trigger_midway_00CA2B               ;$00F2DD | trigger the midway point,
 .no_trigger                                 ;        |
     LDA.b Powerup_19                        ;$00F2E0 |\
     BNE .already_big                        ;$00F2E2 | |
@@ -12692,7 +12682,7 @@ check_y_position:
     BMI .return                             ;$00F5A8 | |
     LDA.w YoshiHeavenFlag_1B95              ;$00F5AA | | and it's a Yoshi wing level,
     BEQ .kill                               ;$00F5AD | |
-    JMP CODE_00C95B                         ;$00F5AF |/ exit and clear the level.
+    JMP normal_exit_level_00C95B            ;$00F5AF |/ exit and clear the level.
 
 .kill
     JSL kill_player_no_speed                ;$00F5B2 | Otherwise, kill the player without throwing him upwards.

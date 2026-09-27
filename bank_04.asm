@@ -6142,7 +6142,7 @@ CODE_04E61C:
     CMP.w $13C1                             ;$04E61F |
     BNE CODE_04E632                         ;$04E622 |
     INC.w $13D9                             ;$04E624 |
-    LDA.b #$E0                              ;$04E627 |
+    LDA.b #!ExitShowSave_E0                 ;$04E627 |
     STA.w LevelExitMode_0DD5                ;$04E629 |
     LDA.b #$0F                              ;$04E62C |
     STA.w $0DB1                             ;$04E62E |
@@ -6153,7 +6153,7 @@ CODE_04E632:
     BPL CODE_04E61C                         ;$04E633 |
     LDA.b #$05                              ;$04E635 |
     STA.w $13D9                             ;$04E637 |
-    LDA.b #$80                              ;$04E63A |
+    LDA.b #!ExitDeath_80                    ;$04E63A |
     STA.w LevelExitMode_0DD5                ;$04E63C |
     RTS                                     ;$04E63F |
 

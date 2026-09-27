@@ -1408,7 +1408,19 @@ OverworldDestXPos_0DC7: skip 2
 OverworldDestYPos_0DC9: skip 6
 OWPlayerSpeed_0DCF: skip 4
 OWPlayerDirection_0DD3: skip 2
+
 LevelExitMode_0DD5: skip 1
+; Valid values
+!ExitNothing_00 = $00
+!ExitNormal_01 = $01
+!ExitSecret1_02 = $02
+!ExitSecret2_03 = $03
+!ExitSecret3_04 = $04
+!Exit_05 = $05
+!Exit_06 = $06
+!ExitDeath_80 = $80
+!ExitShowSave_E0 = $E0
+
 PlayerTurnOW_0DD6: skip 2
 PlayerSwitching_0DD8: skip 1
 ; 7E0DD9 unused
@@ -2154,7 +2166,17 @@ skip 1
 OverworldFreeCamXPos_1DF0: skip 2
 OverworldFreeCamYPos_1DF2: skip 2
 TitleInputIndex_1DF4: skip 1
+
+; Timer used for multiple purposes:
+; How long a particular input during the intro sequence will remain pressed.
+; How long the Nintendo Presents screen will remain active.
+; How long a Switch Palace message will remain active.
+; How long the player has to wait before they can dismiss the intro message.
+NintendoPresentsTimer_1DF5:
+IntroSequenceTimer_1DF5:
+SwitchPalaceTimer_1DF5:
 VariousPromptTimer_1DF5: skip 1
+
 StarWarpIndex_1DF6: skip 1
 StarWarpLaunchSpeed_1DF7: skip 1
 StarWarpLaunchTimer_1DF8: skip 1
