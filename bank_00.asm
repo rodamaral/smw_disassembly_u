@@ -1,4 +1,5 @@
 ORG $008000
+
 reset_start:
     SEI                                     ;$008000 \ Disable IRQ
     STZ.w $4200                             ;$008001 | Disable IRQ, NMI and joypad reading
@@ -17,12 +18,12 @@ reset_start:
     TCD                                     ;$008022 |/
     LDA.w #!StackStart_01FF                 ;$008023 |\ Set up the stack
     TCS                                     ;$008026 |/
-    LDA.w #$F0A9                            ;$008027 |\ Upload OAM clear routine
+    LDA.w #!LDA_F0_F0A9                     ;$008027 |\ Upload OAM clear routine
     STA.l OAM_reset_7F8000                  ;$00802A | | LDA #$F0
     LDX.w #$017D                            ;$00802E | | Loop counter
     LDY.w #$03FD                            ;$008031 | | Current address
 .RAM_routine_upload:                        ;        | |
-    LDA.w #$008D                            ;$008034 | | STA $XXXX
+    LDA.w #!STA_00_008D                     ;$008034 | | STA $XXXX
     STA.l OAM_reset_7F8000+2,X              ;$008037 | |
     TYA                                     ;$00803B | | Set the address to store to
     STA.l OAM_reset_7F8000+3,X              ;$00803C | |
@@ -34,65 +35,63 @@ reset_start:
     DEX                                     ;$008047 | |
     BPL .RAM_routine_upload                 ;$008048 | |
     SEP #$30                                ;$00804A | | 8 bit A/X/Y
-    LDA.b #$6B                              ;$00804C | | RTL
-    STA.l $7F8182                           ;$00804E |/
-    JSR upload_SPC_engine                   ;$008052 | Upload the SPC engine
+    LDA.b #!OpcodeRTL_6B                    ;$00804C | | RTL
+    STA.l OAM_reset_7F8000+$182             ;$00804E |/
+    JSR upload_SPC_engine_0080E8            ;$008052 | Upload the SPC engine
     STZ.w GameMode_0100                     ;$008055 | Clear game mode
     STZ.w OverworldOverride_0109            ;$008058 | Clear level number(used for OW bypass)
-    JSR clear_non_stack                     ;$00805B | RAM clear routine
-    JSR upload_samples                      ;$00805E | Upload SPC samples
-    JSR setup_window_HDMA                   ;$008061 | Set up HDMA for window settings
+    JSR clear_non_stack_008A4E              ;$00805B | RAM clear routine
+    JSR upload_SPC_samples_0080FD           ;$00805E | Upload SPC samples
+    JSR setup_window_HDMA_009250            ;$008061 | Set up HDMA for window settings
     LDA.b #$03                              ;$008064 |\ Set up OAM registers( 8x8 and 16x16)
     STA.w $2101                             ;$008066 |/
     INC.b LagFlag_10                        ;$008069 /
-.game_loop:
-    LDA.b LagFlag_10                        ;$00806B \ Main wait loop
-    BEQ .game_loop                          ;$00806D | $10 is set in NMI to $00
+; game loop:
+-   LDA.b LagFlag_10                        ;$00806B \ Main wait loop
+    BEQ -                                   ;$00806D | $10 is set in NMI to $00
     CLI                                     ;$00806F | Enable interrupts
     INC.b Frame_13                          ;$008070 | Increment frame counter
-    JSR run_game_mode                       ;$008072 | Run the game
+    JSR run_game_mode_009322                ;$008072 | Run the game
     STZ.b LagFlag_10                        ;$008075 | Clear $10
-    BRA .game_loop                          ;$008077 / Back to the wait loop
+    BRA -                                   ;$008077 / Back to the wait loop
 
-SPC_upload_loop:
+SPC_upload_loop_008079:
     PHP                                     ;$008079 \ Preserve processor flags
     REP #$30                                ;$00807A |  16 bit A/X/Y
     LDY.w #$0000                            ;$00807C |
     LDA.w #$BBAA                            ;$00807F |\ Value to check if the SPC is ready
-.SPC_wait                                   ;        | |
-    CMP.w $2140                             ;$008082 | | Wait for the SPC to be ready
-    BNE .SPC_wait                           ;$008085 |/
+-   CMP.w $2140                             ;$008082 | | Wait for the SPC to be ready
+    BNE -                                   ;$008085 |/
     SEP #$20                                ;$008087 | 8 bit A
     LDA.b #$CC                              ;$008089 |\ Byte used to enable SPC block upload
-    BRA send_SPC_block                      ;$00808B |/
-SPC_transfer_bytes:                         ;        |\
+    BRA .send_SPC_block                     ;$00808B |/
+
+.SPC_transfer_bytes:                        ;        |\
     LDA [$00],Y                             ;$00808D | | Load the Byte into the low byte
     INY                                     ;$00808F | | Increase the index
     XBA                                     ;$008090 | | Move it to the high byte
     LDA.b #$00                              ;$008091 |/ Set the validation byte to the low byte
-    BRA start_block_upload                  ;$008093 |
-next_byte:                                  ;        |\
+    BRA .start_block_upload                 ;$008093 |
+
+.next_byte:                                 ;        |\
     XBA                                     ;$008095 | | Switch the high and low byte
     LDA [$00],Y                             ;$008096 | | Load a new low byte
     INY                                     ;$008098 | | Increase the index
     XBA                                     ;$008099 |/ Switch the new low byte to the high byte
-.SPC_wait                                   ;        |\ SPC wait loop
-    CMP.w $2140                             ;$00809A | | Wait till $2140 matches the validation byte
-    BNE .SPC_wait                           ;$00809D |/
+-   CMP.w $2140                             ;$00809A |\ Wait till $2140 matches the validation byte
+    BNE -                                   ;$00809D |/
     INC A                                   ;$00809F | Increment the validation byte
-start_block_upload:                         ;        |\
+.start_block_upload:                        ;        |\
     REP #$20                                ;$0080A0 | | 16 bit A
     STA.w $2140                             ;$0080A2 | | Store to $2140/$2141
     SEP #$20                                ;$0080A5 | | 8 bit A
     DEX                                     ;$0080A7 |/ Decrement byte counter
-    BNE next_byte                           ;$0080A8 |
-.SPC_wait                                   ;        |\ SPC wait loop
-    CMP.w $2140                             ;$0080AA | |
-    BNE .SPC_wait                           ;$0080AD |/
-.add_three                                  ;        |\
-    ADC.b #$03                              ;$0080AD | | If A is 0 add 3 again
-    BEQ .add_three                          ;$0080B1 |/
-send_SPC_block:                             ;        |
+    BNE .next_byte                          ;$0080A8 |
+-   CMP.w $2140                             ;$0080AA |\ SPC wait loop
+    BNE -                                   ;$0080AD |/
+-   ADC.b #$03                              ;$0080AD |\ If A is 0 add 3 again
+    BEQ -                                   ;$0080B1 |/
+.send_SPC_block:                            ;        |
     PHA                                     ;$0080B3 | Preserve A to store to $2140 later
     REP #$20                                ;$0080B4 | 16 bit A
     LDA [$00],Y                             ;$0080B6 |\ Get data length
@@ -111,10 +110,9 @@ send_SPC_block:                             ;        |
     ADC.b #$7F                              ;$0080CD | if A is one this sets the overflow flag
     PLA                                     ;$0080CF |\ Store the A pushed earlier
     STA.w $2140                             ;$0080D0 |/
-.SPC_wait                                   ;        |\ SPC wait loop
-    CMP.w $2140                             ;$0080D3 | |
-    BNE .SPC_wait                           ;$0080D6 |/
-    BVS SPC_transfer_bytes                  ;$0080D8 | If the overflow is not set, keep uploading
+-   CMP.w $2140                             ;$0080D3 |\ SPC wait loop
+    BNE -                                   ;$0080D6 |/
+    BVS .SPC_transfer_bytes                 ;$0080D8 | If the overflow is not set, keep uploading
     STZ.w $2140                             ;$0080DA |\ Clear SPC I/O ports
     STZ.w $2141                             ;$0080DD | |
     STZ.w $2142                             ;$0080E0 | |
@@ -122,27 +120,27 @@ send_SPC_block:                             ;        |
     PLP                                     ;$0080E6 | Restore processor flag
     RTS                                     ;$0080E7 /
 
-upload_SPC_engine:
+upload_SPC_engine_0080E8:
     LDA.b #SPC_engine                       ;$0080E8 \
     STA.w $0000                             ;$0080EA | Set up pointer at $00 to the SPC data ($0E8000)
     LDA.b #SPC_engine>>8                    ;$0080ED |
     STA.w $0001                             ;$0080EF |
     LDA.b #SPC_engine>>16                   ;$0080F2 |
     STA.w $0002                             ;$0080F4 |
-upload_data_to_SPC:                         ;        /
+upload_data_to_SPC_0080F7:                  ;        /
     SEI                                     ;$0080F7 \ Prevent interrupts from interrupting SPC upload
-    JSR SPC_upload_loop                     ;$0080F8 | Main SPC upload loop
+    JSR SPC_upload_loop_008079              ;$0080F8 | Main SPC upload loop
     CLI                                     ;$0080FB | Enable interrupts again
     RTS                                     ;$0080FC /
 
-upload_samples:
+upload_SPC_samples_0080FD:
     LDA.b #sample_table                     ;$0080FD \ Set up pointer at $00 to the SPC data ($0F8000)
     STA.w $0000                             ;$0080FF |
     LDA.b #sample_table>>8                  ;$008102 |
     STA.w $0001                             ;$008104 |
     LDA.b #sample_table>>16                 ;$008107 |
     STA.w $0002                             ;$008109 |
-    BRA start_SPC_upload                    ;$00810C /
+    BRA start_SPC_upload_00811D             ;$00810C /
 
 upload_music_bank_1:
     LDA.b #music_bank_1                     ;$00810E \ Set up pointer at $00 to the SPC data ($0E98B1)
@@ -151,17 +149,16 @@ upload_music_bank_1:
     STA.w $0001                             ;$008115 |
     LDA.b #music_bank_1>>16                 ;$008118 |
     STA.w $0002                             ;$00811A /
-start_SPC_upload:                           ;        \
+start_SPC_upload_00811D:                           ;        \
     LDA.b #$FF                              ;$00811D |\ Tell the SPC to enable the upload routine
     STA.w $2141                             ;$00811F |/
-    JSR upload_data_to_SPC                  ;$008122 | Enter the SNES side SPC upload
+    JSR upload_data_to_SPC_0080F7           ;$008122 | Enter the SNES side SPC upload
     LDX.b #$03                              ;$008125 |\ 
-SPC_clear_loop:                             ;        | | Clear out all SPC I/O ports and mirrors
-    STZ.w $2140,X                           ;$008127 | |
-    STZ.w SPCIO0_1DF9,X                           ;$00812A | |
-    STZ.w $1DFD,X                           ;$00812D | |
+-   STZ.w $2140,X                           ;$008127 | | Clear out all SPC I/O ports and mirrors
+    STZ.w SPCIO0_1DF9,X                     ;$00812A | |
+    STZ.w LastUsedMusic_1DFF-2,X            ;$00812D | |
     DEX                                     ;$008130 | |
-    BPL SPC_clear_loop                      ;$008131 |/
+    BPL -                                   ;$008131 |/
 SPC_upload_return:                          ;        |
     RTS                                     ;$008133 /
 
@@ -181,7 +178,7 @@ upload_music_bank_2:
     STA.w $0001                             ;$00814F | Level music
     LDA.b #music_bank_2>>16                 ;$008152 |
     STA.w $0002                             ;$008154 |
-    BRA start_SPC_upload                    ;$008157 /
+    BRA start_SPC_upload_00811D             ;$008157 /
 
 upload_music_bank_3:
     LDA.b #music_bank_3                     ;$008159 \ Set up pointer at $00 to the SPC data ($03E400)
@@ -190,7 +187,7 @@ upload_music_bank_3:
     STA.w $0001                             ;$008160 | Credits music
     LDA.b #music_bank_3>>16                 ;$008163 |
     STA.w $0002                             ;$008165 |
-    BRA start_SPC_upload                    ;$008168 /
+    BRA start_SPC_upload_00811D             ;$008168 /
 
 NMI_start:                                  ;        \
     SEI                                     ;$00816A | Disable interrupts to stop interrupting an interrupt
@@ -207,11 +204,11 @@ NMI_start:                                  ;        \
     LDA.w SPCIO2_1DFB                       ;$008179 |\ If playing a sound in $1DFB branch to keep playing
     BNE .keep_playing                       ;$00817C |/
     LDY.w $2142                             ;$00817E |\ Check if $1DFF matches the current playing sound
-    CPY.w $1DFF                             ;$008181 | |
+    CPY.w LastUsedMusic_1DFF                ;$008181 | |
     BNE .sound_update                       ;$008184 |/
 .keep_playing                               ;        |
     STA.w $2142                             ;$008186 |\ Keep the current sound playing
-    STA.w $1DFF                             ;$008189 | | Then mirror and clear $1DFB
+    STA.w LastUsedMusic_1DFF                ;$008189 | | Then mirror and clear $1DFB
     STZ.w SPCIO2_1DFB                       ;$00818C |/
 .sound_update                               ;        |
     LDA.w SPCIO0_1DF9                       ;$00818F |\ Update the remaining sound ports and clear mirrors
@@ -1254,24 +1251,26 @@ generic_layer_1_and_2_upload:               ;        \
 .layer_2_DMA_settings_4
     db $01,$18,$A8,$1D,$00,$2C,$00
 
-clear_non_stack:
+; Zeroes WRAM address:
+; - $00 to $0101
+; - $0200 to $1FFF
+; - $7F837B and 7F837C
+; Also sets $7F837D = #$FF
+clear_non_stack_008A4E:
     REP #$30
     LDX.w #$1FFE                            ;$008A50 |
-CODE_008A53:
-    STZ $00,X
-CODE_008A55:
-    DEX
-    DEX                                     ;$008A56 |
-    CPX.w #!StackStart_01FF                 ;$008A57 |
-    BPL CODE_008A61                         ;$008A5A |
-    CPX.w #$0100                            ;$008A5C |
-    BPL CODE_008A55                         ;$008A5F |
-CODE_008A61:
-    CPX.w #$FFFE
-    BNE CODE_008A53                         ;$008A64 |
+--  STZ $00,X                               ;$008A53 |\
+-   DEX                                     ;$008A55 || clear words $1FFE to $0200
+    DEX                                     ;$008A56 || then
+    CPX.w #!StackStart_01FF                 ;$008A57 || clear words $0100 to $00
+    BPL +                                   ;$008A5A || 
+    CPX.w #$0100                            ;$008A5C || 
+    BPL -                                   ;$008A5F || 
++   CPX.w #$FFFE                            ;$008A61 || 
+    BNE --                                  ;$008A64 |/
     LDA.w #$0000                            ;$008A66 |
     STA.l DynStripeImgSize_7F837B           ;$008A69 |
-    STZ.w $0681                             ;$008A6D |
+    STZ.w DynPaletteIndex_0681              ;$008A6D |
     SEP #$30                                ;$008A70 |
     LDA.b #$FF                              ;$008A72 |
     STA.l DynamicStripeImage_7F837D         ;$008A74 |
@@ -2079,13 +2078,12 @@ CODE_00923A:
 DATA_009249:
     db $00,$22,$03,$07,$00,$00,$02
 
-setup_window_HDMA:
+setup_window_HDMA_009250:
     LDX.b #$04                              ;$009250 \ Index for DMA set up
-.loop                                       ;        |\ Upload to $4374 to $4370
-    LDA.w window_HDMA_settings,X            ;$009252 | |
+-   LDA.w window_HDMA_settings_009277,X     ;$009252 |\ Upload to $4374 to $4370
     STA.w $4370,X                           ;$009255 | |
     DEX                                     ;$009258 | |
-    BPL .loop                               ;$009259 |/
+    BPL -                                   ;$009259 |/
     LDA.b #$00                              ;$00925B |\ HDMA Data bank $00
     STA.w $4377                             ;$00925D |/
 DisableHDMA:                                ;        |
@@ -2094,16 +2092,15 @@ clear_window_HDMA:                          ;        |
     REP #$10                                ;$009263 | 16 bit x/y
     LDX.w #$01BE                            ;$009265 |\
     LDA.b #$FF                              ;$009268 | | Initialize the HDMA table to FF00
-.loop                                       ;        | |
-    STA.w $04A0,X                           ;$00926A | |
+-   STA.w $04A0,X                           ;$00926A | |
     STZ.w $04A1,X                           ;$00926D | |
     DEX                                     ;$009270 | |
     DEX                                     ;$009271 | |
-    BPL .loop                               ;$009272 |/
+    BPL -                                   ;$009272 |/
     SEP #$10                                ;$009274 | 8 bit x/y
     RTS                                     ;$009276 /
 
-window_HDMA_settings:
+window_HDMA_settings_009277:
     db $41,$26
     dl window_HDMA_data
 
@@ -2196,50 +2193,50 @@ DATA_009318:
 DATA_00931D:
     db $02,$11,$B4,$04,$00
 
-run_game_mode:
+run_game_mode_009322:
     LDA.w GameMode_0100
     JSL execute_pointer                     ;$009325 |
 
-Ptrs009329:
+.Ptrs009329:
     dw GM00_nintendo_load_009391            ;00 Nintendo Presents: Load
     dw GM01_nintendo_main_00940F            ;01 Nintendo Presents: Main
-    dw GM_transition_fade_009F6F            ;02 Fade out to Title Screen
+    dw GMs_transition_fade_009F6F           ;02 Fade out to Title Screen
     dw GM03_title_load_1_0096AE             ;03 Title Screen: Load (part 1)
     dw GM04_title_load_2_009A8B             ;04 Title Screen: Load (part 2)
-    dw GM_transition_fade_009F6F            ;05 Title Screen: Fade in
+    dw GMs_transition_fade_009F6F           ;05 Title Screen: Fade in
     dw GM06_title_circle_00941B             ;06 Title Screen: Circle effect
     dw GM07_title_main_009C64               ;07 Title Screen: Main
     dw GM08_title_file_select_009CD1        ;08 Title Screen: File select
     dw GM09_title_file_erase_009B1A         ;09 Title Screen: File erase
     dw GM0A_title_player_select_009DFA      ;0A Title Screen: Player select
-    dw GM_transition_fade_009F6F            ;0B Fade out to Overworld
+    dw GMs_transition_fade_009F6F           ;0B Fade out to Overworld
     dw GM0C_overworld_load_00A087           ;0C Overworld: Load
-    dw GM_transition_fade_009F6F            ;0D Overworld: Fade In
+    dw GMs_transition_fade_009F6F           ;0D Overworld: Fade In
     dw GM0E_overworld_main_00A1BE           ;0E Overworld: Main
-    dw GM_transition_mosaic_009F37          ;0F Fade out to Level
+    dw GMs_transition_mosaic_009F37         ;0F Fade out to Level
     dw GM10_level_start_00968E              ;10 Level: Mario Start!
     dw GM11_level_load_1_0096D5             ;11 Level: Load (part 1)
     dw GM12_level_load_2_00A59C             ;12 Level: Load (part 2)
-    dw GM_transition_mosaic_009F37          ;13 Level: Fade in
+    dw GMs_transition_mosaic_009F37         ;13 Level: Fade in
     dw GM14_main_level_00A1DA               ;14 Level: Main
-    dw GM_transition_fade_009F6F            ;15	Fade out to Game Over / Time Up
+    dw GMs_transition_fade_009F6F           ;15 Fade out to Game Over / Time Up
     dw GM16_game_over_load_009750           ;16 Game Over / Time Up: Load
     dw GM17_game_over_main_009759           ;17 Game Over / Time Up: Main
-    dw GM_transition_fade_009F6F            ;18 Fade out to Credits / Castle Cutscene
+    dw GMs_transition_fade_009F6F           ;18 Fade out to Credits / Castle Cutscene
     dw GM19_credits_castle_load_009468      ;19 Credits / Castle Cutscene: Load
-    dw GM_transition_fade_009F6F            ;1A Credits / Castle Cutscene: Fade in
+    dw GMs_transition_fade_009F6F           ;1A Credits / Castle Cutscene: Fade in
     dw GM1B_credits_castle_main_0094FD      ;1B Credits / Castle Cutscene: Main
-    dw GM_transition_fade_009F6F            ;1C Fade out to Ending: Yoshi's House
+    dw GMs_transition_fade_009F6F           ;1C Fade out to Ending: Yoshi's House
     dw GM1D_ending_yoshi_load_009583        ;1D Ending, Yoshi's House: Load
-    dw GM_transition_fade_009F6F            ;1E Ending, Yoshi's House: Fade in
+    dw GMs_transition_fade_009F6F           ;1E Ending, Yoshi's House: Fade in
     dw GM1F_ending_yoshi_main_0095AB        ;1F Ending, Yoshi's House: Main
-    dw GM_transition_fade_009F6F            ;20 Fade out to Enemy Credits
+    dw GMs_transition_fade_009F6F           ;20 Fade out to Enemy Credits
     dw GM21_ending_enemy_load_0095BC        ;21 Ending, Enemy Credits: Load
-    dw GM_transition_fade_009F6F            ;22 Ending, Enemy Credits: Fade out scene
+    dw GMs_transition_fade_009F6F           ;22 Ending, Enemy Credits: Fade out scene
     dw GM23_ending_enemy_scene_0095C1       ;23 Ending, Enemy Credits: Load scene
-    dw GM_transition_fade_009F6F            ;24 Ending, Enemy Credits: Fade in scene
+    dw GMs_transition_fade_009F6F           ;24 Ending, Enemy Credits: Fade in scene
     dw GM25_ending_enemy_main_00962C        ;25 Ending, Enemy Credits: Main
-    dw GM_transition_fade_009F6F            ;26 Fade out to The End
+    dw GMs_transition_fade_009F6F           ;26 Fade out to The End
     dw GM27_the_end_load_00963D             ;27 Ending, The End: Load
     dw GM28_the_end_fade_009F7C             ;28 Ending, The End: Fade in
     dw GM29_the_end_main_00968D             ;29 Ending, The End: Main
@@ -2263,8 +2260,7 @@ GM00_nintendo_load_009391:
     JSR CODE_00A993                         ;$009397 |
     LDY.b #$0C                              ;$00939A |
     LDX.b #$03                              ;$00939C |
-CODE_00939E:
-    LDA.w nintendo_positions,X
+-   LDA.w nintendo_positions,X              ;$00939E |
     STA.w OAMMirror_0200,Y                  ;$0093A1 |
     LDA.b #$70                              ;$0093A4 |
     STA.w $0201,Y                           ;$0093A6 |
@@ -2277,7 +2273,7 @@ CODE_00939E:
     DEY                                     ;$0093B6 |
     DEY                                     ;$0093B7 |
     DEX                                     ;$0093B8 |
-    BPL CODE_00939E                         ;$0093B9 |
+    BPL -                                   ;$0093B9 |
     LDA.b #$AA                              ;$0093BB |
     STA.w OAMTileBitSize_0400               ;$0093BD |
     LDA.b #$01                              ;$0093C0 |
@@ -2286,15 +2282,15 @@ CODE_00939E:
     STA.w NintendoPresentsTimer_1DF5        ;$0093C7 |
 CODE_0093CA:
     LDA.b #$0F
-    STA.w $0DAE                             ;$0093CC |
+    STA.w Brightness_0DAE                   ;$0093CC |
     LDA.b #$01                              ;$0093CF |
-    STA.w $0DAF                             ;$0093D1 |
-    STZ.w $192E                             ;$0093D4 |
+    STA.w MosaicDirection_0DAF              ;$0093D1 |
+    STZ.w SpritePalette_192E                ;$0093D4 |
     JSR LoadPalette                         ;$0093D7 |
     STZ.w $0701                             ;$0093DA |
     STZ.w $0702                             ;$0093DD |
     JSR CODE_00922F                         ;$0093E0 |
-    STZ.w $1B92                             ;$0093E3 |
+    STZ.w BlinkCursorPos_1B92               ;$0093E3 |
     LDX.b #$10                              ;$0093E6 |
     LDY.b #$04                              ;$0093E8 |
 CODE_0093EA:
@@ -2322,21 +2318,21 @@ GM01_nintendo_main_00940F:
     DEC.w NintendoPresentsTimer_1DF5
     BNE Return00941A                        ;$009412 |
     JSR CODE_00B888                         ;$009414 |
-CODE_009417:
+increment_game_mode_009417:
     INC.w GameMode_0100
 Return00941A:
     RTS
 
 GM06_title_circle_00941B:
     JSR SetUp0DA0GM4
-    JSR CODE_009CBE                         ;$00941E |
-    BEQ CODE_00942E                         ;$009421 |
+    JSR has_pressed_AXBYET_009CBE           ;$00941E |
+    BEQ .no_input_00942E                    ;$009421 |
     LDA.b #$EC                              ;$009423 |
-    JSR CODE_009440                         ;$009425 |
+    JSR .CODE_009440                        ;$009425 |
     INC.w GameMode_0100                     ;$009428 |
     JMP CODE_009C9F                         ;$00942B |
 
-CODE_00942E:
+.no_input_00942E:
     DEC.w IntroSequenceTimer_1DF5
     BNE Return00941A                        ;$009431 |
     INC.w IntroSequenceTimer_1DF5           ;$009433 |
@@ -2344,8 +2340,8 @@ CODE_00942E:
     CLC                                     ;$009439 |
     ADC.b #$04                              ;$00943A |
     CMP.b #$F0                              ;$00943C |
-    BCS CODE_009417                         ;$00943E |
-CODE_009440:
+    BCS increment_game_mode_009417          ;$00943E |
+.CODE_009440:
     STA.w SpotlightSize_1433
 CODE_009443:
     JSR CODE_00CA61
@@ -2633,7 +2629,7 @@ CODE_0096AB:
 
 GM03_title_load_1_0096AE:
     STZ.w $4200
-    JSR clear_non_stack                     ;$0096B1 |
+    JSR clear_non_stack_008A4E              ;$0096B1 |
     LDX.b #$07                              ;$0096B4 |
     LDA.b #$FF                              ;$0096B6 |
 CODE_0096B8:
@@ -3194,7 +3190,7 @@ CODE_009B2C:
     DEC.w GameMode_0100
     DEC.w GameMode_0100                     ;$009B2F |
     JSR CODE_009B11                         ;$009B32 |
-    JMP CODE_009CB0                         ;$009B35 |
+    JMP set_intro_level_009CB0              ;$009B35 |
 
 CODE_009B38:
     LDY.b #$08
@@ -3224,7 +3220,7 @@ CODE_009B58:
 CODE_009B67:
     DEY
     BPL CODE_009B43                         ;$009B68 |
-    JMP CODE_009C89                         ;$009B6A |
+    JMP fade_to_title_screen_009C89         ;$009B6A |
 
 CODE_009B6D:
     STX.w $1B92
@@ -3235,23 +3231,24 @@ CODE_009B6D:
     LDX.b #$00                              ;$009B7B |
     JMP CODE_009D3C                         ;$009B7D |
 
-CODE_009B80:
+; uses $13C9 as pointer offset
+handle_continue_end_menu_009B80:
     PHB
     PHK                                     ;$009B81 |
     PLB                                     ;$009B82 |
-    JSR CODE_009B88                         ;$009B83 |
+    JSR .execute_009B88                     ;$009B83 |
     PLB                                     ;$009B86 |
     RTL                                     ;$009B87 |
 
-CODE_009B88:
+.execute_009B88:
     DEC A
     JSL execute_pointer                     ;$009B89 |
 
-Ptrs009B8D:
-    dw CODE_009B91
+.Ptrs009B8D:
+    dw no_load_009B91
     dw CODE_009B9A
 
-CODE_009B91:
+no_load_009B91:
     LDY.b #$0C
     JSR CODE_009D29                         ;$009B93 |
     INC.w $13C9                             ;$009B96 |
@@ -3261,11 +3258,11 @@ CODE_009B9A:
     LDY.b #$00
     JSR CODE_009AD0                         ;$009B9C |
     TXA                                     ;$009B9F |
-    BNE ADDR_009BA5                         ;$009BA0 |
+    BNE .ADDR_009BA5                        ;$009BA0 |
     JMP CODE_009E17                         ;$009BA2 |
 
-ADDR_009BA5:
-    JMP CODE_009C89
+.ADDR_009BA5:
+    JMP fade_to_title_screen_009C89
 
 CODE_009BA8:
     PHB
@@ -3355,31 +3352,30 @@ ItrCntrlrSqnc:
 
 GM07_title_main_009C64:
     JSR SetUp0DA0GM4
-    JSR CODE_009CBE                         ;$009C67 |
+    JSR has_pressed_AXBYET_009CBE           ;$009C67 |
     BNE CODE_009C9F                         ;$009C6A |
-    JSR disable_controls                    ;$009C6C |
-    LDX.w $1DF4                             ;$009C6F |
+    JSR disable_controls                    ;$009C6C | has pressed a button
+    LDX.w TitleInputIndex_1DF4              ;$009C6F |
     DEC.w IntroSequenceTimer_1DF5           ;$009C72 |
-    BNE .CODE_009C82                        ;$009C75 |
+    BNE +                                   ;$009C75 |
     LDA.w ItrCntrlrSqnc,X                   ;$009C77 |
     STA.w IntroSequenceTimer_1DF5           ;$009C7A |
     INX                                     ;$009C7D |
     INX                                     ;$009C7E |
-    STX.w $1DF4                             ;$009C7F |
-.CODE_009C82:
-    LDA.w $9C1D,X
+    STX.w TitleInputIndex_1DF4              ;$009C7F |
++   LDA.w AnimatedTiles_7D00+$1F1D,X        ;$009C82 |
     CMP.b #$FF                              ;$009C85 |
     BNE CODE_009C8F                         ;$009C87 |
-CODE_009C89:
+fade_to_title_screen_009C89:
     LDY.b #!FadeToTitleScreen_02
-CODE_009C8B:
+set_game_mode_009C8B:
     STY.w GameMode_0100
     RTS                                     ;$009C8E |
 
 CODE_009C8F:
     AND.b #$DF
     STA.b byetudlrHold_15                   ;$009C91 |
-    CMP.w $9C1D,X                           ;$009C93 |
+    CMP.w AnimatedTiles_7D00+$1F1D,X        ;$009C93 |
     BNE +                                   ;$009C96 |
     AND.b #$9F                              ;$009C98 |
 +   STA.b byetudlrPress_16                  ;$009C9A |
@@ -3391,23 +3387,25 @@ CODE_009C9F:
     STA.w $212C                             ;$009CA5 |
     LDA.b #$13                              ;$009CA8 |
     STA.w $212D                             ;$009CAA |
-    STZ.w $0D9F                             ;$009CAD |
-CODE_009CB0:
+    STZ.w HDMAEnable_0D9F                   ;$009CAD |
+set_intro_level_009CB0:
     LDA.b #$E9
     STA.w OverworldOverride_0109            ;$009CB2 |
     JSR CODE_WRITEOW                        ;$009CB5 |
     JSR CODE_009D38                         ;$009CB8 |
-    JMP CODE_009417                         ;$009CBB |
+    JMP increment_game_mode_009417          ;$009CBB |
 
-CODE_009CBE:
+; Returns Zero Flag if none of these buttons were pressed in the last frame:
+; A, X, B, Y, start, select
+; PERF: pressing A or X causes a minor performance improvement vs the other keys
+has_pressed_AXBYET_009CBE:
     LDA.b axlr0000Hold_17
-    AND.b #$C0                              ;$009CC0 |
-    BNE Return009CCA                        ;$009CC2 |
+    AND.b #!ButAX_C0                        ;$009CC0 |
+    BNE +                                   ;$009CC2 |
     LDA.b byetudlrHold_15                   ;$009CC4 |
-    AND.b #$F0                              ;$009CC6 |
-    BNE Return009CCA                        ;$009CC8 |
-Return009CCA:
-    RTS
+    AND.b #!ButBYET_F0                      ;$009CC6 |
+    BNE +                                   ;$009CC8 |
++   RTS                                     ;$009CCA |
 
 DATA_009CCB:
     db $00,$00,$01
@@ -3633,7 +3631,7 @@ CODE_009E17:
 CODE_009E62:
     JSR KeepModeActive
     LDY.b #!FadeToOverworld_0B              ;$009E65 |
-    JMP CODE_009C8B                         ;$009E67 |
+    JMP set_game_mode_009C8B                ;$009E67 |
 
 DATA_009E6A:
     db $02,$00,$04,$00,$02,$00,$02,$00
@@ -3745,7 +3743,7 @@ DATA_009F31:
 DATA_009F33:
     db $0F,$00,$00,$F0
 
-GM_transition_mosaic_009F37:
+GMs_transition_mosaic_009F37:
     DEC.w $0DB1
     BPL Return009F6E                        ;$009F3A |
     JSR KeepModeActive                      ;$009F3C |
@@ -3773,8 +3771,8 @@ CODE_009F66:
 Return009F6E:
     RTS
 
-GM_transition_fade_009F6F:
-    DEC.w $0DB1
+GMs_transition_fade_009F6F:
+    DEC.w KeepModeActive_0DB1
     BPL Return009F6E                        ;$009F72 |
     JSR KeepModeActive                      ;$009F74 |
 CODE_009F77:
@@ -3957,7 +3955,7 @@ GM0C_overworld_load_00A087:
     JSR CODE_00A195                         ;$00A0F3 |
     LDA.w $1F2E                             ;$00A0F6 |
     BNE CODE_00A101                         ;$00A0F9 |
-    JSR CODE_009C89                         ;$00A0FB |
+    JSR fade_to_title_screen_009C89         ;$00A0FB |
     JMP increment_game_mode_0093F4          ;$00A0FE |
 
 CODE_00A101:

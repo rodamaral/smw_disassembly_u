@@ -5,6 +5,10 @@
 !Bank_7E = $7E
 !Bank_7F = $7F
 
+!OpcodeRTL_6B = $6B
+!LDA_F0_F0A9 = $F0A9
+!STA_00_008D = $008D
+
 ORG $7E0000
 
 ; scratch RAM
@@ -63,7 +67,6 @@ Frame_14: skip 1
 ; +------- set if the A or B button were pressed this frame
 byetudlrHold_15: skip 1
 ; Valid values
-!ButB = %10000000
 !ButY = %01000000
 !ButSelect = %00100000
 !ButStart = %00010000
@@ -71,6 +74,7 @@ byetudlrHold_15: skip 1
 !DpadDown = %00000100
 !DpadLeft = %00000010
 !DpadRight = %00000001
+!ButBYET_F0 = %11110000
 
 ; === $7E0016 ===
 ; 1 byte
@@ -110,6 +114,7 @@ axlr0000Hold_17: skip 1
 !ButX = %01000000
 !ButL = %00100000
 !ButR = %00010000
+!ButAX_C0 = %11000000
 
 ; === $7E0018 ===
 ; 1 byte
@@ -2181,14 +2186,16 @@ VariousPromptTimer_1DF5: skip 1
 StarWarpIndex_1DF6: skip 1
 StarWarpLaunchSpeed_1DF7: skip 1
 StarWarpLaunchTimer_1DF8: skip 1
-SPCIO0_1DF9: skip 1
-SPCIO1_1DFA: skip 1
-SPCIO2_1DFB: skip 1
-SPCIO3_1DFC: skip 1
-Empty_1DFD: skip 2
-LastUsedMusic_1DFF: skip 1
+SPCIO0_1DF9: skip 1 ;done
+SPCIO1_1DFA: skip 1 ;done
+SPCIO2_1DFB: skip 1 ;done
+SPCIO3_1DFC: skip 1 ;done
+; Empty_1DFD: skip 2
+; $1DFD is set, but unused
+skip 2 ;done
+LastUsedMusic_1DFF: skip 1 ;done
 ; 7E1E00 unused
-skip 1
+skip 1 ;done
 DebugFreeRoam_1E01: skip 1
 ClusterSprYPosLow_1E02: skip 20
 ClusterSprXPosLow_1E16: skip 20

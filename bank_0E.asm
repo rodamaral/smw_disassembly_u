@@ -18,22 +18,22 @@ base $0500
     mov $0388, a                            ;$050C | |
     mov $0389, a                            ;$050F |/
     mov x, a                                ;$0512 |\ Clear the $0000-$00E8 range of ARAM
-.clear_first_page                           ;                | |
+.clear_first_page                           ;      | |
     mov (x+), a                             ;$0513 | | X is a pointer to the current address being cleared
     cmp x, #$E8                             ;$0514 | |
     bne .clear_first_page                   ;$0516 |/
     mov a, #$00                             ;$0518 |\ Clear the $0200-$02FF range
     mov x, a                                ;$051A | |
-.clear_02XX                                 ;                | |
+.clear_02XX                                 ;      | |
     mov $0200+x, a                          ;$051B | |
     inc x                                   ;$051E | |
     bne .clear_02XX                         ;$051F |/
-.clear_03XX                                 ;                |\ Clear the $0300-$03FF range
+.clear_03XX                                 ;      |\ Clear the $0300-$03FF range
     mov $0300+x, a                          ;$0521 | |
     inc x                                   ;$0524 | |
     bne .clear_03XX                         ;$0525 |/
     mov x, #$0B                             ;$0527 |\ Initialize various DSP registers
-.initialize_DSP                             ;                | |
+.initialize_DSP                             ;      | |
     mov a, initial_DSP_registers+x          ;$0529 | |
     mov y, a                                ;$052C | | Y gets the register to write to
     mov a, initial_DSP_data+x               ;$052D | | A gets the value to write
