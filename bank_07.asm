@@ -4356,7 +4356,7 @@ CODE_07F252:
     LSR                                     ;$07F257 |
     TAX                                     ;$07F258 |
     LDA.l DATA_07F1AA,X                     ;$07F259 |
-    STA.w $1900                             ;$07F25D |
+    STA.w BonusStarsGained_1900             ;$07F25D |
     PLX                                     ;$07F260 |
     CMP.b #$50                              ;$07F261 |
     BNE Return07F26B                        ;$07F263 |
@@ -4601,7 +4601,7 @@ LoadTweakerBytes:
     LDA.l Sprite1686Vals,X                  ;$07F7C1 |
     STA.w dnctswye_1686,Y                   ;$07F7C5 |
     LDA.l Sprite190FVals,X                  ;$07F7C8 |
-    STA.w $190F,Y                           ;$07F7CC |
+    STA.w wcdj5sDp_190F,Y                   ;$07F7CC |
     PLX                                     ;$07F7CF |
     PLY                                     ;$07F7D0 |
     RTL                                     ;$07F7D1 |

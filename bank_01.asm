@@ -2227,11 +2227,11 @@ CODE_018EEF:
     BEQ CODE_018F07                         ;$018EF4 |
     DEY                                     ;$018EF6 |
     BPL -                                   ;$018EF7 |
-    DEC.w $18FC                             ;$018EF9 |
+    DEC.w ExtSpriteSlotIdx_18FC             ;$018EF9 |
     BPL +                                   ;$018EFC |
     LDA.b #$07                              ;$018EFE |
-    STA.w $18FC                             ;$018F00 |
-+   LDY.w $18FC                             ;$018F03 |
+    STA.w ExtSpriteSlotIdx_18FC             ;$018F00 |
++   LDY.w ExtSpriteSlotIdx_18FC             ;$018F03 |
 Return018F06:
     RTS
 
@@ -2555,7 +2555,7 @@ CODE_0191B2:
     ADC.w SpriteXPosHigh_14E0,X             ;$0191B8 |
     STA.w SpriteXPosHigh_14E0,X             ;$0191BB |
 CODE_0191BE:
-    LDA.w $190F,X
+    LDA.w wcdj5sDp_190F,X
     BPL CODE_0191ED                         ;$0191C1 |
     LDA.w SpriteBlocked_1588,X              ;$0191C3 |
     AND.b #$03                              ;$0191C6 |
@@ -2645,7 +2645,7 @@ CODE_01925B:
     BMI Return0192C0                        ;$01926D |
 CODE_01926F:
     JSR CODE_0192C9
-    LDA.w $190F,X                           ;$019272 |
+    LDA.w wcdj5sDp_190F,X                   ;$019272 |
     BPL CODE_019288                         ;$019275 |
     LDA.b SpriteXSpeed_B6,X                 ;$019277 |
     ORA.w SpriteTurnTimer_15AC,X            ;$019279 |
@@ -3748,8 +3748,8 @@ CODE_019A7B:
     BEQ SpinJumpEraseSpr                    ;$019A7E |
     LDA.b #$04                              ;$019A80 |
     STA.b SpriteYSpeed_AA,X                 ;$019A82 |
-    ASL.w $190F,X                           ;$019A84 |
-    LSR.w $190F,X                           ;$019A87 |
+    ASL.w wcdj5sDp_190F,X                   ;$019A84 |
+    LSR.w wcdj5sDp_190F,X                   ;$019A87 |
     LDA.b SpriteXSpeed_B6,X                 ;$019A8A |
     BEQ CODE_019A9D                         ;$019A8C |
     BPL CODE_019A94                         ;$019A8E |
@@ -3840,7 +3840,7 @@ HandleSpriteDeath:
 
 CODE_019B1D:
     STZ.w SpriteAnimation_1602,X
-    LDA.w $190F,X                           ;$019B20 |
+    LDA.w wcdj5sDp_190F,X                   ;$019B20 |
     AND.b #$20                              ;$019B23 |
     BEQ CODE_019B64                         ;$019B25 |
     LDA.w dscccccc_1662,X                   ;$019B27 |
@@ -4899,7 +4899,7 @@ get_draw_info_bnk1_01A365:
     LDA.w SpriteStatus_14C8,X               ;$01A397 |
     CMP.b #$09                              ;$01A39A |
     BEQ .loop_01A3A6                        ;$01A39C |
-    LDA.w $190F,X                           ;$01A39E |
+    LDA.w wcdj5sDp_190F,X                   ;$01A39E |
     AND.b #$20                              ;$01A3A1 |
     BEQ .loop_01A3A6                        ;$01A3A3 |
     INY                                     ;$01A3A5 | loop once if not carriable and not death frame 2 tiles high
@@ -5633,7 +5633,7 @@ CODE_01A897:
     BMI CODE_01A8E6                         ;$01A8AE |
     LDA.b PlayerYSpeed_7D                   ;$01A8B0 |
     BPL CODE_01A8C0                         ;$01A8B2 |
-    LDA.w $190F,X                           ;$01A8B4 |
+    LDA.w wcdj5sDp_190F,X                   ;$01A8B4 |
     AND.b #$10                              ;$01A8B7 |
     BNE CODE_01A8C0                         ;$01A8B9 |
     LDA.w SpriteStompCounter_1697           ;$01A8BB |
@@ -5660,7 +5660,7 @@ CODE_01A8D8:
 CODE_01A8E6:
     LDA.w PlayerSlopePose_13ED
     BEQ CODE_01A8F9                         ;$01A8E9 |
-    LDA.w $190F,X                           ;$01A8EB |
+    LDA.w wcdj5sDp_190F,X                   ;$01A8EB |
     AND.b #$04                              ;$01A8EE |
     BNE CODE_01A8F9                         ;$01A8F0 |
     JSR PlayKickSfx                         ;$01A8F2 |
@@ -6203,7 +6203,7 @@ CODE_01AC8E:
     CPY.b #$FF                              ;$01AC98 |
     BEQ OffScrKillSprite                    ;$01AC9A |
     LDA.b #$00                              ;$01AC9C | make sprite able to respawn
-    STA.w $1938,Y                           ;$01AC9E |
+    STA.w SpriteLoadStatus_1938,Y           ;$01AC9E |
 OffScrKillSprite:
     STZ.w SpriteStatus_14C8,X
 Return01ACA4:
@@ -7352,7 +7352,7 @@ CODE_01B4B2:
     RTS                                     ;$01B4B3 |
 
 CODE_01B4B4:
-    LDA.w $190F,X
+    LDA.w wcdj5sDp_190F,X
     LSR                                     ;$01B4B7 |
     BCS CODE_01B4B2                         ;$01B4B8 |
     LDA.b #$00                              ;$01B4BA |
@@ -16132,7 +16132,7 @@ process_tongue_01F4B2:
     LDA.w dscccccc_1662,Y                   ;$01F4EB |
     AND.b #$40                              ;$01F4EE |
     BNE +                                   ;$01F4F0 |\ if sprite has tweakers:
-    LDA.w $190F,Y                           ;$01F4F2 || - use shell as death frame
+    LDA.w wcdj5sDp_190F,Y                   ;$01F4F2 || - use shell as death frame
     AND.b #$20                              ;$01F4F5 || - NOT death frame 2 tiles high
     BEQ +                                   ;$01F4F7 ||
     LDA.b #$F8                              ;$01F4F9 || then position it a little higher

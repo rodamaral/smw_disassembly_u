@@ -1353,10 +1353,10 @@ CODE_0C9FAE:
     BRA CODE_0C9FC6                         ;$0C9FB9 |
 
 CODE_0C9FBB:
-    LDA.w $1B88
+    LDA.w MessageBoxExpand_1B88
     AND.w #$00FF                            ;$0C9FBE |
     BNE CODE_0C9FC6                         ;$0C9FC1 |
-    INC.w $1B88                             ;$0C9FC3 |
+    INC.w MessageBoxExpand_1B88             ;$0C9FC3 |
 CODE_0C9FC6:
     SEP #$20
     BRL CODE_0C9FEA                         ;$0C9FC8 |
@@ -1457,7 +1457,7 @@ CODE_0CA063:
     BNE CODE_0CA063                         ;$0CA084 |
     STZ.b PlayerDir_76                      ;$0CA086 |
     LDA.b #$E2                              ;$0CA088 |
-    STA.w $1B89                             ;$0CA08A |
+    STA.w MessageBoxTimer_1B89              ;$0CA08A |
     PLB                                     ;$0CA08D |
     RTS                                     ;$0CA08E |
 
@@ -1625,7 +1625,7 @@ PtrsLong0CA1DE:
 
 CODE_0CA1ED:
     JSR CODE_0CA315
-    LDA.w $1B89                             ;$0CA1F0 |
+    LDA.w MessageBoxTimer_1B89              ;$0CA1F0 |
     BEQ CODE_0CA1F6                         ;$0CA1F3 |
     RTS                                     ;$0CA1F5 |
 
@@ -1889,7 +1889,7 @@ CODE_0CA3C9:
     LDA.b #$9F                              ;$0CA3FE |
     STA.w $0B42                             ;$0CA400 |
     LDA.b #$E2                              ;$0CA403 |
-    STA.w $1B89                             ;$0CA405 |
+    STA.w MessageBoxTimer_1B89              ;$0CA405 |
     STA.w $1928                             ;$0CA408 |
     LDA.b #$0A                              ;$0CA40B |
     STA.w SPCIO2_1DFB                       ;$0CA40D |
@@ -2775,7 +2775,7 @@ DATA_0CAB1D:
     db $00,$E0
 
 CODE_0CAB1F:
-    LDX.w $1B88
+    LDX.w MessageBoxExpand_1B88
     LDA.b #$33                              ;$0CAB22 |
     STA.b Layer12Window_41                  ;$0CAB24 |
     LDY.w $1928                             ;$0CAB26 |
@@ -2792,13 +2792,13 @@ CODE_0CAB39:
     LDA.b #$30
 CODE_0CAB3B:
     STA.b OBJCWWindow_43
-    LDA.w $1B89                             ;$0CAB3D |
+    LDA.w MessageBoxTimer_1B89              ;$0CAB3D |
     CMP.w DATA_0CAB1D,X                     ;$0CAB40 |
     BNE CODE_0CAB64                         ;$0CAB43 |
     CPX.b #$00                              ;$0CAB45 |
     BEQ CODE_0CAB6B                         ;$0CAB47 |
     LDX.b #$00                              ;$0CAB49 |
-    STX.w $1B88                             ;$0CAB4B |
+    STX.w MessageBoxExpand_1B88             ;$0CAB4B |
     CPY.b #$06                              ;$0CAB4E |
     BCC CODE_0CAB57                         ;$0CAB50 |
     INC.w GameMode_0100                     ;$0CAB52 |
@@ -2815,14 +2815,14 @@ CODE_0CAB57:
 CODE_0CAB64:
     CLC
     ADC.w DATA_0CAB1B,X                     ;$0CAB65 |
-    STA.w $1B89                             ;$0CAB68 |
+    STA.w MessageBoxTimer_1B89              ;$0CAB68 |
 CODE_0CAB6B:
     REP #$20
     LDX.b #$00                              ;$0CAB6D |
     LDY.b #$E0                              ;$0CAB6F |
     LDA.w #$00FF                            ;$0CAB71 |
 CODE_0CAB74:
-    CPX.w $1B89
+    CPX.w MessageBoxTimer_1B89
     BCC CODE_0CAB7C                         ;$0CAB77 |
     LDA.w #$FF00                            ;$0CAB79 |
 CODE_0CAB7C:

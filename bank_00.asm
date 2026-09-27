@@ -1745,15 +1745,15 @@ update_status_tileset_008E1A:
 
 ; Handle Bonus Stars overflow
     LDX.w CurrentPlayer_0DB3                ;$008F5B |
-    LDA.w $0F48,X                           ;$008F5E |
+    LDA.w PlayerBonusStars_0F48,X           ;$008F5E |
     CMP.b #$64                              ;$008F61 |
     BCC .draw_coin_count_008F73             ;$008F63 |
     LDA.b #$FF                              ;$008F65 |\
     STA.w BonusGameFlag_1425                ;$008F67 || set Bonus flag
-    LDA.w $0F48,X                           ;$008F6A || and subtract 100 from stars
+    LDA.w PlayerBonusStars_0F48,X           ;$008F6A || and subtract 100 from stars
     SEC                                     ;$008F6D ||
     SBC.b #$64                              ;$008F6E ||
-    STA.w $0F48,X                           ;$008F70 |/
+    STA.w PlayerBonusStars_0F48,X           ;$008F70 |/
 
 .draw_coin_count_008F73:
     LDA.w $0DBF                             ;$008F73 |
@@ -1770,7 +1770,7 @@ update_status_tileset_008E1A:
     STZ $00                                 ;$008F89 |
     STZ $01                                 ;$008F8B |
     STZ $03                                 ;$008F8D |
-    LDA.w $0F48,X                           ;$008F8F |
+    LDA.w PlayerBonusStars_0F48,X           ;$008F8F |
     STA $02                                 ;$008F92 |
     LDX.b #$09                              ;$008F94 |
     LDY.b #$10                              ;$008F96 |
@@ -3334,7 +3334,7 @@ CODE_009C0F:
 
 CODE_009C13:
     INC.w $1B87
-    INC.w $1B88                             ;$009C16 |
+    INC.w MessageBoxExpand_1B88             ;$009C16 |
     LDY.b #$1B                              ;$009C19 |
     JSR CODE_009D29                         ;$009C1B |
     RTL                                     ;$009C1E |
@@ -3451,7 +3451,7 @@ CODE_009CFF:
     LDY.w #$0000                            ;$009D11 |
 CODE_009D14:
     LDA.l $700000,X
-    STA.w $1F49,Y                           ;$009D18 |
+    STA.w SaveDataBuffer_1F49,Y             ;$009D18 |
     INX                                     ;$009D1B |
     INY                                     ;$009D1C |
     CPY.w #$008D                            ;$009D1D |
@@ -3622,7 +3622,7 @@ CODE_009E17:
     STZ.w $0DB8                             ;$009E42 |
     STZ.w SavedPlayerYoshi_0DBA             ;$009E45 |
     STZ.w $0DC2                             ;$009E48 |
-    STZ.w $0F48                             ;$009E4B |
+    STZ.w PlayerBonusStars_0F48             ;$009E4B |
     STZ.w $0F34                             ;$009E4E |
     STZ.w $0F37                             ;$009E51 |
     SEP #$20                                ;$009E54 |
@@ -3718,7 +3718,7 @@ CODE_009F08:
 CODE_009F10:
     LDY.w TBL_009EE0,X
     LDA.w DATA_009EE1,X                     ;$009F13 |
-    STA.w $1F49,Y                           ;$009F16 |
+    STA.w SaveDataBuffer_1F49,Y             ;$009F16 |
     DEX                                     ;$009F19 |
     DEX                                     ;$009F1A |
     BPL CODE_009F10                         ;$009F1B |
@@ -4148,7 +4148,7 @@ GM14_main_level_00A1DA:
     BIT.b byetudlrHold_15                   ;$00A276 |
     BPL +                                   ;$00A278 |
     INC A                                   ;$00A27A |
-+   STA.w $13CE                             ;$00A27B |
++   STA.w MidwayFlag_13CE                   ;$00A27B |
 .skip_cheat_00A27E:
     STA.w LevelExitMode_0DD5
     INC.w OWLoadEventFlag_1DE9              ;$00A281 |
@@ -6839,9 +6839,9 @@ CODE_00C03A:
     LSR                                     ;$00C054 |
     TAX                                     ;$00C055 |
     SEP #$20                                ;$00C056 |
-    LDA.w $19F8,Y                           ;$00C058 |
+    LDA.w ItemMemoryTable_19F8,Y            ;$00C058 |
     ORA.l DATA_00C005,X                     ;$00C05B |
-    STA.w $19F8,Y                           ;$00C05F |
+    STA.w ItemMemoryTable_19F8,Y            ;$00C05F |
     RTS                                     ;$00C062 |
 
 DATA_00C063:
@@ -7477,7 +7477,7 @@ execute_player_animation_00C593:
     STZ.w $0D9F
 ..CODE_00C5D1:
     LDA.b #$01
-    STA.w $1B88                             ;$00C5D3 |
+    STA.w MessageBoxExpand_1B88             ;$00C5D3 |
     LDA.b #$07                              ;$00C5D6 |
     STA.w $1928                             ;$00C5D8 |
     JSR disable_controls                    ;$00C5DB |
@@ -13366,7 +13366,7 @@ CODE_00FAB2:
     BRA LvlEndNextSprite                    ;$00FAC3 |
 
 CODE_00FAC5:
-    LDA.w $190F,Y
+    LDA.w wcdj5sDp_190F,Y
     AND.b #$02                              ;$00FAC8 |
     BNE LvlEndNextSprite                    ;$00FACA |
     LDA.b #$00                              ;$00FACC |
@@ -13800,7 +13800,7 @@ CODE_00FDC3:
     LDA.b PlayerXPos_94                     ;$00FDDE |
     STA.w MinorSprXPosLow_1808,Y            ;$00FDE0 |
     LDA.b PlayerXPos_94+1                   ;$00FDE3 |
-    STA.w $18EA,Y                           ;$00FDE5 |
+    STA.w MinExtSpriteXPosHigh_18EA,Y       ;$00FDE5 |
     LDA.b #$07                              ;$00FDE8 |
     STA.w MinorSprNumber_17F0,Y             ;$00FDEA |
     LDA.b #$00                              ;$00FDED |

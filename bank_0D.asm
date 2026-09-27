@@ -1442,13 +1442,13 @@ CODE_0DA512:
     AND.b #$1F                              ;$0DA527 |
     TAX                                     ;$0DA529 |
     LDA.b LvlLoadObjNo_5A                   ;$0DA52A |
-    STA.w $19B8,X                           ;$0DA52C |
+    STA.w ExitTableLow_19B8,X               ;$0DA52C |
     LDA $0B                                 ;$0DA52F |
     AND.b #$01                              ;$0DA531 |
-    STA.w $19D8,X                           ;$0DA533 |
+    STA.w ExitTableHigh_19D8,X              ;$0DA533 |
     LDA $0B                                 ;$0DA536 |
     LSR                                     ;$0DA538 |
-    STA.w $1B93                             ;$0DA539 |
+    STA.w UseSecondaryExit_1B93             ;$0DA539 |
     RTS                                     ;$0DA53C |
 
 CODE_0DA53D:
@@ -1634,7 +1634,7 @@ CODE_0DA68E:
     LDA.l $001EA2,X                         ;$0DA691 |
     AND.b #$40                              ;$0DA695 |
     BNE Return0DA6B0                        ;$0DA697 |
-    LDA.w $13CE                             ;$0DA699 |
+    LDA.w MidwayFlag_13CE                   ;$0DA699 |
     BNE Return0DA6B0                        ;$0DA69C |
     LDY.b LevelLoadPos_57                   ;$0DA69E |
     DEY                                     ;$0DA6A0 |

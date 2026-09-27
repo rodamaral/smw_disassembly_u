@@ -883,7 +883,7 @@ GrayLavaPlatform:
     BNE CODE_03871B                         ;$03870D |
     LDY.w SpriteLoadIndex_161A,X            ;$03870F |
     LDA.b #$00                              ;$038712 |
-    STA.w $1938,Y                           ;$038714 |
+    STA.w SpriteLoadStatus_1938,Y           ;$038714 |
     STZ.w SpriteStatus_14C8,X               ;$038717 |
     RTS                                     ;$03871A |
 
@@ -2152,7 +2152,7 @@ CODE_039037:
     LDA.b SpriteXPosLow_E4,X                ;$03903C |
     STA.w MinorSprXPosLow_1808,Y            ;$03903E |
     LDA.w SpriteXPosHigh_14E0,X             ;$039041 |
-    STA.w $18EA,Y                           ;$039044 |
+    STA.w MinExtSpriteXPosHigh_18EA,Y       ;$039044 |
     LDA.b SpriteYPosLow_D8,X                ;$039047 |
     STA.w MinorSprYPosLow_17FC,Y            ;$039049 |
     LDA.w SpriteYPosHigh_14D4,X             ;$03904C |
@@ -6048,7 +6048,7 @@ CODE_03AD88:
     STA.w MinorSprXPosLow_1808,Y            ;$03AD8B |
     LDA.w SpriteXPosHigh_14E0,X             ;$03AD8E |
     ADC $00                                 ;$03AD91 |
-    STA.w $18EA,Y                           ;$03AD93 |
+    STA.w MinExtSpriteXPosHigh_18EA,Y       ;$03AD93 |
     LDA.w $148E                             ;$03AD96 |
     AND.b #$1F                              ;$03AD99 |
     ADC.b SpriteYPosLow_D8,X                ;$03AD9B |
@@ -7476,7 +7476,7 @@ OffScrEraseSprBnk3:
     CPY.b #$FF                              ;$03B8B6 |
     BEQ OffScrKillSprBnk3                   ;$03B8B8 |
     LDA.b #$00                              ;$03B8BA |
-    STA.w $1938,Y                           ;$03B8BC |
+    STA.w SpriteLoadStatus_1938,Y           ;$03B8BC |
 OffScrKillSprBnk3:
     STZ.w SpriteStatus_14C8,X
 Return03B8C2:

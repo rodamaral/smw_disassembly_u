@@ -1463,12 +1463,13 @@ skip 6
 ScoreIncrement_0F40: skip 2
 ; 7E0F42 - 7E0F47 unused
 skip 6
-PlayerBonusStars_0F48: skip 2
-ClusterSpriteMisc_0F4A: skip 20
-ClusterSpriteMisc_0F5E: skip 20 ; unused
-ClusterSpriteMisc_0F72: skip 20
-ClusterSpriteMisc_0F86: skip 20
-ClusterSpriteMisc_0F9A: skip 20
+PlayerBonusStars_0F48: skip 2 ;done
+ClusterSprMisc_0F4A: skip 20 ;done
+; ClusterSprMisc_0F5E: unused
+skip 20
+ClusterSprMisc_0F72: skip 20 ;done
+ClusterSprMisc_0F86: skip 20 ;done
+ClusterSprMisc_0F9A: skip 20 ;done
 BooRingAngleLow_0FAE: skip 2
 BooRingAngleHigh_0FB0: skip 2
 BooRingXPosLow_0FB2: skip 2
@@ -1479,11 +1480,11 @@ BooRingOffscreen_0FBA: skip 2
 BooRingLoadIndex_0FBC: skip 2
 Map16Pointers_0FBE: skip 1024
 ItemMemorySetting_13BE: skip 1
-Translevel_13BF: skip 2
+Translevel_13BF: skip 2 ;done
 OverworldLayer1Tile_13C1: skip 2
-CurrentSubmap_13C3: skip 2
+CurrentSubmap_13C3: skip 2 ;done
 MoonCounter_13C5: skip 1
-CutsceneID_13C6: skip 1
+CutsceneID_13C6: skip 1 ;done
 YoshiColor_13C7: skip 1 ;done
 ; 7E13C8 unused
 skip 1
@@ -1492,7 +1493,7 @@ ShowSavePrompt_13CA: skip 1
 UnusedStarCounter_13CB: skip 1
 CoinAdder_13CC: skip 1
 DisableMidway_13CD: skip 1
-MidwayFlag_13CE: skip 1
+MidwayFlag_13CE: skip 1 ;done
 SkipMidwayCastleIntro_13CF: skip 1
 StructureCrushTile_13D0: skip 1
 StructureCrushIndex_13D1: skip 1
@@ -2053,17 +2054,17 @@ GiveLivesTimer_18E5: skip 1
 skip 1
 YoshiCanStomp_18E7: skip 1 ;done
 YoshiGrowingTimer_18E8: skip 1 ;done
-SmokeSpriteSlotFull_18E9: skip 1
-MinExtSpriteXPosHigh_18EA: skip 12
+SmokeSpriteSlotFull_18E9: skip 1 ;done
+MinExtSpriteXPosHigh_18EA: skip 12 ;done
 ; 7E18F6 unused
 skip 1
-ScoreSprIndex_18F7: skip 1
-BounceSpriteIntTimer_18F8: skip 4
-ExtSpriteSlotIdx_18FC: skip 1
-ChuckIsWhistling_18FD: skip 1
-DiagonalBulletTimer_18FE: skip 1
-ShooterSlotIdx_18FF: skip 1
-BonusStarsGained_1900: skip 1
+ScoreSprIndex_18F7: skip 1 ;done
+BounceSprIntTimer_18F8: skip 4 ;done
+ExtSpriteSlotIdx_18FC: skip 1 ;done
+ChuckIsWhistling_18FD: skip 1 ;done
+DiagonalBulletTimer_18FE: skip 1 ;done
+ShooterSlotIdx_18FF: skip 1 ;done
+BonusStarsGained_1900: skip 1 ;done
 BounceSpriteYXPPCCCT_1901: skip 4
 IggyLarryPlatTilt_1905: skip 1
 IggyLarryPlatWait_1906: skip 1
@@ -2076,8 +2077,8 @@ BooTransparency_190B: skip 1
 DirectCoinTimer_190C: skip 1
 FinalCutscene_190D: skip 1
 SpriteBuoyancy_190E: skip 1
-SpriteTweakerF_190F: skip 12
-Empty_191B: skip 1
+wcdj5sDp_190F: skip 12 ;done
+Empty_191B: skip 1 ;done
 YoshiHasKey_191C: skip 1 ;done
 SumoClustOverwrite_191D: skip 1
 BigSwitchPressTimer_191E: skip 1
@@ -2107,10 +2108,10 @@ LayerProcessing_1933: skip 2
 MarioStartFlag_1935: skip 1
 ; 7E1936 - 7E1937 unused
 skip 2
-SpriteLoadStatus_1938: skip 128
-ExitTableLow_19B8: skip 32
-ExitTableHigh_19D8: skip 32
-ItemMemoryTable_19F8: skip 384
+SpriteLoadStatus_1938: skip 128 ;done
+ExitTableLow_19B8: skip 32 ;done
+ExitTableHigh_19D8: skip 32 ;done
+ItemMemoryTable_19F8: skip 384 ;done
 HardcodedPathIsUsed_1B78: skip 2
 HardcodedPathIndex_1B7A: skip 2
 Layer1PosSpx_1B7C: skip 2
@@ -2123,8 +2124,8 @@ OverworldEventYPos_1B83: skip 1
 OverworldEventSize_1B84: skip 2
 OverworldEventProcess_1B86: skip 1
 OverworldPromptProcess_1B87: skip 1
-MessageBoxExpand_1B88: skip 1
-MessageBoxTimer_1B89: skip 1
+MessageBoxExpand_1B88: skip 1 ;done
+MessageBoxTimer_1B89: skip 1 ;done
 OWPromptArrowDir_1B8A: skip 1
 OWPromptArrowTimer_1B8B: skip 1
 OWTransitionFlag_1B8C: skip 1
@@ -2132,7 +2133,7 @@ OWTransitionXCalc_1B8D: skip 2
 OWTransitionYCalc_1B8F: skip 2
 BlinkCursorTimer_1B91: skip 1
 BlinkCursorPos_1B92: skip 1
-UseSecondaryExit_1B93: skip 1
+UseSecondaryExit_1B93: skip 1 ;done
 DisableBonusSprite_1B94: skip 1
 YoshiHeavenFlag_1B95: skip 1 ;done
 SideExitEnabled_1B96: skip 1
@@ -2152,9 +2153,9 @@ GfxBppConvertBuffer_1BB2: skip 10
 GfxBppConvertFlag_1BBC: skip 39
 Layer3Setting_1BE3: skip 1
 Layer1VramAddr_1BE4: skip 2
-Layer1VramBuffer_1BE6: skip 256
+Layer1VramBuffer_1BE6: skip 256 ;done
 Layer2VramAddr_1CE6: skip 2
-Layer2VramBuffer_1CE8: skip 256
+Layer2VramBuffer_1CE8: skip 256 ;done
 OWSubmapSwapProcess_1DE8: skip 1
 OWLoadEventFlag_1DE9:
 CreditsScreenNumber_1DE9: skip 1
@@ -2197,7 +2198,7 @@ ClusterSprMisc_1E52: skip 20
 ClusterSprMisc_1E66: skip 20
 ClusterSprMisc_1E7A: skip 20
 ClusterSprMisc_1E8E: skip 20
-OWLevelSettings_1EA2: skip 96
+OWLevelSettings_1EA2: skip 96 ;done
 OWEventsActivated_1F02: skip 15
 OWPlayerSubmap_1F11: skip 2
 OWPlayerAnimation_1F13: skip 4
@@ -2215,8 +2216,8 @@ skip 1
 Checkpoint1upCollected_1F3C: skip 12
 ; 7E1F48 unused
 skip 1
-SaveDataBuffer_1F49:         skip 96
-SaveDataBufferEvents_1FA9:   skip 15
+SaveDataBuffer_1F49:         skip 96 ;done
+SaveDataBufferEvents_1FA9:   skip 15 ;done
 SaveDataBufferSubmap_1FB8:   skip 2
 SaveDataBufferAni_1FBA:      skip 4
 SaveDataBufferXPos_1FBE:     skip 2

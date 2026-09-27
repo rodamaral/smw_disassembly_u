@@ -599,7 +599,7 @@ CODE_04853B:
     LSR                                     ;$048565 |
     XBA                                     ;$048566 |
     AND.w #$000F                            ;$048567 |
-    STA.w $13C3                             ;$04856A |
+    STA.w CurrentSubmap_13C3                ;$04856A |
     REP #$10                                ;$04856D |
     JSR CODE_049A93                         ;$04856F |
     SEP #$30                                ;$048572 |
@@ -1458,7 +1458,7 @@ CODE_048F13:
     JSR OW_TilePos_Calc                     ;$048F2E |
     REP #$10                                ;$048F31 |
     SEP #$20                                ;$048F33 |
-    LDA.w $13CE                             ;$048F35 |
+    LDA.w MidwayFlag_13CE                   ;$048F35 |
     BEQ CODE_048F56                         ;$048F38 |
     LDA.w LevelExitMode_0DD5                ;$048F3A |
     BEQ CODE_048F56                         ;$048F3D |
@@ -1505,7 +1505,7 @@ CODE_048F8C:
     LDX.b #$2C                              ;$048F94 |
 CODE_048F96:
     LDA.w $1F02,X
-    STA.w $1FA9,X                           ;$048F99 |
+    STA.w SaveDataBufferEvents_1FA9,X       ;$048F99 |
     DEX                                     ;$048F9C |
     BPL CODE_048F96                         ;$048F9D |
     REP #$30                                ;$048F9F |
@@ -1599,7 +1599,7 @@ CODE_049037:
     LDX.b #$5F                              ;$049041 |
 CODE_049043:
     LDA.w OWLevelSettings_1EA2,X
-    STA.w $1F49,X                           ;$049046 |
+    STA.w SaveDataBuffer_1F49,X             ;$049046 |
     DEX                                     ;$049049 |
     BPL CODE_049043                         ;$04904A |
     STZ.w $13CA                             ;$04904C |
@@ -2818,7 +2818,7 @@ CODE_049A24:
     TAX                                     ;$049A2B |
     LDA.w OWPlayerSubmap_1F11,X             ;$049A2C |
     AND.w #$00FF                            ;$049A2F |
-    STA.w $13C3                             ;$049A32 |
+    STA.w CurrentSubmap_13C3                ;$049A32 |
     LDA.w #$001A                            ;$049A35 |
     STA $02                                 ;$049A38 |
     LDY.b #$41                              ;$049A3A |
@@ -2832,7 +2832,7 @@ CODE_049A3F:
     BNE CODE_049A85                         ;$049A4D |
     LDA.w DATA_049968,Y                     ;$049A4F |
     AND.w #$00FF                            ;$049A52 |
-    CMP.w $13C3                             ;$049A55 |
+    CMP.w CurrentSubmap_13C3                ;$049A55 |
     BNE CODE_049A85                         ;$049A58 |
     LDA.w DATA_0499AA,Y                     ;$049A5A |
     STA.w $1F19,X                           ;$049A5D |
@@ -2840,7 +2840,7 @@ CODE_049A3F:
     STA.w $1F17,X                           ;$049A63 |
     LDA.w DATA_0499AE,Y                     ;$049A66 |
     AND.w #$00FF                            ;$049A69 |
-    STA.w $13C3                             ;$049A6C |
+    STA.w CurrentSubmap_13C3                ;$049A6C |
     LDY $02                                 ;$049A6F |
     LDA.w DATA_0499F0,Y                     ;$049A71 |
     AND.w #$00FF                            ;$049A74 |
@@ -2871,7 +2871,7 @@ CODE_049A93:
     TAX                                     ;$049A9B |
     LDA.w OWPlayerSubmap_1F11,X             ;$049A9C |
     AND.w #$FF00                            ;$049A9F |
-    ORA.w $13C3                             ;$049AA2 |
+    ORA.w CurrentSubmap_13C3                ;$049AA2 |
     STA.w OWPlayerSubmap_1F11,X             ;$049AA5 |
     AND.w #$00FF                            ;$049AA8 |
     BNE CODE_049AB0                         ;$049AAB |
@@ -3102,7 +3102,7 @@ CODE_049DD1:
     SEP #$20                                ;$049E06 |
     LDX.w CurrentPlayer_0DB3                ;$049E08 |
     LDA.w OWPlayerSubmap_1F11,X             ;$049E0B |
-    STA.w $13C3                             ;$049E0E |
+    STA.w CurrentSubmap_13C3                ;$049E0E |
     STZ.w $13C4                             ;$049E11 |
     LDA.b #$02                              ;$049E14 |
     STA.w $0DB1                             ;$049E16 |
@@ -7471,8 +7471,8 @@ CODE_04F415:
     INX                                     ;$04F41F |
 CODE_04F420:
     STX.w $1B8A
-    LDX.w $1B88                             ;$04F423 |
-    LDA.w $1B89                             ;$04F426 |
+    LDX.w MessageBoxExpand_1B88             ;$04F423 |
+    LDA.w MessageBoxTimer_1B89              ;$04F426 |
     CMP.l DATA_04F413,X                     ;$04F429 |
     BNE CODE_04F44B                         ;$04F42D |
     INC.w $1B87                             ;$04F42F |
@@ -7486,7 +7486,7 @@ CODE_04F43D:
     AND.b #$03                              ;$04F43E |
     BNE Return04F44A                        ;$04F440 |
     STZ.w $1B87                             ;$04F442 |
-    STZ.w $1B88                             ;$04F445 |
+    STZ.w MessageBoxExpand_1B88             ;$04F445 |
     BRA CODE_04F407                         ;$04F448 |
 
 Return04F44A:
@@ -7495,7 +7495,7 @@ Return04F44A:
 CODE_04F44B:
     CLC
     ADC.l DATA_04F411,X                     ;$04F44C |
-    STA.w $1B89                             ;$04F450 |
+    STA.w MessageBoxTimer_1B89              ;$04F450 |
     CLC                                     ;$04F453 |
     ADC.b #$80                              ;$04F454 |
     XBA                                     ;$04F456 |
@@ -7509,15 +7509,15 @@ CODE_04F45E:
     DEX                                     ;$04F465 |
     BPL CODE_04F45E                         ;$04F466 |
     SEP #$10                                ;$04F468 |
-    LDA.w $1B89                             ;$04F46A |
+    LDA.w MessageBoxTimer_1B89              ;$04F46A |
     LSR                                     ;$04F46D |
-    ADC.w $1B89                             ;$04F46E |
+    ADC.w MessageBoxTimer_1B89              ;$04F46E |
     LSR                                     ;$04F471 |
     AND.b #$FE                              ;$04F472 |
     TAX                                     ;$04F474 |
     LDA.b #$80                              ;$04F475 |
     SEC                                     ;$04F477 |
-    SBC.w $1B89                             ;$04F478 |
+    SBC.w MessageBoxTimer_1B89              ;$04F478 |
     REP #$20                                ;$04F47B |
     LDY.b #$48                              ;$04F47D |
 CODE_04F47F:

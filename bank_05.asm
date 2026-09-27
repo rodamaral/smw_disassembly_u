@@ -1209,7 +1209,7 @@ CODE_058A55:
     STA $0A                                 ;$058A69 |
     LDY.w #$0000                            ;$058A6B |
     LDA [$0A],Y                             ;$058A6E |
-    STA.w $1BE6,X                           ;$058A70 |
+    STA.w Layer1VramBuffer_1BE6,X           ;$058A70 |
     INY                                     ;$058A73 |
     INY                                     ;$058A74 |
     LDA [$0A],Y                             ;$058A75 |
@@ -1334,7 +1334,7 @@ CODE_058B35:
     STA $0A                                 ;$058B49 |
     LDY.w #$0000                            ;$058B4B |
     LDA [$0A],Y                             ;$058B4E |
-    STA.w $1BE6,X                           ;$058B50 |
+    STA.w Layer1VramBuffer_1BE6,X           ;$058B50 |
     INY                                     ;$058B53 |
     INY                                     ;$058B54 |
     LDA [$0A],Y                             ;$058B55 |
@@ -1344,7 +1344,7 @@ CODE_058B35:
     INY                                     ;$058B5C |
     INY                                     ;$058B5D |
     LDA [$0A],Y                             ;$058B5E |
-    STA.w $1BE6,X                           ;$058B60 |
+    STA.w Layer1VramBuffer_1BE6,X           ;$058B60 |
     INY                                     ;$058B63 |
     INY                                     ;$058B64 |
     LDA [$0A],Y                             ;$058B65 |
@@ -1461,7 +1461,7 @@ CODE_058C23:
     LDY.w #$0000                            ;$058C39 |
     LDA [$0A],Y                             ;$058C3C |
     ORA $03                                 ;$058C3E |
-    STA.w $1CE8,X                           ;$058C40 |
+    STA.w Layer2VramBuffer_1CE8,X           ;$058C40 |
     INY                                     ;$058C43 |
     INY                                     ;$058C44 |
     LDA [$0A],Y                             ;$058C45 |
@@ -1597,7 +1597,7 @@ CODE_058D1A:
     LDY.w #$0000                            ;$058D30 |
     LDA [$0A],Y                             ;$058D33 |
     ORA $03                                 ;$058D35 |
-    STA.w $1CE8,X                           ;$058D37 |
+    STA.w Layer2VramBuffer_1CE8,X           ;$058D37 |
     INY                                     ;$058D3A |
     INY                                     ;$058D3B |
     LDA [$0A],Y                             ;$058D3C |
@@ -1609,7 +1609,7 @@ CODE_058D1A:
     INY                                     ;$058D46 |
     LDA [$0A],Y                             ;$058D47 |
     ORA $03                                 ;$058D49 |
-    STA.w $1CE8,X                           ;$058D4B |
+    STA.w Layer2VramBuffer_1CE8,X           ;$058D4B |
     INY                                     ;$058D4E |
     INY                                     ;$058D4F |
     LDA [$0A],Y                             ;$058D50 |
@@ -1695,7 +1695,7 @@ CODE_058DD9:
     ASL                                     ;$058DEA |
     TAY                                     ;$058DEB |
     LDA [$0A],Y                             ;$058DEC |
-    STA.w $1CE8,X                           ;$058DEE |
+    STA.w Layer2VramBuffer_1CE8,X           ;$058DEE |
     INY                                     ;$058DF1 |
     INY                                     ;$058DF2 |
     LDA [$0A],Y                             ;$058DF3 |
@@ -2912,14 +2912,14 @@ message_box_triggered_05B10C:
     PHB
     PHK                                     ;$05B10D |
     PLB                                     ;$05B10E |
-    LDX.w $1B88                             ;$05B10F |
-    LDA.w $1B89                             ;$05B112 |
+    LDX.w MessageBoxExpand_1B88             ;$05B10F |
+    LDA.w MessageBoxTimer_1B89              ;$05B112 |
     CMP.w DATA_05B108,X                     ;$05B115 |
     BNE CODE_05B191                         ;$05B118 |
     TXA                                     ;$05B11A |
     BEQ .CODE_05B132                        ;$05B11B |
     STZ.w MessageBoxTrigger_1426            ;$05B11D |
-    STZ.w $1B88                             ;$05B120 |
+    STZ.w MessageBoxExpand_1B88             ;$05B120 |
     STZ.b Layer12Window_41                  ;$05B123 |
     STZ.b Layer34Window_42                  ;$05B125 |
     STZ.b OBJCWWindow_43                    ;$05B127 |
@@ -2944,7 +2944,7 @@ message_box_triggered_05B10C:
     PLB                                     ;$05B14F |
     INC.w OWLoadEventFlag_1DE9              ;$05B150 |
     LDA.b #!ExitNormal_01                   ;$05B153 |
-    STA.w $13CE                             ;$05B155 |
+    STA.w MidwayFlag_13CE                   ;$05B155 |
     BRA CODE_05B165                         ;$05B158 |
 
 CODE_05B15A:
@@ -3074,21 +3074,21 @@ CODE_05B191:
     STZ.b Layer3YPos_24                     ;$05B24C |
     STZ.b Layer3YPos_24+1                   ;$05B24E |
 .CODE_05B250:
-    LDX.w $1B88
-    LDA.w $1B89                             ;$05B253 |
+    LDX.w MessageBoxExpand_1B88
+    LDA.w MessageBoxTimer_1B89              ;$05B253 |
     CLC                                     ;$05B256 |
     ADC.w DATA_05B10A,X                     ;$05B257 |
-    STA.w $1B89                             ;$05B25A |
+    STA.w MessageBoxTimer_1B89              ;$05B25A |
     CLC                                     ;$05B25D |
     ADC.b #$80                              ;$05B25E |
     XBA                                     ;$05B260 |
     LDA.b #$80                              ;$05B261 |
     SEC                                     ;$05B263 |
-    SBC.w $1B89                             ;$05B264 |
+    SBC.w MessageBoxTimer_1B89              ;$05B264 |
     REP #$20                                ;$05B267 |
     LDX.b #$00                              ;$05B269 |
     LDY.b #$50                              ;$05B26B |
--   CPX.w $1B89                             ;$05B26D |\
+-   CPX.w MessageBoxTimer_1B89              ;$05B26D |\
     BCC +                                   ;$05B270 ||
     LDA.w #$00FF                            ;$05B272 ||
 +   STA.w $04EC,Y                           ;$05B275 ||
@@ -5575,7 +5575,7 @@ DATA_05CC61:
 CODE_05CC66:
     LDY.b #$00
     LDX.w CurrentPlayer_0DB3                ;$05CC68 |
-    LDA.w $0F48,X                           ;$05CC6B |
+    LDA.w PlayerBonusStars_0F48,X           ;$05CC6B |
 CODE_05CC6E:
     CMP.b #$0A
     BCC CODE_05CC77                         ;$05CC70 |
@@ -5699,7 +5699,7 @@ DATA_05CD63:
     db $C4,$B7,$C5
 
 CODE_05CD76:
-    LDA.w $1900
+    LDA.w BonusStarsGained_1900
     BEQ CODE_05CDD5                         ;$05CD79 |
     DEC.w $1424                             ;$05CD7B |
     BPL Return05CDE8                        ;$05CD7E |
@@ -5716,7 +5716,7 @@ CODE_05CD89:
     BPL CODE_05CD89                         ;$05CD92 |
     LDA.l $7F837B                           ;$05CD94 |
     TAX                                     ;$05CD98 |
-    LDA.w $1900                             ;$05CD99 |
+    LDA.w BonusStarsGained_1900             ;$05CD99 |
     AND.b #$0F                              ;$05CD9C |
     ASL                                     ;$05CD9E |
     TAY                                     ;$05CD9F |
@@ -5724,7 +5724,7 @@ CODE_05CD89:
     STA.l $7F8395,X                         ;$05CDA3 |
     LDA.w DATA_05CD62,Y                     ;$05CDA7 |
     STA.l $7F839D,X                         ;$05CDAA |
-    LDA.w $1900                             ;$05CDAE |
+    LDA.w BonusStarsGained_1900             ;$05CDAE |
     AND.b #$F0                              ;$05CDB1 |
     LSR                                     ;$05CDB3 |
     LSR                                     ;$05CDB4 |
@@ -5746,7 +5746,7 @@ CODE_05CDC9:
 CODE_05CDD5:
     DEC.w $13D6
     BPL Return05CDE8                        ;$05CDD8 |
-    LDA.w $1900                             ;$05CDDA |
+    LDA.w BonusStarsGained_1900             ;$05CDDA |
     STA.w $1424                             ;$05CDDD |
     INC.w $13D9                             ;$05CDE0 |
     LDA.b #$11                              ;$05CDE3 |
@@ -5892,33 +5892,33 @@ CODE_05CEE9:
     ADC.w #$0000                            ;$05CEFF |
     STA.w $0F36,X                           ;$05CF02 |
 CODE_05CF05:
-    LDX.w $1900
+    LDX.w BonusStarsGained_1900
     BEQ CODE_05CF36                         ;$05CF08 |
     SEP #$20                                ;$05CF0A |
     LDA.b Frame_13                          ;$05CF0C |
     AND.b #$03                              ;$05CF0E |
     BNE CODE_05CF34                         ;$05CF10 |
     LDX.w CurrentPlayer_0DB3                ;$05CF12 |
-    LDA.w $0F48,X                           ;$05CF15 |
+    LDA.w PlayerBonusStars_0F48,X           ;$05CF15 |
     CLC                                     ;$05CF18 |
     ADC.b #$01                              ;$05CF19 |
-    STA.w $0F48,X                           ;$05CF1B |
-    LDA.w $1900                             ;$05CF1E |
+    STA.w PlayerBonusStars_0F48,X           ;$05CF1B |
+    LDA.w BonusStarsGained_1900             ;$05CF1E |
     DEC A                                   ;$05CF21 |
-    STA.w $1900                             ;$05CF22 |
+    STA.w BonusStarsGained_1900             ;$05CF22 |
     AND.b #$0F                              ;$05CF25 |
     CMP.b #$0F                              ;$05CF27 |
     BNE CODE_05CF34                         ;$05CF29 |
-    LDA.w $1900                             ;$05CF2B |
+    LDA.w BonusStarsGained_1900             ;$05CF2B |
     SEC                                     ;$05CF2E |
     SBC.b #$06                              ;$05CF2F |
-    STA.w $1900                             ;$05CF31 |
+    STA.w BonusStarsGained_1900             ;$05CF31 |
 CODE_05CF34:
     REP #$20
 CODE_05CF36:
     LDA.w $0F40
     BNE CODE_05CF4D                         ;$05CF39 |
-    LDX.w $1900                             ;$05CF3B |
+    LDX.w BonusStarsGained_1900             ;$05CF3B |
     BNE CODE_05CF4D                         ;$05CF3E |
     LDX.b #$30                              ;$05CF40 |
     STX.w $13D6                             ;$05CF42 |
@@ -5973,7 +5973,7 @@ CODE_05CFA0:
     BEQ CODE_05CFDC                         ;$05CFA7 |
     LDA.l $7F837B                           ;$05CFA9 |
     TAX                                     ;$05CFAD |
-    LDA.w $1900                             ;$05CFAE |
+    LDA.w BonusStarsGained_1900             ;$05CFAE |
     AND.b #$0F                              ;$05CFB1 |
     ASL                                     ;$05CFB3 |
     TAY                                     ;$05CFB4 |
@@ -5981,7 +5981,7 @@ CODE_05CFA0:
     STA.l $7F8391,X                         ;$05CFB8 |
     LDA.w DATA_05CD63,Y                     ;$05CFBC |
     STA.l $7F8399,X                         ;$05CFBF |
-    LDA.w $1900                             ;$05CFC3 |
+    LDA.w BonusStarsGained_1900             ;$05CFC3 |
     AND.b #$F0                              ;$05CFC6 |
     LSR                                     ;$05CFC8 |
     LSR                                     ;$05CFC9 |
@@ -6308,7 +6308,7 @@ CODE_05D7B3:
     BEQ CODE_05D7BD                         ;$05D7B9 |
     LDX.b PlayerYPos_96+1                   ;$05D7BB |
 CODE_05D7BD:
-    LDA.w $19B8,X
+    LDA.w ExitTableLow_19B8,X
     STA.w LoadingLevelNumber_17BB           ;$05D7C0 |
     STA $0E                                 ;$05D7C3 |
     LDA.w $0DD6                             ;$05D7C5 |
@@ -6320,7 +6320,7 @@ CODE_05D7BD:
     LDA.b #$01                              ;$05D7D0 |
 CODE_05D7D2:
     STA $0F
-    LDA.w $1B93                             ;$05D7D4 |
+    LDA.w UseSecondaryExit_1B93             ;$05D7D4 |
     BEQ CODE_05D83B                         ;$05D7D7 |
     REP #$30                                ;$05D7D9 |
     LDA.w #$0000                            ;$05D7DB |
@@ -6513,7 +6513,7 @@ CODE_05D8B7:
     LSR                                     ;$05D948 |
     LSR                                     ;$05D949 |
     STA.b ScreenMode_5B                     ;$05D94A |
-    LDA.w $1B93                             ;$05D94C |
+    LDA.w UseSecondaryExit_1B93             ;$05D94C |
     BNE CODE_05D9A1                         ;$05D94F |
     LDA.w DATA_05F000,Y                     ;$05D951 |
     AND.b #$0F                              ;$05D954 |
@@ -6572,7 +6572,7 @@ CODE_05D9B8:
     LSR                                     ;$05D9C1 |
     LSR                                     ;$05D9C2 |
     STA.w $13CD                             ;$05D9C3 |
-    STZ.w $13CE                             ;$05D9C6 |
+    STZ.w MidwayFlag_13CE                   ;$05D9C6 |
     LDY.w Translevel_13BF                   ;$05D9C9 |
     LDA.w DATA_05D608,Y                     ;$05D9CC |
     STA.w $1DEA                             ;$05D9CF |
@@ -6843,7 +6843,7 @@ CODE_05DBB5:
     LDX.b PlayerYPos_96+1                   ;$05DBBD |
 CODE_05DBBF:
     LDA.w DATA_05DBA9,Y
-    STA.w $19B8,X                           ;$05DBC2 |
+    STA.w ExitTableLow_19B8,X               ;$05DBC2 |
     INC.w SublevelCount_141A                ;$05DBC5 |
     RTS                                     ;$05DBC8 |
 
