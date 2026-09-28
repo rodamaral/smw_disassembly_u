@@ -13301,7 +13301,7 @@ FlatPalaceSwitch:
     LDA.b #$20
     STA.w ScreenShakeTimer_1887             ;$00FA47 |
     LDY.b #$02                              ;$00FA4A |
-    LDA.b #$60                              ;$00FA4C |
+    LDA.b #!FlatSwitch_60                   ;$00FA4C |
     STA.w SpriteNumber_9E,Y                 ;$00FA4E |
     LDA.b #$08                              ;$00FA51 |
     STA.w SpriteStatus_14C8,Y               ;$00FA53 |
@@ -13346,7 +13346,7 @@ LvlEndSprLoopStrt:
 
 CODE_00FAA3:
     LDA.w SpriteNumber_9E,Y
-    CMP.b #$7B                              ;$00FAA6 |
+    CMP.b #!GoalTape_7B                     ;$00FAA6 |
     BEQ CODE_00FAB2                         ;$00FAA8 |
     LDA.w SpriteOffscreenX_15A0,Y           ;$00FAAA |
     ORA.w SpriteOffscreenVert_186C,Y        ;$00FAAD |
@@ -13398,13 +13398,13 @@ CODE_00FB09:
     LDX.b #$05                              ;$00FB0E |
 CODE_00FB10:
     LDA.w SpriteNumber_9E,Y
-    CMP.b #$2F                              ;$00FB13 |
+    CMP.b #!Springboard_2F                  ;$00FB13 |
     BEQ CODE_00FB2D                         ;$00FB15 |
-    CMP.b #$3E                              ;$00FB17 |
+    CMP.b #!PSwitch_3E                      ;$00FB17 |
     BEQ CODE_00FB2D                         ;$00FB19 |
-    CMP.b #$80                              ;$00FB1B |
+    CMP.b #!Key_80                          ;$00FB1B |
     BEQ ADDR_00FB28                         ;$00FB1D |
-    CMP.b #$2D                              ;$00FB1F |
+    CMP.b #!BabyYoshi_2D                    ;$00FB1F |
     BNE CODE_00FB32                         ;$00FB21 |
     TXA                                     ;$00FB23 |
     CLC                                     ;$00FB24 |
@@ -13425,7 +13425,7 @@ CODE_00FB32:
     LDX.w $0DC2                             ;$00FB36 |
     CMP.l DATA_00FAFB,X                     ;$00FB39 |
     BNE CODE_00FB41                         ;$00FB3D |
-    LDA.b #$78                              ;$00FB3F |
+    LDA.b #!1Up_78                          ;$00FB3F |
 CODE_00FB41:
     STZ $0F
     CMP.b #$E0                              ;$00FB43 |
@@ -13435,12 +13435,12 @@ CODE_00FB41:
     STA $0F                                 ;$00FB4A |
     PLA                                     ;$00FB4C |
     CMP.b #$F0                              ;$00FB4D |
-    LDA.b #$78                              ;$00FB4F |
+    LDA.b #!1Up_78                          ;$00FB4F |
     BCS LvlEndStoreSpr                      ;$00FB51 |
-    LDA.b #$78                              ;$00FB53 |
+    LDA.b #!1Up_78                          ;$00FB53 |
 LvlEndStoreSpr:
     STA.w SpriteNumber_9E,Y
-    CMP.b #$76                              ;$00FB58 |
+    CMP.b #!Star_76                         ;$00FB58 |
     BNE CODE_00FB5F                         ;$00FB5A |
     INC.w UnusedStarCounter_13CB            ;$00FB5C |
 CODE_00FB5F:
@@ -13605,7 +13605,7 @@ CODE_00FC7A:
 CODE_00FC98:
     LDA.b #$08
     STA.w SpriteStatus_14C8,X               ;$00FC9A |
-    LDA.b #$35                              ;$00FC9D |
+    LDA.b #!Yoshi_35                        ;$00FC9D |
     STA.b SpriteNumber_9E,X                 ;$00FC9F |
     LDA.b PlayerXPos_94                     ;$00FCA1 |
     STA.b SpriteXPosLow_E4,X                ;$00FCA3 |

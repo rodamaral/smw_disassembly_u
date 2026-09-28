@@ -1050,6 +1050,7 @@ SpriteNumber_9E: skip 12
 !1Up_78 = $78
 !Vine_79 = $79
 !Firework_7A = $7A
+!GoalTape_7B = $7B
 !Peach_7C = $7C
 !PBalloon_7D = $7D
 !FlyingRedCoin_7E = $7E
