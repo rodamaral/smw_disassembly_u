@@ -11,13 +11,13 @@ CODE_05801E:
     SEP #$20                                ;$05801F |
     REP #$10                                ;$058021 |
     LDX.w #$0000                            ;$058023 |
-CODE_058026:
+.CODE_058026:
     LDA.b #$25
     STA.l SwitchAniXPosHigh_B900,X          ;$058028 |
     STA.l SwitchAniZSpx_BAB8+$48,X          ;$05802C |
     INX                                     ;$058030 |
     CPX.w #$0200                            ;$058031 |
-    BNE CODE_058026                         ;$058034 |
+    BNE .CODE_058026                        ;$058034 |
     STZ.w $1928                             ;$058036 |
     LDA.b Layer2DataPtr_68+2                ;$058039 |
     CMP.b #$FF                              ;$05803B |

@@ -4727,7 +4727,7 @@ StunBabyYoshi:
     ADC.b #$00                              ;$01A248 |
     STA $09                                 ;$01A24A |
     JSL CODE_02B9FA                         ;$01A24C |
-    JSL CODE_02EA4E                         ;$01A250 |
+    JSL baby_yoshi_try_eat_sprites_02EA4E   ;$01A250 |
     LDA.w Sprite_163E,X                     ;$01A254 |
     BNE .CODE_01A27E                        ;$01A257 |
     DEC A                                   ;$01A259 |
