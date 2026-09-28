@@ -2643,7 +2643,7 @@ handle_quake_sprite_029398:
     CMP.b #$03                              ;$0293A5 |
     BCS return_029391                       ;$0293A7 |
     LDY.w CurrentMinorSprite_1698           ;$0293A9 |
-    STZ $0E                                 ;$0293AC | $0E: contact type: 00 = quake, 01 = punch/cape, 35 = ground pound
+    STZ $0E                                 ;$0293AC | $0E: quake type
 try_hit_sprites_0293AE:                     ;        |
     LDX.b #$0B                              ;$0293AE | X: sprite slot
 .loop_0293B0:                               ;        |
@@ -2695,7 +2695,7 @@ quakefy_sprite_029404:
     STA.w SpritePlayerContact_154C,X        ;$029406 | Disable contact with Mario briefly
     LDA.b SpriteNumber_9E,X                 ;$029409 |
     CMP.b #!ChangingItem_81                 ;$02940B |
-    BNE .hit_sprite_029427                  ;$02940D |\ hit Changing Item
+    BNE .quakefy_sprite_029427              ;$02940D |\ hit Changing Item
     LDA.b SpritePhase_C2,X                  ;$02940F ||
     BEQ +                                   ;$029411 || Return if the Changing Item is free
     STZ.b SpritePhase_C2,X                  ;$029413 ||
@@ -2708,7 +2708,7 @@ quakefy_sprite_029404:
     STA.w SpriteLava_1558,X                 ;$029423 ||
 +   RTS                                     ;$029426 |/
 
-.hit_sprite_029427:
+.quakefy_sprite_029427:
     CMP.b #!BabyYoshi_2D
     BEQ .clear_lava_skip_stun_029448        ;$029429 |
     LDA.w dpmksPiS_167A,X                   ;$02942B |
@@ -2766,13 +2766,12 @@ quakefy_sprite_029404:
 .CODE_0294A2:
     LDA.b #$C0
     LDY $0E                                 ;$0294A4 |
-    BEQ CODE_0294B0                         ;$0294A6 |
-    LDA.b #$B0                              ;$0294A8 |
-    CPY.b #$02                              ;$0294AA |
-    BNE CODE_0294B0                         ;$0294AC |
-    LDA.b #$C0                              ;$0294AE |
-CODE_0294B0:
-    STA.b SpriteYSpeed_AA,X
+    BEQ +                                   ;$0294A6 |\
+    LDA.b #$B0                              ;$0294A8 ||
+    CPY.b #$02                              ;$0294AA ||
+    BNE +                                   ;$0294AC ||
+    LDA.b #$C0                              ;$0294AE |/ TODO: this line seems impossible to reach
++   STA.b SpriteYSpeed_AA,X                 ;$0294B0 |
     JSR SubHorzPosBnk2                      ;$0294B2 |
     LDA.w DATA_029392,Y                     ;$0294B5 |
     STA.b SpriteXSpeed_B6,X                 ;$0294B8 |
@@ -2811,7 +2810,7 @@ ground_pound_0294C1:
 cape_spin_interactions_0294F5:
     LDA.w CapeInteracts_13E8
     BEQ ++                                  ;$0294F8 |
-    STA $0E                                 ;$0294FA | $0E = quake type
+    STA $0E                                 ;$0294FA | $0E = quake  01
     LDA.b Frame_13                          ;$0294FC |
     LSR                                     ;$0294FE |
     BCC +                                   ;$0294FF |
