@@ -11807,23 +11807,21 @@ CODE_00EF99:
     STZ.w SpriteStompCounter_1697
     STZ.w FlightPhase_1407                  ;$00EF9C |
     CPY.b #$05                              ;$00EF9F |
-    BCS CallGroundPound                     ;$00EFA1 |
+    BCS .CallGroundPound_00EFAE             ;$00EFA1 |
     LDA.b Powerup_19                        ;$00EFA3 |
-    CMP.b #$02                              ;$00EFA5 |
-    BNE Return00EFAD                        ;$00EFA7 |
+    CMP.b #!PowerupCape_02                  ;$00EFA5 |
+    BNE +                                   ;$00EFA7 |
     SEC                                     ;$00EFA9 |
     ROR.w PlayerSlopePose_13ED              ;$00EFAA |
-Return00EFAD:
-    RTS
++   RTS                                     ;$00EFAD |
 
-CallGroundPound:
+.CallGroundPound_00EFAE:
     LDA $8F
-    BEQ Return00EFBB                        ;$00EFB0 |
-    JSL GroundPound                         ;$00EFB2 |
+    BEQ +                                   ;$00EFB0 |
+    JSL ground_pound_0294C1                 ;$00EFB2 |
     LDA.b #$09                              ;$00EFB6 |
     STA.w SPCIO3_1DFC                       ;$00EFB8 |
-Return00EFBB:
-    RTS
++   RTS                                     ;$00EFBB |
 
 CODE_00EFBC:
     LDX.w Map16_1693

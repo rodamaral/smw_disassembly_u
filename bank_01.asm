@@ -4450,7 +4450,7 @@ CODE_01A047:
     BRA CODE_01A0A6                         ;$01A066 |
 
 CODE_01A068:
-    JSL CODE_01AB6F
+    JSL kick_sfx_smoke_effect_01AB6F
     LDA.b #$90                              ;$01A06C |
     STA.b SpriteYSpeed_AA,X                 ;$01A06E |
     LDA.b PlayerXSpeed_7B                   ;$01A070 |
@@ -4460,7 +4460,7 @@ CODE_01A068:
     BRA CODE_01A0A6                         ;$01A077 |
 
 CODE_01A079:
-    JSL CODE_01AB6F
+    JSL kick_sfx_smoke_effect_01AB6F
     LDA.w SpriteStun_1540,X                 ;$01A07D |
     STA.b SpritePhase_C2,X                  ;$01A080 |
     LDA.b #$0A                              ;$01A082 |
@@ -5231,11 +5231,11 @@ CODE_01A5DA:
     LDX.w CurrentSprite_15E9
     LDY.w SpriteInterIndex_1695             ;$01A5DD |
     JSR CODE_01A77C                         ;$01A5E0 |
-    LDA.b #$02                              ;$01A5E3 |
+    LDA.b #!StatusFall_02                   ;$01A5E3 |
     STA.w SpriteStatus_14C8,Y               ;$01A5E5 |
     PHX                                     ;$01A5E8 |
     TYX                                     ;$01A5E9 |
-    JSL CODE_01AB72                         ;$01A5EA |
+    JSL try_create_contact_smoke_01AB72     ;$01A5EA |
     PLX                                     ;$01A5EE |
     LDA.b SpriteXSpeed_B6,X                 ;$01A5EF |
     ASL                                     ;$01A5F1 |
@@ -5309,9 +5309,9 @@ CODE_01A65F:
 CODE_01A666:
     PLX
     JSL GivePoints                          ;$01A667 |
-    LDA.b #$02                              ;$01A66B |
+    LDA.b #!StatusFall_02                   ;$01A66B |
     STA.w SpriteStatus_14C8,X               ;$01A66D |
-    JSL CODE_01AB72                         ;$01A670 |
+    JSL try_create_contact_smoke_01AB72     ;$01A670 |
     LDA.w SpriteXSpeed_B6,Y                 ;$01A674 |
     ASL                                     ;$01A677 |
     LDA.b #$10                              ;$01A678 |
@@ -5354,7 +5354,7 @@ CODE_01A69D:
 ADDR_01A6B8:
     JSR CODE_01A5D3
 CODE_01A6BB:
-    JSL CODE_01AB6F
+    JSL kick_sfx_smoke_effect_01AB6F
     LDA.b #$04                              ;$01A6BF |
     JSL GivePoints                          ;$01A6C1 |
     LDA.b SpriteXSpeed_B6,X                 ;$01A6C5 |
@@ -5570,7 +5570,7 @@ DefaultInteractR:
     AND.b #$02                              ;$01A843 |
     BNE CODE_01A87E                         ;$01A845 |
 CODE_01A847:
-    JSL CODE_01AB6F
+    JSL kick_sfx_smoke_effect_01AB6F
     INC.w $18D2                             ;$01A84B |
     LDA.w $18D2                             ;$01A84E |
     CMP.b #$08                              ;$01A851 |
@@ -6011,21 +6011,19 @@ CODE_01AB64:
 DATA_01AB6A:
     db $0C,$FC,$EC,$DC,$CC
 
-CODE_01AB6F:
+kick_sfx_smoke_effect_01AB6F:
     JSR PlayKickSfx
-CODE_01AB72:
+try_create_contact_smoke_01AB72:
     JSR IsSprOffScreen
-    BNE Return01AB98                        ;$01AB75 |
+    BNE .return_01AB98                      ;$01AB75 |
     PHY                                     ;$01AB77 |
     LDY.b #$03                              ;$01AB78 |
-CODE_01AB7A:
-    LDA.w SmokeSprNumber_17C0,Y
-    BEQ CODE_01AB83                         ;$01AB7D |
-    DEY                                     ;$01AB7F |
-    BPL CODE_01AB7A                         ;$01AB80 |
-    INY                                     ;$01AB82 |
-CODE_01AB83:
-    LDA.b #$02
+-   LDA.w SmokeSprNumber_17C0,Y             ;$01AB7A |\
+    BEQ +                                   ;$01AB7D || get some empty smoke sprite slot
+    DEY                                     ;$01AB7F ||
+    BPL -                                   ;$01AB80 ||
+    INY                                     ;$01AB82 |/ or fallback to slot 0
++   LDA.b #$02                              ;$01AB83 | create Contact graphic
     STA.w SmokeSprNumber_17C0,Y             ;$01AB85 |
     LDA.b SpriteXPosLow_E4,X                ;$01AB88 |
     STA.w SmokeSprXPos_17C8,Y               ;$01AB8A |
@@ -6034,7 +6032,7 @@ CODE_01AB83:
     LDA.b #$08                              ;$01AB92 |
     STA.w SmokeSprTimer_17CC,Y              ;$01AB94 |
     PLY                                     ;$01AB97 |
-Return01AB98:
+.return_01AB98:
     RTL
 
 DisplayContactGfx:
@@ -13038,7 +13036,7 @@ InitBonusGame:
     LDX.b #$09                              ;$01DDB7 | X: current slot
 -   LDA.b #$08                              ;$01DDB7 |\
     STA.w SpriteStatus_14C8,X               ;$01DDB9 || create Bonus Game sprites for slots 9 to 0
-    LDA.b #!BonusGame_7C                    ;$01DDBC ||
+    LDA.b #!BonusGame_82                    ;$01DDBC ||
     STA.w SpriteNumber_9E,X                 ;$01DDBE ||
     LDA.w bonus_sprite_low_y_01DD90,X       ;$01DDC1 ||
     STA.b SpriteXPosLow_E4,X                ;$01DDC4 ||

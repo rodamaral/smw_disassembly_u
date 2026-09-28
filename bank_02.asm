@@ -25,7 +25,7 @@ ReleaseItembox028008:
     ADC.b #$0A                              ;$02802F |
     TAX                                     ;$028031 |
     LDA.b SpriteNumber_9E,X                 ;$028032 |
-    CMP.b #$7D                              ;$028034 |
+    CMP.b #!PBalloon_7D                     ;$028034 |
     BNE .SpawnSprite028042                  ;$028036 |
     LDA.w SpriteStatus_14C8,X               ;$028038 |
     CMP.b #$0B                              ;$02803B |
@@ -36,7 +36,7 @@ ReleaseItembox028008:
     STA.w SpriteStatus_14C8,X               ;$028044 |
     PLA                                     ;$028047 |
     CLC                                     ;$028048 |
-    ADC.b #$73                              ;$028049 |
+    ADC.b #!SuperKoopaGRound_73             ;$028049 |
     STA.b SpriteNumber_9E,X                 ;$02804B |
     JSL InitSpriteTables                    ;$02804D |
     LDA.b #$78                              ;$028051 |
@@ -573,9 +573,9 @@ CODE_0284C2:
     STA $00
     STZ $02                                 ;$0284C4 |
     LDA.b SpriteNumber_9E,X                 ;$0284C6 |
-    CMP.b #$41                              ;$0284C8 |
+    CMP.b #!DolphinLong_41                  ;$0284C8 |
     BEQ CODE_0284D0                         ;$0284CA |
-    CMP.b #$42                              ;$0284CC |
+    CMP.b #!DolphinShort_42                 ;$0284CC |
     BNE CODE_0284D8                         ;$0284CE |
 CODE_0284D0:
     LDA.b SpriteYSpeed_AA,X
@@ -672,7 +672,8 @@ CODE_02853F:
     BPL CODE_028536                         ;$02858C |
     RTL                                     ;$02858E |
 
-SpawnStarSparkles:
+; unused sparkles around the player, like from the stars
+spawn_star_sparkles_02858F:
     LDY.b #$1F
     LDX.b #$00                              ;$028591 |
     LDA.b Powerup_19                        ;$028593 |
@@ -774,7 +775,7 @@ spawn_throw_block:
     STA.b SpriteXPosLow_E4,X                ;$028646 | | Set the sprite's X position to the player's X position.
     LDA.b PlayerXPos_94+1,X                 ;$028648 | | GLITCH: the "LDA $95,X" is likely a typo on Nintendo's part
     STA.w SpriteXPosHigh_14E0,X             ;$02864A |/
-    LDA.b #$53                              ;$02864D |\ Set the sprite to be a throw block.
+    LDA.b #!Throwblock_53                   ;$02864D |\ Set the sprite to be a throw block.
     STA.b SpriteNumber_9E,X                 ;$02864F |/
     JSL InitSpriteTables                    ;$028651 | Initialize the sprite tables.
     LDA.b #$FF                              ;$028655 |\ Set the throw block's disappearance timer.
@@ -1095,26 +1096,72 @@ Return0288A0:
 DATA_0288A1:
     db $35,$78
 
+; SpriteInBlock:
+;     db $00,$74,$75,$76,$77,$78,$00,$00
+;     db $79,$00,$3E,$7D,$2C,$04,$81,$45
+;     db $80
+
 SpriteInBlock:
-    db $00,$74,$75,$76,$77,$78,$00,$00
-    db $79,$00,$3E,$7D,$2C,$04,$81,$45
-    db $80
+    db !GreenKoopa_00
+    db !Mushroom_74
+    db !Flower_75
+    db !Star_76
+    db !Feather_77
+    db !1Up_78
+    db !GreenKoopa_00
+    db !GreenKoopa_00
+    db !Vine_79
+    db !GreenKoopa_00
+    db !PSwitch_3E
+    db !PBalloon_7D
+    db !YoshiEgg_2C
+    db !GreenShell_04
+    db !ChangingItem_81
+    db !DirCoins_45
+    db !Key_80
 
 SpriteInBlockPow:
-    db $00,$74,$75,$76,$77,$78,$00,$00
-    db $79,$00,$3E,$7D,$2C,$04,$81,$45
-    db $80
+    db !GreenKoopa_00,!Mushroom_74
+    db !Flower_75
+    db !Star_76
+    db !Feather_77
+    db !1Up_78
+    db !GreenKoopa_00
+    db !GreenKoopa_00
+    db !Vine_79
+    db !GreenKoopa_00
+    db !PSwitch_3E
+    db !PBalloon_7D
+    db !YoshiEgg_2C
+    db !GreenShell_04
+    db !ChangingItem_81
+    db !DirCoins_45
+    db !Key_80
 
 StatusOfSprInBlk:
-    db $00,$08,$08,$08,$08,$08,$00,$00
-    db $08,$00,$09,$08,$09,$09,$08,$08
-    db $09
+    db !StatusEmpty_00
+    db !StatusNormal_08
+    db !StatusNormal_08
+    db !StatusNormal_08
+    db !StatusNormal_08
+    db !StatusNormal_08
+    db !StatusEmpty_00
+    db !StatusEmpty_00
+    db !StatusNormal_08
+    db !StatusEmpty_00
+    db !StatusCarryable_09
+    db !StatusNormal_08
+    db !StatusCarryable_09
+    db !StatusCarryable_09
+    db !StatusNormal_08
+    db !StatusNormal_08
+    db !StatusCarryable_09
 
 DATA_0288D6:
-    db $80,$7E,$7D
+    db !Key_80, !YoshiWings_7E, !PBalloon_7D
 
 DATA_0288D9:
-    db $09,$08,$08
+    db !StatusCarryable_09, !StatusNormal_08, !StatusNormal_08
 
 CODE_0288DC:
     LDY $05
@@ -1175,9 +1222,9 @@ CODE_028937:
     STA.b SpriteNumber_9E,X                 ;$02893D |
     STA $0E                                 ;$02893F |
     LDY.b #$02                              ;$028941 |
-    CMP.b #$81                              ;$028943 |
+    CMP.b #!ChangingItem_81                 ;$028943 |
     BCS CODE_02894C                         ;$028945 |
-    CMP.b #$79                              ;$028947 |
+    CMP.b #!Vine_79                         ;$028947 |
     BCC CODE_02894C                         ;$028949 |
     INY                                     ;$02894B |
 CODE_02894C:
@@ -1185,9 +1232,9 @@ CODE_02894C:
     JSL InitSpriteTables                    ;$02894F |
     INC.w SpriteOffscreenX_15A0,X           ;$028953 |
     LDA.b SpriteNumber_9E,X                 ;$028956 |
-    CMP.b #$45                              ;$028958 |
+    CMP.b #!DirCoins_45                     ;$028958 |
     BNE CODE_028972                         ;$02895A |
-    LDA.w $1432                             ;$02895C |
+    LDA.w DirectCoinInit_1432               ;$02895C |
     BEQ CODE_028967                         ;$02895F |
     STZ.w SpriteStatus_14C8,X               ;$028961 |
     JMP CODE_02889D                         ;$028964 |
@@ -1224,7 +1271,7 @@ CODE_028972:
     STA.w SpriteYPosHigh_14D4,X             ;$0289A2 |
 CODE_0289A5:
     LDA.b SpriteNumber_9E,X
-    CMP.b #$7D                              ;$0289A7 |
+    CMP.b #!PBalloon_7D                     ;$0289A7 |
     BNE CODE_0289D3                         ;$0289A9 |
     LDA.b SpriteXPosLow_E4,X                ;$0289AB |
     AND.b #$30                              ;$0289AD |
@@ -1240,7 +1287,7 @@ CODE_0289A5:
     PHA                                     ;$0289BF |
     JSL InitSpriteTables                    ;$0289C0 |
     PLA                                     ;$0289C4 |
-    CMP.b #$7D                              ;$0289C5 |
+    CMP.b #!PBalloon_7D                     ;$0289C5 |
     BNE CODE_0289CD                         ;$0289C7 |
     INC.w SpriteDir_157C,X                  ;$0289C9 |
     RTL                                     ;$0289CC |
@@ -1263,7 +1310,7 @@ CODE_0289E1:
     CMP.b #$08                              ;$0289E4 |
     BCC CODE_0289F3                         ;$0289E6 |
     LDA.w SpriteNumber_9E,Y                 ;$0289E8 |
-    CMP.b #$2D                              ;$0289EB |
+    CMP.b #!BabyYoshi_2D                    ;$0289EB |
     BNE CODE_0289F3                         ;$0289ED |
 CODE_0289EF:
     LDY.b #$01
@@ -1385,21 +1432,21 @@ minor_sprites_and_loading_028AB1:
     PHB
     PHK                                     ;$028AB2 |
     PLB                                     ;$028AB3 |
-    LDA.w $18E4                             ;$028AB4 |
+    LDA.w GivePlayerLives_18E4              ;$028AB4 |
     BEQ .process_starman_028AD5             ;$028AB7 |
-    LDA.w $18E5                             ;$028AB9 |
-    BEQ .CODE_028AC3                        ;$028ABC |
-    DEC.w $18E5                             ;$028ABE |
+    LDA.w GiveLivesTimer_18E5               ;$028AB9 |
+    BEQ +                                   ;$028ABC |
+    DEC.w GiveLivesTimer_18E5               ;$028ABE |
     BRA .process_starman_028AD5             ;$028AC1 |
-.CODE_028AC3:
-    DEC.w $18E4
+
++   DEC.w GivePlayerLives_18E4              ;$028AC3 |
     BEQ .increment_lives_028ACD             ;$028AC6 |
     LDA.b #$23                              ;$028AC8 |
-    STA.w $18E5                             ;$028ACA |
+    STA.w GiveLivesTimer_18E5               ;$028ACA |
 .increment_lives_028ACD:
     LDA.b #$05
     STA.w SPCIO3_1DFC                       ;$028ACF |
-    INC.w $0DBE                             ;$028AD2 |
+    INC.w PlayerLives_0DBE                  ;$028AD2 |
 .process_starman_028AD5:
     LDA.w StarTimer_1490
     BEQ .process_star_sparkles_028AEB       ;$028AD8 |
@@ -1416,9 +1463,9 @@ minor_sprites_and_loading_028AB1:
     BRA .try_spawn_star_sparkles            ;$028AE9 |
 
 .process_star_sparkles_028AEB:
-    LDA.w $18D3
+    LDA.w PlayerSparkleTimer_18D3
     BEQ +                                   ;$028AEE |
-    DEC.w $18D3                             ;$028AF0 |
+    DEC.w PlayerSparkleTimer_18D3           ;$028AF0 |
     AND.b #$01                              ;$028AF3 |
 .try_spawn_star_sparkles:
     ORA.b PlayerXPosScrRel_7E+1
@@ -1427,14 +1474,14 @@ minor_sprites_and_loading_028AB1:
     LDA.b PlayerYPosScrRel_80               ;$028AFB |
     CMP.b #$D0                              ;$028AFD |
     BCS +                                   ;$028AFF |
-    JSL SpawnStarSparkles                   ;$028B01 | unused sparkles around the player, like from the stars
-+   JSR MinorExtendedSprites028B67          ;$028B05 |
-    JSR MultipleCoinBlock02902D             ;$028B08 |
-    JSR ScoreSprGfx                         ;$028B0B |
-    JSR ExtendedSprites029B0A               ;$028B0E |
-    JSR SpinningCoinSprites0299D2           ;$028B11 |
-    JSR ShooterSprites02B387                ;$028B14 |
-    JSR CallGenerator                       ;$028B17 |
+    JSL spawn_star_sparkles_02858F          ;$028B01 |
++   JSR minor_extended_sprites_028B67       ;$028B05 |
+    JSR multicoin_and_other_sprites_02902D  ;$028B08 |
+    JSR score_sprites_02ADA4                ;$028B0B |
+    JSR extended_sprites_029B0A             ;$028B0E |
+    JSR spinning_coin_sprites_0299D2        ;$028B11 |
+    JSR shooter_sprites_02B387              ;$028B14 |
+    JSR handle_sprite_generator_02AFFD      ;$028B17 |
     JSR cape_spin_interactions_0294F5       ;$028B1A |
     JSR load_sprites_from_level_02A7FC      ;$028B1D |
     LDA.w $18C0                             ;$028B20 |\ 
@@ -1449,9 +1496,9 @@ minor_sprites_and_loading_028AB1:
     JSL FindFreeSprSlot                     ;$028B35 |||
     BMI +                                   ;$028B39 |/
     TYX                                     ;$028B3B ||
-    LDA.b #$01                              ;$028B3C ||
+    LDA.b #!StatusInit_01                   ;$028B3C ||
     STA.w SpriteStatus_14C8,X               ;$028B3E ||
-    LDA.w $18C1                             ;$028B41 ||
+    LDA.w SpriteRespawnNumber_18C1          ;$028B41 ||
     STA.b SpriteNumber_9E,X                 ;$028B44 ||
     LDA.b Layer1XPos_1A                     ;$028B46 ||
     SEC                                     ;$028B48 ||
@@ -1469,7 +1516,7 @@ minor_sprites_and_loading_028AB1:
 +   PLB                                     ;$028B65 ||
     RTL                                     ;$028B66 |
 
-MinorExtendedSprites028B67:
+minor_extended_sprites_028B67:
     LDX.b #$0B
 CODE_028B69:
     LDA.w MinorSprNumber_17F0,X
@@ -2130,26 +2177,24 @@ CODE_029018:
 Return02902C:
     RTS
 
-MultipleCoinBlock02902D:
-    LDA.w $186B
+multicoin_and_other_sprites_02902D:
+    LDA.w MulticoinTimer_186B
     CMP.b #$02                              ;$029030 |
-    BCC CODE_02903B                         ;$029032 |
-    LDA.b SpriteLock_9D                     ;$029034 |
-    BNE CODE_02903B                         ;$029036 |
-    DEC.w MulticoinTimer_186B               ;$029038 |
-CODE_02903B:
-    LDX.b #$03
-CODE_02903D:
-    STX.w CurrentMinorSprite_1698
-    JSR CODE_02904D                         ;$029040 |
-    JSR CODE_029398                         ;$029043 |
-    JSR CODE_0296C0                         ;$029046 |
-    DEX                                     ;$029049 |
-    BPL CODE_02903D                         ;$02904A |
+    BCC +                                   ;$029032 |\
+    LDA.b SpriteLock_9D                     ;$029034 ||
+    BNE +                                   ;$029036 ||
+    DEC.w MulticoinTimer_186B               ;$029038 |/
++   LDX.b #$03                              ;$02903B | X: common sprite slot for bounce, quake and smoke
+-   STX.w CurrentMinorSprite_1698           ;$02903D |\
+    JSR handle_bounce_sprite_02904D         ;$029040 ||
+    JSR handle_quake_sprite_029398          ;$029043 ||
+    JSR handle_smoke_sprite_0296C0          ;$029046 ||
+    DEX                                     ;$029049 ||
+    BPL -                                   ;$02904A |/
 Return02904C:
     RTS
 
-CODE_02904D:
+handle_bounce_sprite_02904D:
     LDA.w BounceSprNumber_1699,X
     BEQ Return02904C                        ;$029050 |
     LDY.b SpriteLock_9D                     ;$029052 |
@@ -2578,151 +2623,147 @@ ADDR_029361:
     STA.w CoinSpriteLayer_17E4,Y            ;$029389 |
     LDA.b #$D0                              ;$02938C |
     STA.w CoinSpriteYSpeed_17D8,Y           ;$02938E |
-Return029391:
+return_029391:
     RTS
 
 DATA_029392:
     db $F8,$08
 
-CODE_029394:
+erase_quake_029394:
     STZ.w QuakeSprNumber_16CD,X
-Return029397:
+return_029397:
     RTS
 
-CODE_029398:
+handle_quake_sprite_029398:
     LDA.w QuakeSprNumber_16CD,X
-    BEQ Return029397                        ;$02939B |
+    BEQ return_029397                       ;$02939B |
     DEC.w BounceSprIntTimer_18F8,X          ;$02939D |
-    BEQ CODE_029394                         ;$0293A0 |
+    BEQ erase_quake_029394                  ;$0293A0 |
     LDA.w BounceSprIntTimer_18F8,X          ;$0293A2 |
     CMP.b #$03                              ;$0293A5 |
-    BCS Return029391                        ;$0293A7 |
+    BCS return_029391                       ;$0293A7 |
     LDY.w CurrentMinorSprite_1698           ;$0293A9 |
-    STZ $0E                                 ;$0293AC |
-CODE_0293AE:
-    LDX.b #$0B
-CODE_0293B0:
-    STX.w CurrentSprite_15E9
+    STZ $0E                                 ;$0293AC | $0E: contact type: 00 = quake, 01 = punch/cape, 35 = ground pound
+try_hit_sprites_0293AE:                     ;        |
+    LDX.b #$0B                              ;$0293AE | X: sprite slot
+.loop_0293B0:                               ;        |
+    STX.w CurrentSprite_15E9                ;$0293B0 |
     LDA.w SpriteStatus_14C8,X               ;$0293B3 |
-    CMP.b #$0B                              ;$0293B6 |
-    BEQ CODE_0293F7                         ;$0293B8 |
-    CMP.b #$08                              ;$0293BA |
-    BCC CODE_0293F7                         ;$0293BC |
+    CMP.b #!StatusCarried_0B                ;$0293B6 |
+    BEQ .no_contact_0293F7                  ;$0293B8 |
+    CMP.b #!StatusNormal_08                 ;$0293BA |
+    BCC .no_contact_0293F7                  ;$0293BC |
     LDA.w lwcfpppg_166E,X                   ;$0293BE |
     AND.b #$20                              ;$0293C1 |
     ORA.w SpriteOnTongue_15D0,X             ;$0293C3 |
     ORA.w SpritePlayerContact_154C,X        ;$0293C6 |
-    ORA.w $1FE2,X                           ;$0293C9 |
-    BNE CODE_0293F7                         ;$0293CC |
+    ORA.w SpriteDisableTimer_1FE2,X         ;$0293C9 |
+    BNE .no_contact_0293F7                  ;$0293CC |
     LDA.w SpriteBehindScene_1632,X          ;$0293CE |
     PHY                                     ;$0293D1 |
     LDY.b PlayerClimb_74                    ;$0293D2 |
-    BEQ CODE_0293D8                         ;$0293D4 |
+    BEQ +                                   ;$0293D4 |
     EOR.b #$01                              ;$0293D6 |
-CODE_0293D8:
-    PLY
-    EOR.w $13F9                             ;$0293D9 |
-    BNE CODE_0293F7                         ;$0293DC |
++   PLY                                     ;$0293D8 |
+    EOR.w PlayerBehindNet_13F9              ;$0293D9 |
+    BNE .no_contact_0293F7                  ;$0293DC |
     JSL GetSpriteClippingA                  ;$0293DE |
-    LDA $0E                                 ;$0293E2 |
-    BEQ CODE_0293EB                         ;$0293E4 |
-    JSR get_cape_clipping_029696            ;$0293E6 |
-    BRA CODE_0293EE                         ;$0293E9 |
+    LDA $0E                                 ;$0293E2 | $0E = quake type
+    BEQ .check_quake_contact_0293EB         ;$0293E4 |
+    JSR get_cape_clipping_029696            ;$0293E6 | NOTE: punch uses the same cape hitbox
+    BRA .check_punch_contact_0293EE         ;$0293E9 |
 
-CODE_0293EB:
-    JSR CODE_029663
-CODE_0293EE:
+.check_quake_contact_0293EB:
+    JSR get_quake_clipping_029663
+.check_punch_contact_0293EE:
     JSL CheckForContact
-    BCC CODE_0293F7                         ;$0293F2 |
-    JSR CODE_029404                         ;$0293F4 |
-CODE_0293F7:
-    LDY.w CurrentMinorSprite_1698
+    BCC .no_contact_0293F7                  ;$0293F2 |
+    JSR quakefy_sprite_029404               ;$0293F4 |
+.no_contact_0293F7:
+    LDY.w CurrentMinorSprite_1698           ;$0293F7 |
     DEX                                     ;$0293FA |
-    BMI CODE_029400                         ;$0293FB |
-    JMP CODE_0293B0                         ;$0293FD |
+    BMI +                                   ;$0293FB |
+    JMP .loop_0293B0                        ;$0293FD |
 
-CODE_029400:
-    LDX.w CurrentMinorSprite_1698
++   LDX.w CurrentMinorSprite_1698           ;$029400 |
     RTS                                     ;$029403 |
 
-CODE_029404:
-    LDA.b #$08
-    STA.w SpritePlayerContact_154C,X        ;$029406 |
+; Subroutine to "hit" a sprite in contact with a quake/capespin/net punch
+; Also used for cape smash ($0E = #$35)
+quakefy_sprite_029404:
+    LDA.b #$08                              ;$029406 |
+    STA.w SpritePlayerContact_154C,X        ;$029406 | Disable contact with Mario briefly
     LDA.b SpriteNumber_9E,X                 ;$029409 |
     CMP.b #!ChangingItem_81                 ;$02940B |
-    BNE CODE_029427                         ;$02940D |
-    LDA.b SpritePhase_C2,X                  ;$02940F |
-    BEQ Return029426                        ;$029411 |
-    STZ.b SpritePhase_C2,X                  ;$029413 |
-    LDA.b #$C0                              ;$029415 |
-    STA.b SpriteYSpeed_AA,X                 ;$029417 |
-    LDA.b #$10                              ;$029419 |
-    STA.w SpriteStun_1540,X                 ;$02941B |
-    STZ.w SpriteDir_157C,X                  ;$02941E |
-    LDA.b #$20                              ;$029421 |
-    STA.w SpriteLava_1558,X                 ;$029423 |
-Return029426:
-    RTS
+    BNE .hit_sprite_029427                  ;$02940D |\ hit Changing Item
+    LDA.b SpritePhase_C2,X                  ;$02940F ||
+    BEQ +                                   ;$029411 || Return if the Changing Item is free
+    STZ.b SpritePhase_C2,X                  ;$029413 ||
+    LDA.b #$C0                              ;$029415 ||
+    STA.b SpriteYSpeed_AA,X                 ;$029417 ||
+    LDA.b #$10                              ;$029419 ||
+    STA.w SpriteStun_1540,X                 ;$02941B ||
+    STZ.w SpriteDir_157C,X                  ;$02941E ||
+    LDA.b #$20                              ;$029421 || Timer to disable interaction with the sides of blocks
+    STA.w SpriteLava_1558,X                 ;$029423 ||
++   RTS                                     ;$029426 |/
 
-CODE_029427:
-    CMP.b #$2D
-    BEQ CODE_029448                         ;$029429 |
+.hit_sprite_029427:
+    CMP.b #!BabyYoshi_2D
+    BEQ .clear_lava_skip_stun_029448        ;$029429 |
     LDA.w dpmksPiS_167A,X                   ;$02942B |
     AND.b #$02                              ;$02942E |
-    BNE CODE_0294A2                         ;$029430 |
+    BNE .CODE_0294A2                        ;$029430 | branch if Invincible to star/cape/fire/bouncing bricks
     LDA.w SpriteStatus_14C8,X               ;$029432 |
-    CMP.b #$08                              ;$029435 |
-    BEQ CODE_029443                         ;$029437 |
-    LDA.b SpriteNumber_9E,X                 ;$029439 |
-    CMP.b #$0D                              ;$02943B |
-    BEQ CODE_029448                         ;$02943D |
-    LDA.b SpritePhase_C2,X                  ;$02943F |
-    BEQ CODE_029448                         ;$029441 |
-CODE_029443:
-    LDA.b #$FF
+    CMP.b #!StatusNormal_08                 ;$029435 |
+    BEQ +                                   ;$029437 |\
+    LDA.b SpriteNumber_9E,X                 ;$029439 ||
+    CMP.b #!BobOmb_0D                       ;$02943B ||
+    BEQ .clear_lava_skip_stun_029448        ;$02943D ||
+    LDA.b SpritePhase_C2,X                  ;$02943F ||
+    BEQ .clear_lava_skip_stun_029448        ;$029441 |/
++   LDA.b #$FF                              ;$029443 |
     STA.w SpriteStun_1540,X                 ;$029445 |
-CODE_029448:
-    STZ.w SpriteLava_1558,X
-    LDA $0E                                 ;$02944B |
-    CMP.b #$35                              ;$02944D |
-    BEQ CODE_029455                         ;$02944F |
-    JSL CODE_01AB6F                         ;$029451 |
-CODE_029455:
-    LDA.b #$00
+.clear_lava_skip_stun_029448:
+    STZ.w SpriteLava_1558,X                 ;$029448 |
+    LDA $0E                                 ;$02944B | $0E = quake type
+    CMP.b #!QuakeTypeGroundPound_35         ;$02944D |
+    BEQ +                                   ;$02944F |\
+    JSL kick_sfx_smoke_effect_01AB6F        ;$029451 |/ 
++   LDA.b #$00                              ;$029455 |
     JSL GivePoints                          ;$029457 |
-    LDA.b #$02                              ;$02945B |
+    LDA.b #!StatusFall_02                   ;$02945B |
     STA.w SpriteStatus_14C8,X               ;$02945D |
     LDA.b SpriteNumber_9E,X                 ;$029460 |
     CMP.b #!Lakitu_1E                       ;$029462 |
-    BNE .CODE_02946B                        ;$029464 |
-    LDA.b #$1F                              ;$029466 | GLITCH:
-    STA.w SpriteStun_1540+9                 ;$029468 | NOTE: hardcoded slot 9
-.CODE_02946B:
-    LDA.w dscccccc_1662,X
+    BNE +                                   ;$029464 |\
+    LDA.b #$1F                              ;$029466 || GLITCH: killing a Lakitu with a capespin, quake sprite, or net punch will cause whatever sprite is in slot 9 to have its stun timer set to 31
+    STA.w SpriteStun_1540+9                 ;$029468 |/ NOTE: hardcoded slot 9
++   LDA.w dscccccc_1662,X                   ;$02946B |
     AND.b #$80                              ;$02946E |
-    BNE CODE_0294A2                         ;$029470 |
+    BNE .CODE_0294A2                        ;$029470 | branch if Falls straight down when killed
     LDA.w sSjJcccc_1656,X                   ;$029472 |
     AND.b #$10                              ;$029475 |
-    BEQ CODE_0294A2                         ;$029477 |
+    BEQ .CODE_0294A2                        ;$029477 | branch if Cannot be jumped on
     LDA.w sSjJcccc_1656,X                   ;$029479 |
     AND.b #$20                              ;$02947C |
-    BNE CODE_0294A2                         ;$02947E |
-    LDA.b #$09                              ;$029480 |
+    BNE .CODE_0294A2                        ;$02947E | branch if Dies when jumped on
+    LDA.b #!StatusCarryable_09              ;$029480 |
     STA.w SpriteStatus_14C8,X               ;$029482 |
     ASL.w SpriteYXPPCCCT_15F6,X             ;$029485 |
     SEC                                     ;$029488 |
     ROR.w SpriteYXPPCCCT_15F6,X             ;$029489 |
     LDA.w dnctswye_1686,X                   ;$02948C |
-    AND.b #$40                              ;$02948F |
-    BEQ CODE_0294A2                         ;$029491 |
-    PHX                                     ;$029493 |
-    LDA.b SpriteNumber_9E,X                 ;$029494 |
-    TAX                                     ;$029496 |
-    LDA.l SpriteToSpawn,X                   ;$029497 |
-    PLX                                     ;$02949B |
-    STA.b SpriteNumber_9E,X                 ;$02949C |
-    JSL LoadSpriteTables                    ;$02949E |
-CODE_0294A2:
+    AND.b #$40                              ;$02948F | branch if does not Spawn a new sprite
+    BEQ .CODE_0294A2                        ;$029491 |\
+    PHX                                     ;$029493 || transform into a new sprite
+    LDA.b SpriteNumber_9E,X                 ;$029494 ||
+    TAX                                     ;$029496 ||
+    LDA.l SpriteToSpawn,X                   ;$029497 ||
+    PLX                                     ;$02949B ||
+    STA.b SpriteNumber_9E,X                 ;$02949C ||
+    JSL LoadSpriteTables                    ;$02949E |/
+.CODE_0294A2:
     LDA.b #$C0
     LDY $0E                                 ;$0294A4 |
     BEQ CODE_0294B0                         ;$0294A6 |
@@ -2740,49 +2781,46 @@ CODE_0294B0:
     STA.w SpriteDir_157C,X                  ;$0294BD |
     RTS                                     ;$0294C0 |
 
-GroundPound:
+ground_pound_0294C1:
     LDA.b #$30
     STA.w ScreenShakeTimer_1887             ;$0294C3 |
     STZ.w UnusedGroundPoundTimer_14A9       ;$0294C6 |
     PHB                                     ;$0294C9 |
     PHK                                     ;$0294CA |
     PLB                                     ;$0294CB |
-    LDX.b #$09                              ;$0294CC |
-KillSprLoopStart:
-    LDA.w SpriteStatus_14C8,X
-    CMP.b #$08                              ;$0294D1 |
-    BCC GroundPoundNextSpr                  ;$0294D3 |
-    LDA.w SpriteBlocked_1588,X              ;$0294D5 |
-    AND.b #$04                              ;$0294D8 |
-    BEQ GroundPoundNextSpr                  ;$0294DA |
-    LDA.w lwcfpppg_166E,X                   ;$0294DC |
-    AND.b #$20                              ;$0294DF |
-    ORA.w SpriteOnTongue_15D0,X             ;$0294E1 |
-    ORA.w SpritePlayerContact_154C,X        ;$0294E4 |
-    BNE GroundPoundNextSpr                  ;$0294E7 |
-    LDA.b #$35                              ;$0294E9 |
-    STA $0E                                 ;$0294EB |
-    JSR CODE_029404                         ;$0294ED |
-GroundPoundNextSpr:
-    DEX
-    BPL KillSprLoopStart                    ;$0294F1 |
+    LDX.b #$09                              ;$0294CC | X: sprite slot
+-   LDA.w SpriteStatus_14C8,X               ;$0294CE |\
+    CMP.b #!StatusNormal_08                 ;$0294D1 ||
+    BCC +                                   ;$0294D3 || skip if sprite is not active
+    LDA.w SpriteBlocked_1588,X              ;$0294D5 ||
+    AND.b #$04                              ;$0294D8 ||
+    BEQ +                                   ;$0294DA ||
+    LDA.w lwcfpppg_166E,X                   ;$0294DC || skip if:
+    AND.b #$20                              ;$0294DF || - Disable cape killing
+    ORA.w SpriteOnTongue_15D0,X             ;$0294E1 || - sprite on tongue
+    ORA.w SpritePlayerContact_154C,X        ;$0294E4 || - contact with player is disabled
+    BNE +                                   ;$0294E7 ||
+    LDA.b #!QuakeTypeGroundPound_35         ;$0294E9 ||
+    STA $0E                                 ;$0294EB || $0E = quake type
+    JSR quakefy_sprite_029404               ;$0294ED ||
++   DEX                                     ;$0294F0 ||
+    BPL -                                   ;$0294F1 |/
     PLB                                     ;$0294F3 |
     RTL                                     ;$0294F4 |
 
 cape_spin_interactions_0294F5:
-    LDA.w $13E8
-    BEQ Return02950A                        ;$0294F8 |
-    STA $0E                                 ;$0294FA |
+    LDA.w CapeInteracts_13E8
+    BEQ ++                                  ;$0294F8 |
+    STA $0E                                 ;$0294FA | $0E = quake type
     LDA.b Frame_13                          ;$0294FC |
     LSR                                     ;$0294FE |
     BCC +                                   ;$0294FF |
-    JSR CODE_0293AE                         ;$029501 |
-    JSR CapeExtSprInteract029631         ;$029504 |
-+   JSR CODE_02950B
-Return02950A:
-    RTS
+    JSR try_hit_sprites_0293AE              ;$029501 |
+    JSR cape_extspr_interact_029631         ;$029504 |
++   JSR cape_layers_interact_02950B         ;$029507 |
+++  RTS                                     ;$02950A |
 
-CODE_02950B:
+cape_layers_interact_02950B:
     STZ $0F
     JSR CapeLayerInteraction029540          ;$02950D |
     LDA.b ScreenMode_5B                     ;$029510 |
@@ -2932,7 +2970,7 @@ Map16Cape02960D:
 Return029630:
     RTS
 
-CapeExtSprInteract029631:
+cape_extspr_interact_029631:
     LDX.b #$07
 -   STX.w CurrentSprite_15E9                ;$029633 |
     LDA.w ExtSprNumber_170B,X               ;$029636 |
@@ -2969,7 +3007,7 @@ DATA_02965E:
 DATA_029660:
     db $FF,$18,$10
 
-CODE_029663:
+get_quake_clipping_029663:
     PHX
     LDA.w QuakeSprNumber_16CD,Y             ;$029664 |
     TAX                                     ;$029667 |
@@ -3018,21 +3056,21 @@ DATA_0296B8:
 DATA_0296BC:
     db $90,$94,$98,$9C
 
-CODE_0296C0:
+handle_smoke_sprite_0296C0:
     LDA.w SmokeSprNumber_17C0,X
-    BEQ Return0296D7                        ;$0296C3 |
+    BEQ .return_0296D7                      ;$0296C3 |
     AND.b #$7F                              ;$0296C5 |
     JSL execute_pointer                     ;$0296C7 |
 
-Ptrs0296CB:
-    dw Return0296D7
+.Ptrs0296CB:
+    dw .return_0296D7
     dw CODE_0296E3
     dw CODE_029797
     dw CODE_029927
-    dw Return0296D7
+    dw .return_0296D7
     dw CODE_0298CA
 
-Return0296D7:
+.return_0296D7:
     RTS
 
 DATA_0296D8:
@@ -3440,7 +3478,7 @@ CODE_02999F:
     STA.w $0460,Y                           ;$0299CE |
     RTS                                     ;$0299D1 |
 
-SpinningCoinSprites0299D2:
+spinning_coin_sprites_0299D2:
     LDX.b #$03
 CODE_0299D4:
     STX.w CurrentSprite_15E9
@@ -3607,7 +3645,7 @@ CODE_029B01:
     STA.w SmokeSprTimer_17CC,Y              ;$029B06 |
     RTS                                     ;$029B09 |
 
-ExtendedSprites029B0A:
+extended_sprites_029B0A:
     LDX.b #$09
 -   STX.w CurrentSprite_15E9                ;$029B0C |
     JSR .process_slot_029B16                ;$029B0F |
@@ -6116,34 +6154,30 @@ PointSpeedY:
 DATA_02AD9E:
     db $B0,$B8,$C0,$C8,$D0,$D8
 
-ScoreSprGfx:
+score_sprites_02ADA4:
     BIT.w IRQNMICommand_0D9B
-    BVC CODE_02ADB8                         ;$02ADA7 |
+    BVC +                                   ;$02ADA7 |
     LDA.w IRQNMICommand_0D9B                ;$02ADA9 |
     CMP.b #!IRQNMIBowser_C1                 ;$02ADAC |
-    BEQ Return02ADC8                        ;$02ADAE |
+    BEQ .return_02ADC8                      ;$02ADAE |
     LDA.b #$F0                              ;$02ADB0 |
     STA.w $0205                             ;$02ADB2 |
     STA.w $0209                             ;$02ADB5 |
-CODE_02ADB8:
-    LDX.b #$05
-CODE_02ADBA:
-    STX.w CurrentSprite_15E9
-    LDA.w ScoreSprNumber_16E1,X             ;$02ADBD |
-    BEQ CODE_02ADC5                         ;$02ADC0 |
-    JSR CODE_02ADC9                         ;$02ADC2 |
-CODE_02ADC5:
-    DEX
-    BPL CODE_02ADBA                         ;$02ADC6 |
-Return02ADC8:
++   LDX.b #$05                              ;$02ADB8 | X: score sprite slot
+-   STX.w CurrentSprite_15E9                ;$02ADBA |\
+    LDA.w ScoreSprNumber_16E1,X             ;$02ADBD ||
+    BEQ +                                   ;$02ADC0 ||
+    JSR handle_score_sprite_02ADC9          ;$02ADC2 ||
++   DEX                                     ;$02ADC5 ||
+    BPL -                                   ;$02ADC6 |/
+.return_02ADC8:
     RTS
 
-CODE_02ADC9:
+handle_score_sprite_02ADC9:
     LDA.b SpriteLock_9D
-    BEQ CODE_02ADD0                         ;$02ADCA |
+    BEQ +                                   ;$02ADCA |
     JMP CODE_02AE5B                         ;$02ADCD |
-CODE_02ADD0:
-    LDA.w ScoreSprTimer_16FF,X              ;$02ADD0 |
++   LDA.w ScoreSprTimer_16FF,X              ;$02ADD0 |
     BNE CODE_02ADE4                         ;$02ADD3 |
     STZ.w ScoreSprNumber_16E1,X             ;$02ADD5 |
     RTS                                     ;$02ADD8 |
@@ -6439,15 +6473,15 @@ CODE_02AFF1:
 Return02AFFD:
     RTS
 
-CallGenerator:
-    LDA.w $18B9
-    BEQ Return02B02A                        ;$02B001 |
+handle_sprite_generator_02AFFD:
+    LDA.w CurrentGenerator_18B9
+    BEQ .return_02B02A                      ;$02B001 |
     LDY.b SpriteLock_9D                     ;$02B003 |
-    BNE Return02B02A                        ;$02B005 |
+    BNE .return_02B02A                      ;$02B005 |
     DEC A                                   ;$02B007 |
     JSL execute_pointer                     ;$02B008 |
 
-GeneratorPtrs:
+.GeneratorPtrs:
     dw GenerateEerie
     dw GenParaEnemy
     dw GenParaEnemy
@@ -6464,7 +6498,7 @@ GeneratorPtrs:
     dw GenerateFire
     dw TurnOffGenerators
 
-Return02B02A:
+.return_02B02A:
     RTS
 
 TurnOffGen2:
@@ -6930,7 +6964,7 @@ CODE_02B348:
 Return02B386:
     RTS
 
-ShooterSprites02B387:
+shooter_sprites_02B387:
     LDA.b SpriteLock_9D
     BNE Return02B3AA                        ;$02B389 |
     LDX.b #$07                              ;$02B38B |
@@ -12509,7 +12543,7 @@ CODE_02DBF8:
     STA.w SpriteYSpeed_AA,Y                 ;$02DC04 |
     PHX                                     ;$02DC07 |
     TYX                                     ;$02DC08 |
-    JSL CODE_01AB6F                         ;$02DC09 |
+    JSL kick_sfx_smoke_effect_01AB6F        ;$02DC09 |
     PLX                                     ;$02DC0D |
 Return02DC0E:
     RTS

@@ -19,7 +19,7 @@ Football:
     BEQ CODE_03802D                         ;$038024 |
     DEC A                                   ;$038026 |
     BNE CODE_038031                         ;$038027 |
-    JSL CODE_01AB6F                         ;$038029 |
+    JSL kick_sfx_smoke_effect_01AB6F        ;$038029 |
 CODE_03802D:
     JSL UpdateSpritePos
 CODE_038031:
@@ -6536,7 +6536,7 @@ CODE_03B151:
     LDA.b #$02                              ;$03B155 |
     STA.w SpriteStatus_14C8,Y               ;$03B157 |
     TYX                                     ;$03B15A |
-    JSL CODE_01AB6F                         ;$03B15B |
+    JSL kick_sfx_smoke_effect_01AB6F        ;$03B15B |
     PLX                                     ;$03B15F |
 Return03B160:
     RTS

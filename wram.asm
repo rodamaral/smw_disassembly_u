@@ -17,6 +17,9 @@ ORG $7E0000
 ; TODO: $00XX
 skip 16
 
+; Some valid values
+!QuakeTypeGroundPound_35 = $35
+
 ; === $7E0010 ===
 ; 1 byte
 ; non-zero during game loop
@@ -983,6 +986,10 @@ SpriteNumber_9E: skip 12
 !EerieWave_39 = $39
 !PSwitch_3E = $3E
 !ParaGoomba_3F = $3F
+!DolphinLong_41 = $41
+!DolphinShort_42 = $42
+!DolphinV_43 = $43
+!DirCoins_45 = $45
 !GrowingPipe_49 = $49
 !PipeLakitu_4B = $4B
 !ExplodingBlock_4C = $4C
@@ -1017,12 +1024,15 @@ SpriteNumber_9E: skip 12
 !DinoRhino_6E = $6E
 !DinoTorch_6F = $6F
 !Pokey_70 = $70
+!SuperKoopaRed_71 = $71
 !SuperKoopaYellow_72 = $72
+!SuperKoopaGRound_73 = $73
 !Mushroom_74 = $74
 !Flower_75 = $75
 !Star_76 = $76
 !Feather_77 = $77
 !1Up_78 = $78
+!Vine_79 = $79
 !Peach_7C = $7C
 !PBalloon_7D = $7D
 !FlyingRedCoin_7E = $7E
@@ -1030,7 +1040,7 @@ SpriteNumber_9E: skip 12
 !GoldenMushroom_7F = $7F
 !Key_80 = $80
 !ChangingItem_81 = $81
-!BonusGame_7C = $82 ; TODO: _82
+!BonusGame_82 = $82
 !FlyingBlockL_83 = $83
 !FlyingBlockLR_84 = $84
 !Unused_85 = $85
