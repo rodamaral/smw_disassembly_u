@@ -963,6 +963,7 @@ SpriteNumber_9E: skip 12
 !FishH_15 = $15
 !FishV_16 = $16
 !FishFlying_17 = $17
+!Football_1B = $1B
 !BulletBill_1C = $1C
 !HoppingFlame_1D = $1D
 !Lakitu_1E = $1E
@@ -976,6 +977,7 @@ SpriteNumber_9E: skip 12
 !Thwomp_26 = $26
 !Thwimp_27 = $27
 !BigBoo_28 = $28
+!KoopaKid_29 = $29
 !DownPiranhaPlant_2A = $2A
 !SumoLightning_2B = $2B
 !YoshiEgg_2C = $2C
@@ -984,8 +986,10 @@ SpriteNumber_9E: skip 12
 !Springboard_2F = $2F
 !BonyBeetle_31 = $31
 !DryBonesLedge_32 = $32
+!Podoboo_33 = $33
 !BossFireball_34 = $34
 !Yoshi_35 = $35
+!Boo_37 = $37
 !EerieStraight_38 = $38
 !EerieWave_39 = $39
 !UrchinBetweenWalls_3B = $3B
@@ -1006,6 +1010,7 @@ SpriteNumber_9E: skip 12
 !MontyMoleGround_4D = $4D
 !MontyMoleLedge_4E = $4E
 !PiranhaPlantFireballs_50 = $50
+!Ninji_51 = $51
 !Throwblock_53 = $53
 !CheckerboardPlatH_55 = $55
 !RockPlatH_56 = $56
@@ -1031,7 +1036,7 @@ SpriteNumber_9E: skip 12
 !CoinGameCloud_6A = $6A
 !WallSpringL_6B = $6B
 !WallSpringR_6C = $6C
-!Invisible_Block_6D = $6D
+!InvisibleBlock_6D = $6D
 !DinoRhino_6E = $6E
 !DinoTorch_6F = $6F
 !Pokey_70 = $70
@@ -1044,6 +1049,7 @@ SpriteNumber_9E: skip 12
 !Feather_77 = $77
 !1Up_78 = $78
 !Vine_79 = $79
+!Firework_7A = $7A
 !Peach_7C = $7C
 !PBalloon_7D = $7D
 !FlyingRedCoin_7E = $7E
@@ -1073,6 +1079,7 @@ SpriteNumber_9E: skip 12
 !Bubble_9D = $9D
 !BallChain_9E = $9E
 !BanzaiBill_9F = $9F
+!Bowser_A0 = $A0
 !BowserBall_A1 = $A1
 !MechaKoopa_A2 = $A2
 !RotatingGrayPlat_A3 = $A3
@@ -1080,12 +1087,37 @@ SpriteNumber_9E: skip 12
 !WallSparkyFuzzy_A5 = $A5
 !HotHead_A6 = $A6
 !IggyBall_A7 = $A7
+!Blargg_A8 = $A8
 !Reznor_A9 = $A9
+!Fishbone_AA = $AA
+!Rex_AB = $AB
+!WoodenSpikeDown_AC = $AC
+!WoodenSpikeUp_AD = $AD
+!FishinBoo_AE = $AE
 !BooBlock_AF = $AF
+!BooStream_B0 = $B0
+!CreateEatBlock_B1 = $B1
+!FallingSpike_B2 = $B2
 !StatueFireball_B3 = $B3
+!ReflectingFireball_B6 = $B6
+!CarrotTopRight_B7 = $B7
+!CarrotTopLeft_B8 = $B8
+!InfoBox_B9 = $B9
+!TimedLift_BA = $BA
 !CastleBlock_BB = $BB
 !SlidingKoopa_BD = $BD
+!BowserStatue_BC = $BC
+!Swooper_BE = $BE
 !MegaMole_BF = $BF
+!GrayLavaPlat_C0 = $C0
+!FlyingBlocks_C1 = $C1
+!Blurp_C2 = $C2
+!PorcuPuffer_C3 = $C3
+!GrayPlatFalls_C4 = $C4
+!BigBooBoss_C5 = $C5
+!Spotlight_C6 = $C6
+!InvisibleMushroom_C7 = $C7
+!LightSwitch_C8 = $C8
 
 ; === $7E00AA ===
 ; 12 bytes
