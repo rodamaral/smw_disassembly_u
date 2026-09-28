@@ -13333,49 +13333,48 @@ TriggerGoalTape:
     STZ.w $18B9                             ;$00FA89 |
     STZ.w $18DD                             ;$00FA8C |
     LDY.b #$0B                              ;$00FA8F |
-LvlEndSprLoopStrt:
+.LvlEndSprLoopStrt:
     LDA.w SpriteStatus_14C8,Y
     CMP.b #$08                              ;$00FA94 |
-    BCC LvlEndNextSprite                    ;$00FA96 |
+    BCC .LvlEndNextSprite                   ;$00FA96 |
     CMP.b #$0B                              ;$00FA98 |
-    BNE CODE_00FAA3                         ;$00FA9A |
+    BNE .CODE_00FAA3                        ;$00FA9A |
     PHX                                     ;$00FA9C |
     JSR LvlEndPowerUp                       ;$00FA9D |
     PLX                                     ;$00FAA0 |
-    BRA LvlEndNextSprite                    ;$00FAA1 |
+    BRA .LvlEndNextSprite                   ;$00FAA1 |
 
-CODE_00FAA3:
+.CODE_00FAA3:
     LDA.w SpriteNumber_9E,Y
     CMP.b #!GoalTape_7B                     ;$00FAA6 |
-    BEQ CODE_00FAB2                         ;$00FAA8 |
+    BEQ .CODE_00FAB2                        ;$00FAA8 |
     LDA.w SpriteOffscreenX_15A0,Y           ;$00FAAA |
     ORA.w SpriteOffscreenVert_186C,Y        ;$00FAAD |
-    BNE CODE_00FAC5                         ;$00FAB0 |
-CODE_00FAB2:
+    BNE .CODE_00FAC5                        ;$00FAB0 |
+.CODE_00FAB2:
     LDA.w dnctswye_1686,Y
     AND.b #$20                              ;$00FAB5 |
-    BNE CODE_00FAC5                         ;$00FAB7 |
+    BNE .CODE_00FAC5                        ;$00FAB7 |
     LDA.b #$10                              ;$00FAB9 |
     STA.w SpriteStun_1540,Y                 ;$00FABB |
     LDA.b #$06                              ;$00FABE |
     STA.w SpriteStatus_14C8,Y               ;$00FAC0 |
-    BRA LvlEndNextSprite                    ;$00FAC3 |
+    BRA .LvlEndNextSprite                   ;$00FAC3 |
 
-CODE_00FAC5:
+.CODE_00FAC5:
     LDA.w wcdj5sDp_190F,Y
     AND.b #$02                              ;$00FAC8 |
-    BNE LvlEndNextSprite                    ;$00FACA |
+    BNE .LvlEndNextSprite                   ;$00FACA |
     LDA.b #$00                              ;$00FACC |
     STA.w SpriteStatus_14C8,Y               ;$00FACE |
-LvlEndNextSprite:
+.LvlEndNextSprite:
     DEY
-    BPL LvlEndSprLoopStrt                   ;$00FAD2 |
+    BPL .LvlEndSprLoopStrt                  ;$00FAD2 |
     LDY.b #$07                              ;$00FAD4 |
     LDA.b #$00                              ;$00FAD6 |
-CODE_00FAD8:
-    STA.w ExtSprNumber_170B,Y
+-   STA.w ExtSprNumber_170B,Y               ;$00FAD8 |
     DEY                                     ;$00FADB |
-    BPL CODE_00FAD8                         ;$00FADC |
+    BPL -                                   ;$00FADC |
     RTL                                     ;$00FADE |
 
 DATA_00FADF:
@@ -13390,61 +13389,56 @@ DATA_00FAFB:
 LvlEndPowerUp:
     LDX.b Powerup_19
     LDA.w StarTimer_1490                    ;$00FB02 |
-    BEQ CODE_00FB09                         ;$00FB05 |
+    BEQ +                                   ;$00FB05 |
     LDX.b #$04                              ;$00FB07 |
-CODE_00FB09:
-    LDA.w RidingYoshi_187A
-    BEQ CODE_00FB10                         ;$00FB0C |
++   LDA.w RidingYoshi_187A                  ;$00FB09 |
+    BEQ +                                   ;$00FB0C |
     LDX.b #$05                              ;$00FB0E |
-CODE_00FB10:
-    LDA.w SpriteNumber_9E,Y
++   LDA.w SpriteNumber_9E,Y                 ;$00FB10 |
     CMP.b #!Springboard_2F                  ;$00FB13 |
-    BEQ CODE_00FB2D                         ;$00FB15 |
+    BEQ .CODE_00FB2D                        ;$00FB15 |
     CMP.b #!PSwitch_3E                      ;$00FB17 |
-    BEQ CODE_00FB2D                         ;$00FB19 |
+    BEQ .CODE_00FB2D                        ;$00FB19 |
     CMP.b #!Key_80                          ;$00FB1B |
-    BEQ ADDR_00FB28                         ;$00FB1D |
+    BEQ .ADDR_00FB28                        ;$00FB1D |
     CMP.b #!BabyYoshi_2D                    ;$00FB1F |
-    BNE CODE_00FB32                         ;$00FB21 |
+    BNE .CODE_00FB32                        ;$00FB21 |
     TXA                                     ;$00FB23 |
     CLC                                     ;$00FB24 |
     ADC.b #$07                              ;$00FB25 |
     TAX                                     ;$00FB27 |
-ADDR_00FB28:
+.ADDR_00FB28:
     TXA
     CLC                                     ;$00FB29 |
     ADC.b #$07                              ;$00FB2A |
     TAX                                     ;$00FB2C |
-CODE_00FB2D:
+.CODE_00FB2D:
     TXA
     CLC                                     ;$00FB2E |
     ADC.b #$07                              ;$00FB2F |
     TAX                                     ;$00FB31 |
-CODE_00FB32:
+.CODE_00FB32:
     LDA.l DATA_00FADF,X
     LDX.w $0DC2                             ;$00FB36 |
     CMP.l DATA_00FAFB,X                     ;$00FB39 |
-    BNE CODE_00FB41                         ;$00FB3D |
+    BNE +                                   ;$00FB3D |
     LDA.b #!1Up_78                          ;$00FB3F |
-CODE_00FB41:
-    STZ $0F
++   STZ $0F                                 ;$00FB41 |
     CMP.b #$E0                              ;$00FB43 |
-    BCC LvlEndStoreSpr                      ;$00FB45 |
+    BCC +                                   ;$00FB45 |
     PHA                                     ;$00FB47 |
     AND.b #$0F                              ;$00FB48 |
     STA $0F                                 ;$00FB4A |
     PLA                                     ;$00FB4C |
     CMP.b #$F0                              ;$00FB4D |
     LDA.b #!1Up_78                          ;$00FB4F |
-    BCS LvlEndStoreSpr                      ;$00FB51 |
+    BCS +                                   ;$00FB51 |
     LDA.b #!1Up_78                          ;$00FB53 |
-LvlEndStoreSpr:
-    STA.w SpriteNumber_9E,Y
++   STA.w SpriteNumber_9E,Y                 ;$00FB55 |
     CMP.b #!Star_76                         ;$00FB58 |
-    BNE CODE_00FB5F                         ;$00FB5A |
+    BNE +                                   ;$00FB5A |
     INC.w UnusedStarCounter_13CB            ;$00FB5C |
-CODE_00FB5F:
-    TYX
++   TYX                                     ;$00FB5F |
     JSL InitSpriteTables                    ;$00FB60 |
     LDA $0F                                 ;$00FB64 |
     STA.w Sprite_1594,Y                     ;$00FB66 |
@@ -13459,14 +13453,13 @@ CODE_00FB5F:
     LDA.b #$0C                              ;$00FB7D |
     STA.w SPCIO0_1DF9                       ;$00FB7F |
     LDX.b #$03                              ;$00FB82 |
-CODE_00FB84:
-    LDA.w SmokeSprNumber_17C0,X
-    BEQ CODE_00FB8D                         ;$00FB87 |
+-   LDA.w SmokeSprNumber_17C0,X             ;$00FB84 |
+    BEQ .create_smoke_puff_00FB8D           ;$00FB87 |
     DEX                                     ;$00FB89 |
-    BPL CODE_00FB84                         ;$00FB8A |
+    BPL -                                   ;$00FB8A |
     RTS                                     ;$00FB8C |
 
-CODE_00FB8D:
+.create_smoke_puff_00FB8D:
     LDA.b #$01
     STA.w SmokeSprNumber_17C0,X             ;$00FB8F |
     LDA.w SpriteYPosLow_D8,Y                ;$00FB92 |
