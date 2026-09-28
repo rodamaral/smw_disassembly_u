@@ -199,9 +199,9 @@ ExplodeKillSpr:
     LDA.b #$02                              ;$028168 |
     STA.w SpriteStatus_14C8,Y               ;$02816A |
     LDA.b #$C0                              ;$02816D |
-    STA.w $00AA,y                           ;$02816F |
+    STA.w SpriteYSpeed_AA,Y                 ;$02816F |
     LDA.b #$00                              ;$028172 |
-    STA.w $00B6,y                           ;$028174 |
+    STA.w SpriteXSpeed_B6,Y                 ;$028174 |
 Return028177:
     RTS
 
@@ -1262,7 +1262,7 @@ CODE_0289E1:
     LDA.w SpriteStatus_14C8,Y
     CMP.b #$08                              ;$0289E4 |
     BCC CODE_0289F3                         ;$0289E6 |
-    LDA.w $009E,y                           ;$0289E8 |
+    LDA.w SpriteNumber_9E,Y                 ;$0289E8 |
     CMP.b #$2D                              ;$0289EB |
     BNE CODE_0289F3                         ;$0289ED |
 CODE_0289EF:
@@ -2381,13 +2381,13 @@ BounceSprGfx:
     BPL CODE_029201                         ;$0291FD |
     LDY.b #$04                              ;$0291FF |
 CODE_029201:
-    LDA.w $001C,y
+    LDA.w Layer1YPos_1C,y
     STA $02                                 ;$029204 |
-    LDA.w $001A,y                           ;$029206 |
+    LDA.w Layer1XPos_1A,y                   ;$029206 |
     STA $03                                 ;$029209 |
-    LDA.w $001D,y                           ;$02920B |
+    LDA.w Layer1YPos_1C+1,y                 ;$02920B |
     STA $04                                 ;$02920E |
-    LDA.w $001B,y                           ;$029210 |
+    LDA.w Layer1XPos_1A+1,y                 ;$029210 |
     STA $05                                 ;$029213 |
     LDA.w BounceSprYPosLow_16A1,X           ;$029215 |
     CMP $02                                 ;$029218 |
@@ -3477,11 +3477,11 @@ CODE_029A08:
     ASL                                     ;$029A0B |
     ASL                                     ;$029A0C |
     TAY                                     ;$029A0D |
-    LDA.w $001C,y                           ;$029A0E |
+    LDA.w Layer1YPos_1C,y                   ;$029A0E |
     STA $02                                 ;$029A11 |
-    LDA.w $001A,y                           ;$029A13 |
+    LDA.w Layer1XPos_1A,y                   ;$029A13 |
     STA $03                                 ;$029A16 |
-    LDA.w $001D,y                           ;$029A18 |
+    LDA.w Layer1YPos_1C+1,y                 ;$029A18 |
     STA $04                                 ;$029A1B |
     LDA.w CoinSpriteYPosLow_17D4,X          ;$029A1D |
     CMP $02                                 ;$029A20 |
@@ -6223,9 +6223,9 @@ CODE_02AE5B:
     ASL                                     ;$02AE5F |
     TAY                                     ;$02AE60 |
     REP #$20                                ;$02AE61 |
-    LDA.w $001C,y                           ;$02AE63 |
+    LDA.w Layer1YPos_1C,y                   ;$02AE63 |
     STA $02                                 ;$02AE66 |
-    LDA.w $001A,y                           ;$02AE68 |
+    LDA.w Layer1XPos_1A,y                   ;$02AE68 |
     STA $04                                 ;$02AE6B |
     SEP #$20                                ;$02AE6D |
     LDA.w ScoreSprXPosLow_16ED,X            ;$02AE6F |
@@ -6595,7 +6595,7 @@ CODE_02B115:
     JSL FindFreeSlotLowPri
     BMI Return02B152                        ;$02B119 |
     LDA.b #$1C                              ;$02B11B |
-    STA.w $009E,y                           ;$02B11D |
+    STA.w SpriteNumber_9E,Y                 ;$02B11D |
     LDA.b #$08                              ;$02B120 |
     STA.w SpriteStatus_14C8,Y               ;$02B122 |
     TYX                                     ;$02B125 |
@@ -6616,7 +6616,7 @@ CODE_02B115:
     ADC.b #$00                              ;$02B147 |
     STA.w SpriteYPosHigh_14D4,Y             ;$02B149 |
     LDA.w DATA_02B10C,X                     ;$02B14C |
-    STA.w $00C2,y                           ;$02B14F |
+    STA.w SpritePhase_C2,y                  ;$02B14F |
 Return02B152:
     RTS
 
@@ -6991,7 +6991,7 @@ LaunchTorpedo:
     LDA.b #$08                              ;$02B3EB |
     STA.w SpriteStatus_14C8,Y               ;$02B3ED |
     LDA.b #$44                              ;$02B3F0 |
-    STA.w $009E,y                           ;$02B3F2 |
+    STA.w SpriteNumber_9E,Y                 ;$02B3F2 |
     LDA.w ShooterXPosLow_179B,X             ;$02B3F5 |
     STA.w SpriteXPosLow_E4,y                ;$02B3F8 |
     LDA.w ShooterXPosHigh_17A3,X            ;$02B3FB |
@@ -7083,7 +7083,7 @@ ShootBullet:
     LDA.b #$01                              ;$02B4AC |
     STA.w SpriteStatus_14C8,Y               ;$02B4AE |
     LDA.b #$1C                              ;$02B4B1 |
-    STA.w $009E,y                           ;$02B4B3 |
+    STA.w SpriteNumber_9E,Y                 ;$02B4B3 |
     LDA.w ShooterXPosLow_179B,X             ;$02B4B6 |
     STA.w SpriteXPosLow_E4,y                ;$02B4B9 |
     LDA.w ShooterXPosHigh_17A3,X            ;$02B4BC |
@@ -7593,7 +7593,7 @@ CODE_02B82E:
     LDA.b #$02                              ;$02B834 |
     STA.w SpriteStatus_14C8,Y               ;$02B836 |
     LDA.b #$70                              ;$02B839 |
-    STA.w $009E,y                           ;$02B83B |
+    STA.w SpriteNumber_9E,Y                 ;$02B83B |
     LDA.b SpriteXPosLow_E4,X                ;$02B83E |
     STA.w SpriteXPosLow_E4,y                ;$02B840 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02B843 |
@@ -7611,13 +7611,13 @@ CODE_02B82E:
     ASL                                     ;$02B861 |
     ROR $00                                 ;$02B862 |
     LDA $00                                 ;$02B864 |
-    STA.w $00B6,y                           ;$02B866 |
+    STA.w SpriteXSpeed_B6,Y                 ;$02B866 |
     LDA.b #$E0                              ;$02B869 |
-    STA.w $00AA,y                           ;$02B86B |
+    STA.w SpriteYSpeed_AA,Y                 ;$02B86B |
     PLX                                     ;$02B86E |
     LDA.b SpritePhase_C2,X                  ;$02B86F |
     AND $0D                                 ;$02B871 |
-    STA.w $00C2,y                           ;$02B873 |
+    STA.w SpritePhase_C2,y                  ;$02B873 |
     LDA.b #$01                              ;$02B876 |
     STA.w Sprite_1534,Y                     ;$02B878 |
     LDA.b #$01                              ;$02B87B |
@@ -7828,7 +7828,7 @@ CODE_02B9D5:
 
 CODE_02B9D9:
     LDA.b #$21
-    STA.w $009E,y                           ;$02B9DB |
+    STA.w SpriteNumber_9E,Y                 ;$02B9DB |
     LDA.b #$08                              ;$02B9DE |
     STA.w SpriteStatus_14C8,Y               ;$02B9E0 |
     PHX                                     ;$02B9E3 |
@@ -7956,7 +7956,7 @@ CODE_02BAC0:
     LDA.b #$08
     STA.w SpriteStatus_14C8,Y               ;$02BAC2 |
     LDA.b #$74                              ;$02BAC5 |
-    STA.w $009E,y                           ;$02BAC7 |
+    STA.w SpriteNumber_9E,Y                 ;$02BAC7 |
     LDA $00                                 ;$02BACA |
     STA.w SpriteXPosLow_E4,y                ;$02BACC |
     STA.b InteractionPtXPos_9A              ;$02BACF |
@@ -8913,7 +8913,7 @@ CODE_02C19A:
     LDA.b #$08                              ;$02C1A0 |
     STA.w SpriteStatus_14C8,Y               ;$02C1A2 |
     LDA.b #$48                              ;$02C1A5 |
-    STA.w $009E,y                           ;$02C1A7 |
+    STA.w SpriteNumber_9E,Y                 ;$02C1A7 |
     LDA.w SpriteDir_157C,X                  ;$02C1AA |
     STA $02                                 ;$02C1AD |
     LDA.b SpriteXPosLow_E4,X                ;$02C1AF |
@@ -8932,7 +8932,7 @@ CODE_02C19A:
     ADC.w DATA_02C196,X                     ;$02C1CB |
     STA.w SpriteXPosHigh_14E0,Y             ;$02C1CE |
     LDA.w DATA_02C198,X                     ;$02C1D1 |
-    STA.w $00B6,y                           ;$02C1D4 |
+    STA.w SpriteXSpeed_B6,Y                 ;$02C1D4 |
     PLX                                     ;$02C1D7 |
     LDA.b SpriteYPosLow_D8,X                ;$02C1D8 |
     CLC                                     ;$02C1DA |
@@ -8942,7 +8942,7 @@ CODE_02C19A:
     ADC.b #$00                              ;$02C1E3 |
     STA.w SpriteYPosHigh_14D4,Y             ;$02C1E5 |
     LDA.b #$C0                              ;$02C1E8 |
-    STA.w $00AA,y                           ;$02C1EA |
+    STA.w SpriteYSpeed_AA,Y                 ;$02C1EA |
     LDA.b #$2C                              ;$02C1ED |
     STA.w SpriteStun_1540,Y                 ;$02C1EF |
 Return02C1F2:
@@ -12432,7 +12432,7 @@ CODE_02DB66:
     LDA.w SpriteStatus_14C8,Y
     CMP.b #$08                              ;$02DB69 |
     BNE CODE_02DB74                         ;$02DB6B |
-    LDA.w $009E,y                           ;$02DB6D |
+    LDA.w SpriteNumber_9E,Y                 ;$02DB6D |
     CMP.b #$9B                              ;$02DB70 |
     BEQ PutHammerBroOnPlat                  ;$02DB72 |
 CODE_02DB74:
@@ -12506,7 +12506,7 @@ CODE_02DBF8:
     LDA.b #$02                              ;$02DBFD |
     STA.w SpriteStatus_14C8,Y               ;$02DBFF |
     LDA.b #$C0                              ;$02DC02 |
-    STA.w $00AA,y                           ;$02DC04 |
+    STA.w SpriteYSpeed_AA,Y                 ;$02DC04 |
     PHX                                     ;$02DC07 |
     TYX                                     ;$02DC08 |
     JSL CODE_01AB6F                         ;$02DC09 |
@@ -12731,7 +12731,7 @@ GenSumoLightning:
     JSL FindFreeSprSlot
     BMI Return02DDC5                        ;$02DD93 |
     LDA.b #$2B                              ;$02DD95 |
-    STA.w $009E,y                           ;$02DD97 |
+    STA.w SpriteNumber_9E,Y                 ;$02DD97 |
     LDA.b #$08                              ;$02DD9A |
     STA.w SpriteStatus_14C8,Y               ;$02DD9C |
     LDA.b SpriteXPosLow_E4,X                ;$02DD9F |
@@ -14474,7 +14474,7 @@ CODE_02EA50:
     LDA.w SpriteStatus_14C8,Y               ;$02EA63 |
     CMP.b #$08                              ;$02EA66 |
     BCC CODE_02EA86                         ;$02EA68 |
-    LDA.w $009E,y                           ;$02EA6A |
+    LDA.w SpriteNumber_9E,Y                 ;$02EA6A |
     CMP.b #$70                              ;$02EA6D |
     BEQ CODE_02EA86                         ;$02EA6F |
     CMP.b #$0E                              ;$02EA71 |
@@ -14556,7 +14556,7 @@ CODE_02EAF2:
     LDA.b #$08                              ;$02EAF8 |
     STA.w SpriteStatus_14C8,Y               ;$02EAFA |
     LDA.b #$77                              ;$02EAFD |
-    STA.w $009E,y                           ;$02EAFF |
+    STA.w SpriteNumber_9E,Y                 ;$02EAFF |
     LDA.b SpriteXPosLow_E4,X                ;$02EB02 |
     STA.w SpriteXPosLow_E4,y                ;$02EB04 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02EB07 |
@@ -14878,7 +14878,7 @@ CODE_02ED93:
     LDA.b #$08                              ;$02ED99 |
     STA.w SpriteStatus_14C8,Y               ;$02ED9B |
     LDA.b #$61                              ;$02ED9E |
-    STA.w $009E,y                           ;$02EDA0 |
+    STA.w SpriteNumber_9E,Y                 ;$02EDA0 |
     LDA.b SpriteYPosLow_D8,X                ;$02EDA3 |
     STA.w SpriteYPosLow_D8,Y                ;$02EDA5 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02EDA8 |
@@ -14917,10 +14917,10 @@ CODE_02EDD8:
     BNE CODE_02EDF6                         ;$02EDE2 |
     LDY.b #$09                              ;$02EDE4 |
 CODE_02EDE6:
-    LDA.w $009E,y
-    CMP.b #$61                              ;$02EDE9 |
+    LDA.w SpriteNumber_9E,Y
+    CMP.b #!SkullRaft_61                    ;$02EDE9 |
     BNE CODE_02EDF2                         ;$02EDEB |
-    LDA.b #$00                              ;$02EDED |
+    LDA.b #!StatusEmpty_00                  ;$02EDED |
     STA.w SpriteStatus_14C8,Y               ;$02EDEF |
 CODE_02EDF2:
     DEY
@@ -14955,7 +14955,7 @@ CODE_02EE19:
 CODE_02EE21:
     LDA.w SpriteStatus_14C8,Y
     BEQ CODE_02EE36                         ;$02EE24 |
-    LDA.w $009E,y                           ;$02EE26 |
+    LDA.w SpriteNumber_9E,Y                 ;$02EE26 |
     CMP.b #$61                              ;$02EE29 |
     BNE CODE_02EE36                         ;$02EE2B |
     LDA.w SpriteBlocked_1588,Y              ;$02EE2D |
@@ -15144,7 +15144,7 @@ ADDR_02EF7B:
     LDA.b #$08
     STA.w SpriteStatus_14C8,Y               ;$02EF7D |
     LDA.b #$78                              ;$02EF80 |
-    STA.w $009E,y                           ;$02EF82 |
+    STA.w SpriteNumber_9E,Y                 ;$02EF82 |
     LDA.b SpriteXPosLow_E4,X                ;$02EF85 |
     STA.w SpriteXPosLow_E4,y                ;$02EF87 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02EF8A |
@@ -15987,7 +15987,7 @@ CODE_02F54A:
 
 CODE_02F553:
     LDA.b #$8B
-    STA.w $009E,y                           ;$02F555 |
+    STA.w SpriteNumber_9E,Y                 ;$02F555 |
     LDA.b #$08                              ;$02F558 |
     STA.w SpriteStatus_14C8,Y               ;$02F55A |
     PHX                                     ;$02F55D |

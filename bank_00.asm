@@ -2167,10 +2167,10 @@ CODE_0092ED:
     LDY.w #$0008                            ;$0092EF |
     LDX.w #$0014                            ;$0092F2 |
 CODE_0092F5:
-    LDA.w $001A,y
+    LDA.w Layer1XPos_1A,Y
     STA.w $04A1,X                           ;$0092F8 |
     STA.w $04A4,X                           ;$0092FB |
-    LDA.w $1462,Y                           ;$0092FE |
+    LDA.w NextLayer1XPos_1462,Y             ;$0092FE |
     STA.w $04A7,X                           ;$009301 |
     TXA                                     ;$009304 |
     SEC                                     ;$009305 |
@@ -13304,7 +13304,7 @@ FlatPalaceSwitch:
     STA.w ScreenShakeTimer_1887             ;$00FA47 |
     LDY.b #$02                              ;$00FA4A |
     LDA.b #$60                              ;$00FA4C |
-    STA.w $009E,y                           ;$00FA4E |
+    STA.w SpriteNumber_9E,Y                 ;$00FA4E |
     LDA.b #$08                              ;$00FA51 |
     STA.w SpriteStatus_14C8,Y               ;$00FA53 |
     LDA.b InteractionPtXPos_9A              ;$00FA56 |
@@ -13347,7 +13347,7 @@ LvlEndSprLoopStrt:
     BRA LvlEndNextSprite                    ;$00FAA1 |
 
 CODE_00FAA3:
-    LDA.w $009E,y
+    LDA.w SpriteNumber_9E,Y
     CMP.b #$7B                              ;$00FAA6 |
     BEQ CODE_00FAB2                         ;$00FAA8 |
     LDA.w SpriteOffscreenX_15A0,Y           ;$00FAAA |
@@ -13399,7 +13399,7 @@ CODE_00FB09:
     BEQ CODE_00FB10                         ;$00FB0C |
     LDX.b #$05                              ;$00FB0E |
 CODE_00FB10:
-    LDA.w $009E,y
+    LDA.w SpriteNumber_9E,Y
     CMP.b #$2F                              ;$00FB13 |
     BEQ CODE_00FB2D                         ;$00FB15 |
     CMP.b #$3E                              ;$00FB17 |
@@ -13441,7 +13441,7 @@ CODE_00FB41:
     BCS LvlEndStoreSpr                      ;$00FB51 |
     LDA.b #$78                              ;$00FB53 |
 LvlEndStoreSpr:
-    STA.w $009E,y
+    STA.w SpriteNumber_9E,Y
     CMP.b #$76                              ;$00FB58 |
     BNE CODE_00FB5F                         ;$00FB5A |
     INC.w UnusedStarCounter_13CB            ;$00FB5C |
@@ -13453,9 +13453,9 @@ CODE_00FB5F:
     LDA.b #$0C                              ;$00FB69 |
     STA.w SpriteStatus_14C8,Y               ;$00FB6B |
     LDA.b #$D0                              ;$00FB6E |
-    STA.w $00AA,y                           ;$00FB70 |
+    STA.w SpriteYSpeed_AA,Y                 ;$00FB70 |
     LDA.b #$05                              ;$00FB73 |
-    STA.w $00B6,y                           ;$00FB75 |
+    STA.w SpriteXSpeed_B6,Y                 ;$00FB75 |
     LDA.b #$20                              ;$00FB78 |
     STA.w SpritePlayerContact_154C,Y        ;$00FB7A |
     LDA.b #$0C                              ;$00FB7D |
@@ -13552,7 +13552,7 @@ ADDR_00FC25:
     LDA.w SpriteStatus_14C8,Y
     CMP.b #$08                              ;$00FC28 |
     BNE ADDR_00FC73                         ;$00FC2A |
-    LDA.w $009E,y                           ;$00FC2C |
+    LDA.w SpriteNumber_9E,Y                 ;$00FC2C |
     CMP.b #$35                              ;$00FC2F |
     BNE ADDR_00FC73                         ;$00FC31 |
     LDA.b #$01                              ;$00FC33 |
@@ -13576,11 +13576,11 @@ ADDR_00FC25:
     LDA.b PlayerYPos_96+1                   ;$00FC5E |
     STA.w SpriteYPosHigh_14D4,Y             ;$00FC60 |
     LDA.b #$03                              ;$00FC63 |
-    STA.w $00C2,y                           ;$00FC65 |
+    STA.w SpritePhase_C2,Y                  ;$00FC65 |
     LDA.b #$00                              ;$00FC68 |
     STA.w SpriteDir_157C,Y                  ;$00FC6A |
     LDA.b #$10                              ;$00FC6D |
-    STA.w $00B6,y                           ;$00FC6F |
+    STA.w SpriteXSpeed_B6,Y                 ;$00FC6F |
 Return00FC72:
     RTL
 

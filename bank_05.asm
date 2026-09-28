@@ -4609,9 +4609,9 @@ ADDR_05C389:
     ADC.w $1462,X                           ;$05C38A |
     STA.w $1462,X                           ;$05C38D |
     LDA.w #$FFF8                            ;$05C390 |
-    STA.w $0045,X                           ;$05C393 |
+    STA.w Layer1TileUp_45,X                 ;$05C393 |
     LDA.w #$0017                            ;$05C396 |
-    STA.w $0047,X                           ;$05C399 |
+    STA.w Layer1TileDown_47,X               ;$05C399 |
     STZ.w PlayerXPos_94+1                   ;$05C39C |
 ADDR_05C39F:
     LDA.w $1456
@@ -4631,7 +4631,7 @@ ADDR_05C39F:
     LDY.b #$01                              ;$05C3BB |
 ADDR_05C3BD:
     TXA
-    STA.w $0055,Y                           ;$05C3BE |
+    STA.w Layer1ScrollDir_55,Y              ;$05C3BE |
     REP #$20                                ;$05C3C1 |
     PLA                                     ;$05C3C3 |
     TAY                                     ;$05C3C4 |
