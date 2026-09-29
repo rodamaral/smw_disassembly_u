@@ -243,7 +243,7 @@ CODE_048261:
     BPL CODE_048246                         ;$048262 |
     JSR CODE_0485A7                         ;$048264 |
     JSR OW_Tile_Animation                   ;$048267 |
-    LDA.w $13D2                             ;$04826A |
+    LDA.w SwitchPalaceColor_13D2            ;$04826A |
     BEQ .CODE_048275                        ;$04826D |
     JSR CODE_04F290                         ;$04826F |
     JMP .CODE_04840D                        ;$048272 |
@@ -7258,7 +7258,7 @@ CODE_04F290:
     LDY.w KeyholeYPos_1438+1
     CPY.b #$0C                              ;$04F293 |
     BCC CODE_04F29B                         ;$04F295 |
-    STZ.w $13D2                             ;$04F297 |
+    STZ.w SwitchPalaceColor_13D2            ;$04F297 |
     RTS                                     ;$04F29A |
 
 CODE_04F29B:
@@ -7350,7 +7350,7 @@ CODE_04F33A:
     STA.w $0340,Y                           ;$04F35D |
     LDA.b #$E6                              ;$04F360 |
     STA.w $0342,Y                           ;$04F362 |
-    LDA.w $13D2                             ;$04F365 |
+    LDA.w SwitchPalaceColor_13D2            ;$04F365 |
     DEC A                                   ;$04F368 |
     ASL                                     ;$04F369 |
     ORA.b #$30                              ;$04F36A |

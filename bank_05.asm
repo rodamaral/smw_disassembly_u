@@ -2523,12 +2523,17 @@ DATA_05A221:
 DATA_05A580:
     db $51,$A7,$51,$87,$51,$67,$51,$47
     db $51,$27,$51,$07,$50,$E7,$50,$C7
-DATA_05A590:
+
+; positive values are the translevel themselves
+; the 8th bit symbolizes the 2nd message in this translevel 
+; eg: $2A (0ffset 0x15) => message 1 of translevel 2A
+;     $AA (offset 0x06) => message 2 of translevel 2A
+translevel_messages_05A590:
     db $14,$45,$3F,$08,$00,$29,$AA,$27
     db $26,$84,$95,$A9,$15,$13,$CE,$A7
     db $A4,$25,$A5,$05,$A6,$2A,$28
 
-DATA_05A5A7:
+message_entry_05A5A7:
     db $8D,$00,$8D,$00,$8D,$00,$8D,$00
     db $00,$00,$91,$02,$1D,$04,$18,$05
     db $1D,$06,$B7,$08,$B2,$07,$0B,$03
@@ -2537,7 +2542,7 @@ DATA_05A5A7:
     db $A4,$05,$8F,$03,$09,$01,$0A,$02
     db $91,$01
 
-DATA_05A5D9:
+messages_05A5D9:
     db $16,$44,$4B,$42,$4E,$4C,$44,$1A
     db $1F,$1F,$1F,$13,$47,$48,$52,$1F
     db $48,$D2,$03,$48,$4D,$4E,$52,$40
@@ -2899,13 +2904,13 @@ DATA_05A5D9:
 DATA_05B0FF:
     db $50,$C7,$41,$E2,$FC,$38,$FF
 
-DATA_05B106:
+message_size_trigger_05B106:
     db $4C,$50
 
-DATA_05B108:
+message_size_targets_05B108:
     db $50,$00
 
-DATA_05B10A:
+message_size_incrementer_05B10A:
     db $04,$FC
 
 message_box_triggered_05B10C:
@@ -2914,120 +2919,121 @@ message_box_triggered_05B10C:
     PLB                                     ;$05B10E |
     LDX.w MessageBoxExpand_1B88             ;$05B10F |
     LDA.w MessageBoxTimer_1B89              ;$05B112 |
-    CMP.w DATA_05B108,X                     ;$05B115 |
-    BNE CODE_05B191                         ;$05B118 |
+    CMP.w message_size_targets_05B108,X     ;$05B115 |
+    BNE message_partially_expanded_05B191   ;$05B118 |
     TXA                                     ;$05B11A |
-    BEQ .CODE_05B132                        ;$05B11B |
-    STZ.w MessageBoxTrigger_1426            ;$05B11D |
-    STZ.w MessageBoxExpand_1B88             ;$05B120 |
-    STZ.b Layer12Window_41                  ;$05B123 |
-    STZ.b Layer34Window_42                  ;$05B125 |
-    STZ.b OBJCWWindow_43                    ;$05B127 |
-    STZ.w $0D9F                             ;$05B129 |
-    LDA.b #$02                              ;$05B12C |
-    STA.b ColorAddition_44                  ;$05B12E |
-    BRA CODE_05B18E                         ;$05B130 |
+    BEQ .message_fully_expanded_05B132      ;$05B11B |\
+    STZ.w MessageBoxTrigger_1426            ;$05B11D || fully dismiss message box:
+    STZ.w MessageBoxExpand_1B88             ;$05B120 ||
+    STZ.b Layer12Window_41                  ;$05B123 ||
+    STZ.b Layer34Window_42                  ;$05B125 ||
+    STZ.b OBJCWWindow_43                    ;$05B127 ||
+    STZ.w HDMAEnable_0D9F                   ;$05B129 ||
+    LDA.b #$02                              ;$05B12C ||
+    STA.b ColorAddition_44                  ;$05B12E ||
+    BRA return_05B18E                       ;$05B130 |/
 
-.CODE_05B132:
+.message_fully_expanded_05B132:
     LDA.w OverworldOverride_0109
     ORA.w SwitchPalaceColor_13D2            ;$05B135 |
-    BEQ CODE_05B16E                         ;$05B138 |
-    LDA.w SwitchPalaceTimer_1DF5            ;$05B13A |
-    BEQ CODE_05B16E                         ;$05B13D |
-    LDA.b Frame_13                          ;$05B13F |
-    AND.b #$03                              ;$05B141 |
-    BNE CODE_05B18E                         ;$05B143 |
-    DEC.w SwitchPalaceTimer_1DF5            ;$05B145 |
-    BNE CODE_05B18E                         ;$05B148 |
+    BEQ check_input_05B16E                  ;$05B138 |\
+    LDA.w SwitchPalaceTimer_1DF5            ;$05B13A ||
+    BEQ check_input_05B16E                  ;$05B13D ||
+    LDA.b Frame_13                          ;$05B13F ||
+    AND.b #$03                              ;$05B141 ||
+    BNE return_05B18E                       ;$05B143 || if in the intro level or switch palace
+    DEC.w SwitchPalaceTimer_1DF5            ;$05B145 ||  decrease the timer every 4 frames
+    BNE return_05B18E                       ;$05B148 |/
     LDA.w SwitchPalaceColor_13D2            ;$05B14A |
-    BEQ CODE_05B16E                         ;$05B14D |
-    PLB                                     ;$05B14F |
-    INC.w OWLoadEventFlag_1DE9              ;$05B150 |
-    LDA.b #!ExitNormal_01                   ;$05B153 |
-    STA.w MidwayFlag_13CE                   ;$05B155 |
-    BRA CODE_05B165                         ;$05B158 |
+    BEQ check_input_05B16E                  ;$05B14D |\
+    PLB                                     ;$05B14F || if pressed a switch palace
+    INC.w OWLoadEventFlag_1DE9              ;$05B150 || trigger level end
+    LDA.b #!ExitNormal_01                   ;$05B153 ||
+    STA.w MidwayFlag_13CE                   ;$05B155 ||
+    BRA exit_level_05B165                   ;$05B158 |/
 
-CODE_05B15A:
+mario_to_yoshi_island_05B15A:
     PLB
     LDA.b #$8E                              ;$05B15B |
-    STA.w $1F19                             ;$05B15D |
+    STA.w OWPlayerYPos_1F19                 ;$05B15D |
 side_exit_level:
     STZ.w OverworldOverride_0109            ;$05B160 |
     LDA.b #!ExitNothing_00                  ;$05B163 |
-CODE_05B165:
+exit_level_05B165:
     STA.w LevelExitMode_0DD5
     LDA.b #!FadeToOverworld_0B              ;$05B168 |
     STA.w GameMode_0100                     ;$05B16A |
     RTL                                     ;$05B16D |
 
-CODE_05B16E:
+check_input_05B16E:
     LDA.b byetudlrHold_15
     AND.b #$F0                              ;$05B170 |
-    BEQ CODE_05B18E                         ;$05B172 |
+    BEQ return_05B18E                       ;$05B172 | branch if byet held
     EOR.b byetudlrPress_16                  ;$05B174 |
-    AND.b #$F0                              ;$05B176 |
+    AND.b #$F0                              ;$05B176 | branch if no input form byet was pressed
     BEQ +                                   ;$05B178 |
     LDA.b axlr0000Hold_17                   ;$05B17A |
     AND.b #$C0                              ;$05B17C |
-    BEQ CODE_05B18E                         ;$05B17E |
+    BEQ return_05B18E                       ;$05B17E | branch if axlr is held
     EOR.b axlr0000Press_18                  ;$05B180 |
     AND.b #$C0                              ;$05B182 |
-    BNE CODE_05B18E                         ;$05B184 |
-+   LDA.w OverworldOverride_0109            ;$05B186 |
-    BNE CODE_05B15A                         ;$05B189 |
-    INC.w MessageBoxExpand_1B88             ;$05B18B |
-CODE_05B18E:
+    BNE return_05B18E                       ;$05B184 | branch if no input form byet was pressed
++   LDA.w OverworldOverride_0109            ;$05B186 |\ if dismissing the intro level message
+    BNE mario_to_yoshi_island_05B15A        ;$05B189 |/ prepare Mario to start Yoshi Island 
+    INC.w MessageBoxExpand_1B88             ;$05B18B | set message to shrink
+return_05B18E:
     JMP return_05B299
 
-CODE_05B191:
-    CMP.w DATA_05B106,X
-    BNE +                                   ;$05B194 |
-    TXA                                     ;$05B196 |
-    BEQ .CODE_05B1A3                        ;$05B197 |
-    JSR CODE_05B31B                         ;$05B199 |
-    LDA.b #$09                              ;$05B19C |
-    STA.b StripeImage_12                    ;$05B19E |
-+   JMP .CODE_05B250                        ;$05B1A0 |
+message_partially_expanded_05B191:
+    CMP.w message_size_trigger_05B106,X
+    BNE +                                   ;$05B194 |\
+    TXA                                     ;$05B196 || X: $1B89
+    BEQ .message_lookup_05B1A3              ;$05B197 || if box just stopped expanding
+    JSR CODE_05B31B                         ;$05B199 || if box just started shriking:
+    LDA.b #$09                              ;$05B19C ||
+    STA.b StripeImage_12                    ;$05B19E |/
++   JMP .handle_box_sizing_05B250           ;$05B1A0 |
 
-.CODE_05B1A3:
-    LDX.b #$16
--   LDY.b #$01                              ;$05B1A5 |
-    LDA.w DATA_05A590,X                     ;$05B1A7 |
-    BPL +                                   ;$05B1AA |
-    INY                                     ;$05B1AC |
-    AND.b #$7F                              ;$05B1AD |
-+   CPY.w MessageBoxTrigger_1426            ;$05B1AF |
-    BNE +                                   ;$05B1B2 |
-    CMP.w Translevel_13BF                   ;$05B1B4 |
-    BEQ ++                                  ;$05B1B7 |
-+   DEX                                     ;$05B1B9 |
-    BNE -                                   ;$05B1BA |
+.message_lookup_05B1A3:
+    LDX.b #$16                              ;$05B1A3 | X: message index to look for
+.loop_05B1A5:                               ;        |
+    LDY.b #$01                              ;$05B1A5 |\ Y: current message number to look
+    LDA.w translevel_messages_05A590,X      ;$05B1A7 ||
+    BPL +                                   ;$05B1AA ||\
+    INY                                     ;$05B1AC ||| negative data implies a 2nd message in the level
+    AND.b #$7F                              ;$05B1AD ||/
++   CPY.w MessageBoxTrigger_1426            ;$05B1AF ||
+    BNE +                                   ;$05B1B2 ||\ if message number is Y
+    CMP.w Translevel_13BF                   ;$05B1B4 ||| and data = translevel
+    BEQ ++                                  ;$05B1B7 ||/ break
++   DEX                                     ;$05B1B9 ||
+    BNE .loop_05B1A5                        ;$05B1BA |/
 ++  LDY.w MessageBoxTrigger_1426            ;$05B1BC |
-    CPY.b #$03                              ;$05B1BF |
-    BNE +                                   ;$05B1C1 |
-    LDX.b #$18                              ;$05B1C3 |
+    CPY.b #!MessageYoshi_03                 ;$05B1BF |
+    BNE +                                   ;$05B1C1 |\
+    LDX.b #$18                              ;$05B1C3 |/
 +   CPX.b #$04                              ;$05B1C5 |
-    BCS +                                   ;$05B1C7 |
-    INX                                     ;$05B1C9 |
-    STX.w $13D2                             ;$05B1CA |
-    DEX                                     ;$05B1CD |
-    JSR CODE_05B2EB                         ;$05B1CE |
+    BCS +                                   ;$05B1C7 |\
+    INX                                     ;$05B1C9 ||
+    STX.w SwitchPalaceColor_13D2            ;$05B1CA ||
+    DEX                                     ;$05B1CD ||
+    JSR palace_message_OAM_05B2EB           ;$05B1CE |/
 +   CPX.b #$16                              ;$05B1D1 |
-    BNE +                                   ;$05B1D3 |
-    LDA.w RidingYoshi_187A                  ;$05B1D5 |
-    BEQ +                                   ;$05B1D8 |
-    INX                                     ;$05B1DA |
-+   TXA                                     ;$05B1DB |
+    BNE +                                   ;$05B1D3 |\
+    LDA.w RidingYoshi_187A                  ;$05B1D5 ||
+    BEQ +                                   ;$05B1D8 || increase message index if mounted during Yoshi's House message
+    INX                                     ;$05B1DA |/
++   TXA                                     ;$05B1DB | render message:
     ASL                                     ;$05B1DC |
     TAX                                     ;$05B1DD |
     REP #$20                                ;$05B1DE |
-    LDA.w DATA_05A5A7,X                     ;$05B1E0 |
-    STA $00                                 ;$05B1E3 |
+    LDA.w message_entry_05A5A7,X            ;$05B1E0 |
+    STA $00                                 ;$05B1E3 | $00 = message string reference???
     REP #$10                                ;$05B1E5 |
     LDA.l DynStripeImgSize_7F837B           ;$05B1E7 |
     TAX                                     ;$05B1EB |
     LDY.w #$000E                            ;$05B1EC | Y: loop counter
-.loop_05B1EF:
+.render_message_loop_05B1EF:
     LDA.w DATA_05A580,Y                     ;        |\
     STA.l DynamicStripeImage_7F837D,X       ;$05B1F2 ||
     LDA.w #$2300                            ;$05B1F6 ||
@@ -3035,19 +3041,19 @@ CODE_05B191:
     PHY                                     ;$05B1FD ||
     SEP #$20                                ;$05B1FE ||
     LDA.b #$12                              ;$05B200 ||
-    STA $02                                 ;$05B202 ||
+    STA $02                                 ;$05B202 || $02: inner loop counter
     STZ $03                                 ;$05B204 ||
-    LDY $00                                 ;$05B206 ||
+    LDY $00                                 ;$05B206 || Y: 
 -   LDA.b #$1F                              ;$05B208 ||\
     BIT.w $0003                             ;$05B20A |||
     BMI +                                   ;$05B20D |||\
-    LDA.w DATA_05A5D9,Y                     ;$05B20F ||||
+    LDA.w messages_05A5D9,Y                 ;$05B20F ||||
     STA.w $0003                             ;$05B212 ||||
     AND.b #$7F                              ;$05B215 ||||
     INY                                     ;$05B217 |||/
-+   STA.l $7F8381,X                         ;$05B218 |||
++   STA.l DynamicStripeImage_7F837D+4,X     ;$05B218 |||
     LDA.b #$39                              ;$05B21C |||
-    STA.l $7F8382,X                         ;$05B21E |||
+    STA.l DynamicStripeImage_7F837D+5,X     ;$05B21E |||
     INX                                     ;$05B222 |||
     INX                                     ;$05B223 |||
     DEC $02                                 ;$05B224 |||
@@ -3061,23 +3067,23 @@ CODE_05B191:
     PLY                                     ;$05B230 ||
     DEY                                     ;$05B231 ||
     DEY                                     ;$05B232 ||
-    BPL .loop_05B1EF                        ;$05B233 |/
+    BPL .render_message_loop_05B1EF         ;$05B233 |/
     LDA.w #$00FF                            ;$05B235 |
     STA.l DynamicStripeImage_7F837D,X       ;$05B238 |
     TXA                                     ;$05B23C |
     STA.l DynStripeImgSize_7F837B           ;$05B23D |
     SEP #$30                                ;$05B241 |
     LDA.b #$01                              ;$05B243 |
-    STA.w $13D5                             ;$05B245 |
+    STA.w Layer3ScrollType_13D5             ;$05B245 |
     STZ.b Layer3XPos_22                     ;$05B248 |
     STZ.b Layer3XPos_22+1                   ;$05B24A |
     STZ.b Layer3YPos_24                     ;$05B24C |
     STZ.b Layer3YPos_24+1                   ;$05B24E |
-.CODE_05B250:
+.handle_box_sizing_05B250:
     LDX.w MessageBoxExpand_1B88
     LDA.w MessageBoxTimer_1B89              ;$05B253 |
     CLC                                     ;$05B256 |
-    ADC.w DATA_05B10A,X                     ;$05B257 |
+    ADC.w message_size_incrementer_05B10A,X ;$05B257 |
     STA.w MessageBoxTimer_1B89              ;$05B25A |
     CLC                                     ;$05B25D |
     ADC.b #$80                              ;$05B25E |
@@ -3091,8 +3097,8 @@ CODE_05B191:
 -   CPX.w MessageBoxTimer_1B89              ;$05B26D |\
     BCC +                                   ;$05B270 ||
     LDA.w #$00FF                            ;$05B272 ||
-+   STA.w $04EC,Y                           ;$05B275 ||
-    STA.w $053C,X                           ;$05B278 ||
++   STA.w CreditsL3HDMATable_04B4+$38,Y     ;$05B275 ||
+    STA.w CreditsL3HDMATable_04B4+$88,X     ;$05B278 ||
     INX                                     ;$05B27B ||
     INX                                     ;$05B27C ||
     DEY                                     ;$05B27D ||
@@ -3101,14 +3107,14 @@ CODE_05B191:
     SEP #$20                                ;$05B281 |
     LDA.b #$22                              ;$05B283 |
     STA.b Layer12Window_41                  ;$05B285 |
-    LDY.w $13D2                             ;$05B287 |
+    LDY.w SwitchPalaceColor_13D2            ;$05B287 |
     BEQ +                                   ;$05B28A |
     LDA.b #$20                              ;$05B28C |
 +   STA.b OBJCWWindow_43                    ;$05B28E |
     LDA.b #$22                              ;$05B290 |
     STA.b ColorAddition_44                  ;$05B292 |
     LDA.b #$80                              ;$05B294 |
-    STA.w $0D9F                             ;$05B296 |
+    STA.w HDMAEnable_0D9F                   ;$05B296 |
 return_05B299:
     PLB
     RTL                                     ;$05B29A |
@@ -3126,7 +3132,7 @@ DATA_05B2DB:
     db $50,$4F,$58,$4F,$50,$57,$58,$57
     db $92,$4F,$9A,$4F,$92,$57,$9A,$57
 
-CODE_05B2EB:
+palace_message_OAM_05B2EB:
     PHX
     TXA                                     ;$05B2EC |
     ASL                                     ;$05B2ED |
@@ -3137,23 +3143,22 @@ CODE_05B2EB:
     STZ $00                                 ;$05B2F2 |
     REP #$20                                ;$05B2F4 |
     LDY.b #$1C                              ;$05B2F6 |
-CODE_05B2F8:
-    LDA.w DATA_05B29B,X
-    STA.w $0202,Y                           ;$05B2FB |
-    PHX                                     ;$05B2FE |
-    LDX $00                                 ;$05B2FF |
-    LDA.w DATA_05B2DB,X                     ;$05B301 |
-    STA.w OAMMirror_0200,Y                  ;$05B304 |
-    PLX                                     ;$05B307 |
-    INX                                     ;$05B308 |
-    INX                                     ;$05B309 |
-    INC $00                                 ;$05B30A |
-    INC $00                                 ;$05B30C |
-    DEY                                     ;$05B30E |
-    DEY                                     ;$05B30F |
-    DEY                                     ;$05B310 |
-    DEY                                     ;$05B311 |
-    BPL CODE_05B2F8                         ;$05B312 |
+-   LDA.w DATA_05B29B,X                     ;$05B2F8 |\
+    STA.w $0202,Y                           ;$05B2FB ||
+    PHX                                     ;$05B2FE ||
+    LDX $00                                 ;$05B2FF ||
+    LDA.w DATA_05B2DB,X                     ;$05B301 ||
+    STA.w OAMMirror_0200,Y                  ;$05B304 ||
+    PLX                                     ;$05B307 ||
+    INX                                     ;$05B308 ||
+    INX                                     ;$05B309 ||
+    INC $00                                 ;$05B30A ||
+    INC $00                                 ;$05B30C ||
+    DEY                                     ;$05B30E ||
+    DEY                                     ;$05B30F ||
+    DEY                                     ;$05B310 ||
+    DEY                                     ;$05B311 ||
+    BPL -                                   ;$05B312 |/
     STZ.w OAMTileBitSize_0400               ;$05B314 |
     SEP #$20                                ;$05B317 |
     PLX                                     ;$05B319 |
@@ -3162,13 +3167,12 @@ CODE_05B2F8:
 CODE_05B31B:
     LDY.b #$1C
     LDA.b #$F0                              ;$05B31D |
-CODE_05B31F:
-    STA.w $0201,Y
+-   STA.w $0201,Y                           ;$05B31F |
     DEY                                     ;$05B322 |
     DEY                                     ;$05B323 |
     DEY                                     ;$05B324 |
     DEY                                     ;$05B325 |
-    BPL CODE_05B31F                         ;$05B326 |
+    BPL -                                   ;$05B326 |
     RTS                                     ;$05B328 |
 
 ADDR_05B329:

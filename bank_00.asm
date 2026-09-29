@@ -11682,13 +11682,13 @@ CODE_00EEAA:
     LSR                                     ;$00EEAB |
     LSR                                     ;$00EEAC |
     TAX                                     ;$00EEAD |
-    LDA.w $1F27,X                           ;$00EEAE |
+    LDA.w SwitchBlockFlags_1F27,X           ;$00EEAE |
     BNE CODE_00EED1                         ;$00EEB1 |
     INC A                                   ;$00EEB3 |
-    STA.w $1F27,X                           ;$00EEB4 |
-    STA.w $13D2                             ;$00EEB7 |
+    STA.w SwitchBlockFlags_1F27,X           ;$00EEB4 |
+    STA.w SwitchPalaceColor_13D2            ;$00EEB7 |
     PHY                                     ;$00EEBA |
-    STX.w $191E                             ;$00EEBB |
+    STX.w BigSwitchPressTimer_191E          ;$00EEBB |
     JSR FlatPalaceSwitch                    ;$00EEBE |
     PLY                                     ;$00EEC1 |
     LDA.b #$0C                              ;$00EEC2 |

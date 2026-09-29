@@ -1754,7 +1754,14 @@ DragonCoinsShown_1422: skip 1
 SwitchPalacePressed_1423: skip 1
 DisplayBonusStars_1424: skip 1
 BonusGameFlag_1425: skip 1
+
 MessageBoxTrigger_1426: skip 1
+; Valid values
+!MessageNone_00 = $00
+!Message_01 = $01
+!Message_02 = $02
+!MessageYoshi_03 = $03
+
 ClownCarImage_1427: skip 1
 ClownCarPropeller_1428: skip 1
 BowserPalette_1429: skip 1
