@@ -258,7 +258,7 @@ Return0381D2:
     RTS
 
 CODE_0381D3:
-    LDA.b #$02
+    LDA.b #!StatusFall_02
     STA.w SpriteStatus_14C8,X               ;$0381D5 |
     STZ.b SpriteXSpeed_B6,X                 ;$0381D8 |
     LDA.b #$D0                              ;$0381DA |
@@ -271,7 +271,7 @@ CODE_0381E4:
     LDY.b #$0B
 CODE_0381E6:
     LDA.w SpriteStatus_14C8,Y
-    CMP.b #$09                              ;$0381E9 |
+    CMP.b #!StatusCarryable_09              ;$0381E9 |
     BEQ CODE_0381F5                         ;$0381EB |
     CMP.b #$0A                              ;$0381ED |
     BEQ CODE_0381F5                         ;$0381EF |
@@ -592,7 +592,7 @@ Blurp:
 CODE_0384E2:
     STA.w $0302,Y
     LDA.w SpriteStatus_14C8,X               ;$0384E5 |
-    CMP.b #$08                              ;$0384E8 |
+    CMP.b #!StatusNormal_08                 ;$0384E8 |
     BEQ CODE_0384F5                         ;$0384EA |
 CODE_0384EC:
     LDA.w $0303,Y
@@ -638,7 +638,7 @@ PorcuPuffer:
     LDA.b SpriteLock_9D                     ;$038532 |
     BNE Return038586                        ;$038534 |
     LDA.w SpriteStatus_14C8,X               ;$038536 |
-    CMP.b #$08                              ;$038539 |
+    CMP.b #!StatusNormal_08                 ;$038539 |
     BNE Return038586                        ;$03853B |
     JSR SubOffscreen0Bnk3                   ;$03853D |
     JSL SprSprPMarioSprRts                  ;$038540 |
@@ -941,7 +941,7 @@ MegaMoleSpeed:
 MegaMole:
     JSR MegaMoleGfxRt
     LDA.w SpriteStatus_14C8,X               ;$038773 |
-    CMP.b #$08                              ;$038776 |
+    CMP.b #!StatusNormal_08                 ;$038776 |
     BNE Return038733                        ;$038778 |
     JSR SubOffscreen3Bnk3                   ;$03877A |
     LDY.w SpriteDir_157C,X                  ;$03877D |
@@ -1116,7 +1116,7 @@ Swooper:
     STA.w $0302,Y                           ;$0388B2 |
     PLX                                     ;$0388B5 |
     LDA.w SpriteStatus_14C8,X               ;$0388B6 |
-    CMP.b #$08                              ;$0388B9 |
+    CMP.b #!StatusNormal_08                 ;$0388B9 |
     BEQ CODE_0388C0                         ;$0388BB |
     JMP CODE_0384EC                         ;$0388BD |
 
@@ -1244,7 +1244,7 @@ CODE_038983:
 CODE_038989:
     STA.w $0302,Y
     LDA.w SpriteStatus_14C8,X               ;$03898C |
-    CMP.b #$08                              ;$03898F |
+    CMP.b #!StatusNormal_08                 ;$03898F |
     BNE Return0389FE                        ;$038991 |
     JSR SubOffscreen0Bnk3                   ;$038993 |
     JSL SprSprPMarioSprRts                  ;$038996 |
@@ -1435,7 +1435,7 @@ CODE_038ACB:
     BMI Return038B24                        ;$038AD8 |
     LDA.b #$17                              ;$038ADA |
     STA.w SPCIO3_1DFC                       ;$038ADC |
-    LDA.b #$08                              ;$038ADF |
+    LDA.b #!StatusNormal_08                 ;$038ADF |
     STA.w SpriteStatus_14C8,Y               ;$038AE1 |
     LDA.b #!StatueFireball_B3               ;$038AE4 |
     STA.w SpriteNumber_9E,Y                 ;$038AE6 |
@@ -2068,7 +2068,7 @@ CODE_038F81:
     PLX                                     ;$038FA3 |
 CODE_038FA4:
     LDA.w SpriteStatus_14C8,X
-    CMP.b #$08                              ;$038FA7 |
+    CMP.b #!StatusNormal_08                 ;$038FA7 |
     BNE Return038FF1                        ;$038FA9 |
     LDA.b SpriteLock_9D                     ;$038FAB |
     BNE Return038FF1                        ;$038FAD |
@@ -2780,7 +2780,7 @@ RexSpeed:
 RexMainRt:
     JSR RexGfxRt
     LDA.w SpriteStatus_14C8,X               ;$03951A |
-    CMP.b #$08                              ;$03951D |
+    CMP.b #!StatusNormal_08                 ;$03951D |
     BNE RexReturn                           ;$03951F |
     LDA.b SpriteLock_9D                     ;$039521 |
     BNE RexReturn                           ;$039523 |
@@ -2881,7 +2881,7 @@ NoRexContact:
     RTS
 
 RexSpinKill:
-    LDA.b #$04
+    LDA.b #!StatusSpinkill_04
     STA.w SpriteStatus_14C8,X               ;$0395E0 |
     LDA.b #$1F                              ;$0395E3 |
     STA.w SpriteStun_1540,X                 ;$0395E5 |
@@ -3348,7 +3348,7 @@ CODE_03990A:
     BPL CODE_03990A                         ;$03990E |
 CODE_039910:
     LDA.w SpriteStatus_14C8,X
-    CMP.b #$08                              ;$039913 |
+    CMP.b #!StatusNormal_08                 ;$039913 |
     BEQ CODE_03991A                         ;$039915 |
     JMP DrawReznor                          ;$039917 |
 
@@ -3718,7 +3718,7 @@ NoReznorGfxFlip:
     LDA.b #$03                              ;$039BD2 |
     JSL FinishOAMWrite                      ;$039BD4 |
     LDA.w SpriteStatus_14C8,X               ;$039BD8 |
-    CMP.b #$02                              ;$039BDB |
+    CMP.b #!StatusFall_02                   ;$039BDB |
     BEQ Return039BE2                        ;$039BDD |
 DrawReznorPlats:
     JSR ReznorPlatGfxRt
@@ -3783,7 +3783,7 @@ DinoMainSubRt:
     LDA.b SpriteLock_9D                     ;$039C4A |
     BNE Return039CA3                        ;$039C4C |
     LDA.w SpriteStatus_14C8,X               ;$039C4E |
-    CMP.b #$08                              ;$039C51 |
+    CMP.b #!StatusNormal_08                 ;$039C51 |
     BNE Return039CA3                        ;$039C53 |
     JSR SubOffscreen0Bnk3                   ;$039C55 |
     JSL MarioSprInteract                    ;$039C58 |
@@ -5117,7 +5117,7 @@ CODE_03A619:
     RTS                                     ;$03A61C |
 
 CODE_03A61D:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8+8               ;$03A61F | NOTE: hardcoded slot 8
     LDA.b #!BowserBall_A1                   ;$03A622 |
     STA.b SpriteNumber_9E+8                 ;$03A624 | NOTE: hardcoded slot 8
@@ -5382,7 +5382,7 @@ CODE_03A7EB:
 CODE_03A7F6:
     LDA.b #$17
     STA.w SPCIO3_1DFC                       ;$03A7F8 |
-    LDA.b #$08                              ;$03A7FB |
+    LDA.b #!StatusNormal_08                 ;$03A7FB |
     STA.w SpriteStatus_14C8,Y               ;$03A7FD |
     LDA.b #!Podoboo_33                      ;$03A800 |
     STA.w SpriteNumber_9E,Y                 ;$03A802 |
@@ -5514,7 +5514,7 @@ CODE_03A8D8:
 CODE_03A8E3:
     LDA.b #$10
     STA.w SPCIO0_1DF9                       ;$03A8E5 |
-    LDA.b #$08                              ;$03A8E8 |
+    LDA.b #!StatusNormal_08                 ;$03A8E8 |
     STA.w SpriteStatus_14C8,Y               ;$03A8EA |
     LDA.b #!Mushroom_74                     ;$03A8ED |
     STA.w SpriteNumber_9E,Y                 ;$03A8EF |
@@ -5880,7 +5880,7 @@ CODE_03AC5A:
     RTS                                     ;$03AC62 |
 
 CODE_03AC63:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8+8               ;$03AC65 | NOTE: hardcoded slot 8
     LDA.b #!Peach_7C                        ;$03AC68 |
     STA.b SpriteNumber_9E+8                 ;$03AC6A | NOTE: hardcoded slot 8
@@ -6384,7 +6384,7 @@ CODE_03B022:
     RTS                                     ;$03B02A |
 
 CODE_03B02B:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,Y               ;$03B02D |
     LDA.b #!MechaKoopa_A2                   ;$03B030 |
     STA.w SpriteNumber_9E,Y                 ;$03B032 |
@@ -6478,7 +6478,7 @@ CODE_03B0DC:
 CODE_03B0DE:
     PHY
     LDA.w SpriteStatus_14C8,Y               ;$03B0DF |
-    CMP.b #$09                              ;$03B0E2 |
+    CMP.b #!StatusCarryable_09              ;$03B0E2 |
     BNE CODE_03B0EE                         ;$03B0E4 |
     LDA.w SpriteOffscreenX_15A0,Y           ;$03B0E6 |
     BNE CODE_03B0EE                         ;$03B0E9 |
@@ -6533,7 +6533,7 @@ CODE_03B142:
 CODE_03B151:
     TXA
     STA.w SpriteYSpeed_AA,Y                 ;$03B152 |
-    LDA.b #$02                              ;$03B155 |
+    LDA.b #!StatusFall_02                   ;$03B155 |
     STA.w SpriteStatus_14C8,Y               ;$03B157 |
     TYX                                     ;$03B15A |
     JSL kick_sfx_smoke_effect_01AB6F        ;$03B15B |
@@ -6705,7 +6705,7 @@ MechakoopaSpeed:
 MechaKoopa:
     JSL CODE_03B307
     LDA.w SpriteStatus_14C8,X               ;$03B2AD |
-    CMP.b #$08                              ;$03B2B0 |
+    CMP.b #!StatusNormal_08                 ;$03B2B0 |
     BNE Return03B306                        ;$03B2B2 |
     LDA.b SpriteLock_9D                     ;$03B2B4 |
     BNE Return03B306                        ;$03B2B6 |
@@ -7470,7 +7470,7 @@ CODE_03B8A8:
     BPL Return03B8C2                        ;$03B8AA |
 OffScrEraseSprBnk3:
     LDA.w SpriteStatus_14C8,X
-    CMP.b #$08                              ;$03B8AF |
+    CMP.b #!StatusNormal_08                 ;$03B8AF |
     BCC OffScrKillSprBnk3                   ;$03B8B1 |
     LDY.w SpriteLoadIndex_161A,X            ;$03B8B3 |
     CPY.b #$FF                              ;$03B8B6 |
@@ -7777,7 +7777,7 @@ DATA_03C02B:
 
 CODE_03C02F:
     LDY.w Sprite_160E,X
-    LDA.b #$00                              ;$03C032 |
+    LDA.b #!StatusEmpty_00                  ;$03C032 |
     STA.w SpriteStatus_14C8,Y               ;$03C034 |
     LDA.b #$06                              ;$03C037 |
     STA.w SPCIO0_1DF9                       ;$03C039 |
@@ -8004,7 +8004,7 @@ LightSwitch:
     LDY.b #$09                              ;$03C20F |
 CODE_03C211:
     LDA.w SpriteStatus_14C8,Y
-    CMP.b #$08                              ;$03C214 |
+    CMP.b #!StatusNormal_08                 ;$03C214 |
     BNE CODE_03C227                         ;$03C216 |
     LDA.w SpriteNumber_9E,Y                 ;$03C218 |
     CMP.b #!Spotlight_C6                    ;$03C21B |
@@ -8127,7 +8127,7 @@ CODE_03C2DC:
     RTL                                     ;$03C2E5 |
 
 Generate1Up:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,X               ;$03C2E8 |
     LDA.b #!1Up_78                          ;$03C2EB |
     STA.b SpriteNumber_9E,X                 ;$03C2ED |
@@ -8415,7 +8415,7 @@ CODE_03C4E3:
     CPY.w CurrentSprite_15E9
     BEQ CODE_03C4FA                         ;$03C4E6 |
     LDA.w SpriteStatus_14C8,Y               ;$03C4E8 |
-    CMP.b #$08                              ;$03C4EB |
+    CMP.b #!StatusNormal_08                 ;$03C4EB |
     BNE CODE_03C4FA                         ;$03C4ED |
     LDA.w SpriteNumber_9E,Y                 ;$03C4EF |
     CMP.b #!Spotlight_C6                    ;$03C4F2 |
@@ -8678,7 +8678,7 @@ CODE_03C7C7:
     RTS                                     ;$03C7CF |
 
 CODE_03C7D0:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,Y               ;$03C7D2 |
     LDA.b #!Firework_7A                     ;$03C7D5 |
     STA.w SpriteNumber_9E,Y                 ;$03C7D7 |
@@ -9221,7 +9221,7 @@ CODE_03CBB3:
     TYX                                     ;$03CBBF |
     JSL InitSpriteTables                    ;$03CBC0 |
     PLX                                     ;$03CBC4 |
-    LDA.b #$08                              ;$03CBC5 |
+    LDA.b #!StatusNormal_08                 ;$03CBC5 |
     STA.w SpriteStatus_14C8,Y               ;$03CBC7 |
     LDA.b SpriteYPosLow_D8,X                ;$03CBCA |
     STA.w SpriteYPosLow_D8,Y                ;$03CBCC |
@@ -9263,7 +9263,7 @@ CODE_03CC09:
 CODE_03CC14:
     JSR CODE_03D484
     LDA.w SpriteStatus_14C8,X               ;$03CC17 |
-    CMP.b #$08                              ;$03CC1A |
+    CMP.b #!StatusNormal_08                 ;$03CC1A |
     BNE Return03CC37                        ;$03CC1C |
     LDA.b SpriteLock_9D                     ;$03CC1E |
     BNE Return03CC37                        ;$03CC20 |
@@ -9352,7 +9352,7 @@ CODE_03CCE2:
     JSR CODE_03CCE8                         ;$03CCE4 |
     DEY                                     ;$03CCE7 |
 CODE_03CCE8:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,Y               ;$03CCEA |
     LDA.b #!KoopaKid_29                     ;$03CCED |
     STA.w SpriteNumber_9E,Y                 ;$03CCEF |

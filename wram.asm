@@ -1926,7 +1926,7 @@ SpriteStatus_14C8: skip 12 ;done
 !StatusFall_02 = $02
 !StatusSmush_03 = $03
 !StatusSpinkill_04 = $04
-!StatusLavA_05 = $05
+!StatusLava_05 = $05
 !StatusCoin_06 = $06
 !StatusMouth_07 = $07
 !StatusNormal_08 = $08

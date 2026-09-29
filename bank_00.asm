@@ -13261,7 +13261,7 @@ Empty00F9F5:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF
 
-    LDX.b #$0B                              ;$00FA10 |
+    LDX.b #$0B                              ;$00FA10 | TODO: how is this line possible?
 ADDR_00FA12:
     STZ.w SpriteStatus_14C8,X
     DEX                                     ;$00FA15 |
@@ -13303,7 +13303,7 @@ FlatPalaceSwitch:
     LDY.b #$02                              ;$00FA4A |
     LDA.b #!FlatSwitch_60                   ;$00FA4C |
     STA.w SpriteNumber_9E,Y                 ;$00FA4E |
-    LDA.b #$08                              ;$00FA51 |
+    LDA.b #!StatusNormal_08                 ;$00FA51 |
     STA.w SpriteStatus_14C8,Y               ;$00FA53 |
     LDA.b InteractionPtXPos_9A              ;$00FA56 |
     AND.b #$F0                              ;$00FA58 |
@@ -13335,9 +13335,9 @@ TriggerGoalTape:
     LDY.b #$0B                              ;$00FA8F |
 .LvlEndSprLoopStrt:
     LDA.w SpriteStatus_14C8,Y
-    CMP.b #$08                              ;$00FA94 |
+    CMP.b #!StatusNormal_08                 ;$00FA94 |
     BCC .LvlEndNextSprite                   ;$00FA96 |
-    CMP.b #$0B                              ;$00FA98 |
+    CMP.b #!StatusCarried_0B                ;$00FA98 |
     BNE .CODE_00FAA3                        ;$00FA9A |
     PHX                                     ;$00FA9C |
     JSR LvlEndPowerUp                       ;$00FA9D |
@@ -13357,7 +13357,7 @@ TriggerGoalTape:
     BNE .CODE_00FAC5                        ;$00FAB7 |
     LDA.b #$10                              ;$00FAB9 |
     STA.w SpriteStun_1540,Y                 ;$00FABB |
-    LDA.b #$06                              ;$00FABE |
+    LDA.b #!StatusCoin_06                   ;$00FABE |
     STA.w SpriteStatus_14C8,Y               ;$00FAC0 |
     BRA .LvlEndNextSprite                   ;$00FAC3 |
 
@@ -13365,7 +13365,7 @@ TriggerGoalTape:
     LDA.w wcdj5sDp_190F,Y
     AND.b #$02                              ;$00FAC8 |
     BNE .LvlEndNextSprite                   ;$00FACA |
-    LDA.b #$00                              ;$00FACC |
+    LDA.b #!StatusEmpty_00                  ;$00FACC |
     STA.w SpriteStatus_14C8,Y               ;$00FACE |
 .LvlEndNextSprite:
     DEY
@@ -13442,7 +13442,7 @@ LvlEndPowerUp:
     JSL InitSpriteTables                    ;$00FB60 |
     LDA $0F                                 ;$00FB64 |
     STA.w Sprite_1594,Y                     ;$00FB66 |
-    LDA.b #$0C                              ;$00FB69 |
+    LDA.b #!StatusPowerup_0C                ;$00FB69 |
     STA.w SpriteStatus_14C8,Y               ;$00FB6B |
     LDA.b #$D0                              ;$00FB6E |
     STA.w SpriteYSpeed_AA,Y                 ;$00FB70 |
@@ -13538,10 +13538,10 @@ CODE_00FC1E:
     JSL CoinSprGfx
     RTS                                     ;$00FC22 |
 
-    LDY.b #$0B                              ;$00FC23 |
+    LDY.b #$0B                              ;$00FC23 | TODO: how is this line possible?
 ADDR_00FC25:
     LDA.w SpriteStatus_14C8,Y
-    CMP.b #$08                              ;$00FC28 |
+    CMP.b #!StatusNormal_08                 ;$00FC28 |
     BNE ADDR_00FC73                         ;$00FC2A |
     LDA.w SpriteNumber_9E,Y                 ;$00FC2C |
     CMP.b #$35                              ;$00FC2F |
@@ -13596,7 +13596,7 @@ CODE_00FC7A:
     BPL CODE_00FC98                         ;$00FC94 |
     LDX.b #$03                              ;$00FC96 |
 CODE_00FC98:
-    LDA.b #$08
+    LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,X               ;$00FC9A |
     LDA.b #!Yoshi_35                        ;$00FC9D |
     STA.b SpriteNumber_9E,X                 ;$00FC9F |
