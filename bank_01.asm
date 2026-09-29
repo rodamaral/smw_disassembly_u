@@ -1449,7 +1449,7 @@ Return018951:
     RTS
 
 CODE_018952:
-    LDA.w Sprite_163E,X             
+    LDA.w Sprite_163E,X
     BEQ CODE_0189B4                         ;$018955 |
     CMP.b #$80                              ;$018957 |
     BNE CODE_01896B                         ;$018959 |
@@ -16443,7 +16443,7 @@ YoshiEggTiles:
 
 YoshiEgg:
     LDA.w SpriteMisc_187B,X                 ;$01F764 | Flag to prevent hatching until Mario gets close
-    BEQ CODE_01F799                         ;$01F767 | branch if this flag is off
+    BEQ .try_hatch_egg_01F799               ;$01F767 | branch if this flag is off
     JSR IsSprOffScreen                      ;$01F769 | otherwise, try to unset it by checking proximity
     BNE .offscreen_01F78D                   ;$01F76C | if sprite is offscreen, skip
     JSR SubHorizPos                         ;$01F76E |\
@@ -16454,8 +16454,8 @@ YoshiEgg:
     BCS .offscreen_01F78D                   ;$01F778 |\
     STZ.w SpriteMisc_187B,X                 ;$01F77A | | unset flag
     JSL stun_yoshi_egg_01F751               ;$01F77D | |
-    LDA.b #!BabyYoshi_2D                    ;$01F781 | |
-    LDY.w YoshiSlotMirror_18E2              ;$01F783 | |
+    LDA.b #!BabyYoshi_2D                    ;$01F781 | | set egg to hatch a Baby Yoshi if no adult Yoshi exists
+    LDY.w YoshiSlotMirror_18E2              ;$01F783 | |  or a 1-up otherwise
     BEQ +                                   ;$01F786 | |
     LDA.b #!1Up_78                          ;$01F788 | |
 +   STA.w Sprite_151C,X                     ;$01F78A |/
@@ -16466,9 +16466,9 @@ YoshiEgg:
     STA.w $0302,Y                           ;$01F795 |
     RTS                                     ;$01F798 |
 
-CODE_01F799:
+.try_hatch_egg_01F799:
     LDA.w SpriteStun_1540,X
-    BEQ CODE_01F7C2                         ;$01F79C |
+    BEQ .hatch_egg_01F7C2                   ;$01F79C |
     LSR                                     ;$01F79E |
     LSR                                     ;$01F79F |
     LSR                                     ;$01F7A0 |
@@ -16489,13 +16489,13 @@ CODE_01F799:
     STA.w $0302,Y                           ;$01F7BE |
     RTS                                     ;$01F7C1 |
 
-CODE_01F7C2:
-    JSR CODE_01F7C8
-    JMP CODE_01F83D                         ;$01F7C5 |
+.hatch_egg_01F7C2:
+    JSR egg_shards_01F7C8
+    JMP egg_to_sprite_01F83D                ;$01F7C5 |
 
-CODE_01F7C8:
+egg_shards_01F7C8:
     JSR IsSprOffScreen
-    BNE Return01F82C                        ;$01F7CB |
+    BNE .return_01F82C                      ;$01F7CB |
     LDA.b SpriteXPosLow_E4,X                ;$01F7CD |
     STA $00                                 ;$01F7CF |
     LDA.b SpriteYPosLow_D8,X                ;$01F7D1 |
@@ -16505,34 +16505,34 @@ CODE_01F7C8:
     PHX                                     ;$01F7DA |
     LDY.b #$03                              ;$01F7DB |
     LDX.b #$0B                              ;$01F7DD |
-CODE_01F7DF:
+.CODE_01F7DF:
     LDA.w MinorSprNumber_17F0,X
-    BEQ CODE_01F7F4                         ;$01F7E2 |
-CODE_01F7E4:
+    BEQ .CODE_01F7F4                        ;$01F7E2 |
+.CODE_01F7E4:
     DEX
-    BPL CODE_01F7DF                         ;$01F7E5 |
+    BPL .CODE_01F7DF                        ;$01F7E5 |
     DEC.w MinorSprSlotIdx_185D              ;$01F7E7 |
-    BPL CODE_01F7F1                         ;$01F7EA |
+    BPL .CODE_01F7F1                        ;$01F7EA |
     LDA.b #$0B                              ;$01F7EC |
     STA.w MinorSprSlotIdx_185D              ;$01F7EE |
-CODE_01F7F1:
+.CODE_01F7F1:
     LDX.w MinorSprSlotIdx_185D
-CODE_01F7F4:
+.CODE_01F7F4:
     LDA.b #$03
     STA.w MinorSprNumber_17F0,X             ;$01F7F6 |
     LDA $00                                 ;$01F7F9 |
     CLC                                     ;$01F7FB |
-    ADC.w DATA_01F831,Y                     ;$01F7FC |
+    ADC.w .DATA_01F831,Y                    ;$01F7FC |
     STA.w MinorSprXPosLow_1808,X            ;$01F7FF |
     LDA $02                                 ;$01F802 |
     CLC                                     ;$01F804 |
-    ADC.w DATA_01F82D,Y                     ;$01F805 |
+    ADC.w .DATA_01F82D,Y                    ;$01F805 |
     STA.w MinorSprYPosLow_17FC,X            ;$01F808 |
     LDA $03                                 ;$01F80B |
     STA.w MinorSprYPosHigh_1814,X           ;$01F80D |
-    LDA.w DATA_01F835,Y                     ;$01F810 |
+    LDA.w .DATA_01F835,Y                    ;$01F810 |
     STA.w MinorSprYSpeed_1820,X             ;$01F813 |
-    LDA.w DATA_01F839,Y                     ;$01F816 |
+    LDA.w .DATA_01F839,Y                    ;$01F816 |
     STA.w MinorSprXSpeed_182C,X             ;$01F819 |
     TYA                                     ;$01F81C |
     ASL                                     ;$01F81D |
@@ -16544,49 +16544,49 @@ CODE_01F7F4:
     ORA.b #$28                              ;$01F823 |
     STA.w MinorSprTimer_1850,X              ;$01F825 |
     DEY                                     ;$01F828 |
-    BPL CODE_01F7E4                         ;$01F829 |
+    BPL .CODE_01F7E4                        ;$01F829 |
     PLX                                     ;$01F82B |
-Return01F82C:
+.return_01F82C:
     RTS
 
-DATA_01F82D:
+.DATA_01F82D:
     db $00,$00,$08,$08
 
-DATA_01F831:
+.DATA_01F831:
     db $00,$08,$00,$08
 
-DATA_01F835:
+.DATA_01F835:
     db $E8,$E8,$F4,$F4
 
-DATA_01F839:
+.DATA_01F839:
     db $FA,$06,$FD,$03
 
-CODE_01F83D:
+egg_to_sprite_01F83D:
     LDA.w Sprite_151C,X
     STA.b SpriteNumber_9E,X                 ;$01F840 |
     CMP.b #!Yoshi_35                        ;$01F842 |
-    BEQ CODE_01F86C                         ;$01F844 |
+    BEQ .egg_to_yoshi_01F86C                ;$01F844 |
     CMP.b #!BabyYoshi_2D                    ;$01F846 |
-    BNE CODE_01F867                         ;$01F848 |
-    LDA.b #!StatusCarryable_09              ;$01F84A |
-    STA.w SpriteStatus_14C8,X               ;$01F84C |
-    LDA.w SpriteYXPPCCCT_15F6,X             ;$01F84F |
-    AND.b #$0E                              ;$01F852 |
-    PHA                                     ;$01F854 |
-    JSL InitSpriteTables                    ;$01F855 |
-    PLA                                     ;$01F859 |
-    STA $00                                 ;$01F85A |
-    LDA.w SpriteYXPPCCCT_15F6,X             ;$01F85C |
-    AND.b #$F1                              ;$01F85F |
-    ORA $00                                 ;$01F861 |
-    STA.w SpriteYXPPCCCT_15F6,X             ;$01F863 |
-    RTS                                     ;$01F866 |
+    BNE .non_yoshi_sprites_01F867           ;$01F848 |\
+    LDA.b #!StatusCarryable_09              ;$01F84A || egg to Baby Yoshi:
+    STA.w SpriteStatus_14C8,X               ;$01F84C ||
+    LDA.w SpriteYXPPCCCT_15F6,X             ;$01F84F ||
+    AND.b #$0E                              ;$01F852 ||
+    PHA                                     ;$01F854 ||
+    JSL InitSpriteTables                    ;$01F855 ||
+    PLA                                     ;$01F859 ||
+    STA $00                                 ;$01F85A ||
+    LDA.w SpriteYXPPCCCT_15F6,X             ;$01F85C ||
+    AND.b #$F1                              ;$01F85F ||
+    ORA $00                                 ;$01F861 ||
+    STA.w SpriteYXPPCCCT_15F6,X             ;$01F863 ||
+    RTS                                     ;$01F866 |/
 
-CODE_01F867:
+.non_yoshi_sprites_01F867:
     JSL InitSpriteTables
     RTS                                     ;$01F86B |
 
-CODE_01F86C:
+.egg_to_yoshi_01F86C:
     JSL InitSpriteTables
     JMP transform_into_yoshi_01A2B5         ;$01F870 |
 
