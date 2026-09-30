@@ -2520,29 +2520,31 @@ DATA_05A221:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF
 
-DATA_05A580:
-    db $51,$A7,$51,$87,$51,$67,$51,$47
-    db $51,$27,$51,$07,$50,$E7,$50,$C7
+message_line_offsets_05A580:
+    dw $A751,$8751,$6751,$4751
+    dw $2751,$0751,$E750,$C750
 
 ; positive values are the translevel themselves
 ; the 8th bit symbolizes the 2nd message in this translevel 
 ; eg: $2A (0ffset 0x15) => message 1 of translevel 2A
 ;     $AA (offset 0x06) => message 2 of translevel 2A
+; NOTE: the 0th byte is not reachable in $05B1A7
 translevel_messages_05A590:
-    db $14,$45,$3F,$08,$00,$29,$AA,$27
-    db $26,$84,$95,$A9,$15,$13,$CE,$A7
-    db $A4,$25,$A5,$05,$A6,$2A,$28
+    db $14
+    db $45,$3F,$08,$00,$29,$AA,$27,$26
+    db $84,$95,$A9,$15,$13,$CE,$A7,$A4
+    db $25,$A5,$05,$A6,$2A,$28
 
 message_entry_05A5A7:
-    db $8D,$00,$8D,$00,$8D,$00,$8D,$00
-    db $00,$00,$91,$02,$1D,$04,$18,$05
-    db $1D,$06,$B7,$08,$B2,$07,$0B,$03
-    db $3C,$08,$9D,$09,$9E,$0A,$A0,$04
-    db $2C,$0A,$A6,$06,$30,$07,$11,$09
-    db $A4,$05,$8F,$03,$09,$01,$0A,$02
-    db $91,$01
+    dw $008D,$008D,$008D,$008D
+    dw $0000,$0291,$041D,$0518
+    dw $061D,$08B7,$07B2,$030B
+    dw $083C,$099D,$0A9E,$04A0
+    dw $0A2C,$06A6,$0730,$0911
+    dw $05A4,$038F,$0109,$020A
+    dw $0191
 
-messages_05A5D9:
+message_tile_data_05A5D9:
     db $16,$44,$4B,$42,$4E,$4C,$44,$1A
     db $1F,$1F,$1F,$13,$47,$48,$52,$1F
     db $48,$D2,$03,$48,$4D,$4E,$52,$40
@@ -2996,7 +2998,7 @@ message_partially_expanded_05B191:
 
 .message_lookup_05B1A3:
     LDX.b #$16                              ;$05B1A3 | X: message index to look for
-.loop_05B1A5:                               ;        |
+..loop_05B1A5                               ;        |
     LDY.b #$01                              ;$05B1A5 |\ Y: current message number to look
     LDA.w translevel_messages_05A590,X      ;$05B1A7 ||
     BPL +                                   ;$05B1AA ||\
@@ -3007,47 +3009,49 @@ message_partially_expanded_05B191:
     CMP.w Translevel_13BF                   ;$05B1B4 ||| and data = translevel
     BEQ ++                                  ;$05B1B7 ||/ break
 +   DEX                                     ;$05B1B9 ||
-    BNE .loop_05B1A5                        ;$05B1BA |/
+    BNE ..loop_05B1A5                       ;$05B1BA |/
 ++  LDY.w MessageBoxTrigger_1426            ;$05B1BC |
     CPY.b #!MessageYoshi_03                 ;$05B1BF |
     BNE +                                   ;$05B1C1 |\
     LDX.b #$18                              ;$05B1C3 |/
 +   CPX.b #$04                              ;$05B1C5 |
-    BCS +                                   ;$05B1C7 |\
-    INX                                     ;$05B1C9 ||
-    STX.w SwitchPalaceColor_13D2            ;$05B1CA ||
-    DEX                                     ;$05B1CD ||
+    BCS +                                   ;$05B1C7 |\ GLITCH: this allows invoking the Switch Palace message in other levels
+    INX                                     ;$05B1C9 || reserve the first 4 entries for Switch Palace messages
+    STX.w SwitchPalaceColor_13D2            ;$05B1CA || not sure why this sets the palace color
+    DEX                                     ;$05B1CD || if stepping on the map16 already did it
     JSR palace_message_OAM_05B2EB           ;$05B1CE |/
 +   CPX.b #$16                              ;$05B1D1 |
     BNE +                                   ;$05B1D3 |\
     LDA.w RidingYoshi_187A                  ;$05B1D5 ||
     BEQ +                                   ;$05B1D8 || increase message index if mounted during Yoshi's House message
     INX                                     ;$05B1DA |/
-+   TXA                                     ;$05B1DB | render message:
+; render message:
++   TXA                                     ;$05B1DB |
     ASL                                     ;$05B1DC |
     TAX                                     ;$05B1DD |
-    REP #$20                                ;$05B1DE |
+    REP #$20                                ;$05B1DE | A->16
     LDA.w message_entry_05A5A7,X            ;$05B1E0 |
     STA $00                                 ;$05B1E3 | $00 = message string reference???
-    REP #$10                                ;$05B1E5 |
+    REP #$10                                ;$05B1E5 | XY->16
     LDA.l DynStripeImgSize_7F837B           ;$05B1E7 |
     TAX                                     ;$05B1EB |
-    LDY.w #$000E                            ;$05B1EC | Y: loop counter
-.render_message_loop_05B1EF:
-    LDA.w DATA_05A580,Y                     ;        |\
+    LDY.w #$000E                            ;$05B1EC | Y: line counter, 8 in total
+..render_message_loop_05B1EF:               ;        |\
+    LDA.w message_line_offsets_05A580,Y     ;        ||
     STA.l DynamicStripeImage_7F837D,X       ;$05B1F2 ||
     LDA.w #$2300                            ;$05B1F6 ||
     STA.l DynamicStripeImage_7F837D+2,X     ;$05B1F9 ||
     PHY                                     ;$05B1FD ||
-    SEP #$20                                ;$05B1FE ||
+    SEP #$20                                ;$05B1FE || A->8
     LDA.b #$12                              ;$05B200 ||
-    STA $02                                 ;$05B202 || $02: inner loop counter
+    STA $02                                 ;$05B202 || $02: current char, 18 in total
     STZ $03                                 ;$05B204 ||
-    LDY $00                                 ;$05B206 || Y: 
--   LDA.b #$1F                              ;$05B208 ||\
+    LDY $00                                 ;$05B206 ||
+...print_line_05B206                        ;        ||\
+    LDA.b #$1F                              ;$05B208 |||
     BIT.w $0003                             ;$05B20A |||
     BMI +                                   ;$05B20D |||\
-    LDA.w messages_05A5D9,Y                 ;$05B20F ||||
+    LDA.w message_tile_data_05A5D9,Y        ;$05B20F |||| Y: offset string > line > char
     STA.w $0003                             ;$05B212 ||||
     AND.b #$7F                              ;$05B215 ||||
     INY                                     ;$05B217 |||/
@@ -3057,9 +3061,9 @@ message_partially_expanded_05B191:
     INX                                     ;$05B222 |||
     INX                                     ;$05B223 |||
     DEC $02                                 ;$05B224 |||
-    BNE -                                   ;$05B226 ||/
+    BNE ...print_line_05B206                ;$05B226 ||/
     STY $00                                 ;$05B228 ||
-    REP #$20                                ;$05B22A ||
+    REP #$20                                ;$05B22A || A->16
     INX                                     ;$05B22C ||
     INX                                     ;$05B22D ||
     INX                                     ;$05B22E ||
@@ -3067,12 +3071,12 @@ message_partially_expanded_05B191:
     PLY                                     ;$05B230 ||
     DEY                                     ;$05B231 ||
     DEY                                     ;$05B232 ||
-    BPL .render_message_loop_05B1EF         ;$05B233 |/
+    BPL ..render_message_loop_05B1EF        ;$05B233 |/
     LDA.w #$00FF                            ;$05B235 |
     STA.l DynamicStripeImage_7F837D,X       ;$05B238 |
     TXA                                     ;$05B23C |
     STA.l DynStripeImgSize_7F837B           ;$05B23D |
-    SEP #$30                                ;$05B241 |
+    SEP #$30                                ;$05B241 | AXY->8
     LDA.b #$01                              ;$05B243 |
     STA.w Layer3ScrollType_13D5             ;$05B245 |
     STZ.b Layer3XPos_22                     ;$05B248 |

@@ -8302,7 +8302,7 @@ CODE_02BD0B:
     BRA CODE_02BD2F                         ;$02BD21 |
 
 CODE_02BD23:
-    CMP.b #$A5
+    CMP.b #!WallSparkyFuzzy_A5
     BCC CODE_02BD2C                         ;$02BD25 |
     JSR CODE_02BE4E                         ;$02BD27 |
     BRA CODE_02BD2F                         ;$02BD2A |
@@ -8403,7 +8403,7 @@ CODE_02BDB3:
     CPY.b #!UrchinFolloWalls_3C             ;$02BDD8 |
     BEQ CODE_02BDE4                         ;$02BDDA |
     LDA.b #$1A                              ;$02BDDC |
-    CPY.b #$A5                              ;$02BDDE |
+    CPY.b #!WallSparkyFuzzy_A5              ;$02BDDE |
     BNE CODE_02BDE4                         ;$02BDE0 |
     LSR                                     ;$02BDE2 |
     NOP                                     ;$02BDE3 |
@@ -8415,7 +8415,7 @@ CODE_02BDE7:
     CPY.b #!UrchinFolloWalls_3C             ;$02BDEB |
     BEQ CODE_02BDF7                         ;$02BDED |
     LDA.b #$10                              ;$02BDEF |
-    CPY.b #$A5                              ;$02BDF1 |
+    CPY.b #!WallSparkyFuzzy_A5              ;$02BDF1 |
     BNE CODE_02BDF7                         ;$02BDF3 |
     LSR                                     ;$02BDF5 |
     NOP                                     ;$02BDF6 |

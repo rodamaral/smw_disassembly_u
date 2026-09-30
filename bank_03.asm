@@ -1758,7 +1758,7 @@ InfoBox:
     LSR                                     ;$038D8A |
     LSR                                     ;$038D8B |
     LSR                                     ;$038D8C |
-    AND.b #$01                              ;$038D8D |
+    AND.b #!Message_01                      ;$038D8D |
     INC A                                   ;$038D8F |
     STA.w MessageBoxTrigger_1426            ;$038D90 |
 CODE_038D93:

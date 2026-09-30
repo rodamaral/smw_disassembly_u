@@ -11651,7 +11651,7 @@ CODE_00EE57:
 CODE_00EE78:
     CMP.b #$32
     BNE CODE_00EE7F                         ;$00EE7A |
-    STZ.w $1909                             ;$00EE7C |
+    STZ.w BlockSnakeActive_1909             ;$00EE7C |
 CODE_00EE7F:
     JSL CODE_00F120
 CODE_00EE83:
@@ -11663,7 +11663,7 @@ CODE_00EE85:
     CMP.b #$02                              ;$00EE8B |
     BCC Return00EE39                        ;$00EE8D |
 CODE_00EE8F:
-    LDX.w $1423
+    LDX.w SwitchPalacePressed_1423
     BEQ CODE_00EED1                         ;$00EE92 |
     DEX                                     ;$00EE94 |
     TXA                                     ;$00EE95 |
@@ -11683,22 +11683,22 @@ CODE_00EEAA:
     LSR                                     ;$00EEAC |
     TAX                                     ;$00EEAD |
     LDA.w SwitchBlockFlags_1F27,X           ;$00EEAE |
-    BNE CODE_00EED1                         ;$00EEB1 |
-    INC A                                   ;$00EEB3 |
-    STA.w SwitchBlockFlags_1F27,X           ;$00EEB4 |
-    STA.w SwitchPalaceColor_13D2            ;$00EEB7 |
-    PHY                                     ;$00EEBA |
-    STX.w BigSwitchPressTimer_191E          ;$00EEBB |
-    JSR FlatPalaceSwitch                    ;$00EEBE |
-    PLY                                     ;$00EEC1 |
-    LDA.b #$0C                              ;$00EEC2 |
-    STA.w SPCIO2_1DFB                       ;$00EEC4 |
-    LDA.b #$FF                              ;$00EEC7 |
-    STA.w MusicBackup_0DDA                  ;$00EEC9 |
-    LDA.b #$08                              ;$00EECC |
-    STA.w EndLevelTimer_1493                ;$00EECE |
+    BNE CODE_00EED1                         ;$00EEB1 |\
+    INC A                                   ;$00EEB3 ||
+    STA.w SwitchBlockFlags_1F27,X           ;$00EEB4 ||
+    STA.w SwitchPalaceColor_13D2            ;$00EEB7 ||
+    PHY                                     ;$00EEBA ||
+    STX.w BigSwitchPressTimer_191E          ;$00EEBB ||
+    JSR FlatPalaceSwitch                    ;$00EEBE ||
+    PLY                                     ;$00EEC1 ||
+    LDA.b #$0C                              ;$00EEC2 ||
+    STA.w SPCIO2_1DFB                       ;$00EEC4 ||
+    LDA.b #$FF                              ;$00EEC7 ||
+    STA.w MusicBackup_0DDA                  ;$00EEC9 ||
+    LDA.b #$08                              ;$00EECC || prepare countdown to set the Switch Palace message
+    STA.w EndLevelTimer_1493                ;$00EECE |/
 CODE_00EED1:
-    INC.w PlayerGroundType_13EF
+    INC.w PlayerGroundType_13EF             ;$00EED1 |
     LDA.b PlayerYPos_96                     ;$00EED4 |
     SEC                                     ;$00EED6 |
     SBC.b PlayerBlockMoveY_91               ;$00EED7 |
@@ -12483,7 +12483,7 @@ process_collision:                          ;        /
 
 collision:
     SEP #$20                                ;$00F465 \ Enable 8 bit A.
-    STZ.w $1423                             ;$00F467 | Clear switch palace switch flag.
+    STZ.w SwitchPalacePressed_1423          ;$00F467 | Clear switch palace switch flag.
     PHX                                     ;$00F46A | Preserve collision point index.
     LDA $8E                                 ;$00F46B |
     BPL .not_layer_2                        ;$00F46D |
@@ -12631,7 +12631,7 @@ conditional_map16:
     CMP.b #$10                              ;$00F562 | If it's a switch palace switch,
     BCS .not_switch                         ;$00F564 |
     INC A                                   ;$00F566 |
-    STA.w $1423                             ;$00F567 | set the switch palace flag,
+    STA.w SwitchPalacePressed_1423          ;$00F567 | set the switch palace flag,
     BRA .act_like_used_block                ;$00F56A / and act like a used block.
 
 .is_02B
