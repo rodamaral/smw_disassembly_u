@@ -916,7 +916,7 @@ SpriteMainPtr:
     dw RedHorzParaKoopa
     dw Spr0to13Start
     dw Bobomb
-    dw Keyhole
+    dw keyhole_01E1C8
     dw Spr0to13Start
     dw WingedGoomba
     dw Spr0to13Start
@@ -13552,64 +13552,61 @@ InitKeyHole:
     STA.w SpriteXPosHigh_14E0,X             ;$01E1C4 |
     RTS                                     ;$01E1C7 |
 
-Keyhole:
+keyhole_01E1C8:
     LDY.b #$0B
-CODE_01E1CA:
-    LDA.w SpriteStatus_14C8,Y
-    CMP.b #!StatusNormal_08                 ;$01E1CD |
-    BCC CODE_01E1D8                         ;$01E1CF |
-    LDA.w SpriteNumber_9E,Y                 ;$01E1D1 |
-    CMP.b #!Key_80                          ;$01E1D4 |
-    BEQ CODE_01E1DB                         ;$01E1D6 |
-CODE_01E1D8:
-    DEY
-    BPL CODE_01E1CA                         ;$01E1D9 |
-CODE_01E1DB:
+-   LDA.w SpriteStatus_14C8,Y               ;$01E1CA |\
+    CMP.b #!StatusNormal_08                 ;$01E1CD || gets highest Key slot
+    BCC +                                   ;$01E1CF ||
+    LDA.w SpriteNumber_9E,Y                 ;$01E1D1 ||
+    CMP.b #!Key_80                          ;$01E1D4 ||
+    BEQ .break_01E1DB                       ;$01E1D6 ||
++   DEY                                     ;$01E1D8 ||
+    BPL -                                   ;$01E1D9 |/
+.break_01E1DB:
     LDA.w RidingYoshi_187A
-    BEQ CODE_01E1E5                         ;$01E1DE |
-    LDA.w YoshiHasKey_191C                  ;$01E1E0 |
-    BNE CODE_01E1ED                         ;$01E1E3 |
-CODE_01E1E5:
-    TYA
+    BEQ +                                   ;$01E1DE |\
+    LDA.w YoshiHasKey_191C                  ;$01E1E0 ||
+    BNE .yoshi_has_key_01E1ED               ;$01E1E3 |/
++   TYA                                     ;$01E1E5 |
     STA.w Sprite_151C,X                     ;$01E1E6 |
-    BMI CODE_01E23A                         ;$01E1E9 |
-    BRA CODE_01E1F3                         ;$01E1EB |
+    BMI .draw_01E23A                        ;$01E1E9 |
+    BRA .check_key_01E1F3                   ;$01E1EB |
 
-CODE_01E1ED:
+.yoshi_has_key_01E1ED:
     JSL GetMarioClipping
-    BRA CODE_01E201                         ;$01E1F1 |
+    BRA .check_contact_01E201               ;$01E1F1 |
 
-CODE_01E1F3:
+.check_key_01E1F3:
     LDA.w SpriteStatus_14C8,Y
     CMP.b #!StatusCarried_0B                ;$01E1F6 |
-    BNE CODE_01E23A                         ;$01E1F8 |
-    PHX                                     ;$01E1FA |
-    TYX                                     ;$01E1FB |
-    JSL GetSpriteClippingB                  ;$01E1FC |
-    PLX                                     ;$01E200 |
-CODE_01E201:
+    BNE .draw_01E23A                        ;$01E1F8 |\ only if this Key is carried
+    PHX                                     ;$01E1FA || check contact
+    TYX                                     ;$01E1FB ||
+    JSL GetSpriteClippingB                  ;$01E1FC ||
+    PLX                                     ;$01E200 |/
+.check_contact_01E201:
     JSL GetSpriteClippingA
     JSL CheckForContact                     ;$01E205 |
-    BCC CODE_01E23A                         ;$01E209 |
+    BCC .draw_01E23A                        ;$01E209 |
     LDA.w SpritePlayerContact_154C,X        ;$01E20B |
-    BNE CODE_01E23A                         ;$01E20E |
-    LDA.b #$30                              ;$01E210 |
-    STA.w KeyholeTimer_1434                 ;$01E212 |
-    LDA.b #$10                              ;$01E215 |
-    STA.w SPCIO2_1DFB                       ;$01E217 |
-    INC.w PlayerIsFrozen_13FB               ;$01E21A |
-    INC.b SpriteLock_9D                     ;$01E21D |
-    LDA.w SpriteXPosHigh_14E0,X             ;$01E21F |
-    STA.w KeyholeXPos_1436+1                ;$01E222 |
-    LDA.b SpriteXPosLow_E4,X                ;$01E225 |
-    STA.w KeyholeXPos_1436                  ;$01E227 |
-    LDA.w SpriteYPosHigh_14D4,X             ;$01E22A |
-    STA.w KeyholeYPos_1438+1                ;$01E22D |
-    LDA.b SpriteYPosLow_D8,X                ;$01E230 |
-    STA.w KeyholeYPos_1438                  ;$01E232 |
-    LDA.b #$30                              ;$01E235 |
-    STA.w SpritePlayerContact_154C,X        ;$01E237 |
-CODE_01E23A:
+    BNE .draw_01E23A                        ;$01E20E |\
+    LDA.b #$30                              ;$01E210 || if there is contact
+    STA.w KeyholeTimer_1434                 ;$01E212 || activate keyhole
+    LDA.b #$10                              ;$01E215 ||
+    STA.w SPCIO2_1DFB                       ;$01E217 ||
+    INC.w PlayerIsFrozen_13FB               ;$01E21A ||
+    INC.b SpriteLock_9D                     ;$01E21D ||
+    LDA.w SpriteXPosHigh_14E0,X             ;$01E21F ||
+    STA.w KeyholeXPos_1436+1                ;$01E222 ||
+    LDA.b SpriteXPosLow_E4,X                ;$01E225 ||
+    STA.w KeyholeXPos_1436                  ;$01E227 ||
+    LDA.w SpriteYPosHigh_14D4,X             ;$01E22A ||
+    STA.w KeyholeYPos_1438+1                ;$01E22D ||
+    LDA.b SpriteYPosLow_D8,X                ;$01E230 ||
+    STA.w KeyholeYPos_1438                  ;$01E232 ||
+    LDA.b #$30                              ;$01E235 ||
+    STA.w SpritePlayerContact_154C,X        ;$01E237 |/
+.draw_01E23A:
     JSR get_draw_info_bnk1_01A365
     LDA $00                                 ;$01E23D |
     STA.w $0300,Y                           ;$01E23F |
@@ -15548,10 +15545,10 @@ process_yoshi_tongue_01F0A2:
     JSL execute_pointer                     ;$01F0C7 |
 
 .mouth_routine_pointers_01F0CB:
-    dw normal_mouth_01F14B
-    dw extending_tongue_01F314
-    dw retracting_tongue_01F332
-    dw spitting_01F12E
+    dw normal_mouth_01F14B                  ;$01F0CB | 0
+    dw extending_tongue_01F314              ;$01F0CD | 1
+    dw retracting_tongue_01F332             ;$01F0CF | 2
+    dw spitting_01F12E                      ;$01F0D1 | 3
 
 process_eaten_berry_01F0D3:
     LDA.b #$06

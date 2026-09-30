@@ -4652,10 +4652,9 @@ CODE_00A6C7:
 CODE_00A6CC:
     LDA.b Layer1YPos_1C
     CMP.b #$C0                              ;$00A6CE |
-    BEQ CODE_00A6D5                         ;$00A6D0 |
-    INC.w $13F1                             ;$00A6D2 |
-CODE_00A6D5:
-    LDA.w $192A
+    BEQ +                                   ;$00A6D0 |
+    INC.w VerticalScrollEnabled_13F1        ;$00A6D2 |
++   LDA.w LevelEntranceType_192A            ;$00A6D5 |
     BEQ CODE_00A6E0                         ;$00A6D8 |
     CMP.b #$05                              ;$00A6DA |
     BNE CODE_00A716                         ;$00A6DC |
@@ -4691,8 +4690,8 @@ Return00A715:
 
 CODE_00A716:
     CMP.b #$06
-    BCC CODE_00A740                         ;$00A718 |
-    BNE CODE_00A734                         ;$00A71A |
+    BCC .CODE_00A740                        ;$00A718 |
+    BNE .CODE_00A734                        ;$00A71A |
     STY.b PlayerDir_76                      ;$00A71C |
     STY.w $13DF                             ;$00A71E |
     LDA.b #$FF                              ;$00A721 |
@@ -4705,13 +4704,13 @@ CODE_00A716:
     LDY.b #$20                              ;$00A730 |
     BRA CODE_00A6C7                         ;$00A732 |
 
-CODE_00A734:
+.CODE_00A734:
     STY.b LevelIsWater_85
-    LDA.w $13CF                             ;$00A736 |
+    LDA.w SkipMidwayCastleIntro_13CF        ;$00A736 |
     ORA.w KeyholeTimer_1434                 ;$00A739 |
     BNE CODE_00A6E0                         ;$00A73C |
     LDA.b #$04                              ;$00A73E |
-CODE_00A740:
+.CODE_00A740:
     CLC
     ADC.b #$03                              ;$00A741 |
     STA.b PlayerPipeAction_89               ;$00A743 |
