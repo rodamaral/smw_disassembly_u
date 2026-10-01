@@ -5593,12 +5593,11 @@ CODE_00AF17:
     LDY.w EndLevelTimer_1493
     LDA.b Frame_13                          ;$00AF1A |
     LSR                                     ;$00AF1C |
-    BCC CODE_00AF25                         ;$00AF1D |
+    BCC +                                   ;$00AF1D |
     DEY                                     ;$00AF1F |
-    BEQ CODE_00AF25                         ;$00AF20 |
+    BEQ +                                   ;$00AF20 |
     STY.w EndLevelTimer_1493                ;$00AF22 |
-CODE_00AF25:
-    CPY.b #$A0
++   CPY.b #$A0                              ;$00AF25 |
     BCS CODE_00AF35                         ;$00AF27 |
     LDA.b #$04                              ;$00AF29 |
     TRB.b ColorSettings_40                  ;$00AF2B |
@@ -5606,7 +5605,7 @@ CODE_00AF25:
     STA.b MainBGMode_3E                     ;$00AF2F |
     JSL CODE_05CBFF                         ;$00AF31 |
 CODE_00AF35:
-    LDA.b Frame_13
+    LDA.b Frame_13                          ;$00AF35 |
     AND.b #$03                              ;$00AF37 |
     BNE Return00AFA2                        ;$00AF39 |
     LDA.w ColorFadeTimer_1495               ;$00AF3B |
@@ -5616,28 +5615,26 @@ CODE_00AF35:
     LDA.w #$01FE                            ;$00AF45 |
     STA.w $0905                             ;$00AF48 |
     LDX.w #$00EE                            ;$00AF4B |
-CODE_00AF4E:
-    LDA.w #$0007
-    STA $00                                 ;$00AF51 |
-CODE_00AF53:
-    LDA.w $0905,X
-    STA $02                                 ;$00AF56 |
-    LDA.w $0703,X                           ;$00AF58 |
-    JSR CODE_00AFC0                         ;$00AF5B |
-    LDA $04                                 ;$00AF5E |
-    STA.w $0905,X                           ;$00AF60 |
-    DEX                                     ;$00AF63 |
-    DEX                                     ;$00AF64 |
-    DEC $00                                 ;$00AF65 |
-    BNE CODE_00AF53                         ;$00AF67 |
-    TXA                                     ;$00AF69 |
-    SEC                                     ;$00AF6A |
-    SBC.w #$0012                            ;$00AF6B |
-    TAX                                     ;$00AF6E |
-    BPL CODE_00AF4E                         ;$00AF6F |
+.loop_00AF4E:                               ;        |\
+    LDA.w #$0007                            ;$00AF4E ||
+    STA $00                                 ;$00AF51 ||
+-   LDA.w $0905,X                           ;$00AF53 ||\
+    STA $02                                 ;$00AF56 |||
+    LDA.w $0703,X                           ;$00AF58 |||
+    JSR CODE_00AFC0                         ;$00AF5B |||
+    LDA $04                                 ;$00AF5E |||
+    STA.w $0905,X                           ;$00AF60 |||
+    DEX                                     ;$00AF63 |||
+    DEX                                     ;$00AF64 |||
+    DEC $00                                 ;$00AF65 |||
+    BNE -                                   ;$00AF67 ||/
+    TXA                                     ;$00AF69 ||
+    SEC                                     ;$00AF6A ||
+    SBC.w #$0012                            ;$00AF6B ||
+    TAX                                     ;$00AF6E ||
+    BPL .loop_00AF4E                        ;$00AF6F |/
     LDX.w #$0004                            ;$00AF71 |
-CODE_00AF74:
-    LDA.w $091F,X
+-   LDA.w $091F,X                           ;$00AF74 |
     STA $02                                 ;$00AF77 |
     LDA.w $071D,X                           ;$00AF79 |
     JSR CODE_00AFC0                         ;$00AF7C |
@@ -5645,7 +5642,7 @@ CODE_00AF74:
     STA.w $091F,X                           ;$00AF81 |
     DEX                                     ;$00AF84 |
     DEX                                     ;$00AF85 |
-    BPL CODE_00AF74                         ;$00AF86 |
+    BPL -                                   ;$00AF86 |
     LDA.w $0701                             ;$00AF88 |
     STA $02                                 ;$00AF8B |
     LDA.w $0903                             ;$00AF8D |
@@ -7685,8 +7682,8 @@ CODE_00C7F6:
 Return00C7F8:
     RTS
 
-DATA_00C7F9:
-    db $C0,$FF,$A0,$00
+wings_transitions_pos_00C7F9:
+    dw $FFC0,$00A0
 
 yoshi_wings_animation:
     JSR disable_controls
@@ -7694,42 +7691,37 @@ yoshi_wings_animation:
     STA.b PlayerInAir_72                    ;$00C802 |
     JSR aerial_physics                      ;$00C804 |
     LDA.b PlayerYSpeed_7D                   ;$00C807 |
-    BPL CODE_00C80F                         ;$00C809 |
-    CMP.b #$90                              ;$00C80B |
-    BCC CODE_00C814                         ;$00C80D |
-CODE_00C80F:
-    SEC
-    SBC.b #$0D                              ;$00C810 |
-    STA.b PlayerYSpeed_7D                   ;$00C812 |
-CODE_00C814:
-    LDA.b #$02
+    BPL +                                   ;$00C809 |\
+    CMP.b #$90                              ;$00C80B || decrement Y speed by 14
+    BCC ++                                  ;$00C80D || until it's fast enough
++   SEC                                     ;$00C80F ||
+    SBC.b #$0D                              ;$00C810 ||
+    STA.b PlayerYSpeed_7D                   ;$00C812 |/
+++  LDA.b #$02                              ;$00C814 |
     LDY.b PlayerXSpeed_7B                   ;$00C816 |
-    BEQ CODE_00C827                         ;$00C818 |
-    BMI CODE_00C81E                         ;$00C81A |
-    LDA.b #$FE                              ;$00C81C |
-CODE_00C81E:
-    CLC
-    ADC.b PlayerXSpeed_7B                   ;$00C81F |
-    STA.b PlayerXSpeed_7B                   ;$00C821 |
-    BVC CODE_00C827                         ;$00C823 |
-    STZ.b PlayerXSpeed_7B                   ;$00C825 |
-CODE_00C827:
-    JSR apply_player_speeds
-    REP #$20                                ;$00C82A |
+    BEQ ++                                  ;$00C818 |\
+    BMI +                                   ;$00C81A || reduce X speed by 2
+    LDA.b #$FE                              ;$00C81C ||
++   CLC                                     ;$00C81E ||
+    ADC.b PlayerXSpeed_7B                   ;$00C81F ||
+    STA.b PlayerXSpeed_7B                   ;$00C821 ||
+    BVC ++                                  ;$00C823 ||
+    STZ.b PlayerXSpeed_7B                   ;$00C825 |/
+++  JSR apply_player_speeds                 ;$00C827 |
+    REP #$20                                ;$00C82A | A->16
     LDY.w YoshiHeavenFlag_1B95              ;$00C82C |
     LDA.b PlayerYPosScrRel_80               ;$00C82F |
-    CMP.w DATA_00C7F9,Y                     ;$00C831 |
-    SEP #$20                                ;$00C834 |
-    BPL CODE_00C845                         ;$00C836 |
-    STZ.b PlayerAnimation_71                ;$00C838 |
-    TYA                                     ;$00C83A |
-    BNE CODE_00C845                         ;$00C83B |
-    INY                                     ;$00C83D |
-    INY                                     ;$00C83E |
-    STY.w YoshiHeavenFlag_1B95              ;$00C83F |
-    JSR go_to_sublevel                      ;$00C842 |
-CODE_00C845:
-    JMP CODE_00CD8F
+    CMP.w wings_transitions_pos_00C7F9,Y    ;$00C831 |
+    SEP #$20                                ;$00C834 | A->8
+    BPL +                                   ;$00C836 |\
+    STZ.b PlayerAnimation_71                ;$00C838 ||
+    TYA                                     ;$00C83A ||
+    BNE +                                   ;$00C83B || abort if YoshiHeavenFlag_1B95 is not set
+    INY                                     ;$00C83D || which should never occur
+    INY                                     ;$00C83E ||
+    STY.w YoshiHeavenFlag_1B95              ;$00C83F ||
+    JSR go_to_sublevel                      ;$00C842 ||
++   JMP CODE_00CD8F                         ;$00C845 |/
 
 DATA_00C848:
     db $01,$5F,$00,$30,$08,$30,$00,$20
@@ -7903,37 +7895,37 @@ levels_with_cutscene_00C9A7:
 CODE_00C9AF:
     JSR SetMarioPeaceImg
     LDA.w PlayerPeaceSign_1492              ;$00C9B2 |
-    BEQ .CODE_00C9C2                        ;$00C9B5 |
-    DEC.w PlayerPeaceSign_1492              ;$00C9B7 |
-    BNE +                                   ;$00C9BA |
-    LDA.b #$11                              ;$00C9BC |
-    STA.w SPCIO2_1DFB                       ;$00C9BE |
-+   RTS                                     ;$00C9C1 |
+    BEQ .no_peace_sign_00C9C2               ;$00C9B5 |\
+    DEC.w PlayerPeaceSign_1492              ;$00C9B7 ||
+    BNE +                                   ;$00C9BA ||\
+    LDA.b #$11                              ;$00C9BC ||| play Iris out SFX
+    STA.w SPCIO2_1DFB                       ;$00C9BE ||/
++   RTS                                     ;$00C9C1 |/
 
-.CODE_00C9C2:
+.no_peace_sign_00C9C2:
     JSR CODE_00CA44
     LDA.b #$01                              ;$00C9C5 |
-    STA.b byetudlrHold_15                   ;$00C9C7 |
+    STA.b byetudlrHold_15                   ;$00C9C7 | press right
     JSR no_special_collision                ;$00C9C9 |
     LDA.w SpotlightSize_1433                ;$00C9CC |
     BNE return_00CA30                       ;$00C9CF |
     LDA.w SecretGoalTape_141C               ;$00C9D1 |
     INC A                                   ;$00C9D4 |
     CMP.b #$03                              ;$00C9D5 |
-    BNE +                                   ;$00C9D7 |
-    LDA.b #$01                              ;$00C9D9 |
-    STA.w OWPlayerSubmap_1F11               ;$00C9DB |
-    LSR                                     ;$00C9DE |
+    BNE +                                   ;$00C9D7 |\
+    LDA.b #$01                              ;$00C9D9 ||
+    STA.w OWPlayerSubmap_1F11               ;$00C9DB || send Mario to Yoshi Island
+    LSR                                     ;$00C9DE |/
 +   LDY.b #!LoadOverworld_0C                ;$00C9DF |
     LDX.w BonusGameFlag_1425                ;$00C9E1 |
-    BEQ +                                   ;$00C9E4 |
-    LDX.b #$FF                              ;$00C9E6 |
-    STX.w BonusGameFlag_1425                ;$00C9E8 |
-    LDX.b #$F0                              ;$00C9EB |
-    STX.w $0DB0                             ;$00C9ED |
-    STZ.w EndLevelTimer_1493                ;$00C9F0 |
-    STZ.w MusicBackup_0DDA                  ;$00C9F3 |
-    LDY.b #!FadeLevelBlack_10               ;$00C9F6 |
+    BEQ +                                   ;$00C9E4 |\
+    LDX.b #$FF                              ;$00C9E6 ||
+    STX.w BonusGameFlag_1425                ;$00C9E8 ||
+    LDX.b #$F0                              ;$00C9EB ||
+    STX.w MosaicSize_0DB0                   ;$00C9ED ||
+    STZ.w EndLevelTimer_1493                ;$00C9F0 ||
+    STZ.w MusicBackup_0DDA                  ;$00C9F3 ||
+    LDY.b #!FadeLevelBlack_10               ;$00C9F6 |/
 +   STZ.w Brightness_0DAE                   ;$00C9F8 |
     STZ.w MosaicDirection_0DAF              ;$00C9FB |
 beat_level_00C9FE:

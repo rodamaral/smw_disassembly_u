@@ -16513,10 +16513,10 @@ reappearing_boo_02F83D:
     JSR CODE_02FBB0
     LDA.b #$08                              ;$02F8E9 |
 .CODE_02F8EB:
-    STA.w $190B
+    STA.w BooTransparency_190B
     CPX.b #$00                              ;$02F8EE |
     BNE .CODE_02F8F6                        ;$02F8F0 |
-    JSL CODE_038239                         ;$02F8F2 |
+    JSL draw_boo_038239                     ;$02F8F2 |
 .CODE_02F8F6:
     LDA.b #$0F
     JSR CODE_02FD48                         ;$02F8F8 |

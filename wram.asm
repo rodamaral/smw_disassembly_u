@@ -1,6 +1,7 @@
 ; incsrc "hardware_registers.asm"
 
 ; Constants:
+!Bank_07 = $07
 !Bank_0C = $0C
 !Bank_7E = $7E
 !Bank_7F = $7F
