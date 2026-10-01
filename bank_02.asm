@@ -2654,7 +2654,7 @@ try_hit_sprites_0293AE:                     ;        |
     CMP.b #!StatusNormal_08                 ;$0293BA |
     BCC .no_contact_0293F7                  ;$0293BC |
     LDA.w lwcfpppg_166E,X                   ;$0293BE |
-    AND.b #$20                              ;$0293C1 |
+    AND.b #$20                              ;$0293C1 | if has Disable cape killing
     ORA.w SpriteOnTongue_15D0,X             ;$0293C3 |
     ORA.w SpritePlayerContact_154C,X        ;$0293C6 |
     ORA.w SpriteDisableTimer_1FE2,X         ;$0293C9 |
@@ -5885,7 +5885,7 @@ CODE_02AB81:
 CODE_02AB93:
     LDX.w ShooterSlotIdx_18FF
     LDY.w ShooterLoadIndex_17B3,X           ;$02AB96 |
-    LDA.b #$00                              ;$02AB99 |
+    LDA.b #!Respawn_00                      ;$02AB99 |
     STA.w SpriteLoadStatus_1938,Y           ;$02AB9B |
 CODE_02AB9E:
     LDY $03
@@ -5943,7 +5943,7 @@ CODE_02ABF2:
     STA $00                                 ;$02ABFC |
     LDX.b #$0B                              ;$02ABFE |
 .CODE_02AC00:
-    LDA.b #$FF
+    LDA.b #!NoRespawn_FF
     STA.w SpriteLoadIndex_161A,X            ;$02AC02 |
     LDA.w SpriteStatus_14C8,X               ;$02AC05 |
     CMP.b #!StatusCarried_0B                ;$02AC08 |
@@ -10908,9 +10908,9 @@ OffScrEraseSprBnk2:
     CMP.b #!StatusNormal_08                 ;$02D07D |
     BCC OffScrKillSprBnk2                   ;$02D07F |
     LDY.w SpriteLoadIndex_161A,X            ;$02D081 |
-    CPY.b #$FF                              ;$02D084 |
+    CPY.b #!NoRespawn_FF                    ;$02D084 |
     BEQ OffScrKillSprBnk2                   ;$02D086 |
-    LDA.b #$00                              ;$02D088 |
+    LDA.b #!Respawn_00                      ;$02D088 |
     STA.w SpriteLoadStatus_1938,Y           ;$02D08A |
 OffScrKillSprBnk2:
     STZ.w SpriteStatus_14C8,X
@@ -17335,7 +17335,7 @@ ADDR_02FF0E:
     LDY.w ClusterSprMisc_0F86,X
     CPY.b #$FF                              ;$02FF11 |
     BEQ ADDR_02FF1A                         ;$02FF13 |
-    LDA.b #$00                              ;$02FF15 |
+    LDA.b #!Respawn_00                      ;$02FF15 |
     STA.w SpriteLoadStatus_1938,Y           ;$02FF17 |
 ADDR_02FF1A:
     STZ.w ClusterSprNumber_1892,X

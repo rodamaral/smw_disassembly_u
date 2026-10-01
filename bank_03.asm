@@ -882,7 +882,7 @@ GrayLavaPlatform:
     DEC A                                   ;$03870C |
     BNE CODE_03871B                         ;$03870D |
     LDY.w SpriteLoadIndex_161A,X            ;$03870F |
-    LDA.b #$00                              ;$038712 |
+    LDA.b #!Respawn_00                      ;$038712 |
     STA.w SpriteLoadStatus_1938,Y           ;$038714 |
     STZ.w SpriteStatus_14C8,X               ;$038717 |
     RTS                                     ;$03871A |
@@ -7473,9 +7473,9 @@ OffScrEraseSprBnk3:
     CMP.b #!StatusNormal_08                 ;$03B8AF |
     BCC OffScrKillSprBnk3                   ;$03B8B1 |
     LDY.w SpriteLoadIndex_161A,X            ;$03B8B3 |
-    CPY.b #$FF                              ;$03B8B6 |
+    CPY.b #!NoRespawn_FF                    ;$03B8B6 |
     BEQ OffScrKillSprBnk3                   ;$03B8B8 |
-    LDA.b #$00                              ;$03B8BA |
+    LDA.b #!Respawn_00                      ;$03B8BA |
     STA.w SpriteLoadStatus_1938,Y           ;$03B8BC |
 OffScrKillSprBnk3:
     STZ.w SpriteStatus_14C8,X

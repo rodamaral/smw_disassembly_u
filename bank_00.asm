@@ -7821,7 +7821,7 @@ CODE_00C90A:
 ending_level:
     JSR disable_controls
     STZ.w PlayerInCloud_18C2                ;$00C918 |
-    STZ.w $13DE                             ;$00C91B |
+    STZ.w PlayerOverworldPose_13DE          ;$00C91B |
     STZ.w PlayerSlopePose_13ED              ;$00C91E |
     LDA.b ScreenMode_5B                     ;$00C921 |
     LSR                                     ;$00C923 |

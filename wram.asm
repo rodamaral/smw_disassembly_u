@@ -1977,7 +1977,10 @@ SpriteOAMIndex_15EA: skip 12 ;done
 SpriteYXPPCCCT_15F6: skip 12 ;done
 SpriteAnimation_1602: skip 12 ;done
 Sprite_160E: skip 12 ;done
+
 SpriteLoadIndex_161A: skip 12 ;done
+!NoRespawn_FF = $FF
+
 SpriteKill_1626: skip 12 ;done
 SpriteBehindScene_1632: skip 12 ;done
 Sprite_163E: skip 12 ;done
@@ -2287,7 +2290,10 @@ LayerProcessing_1933: skip 2
 MarioStartFlag_1935: skip 1
 ; 7E1936 - 7E1937 unused
 skip 2
+
 SpriteLoadStatus_1938: skip 128 ;done
+!Respawn_00 = 0
+
 ExitTableLow_19B8: skip 32 ;done
 ExitTableHigh_19D8: skip 32 ;done
 ItemMemoryTable_19F8: skip 384 ;done

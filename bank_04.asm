@@ -6138,9 +6138,9 @@ CODE_04E61A:
     LDX.b #$07
 CODE_04E61C:
     LDA.w DATA_04E5E6,X
-    CMP.w $13C1                             ;$04E61F |
+    CMP.w OverworldLayer1Tile_13C1          ;$04E61F |
     BNE CODE_04E632                         ;$04E622 |
-    INC.w $13D9                             ;$04E624 |
+    INC.w OverworldProcess_13D9             ;$04E624 |
     LDA.b #!ExitShowSave_E0                 ;$04E627 |
     STA.w LevelExitMode_0DD5                ;$04E629 |
     LDA.b #$0F                              ;$04E62C |
@@ -6151,7 +6151,7 @@ CODE_04E632:
     DEX
     BPL CODE_04E61C                         ;$04E633 |
     LDA.b #$05                              ;$04E635 |
-    STA.w $13D9                             ;$04E637 |
+    STA.w OverworldProcess_13D9             ;$04E637 |
     LDA.b #!ExitDeath_80                    ;$04E63A |
     STA.w LevelExitMode_0DD5                ;$04E63C |
     RTS                                     ;$04E63F |
