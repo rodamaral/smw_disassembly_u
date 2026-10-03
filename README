@@ -1,57 +1,73 @@
-Documentation style:
+This is a rewrite on top of https://github.com/Sir-Walrus/smw-irq
 
-1) Tabs are the method of spacing with a width of 8.
-2) \n is the preferred line ending for consistency.
-3) Labels and code should never share a line.
-4) Underscores are the naming convention of choice.  Case variations are not permitted.
-5) Prefer sublabels whenever possible.
-6) A newline may be added after jumps/subroutines/forced branches/or branches into other subroutines.
-7) The "soft margin" width is 120 characters per line. 
-8) Lines missing an address should have the address added.
-9) At this time RAM defines should NOT be used.
-10) Abbreviations should be avoided where possible to enforce maximum consistency.  Exceptions list below.
-11) Opcode suffixes are currently required.  At some point they will be removed however.
-12) Avoid +/- labels if reasonable.
-13) Opcodes and hex numbers are written in upper case.
-14) Documentation should be enough to at a mimium explain the result of an operation, rather than the operation itself.
-15) All labels should recieve meaningful names, code/data labels should be gradually removed.
-16) It is required to where possible convert numeric addresses to labels.  Especially those used in DMA.
+At the moment, we're updating it very aggressively myself, directly on the master branch, so PRs are prone to conflict... This should change soon.
+
+We're still testing the style below. The main objective is to have a clear view of the hex values and semantics at the same time, making trace logging and debugging easier. Finally, we want to document where glitches happen in the code and be able to predict new ones.
+/
+## Documentation Style
+
+1. Spaces are used for indentation, with a width of 4.
+2. `\n` (LF) is the preferred line ending for consistency.
+3. Labels and code should never share a line.
+4. Labels should use the `snake_case_0190FA` format, with the address code at the end.
+5. Prefer dotted sublabels whenever possible.
+6. A newline may be added after jumps, subroutines, forced branches, or branches into other subroutines.
+7. Try to limit lines to 120 characters, unless the comment cannot be broken into the next lines.
+8. Lines missing an address should have the address added.
+9. RAM defines should currently use the `CamelCase_09AF` format.
+10. It is advisable to use multiple defines for the same address, if they have different semantics.
+11. Constants should be used for known values of important addresses, using this format `!StatusNormal_08 = $08`
+12. Abbreviations should be avoided where possible to enforce maximum consistency. Exceptions are listed below.
+13. Use +/- labels sensibly, when they are next to each other or are part of a unidirectional sequence.
+14. Opcodes and hexadecimal numbers should be written in uppercase.
+15. Documentation should be semantic. Only during complicated operations should it explain the opcodes.
+16. All labels should receive meaningful names. Code/data labels should be gradually removed.
+17. Numeric addresses should be converted to labels whenever possible, especially those used in DMA.
 
 
-The comment structure:
+## The comment structure:
+
 The comment structure is rather simple and is rather basic. The backslash (\) is used to represent a new level of code,
 the pipe (|) is used to designate continuation of the current code level, and finally the forwardslash (/) closes a 
 level of code.  You may nest comments up to two levels deep.  An example of the comment structure looks something like
 this:
 
-(code section)					(address column) (comment wall) 
-mode_7_static_background_scroll:		;		\ 
-	LDA.b #$59				;$008416	 |\ set layer 1 tilemap address to $5800, mirror X
-	STA.w $2107				;$008418	 |/
-	LDA.b #$07				;$00841B	 |\ set layer 1 base character address to $7000
-	STA.w $210B				;$00841D	 |/
-	LDA $1A					;$008420	 |\ Set layer 1 X position.
-	STA.w $210D				;$008422	 | |
-	LDA $1B					;$008425	 | |
-	STA.w $210D				;$008427	 |/
-	LDA $1C					;$00842A	 |\ Set relative layer 1 Y position.
-	CLC					;$00842C	 | |
-	ADC.w $1888				;$00842D	 | | Add in the relative amount.
-	STA.w $210E				;$008430	 | |
-	LDA $1D					;$008433	 | |
-	STA.w $210E				;$008435	 |/
-	RTS					;$008438	/
+```asm
+(code section)                    (address column) (comment wall) 
+start_SPC_upload_00811D:                    ;        \
+    LDA.b #$FF                              ;$00811D |\ Tell the SPC to enable the upload routine
+    STA.w $2141                             ;$00811F |/
+    JSR upload_data_to_SPC_0080F7           ;$008122 | Enter the SNES side SPC upload
+    LDX.b #$03                              ;$008125 |\ 
+-   STZ.w $2140,X                           ;$008127 | | Clear out all SPC I/O ports and mirrors
+    STZ.w SPCIO0_1DF9,X                     ;$00812A | |
+    STZ.w LastUsedMusic_1DFF-2,X            ;$00812D | |
+    DEX                                     ;$008130 | |
+    BPL -                                   ;$008131 |/
+SPC_upload_return:                          ;        |
+    RTS                                     ;$008133 /
+```
 
-
-Acceptable abbreviations:
+## Acceptable abbreviations:
 Abbreviations are enforced on the following words for maximum consistency and ease of typing.  Abbreviations are
-carefully chosen to avoid ambiguity and not compromise readability in any way.  If you feel a word is lacking an
-abbreviations please contact p4plus2 so the potential inclusion can be discussed.  To clarify, acronyms do not count as
-abbreviations and may be used.  (NOTE: these should be treated as case sensitive!!)  
+carefully chosen to avoid ambiguity and not compromise readability in any way.
 
-(abbreviations = base word)
 OW = overworld
 BG = background
 gfx = graphics
 info = information
 init = initialization
+spr = sprite
+
+> TODO: list all correctly.
+
+# Acknowledgements
+
+Alcaro, p4plus2, Mario
+https://github.com/Sir-Walrus/smw-irq
+
+Ankouno
+https://github.com/Ankouno/SMW-Data/blob/master/Disassembly/bank_01.asm
+
+IsoFrieze, et al
+https://github.com/IsoFrieze/SMWDisX
