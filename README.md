@@ -1,6 +1,6 @@
 This is a rewrite on top of https://github.com/Sir-Walrus/smw-irq
 
-At the moment, we're updating it very aggressively myself, directly on the master branch, so PRs are prone to conflict... This should change soon.
+At the moment, we're updating it very aggressively, directly on the master branch.
 
 We're still testing the style below. The main objective is to have a clear view of the hex values and semantics at the same time, making trace logging and debugging easier. Finally, we want to document where glitches happen in the code and be able to predict new ones.
 /
