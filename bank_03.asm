@@ -2885,7 +2885,7 @@ RexSpinKill:
     STA.w SpriteStatus_14C8,X               ;$0395E0 |
     LDA.b #$1F                              ;$0395E3 |
     STA.w SpriteStun_1540,X                 ;$0395E5 |
-    JSL CODE_07FC3B                         ;$0395E8 |
+    JSL create_4_spinjump_stars_07FC3B      ;$0395E8 |
     LDA.b #$08                              ;$0395EC |
     STA.w SPCIO0_1DF9                       ;$0395EE |
     RTS                                     ;$0395F1 |

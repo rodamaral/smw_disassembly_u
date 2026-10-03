@@ -1676,7 +1676,29 @@ PauseFlag_13D4: skip 1
 Layer3ScrollType_13D5: skip 1
 DrumrollTimer_13D6: skip 1
 IntroMarchYPosSpx_13D7: skip 2
-OverworldProcess_13D9: skip 1
+
+
+EndMarchPhase_13D9:
+OWProcess_13D9: skip 1 ;done
+!MarchCourseClear_00 = $00 ; Show up the course clear text.
+!MarchStore_01 = $01 ; Store bonus star text (if applicable), bonus stars not decrementing yet.
+!MarchCount_02 = $02 ; Count down timer/convert to score, add up bonus stars to total.
+!MarchNOP_03 = $03 ; Do nothing.
+;;;
+!OwNOP_00 = $00 ; Nothing.
+!OwActivate_01 = $01 ; Activate overworld events.
+!OwPostEvent_02 = $02 ; Runs as soon as a level is beaten and the events have run.
+!OwStanding_03 = $03 ; Standing still on a level tile.
+!OwWalking_04 = $04 ; Player is moving in a certain direction.
+!OwBeforeTile_05 = $05 ; Runs before settling on a level tile.
+!OwFadeOut_06 = $06 ; Fading out to #$07.
+!OwSwitchPlayer_07 = $07 ; Switching between Mario and Luigi.
+!OwFadeIn_08 = $08 ; Fading in from #$07.
+!OwPostFadeIn_09 = $09 ; Follows up #$08, sets $7E:13D9 to #$03.
+!OwSubmap_0A = $0A ; Switching between two submaps (not via warp pipe/star).
+!OwStarWarp_0B = $0B ; Activate star warp.
+!OwStart_0C = $0C ; Player intro march (entering overworld for the first time).
+
 PlayerXPosSpx_13DA: skip 1
 PlayerWalkingPose_13DB: skip 1
 PlayerYPosSpx_13DC: skip 1 ; unused

@@ -149,7 +149,7 @@ upload_music_bank_1:
     STA.w $0001                             ;$008115 |
     LDA.b #music_bank_1>>16                 ;$008118 |
     STA.w $0002                             ;$00811A /
-start_SPC_upload_00811D:                           ;        \
+start_SPC_upload_00811D:                    ;        \
     LDA.b #$FF                              ;$00811D |\ Tell the SPC to enable the upload routine
     STA.w $2141                             ;$00811F |/
     JSR upload_data_to_SPC_0080F7           ;$008122 | Enter the SNES side SPC upload
@@ -275,8 +275,8 @@ NMI_start:                                  ;        \
     JSR dynamic_sprite_DMA                  ;$00821D | DMA Mario/Yoshi/Vertical fireball
     BRA .skip_OW_NMI                        ;$008220 | Skip over a majority of the OW NMI
 .OW_NMI                                     ;        |
-    LDA.w $13D9                             ;$008222 |\ If not switching submaps, skip OW layer DMA
-    CMP.b #$0A                              ;$008225 | | and handle the regular OW routines
+    LDA.w OWProcess_13D9                    ;$008222 |\ If not switching submaps, skip OW layer DMA
+    CMP.b #!OwSubmap_0A                     ;$008225 | | and handle the regular OW routines
     BNE .regular_OW_handle                  ;$008227 |/
     LDY.w $1DE8                             ;$008229 |
     DEY                                     ;$00822C |\ If submap loading is finished, skip layer data DMA
@@ -2656,10 +2656,10 @@ GM11_level_load_1_0096D5:
     BEQ CODE_0096E9                         ;$0096E3 |
     JSL CODE_04DC09                         ;$0096E5 |
 CODE_0096E9:
-    STZ.w $13D5
-    STZ.w $13D9                             ;$0096EC |
+    STZ.w Layer3ScrollType_13D5
+    STZ.w EndMarchPhase_13D9                ;$0096EC |
     LDA.b #$50                              ;$0096EF |
-    STA.w $13D6                             ;$0096F1 |
+    STA.w DrumrollTimer_13D6                ;$0096F1 |
     JSL CODE_05D796                         ;$0096F4 |
     LDX.b #$07                              ;$0096F8 |
 CODE_0096FA:
@@ -4004,7 +4004,7 @@ CODE_00A11B:
     STA.b OAMAddress_3F                     ;$00A16B |
     JSR consolidate_OAM_008494              ;$00A16D |
     JSR _load_stripe_image_                 ;$00A170 |
-    STZ.w $13D9                             ;$00A173 |
+    STZ.w OWProcess_13D9                    ;$00A173 |
     JSR KeepModeActive                      ;$00A176 |
     LDA.b #!IRQNMIOverworld_02              ;$00A179 |
     STA.w IRQNMICommand_0D9B                ;$00A17B |
@@ -4438,7 +4438,7 @@ DMA_animated_OW_tiles:                      ;        \
     LDA.b #$04                              ;$00A505 |\ Run DMA channel 2
     STA.w $420B                             ;$00A507 |/
     SEP #$10                                ;$00A50A | 8 bit XY
-    LDA.w $13D9                             ;$00A50C |\ If the submap is switching don't bother
+    LDA.w OWProcess_13D9                    ;$00A50C |\ If the submap is switching don't bother
     CMP.b #$0A                              ;$00A50F | | updating the level tile palette animation
     BEQ palette_upload_return               ;$00A511 |/
     LDA.b #$6D                              ;$00A513 | Load CGRAM color address
@@ -4610,10 +4610,9 @@ CODE_00A676:
     DEX                                     ;$00A678 |
     BNE CODE_00A676                         ;$00A679 |
     LDX.b #$37                              ;$00A67B |
-CODE_00A67D:
-    STZ.w $13D9,X
-    DEX                                     ;$00A680 |
-    BNE CODE_00A67D                         ;$00A681 |
+-   STZ.w OWProcess_13D9,X                  ;$00A67D |\
+    DEX                                     ;$00A680 || erase $13d9 to $1410
+    BNE -                                   ;$00A681 |/
     ASL.w UnusedStarCounter_13CB            ;$00A683 |
     STZ.w KickTimer_149A                    ;$00A686 |
     STZ.w PickUpItemTimer_1498              ;$00A689 |

@@ -4757,27 +4757,25 @@ DATA_07FC33:
 DATA_07FC37:
     db $F0,$F0,$10,$10
 
-CODE_07FC3B:
+create_4_spinjump_stars_07FC3B:
     PHX
-    LDX.b #$03                              ;$07FC3C |
-CODE_07FC3E:
-    JSL CODE_07FC47
-    DEX                                     ;$07FC42 |
-    BPL CODE_07FC3E                         ;$07FC43 |
+    LDX.b #$03                              ;$07FC3C | X: loop counter
+-   JSL .create_spinjump_star_07FC47        ;$07FC3E |\
+    DEX                                     ;$07FC42 ||
+    BPL -                                   ;$07FC43 |/
     PLX                                     ;$07FC45 |
     RTL                                     ;$07FC46 |
 
-CODE_07FC47:
+.create_spinjump_star_07FC47:
     LDY.b #$07
-CODE_07FC49:
-    LDA.w ExtSprNumber_170B,Y
-    BEQ CODE_07FC52                         ;$07FC4C |
-    DEY                                     ;$07FC4E |
-    BPL CODE_07FC49                         ;$07FC4F |
+-   LDA.w ExtSprNumber_170B,Y               ;$07FC49 |\
+    BEQ .found_slot_07FC52                  ;$07FC4C ||
+    DEY                                     ;$07FC4E ||
+    BPL -                                   ;$07FC4F |/
     RTL                                     ;$07FC51 |
 
-CODE_07FC52:
-    LDA.b #$10
+.found_slot_07FC52:
+    LDA.b #!SpinjumpStars_10
     STA.w ExtSprNumber_170B,Y               ;$07FC54 |
     PHX                                     ;$07FC57 |
     LDX.w CurrentSprite_15E9                ;$07FC58 |

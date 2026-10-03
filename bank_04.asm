@@ -384,10 +384,10 @@ CODE_048261:
     JMP .CODE_04840D                        ;$048353 |
 
 .CODE_048356:
-    LDA.w $13D9
-    CMP.b #$03                              ;$048359 |
+    LDA.w OWProcess_13D9
+    CMP.b #!OwStanding_03                   ;$048359 |
     BEQ .CODE_048366                        ;$04835B |
-    CMP.b #$04                              ;$04835D |
+    CMP.b #!OwWalking_04                    ;$04835D |
     BNE .CODE_04839A                        ;$04835F |
     LDA.w $0DD8                             ;$048361 |
     BNE .CODE_04839A                        ;$048364 |
@@ -469,18 +469,18 @@ CODE_048261:
 .CODE_0483F3:
     CPX.b #$80
     BCS .CODE_0483FE                        ;$0483F5 |
-    LDA.w $13D9                             ;$0483F7 |
-    CMP.b #$02                              ;$0483FA |
+    LDA.w OWProcess_13D9                    ;$0483F7 |
+    CMP.b #!OwPostEvent_02                  ;$0483FA |
     BNE .CODE_04840A                        ;$0483FC |
 .CODE_0483FE:
-    DEC.w $1BA0
+    DEC.w OverworldEarthquake_1BA0
     BNE .CODE_04840D                        ;$048401 |
     LDA.b #$22                              ;$048403 |
     STA.w SPCIO0_1DF9                       ;$048405 |
     BRA .CODE_04840D                        ;$048408 |
 
 .CODE_04840A:
-    JSR CODE_048576
+    JSR run_overworld_process_048576
 .CODE_04840D:
     JSR CODE_04F708
 .CODE_048410:
@@ -605,11 +605,11 @@ CODE_04853B:
     PLB                                     ;$048574 |
     RTL                                     ;$048575 |
 
-CODE_048576:
-    LDA.w $13D9
+run_overworld_process_048576:
+    LDA.w OWProcess_13D9
     JSL execute_pointer_long                ;$048579 |
 
-PtrsLong04857D:
+.PtrsLong04857D:
     dl CODE_048EF1
     dl CODE_04E570
     dl CODE_048F87
@@ -806,8 +806,8 @@ CODE_0486C5:
     LDA.b #$03                              ;$0486F9 |
     STA.b OWTileCount_8C                    ;$0486FB |
     LDA.w OWPlayerSubmap_1F11               ;$0486FD |
-    LDY.w $13D9                             ;$048700 |
-    CPY.b #$0A                              ;$048703 |
+    LDY.w OWProcess_13D9                    ;$048700 |
+    CPY.b #!OwSubmap_0A                     ;$048703 |
     BNE CODE_048709                         ;$048705 |
     EOR.b #$01                              ;$048707 |
 CODE_048709:
@@ -1002,8 +1002,8 @@ CODE_048962:
 CODE_04898B:
     CPX.w #$0000
     BNE CODE_0489A7                         ;$04898E |
-    LDA.w $13D9                             ;$048990 |
-    CMP.w #$000B                            ;$048993 |
+    LDA.w OWProcess_13D9                    ;$048990 |
+    CMP.w #!OwStarWarp_0B                   ;$048993 |
     BNE CODE_0489A7                         ;$048996 |
     LDA.b Frame_13                          ;$048998 |
     AND.w #$000C                            ;$04899A |
@@ -1167,8 +1167,8 @@ CODE_048CE6:
     TAY                                     ;$048CFE |
     CPX.w #$0000                            ;$048CFF |
     BNE CODE_048D1B                         ;$048D02 |
-    LDA.w $13D9                             ;$048D04 |
-    CMP.w #$000B                            ;$048D07 |
+    LDA.w OWProcess_13D9                    ;$048D04 |
+    CMP.w #!OwStarWarp_0B                   ;$048D07 |
     BNE CODE_048D1B                         ;$048D0A |
     LDA.b Frame_13                          ;$048D0C |
     AND.w #$000C                            ;$048D0E |
@@ -1432,8 +1432,8 @@ CODE_048EF1:
     LDA.w $1F19                             ;$048F04 |
     CMP.b #$8E                              ;$048F07 |
     BNE CODE_048F13                         ;$048F09 |
-    LDA.b #$0C                              ;$048F0B |
-    STA.w $13D9                             ;$048F0D |
+    LDA.b #!OwStart_0C                      ;$048F0B |
+    STA.w OWProcess_13D9                    ;$048F0D |
     BRL CODE_048F7A                         ;$048F10 |
 CODE_048F13:
     REP #$20
@@ -1472,8 +1472,8 @@ CODE_048F13:
     STA.w OWLevelSettings_1EA2,X            ;$048F53 |
 CODE_048F56:
     SEP #$20
-    LDA.b #$05                              ;$048F58 |
-    STA.w $13D9                             ;$048F5A |
+    LDA.b #!OwBeforeTile_05                  ;$048F58 |
+    STA.w OWProcess_13D9                    ;$048F5A |
     BRA CODE_048F7A                         ;$048F5D |
 
 CODE_048F5F:
@@ -1486,7 +1486,7 @@ CODE_048F5F:
     ORA.w #$0080                            ;$048F6E |
     AND.w #$FFBF                            ;$048F71 |
     STA.w OWLevelSettings_1EA2,X            ;$048F74 |
-    INC.w $13D9                             ;$048F77 |
+    INC.w OWProcess_13D9                    ;$048F77 |
 CODE_048F7A:
     REP #$30
     JMP CODE_049831                         ;$048F7C |
@@ -1547,8 +1547,8 @@ ADDR_048FE9:
     JSR CODE_049037                         ;$048FEC |
     LDA.b #$02                              ;$048FEF |
     STA.w $0DB1                             ;$048FF1 |
-    LDA.b #$04                              ;$048FF4 |
-    STA.w $13D9                             ;$048FF6 |
+    LDA.b #!OwWalking_04                    ;$048FF4 |
+    STA.w OWProcess_13D9                    ;$048FF6 |
     BRA CODE_049003                         ;$048FF9 |
 
 CODE_048FFB:
@@ -1585,7 +1585,7 @@ CODE_049003:
     AND.w #$00FF                            ;$04902B |
     STA.w $13C1                             ;$04902E |
     SEP #$30                                ;$049031 |
-    INC.w $13D9                             ;$049033 |
+    INC.w OWProcess_13D9                    ;$049033 |
     RTS                                     ;$049036 |
 
 CODE_049037:
@@ -1701,8 +1701,8 @@ CODE_049165:
     STZ.w $1DF8                             ;$04916D |
     LDA.b #$0D                              ;$049170 |
     STA.w SPCIO0_1DF9                       ;$049172 |
-    LDA.b #$0B                              ;$049175 |
-    STA.w $13D9                             ;$049177 |
+    LDA.b #!OwStarWarp_0B                   ;$049175 |
+    STA.w OWProcess_13D9                    ;$049177 |
     JMP CODE_049E52                         ;$04917A |
 
 OWPU_NotOnStar:
@@ -1796,8 +1796,8 @@ CODE_0491E9:
 CODE_04922A:
     CMP.w DATA_04906C,Y
     BNE CODE_04923B                         ;$04922D |
-    LDA.w #$0005                            ;$04922F |
-    STA.w $13D9                             ;$049232 |
+    LDA.w #!OwBeforeTile_05                 ;$04922F |
+    STA.w OWProcess_13D9                    ;$049232 |
     JSR CODE_049037                         ;$049235 |
     BRL CODE_049411                         ;$049238 |
 CODE_04923B:
@@ -2047,7 +2047,7 @@ CODE_0493DA:
     STA.w $1F13,X                           ;$049402 |
     LDA.w #$000F                            ;$049405 |
     STA.w $144E                             ;$049408 |
-    INC.w $13D9                             ;$04940B |
+    INC.w OWProcess_13D9                    ;$04940B |
     STZ.w $1444                             ;$04940E |
 CODE_049411:
     JMP CODE_049831
@@ -2083,8 +2083,8 @@ DATA_04944E:
 CODE_04945D:
     LDA.w $0DD8
     BEQ CODE_049468                         ;$049460 |
-    LDA.b #$08                              ;$049462 |
-    STA.w $13D9                             ;$049464 |
+    LDA.b #!OwFadeIn_08                     ;$049462 |
+    STA.w OWProcess_13D9                    ;$049464 |
     RTS                                     ;$049467 |
 
 CODE_049468:
@@ -2217,7 +2217,7 @@ CODE_049522:
     LDA.w LevelNames,X                      ;$04954B |
     STA $00                                 ;$04954E |
     JSR CODE_049D07                         ;$049550 |
-    INC.w $13D9                             ;$049553 |
+    INC.w OWProcess_13D9                    ;$049553 |
     JSR CODE_049037                         ;$049556 |
     JMP CODE_049831                         ;$049559 |
 
@@ -2327,8 +2327,8 @@ CODE_049616:
     LDA.w #$5400                            ;$049636 |
     STA.w $1B8F                             ;$049639 |
     SEP #$20                                ;$04963C |
-    LDA.b #$0A                              ;$04963E |
-    STA.w $13D9                             ;$049640 |
+    LDA.b #!OwSubmap_0A                     ;$04963E |
+    STA.w OWProcess_13D9                    ;$049640 |
     BRA CODE_049648                         ;$049643 |
 
 CODE_049645:
@@ -2556,8 +2556,8 @@ CODE_0497E3:
     LDY.w #$0002                            ;$0497F1 |
 CODE_0497F4:
     STY.w $0DD3
-    LDA.w $13D9                             ;$0497F7 |
-    CMP.b #$0A                              ;$0497FA |
+    LDA.w OWProcess_13D9                    ;$0497F7 |
+    CMP.b #!OwSubmap_0A                     ;$0497FA |
     BEQ CODE_049831                         ;$0497FC |
     JMP CODE_04945D                         ;$0497FE |
 
@@ -2589,8 +2589,8 @@ CODE_049823:
     BPL CODE_04980E                         ;$04982F |
 CODE_049831:
     SEP #$20
-    LDA.w $13D9                             ;$049833 |
-    CMP.b #$0A                              ;$049836 |
+    LDA.w OWProcess_13D9                    ;$049833 |
+    CMP.b #!OwSubmap_0A                     ;$049836 |
     BEQ CODE_049882                         ;$049838 |
     LDA.w $1BA0                             ;$04983A |
     BNE CODE_049882                         ;$04983D |
@@ -2694,10 +2694,10 @@ CODE_0498DE:
     TYA                                     ;$0498E5 |
     ADC.w $1F1A                             ;$0498E6 |
     STA.w $1F1A                             ;$0498E9 |
-    LDA.w $1F19                             ;$0498EC |
+    LDA.w OWPlayerYPos_1F19                 ;$0498EC |
     CMP.b #$78                              ;$0498EF |
     BNE Return0498FA                        ;$0498F1 |
-    STZ.w $13D9                             ;$0498F3 |
+    STZ.w OWProcess_13D9                    ;$0498F3 |
     JSL CODE_009BC9                         ;$0498F6 |
 Return0498FA:
     RTS
@@ -3062,7 +3062,7 @@ CODE_049D9A:
     BNE CODE_049DBC                         ;$049DAD |
 CODE_049DAF:
     LDA.b #$03
-    STA.w $13D9                             ;$049DB1 |
+    STA.w OWProcess_13D9                    ;$049DB1 |
     STZ.w LevelExitMode_0DD5                ;$049DB4 |
     REP #$30                                ;$049DB7 |
     JMP CODE_049831                         ;$049DB9 |
@@ -3073,7 +3073,7 @@ CODE_049DBC:
     LDA.b #$02                              ;$049DC1 |
     STA.w $0DB1                             ;$049DC3 |
     STZ.w LevelExitMode_0DD5                ;$049DC6 |
-    INC.w $13D9                             ;$049DC9 |
+    INC.w OWProcess_13D9                    ;$049DC9 |
 CODE_049DCC:
     REP #$30
     JMP CODE_049831                         ;$049DCE |
@@ -3106,7 +3106,7 @@ CODE_049DD1:
     LDA.b #$02                              ;$049E14 |
     STA.w $0DB1                             ;$049E16 |
     LDA.b #$0A                              ;$049E19 |
-    STA.w $13D9                             ;$049E1B |
+    STA.w OWProcess_13D9                    ;$049E1B |
     INC.w $0DD8                             ;$049E1E |
     RTS                                     ;$049E21 |
 
@@ -3122,7 +3122,7 @@ CODE_049E22:
     STA.w $0DAE                             ;$049E37 |
     CMP.l DATA_009F33,X                     ;$049E3A |
     BNE Return049E4B                        ;$049E3E |
-    INC.w $13D9                             ;$049E40 |
+    INC.w OWProcess_13D9                    ;$049E40 |
     LDA.w $0DAF                             ;$049E43 |
     EOR.b #$01                              ;$049E46 |
     STA.w $0DAF                             ;$049E48 |
@@ -3131,7 +3131,7 @@ Return049E4B:
 
 CODE_049E4C:
     LDA.b #$03
-    STA.w $13D9                             ;$049E4E |
+    STA.w OWProcess_13D9                    ;$049E4E |
     RTS                                     ;$049E51 |
 
 CODE_049E52:
@@ -5453,7 +5453,7 @@ DATA_04DBC8:
 CODE_04DBCF:
     STZ.w $1DE8
     LDA.b #$04                              ;$04DBD2 |
-    STA.w $13D9                             ;$04DBD4 |
+    STA.w OWProcess_13D9                    ;$04DBD4 |
     LDA.w $0DD6                             ;$04DBD7 |
     LSR                                     ;$04DBDA |
     LSR                                     ;$04DBDB |
@@ -6140,7 +6140,7 @@ CODE_04E61C:
     LDA.w DATA_04E5E6,X
     CMP.w OverworldLayer1Tile_13C1          ;$04E61F |
     BNE CODE_04E632                         ;$04E622 |
-    INC.w OverworldProcess_13D9             ;$04E624 |
+    INC.w OWProcess_13D9                    ;$04E624 |
     LDA.b #!ExitShowSave_E0                 ;$04E627 |
     STA.w LevelExitMode_0DD5                ;$04E629 |
     LDA.b #$0F                              ;$04E62C |
@@ -6151,7 +6151,7 @@ CODE_04E632:
     DEX
     BPL CODE_04E61C                         ;$04E633 |
     LDA.b #$05                              ;$04E635 |
-    STA.w OverworldProcess_13D9             ;$04E637 |
+    STA.w OWProcess_13D9                    ;$04E637 |
     LDA.b #!ExitDeath_80                    ;$04E63A |
     STA.w LevelExitMode_0DD5                ;$04E63C |
     RTS                                     ;$04E63F |
@@ -6584,7 +6584,7 @@ CODE_04E9F9:
     LDA.w $1B86                             ;$04E9FC |
     BEQ Return04EA24                        ;$04E9FF |
     STZ.w $1B86                             ;$04EA01 |
-    INC.w $13D9                             ;$04EA04 |
+    INC.w OWProcess_13D9                    ;$04EA04 |
     LDA.w $1DEA                             ;$04EA07 |
     AND.b #$07                              ;$04EA0A |
     TAX                                     ;$04EA0C |
@@ -7964,7 +7964,7 @@ CODE_04F87C:
     LDA.w Return04F828,Y                    ;$04F87F |
 CODE_04F882:
     STA $00
-    LDY.w $13D9                             ;$04F884 |
+    LDY.w OWProcess_13D9                    ;$04F884 |
     CPY.b #$0A                              ;$04F887 |
     BNE CODE_04F892                         ;$04F889 |
     LDY.w $1DE8                             ;$04F88B |

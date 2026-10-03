@@ -5556,7 +5556,7 @@ CODE_05CBFF:
     RTL                                     ;$05CC06 |
 
 CODE_05CC07:
-    LDA.w $13D9
+    LDA.w OWProcess_13D9
     JSL execute_pointer                     ;$05CC0A |
 
 Ptrs05CC0E:
@@ -5680,7 +5680,7 @@ CODE_05CD10:
     BNE CODE_05CD10                         ;$05CD24 |
 CODE_05CD26:
     SEP #$20
-    INC.w $13D9                             ;$05CD28 |
+    INC.w OWProcess_13D9                    ;$05CD28 |
     LDA.b #$28                              ;$05CD2B |
     STA.w $1424                             ;$05CD2D |
     LDA.b #$4A                              ;$05CD30 |
@@ -5756,7 +5756,7 @@ CODE_05CDD5:
     BPL Return05CDE8                        ;$05CDD8 |
     LDA.w BonusStarsGained_1900             ;$05CDDA |
     STA.w $1424                             ;$05CDDD |
-    INC.w $13D9                             ;$05CDE0 |
+    INC.w OWProcess_13D9                    ;$05CDE0 |
     LDA.b #$11                              ;$05CDE3 |
     STA.w SPCIO3_1DFC                       ;$05CDE5 |
 Return05CDE8:
@@ -5930,7 +5930,7 @@ CODE_05CF36:
     BNE CODE_05CF4D                         ;$05CF3E |
     LDX.b #$30                              ;$05CF40 |
     STX.w $13D6                             ;$05CF42 |
-    INC.w $13D9                             ;$05CF45 |
+    INC.w OWProcess_13D9                    ;$05CF45 |
     LDX.b #$12                              ;$05CF48 |
     STX.w SPCIO3_1DFC                       ;$05CF4A |
 CODE_05CF4D:
