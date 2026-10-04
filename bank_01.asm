@@ -4388,11 +4388,10 @@ handle_carryable_sprite_019F9B:
     STA.w SpriteStatus_14C8,X               ;$01A084 |
     LDY.b PlayerDir_76                      ;$01A087 |
     LDA.w RidingYoshi_187A                  ;$01A089 |
-    BEQ .CODE_01A090                        ;$01A08C |
+    BEQ +                                   ;$01A08C |
     INY                                     ;$01A08E |
     INY                                     ;$01A08F |
-.CODE_01A090:
-    LDA.w ShellSpeedX,Y
++   LDA.w ShellSpeedX,Y                     ;$01A090 |
     STA.b SpriteXSpeed_B6,X                 ;$01A093 |
     EOR.b PlayerXSpeed_7B                   ;$01A095 |
     BMI .CODE_01A0A6                        ;$01A097 |
@@ -5460,11 +5459,10 @@ CODE_01A80F:
     BCS ReturnNoContact                     ;$01A813 |
     LDA.b #!IRQNMIStandard_00               ;$01A815 |
     BIT.w IRQNMICommand_0D9B                ;$01A817 |
-    BVS CODE_01A822                         ;$01A81A |
+    BVS +                                   ;$01A81A |
     LDA.w $13F9                             ;$01A81C |
     EOR.w SpriteBehindScene_1632,X          ;$01A81F |
-CODE_01A822:
-    BNE ReturnNoContact2
++   BNE ReturnNoContact2                    ;$01A822 |
     JSL GetMarioClipping                    ;$01A824 |
     JSL GetSpriteClippingA                  ;$01A828 |
     JSL CheckForContact                     ;$01A82C |
@@ -5488,18 +5486,16 @@ CODE_01A847:
     INC.w $18D2                             ;$01A84B |
     LDA.w $18D2                             ;$01A84E |
     CMP.b #$08                              ;$01A851 |
-    BCC CODE_01A85A                         ;$01A853 |
-    LDA.b #$08                              ;$01A855 |
-    STA.w $18D2                             ;$01A857 |
-CODE_01A85A:
-    JSL GivePoints
+    BCC +                                   ;$01A853 |\
+    LDA.b #$08                              ;$01A855 ||
+    STA.w $18D2                             ;$01A857 |/
++   JSL GivePoints                          ;$01A85A |
     LDY.w $18D2                             ;$01A85E |
     CPY.b #$08                              ;$01A861 |
-    BCS CODE_01A86B                         ;$01A863 |
-    LDA.w Return01A61D,Y                    ;$01A865 |
-    STA.w SPCIO0_1DF9                       ;$01A868 |
-CODE_01A86B:
-    LDA.b #!StatusFall_02
+    BCS +                                   ;$01A863 |\
+    LDA.w Return01A61D,Y                    ;$01A865 ||
+    STA.w SPCIO0_1DF9                       ;$01A868 |/
++   LDA.b #!StatusFall_02                   ;$01A86B |
     STA.w SpriteStatus_14C8,X               ;$01A86D |
     LDA.b #$D0                              ;$01A870 |
     STA.b SpriteYSpeed_AA,X                 ;$01A872 |
@@ -5511,20 +5507,19 @@ ReturnNoContact2:
     RTS                                     ;$01A87D |
 
 CODE_01A87E:
-    STZ.w $18D2
+    STZ.w StarKillCounter_18D2
     LDA.w SpritePlayerContact_154C,X        ;$01A881 |
-    BNE CODE_01A895                         ;$01A884 |
-    LDA.b #$08                              ;$01A886 |
-    STA.w SpritePlayerContact_154C,X        ;$01A888 |
-    LDA.w SpriteStatus_14C8,X               ;$01A88B |
-    CMP.b #!StatusCarryable_09              ;$01A88E |
-    BNE CODE_01A897                         ;$01A890 |
-    JSR CODE_01AA42                         ;$01A892 |
-CODE_01A895:
-    CLC
+    BNE +                                   ;$01A884 |\
+    LDA.b #$08                              ;$01A886 ||
+    STA.w SpritePlayerContact_154C,X        ;$01A888 ||
+    LDA.w SpriteStatus_14C8,X               ;$01A88B ||
+    CMP.b #!StatusCarryable_09              ;$01A88E ||
+    BNE .CODE_01A897                        ;$01A890 ||
+    JSR player_vs_carryable_01AA42          ;$01A892 ||
++   CLC                                     ;$01A895 |/
     RTS                                     ;$01A896 |
 
-CODE_01A897:
+.CODE_01A897:
     LDA.b #$14
     STA $01                                 ;$01A899 |
     LDA $05                                 ;$01A89B |
@@ -5548,11 +5543,10 @@ CODE_01A897:
     BEQ CODE_01A8E6                         ;$01A8BE |
 .CODE_01A8C0:
     JSR IsOnGround
-    BEQ .CODE_01A8C9                         ;$01A8C3 |
+    BEQ +                                   ;$01A8C3 |
     LDA.b PlayerInAir_72                    ;$01A8C5 |
     BEQ CODE_01A8E6                         ;$01A8C7 |
-.CODE_01A8C9:
-    LDA.w sSjJcccc_1656,X
++   LDA.w sSjJcccc_1656,X                   ;$01A8C9 |
     AND.b #$10                              ;$01A8CC |
     BNE CODE_01A91C                         ;$01A8CE | branch if Can be jumped on
     LDA.w SpinJumpFlag_140D                 ;$01A8D0 |
@@ -5753,52 +5747,53 @@ BoostMarioSpeed:
 .return_01AA41:
     RTL
 
-CODE_01AA42:
+; TODO: Subroutine to handle Mario touching a carryable sprite.
+player_vs_carryable_01AA42:
     LDA.w SpinJumpFlag_140D
     ORA.w RidingYoshi_187A                  ;$01AA45 |
-    BEQ CODE_01AA58                         ;$01AA48 |
-    LDA.b PlayerYSpeed_7D                   ;$01AA4A |
-    BMI CODE_01AA58                         ;$01AA4C |
-    LDA.w sSjJcccc_1656,X                   ;$01AA4E |
-    AND.b #$10                              ;$01AA51 |
-    BEQ CODE_01AA58                         ;$01AA53 |
-    JMP spin_kill_sprite_effects_01A924     ;$01AA55 |
+    BEQ .try_hold_sprite_01AA58             ;$01AA48 |\
+    LDA.b PlayerYSpeed_7D                   ;$01AA4A || Spinkill sprite if:
+    BMI .try_hold_sprite_01AA58             ;$01AA4C || - player is spinjumping or on Yoshi 
+    LDA.w sSjJcccc_1656,X                   ;$01AA4E || - player is moving downward
+    AND.b #$10                              ;$01AA51 || - and sprite Can be jumped on
+    BEQ .try_hold_sprite_01AA58             ;$01AA53 ||
+    JMP spin_kill_sprite_effects_01A924     ;$01AA55 |/
 
-CODE_01AA58:
+.try_hold_sprite_01AA58:
     LDA.b byetudlrHold_15
-    AND.b #$40                              ;$01AA5A |
-    BEQ CODE_01AA74                         ;$01AA5C |
-    LDA.w CarryingFlag_1470                 ;$01AA5E |
-    ORA.w RidingYoshi_187A                  ;$01AA61 |
-    BNE CODE_01AA74                         ;$01AA64 |
-    LDA.b #!StatusCarried_0B                ;$01AA66 |
-    STA.w SpriteStatus_14C8,X               ;$01AA68 |
-    INC.w CarryingFlag_1470                 ;$01AA6B |
-    LDA.b #$08                              ;$01AA6E |
-    STA.w PickUpItemTimer_1498              ;$01AA70 |
-    RTS                                     ;$01AA73 |
+    AND.b #!ButY                            ;$01AA5A | if holding X/Y
+    BEQ .doesnt_hold_01AA74                 ;$01AA5C | 
+    LDA.w CarryingFlag_1470                 ;$01AA5E | not holding something yet
+    ORA.w RidingYoshi_187A                  ;$01AA61 | not on Yoshi
+    BNE .doesnt_hold_01AA74                 ;$01AA64 |\ then hold sprite
+    LDA.b #!StatusCarried_0B                ;$01AA66 ||
+    STA.w SpriteStatus_14C8,X               ;$01AA68 ||
+    INC.w CarryingFlag_1470                 ;$01AA6B ||
+    LDA.b #$08                              ;$01AA6E ||
+    STA.w PickUpItemTimer_1498              ;$01AA70 ||
+    RTS                                     ;$01AA73 |/
 
-CODE_01AA74:
+.doesnt_hold_01AA74:
     LDA.b SpriteNumber_9E,X
-    CMP.b #!Key_80                          ;$01AA76 |
-    BEQ CODE_01AAB7                         ;$01AA78 |
-    CMP.b #!PSwitch_3E                      ;$01AA7A |
-    BEQ CODE_01AAB2                         ;$01AA7C |
-    CMP.b #!BobOmb_0D                       ;$01AA7E |
-    BEQ CODE_01AA97                         ;$01AA80 |
-    CMP.b #!BabyYoshi_2D                    ;$01AA82 |
-    BEQ CODE_01AA97                         ;$01AA84 |
+    CMP.b #!Key_80                          ;$01AA76 | If:
+    BEQ .touch_key_01AAB7                   ;$01AA78 |  - sprite 0D (Bob-Omb): kick it
+    CMP.b #!PSwitch_3E                      ;$01AA7A |  - sprite 0F (Goomba): kick it, upwards slightly.
+    BEQ .touch_pswitch_01AAB2               ;$01AA7C |  - sprite 2D (baby Yoshi): kick it
+    CMP.b #!BobOmb_0D                       ;$01AA7E |  - sprite 3E (P-switch): make solid, handle pressing
+    BEQ .kick_sprite_01AA97                 ;$01AA80 |  - sprite 80 (key): make solid
+    CMP.b #!BabyYoshi_2D                    ;$01AA82 |  - sprite A2 (MechaKoopa): kick it
+    BEQ .kick_sprite_01AA97                 ;$01AA84 |  - others (shells): kick it and give points
     CMP.b #!MechaKoopa_A2                   ;$01AA86 |
-    BEQ CODE_01AA97                         ;$01AA88 |
+    BEQ .kick_sprite_01AA97                 ;$01AA88 |
     CMP.b #!Goomba_0F                       ;$01AA8A |
-    BNE CODE_01AA94                         ;$01AA8C |
-    LDA.b #$F0                              ;$01AA8E |
-    STA.b SpriteYSpeed_AA,X                 ;$01AA90 |
-    BRA CODE_01AA97                         ;$01AA92 |
+    BNE .other_sprites_01AA94               ;$01AA8C |\
+    LDA.b #$F0                              ;$01AA8E || Give Goomba some Y speed
+    STA.b SpriteYSpeed_AA,X                 ;$01AA90 ||
+    BRA .kick_sprite_01AA97                 ;$01AA92 |/
 
-CODE_01AA94:
+.other_sprites_01AA94:
     JSR CODE_01AB46
-CODE_01AA97:
+.kick_sprite_01AA97:
     JSR PlayKickSfx
     LDA.w SpriteStun_1540,X                 ;$01AA9A |
     STA.b SpritePhase_C2,X                  ;$01AA9D |
@@ -5811,73 +5806,72 @@ CODE_01AA97:
     STA.b SpriteXSpeed_B6,X                 ;$01AAAF |
     RTS                                     ;$01AAB1 |
 
-CODE_01AAB2:
+.touch_pswitch_01AAB2:
     LDA.w Sprite_163E,X
-    BNE Return01AB2C                        ;$01AAB5 |
-CODE_01AAB7:
+    BNE .return_01AB2C                      ;$01AAB5 | return if erasing P-Switch
+.touch_key_01AAB7:
     STZ.w SpritePlayerContact_154C,X
     LDA.b SpriteYPosLow_D8,X                ;$01AABA |
     SEC                                     ;$01AABC |
-    SBC.b PlayerYPosMirror_D3               ;$01AABD |
-    CLC                                     ;$01AABF |
-    ADC.b #$08                              ;$01AAC0 |
+    SBC.b PlayerYPosMirror_D3               ;$01AABD | If player's touching the bottom 8 pixels of the key, then he's hitting the side and should be pushed out (branch).
+    CLC                                     ;$01AABF | If he's any higher, then he's hitting the top and should be pushed up (branch).
+    ADC.b #$08                              ;$01AAC0 | Otherwise, just his head is inside and he should be pushed down.
     CMP.b #$20                              ;$01AAC2 |
-    BCC CODE_01AB31                         ;$01AAC4 |
-    BPL CODE_01AACD                         ;$01AAC6 |
-    LDA.b #$10                              ;$01AAC8 |
-    STA.b PlayerYSpeed_7D                   ;$01AACA |
-    RTS                                     ;$01AACC |
+    BCC touch_side_key_pow_spring_01AB31    ;$01AAC4 |\
+    BPL .step_on_key_pow_01AACD             ;$01AAC6 ||
+    LDA.b #$10                              ;$01AAC8 || Give player downward speed
+    STA.b PlayerYSpeed_7D                   ;$01AACA ||
+    RTS                                     ;$01AACC |/
 
-CODE_01AACD:
+.step_on_key_pow_01AACD:
     LDA.b PlayerYSpeed_7D
-    BMI Return01AB2C                        ;$01AACF |
+    BMI .return_01AB2C                      ;$01AACF | return if going upwards
     STZ.b PlayerYSpeed_7D                   ;$01AAD1 |
     STZ.b PlayerInAir_72                    ;$01AAD3 |
     INC.w OnSolidSprite_1471                ;$01AAD5 |
     LDA.b #$1F                              ;$01AAD8 |
     LDY.w RidingYoshi_187A                  ;$01AADA |
-    BEQ CODE_01AAE1                         ;$01AADD |
-    LDA.b #$2F                              ;$01AADF |
-CODE_01AAE1:
-    STA $00
+    BEQ +                                   ;$01AADD |\
+    LDA.b #$2F                              ;$01AADF |/
++   STA $00                                 ;$01AAE1 |
     LDA.b SpriteYPosLow_D8,X                ;$01AAE3 |
     SEC                                     ;$01AAE5 |
     SBC $00                                 ;$01AAE6 |
-    STA.b PlayerYPos_96                     ;$01AAE8 |
+    STA.b PlayerYPos_96                     ;$01AAE8 | Push Mario on top of the sprite
     LDA.w SpriteYPosHigh_14D4,X             ;$01AAEA |
     SBC.b #$00                              ;$01AAED |
     STA.b PlayerYPos_96+1                   ;$01AAEF |
     LDA.b SpriteNumber_9E,X                 ;$01AAF1 |
     CMP.b #!PSwitch_3E                      ;$01AAF3 |
-    BNE Return01AB2C                        ;$01AAF5 |
+    BNE .return_01AB2C                      ;$01AAF5 | return if a Key
+..process_pressing_pswitch:
     ASL.w dpmksPiS_167A,X                   ;$01AAF7 |
-    LSR.w dpmksPiS_167A,X                   ;$01AAFA |
+    LSR.w dpmksPiS_167A,X                   ;$01AAFA | disable default Mario interaction for the switch
     LDA.b #$0B                              ;$01AAFD |
-    STA.w SPCIO0_1DF9                       ;$01AAFF |
+    STA.w SPCIO0_1DF9                       ;$01AAFF | SFX for pressing a P-switch
     LDA.w MusicBackup_0DDA                  ;$01AB02 |
-    BMI CODE_01AB0C                         ;$01AB05 |
-    LDA.b #$0E                              ;$01AB07 |
-    STA.w SPCIO2_1DFB                       ;$01AB09 |
-CODE_01AB0C:
-    LDA.b #$20
-    STA.w Sprite_163E,X                     ;$01AB0E |
-    LSR.w SpriteYXPPCCCT_15F6,X             ;$01AB11 |
+    BMI +                                   ;$01AB05 |\
+    LDA.b #$0E                              ;$01AB07 || Don't change the music if it's already changed
+    STA.w SPCIO2_1DFB                       ;$01AB09 |/
++   LDA.b #$20                              ;$01AB0C |
+    STA.w Sprite_163E,X                     ;$01AB0E | Set the P-switch to erase itself
+    LSR.w SpriteYXPPCCCT_15F6,X             ;$01AB11 | GLITCH: If a pressed P-switch despawns before it disappears in a cloud of smoke, then the switch will respawn as if it was not pressed.
     ASL.w SpriteYXPPCCCT_15F6,X             ;$01AB14 |
-    LDY.w Sprite_151C,X                     ;$01AB17 |
+    LDY.w Sprite_151C,X                     ;$01AB17 | gets the address of timer to set (Blue/Silver/glitched)
     LDA.b #$B0                              ;$01AB1A |
     STA.w TimersStart_14AD,Y                ;$01AB1C |
     LDA.b #$20                              ;$01AB1F |
-    STA.w ScreenShakeTimer_1887             ;$01AB21 |
+    STA.w ScreenShakeTimer_1887             ;$01AB21 | How long Layer 1 shakes after hitting the switch
     CPY.b #$01                              ;$01AB24 |
-    BNE Return01AB2C                        ;$01AB26 |
-    JSL CODE_02B9BD                         ;$01AB28 |
-Return01AB2C:
+    BNE .return_01AB2C                      ;$01AB26 |\ If hitting a silver P-switch, turn all sprites into coins
+    JSL sprites_into_coins_02B9BD           ;$01AB28 |/
+.return_01AB2C:
     RTS
 
 DATA_01AB2D:
     db $01,$00,$FF,$FF
 
-CODE_01AB31:
+touch_side_key_pow_spring_01AB31:
     STZ.b PlayerXSpeed_7B
     JSR SubHorizPos                         ;$01AB33 |
     TYA                                     ;$01AB36 |
@@ -14160,7 +14154,7 @@ CODE_01E6CE:
     STA.w SpriteStatus_14C8,X               ;$01E6DC |
     STZ.w SpriteAnimation_1602,X            ;$01E6DF |
 CODE_01E6E2:
-    JSR CODE_01AB31
+    JSR touch_side_key_pow_spring_01AB31
     BRA CODE_01E6F0                         ;$01E6E5 |
 
 CODE_01E6E7:

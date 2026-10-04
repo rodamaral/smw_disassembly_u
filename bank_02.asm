@@ -7846,24 +7846,22 @@ GenTileFromSpr0:
     JSL generate_tile                       ;$02B9B8 |
     RTL                                     ;$02B9BC |
 
-CODE_02B9BD:
+sprites_into_coins_02B9BD:
     LDA.b #$02
-    STA.w $18DD                             ;$02B9BF |
-    LDY.b #$09                              ;$02B9C2 |
-CODE_02B9C4:
-    LDA.w SpriteStatus_14C8,Y
-    CMP.b #!StatusNormal_08                 ;$02B9C7 |
-    BCC CODE_02B9D5                         ;$02B9C9 |
-    LDA.w wcdj5sDp_190F,Y                   ;$02B9CB |
-    AND.b #$40                              ;$02B9CE |
-    BNE CODE_02B9D5                         ;$02B9D0 |
-    JSR CODE_02B9D9                         ;$02B9D2 |
-CODE_02B9D5:
-    DEY
-    BPL CODE_02B9C4                         ;$02B9D6 |
+    STA.w SilverCoinsCollected_18DD         ;$02B9BF | GLITCH: silver P-switches can't kill sprites in slot #A or #B
+    LDY.b #$09                              ;$02B9C2 | Y: sprite slot
+-   LDA.w SpriteStatus_14C8,Y               ;$02B9C4 |\
+    CMP.b #!StatusNormal_08                 ;$02B9C7 ||
+    BCC +                                   ;$02B9C9 || continue if:
+    LDA.w wcdj5sDp_190F,Y                   ;$02B9CB ||  - sprite is not alive
+    AND.b #$40                              ;$02B9CE ||  - sprite has Don't turn into a coin with silver POW
+    BNE +                                   ;$02B9D0 ||
+    JSR sprite_into_coin_02B9D9             ;$02B9D2 ||
++   DEY                                     ;$02B9D5 ||
+    BPL -                                   ;$02B9D6 |/
     RTL                                     ;$02B9D8 |
 
-CODE_02B9D9:
+sprite_into_coin_02B9D9:
     LDA.b #!Coin_21
     STA.w SpriteNumber_9E,Y                 ;$02B9DB |
     LDA.b #!StatusNormal_08                 ;$02B9DE |
