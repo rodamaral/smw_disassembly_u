@@ -78,6 +78,7 @@ byetudlrHold_15: skip 1
 !DpadDown = %00000100
 !DpadLeft = %00000010
 !DpadRight = %00000001
+!DpadSides = %00000011
 !ButBYET_F0 = %11110000
 
 ; === $7E0016 ===
@@ -1120,6 +1121,13 @@ SpriteNumber_9E: skip 12
 !Spotlight_C6 = $C6
 !InvisibleMushroom_C7 = $C7
 !LightSwitch_C8 = $C8
+!BulletBillShooter_C9 = $C9
+!EerieGenerator_CB = $CB
+!GreenShell_DA = $DA
+!5Eeries_DE = $DE
+!3GrayPlats_E0 = $E0
+!BooCeiling_E1 = $E1
+!Unused_E7 = $E7
 
 ; === $7E00AA ===
 ; 12 bytes

@@ -55,6 +55,7 @@ carefully chosen to avoid ambiguity and not compromise readability in any way.
 OW = overworld
 BG = background
 gfx = graphics
+iff = if and only if
 info = information
 init = initialization
 spr = sprite

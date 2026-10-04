@@ -2523,8 +2523,8 @@ CODE_019140:
     BEQ return_019210                       ;$0191F3 |
     ASL                                     ;$0191F5 |
     LDA.w lwcfpppg_166E,X                   ;$0191F6 |
-    AND.b #$40                              ;$0191F9 |
-    ORA.w $1FE2,X                           ;$0191FB |
+    AND.b #$40                              ;$0191F9 | tweaker Disable water splash
+    ORA.w SpriteDisableTimer_1FE2,X         ;$0191FB |
     BNE return_019210                       ;$0191FE |
     BCS .CODE_01920C                        ;$019200 |
     BIT.w IRQNMICommand_0D9B                ;$019202 |
@@ -4260,7 +4260,7 @@ DATA_019F99:
 handle_carryable_sprite_019F9B:
     LDA.b SpriteNumber_9E,X
     CMP.b #!PBalloon_7D                     ;$019F9D |
-    BNE .CODE_019FE0                        ;$019F9F |
+    BNE .non_pballoon_019FE0                ;$019F9F |
     LDA.b Frame_13                          ;$019FA1 | P Balloon:
     AND.b #$03                              ;$019FA3 |
     BNE .CODE_019FBE                        ;$019FA5 |\
@@ -4295,7 +4295,7 @@ handle_carryable_sprite_019F9B:
     STA.w $0301,Y                           ;$019FDC |
     RTS                                     ;$019FDF |
 
-.CODE_019FE0:
+.non_pballoon_019FE0:
     JSR CODE_019140
     LDA.b PlayerAnimation_71                ;$019FE3 |
     CMP.b #!AniHurt_01                      ;$019FE5 |
@@ -4320,40 +4320,40 @@ handle_carryable_sprite_019F9B:
     LDA.w SpriteInPipeMode_1419             ;$01A008 |
     BNE .CODE_01A011                        ;$01A00B |
     BIT.b byetudlrHold_15                   ;$01A00D |
-    BVC .CODE_01A015                        ;$01A00F |
+    BVC .release_carried_item_01A015        ;$01A00F | if releasing Y/X
 .CODE_01A011:
     JSR CODE_01A0B1
 .return_01A014:
     RTS
 
-.CODE_01A015:
+.release_carried_item_01A015:
     STZ.w SpriteKill_1626,X
     LDY.b #$00                              ;$01A018 |
     LDA.b SpriteNumber_9E,X                 ;$01A01A |
     CMP.b #!Goomba_0F                       ;$01A01C |
-    BNE +                                   ;$01A01E |
-    LDA.b PlayerInAir_72                    ;$01A020 |
-    BNE +                                   ;$01A022 |
-    LDY.b #$EC                              ;$01A024 |
+    BNE +                                   ;$01A01E |\
+    LDA.b PlayerInAir_72                    ;$01A020 || If kicking a Goomba on the ground, punt it slightly into the air
+    BNE +                                   ;$01A022 ||
+    LDY.b #$EC                              ;$01A024 |/
 +   STY.b SpriteYSpeed_AA,X                 ;$01A026 |
     LDA.b #!StatusCarryable_09              ;$01A028 |
     STA.w SpriteStatus_14C8,X               ;$01A02A |
     LDA.b byetudlrHold_15                   ;$01A02D |
-    AND.b #$08                              ;$01A02F |
-    BNE .CODE_01A068                        ;$01A031 |
-    LDA.b SpriteNumber_9E,X                 ;$01A033 |
-    CMP.b #!FishH_15                        ;$01A035 |
-    BCS .CODE_01A041                        ;$01A037 |
-    LDA.b byetudlrHold_15                   ;$01A039 |
-    AND.b #$04                              ;$01A03B |
-    BEQ .CODE_01A079                        ;$01A03D |
-    BRA .CODE_01A047                        ;$01A03F |
+    AND.b #!DpadUp                          ;$01A02F | branch if holding Up
+    BNE .throw_upward_01A068                ;$01A031 |\
+    LDA.b SpriteNumber_9E,X                 ;$01A033 ||
+    CMP.b #!FishH_15                        ;$01A035 ||
+    BCS .fish_or_higher_01A041              ;$01A037 || branch if ID >= $15
+    LDA.b byetudlrHold_15                   ;$01A039 ||
+    AND.b #!DpadDown                        ;$01A03B || NOTE:
+    BEQ .kick_sideways_01A079               ;$01A03D ||  - for lower sprite numbers, releasing occurs iff holding Down
+    BRA .release_01A047                     ;$01A03F |/  - kicking does not require holding a side direction
 
-.CODE_01A041:
-    LDA.b byetudlrHold_15
-    AND.b #$03                              ;$01A043 |
-    BNE .CODE_01A079                        ;$01A045 |
-.CODE_01A047:
+.fish_or_higher_01A041:
+    LDA.b byetudlrHold_15                   ;$01A041 | NOTE:
+    AND.b #!DpadSides                       ;$01A043 |  - for higher sprite numbers, kicking occurs iff holding a side
+    BNE .kick_sideways_01A079               ;$01A045 |  - releasing does not require Down
+.release_01A047:
     LDY.b PlayerDir_76
     LDA.b PlayerXPosMirror_D1               ;$01A049 |
     CLC                                     ;$01A04B |
@@ -4370,7 +4370,7 @@ handle_carryable_sprite_019F9B:
     STZ.b SpriteYSpeed_AA,X                 ;$01A064 |
     BRA .CODE_01A0A6                        ;$01A066 |
 
-.CODE_01A068:
+.throw_upward_01A068:
     JSL kick_sfx_smoke_effect_01AB6F
     LDA.b #$90                              ;$01A06C |
     STA.b SpriteYSpeed_AA,X                 ;$01A06E |
@@ -4380,7 +4380,7 @@ handle_carryable_sprite_019F9B:
     ROR.b SpriteXSpeed_B6,X                 ;$01A075 |
     BRA .CODE_01A0A6                        ;$01A077 |
 
-.CODE_01A079:
+.kick_sideways_01A079:
     JSL kick_sfx_smoke_effect_01AB6F
     LDA.w SpriteStun_1540,X                 ;$01A07D |
     STA.b SpritePhase_C2,X                  ;$01A080 |
