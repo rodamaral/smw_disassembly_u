@@ -630,15 +630,15 @@ CODE_028528:
     LDA.b #$04                              ;$028530 |
     STA $00                                 ;$028532 |
     LDY.b #$07                              ;$028534 |
-CODE_028536:
-    LDA.w ExtSprNumber_170B,Y
-    BEQ CODE_02853F                         ;$028539 |
+.loop_028536:
+    LDA.w ExtSprNumber_170B,Y               ;$028536 |
+    BEQ .empty_slot_02853F                  ;$028539 |
     DEY                                     ;$02853B |
-    BPL CODE_028536                         ;$02853C |
+    BPL .loop_028536                        ;$02853C |
     RTL                                     ;$02853E |
 
-CODE_02853F:
-    LDA.b #$07
+.empty_slot_02853F:
+    LDA.b #!LavaSplash_07
     STA.w ExtSprNumber_170B,Y               ;$028541 |
     LDA.b SpriteYPosLow_D8,X                ;$028544 |
     STA.w ExtSprYPosLow_1715,Y              ;$028546 |
@@ -669,7 +669,7 @@ CODE_02853F:
     STA.w ExtSprTimer_176F,Y                ;$028586 |
     PLX                                     ;$028589 |
     DEC $00                                 ;$02858A |
-    BPL CODE_028536                         ;$02858C |
+    BPL .loop_028536                        ;$02858C |
     RTL                                     ;$02858E |
 
 ; unused sparkles around the player, like from the stars
@@ -5426,20 +5426,20 @@ CODE_02A84C:
     CMP.b #$E7                              ;$02A866 |
     BCC CODE_02A88C                         ;$02A868 |
 LoadScrollSprite:
-    LDA.w $143E
-    ORA.w $143F                             ;$02A86D |
+    LDA.w Layer1ScrollCmd_143E
+    ORA.w Layer2ScrollCmd_143F              ;$02A86D |
     BNE CODE_02A88A                         ;$02A870 |
     PHY                                     ;$02A872 |
     PHX                                     ;$02A873 |
     LDA $05                                 ;$02A874 |
     SEC                                     ;$02A876 |
-    SBC.b #$E7                              ;$02A877 |
-    STA.w $143E                             ;$02A879 |
+    SBC.b #!Unused_E7                       ;$02A877 |
+    STA.w Layer1ScrollCmd_143E              ;$02A879 |
     DEY                                     ;$02A87C |
     LDA.b [SpriteDataPtr_CE],Y              ;$02A87D |
     LSR                                     ;$02A87F |
     LSR                                     ;$02A880 |
-    STA.w $1440                             ;$02A881 |
+    STA.w Layer1ScrollBits_1440             ;$02A881 |
     JSL CODE_05BCD6                         ;$02A884 |
     PLX                                     ;$02A888 |
     PLY                                     ;$02A889 |
@@ -5447,7 +5447,7 @@ CODE_02A88A:
     BRA LoadNExtSpr
 
 CODE_02A88C:
-    CMP.b #$DE
+    CMP.b #!5Eeries_DE
     BNE CODE_02A89C                         ;$02A88E |
     PHY                                     ;$02A890 |
     PHX                                     ;$02A891 |
@@ -5460,7 +5460,7 @@ CODE_02A89A:
     BRA LoadNExtSpr
 
 CODE_02A89C:
-    CMP.b #$E0
+    CMP.b #!3GrayPlats_E0
     BNE CODE_02A8AC                         ;$02A89E |
     PHY                                     ;$02A8A0 |
     PHX                                     ;$02A8A1 |
@@ -5472,20 +5472,20 @@ CODE_02A89C:
     BRA CODE_02A89A                         ;$02A8AA |
 
 CODE_02A8AC:
-    CMP.b #$CB
+    CMP.b #!EerieGenerator_CB
     BCC CODE_02A8D4                         ;$02A8AE |
-    CMP.b #$DA                              ;$02A8B0 |
+    CMP.b #!GreenShell_DA                   ;$02A8B0 |
     BCS CODE_02A8C0                         ;$02A8B2 |
 InitGenerator:
     SEC
-    SBC.b #$CB                              ;$02A8B5 |
+    SBC.b #!EerieGenerator_CB               ;$02A8B5 |
     INC A                                   ;$02A8B7 |
     STA.w CurrentGenerator_18B9             ;$02A8B8 |
     STZ.w SpriteLoadStatus_1938,X           ;$02A8BB |
     BRA CODE_02A89A                         ;$02A8BE |
 
 CODE_02A8C0:
-    CMP.b #$E1
+    CMP.b #!BooCeiling_E1
     BCC .CODE_02A8D0                        ;$02A8C2 |
     PHX                                     ;$02A8C4 |
     PHY                                     ;$02A8C5 |
@@ -5501,7 +5501,7 @@ CODE_02A8C0:
     BRA CODE_02A8DF                         ;$02A8D2 |
 
 CODE_02A8D4:
-    CMP.b #$C9
+    CMP.b #!BulletBillShooter_C9
     BCC LoadNormalSprite                    ;$02A8D6 |
     JSR LoadShooter                         ;$02A8D8 |
     BRA CODE_02A89A                         ;$02A8DB |
@@ -5526,7 +5526,7 @@ CODE_02A8DF:
     LDA $05
     CMP.w ReservedSprite2,Y                 ;$02A900 |
     BNE .CODE_02A916                        ;$02A903 |
-    CMP.b #$64                              ;$02A905 |
+    CMP.b #!Rope_64                         ;$02A905 |
     BNE .CODE_02A90F                        ;$02A907 |
     LDA $00                                 ;$02A909 |
     AND.b #$10                              ;$02A90B |
@@ -5544,7 +5544,7 @@ CODE_02A8DF:
     CPX $06                                 ;$02A91E |
     BNE .CODE_02A918                        ;$02A920 |
     LDA $05                                 ;$02A922 |
-    CMP.b #$7B                              ;$02A924 |
+    CMP.b #!GoalTape_7B                     ;$02A924 |
     BNE .CODE_02A936                        ;$02A926 |
     LDX $0F                                 ;$02A928 |
 .ADDR_02A92A:
@@ -5594,11 +5594,11 @@ CODE_02A8DF:
     INY                                     ;$02A972 |
     LDA $04                                 ;$02A973 |
     STA.w SpriteStatus_14C8,X               ;$02A975 |
-    CMP.b #$09                              ;$02A978 |
+    CMP.b #!StatusCarryable_09              ;$02A978 |
     LDA.b [SpriteDataPtr_CE],Y              ;$02A97A |
     BCC .CODE_02A984                        ;$02A97C |
     SEC                                     ;$02A97E |
-    SBC.b #$DA                              ;$02A97F |
+    SBC.b #!GreenShell_DA                   ;$02A97F |
     CLC                                     ;$02A981 |
     ADC.b #$04                              ;$02A982 |
 .CODE_02A984:
@@ -5617,33 +5617,33 @@ CODE_02A8DF:
     PLY                                     ;$02A998 |
     LDA $02                                 ;$02A999 |
     STA.w SpriteLoadIndex_161A,X            ;$02A99B |
-    LDA.w SilverSwitchTimer_14AE            ;$02A99E |
-    BEQ .CODE_02A9C9                        ;$02A9A1 |
+    LDA.w SilverSwitchTimer_14AE            ;$02A99E |\
+    BEQ .dont_turn_into_coin_02A9C9         ;$02A9A1 |/
     PHX                                     ;$02A9A3 |
     LDA.b SpriteNumber_9E,X                 ;$02A9A4 |
     TAX                                     ;$02A9A6 |
     LDA.l Sprite190FVals,X                  ;$02A9A7 |
     PLX                                     ;$02A9AB |
     AND.b #$40                              ;$02A9AC |
-    BNE .CODE_02A9C9                        ;$02A9AE |
-    LDA.b #!Coin_21                         ;$02A9B0 |
-    STA.b SpriteNumber_9E,X                 ;$02A9B2 |
-    LDA.b #!StatusNormal_08                 ;$02A9B4 |
-    STA.w SpriteStatus_14C8,X               ;$02A9B6 |
-    JSL InitSpriteTables                    ;$02A9B9 |
-    LDA.w SpriteYXPPCCCT_15F6,X             ;$02A9BD |
-    AND.b #$F1                              ;$02A9C0 |
-    ORA.b #$02                              ;$02A9C2 |
-    STA.w SpriteYXPPCCCT_15F6,X             ;$02A9C4 |
-    BRA .CODE_02A9CD                        ;$02A9C7 |
+    BNE .dont_turn_into_coin_02A9C9         ;$02A9AE |\ branch if Don't turn into a coin with silver POW
+    LDA.b #!Coin_21                         ;$02A9B0 ||
+    STA.b SpriteNumber_9E,X                 ;$02A9B2 ||
+    LDA.b #!StatusNormal_08                 ;$02A9B4 ||
+    STA.w SpriteStatus_14C8,X               ;$02A9B6 ||
+    JSL InitSpriteTables                    ;$02A9B9 ||
+    LDA.w SpriteYXPPCCCT_15F6,X             ;$02A9BD ||
+    AND.b #$F1                              ;$02A9C0 ||
+    ORA.b #$02                              ;$02A9C2 ||
+    STA.w SpriteYXPPCCCT_15F6,X             ;$02A9C4 ||
+    BRA .init_silver_coin_02A9CD            ;$02A9C7 |/
 
-.CODE_02A9C9:
+.dont_turn_into_coin_02A9C9:
     JSL InitSpriteTables
-.CODE_02A9CD:
+.init_silver_coin_02A9CD:
     LDA.b #$01
     STA.w SpriteOffscreenX_15A0,X           ;$02A9CF |
     LDA.b #$04                              ;$02A9D2 |
-    STA.w $1FE2,X                           ;$02A9D4 |
+    STA.w SpriteDisableTimer_1FE2,X         ;$02A9D4 |
     INY                                     ;$02A9D7 |
     LDX $02                                 ;$02A9D8 |
     INX                                     ;$02A9DA |
