@@ -677,11 +677,10 @@ spawn_star_sparkles_02858F:
     LDY.b #$1F
     LDX.b #$00                              ;$028591 |
     LDA.b Powerup_19                        ;$028593 |
-    BNE CODE_02859B                         ;$028595 |
+    BNE +                                   ;$028595 |
     LDY.b #$0F                              ;$028597 |
     LDX.b #$10                              ;$028599 |
-CODE_02859B:
-    STX $01
++   STX $01                                 ;$02859B |
     JSL GetRand                             ;$02859D |
     TYA                                     ;$0285A1 |
     AND.w $148D                             ;$0285A2 |
@@ -690,24 +689,23 @@ CODE_02859B:
     CLC                                     ;$0285A8 |
     ADC.b PlayerYPos_96                     ;$0285A9 |
     STA $00                                 ;$0285AB |
-    LDA.w $148E                             ;$0285AD |
+    LDA.w RandomNumber_148D+1               ;$0285AD |
     AND.b #$0F                              ;$0285B0 |
     CLC                                     ;$0285B2 |
     ADC.b #$FE                              ;$0285B3 |
     CLC                                     ;$0285B5 |
     ADC.b PlayerXPos_94                     ;$0285B6 |
     STA $02                                 ;$0285B8 |
-CODE_0285BA:
+create_sparkle_if_free_0285BA:
     LDY.b #$0B
-CODE_0285BC:
-    LDA.w MinorSprNumber_17F0,Y
-    BEQ CODE_0285C5                         ;$0285BF |
-    DEY                                     ;$0285C1 |
-    BPL CODE_0285BC                         ;$0285C2 |
+-   LDA.w MinorSprNumber_17F0,Y             ;$0285BC |\
+    BEQ .create_smarkle_0285C5              ;$0285BF ||
+    DEY                                     ;$0285C1 ||
+    BPL -                                   ;$0285C2 |/
     RTL                                     ;$0285C4 |
 
-CODE_0285C5:
-    LDA.b #$05
+.create_smarkle_0285C5:
+    LDA.b #!MinorSparkle_05
     STA.w MinorSprNumber_17F0,Y             ;$0285C7 |
     LDA.b #$00                              ;$0285CA |
     STA.w MinorSprYSpeed_1820,Y             ;$0285CC |

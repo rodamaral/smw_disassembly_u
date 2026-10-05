@@ -2139,6 +2139,20 @@ CoinsPriteXPosHigh_17EC: skip 4 ;done
 
 
 MinorSprNumber_17F0: skip 12 ;done
+; Valid values:
+!MinorEmpty_00 = $00
+!MinorBrick_01 = $01
+!MinorStar_02 = $02
+!MinorEggFragment_03 = $03
+!MinorPodobooFlame_04 = $04
+!MinorSparkle_05 = $05
+!MinorFishZ_06 = $06
+!MinorWaterSplash_07 = $07
+!MinorRightNote_08 = $08
+!MinorLeftNote_09 = $09
+!MinorBooStream_0A = $0A
+!MinorYoshiSmoke_0B = $0B
+
 MinorSprYPosLow_17FC: skip 12 ;done
 MinorSprXPosLow_1808: skip 12 ;done
 MinorSprYPosHigh_1814: skip 12 ;done
