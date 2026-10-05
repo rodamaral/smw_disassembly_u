@@ -4628,7 +4628,7 @@ CODE_01A222:
     RTS                                     ;$01A228 |
 
 StunSpringBoard:
-    JMP CODE_01E6F0
+    JMP draw_springboard_01E6F0
 
 StunBabyYoshi:
     LDA.b SpriteLock_9D
@@ -14046,42 +14046,38 @@ DATA_01E61A:
 
 SpringBoard:
     LDA.b SpriteLock_9D
-    BEQ CODE_01E62A                         ;$01E625 |
-    JMP CODE_01E6F0                         ;$01E627 |
+    BEQ .springboard_physics_01E62A         ;$01E625 |
+    JMP draw_springboard_01E6F0             ;$01E627 |
 
-CODE_01E62A:
+.springboard_physics_01E62A:
     JSR SubOffscreen0Bnk1
     JSR SubUpdateSprPos                     ;$01E62D |
     JSR IsOnGround                          ;$01E630 |
-    BEQ CODE_01E638                         ;$01E633 |
-    JSR CODE_0197D5                         ;$01E635 |
-CODE_01E638:
-    JSR IsTouchingObjSide
-    BEQ CODE_01E649                         ;$01E63B |
-    JSR FlipSpriteDir                       ;$01E63D |
-    LDA.b SpriteXSpeed_B6,X                 ;$01E640 |
-    ASL                                     ;$01E642 |
-    PHP                                     ;$01E643 |
-    ROR.b SpriteXSpeed_B6,X                 ;$01E644 |
-    PLP                                     ;$01E646 |
-    ROR.b SpriteXSpeed_B6,X                 ;$01E647 |
-CODE_01E649:
-    JSR IsTouchingCeiling
-    BEQ CODE_01E650                         ;$01E64C |
-    STZ.b SpriteYSpeed_AA,X                 ;$01E64E |
-CODE_01E650:
-    LDA.w SpriteStun_1540,X
-    BEQ CODE_01E6B0                         ;$01E653 |
+    BEQ +                                   ;$01E633 |\
+    JSR CODE_0197D5                         ;$01E635 |/
++   JSR IsTouchingObjSide                   ;$01E638 |
+    BEQ +                                   ;$01E63B |\
+    JSR FlipSpriteDir                       ;$01E63D ||
+    LDA.b SpriteXSpeed_B6,X                 ;$01E640 ||
+    ASL                                     ;$01E642 ||
+    PHP                                     ;$01E643 ||
+    ROR.b SpriteXSpeed_B6,X                 ;$01E644 ||
+    PLP                                     ;$01E646 ||
+    ROR.b SpriteXSpeed_B6,X                 ;$01E647 |/
++   JSR IsTouchingCeiling                   ;$01E649 |
+    BEQ +                                   ;$01E64C |\
+    STZ.b SpriteYSpeed_AA,X                 ;$01E64E |/
++   LDA.w SpriteStun_1540,X                 ;$01E650 |
+    BEQ .CODE_01E6B0                        ;$01E653 |
     LSR                                     ;$01E655 |
     TAY                                     ;$01E656 |
     LDA.w RidingYoshi_187A                  ;$01E657 |
     CMP.b #$01                              ;$01E65A |
     LDA.w DATA_01E61A,Y                     ;$01E65C |
-    BCC CODE_01E664                         ;$01E65F |
-    CLC                                     ;$01E661 |
-    ADC.b #$12                              ;$01E662 |
-CODE_01E664:
-    STA $00
+    BCC +                                   ;$01E65F |\
+    CLC                                     ;$01E661 ||
+    ADC.b #$12                              ;$01E662 |/
++   STA $00                                 ;$01E664 |
     LDA.w DATA_01E611,Y                     ;$01E666 |
     STA.w SpriteAnimation_1602,X            ;$01E669 |
     LDA.b SpriteYPosLow_D8,X                ;$01E66C |
@@ -14097,33 +14093,33 @@ CODE_01E664:
     STA.w OnSolidSprite_1471                ;$01E680 |
     LDA.w SpriteStun_1540,X                 ;$01E683 |
     CMP.b #$07                              ;$01E686 |
-    BCS CODE_01E6AE                         ;$01E688 |
+    BCS .CODE_01E6AE                        ;$01E688 |
     STZ.w OnSolidSprite_1471                ;$01E68A |
     LDY.b #$B0                              ;$01E68D |
     LDA.b axlr0000Hold_17                   ;$01E68F |
-    BPL CODE_01E69A                         ;$01E691 |
-    LDA.b #$01                              ;$01E693 |
-    STA.w SpinJumpFlag_140D                 ;$01E695 |
-    BRA CODE_01E69E                         ;$01E698 |
+    BPL .CODE_01E69A                        ;$01E691 |\
+    LDA.b #$01                              ;$01E693 ||
+    STA.w SpinJumpFlag_140D                 ;$01E695 ||
+    BRA .CODE_01E69E                        ;$01E698 |/
 
-CODE_01E69A:
+.CODE_01E69A:
     LDA.b byetudlrHold_15
-    BPL CODE_01E6A7                         ;$01E69C |
-CODE_01E69E:
+    BPL .CODE_01E6A7                        ;$01E69C |
+.CODE_01E69E:
     LDA.b #$0B
     STA.b PlayerInAir_72                    ;$01E6A0 |
     LDY.b #$80                              ;$01E6A2 |
     STY.w BouncingFlag_1406                 ;$01E6A4 |
-CODE_01E6A7:
+.CODE_01E6A7:
     STY.b PlayerYSpeed_7D
     LDA.b #$08                              ;$01E6A9 |
     STA.w SPCIO3_1DFC                       ;$01E6AB |
-CODE_01E6AE:
-    BRA CODE_01E6F0
+.CODE_01E6AE:
+    BRA draw_springboard_01E6F0
 
-CODE_01E6B0:
+.CODE_01E6B0:
     JSR ProcessInteract
-    BCC CODE_01E6F0                         ;$01E6B3 |
+    BCC draw_springboard_01E6F0             ;$01E6B3 |
     STZ.w SpritePlayerContact_154C,X        ;$01E6B5 |
     LDA.b SpriteYPosLow_D8,X                ;$01E6B8 |
     SEC                                     ;$01E6BA |
@@ -14131,32 +14127,31 @@ CODE_01E6B0:
     CLC                                     ;$01E6BD |
     ADC.b #$04                              ;$01E6BE |
     CMP.b #$1C                              ;$01E6C0 |
-    BCC CODE_01E6CE                         ;$01E6C2 |
-    BPL CODE_01E6E7                         ;$01E6C4 |
+    BCC .inside_springboard_01E6CE          ;$01E6C2 |
+    BPL .above_springboard_01E6E7           ;$01E6C4 |
     LDA.b PlayerYSpeed_7D                   ;$01E6C6 |
-    BPL CODE_01E6F0                         ;$01E6C8 |
+    BPL draw_springboard_01E6F0             ;$01E6C8 |
     STZ.b PlayerYSpeed_7D                   ;$01E6CA |
-    BRA CODE_01E6F0                         ;$01E6CC |
+    BRA draw_springboard_01E6F0             ;$01E6CC |
 
-CODE_01E6CE:
+.inside_springboard_01E6CE:
     BIT.b byetudlrHold_15
-    BVC CODE_01E6E2                         ;$01E6D0 |
+    BVC +                                   ;$01E6D0 |
     LDA.w CarryingFlag_1470                 ;$01E6D2 |
     ORA.w RidingYoshi_187A                  ;$01E6D5 |
-    BNE CODE_01E6E2                         ;$01E6D8 |
+    BNE +                                   ;$01E6D8 |
     LDA.b #!StatusCarried_0B                ;$01E6DA |
     STA.w SpriteStatus_14C8,X               ;$01E6DC |
     STZ.w SpriteAnimation_1602,X            ;$01E6DF |
-CODE_01E6E2:
-    JSR touch_side_key_pow_spring_01AB31
-    BRA CODE_01E6F0                         ;$01E6E5 |
++   JSR touch_side_key_pow_spring_01AB31    ;$01E6E1 |
+    BRA draw_springboard_01E6F0             ;$01E6E5 |
 
-CODE_01E6E7:
+.above_springboard_01E6E7:
     LDA.b PlayerYSpeed_7D
-    BMI CODE_01E6F0                         ;$01E6E9 |
-    LDA.b #$11                              ;$01E6EB |
-    STA.w SpriteStun_1540,X                 ;$01E6ED |
-CODE_01E6F0:
+    BMI draw_springboard_01E6F0             ;$01E6E9 |\
+    LDA.b #$11                              ;$01E6EB ||
+    STA.w SpriteStun_1540,X                 ;$01E6ED |/
+draw_springboard_01E6F0:
     LDY.w SpriteAnimation_1602,X
     LDA.w DATA_01E6FD,Y                     ;$01E6F3 |
     TAY                                     ;$01E6F6 |
