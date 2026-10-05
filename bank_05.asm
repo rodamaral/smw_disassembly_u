@@ -56,15 +56,14 @@ CODE_058079:
     JSR CODE_0582C8                         ;$058081 |
     CPX.w #$0200                            ;$058084 |
     BNE CODE_058079                         ;$058087 |
-    STZ.w $1928                             ;$058089 |
+    STZ.w LevelLoadObject_1928              ;$058089 |
     JSR LoadLevel                           ;$05808C |
     SEP #$30                                ;$05808F |
     LDA.w GameMode_0100                     ;$058091 |
     CMP.b #!FadeInEnemyList_22              ;$058094 |
-    BPL CODE_05809C                         ;$058096 |
+    BPL +                                   ;$058096 |
     JSL CODE_02A751                         ;$058098 |
-CODE_05809C:
-    PLP
++   PLP                                     ;$05809C |
     RTL                                     ;$05809D |
 
 CODE_05809E:

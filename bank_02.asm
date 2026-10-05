@@ -5297,19 +5297,17 @@ CODE_02A751:
     PHB
     PHK                                     ;$02A752 |
     PLB                                     ;$02A753 |
-    JSR CODE_02ABF2                         ;$02A754 |
-    JSR CODE_02AC5C                         ;$02A757 |
+    JSR handle_old_sprites_sprites_02ABF2   ;$02A754 |
+    JSR load_nearby_sprites_02AC5C          ;$02A757 |
     LDA.w IRQNMICommand_0D9B                ;$02A75A |
-    BMI CODE_02A763                         ;$02A75D |
+    BMI +                                   ;$02A75D |
     JSL standard_and_cluster_sprites_01808C ;$02A75F |
-CODE_02A763:
-    LDA.w CarryYoshiLevels_0DC1
-    BEQ CODE_02A771                         ;$02A766 |
++   LDA.w CarryYoshiLevels_0DC1             ;$02A763 |
+    BEQ +                                   ;$02A766 |
     LDA.w RemoveYoshiFlag_1B9B              ;$02A768 |
-    BNE CODE_02A771                         ;$02A76B |
+    BNE +                                   ;$02A76B |
     JSL CODE_00FC7A                         ;$02A76D |
-CODE_02A771:
-    PLB
++   PLB                                     ;$02A771 |
     RTL                                     ;$02A772 |
 
 SpriteSlotMax:
@@ -5931,65 +5929,64 @@ CODE_02ABDF:
     INX                                     ;$02ABEE |
     JMP LoadSpriteLoopStrt                  ;$02ABEF |
 
-CODE_02ABF2:
+handle_old_sprites_sprites_02ABF2:
     LDX.b #$3F
-.CODE_02ABF4:
-    STZ.w SpriteLoadStatus_1938,X
-    DEX                                     ;$02ABF7 |
-    BPL .CODE_02ABF4                        ;$02ABF8 |
+-   STZ.w SpriteLoadStatus_1938,X           ;$02ABF4 |\ set first 96 sprites to reload in a room
+    DEX                                     ;$02ABF7 ||
+    BPL -                                   ;$02ABF8 |/
     LDA.b #$FF                              ;$02ABFA |
-    STA $00                                 ;$02ABFC |
-    LDX.b #$0B                              ;$02ABFE |
-.CODE_02AC00:
+    STA $00                                 ;$02ABFC | $00: last carried sprite slot
+    LDX.b #$0B                              ;$02ABFE | X: sprite slot
+.loop_02AC00:
     LDA.b #!NoRespawn_FF
     STA.w SpriteLoadIndex_161A,X            ;$02AC02 |
     LDA.w SpriteStatus_14C8,X               ;$02AC05 |
     CMP.b #!StatusCarried_0B                ;$02AC08 |
-    BEQ .CODE_02AC11                        ;$02AC0A |
-    STZ.w SpriteStatus_14C8,X               ;$02AC0C |
-    BRA .CODE_02AC13                        ;$02AC0F |
+    BEQ .carried_sprite_02AC11              ;$02AC0A |\
+    STZ.w SpriteStatus_14C8,X               ;$02AC0C || erase non-carried sprites
+    BRA .continue_02AC13                    ;$02AC0F |/
 
-.CODE_02AC11:
-    STX $00
-.CODE_02AC13:
-    DEX
-    BPL .CODE_02AC00                        ;$02AC14 |
-    LDX $00                                 ;$02AC16 |
-    BMI CODE_02AC48                         ;$02AC18 |
-    STZ.w SpriteStatus_14C8,X               ;$02AC1A |
-    LDA.b #!StatusCarried_0B                ;$02AC1D |
-    STA.w SpriteStatus_14C8                 ;$02AC1F | NOTE: hardcoded slot 0
-    LDA.b SpriteNumber_9E,X                 ;$02AC22 |
-    STA.b SpriteNumber_9E                   ;$02AC24 | NOTE: hardcoded slot 0
-    LDA.b SpriteXPosLow_E4,X                ;$02AC26 |
-    STA.b SpriteXPosLow_E4                  ;$02AC28 | NOTE: hardcoded slot 0
-    LDA.w SpriteXPosHigh_14E0,X             ;$02AC2A |
-    STA.w SpriteXPosHigh_14E0               ;$02AC2D | NOTE: hardcoded slot 0
-    LDA.b SpriteYPosLow_D8,X                ;$02AC30 |
-    STA.b SpriteYPosLow_D8                  ;$02AC32 | NOTE: hardcoded slot 0
-    LDA.w SpriteYPosHigh_14D4,X             ;$02AC34 |
-    STA.w SpriteYPosHigh_14D4               ;$02AC37 | NOTE: hardcoded slot 0
-    LDA.w SpriteYXPPCCCT_15F6,X             ;$02AC3A |
-    PHA                                     ;$02AC3D |
-    LDX.b #$00                              ;$02AC3E |
-    JSL InitSpriteTables                    ;$02AC40 | init sprite slot 0
-    PLA                                     ;$02AC44 |
-    STA.w SpriteYXPPCCCT_15F6               ;$02AC45 | NOTE: hardcoded slot 0
-CODE_02AC48:
+.carried_sprite_02AC11:
+    STX $00                                 ;$02AC11 | save carried slot
+.continue_02AC13:                           ;        |
+    DEX                                     ;$02AC13 |
+    BPL .loop_02AC00                        ;$02AC14 |
+    LDX $00                                 ;$02AC16 | X: lowest carried sprite slot
+    BMI .no_carried_02AC48                  ;$02AC18 |\
+    STZ.w SpriteStatus_14C8,X               ;$02AC1A ||
+    LDA.b #!StatusCarried_0B                ;$02AC1D ||
+    STA.w SpriteStatus_14C8                 ;$02AC1F || NOTE: hardcoded slot 0
+    LDA.b SpriteNumber_9E,X                 ;$02AC22 ||
+    STA.b SpriteNumber_9E                   ;$02AC24 || NOTE: hardcoded slot 0
+    LDA.b SpriteXPosLow_E4,X                ;$02AC26 ||
+    STA.b SpriteXPosLow_E4                  ;$02AC28 || NOTE: hardcoded slot 0
+    LDA.w SpriteXPosHigh_14E0,X             ;$02AC2A ||
+    STA.w SpriteXPosHigh_14E0               ;$02AC2D || NOTE: hardcoded slot 0
+    LDA.b SpriteYPosLow_D8,X                ;$02AC30 ||
+    STA.b SpriteYPosLow_D8                  ;$02AC32 || NOTE: hardcoded slot 0
+    LDA.w SpriteYPosHigh_14D4,X             ;$02AC34 ||
+    STA.w SpriteYPosHigh_14D4               ;$02AC37 || NOTE: hardcoded slot 0
+    LDA.w SpriteYXPPCCCT_15F6,X             ;$02AC3A ||
+    PHA                                     ;$02AC3D ||
+    LDX.b #$00                              ;$02AC3E ||
+    JSL InitSpriteTables                    ;$02AC40 || init sprite slot 0
+    PLA                                     ;$02AC44 ||
+    STA.w SpriteYXPPCCCT_15F6               ;$02AC45 |/ NOTE: hardcoded slot 0
+.no_carried_02AC48:
     REP #$10
     LDX.w #$027A                            ;$02AC4A |
--   STZ.w Map16_1693,X                      ;$02AC4D | level initialization
-    DEX                                     ;$02AC50 |
-    BPL -                                   ;$02AC51 |
+-   STZ.w Map16_1693,X                      ;$02AC4D |\ level initialization
+    DEX                                     ;$02AC50 ||
+    BPL -                                   ;$02AC51 |/
     SEP #$10                                ;$02AC53 |
     STZ.w Layer1ScrollCmd_143E              ;$02AC55 |
     STZ.w Layer2ScrollCmd_143F              ;$02AC58 |
     RTS                                     ;$02AC5B |
 
-CODE_02AC5C:
+load_nearby_sprites_02AC5C:
     LDA.b ScreenMode_5B
     LSR                                     ;$02AC5E |
-    BCC CODE_02ACA1                         ;$02AC5F |
+    BCC .horizontal_layer1_02ACA1           ;$02AC5F |
     LDA.b Layer1ScrollDir_55                ;$02AC61 |
     PHA                                     ;$02AC63 |
     LDA.b #!ScrollLoading_01                ;$02AC64 |
@@ -6003,21 +6000,20 @@ CODE_02AC5C:
     PHA                                     ;$02AC72 |
     SBC.b #$00                              ;$02AC73 |
     STA.b Layer1YPos_1C+1                   ;$02AC75 |
-    STZ.w $18B6                             ;$02AC77 |
-CODE_02AC7A:
-    JSR CODE_02A802
-    JSR CODE_02A802                         ;$02AC7D |
-    LDA.b Layer1YPos_1C                     ;$02AC80 |
-    CLC                                     ;$02AC82 |
-    ADC.b #$10                              ;$02AC83 |
-    STA.b Layer1YPos_1C                     ;$02AC85 |
-    LDA.b Layer1YPos_1C+1                   ;$02AC87 |
-    ADC.b #$00                              ;$02AC89 |
-    STA.b Layer1YPos_1C+1                   ;$02AC8B |
-    INC.w $18B6                             ;$02AC8D |
-    LDA.w $18B6                             ;$02AC90 |
-    CMP.b #$20                              ;$02AC93 |
-    BCC CODE_02AC7A                         ;$02AC95 |
+    STZ.w TileGenerateTrackB_18B6           ;$02AC77 |
+-   JSR CODE_02A802                         ;$02AC7A |\
+    JSR CODE_02A802                         ;$02AC7D ||
+    LDA.b Layer1YPos_1C                     ;$02AC80 ||
+    CLC                                     ;$02AC82 ||
+    ADC.b #$10                              ;$02AC83 ||
+    STA.b Layer1YPos_1C                     ;$02AC85 ||
+    LDA.b Layer1YPos_1C+1                   ;$02AC87 ||
+    ADC.b #$00                              ;$02AC89 ||
+    STA.b Layer1YPos_1C+1                   ;$02AC8B ||
+    INC.w TileGenerateTrackB_18B6           ;$02AC8D ||
+    LDA.w TileGenerateTrackB_18B6           ;$02AC90 ||
+    CMP.b #$20                              ;$02AC93 ||
+    BCC -                                   ;$02AC95 |/
     PLA                                     ;$02AC97 |
     STA.b Layer1YPos_1C+1                   ;$02AC98 |
     PLA                                     ;$02AC9A |
@@ -6026,7 +6022,7 @@ CODE_02AC7A:
     STA.b Layer1ScrollDir_55                ;$02AC9E |
     RTS                                     ;$02ACA0 |
 
-CODE_02ACA1:
+.horizontal_layer1_02ACA1:
     LDA.b Layer1ScrollDir_55
     PHA                                     ;$02ACA3 |
     LDA.b #!ScrollLoading_01                ;$02ACA4 |
@@ -6040,21 +6036,20 @@ CODE_02ACA1:
     PHA                                     ;$02ACB2 |
     SBC.b #$00                              ;$02ACB3 |
     STA.b Layer1XPos_1A+1                   ;$02ACB5 |
-    STZ.w $18B6                             ;$02ACB7 |
-CODE_02ACBA:
-    JSR CODE_02A802
-    JSR CODE_02A802                         ;$02ACBD |
-    LDA.b Layer1XPos_1A                     ;$02ACC0 |
-    CLC                                     ;$02ACC2 |
-    ADC.b #$10                              ;$02ACC3 |
-    STA.b Layer1XPos_1A                     ;$02ACC5 |
-    LDA.b Layer1XPos_1A+1                   ;$02ACC7 |
-    ADC.b #$00                              ;$02ACC9 |
-    STA.b Layer1XPos_1A+1                   ;$02ACCB |
-    INC.w $18B6                             ;$02ACCD |
-    LDA.w $18B6                             ;$02ACD0 |
-    CMP.b #$20                              ;$02ACD3 |
-    BCC CODE_02ACBA                         ;$02ACD5 |
+    STZ.w TileGenerateTrackB_18B6           ;$02ACB7 |
+-   JSR CODE_02A802                         ;$02ACBA |\
+    JSR CODE_02A802                         ;$02ACBD ||
+    LDA.b Layer1XPos_1A                     ;$02ACC0 ||
+    CLC                                     ;$02ACC2 ||
+    ADC.b #$10                              ;$02ACC3 ||
+    STA.b Layer1XPos_1A                     ;$02ACC5 ||
+    LDA.b Layer1XPos_1A+1                   ;$02ACC7 ||
+    ADC.b #$00                              ;$02ACC9 ||
+    STA.b Layer1XPos_1A+1                   ;$02ACCB ||
+    INC.w TileGenerateTrackB_18B6           ;$02ACCD ||
+    LDA.w TileGenerateTrackB_18B6           ;$02ACD0 ||
+    CMP.b #$20                              ;$02ACD3 ||
+    BCC -                                   ;$02ACD5 |/
     PLA                                     ;$02ACD7 |
     STA.b Layer1XPos_1A+1                   ;$02ACD8 |
     PLA                                     ;$02ACDA |
