@@ -2234,7 +2234,7 @@ CODE_018F50:
     AND.b #$0F                              ;$018F54 |
     ORA.b #$D0                              ;$018F56 |
     STA.b SpriteYSpeed_AA,X                 ;$018F58 |
-    LDA.w $148D                             ;$018F5A |
+    LDA.w RandomNumber_148D                 ;$018F5A |
     AND.b #$03                              ;$018F5D |
     BNE +                                   ;$018F5F |
     JSR FaceMario                           ;$018F61 |
@@ -6115,14 +6115,13 @@ VerticalLevel:
     AND.b #$01                              ;$01ACC1 |
     STA $01                                 ;$01ACC3 |
     TAY                                     ;$01ACC5 |
-    BEQ CODE_01ACD2                         ;$01ACC6 |
-    LDA.b SpriteNumber_9E,X                 ;$01ACC8 |
-    CMP.b #!GreenVNetKoopa_22               ;$01ACCA |
-    BEQ Return01ACA4                        ;$01ACCC |
-    CMP.b #!GreenHNetKoopa_24               ;$01ACCE |
-    BEQ Return01ACA4                        ;$01ACD0 |
-CODE_01ACD2:
-    LDA.b Layer1YPos_1C
+    BEQ +                                   ;$01ACC6 |\
+    LDA.b SpriteNumber_9E,X                 ;$01ACC8 ||
+    CMP.b #!GreenVNetKoopa_22               ;$01ACCA ||
+    BEQ Return01ACA4                        ;$01ACCC ||
+    CMP.b #!GreenHNetKoopa_24               ;$01ACCE ||
+    BEQ Return01ACA4                        ;$01ACD0 |/
++   LDA.b Layer1YPos_1C                     ;$01ACD2 |
     CLC                                     ;$01ACD4 |
     ADC.w SpriteOffScreen1,Y                ;$01ACD5 |
     ROL $00                                 ;$01ACD8 |
@@ -6135,43 +6134,39 @@ CODE_01ACD2:
     SBC.w SpriteYPosHigh_14D4,X             ;$01ACE6 |
     STA $00                                 ;$01ACE9 |
     LDY $01                                 ;$01ACEB |
-    BEQ CODE_01ACF3                         ;$01ACED |
-    EOR.b #$80                              ;$01ACEF |
-    STA $00                                 ;$01ACF1 |
-CODE_01ACF3:
-    LDA $00
+    BEQ +                                   ;$01ACED |\
+    EOR.b #$80                              ;$01ACEF ||
+    STA $00                                 ;$01ACF1 |/
++   LDA $00                                 ;$01ACF3 |
     BPL Return01ACA4                        ;$01ACF5 |
     BMI OffScrEraseSprite                   ;$01ACF7 |
 GetRand:
     PHY
     LDY.b #$01                              ;$01ACFA |
-    JSL CODE_01AD07                         ;$01ACFC |
+    JSL .set_rng_01AD07                     ;$01ACFC |
     DEY                                     ;$01AD00 |
-    JSL CODE_01AD07                         ;$01AD01 |
+    JSL .set_rng_01AD07                     ;$01AD01 |
     PLY                                     ;$01AD05 |
     RTL                                     ;$01AD06 |
 
-CODE_01AD07:
-    LDA.w $148B
+.set_rng_01AD07:
+    LDA.w RNGCalc_148B
     ASL                                     ;$01AD0A |
     ASL                                     ;$01AD0B |
     SEC                                     ;$01AD0C |
-    ADC.w $148B                             ;$01AD0D |
-    STA.w $148B                             ;$01AD10 |
-    ASL.w $148C                             ;$01AD13 |
+    ADC.w RNGCalc_148B                      ;$01AD0D |
+    STA.w RNGCalc_148B                      ;$01AD10 |
+    ASL.w RNGCalc_148B+1                    ;$01AD13 |
     LDA.b #$20                              ;$01AD16 |
-    BIT.w $148C                             ;$01AD18 |
-    BCC CODE_01AD21                         ;$01AD1B |
-    BEQ CODE_01AD26                         ;$01AD1D |
-    BNE CODE_01AD23                         ;$01AD1F |
-CODE_01AD21:
-    BNE CODE_01AD26
-CODE_01AD23:
-    INC.w $148C
-CODE_01AD26:
-    LDA.w $148C
-    EOR.w $148B                             ;$01AD29 |
-    STA.w $148D,Y                           ;$01AD2C |
+    BIT.w RNGCalc_148B+1                    ;$01AD18 |
+    BCC +                                   ;$01AD1B |\
+    BEQ +++                                 ;$01AD1D ||
+    BNE ++                                  ;$01AD1F ||
++   BNE +++                                 ;$01AD21 ||
+++  INC.w RNGCalc_148B+1                    ;$01AD23 ||
++++ LDA.w RNGCalc_148B+1                    ;$01AD26 |/
+    EOR.w RNGCalc_148B                      ;$01AD29 |
+    STA.w RandomNumber_148D,Y               ;$01AD2C |
     RTL                                     ;$01AD2F |
 
 SubHorizPos:
@@ -6655,7 +6650,7 @@ CODE_01B062:
     TAY                                     ;$01B079 |
     LDA.w DATA_01B025,Y                     ;$01B07A |
     STA.b SpriteYSpeed_AA,X                 ;$01B07D |
-    LDA.w $148D                             ;$01B07F |
+    LDA.w RandomNumber_148D                 ;$01B07F |
     AND.b #$40                              ;$01B082 |
     BNE CODE_01B08E                         ;$01B084 |
     LDA.w SpriteYXPPCCCT_15F6,X             ;$01B086 |
@@ -6663,7 +6658,7 @@ CODE_01B062:
     STA.w SpriteYXPPCCCT_15F6,X             ;$01B08B |
 CODE_01B08E:
     JSL GetRand
-    LDA.w $148D                             ;$01B092 |
+    LDA.w RandomNumber_148D                 ;$01B092 |
     AND.b #$80                              ;$01B095 |
     BNE CODE_01B09C                         ;$01B097 |
     JSR UpdateDirection                     ;$01B099 |

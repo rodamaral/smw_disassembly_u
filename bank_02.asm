@@ -683,7 +683,7 @@ spawn_star_sparkles_02858F:
 +   STX $01                                 ;$02859B |
     JSL GetRand                             ;$02859D |
     TYA                                     ;$0285A1 |
-    AND.w $148D                             ;$0285A2 |
+    AND.w RandomNumber_148D                 ;$0285A2 |
     CLC                                     ;$0285A5 |
     ADC $01                                 ;$0285A6 |
     CLC                                     ;$0285A8 |
@@ -735,7 +735,7 @@ CODE_0285EF:
     STA.w MinorSprNumber_17F0,Y             ;$0285F5 |
     LDA.b #$00                              ;$0285F8 |
     STA.w MinorSprYSpeed_1820,Y             ;$0285FA |
-    LDA.w $148D                             ;$0285FD |
+    LDA.w RandomNumber_148D                 ;$0285FD |
     AND.b #$0F                              ;$028600 |
     SEC                                     ;$028602 |
     SBC.b #$03                              ;$028603 |
@@ -6936,7 +6936,7 @@ GenParaEnemy:
     LDA.b Layer1YPos_1C+1                   ;$02B358 |
     SBC.b #$00                              ;$02B35A |
     STA.w SpriteYPosHigh_14D4,X             ;$02B35C |
-    LDA.w $148D                             ;$02B35F |
+    LDA.w RandomNumber_148D                 ;$02B35F |
     AND.b #$FF                              ;$02B362 |
     CLC                                     ;$02B364 |
     ADC.b #$30                              ;$02B365 |
@@ -17031,7 +17031,7 @@ CODE_02FCE2:
     CMP.w DATA_02FBBD,Y                     ;$02FD08 |
     BNE CODE_02FD1A                         ;$02FD0B |
     INC.w ClusterSprMisc_0F4A,X             ;$02FD0D |
-    LDA.w $148D                             ;$02FD10 |
+    LDA.w RandomNumber_148D                 ;$02FD10 |
     AND.b #$FF                              ;$02FD13 |
     ORA.b #$3F                              ;$02FD15 |
     STA.w ClusterSprMisc_0F9A,X             ;$02FD17 |
