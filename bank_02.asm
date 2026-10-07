@@ -923,14 +923,14 @@ BreakTurnBlock:
     ASL                                     ;$02875B |
     ADC.w CurrentPlayer_0DB3                ;$02875C |
     TAX                                     ;$02875F |
-    LDA.w $0F34,X                           ;$028760 |
+    LDA.w PlayerScore_0F34,X                ;$028760 |
     CLC                                     ;$028763 |
     ADC.b #$05                              ;$028764 |
-    STA.w $0F34,X                           ;$028766 |
+    STA.w PlayerScore_0F34,X                ;$028766 |
     BCC CODE_028773                         ;$028769 |
-    INC.w $0F35,X                           ;$02876B |
+    INC.w PlayerScore_0F34+1,X              ;$02876B |
     BNE CODE_028773                         ;$02876E |
-    INC.w $0F36,X                           ;$028770 |
+    INC.w PlayerScore_0F34+2,X              ;$028770 |
 CODE_028773:
     LDA.b #$D0
     STA.b PlayerYSpeed_7D                   ;$028775 |
@@ -6211,16 +6211,16 @@ CODE_02AE12:
     ASL                                     ;$02AE15 |
     ADC.w CurrentPlayer_0DB3                ;$02AE16 |
     TAX                                     ;$02AE19 |
-    LDA.w $0F34,X                           ;$02AE1A |
+    LDA.w PlayerScore_0F34,X                ;$02AE1A |
     CLC                                     ;$02AE1D |
     ADC.w PointMultiplierLo,Y               ;$02AE1E |
-    STA.w $0F34,X                           ;$02AE21 |
-    LDA.w $0F35,X                           ;$02AE24 |
+    STA.w PlayerScore_0F34,X                ;$02AE21 |
+    LDA.w PlayerScore_0F34+1,X              ;$02AE24 |
     ADC.w PointMultiplierHi,Y               ;$02AE27 |
-    STA.w $0F35,X                           ;$02AE2A |
-    LDA.w $0F36,X                           ;$02AE2D |
+    STA.w PlayerScore_0F34+1,X              ;$02AE2A |
+    LDA.w PlayerScore_0F34+2,X              ;$02AE2D |
     ADC.b #$00                              ;$02AE30 |
-    STA.w $0F36,X                           ;$02AE32 |
+    STA.w PlayerScore_0F34+2,X              ;$02AE32 |
 CODE_02AE35:
     LDX.w CurrentSprite_15E9
 CODE_02AE38:

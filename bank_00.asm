@@ -1512,13 +1512,13 @@ CODE_008D6D:
     LDY.b #$6C                              ;$008D7D |
 CODE_008D7F:
     LDA.w DATA_008C89,Y
-    STA.w $0EF9,X                           ;$008D82 |
+    STA.w StatusBar_0EF9,X                  ;$008D82 |
     DEY                                     ;$008D85 |
     DEY                                     ;$008D86 |
     DEX                                     ;$008D87 |
     BPL CODE_008D7F                         ;$008D88 |
     LDA.b #$28                              ;$008D8A |
-    STA.w $0F30                             ;$008D8C |
+    STA.w InGameTimerFrames_0F30            ;$008D8C |
     RTS                                     ;$008D8F |
 
 DATA_008D90:
@@ -1595,63 +1595,63 @@ update_status_tileset_008E1A:
     LDA.w IRQNMICommand_0D9B                ;$008E21 ||  - Game is frozen
     CMP.b #$C1                              ;$008E24 ||  - In Bowser's battle mode
     BEQ .update_time_tilemap                ;$008E26 ||
-    DEC.w $0F30                             ;$008E28 || Decrement subsecond timer
+    DEC.w InGameTimerFrames_0F30            ;$008E28 || Decrement subsecond timer
     BPL .update_time_tilemap                ;$008E2B |/
     LDA.b #$28                              ;$008E2D | if subsecond timer becomes negative
-    STA.w $0F30                             ;$008E2F | reset it and update the clock digits
-    LDA.w $0F31                             ;$008E32 |
-    ORA.w $0F32                             ;$008E35 |
-    ORA.w $0F33                             ;$008E38 |
+    STA.w InGameTimerFrames_0F30            ;$008E2F | reset it and update the clock digits
+    LDA.w InGameTimerHundreds_0F31          ;$008E32 |
+    ORA.w InGameTimerTens_0F32              ;$008E35 |
+    ORA.w InGameTimerOnes_0F33              ;$008E38 |
     BEQ .update_time_tilemap                ;$008E3B | do not update when clock is 000
 
     LDX.b #$02                              ;$008E3D |\
--   DEC.w $0F31,X                           ;$008E3F || Clock digits decrementing algorithm
+-   DEC.w InGameTimerHundreds_0F31,X        ;$008E3F || Clock digits decrementing algorithm
     BPL +                                   ;$008E42 ||
     LDA.b #$09                              ;$008E44 ||
-    STA.w $0F31,X                           ;$008E46 ||
+    STA.w InGameTimerHundreds_0F31,X        ;$008E46 ||
     DEX                                     ;$008E49 ||
     BPL -                                   ;$008E4A |/
 
-+   LDA.w $0F31                             ;$008E4C |\
++   LDA.w InGameTimerHundreds_0F31          ;$008E4C |\
     BNE +                                   ;$008E4F || Check if clock is 099
-    LDA.w $0F32                             ;$008E51 || to play time is running out theme
-    AND.w $0F33                             ;$008E54 ||
+    LDA.w InGameTimerTens_0F32              ;$008E51 || to play time is running out theme
+    AND.w InGameTimerOnes_0F33              ;$008E54 ||
     CMP.b #$09                              ;$008E57 ||
     BNE +                                   ;$008E59 ||
     LDA.b #$FF                              ;$008E5B ||
     STA.w SPCIO0_1DF9                       ;$008E5D |/
 
-+   LDA.w $0F31                             ;$008E60 |\
-    ORA.w $0F32                             ;$008E63 || Check if clock is 000
-    ORA.w $0F33                             ;$008E66 || to kill the player
++   LDA.w InGameTimerHundreds_0F31          ;$008E60 |\
+    ORA.w InGameTimerTens_0F32              ;$008E63 || Check if clock is 000
+    ORA.w InGameTimerOnes_0F33              ;$008E66 || to kill the player
     BNE .update_time_tilemap                ;$008E69 ||
     JSL kill_player                         ;$008E6B |/
 
 .update_time_tilemap:
-    LDA.w $0F31                             ;$008E6F | copy digits to corresponding
-    STA.w $0F25                             ;$008E72 | statusbar tilemap values
-    LDA.w $0F32                             ;$008E75 |
-    STA.w $0F26                             ;$008E78 |
-    LDA.w $0F33                             ;$008E7B |
-    STA.w $0F27                             ;$008E7E |
+    LDA.w InGameTimerHundreds_0F31          ;$008E6F | copy digits to corresponding
+    STA.w StatusBar_0EF9+$2C                ;$008E72 | statusbar tilemap values
+    LDA.w InGameTimerTens_0F32              ;$008E75 |
+    STA.w StatusBar_0EF9+$2D                ;$008E78 |
+    LDA.w InGameTimerOnes_0F33              ;$008E7B |
+    STA.w StatusBar_0EF9+$2E                ;$008E7E |
     LDX.b #$10                              ;$008E81 |
     LDY.b #$00                              ;$008E83 |
 
--   LDA.w $0F31,Y                           ;$008E85 |
+-   LDA.w InGameTimerHundreds_0F31,Y        ;$008E85 |
     BNE +                                   ;$008E88 | Replace leadings 0s in timer with spaces
     LDA.b #$FC                              ;$008E8A | 099 -> _99
-    STA.w $0F15,X                           ;$008E8C | 008 -> __8
+    STA.w StatusBar_0EF9+$1C,X              ;$008E8C | 008 -> __8
     INY                                     ;$008E8F |
     INX                                     ;$008E90 |
     CPY.b #$02                              ;$008E91 |
     BNE -                                   ;$008E93 |
 
 +   LDX.b #$03                              ;$008E95 | limit scores to 999999
--   LDA.w $0F36,X                           ;$008E97 |
+-   LDA.w PlayerScore_0F34+2,X              ;$008E97 |
     STA $00                                 ;$008E9A |
     STZ $01                                 ;$008E9C |
     REP #$20                                ;$008E9E | A->16
-    LDA.w $0F34,X                           ;$008EA0 |
+    LDA.w PlayerScore_0F34,X                ;$008EA0 |
     SEC                                     ;$008EA3 |
     SBC.w #$423F                            ;$008EA4 |
     LDA $00                                 ;$008EA7 |
@@ -1659,55 +1659,54 @@ update_status_tileset_008E1A:
     BCC +                                   ;$008EAC |
     SEP #$20                                ;$008EAE |\ A->8
     LDA.b #$0F                              ;$008EB0 || if score exceeds 999999
-    STA.w $0F36,X                           ;$008EB2 || set it to 999999 (in hex)
+    STA.w PlayerScore_0F34+2,X              ;$008EB2 || set it to 999999 (in hex)
     LDA.b #$42                              ;$008EB5 ||
-    STA.w $0F35,X                           ;$008EB7 ||
+    STA.w PlayerScore_0F34+1,X              ;$008EB7 ||
     LDA.b #$3F                              ;$008EBA ||
-    STA.w $0F34,X                           ;$008EBC |/
+    STA.w PlayerScore_0F34,X                ;$008EBC |/
 +   SEP #$20                                ;$008EBF | A->8
     DEX                                     ;$008EC1 | 
     DEX                                     ;$008EC2 |
     DEX                                     ;$008EC3 |
     BPL -                                   ;$008EC4 | repeat for Luigi
 
-    LDA.w $0F36                             ;$008EC6 | copy Mario score to scratch RAM
+    LDA.w PlayerScore_0F34+2                ;$008EC6 | copy Mario score to scratch RAM
     STA $00                                 ;$008EC9 | that are parameters to $009012
     STZ $01                                 ;$008ECB | notice that this happens regardless of character in play
-    LDA.w $0F35                             ;$008ECD |
+    LDA.w PlayerScore_0F34+1                ;$008ECD |
     STA $03                                 ;$008ED0 |
-    LDA.w $0F34                             ;$008ED2 |
+    LDA.w PlayerScore_0F34                  ;$008ED2 |
     STA $02                                 ;$008ED5 |
     LDX.b #$14                              ;$008ED7 |
     LDY.b #$00                              ;$008ED9 |
     JSR draw_score_009012                   ;$008EDB | PERF: Mario's statusbar score is calculated while playing as Luigi
 
     LDX.b #$00                              ;$008EDE |
--   LDA.w $0F29,X                           ;$008EE0 | Replace leadings 0s in score with spaces
+-   LDA.w StatusBar_0EF9+$30,X              ;$008EE0 | Replace leadings 0s in score with spaces
     BNE +                                   ;$008EE3 |
     LDA.b #$FC                              ;$008EE5 |
-    STA.w $0F29,X                           ;$008EE7 |
+    STA.w StatusBar_0EF9+$30,X              ;$008EE7 |
     INX                                     ;$008EEA |
     CPX.b #$06                              ;$008EEB |
     BNE -                                   ;$008EED |
 
 +   LDA.w CurrentPlayer_0DB3                ;$008EEF |
     BEQ .handle_coins_008F1D                ;$008EF2 |
-    LDA.w $0F39                             ;$008EF4 | copy Luigi score to scratch RAM
+    LDA.w PlayerScore_0F34+5                ;$008EF4 | copy Luigi score to scratch RAM
     STA $00                                 ;$008EF7 | that are parameters to $009012
     STZ $01                                 ;$008EF9 |
-    LDA.w $0F38                             ;$008EFB |
+    LDA.w PlayerScore_0F34+4                ;$008EFB |
     STA $03                                 ;$008EFE |
-    LDA.w $0F37                             ;$008F00 |
+    LDA.w PlayerScore_0F34+3                ;$008F00 |
     STA $02                                 ;$008F03 |
     LDX.b #$14                              ;$008F05 |
     LDY.b #$00                              ;$008F07 |
     JSR draw_score_009012                   ;$008F09 |
-
     LDX.b #$00                              ;$008F0C |
--   LDA.w $0F29,X                           ;$008F0E | Replace leadings 0s in score with spaces
+-   LDA.w StatusBar_0EF9+$30,X              ;$008F0E | Replace leadings 0s in score with spaces
     BNE .handle_coins_008F1D                ;$008F11 |
     LDA.b #$FC                              ;$008F13 |
-    STA.w $0F29,X                           ;$008F15 |
+    STA.w StatusBar_0EF9+$30,X              ;$008F15 |
     INX                                     ;$008F18 |
     CPX.b #$06                              ;$008F19 |
     BNE -                                   ;$008F1B |
@@ -1739,8 +1738,8 @@ update_status_tileset_008E1A:
     TXY                                     ;$008F50 |
     BNE +                                   ;$008F51 |
     LDX.b #$FC                              ;$008F53 | Replace leading 0 in lives with space
-+   STX.w $0F16                             ;$008F55 |
-    STA.w $0F17                             ;$008F58 |
++   STX.w StatusBar_0EF9+$1D                ;$008F55 |
+    STA.w StatusBar_0EF9+$1E                ;$008F58 |
 
 ; Handle Bonus Stars overflow
     LDX.w CurrentPlayer_0DB3                ;$008F5B |
@@ -1760,8 +1759,8 @@ update_status_tileset_008E1A:
     TXY                                     ;$008F79 |
     BNE +                                   ;$008F7A |
     LDX.b #$FC                              ;$008F7C | Replace leading 0 in coins with space
-+   STA.w $0F14                             ;$008F7E |
-    STX.w $0F13                             ;$008F81 |
++   STA.w StatusBar_0EF9+$1B                ;$008F7E |
+    STX.w StatusBar_0EF9+$1A                ;$008F81 |
 
 ; Calculate Bonus Stars digits
     SEP #$20                                ;$008F84 | A->8
@@ -1775,23 +1774,23 @@ update_status_tileset_008E1A:
     LDY.b #$10                              ;$008F96 |
     JSR calculate_decimal_digits_009051     ;$008F98 |
     LDX.b #$00                              ;$008F9B | X represents a digit, starting from tens
--   LDA.w $0F1E,X                           ;$008F9D |\ get returned digit
+-   LDA.w StatusBar_0EF9+$25,X              ;$008F9D |\ get returned digit
     BNE .draw_bonus_stars_008FAF            ;$008FA0 ||
     LDA.b #$FC                              ;$008FA2 ||\
-    STA.w $0F1E,X                           ;$008FA4 ||| Replace leading 0 in Bonus Star with space
-    STA.w $0F03,X                           ;$008FA7 |||
+    STA.w StatusBar_0EF9+$25,X              ;$008FA4 ||| Replace leading 0 in Bonus Star with space
+    STA.w StatusBar_0EF9+$A,X               ;$008FA7 |||
     INX                                     ;$008FAA |||
     CPX.b #$01                              ;$008FAB ||/
     BNE -                                   ;$008FAD |/ WARN: as X is always 1, this never branches
 
 .draw_bonus_stars_008FAF:
-    LDA.w $0F1E,X                           ;$008FAF | start from tens if non-empty, or ones otherwise
+    LDA.w StatusBar_0EF9+$25,X              ;$008FAF | start from tens if non-empty, or ones otherwise
     ASL                                     ;$008FB2 |
     TAY                                     ;$008FB3 |
     LDA.w DATA_008E06,Y                     ;$008FB4 | get the tileset values
-    STA.w $0F03,X                           ;$008FB7 | for the upper part of the digit
+    STA.w StatusBar_0EF9+$A,X               ;$008FB7 | for the upper part of the digit
     LDA.w DATA_008E07,Y                     ;$008FBA | and the bottom part of the digit
-    STA.w $0F1E,X                           ;$008FBD | overwriting the actual decimal value used previously
+    STA.w StatusBar_0EF9+$25,X              ;$008FBD | overwriting the actual decimal value used previously
     INX                                     ;$008FC0 |
     CPX.b #$02                              ;$008FC1 |
     BNE .draw_bonus_stars_008FAF            ;$008FC3 | redo for ones, if started from tens
@@ -1802,7 +1801,7 @@ update_status_tileset_008E1A:
     BEQ .draw_dragon_coins_008FD8           ;$008FCB |
     LDX.b #$04                              ;$008FCD |\
 -   LDA.w DATA_008DF5,X                     ;$008FCF ||
-    STA.w $0EF9,X                           ;$008FD2 || overwrite Mario's name in statusbar
+    STA.w StatusBar_0EF9,X                  ;$008FD2 || overwrite Mario's name in statusbar
     DEX                                     ;$008FD5 ||
     BPL -                                   ;$008FD6 |/
 
@@ -1819,7 +1818,7 @@ update_status_tileset_008E1A:
     BMI +                                   ;$008FEA ||
     LDY.b #$2E                              ;$008FEC || Dragon Coin tile
 +   TYA                                     ;$008FEE ||
-    STA.w $0EFF,X                           ;$008FEF || Tilemap entry
+    STA.w StatusBar_0EF9+6,X                ;$008FEF || Tilemap entry
     DEC $00                                 ;$008FF2 ||
     INX                                     ;$008FF4 ||
     CPX.b #$04                              ;$008FF5 ||
@@ -1836,7 +1835,7 @@ powers_of_ten_008FFA:                       ; Values used for converting score a
 
 draw_score_009012:
 --  SEP #$20                                ;$009012 | A->8
-    STZ.w $0F15,X                           ;$009014 |
+    STZ.w StatusBar_0EF9+$1C,X              ;$009014 |
 -   REP #$20                                ;$009017 | A->16
     LDA $02                                 ;$009019 | current score remainder, low word
     SEC                                     ;$00901B |
@@ -1851,7 +1850,7 @@ draw_score_009012:
     LDA $04                                 ;$00902E |
     STA $00                                 ;$009030 |
     SEP #$20                                ;$009032 |
-    INC.w $0F15,X                           ;$009034 | increment current digit
+    INC.w StatusBar_0EF9+$1C,X              ;$009034 | increment current digit
     BRA -                                   ;$009037 | repeat until subtraction underflows
 
 .next_decimal_place:
@@ -1876,7 +1875,7 @@ hex_to_dec_009045:
 
 calculate_decimal_digits_009051:
     SEP #$20                                ;$009051 | A->8
-    STZ.w $0F15,X                           ;$009053 |
+    STZ.w StatusBar_0EF9+$1C,X              ;$009053 |
 -   REP #$20                                ;$009056 | A->16
     LDA $02                                 ;$009058 |
     SEC                                     ;$00905A |
@@ -1886,7 +1885,7 @@ calculate_decimal_digits_009051:
     LDA $06                                 ;$009062 |
     STA $02                                 ;$009064 |
     SEP #$20                                ;$009066 | A->8
-    INC.w $0F15,X                           ;$009068 |
+    INC.w StatusBar_0EF9+$1C,X              ;$009068 |
     BRA -                                   ;$00906B |
 +   INX                                     ;$00906D |
     INY                                     ;$00906E |
@@ -2000,9 +1999,9 @@ CODE_0091B1:
     LDA.b #$B0                              ;$0091B6 |
     LDY.w BonusGameFlag_1425                ;$0091B8 |
     BEQ CODE_0091CA                         ;$0091BB |
-    STZ.w $0F31                             ;$0091BD |
-    STZ.w $0F32                             ;$0091C0 |
-    STZ.w $0F33                             ;$0091C3 |
+    STZ.w InGameTimerHundreds_0F31          ;$0091BD |
+    STZ.w InGameTimerTens_0F32              ;$0091C0 |
+    STZ.w InGameTimerOnes_0F33              ;$0091C3 |
     LDX.b #$26                              ;$0091C6 |
     LDA.b #$A4                              ;$0091C8 |
 CODE_0091CA:
@@ -3098,7 +3097,7 @@ CODE_009A87:
 GM04_title_load_2_009A8B:
     JSR SetUp0DA0GM4
     JSR GM12_level_load_2_00A59C            ;$009A8E |
-    STZ.w $0F31                             ;$009A91 |
+    STZ.w InGameTimerHundreds_0F31          ;$009A91 |
     JSR CODE_0085FA                         ;$009A94 |
     LDA.b #$03                              ;$009A97 |
     STA.b StripeImage_12                    ;$009A99 |
@@ -3621,11 +3620,11 @@ CODE_009E17:
     STZ.w SavedPlayerYoshi_0DBA             ;$009E45 |
     STZ.w PlayerItembox_0DC2                ;$009E48 |
     STZ.w PlayerBonusStars_0F48             ;$009E4B |
-    STZ.w $0F34                             ;$009E4E |
-    STZ.w $0F37                             ;$009E51 |
+    STZ.w PlayerScore_0F34                  ;$009E4E |
+    STZ.w PlayerScore_0F34+3                ;$009E51 |
     SEP #$20                                ;$009E54 |
-    STZ.w $0F36                             ;$009E56 |
-    STZ.w $0F39                             ;$009E59 |
+    STZ.w PlayerScore_0F34+2                ;$009E56 |
+    STZ.w PlayerScore_0F34+5                ;$009E59 |
     STZ.w LevelExitMode_0DD5                ;$009E5C |
     STZ.w CurrentPlayer_0DB3                ;$009E5F |
 CODE_009E62:
@@ -8810,9 +8809,9 @@ death_animation:
 
 .not_game_over
     LDY.b #!FadeToOverworld_0B              ;$00D0E6 \ Load the fade to OW game mode.
-    LDA.w $0F31                             ;$00D0E8 |\ If the hundreds place of the time,
-    ORA.w $0F32                             ;$00D0EB | | the tens place,
-    ORA.w $0F33                             ;$00D0EE | | and the ones place are zero,
+    LDA.w InGameTimerHundreds_0F31          ;$00D0E8 |\ If the hundreds place of the time,
+    ORA.w InGameTimerTens_0F32              ;$00D0EB | | the tens place,
+    ORA.w InGameTimerOnes_0F33              ;$00D0EE | | and the ones place are zero,
     BNE .not_time_up                        ;$00D0F1 | |
     LDX.b #$1D                              ;$00D0F3 | | show the "TIME UP" message.
 .show_message                               ;        |/

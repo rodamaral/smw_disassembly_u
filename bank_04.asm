@@ -1380,14 +1380,14 @@ CODE_048E55:
     STA.w $13C1                             ;$048E9B |
 CODE_048E9E:
     SEP #$30
-    LDX.w $0EF7                             ;$048EA0 |
+    LDX.w EnterLevelAuto_0EF7               ;$048EA0 |
     BEQ CODE_048EE1                         ;$048EA3 |
     BPL ADDR_048ED9                         ;$048EA5 |
     TXA                                     ;$048EA7 |
     AND.b #$7F                              ;$048EA8 |
     TAX                                     ;$048EAA |
-    STZ.w $0DF5,X                           ;$048EAB |
-    LDA.w $0EF6                             ;$048EAE |
+    STZ.w OWSpriteMisc_0DF5,X               ;$048EAB |
+    LDA.w KoopaKidTile_0EF6                 ;$048EAE |
     LDX.w LevelExitMode_0DD5                ;$048EB1 |
     BPL ADDR_048ECD                         ;$048EB4 |
     ASL                                     ;$048EB6 |
@@ -1404,8 +1404,8 @@ CODE_048E9E:
 ADDR_048ECD:
     TAX
     LDA.w DATA_04FB85,X                     ;$048ECE |
-    ORA.w $0EF5                             ;$048ED1 |
-    STA.w $0EF5                             ;$048ED4 |
+    ORA.w KoopaKidActive_0EF5               ;$048ED1 |
+    STA.w KoopaKidActive_0EF5               ;$048ED4 |
     BRA CODE_048EE1                         ;$048ED7 |
 
 ADDR_048ED9:
@@ -1660,7 +1660,7 @@ DATA_04910E:
 
 CODE_049120:
     STZ.w PlayerSwitching_0DD8
-    LDY.w $0EF7                             ;$049123 |
+    LDY.w EnterLevelAuto_0EF7               ;$049123 |
     BMI OWPU_NotOnPipe                      ;$049126 |
     LDA.w LevelExitMode_0DD5                ;$049128 |
     BMI CODE_049132                         ;$04912B |
@@ -7745,10 +7745,10 @@ CODE_04F68F:
     BPL CODE_04F67C                         ;$04F6AD |
     LDX.b #$0D                              ;$04F6AF |
 CODE_04F6B1:
-    STZ.w $0E25,X
+    STZ.w OWSpriteMisc_0E25,X
     LDA.w DATA_04FD22                       ;$04F6B4 |
     DEC A                                   ;$04F6B7 |
-    STA.w $0EB5,X                           ;$04F6B8 |
+    STA.w OWSpriteZSpeed_0EB5,X             ;$04F6B8 |
     LDA.w DATA_04F665,X                     ;$04F6BB |
 CODE_04F6BE:
     PHA
@@ -7834,7 +7834,7 @@ CODE_04F770:
     AND.b #$07                              ;$04F77D |
     TAY                                     ;$04F77F |
     LDA.w DATA_04F6D0,Y                     ;$04F780 |
-    STA.w $0E55,X                           ;$04F783 |
+    STA.w OWSpriteZPosLow_0E55,X            ;$04F783 |
     TYA                                     ;$04F786 |
     ASL                                     ;$04F787 |
     TAY                                     ;$04F788 |
@@ -7843,17 +7843,17 @@ CODE_04F770:
     CLC                                     ;$04F78D |
     ADC.w DATA_04F6D8,Y                     ;$04F78E |
     SEP #$20                                ;$04F791 |
-    STA.w $0E35,X                           ;$04F793 |
+    STA.w OWSpriteXPosLow_0E35,X            ;$04F793 |
     XBA                                     ;$04F796 |
-    STA.w $0E65,X                           ;$04F797 |
+    STA.w OWSpriteXPosHigh_0E65,X           ;$04F797 |
     REP #$20                                ;$04F79A |
     LDA.b Layer1YPos_1C                     ;$04F79C |
     CLC                                     ;$04F79E |
     ADC.w DATA_04F6E8,Y                     ;$04F79F |
     SEP #$20                                ;$04F7A2 |
-    STA.w $0E45,X                           ;$04F7A4 |
+    STA.w OWSpriteYPosLow_0E45,X            ;$04F7A4 |
     XBA                                     ;$04F7A7 |
-    STA.w $0E75,X                           ;$04F7A8 |
+    STA.w OWSpriteYPosHigh_0E75,X           ;$04F7A8 |
 CODE_04F7AB:
     DEX
     BPL CODE_04F770                         ;$04F7AC |
@@ -7870,15 +7870,15 @@ CODE_04F7BB:
     STX $01
     LDX $00                                 ;$04F7BD |
     LDY.w OWCloudYSpeed_0DE0,X              ;$04F7BF |
-    LDA.w $0E45,Y                           ;$04F7C2 |
+    LDA.w OWSpriteYPosLow_0E45,Y            ;$04F7C2 |
     STA $02                                 ;$04F7C5 |
-    LDA.w $0E75,Y                           ;$04F7C7 |
+    LDA.w OWSpriteYPosHigh_0E75,Y            ;$04F7C7 |
     STA $03                                 ;$04F7CA |
     LDX $01                                 ;$04F7CC |
     LDY.w OWCloudYSpeed_0DE0-1,X            ;$04F7CE |
-    LDA.w $0E75,Y                           ;$04F7D1 |
+    LDA.w OWSpriteYPosHigh_0E75,Y            ;$04F7D1 |
     XBA                                     ;$04F7D4 |
-    LDA.w $0E45,Y                           ;$04F7D5 |
+    LDA.w OWSpriteYPosLow_0E45,Y            ;$04F7D5 |
     REP #$20                                ;$04F7D8 |
     CMP $02                                 ;$04F7DA |
     SEP #$20                                ;$04F7DC |
@@ -7897,15 +7897,15 @@ CODE_04F7ED:
     BNE CODE_04F7B9                         ;$04F7F3 |
     LDA.b #$30                              ;$04F7F5 |
     STA.w OWCloudOAMIndex_0DDF              ;$04F7F7 |
-    STZ.w $0EF7                             ;$04F7FA |
+    STZ.w EnterLevelAuto_0EF7               ;$04F7FA |
     LDX.b #$0F                              ;$04F7FD |
     LDY.b #$2D                              ;$04F7FF |
 CODE_04F801:
     CPX.b #$0D
     BCS CODE_04F80D                         ;$04F803 |
-    LDA.w $0E25,X                           ;$04F805 |
+    LDA.w OWSpriteMisc_0E25,X               ;$04F805 |
     BEQ CODE_04F80D                         ;$04F808 |
-    DEC.w $0E25,X                           ;$04F80A |
+    DEC.w OWSpriteMisc_0E25,X               ;$04F80A |
 CODE_04F80D:
     CPX.b #$05
     BCC CODE_04F819                         ;$04F80F |
@@ -8046,27 +8046,27 @@ ADDR_04F8F6:
     XBA                                     ;$04F91A |
     LDA.b #$26                              ;$04F91B |
     JSR CODE_04FB7A                         ;$04F91D |
-    LDA.w $0E15,X                           ;$04F920 |
+    LDA.w OWSpriteMisc_0E15,X               ;$04F920 |
     BEQ ADDR_04F928                         ;$04F923 |
     JMP ADDR_04FF2E                         ;$04F925 |
 
 ADDR_04F928:
-    LDA.w $0E05,X
+    LDA.w OWSpriteMisc_0E05,X
     AND.b #$01                              ;$04F92B |
     TAY                                     ;$04F92D |
-    LDA.w $0EB5,X                           ;$04F92E |
+    LDA.w OWSpriteZSpeed_0EB5,X             ;$04F92E |
     CLC                                     ;$04F931 |
     ADC.w DATA_04F8C6,Y                     ;$04F932 |
-    STA.w $0EB5,X                           ;$04F935 |
+    STA.w OWSpriteZSpeed_0EB5,X             ;$04F935 |
     CMP.w DATA_04F8CA,Y                     ;$04F938 |
     BNE ADDR_04F945                         ;$04F93B |
-    LDA.w $0E05,X                           ;$04F93D |
+    LDA.w OWSpriteMisc_0E05,X               ;$04F93D |
     EOR.b #$01                              ;$04F940 |
-    STA.w $0E05,X                           ;$04F942 |
+    STA.w OWSpriteMisc_0E05,X               ;$04F942 |
 ADDR_04F945:
     JSR ADDR_04FEEF
-    LDY.w $0DF5,X                           ;$04F948 |
-    LDA.w $0E04,X                           ;$04F94B |
+    LDY.w OWSpriteMisc_0DF5,X               ;$04F948 |
+    LDA.w OWSpriteMisc_0E05-1,X             ;$04F94B |
     ASL                                     ;$04F94E |
     EOR $00                                 ;$04F94F |
     BPL ADDR_04F95D                         ;$04F951 |
@@ -8075,7 +8075,7 @@ ADDR_04F945:
     LDA.w #$0040                            ;$04F958 |
     BCS ADDR_04F96D                         ;$04F95B |
 ADDR_04F95D:
-    LDA.w $0E04,X
+    LDA.w OWSpriteMisc_0E05-1,X
     EOR $02                                 ;$04F960 |
     ASL                                     ;$04F962 |
     BCC ADDR_04F96D                         ;$04F963 |
@@ -8085,21 +8085,21 @@ ADDR_04F95D:
 ADDR_04F96D:
     SEP #$20
     BCC ADDR_04F97F                         ;$04F96F |
-    EOR.w $0E05,X                           ;$04F971 |
-    STA.w $0E05,X                           ;$04F974 |
+    EOR.w OWSpriteMisc_0E05,X               ;$04F971 |
+    STA.w OWSpriteMisc_0E05,X               ;$04F974 |
     JSR CODE_04FE5B                         ;$04F977 |
     AND.b #$06                              ;$04F97A |
-    STA.w $0DF5,X                           ;$04F97C |
+    STA.w OWSpriteMisc_0DF5,X               ;$04F97C |
 ADDR_04F97F:
     TXA
     CLC                                     ;$04F980 |
     ADC.b #$10                              ;$04F981 |
     TAX                                     ;$04F983 |
-    LDA.w $0DF5,X                           ;$04F984 |
+    LDA.w OWSpriteMisc_0DF5,X               ;$04F984 |
     ASL                                     ;$04F987 |
     JSR ADDR_04F993                         ;$04F988 |
     LDX.w SaveFileDelete_0DDE               ;$04F98B |
-    LDA.w $0E05,X                           ;$04F98E |
+    LDA.w OWSpriteMisc_0E05,X               ;$04F98E |
     ASL                                     ;$04F991 |
     ASL                                     ;$04F992 |
 ADDR_04F993:
@@ -8107,12 +8107,12 @@ ADDR_04F993:
     BCS ADDR_04F998                         ;$04F995 |
     INY                                     ;$04F997 |
 ADDR_04F998:
-    LDA.w $0E95,X
+    LDA.w OWSpriteXSpeed_0E95,X
     CLC                                     ;$04F99B |
     ADC.w DATA_04F8C6,Y                     ;$04F99C |
     CMP.w DATA_04F8C8,Y                     ;$04F99F |
     BEQ Return04F9A7                        ;$04F9A2 |
-    STA.w $0E95,X                           ;$04F9A4 |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04F9A4 |
 Return04F9A7:
     RTS
 
@@ -8138,22 +8138,22 @@ ADDR_04F9B8:
     BMI ADDR_04F9C8                         ;$04F9C5 |
     INY                                     ;$04F9C7 |
 ADDR_04F9C8:
-    LDA.w $0E95,X
+    LDA.w OWSpriteXSpeed_0E95,X
     CLC                                     ;$04F9CB |
     ADC.w DATA_04F8C6,Y                     ;$04F9CC |
     CMP.w DATA_04F8C8,Y                     ;$04F9CF |
     BEQ ADDR_04F9D7                         ;$04F9D2 |
-    STA.w $0E95,X                           ;$04F9D4 |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04F9D4 |
 ADDR_04F9D7:
     LDY.w PlayerTurnOW_0DD6
     LDA.w $1F19,Y                           ;$04F9DA |
-    STA.w $0E45,X                           ;$04F9DD |
+    STA.w OWSpriteYPosLow_0E45,X            ;$04F9DD |
     LDA.w $1F1A,Y                           ;$04F9E0 |
-    STA.w $0E75,X                           ;$04F9E3 |
+    STA.w OWSpriteYPosHigh_0E75,X           ;$04F9E3 |
     JSR CODE_04FE90                         ;$04F9E6 |
     JSR CODE_04FE62                         ;$04F9E9 |
     LDA.b #$36                              ;$04F9EC |
-    LDY.w $0E95,X                           ;$04F9EE |
+    LDY.w OWSpriteXSpeed_0E95,X             ;$04F9EE |
     BMI ADDR_04F9F5                         ;$04F9F1 |
     ORA.b #$40                              ;$04F9F3 |
 ADDR_04F9F5:
@@ -8170,7 +8170,7 @@ ADDR_04F9F5:
     AND.b #$03                              ;$04FA04 |
     TAY                                     ;$04FA06 |
     LDA.w DATA_04F9AC,Y                     ;$04FA07 |
-    BIT.w $0E95,X                           ;$04FA0A |
+    BIT.w OWSpriteXSpeed_0E95,X             ;$04FA0A |
     BMI ADDR_04FA12                         ;$04FA0D |
     LDA.w DATA_04F9B0,Y                     ;$04FA0F |
 ADDR_04FA12:
@@ -8207,7 +8207,7 @@ DATA_04FA3A:
     db $73,$72,$63,$62
 
 CODE_04FA3E:
-    LDA.w $0DF5,X
+    LDA.w OWSpriteMisc_0DF5,X
     BNE CODE_04FA83                         ;$04FA41 |
     LDA.w $13C1                             ;$04FA43 |
     SEC                                     ;$04FA46 |
@@ -8216,47 +8216,47 @@ CODE_04FA3E:
     BCS Return04FA82                        ;$04FA4B |
     TAY                                     ;$04FA4D |
     LDA.w DATA_04FA2E,Y                     ;$04FA4E |
-    STA.w $0E35,X                           ;$04FA51 |
+    STA.w OWSpriteXPosLow_0E35,X            ;$04FA51 |
     LDA.w DATA_04FA31,Y                     ;$04FA54 |
-    STA.w $0E65,X                           ;$04FA57 |
+    STA.w OWSpriteXPosHigh_0E65,X           ;$04FA57 |
     LDA.w DATA_04FA34,Y                     ;$04FA5A |
-    STA.w $0E45,X                           ;$04FA5D |
+    STA.w OWSpriteYPosLow_0E45,X            ;$04FA5D |
     LDA.w DATA_04FA37,Y                     ;$04FA60 |
-    STA.w $0E75,X                           ;$04FA63 |
+    STA.w OWSpriteYPosHigh_0E75,X           ;$04FA63 |
     JSR CODE_04FE5B                         ;$04FA66 |
     LSR                                     ;$04FA69 |
     ROR                                     ;$04FA6A |
     LSR                                     ;$04FA6B |
     AND.b #$40                              ;$04FA6C |
     ORA.b #$12                              ;$04FA6E |
-    STA.w $0DF5,X                           ;$04FA70 |
+    STA.w OWSpriteMisc_0DF5,X               ;$04FA70 |
     LDA.b #$24                              ;$04FA73 |
-    STA.w $0EB5,X                           ;$04FA75 |
+    STA.w OWSpriteZSpeed_0EB5,X             ;$04FA75 |
     LDA.b #$0E                              ;$04FA78 |
     STA.w SPCIO0_1DF9                       ;$04FA7A |
 CODE_04FA7D:
     LDA.b #$0F
-    STA.w $0E25,X                           ;$04FA7F |
+    STA.w OWSpriteMisc_0E25,X               ;$04FA7F |
 Return04FA82:
     RTS
 
 CODE_04FA83:
-    DEC.w $0EB5,X
-    LDA.w $0EB5,X                           ;$04FA86 |
+    DEC.w OWSpriteZSpeed_0EB5,X
+    LDA.w OWSpriteZSpeed_0EB5,X             ;$04FA86 |
     CMP.b #$E4                              ;$04FA89 |
     BNE CODE_04FA90                         ;$04FA8B |
     JSR CODE_04FA7D                         ;$04FA8D |
 CODE_04FA90:
     JSR CODE_04FE90
-    LDA.w $0E55,X                           ;$04FA93 |
-    ORA.w $0E25,X                           ;$04FA96 |
+    LDA.w OWSpriteZPosLow_0E55,X            ;$04FA93 |
+    ORA.w OWSpriteMisc_0E25,X               ;$04FA96 |
     BNE CODE_04FA9E                         ;$04FA99 |
-    STZ.w $0DF5,X                           ;$04FA9B |
+    STZ.w OWSpriteMisc_0DF5,X               ;$04FA9B |
 CODE_04FA9E:
     JSR CODE_04FE62
-    LDA.w $0DF5,X                           ;$04FAA1 |
+    LDA.w OWSpriteMisc_0DF5,X               ;$04FAA1 |
     LDY.b #$08                              ;$04FAA4 |
-    BIT.w $0EB5,X                           ;$04FAA6 |
+    BIT.w OWSpriteZSpeed_0EB5,X             ;$04FAA6 |
     BPL CODE_04FAAF                         ;$04FAA9 |
     EOR.b #$C0                              ;$04FAAB |
     LDY.b #$10                              ;$04FAAD |
@@ -8279,7 +8279,7 @@ CODE_04FAB9:
 CODE_04FAC9:
     LDA.b #$36
     XBA                                     ;$04FACB |
-    LDA.w $0E25,X                           ;$04FACC |
+    LDA.w OWSpriteMisc_0E25,X               ;$04FACC |
     BEQ Return04FA82                        ;$04FACF |
     LSR                                     ;$04FAD1 |
     LSR                                     ;$04FAD2 |
@@ -8350,9 +8350,9 @@ Return04FB36:
 
 CODE_04FB37:
     LDA.b #$02
-    STA.w $0E95,X                           ;$04FB39 |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04FB39 |
     LDA.b #$FF                              ;$04FB3C |
-    STA.w $0EA5,X                           ;$04FB3E |
+    STA.w OWSpriteYSpeed_0EA5,X             ;$04FB3E |
     JSR CODE_04FE90                         ;$04FB41 |
     JSR CODE_04FE62                         ;$04FB44 |
     REP #$20                                ;$04FB47 |
@@ -8413,7 +8413,7 @@ DATA_04FB95:
     db $02,$0F,$00
 
 CODE_04FB98:
-    LDA.w $0DF5,X
+    LDA.w OWSpriteMisc_0DF5,X
     BNE ADDR_04FBD8                         ;$04FB9B |
     LDA.w $13C1                             ;$04FB9D |
     SEC                                     ;$04FBA0 |
@@ -8421,43 +8421,43 @@ CODE_04FB98:
     CMP.b #$03                              ;$04FBA3 |
     BCS Return04FB84                        ;$04FBA5 |
     TAY                                     ;$04FBA7 |
-    STA.w $0EF6                             ;$04FBA8 |
-    LDA.w $0EF5                             ;$04FBAB |
+    STA.w KoopaKidTile_0EF6                 ;$04FBA8 |
+    LDA.w KoopaKidActive_0EF5               ;$04FBAB |
     AND.w DATA_04FB85,Y                     ;$04FBAE |
     BNE Return04FB84                        ;$04FBB1 |
     LDA.w DATA_04FB88,Y                     ;$04FBB3 |
-    STA.w $0E35,X                           ;$04FBB6 |
+    STA.w OWSpriteXPosLow_0E35,X            ;$04FBB6 |
     LDA.w DATA_04FB8B,Y                     ;$04FBB9 |
-    STA.w $0E65,X                           ;$04FBBC |
+    STA.w OWSpriteXPosHigh_0E65,X           ;$04FBBC |
     LDA.w DATA_04FB8E,Y                     ;$04FBBF |
-    STA.w $0E45,X                           ;$04FBC2 |
+    STA.w OWSpriteYPosLow_0E45,X            ;$04FBC2 |
     LDA.w DATA_04FB91,Y                     ;$04FBC5 |
-    STA.w $0E75,X                           ;$04FBC8 |
+    STA.w OWSpriteYPosHigh_0E75,X           ;$04FBC8 |
     LDA.b #$02                              ;$04FBCB |
-    STA.w $0DF5,X                           ;$04FBCD |
+    STA.w OWSpriteMisc_0DF5,X               ;$04FBCD |
     LDA.b #$F0                              ;$04FBD0 |
-    STA.w $0E95,X                           ;$04FBD2 |
-    STZ.w $0E25,X                           ;$04FBD5 |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04FBD2 |
+    STZ.w OWSpriteMisc_0E25,X               ;$04FBD5 |
 ADDR_04FBD8:
     JSR CODE_04FE62
-    LDA.w $0E25,X                           ;$04FBDB |
+    LDA.w OWSpriteMisc_0E25,X               ;$04FBDB |
     BNE ADDR_04FC00                         ;$04FBDE |
-    INC.w $0E05,X                           ;$04FBE0 |
+    INC.w OWSpriteMisc_0E05,X               ;$04FBE0 |
     JSR CODE_04FEAB                         ;$04FBE3 |
-    LDY.w $0DF5,X                           ;$04FBE6 |
-    LDA.w $0E35,X                           ;$04FBE9 |
+    LDY.w OWSpriteMisc_0DF5,X               ;$04FBE6 |
+    LDA.w OWSpriteXPosLow_0E35,X            ;$04FBE9 |
     AND.b #$0F                              ;$04FBEC |
     CMP.w DATA_04FB95,Y                     ;$04FBEE |
     BNE ADDR_04FC00                         ;$04FBF1 |
-    DEC.w $0DF5,X                           ;$04FBF3 |
+    DEC.w OWSpriteMisc_0DF5,X               ;$04FBF3 |
     LDA.b #$04                              ;$04FBF6 |
-    STA.w $0E95,X                           ;$04FBF8 |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04FBF8 |
     LDA.b #$60                              ;$04FBFB |
-    STA.w $0E25,X                           ;$04FBFD |
+    STA.w OWSpriteMisc_0E25,X               ;$04FBFD |
 ADDR_04FC00:
     LDA.w DATA_04FB93,Y
     LDY.b #$22                              ;$04FC03 |
-    AND.w $0E05,X                           ;$04FC05 |
+    AND.w OWSpriteMisc_0E05,X               ;$04FC05 |
     BNE ADDR_04FC0C                         ;$04FC08 |
     LDY.b #$62                              ;$04FC0A |
 ADDR_04FC0C:
@@ -8468,7 +8468,7 @@ ADDR_04FC0C:
     JSR ADDR_04FED7                         ;$04FC13 |
     BCS Return04FC1D                        ;$04FC16 |
     ORA.b #$80                              ;$04FC18 |
-    STA.w $0EF7                             ;$04FC1A |
+    STA.w EnterLevelAuto_0EF7               ;$04FC1A |
 Return04FC1D:
     RTS
 
@@ -8500,23 +8500,23 @@ CODE_04FC46:
     ASL                                     ;$04FC4F |
     TAY                                     ;$04FC50 |
     LDA.w DATA_04FC1E,Y                     ;$04FC51 |
-    STA.w $0E35,X                           ;$04FC54 |
+    STA.w OWSpriteXPosLow_0E35,X            ;$04FC54 |
     LDA.w DATA_04FC1F,Y                     ;$04FC57 |
-    STA.w $0E65,X                           ;$04FC5A |
+    STA.w OWSpriteXPosHigh_0E65,X           ;$04FC5A |
     LDA.w DATA_04FC22,Y                     ;$04FC5D |
-    STA.w $0E45,X                           ;$04FC60 |
+    STA.w OWSpriteYPosLow_0E45,X            ;$04FC60 |
     LDA.w DATA_04FC23,Y                     ;$04FC63 |
-    STA.w $0E75,X                           ;$04FC66 |
+    STA.w OWSpriteYPosHigh_0E75,X           ;$04FC66 |
     LDA.b Frame_13                          ;$04FC69 |
     AND.b #$0F                              ;$04FC6B |
     BNE CODE_04FC7C                         ;$04FC6D |
-    LDA.w $0DF5,X                           ;$04FC6F |
+    LDA.w OWSpriteMisc_0DF5,X               ;$04FC6F |
     INC A                                   ;$04FC72 |
     CMP.b #$0C                              ;$04FC73 |
     BCC CODE_04FC79                         ;$04FC75 |
     LDA.b #$00                              ;$04FC77 |
 CODE_04FC79:
-    STA.w $0DF5,X
+    STA.w OWSpriteMisc_0DF5,X
 CODE_04FC7C:
     LDA.b #$03
     STA $04                                 ;$04FC7E |
@@ -8524,7 +8524,7 @@ CODE_04FC7C:
     STA $06                                 ;$04FC82 |
     STZ $07                                 ;$04FC84 |
     LDY.w DATA_04F843,X                     ;$04FC86 |
-    LDA.w $0DF5,X                           ;$04FC89 |
+    LDA.w OWSpriteMisc_0DF5,X               ;$04FC89 |
     TAX                                     ;$04FC8C |
 CODE_04FC8D:
     PHY
@@ -8619,30 +8619,30 @@ CODE_04FD24:
     JSR CODE_04FE62                         ;$04FD27 |
     JSR CODE_04FE62                         ;$04FD2A |
     LDA.b #$00                              ;$04FD2D |
-    LDY.w $0E95,X                           ;$04FD2F |
+    LDY.w OWSpriteXSpeed_0E95,X             ;$04FD2F |
     BMI CODE_04FD36                         ;$04FD32 |
     LDA.b #$40                              ;$04FD34 |
 CODE_04FD36:
     XBA
     LDA.b #$68                              ;$04FD37 |
     JSR CODE_04FB06                         ;$04FD39 |
-    INC.w $0E15,X                           ;$04FD3C |
-    LDA.w $0E15,X                           ;$04FD3F |
+    INC.w OWSpriteMisc_0E15,X               ;$04FD3C |
+    LDA.w OWSpriteMisc_0E15,X               ;$04FD3F |
     LSR                                     ;$04FD42 |
     BCS Return04FD6F                        ;$04FD43 |
-    LDA.w $0E05,X                           ;$04FD45 |
+    LDA.w OWSpriteMisc_0E05,X               ;$04FD45 |
     ORA.b #$02                              ;$04FD48 |
     TAY                                     ;$04FD4A |
     TXA                                     ;$04FD4B |
     ADC.b #$10                              ;$04FD4C |
     TAX                                     ;$04FD4E |
     JSR CODE_04FD55                         ;$04FD4F |
-    LDY.w $0DF5,X                           ;$04FD52 |
+    LDY.w OWSpriteMisc_0DF5,X               ;$04FD52 |
 CODE_04FD55:
-    LDA.w $0E95,X
+    LDA.w OWSpriteXSpeed_0E95,X
     CLC                                     ;$04FD58 |
     ADC.w DATA_04FD10,Y                     ;$04FD59 |
-    STA.w $0E95,X                           ;$04FD5C |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04FD5C |
     CMP.w DATA_04FD1A,Y                     ;$04FD5F |
     BNE CODE_04FD68                         ;$04FD62 |
     TYA                                     ;$04FD64 |
@@ -8650,7 +8650,7 @@ CODE_04FD55:
     TAY                                     ;$04FD67 |
 CODE_04FD68:
     TYA
-    STA.w $0DF5,X                           ;$04FD69 |
+    STA.w OWSpriteMisc_0DF5,X               ;$04FD69 |
     LDX.w SaveFileDelete_0DDE               ;$04FD6C |
 Return04FD6F:
     RTS
@@ -8684,16 +8684,16 @@ CODE_04FD8E:
     SEP #$20                                ;$04FDA3 |
 CODE_04FDA5:
     LDA.b #$34
-    LDY.w $0E95,X                           ;$04FDA7 |
+    LDY.w OWSpriteXSpeed_0E95,X             ;$04FDA7 |
     BMI CODE_04FDAE                         ;$04FDAA |
     LDA.b #$44                              ;$04FDAC |
 CODE_04FDAE:
     XBA
     LDA.b #$60                              ;$04FDAF |
     JSR CODE_04FB06                         ;$04FDB1 |
-    LDA.w $0E25,X                           ;$04FDB4 |
+    LDA.w OWSpriteMisc_0E25,X               ;$04FDB4 |
     STA $00                                 ;$04FDB7 |
-    INC.w $0E25,X                           ;$04FDB9 |
+    INC.w OWSpriteMisc_0E25,X               ;$04FDB9 |
     TXA                                     ;$04FDBC |
     CLC                                     ;$04FDBD |
     ADC.b #$20                              ;$04FDBE |
@@ -8708,7 +8708,7 @@ CODE_04FDAE:
     JSR CODE_04FDD2                         ;$04FDCD |
     LDA.b #$04                              ;$04FDD0 |
 CODE_04FDD2:
-    ORA.w $0DF5,X
+    ORA.w OWSpriteMisc_0DF5,X
     TAY                                     ;$04FDD5 |
     LDA.w $FD06,Y                           ;$04FDD6 |
     AND $00                                 ;$04FDD9 |
@@ -8726,7 +8726,7 @@ ADDR_04FE00:
     ROR $04
     JSR CODE_04FE62                         ;$04FE02 |
     JSR CODE_04FE4E                         ;$04FE05 |
-    LDA.w $0E55,X                           ;$04FE08 |
+    LDA.w OWSpriteZPosLow_0E55,X            ;$04FE08 |
     LSR                                     ;$04FE0B |
     LSR                                     ;$04FE0C |
     LSR                                     ;$04FE0D |
@@ -8772,7 +8772,7 @@ ADDR_04FE45:
 CODE_04FE4E:
     LDA $02
     CLC                                     ;$04FE50 |
-    ADC.w $0E55,X                           ;$04FE51 |
+    ADC.w OWSpriteZPosLow_0E55,X            ;$04FE51 |
     STA $02                                 ;$04FE54 |
     BCC Return04FE5A                        ;$04FE56 |
     INC $03                                 ;$04FE58 |
@@ -8795,16 +8795,16 @@ CODE_04FE62:
     LDX.w SaveFileDelete_0DDE               ;$04FE6C |
     LDA $02                                 ;$04FE6F |
     SEC                                     ;$04FE71 |
-    SBC.w $0E55,X                           ;$04FE72 |
+    SBC.w OWSpriteZPosLow_0E55,X            ;$04FE72 |
     STA $02                                 ;$04FE75 |
     BCS CODE_04FE7B                         ;$04FE77 |
     DEC $03                                 ;$04FE79 |
 CODE_04FE7B:
     LDY.b #$00
 CODE_04FE7D:
-    LDA.w $0E65,X
+    LDA.w OWSpriteXPosHigh_0E65,X
     XBA                                     ;$04FE80 |
-    LDA.w $0E35,X                           ;$04FE81 |
+    LDA.w OWSpriteXPosLow_0E35,X            ;$04FE81 |
     REP #$20                                ;$04FE84 |
     SEC                                     ;$04FE86 |
     SBC.w Layer1XPos_1A,y                   ;$04FE87 |
@@ -8818,9 +8818,9 @@ CODE_04FE90:
     ADC.b #$20                              ;$04FE92 |
     TAX                                     ;$04FE94 |
     JSR CODE_04FEAB                         ;$04FE95 |
-    LDA.w $0E35,X                           ;$04FE98 |
+    LDA.w OWSpriteXPosLow_0E35,X            ;$04FE98 |
     BPL CODE_04FEA0                         ;$04FE9B |
-    STZ.w $0E35,X                           ;$04FE9D |
+    STZ.w OWSpriteXPosLow_0E35,X            ;$04FE9D |
 CODE_04FEA0:
     TXA
     SEC                                     ;$04FEA1 |
@@ -8829,15 +8829,15 @@ CODE_04FEA0:
     JSR CODE_04FEAB                         ;$04FEA5 |
     LDX.w SaveFileDelete_0DDE               ;$04FEA8 |
 CODE_04FEAB:
-    LDA.w $0E95,X
+    LDA.w OWSpriteXSpeed_0E95,X
     ASL                                     ;$04FEAE |
     ASL                                     ;$04FEAF |
     ASL                                     ;$04FEB0 |
     ASL                                     ;$04FEB1 |
     CLC                                     ;$04FEB2 |
-    ADC.w $0EC5,X                           ;$04FEB3 |
-    STA.w $0EC5,X                           ;$04FEB6 |
-    LDA.w $0E95,X                           ;$04FEB9 |
+    ADC.w OWSpriteXPosSpx_0EC5,X            ;$04FEB3 |
+    STA.w OWSpriteXPosSpx_0EC5,X            ;$04FEB6 |
+    LDA.w OWSpriteXSpeed_0E95,X             ;$04FEB9 |
     PHP                                     ;$04FEBC |
     LSR                                     ;$04FEBD |
     LSR                                     ;$04FEBE |
@@ -8849,11 +8849,11 @@ CODE_04FEAB:
     ORA.b #$F0                              ;$04FEC6 |
     DEY                                     ;$04FEC8 |
 CODE_04FEC9:
-    ADC.w $0E35,X
-    STA.w $0E35,X                           ;$04FECC |
+    ADC.w OWSpriteXPosLow_0E35,X
+    STA.w OWSpriteXPosLow_0E35,X            ;$04FECC |
     TYA                                     ;$04FECF |
-    ADC.w $0E65,X                           ;$04FED0 |
-    STA.w $0E65,X                           ;$04FED3 |
+    ADC.w OWSpriteXPosHigh_0E65,X           ;$04FED0 |
+    STA.w OWSpriteXPosHigh_0E65,X           ;$04FED3 |
     RTS                                     ;$04FED6 |
 
 ADDR_04FED7:
@@ -8867,14 +8867,14 @@ ADDR_04FEE6:
     SEP #$20
     TXA                                     ;$04FEE8 |
     BCS Return04FEEE                        ;$04FEE9 |
-    STA.w $0EF7                             ;$04FEEB |
+    STA.w EnterLevelAuto_0EF7               ;$04FEEB |
 Return04FEEE:
     RTS
 
 ADDR_04FEEF:
-    LDA.w $0E65,X
+    LDA.w OWSpriteXPosHigh_0E65,X
     XBA                                     ;$04FEF2 |
-    LDA.w $0E35,X                           ;$04FEF3 |
+    LDA.w OWSpriteXPosLow_0E35,X            ;$04FEF3 |
     REP #$20                                ;$04FEF6 |
     CLC                                     ;$04FEF8 |
     ADC.w #$0008                            ;$04FEF9 |
@@ -8888,9 +8888,9 @@ ADDR_04FEEF:
 ADDR_04FF0B:
     STA $06
     SEP #$20                                ;$04FF0D |
-    LDA.w $0E75,X                           ;$04FF0F |
+    LDA.w OWSpriteYPosHigh_0E75,X           ;$04FF0F |
     XBA                                     ;$04FF12 |
-    LDA.w $0E45,X                           ;$04FF13 |
+    LDA.w OWSpriteYPosLow_0E45,X            ;$04FF13 |
     REP #$20                                ;$04FF16 |
     CLC                                     ;$04FF18 |
     ADC.w #$0008                            ;$04FF19 |
@@ -8910,7 +8910,7 @@ ADDR_04FF2E:
     LSR $06                                 ;$04FF31 |
     LSR $08                                 ;$04FF33 |
     SEP #$20                                ;$04FF35 |
-    LDA.w $0E55,X                           ;$04FF37 |
+    LDA.w OWSpriteZPosLow_0E55,X            ;$04FF37 |
     LSR                                     ;$04FF3A |
     STA $0A                                 ;$04FF3B |
     STZ $05                                 ;$04FF3D |
@@ -8927,12 +8927,12 @@ ADDR_04FF49:
 ADDR_04FF51:
     CMP.b #$01
     BCS ADDR_04FF67                         ;$04FF53 |
-    STZ.w $0E15,X                           ;$04FF55 |
-    STZ.w $0E95,X                           ;$04FF58 |
-    STZ.w $0EA5,X                           ;$04FF5B |
-    STZ.w $0EB5,X                           ;$04FF5E |
+    STZ.w OWSpriteMisc_0E15,X               ;$04FF55 |
+    STZ.w OWSpriteXSpeed_0E95,X             ;$04FF58 |
+    STZ.w OWSpriteYSpeed_0EA5,X             ;$04FF5B |
+    STZ.w OWSpriteZSpeed_0EB5,X             ;$04FF5E |
     LDA.b #$40                              ;$04FF61 |
-    STA.w $0E55,X                           ;$04FF63 |
+    STA.w OWSpriteZPosLow_0E55,X            ;$04FF63 |
     RTS                                     ;$04FF66 |
 
 ADDR_04FF67:
@@ -8974,11 +8974,11 @@ ADDR_04FF98:
     BPL ADDR_04FF6B                         ;$04FF9C |
     LDX.w SaveFileDelete_0DDE               ;$04FF9E |
     LDA $00                                 ;$04FFA1 |
-    STA.w $0E95,X                           ;$04FFA3 |
+    STA.w OWSpriteXSpeed_0E95,X             ;$04FFA3 |
     LDA $02                                 ;$04FFA6 |
-    STA.w $0EA5,X                           ;$04FFA8 |
+    STA.w OWSpriteYSpeed_0EA5,X             ;$04FFA8 |
     LDA $04                                 ;$04FFAB |
-    STA.w $0EB5,X                           ;$04FFAD |
+    STA.w OWSpriteZSpeed_0EB5,X             ;$04FFAD |
     RTS                                     ;$04FFB0 |
 
 DATA_04FFB1:

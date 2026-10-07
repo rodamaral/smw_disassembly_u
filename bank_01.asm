@@ -15466,14 +15466,14 @@ process_eaten_berry_01F0D3:
     BNE .pink_berry_01F116                  ;$01F0FB |
     LDA.b #$29                              ;$01F0FD | Green Berry:
     STA.w SPCIO3_1DFC                       ;$01F0FF | - play Correct sound
-    LDA.w $0F32                             ;$01F102 | - increase clock
+    LDA.w InGameTimerTens_0F32              ;$01F102 | - increase clock
     CLC                                     ;$01F105 |
     ADC.b #$02                              ;$01F106 |
     CMP.b #$0A                              ;$01F108 |
     BCC +                                   ;$01F10A |
     SBC.b #$0A                              ;$01F10C |
-    INC.w $0F31                             ;$01F10E |
-+   STA.w $0F32                             ;$01F114 |
+    INC.w InGameTimerHundreds_0F31          ;$01F10E |
++   STA.w InGameTimerTens_0F32              ;$01F114 |
     BRA .return_01F12D                      ;$01F114 |
 
 .pink_berry_01F116:

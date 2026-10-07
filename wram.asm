@@ -1613,32 +1613,32 @@ SaveFileDelete_0DDE: skip 1 ;done
 OWCloudOAMIndex_0DDF: skip 1 ;done
 OWCloudYSpeed_0DE0: skip 5 ;done
 OWSpriteNumber_0DE5: skip 16 ;done
-OWSpriteMisc_0DF5: skip 16
-OWSpriteMisc_0E05: skip 16
-OWSpriteMisc_0E15: skip 16
-OWSpriteMisc_0E25: skip 16
-OWSpriteXPosLow_0E35: skip 16
-OWSpriteYPosLow_0E45: skip 16
-OWSpriteZPosLow_0E55: skip 16
-OWSpriteXPosHigh_0E65: skip 16
-OWSpriteYPosHigh_0E75: skip 16
-OWSpriteZPosHigh_0E85: skip 16 ; unused?
-OWSpriteXSpeed_0E95: skip 16
-OWSpriteYSpeed_0EA5: skip 16
-OWSpriteZSpeed_0EB5: skip 16
-OWSpriteXPosSpx_0EC5: skip 16
-OWSpriteYPosSpx_0ED5: skip 16 ; unused?
-OWSpriteZPosSpx_0EE5: skip 16 ; unused?
-KoopaKidActive_0EF5: skip 1
-KoopaKidTile_0EF6: skip 1
-EnterLevelAuto_0EF7: skip 1
+OWSpriteMisc_0DF5: skip 16 ;done
+OWSpriteMisc_0E05: skip 16 ;done
+OWSpriteMisc_0E15: skip 16 ;done
+OWSpriteMisc_0E25: skip 16 ;done
+OWSpriteXPosLow_0E35: skip 16 ;done
+OWSpriteYPosLow_0E45: skip 16 ;done
+OWSpriteZPosLow_0E55: skip 16 ;done
+OWSpriteXPosHigh_0E65: skip 16 ;done
+OWSpriteYPosHigh_0E75: skip 16 ;done
+OWSpriteZPosHigh_0E85: skip 16 ; done , unused?
+OWSpriteXSpeed_0E95: skip 16 ;done
+OWSpriteYSpeed_0EA5: skip 16 ;done
+OWSpriteZSpeed_0EB5: skip 16 ;done
+OWSpriteXPosSpx_0EC5: skip 16 ;done
+OWSpriteYPosSpx_0ED5: skip 16 ;done
+OWSpriteZPosSpx_0EE5: skip 16 ;done
+KoopaKidActive_0EF5: skip 1 ;done
+KoopaKidTile_0EF6: skip 1 ;done
+EnterLevelAuto_0EF7: skip 1 ;done
 YoshiSavedFlag_0EF8: skip 1 ;done
-StatusBar_0EF9: skip 55
-InGameTimerFrames_0F30: skip 1
-InGameTimerHundreds_0F31: skip 1
-InGameTimerTens_0F32: skip 1
-InGameTimerOnes_0F33: skip 1
-PlayerScore_0F34: skip 6
+StatusBar_0EF9: skip 55 ;done
+InGameTimerFrames_0F30: skip 1 ;done
+InGameTimerHundreds_0F31: skip 1 ;done
+InGameTimerTens_0F32: skip 1 ;done
+InGameTimerOnes_0F33: skip 1 ;done
+PlayerScore_0F34: skip 6 ;done
 ; 7E0F3A - 7E0F3F unused
 skip 6
 ScoreIncrement_0F40: skip 2

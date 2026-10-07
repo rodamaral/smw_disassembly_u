@@ -583,9 +583,9 @@ CODE_058563:
     LDA.w SublevelCount_141A                ;$05857E |
     BNE CODE_058590                         ;$058581 |
     LDA.l TimerTable,X                      ;$058583 |
-    STA.w $0F31                             ;$058587 |
-    STZ.w $0F32                             ;$05858A |
-    STZ.w $0F33                             ;$05858D |
+    STA.w InGameTimerHundreds_0F31          ;$058587 |
+    STZ.w InGameTimerTens_0F32              ;$05858A |
+    STZ.w InGameTimerOnes_0F33              ;$05858D |
 CODE_058590:
     LDA $00
     AND.b #$07                              ;$058592 |
@@ -5591,9 +5591,9 @@ CODE_05CC6E:
     BRA CODE_05CC6E                         ;$05CC75 |
 
 CODE_05CC77:
-    CPY.w $0F32
+    CPY.w InGameTimerTens_0F32
     BNE CODE_05CC84                         ;$05CC7A |
-    CPY.w $0F33                             ;$05CC7C |
+    CPY.w InGameTimerOnes_0F33              ;$05CC7C |
     BNE CODE_05CC84                         ;$05CC7F |
     INC.w $18E4                             ;$05CC81 |
 CODE_05CC84:
@@ -5638,7 +5638,7 @@ CODE_05CCC8:
     ADC.l DynStripeImgSize_7F837B           ;$05CCCE |
     TAX                                     ;$05CCD2 |
 CODE_05CCD3:
-    LDA.w $0F31,Y
+    LDA.w InGameTimerHundreds_0F31,Y
     STA.l $7F83AF,X                         ;$05CCD6 |
     DEY                                     ;$05CCDA |
     DEX                                     ;$05CCDB |
@@ -5662,7 +5662,7 @@ CODE_05CCF9:
     REP #$20                                ;$05CCFE |
     STZ $00                                 ;$05CD00 |
     LDA $02                                 ;$05CD02 |
-    STA.w $0F40                             ;$05CD04 |
+    STA.w ScoreIncrement_0F40               ;$05CD04 |
     LDX.b #$42                              ;$05CD07 |
     LDY.b #$00                              ;$05CD09 |
     JSR CODE_05CDFD                         ;$05CD0B |
@@ -5813,19 +5813,19 @@ DATA_05CE42:
 
 CODE_05CE4C:
     REP #$20
-    LDA.w $0F31                             ;$05CE4E |
+    LDA.w InGameTimerHundreds_0F31          ;$05CE4E |
     ASL                                     ;$05CE51 |
     TAX                                     ;$05CE52 |
     LDA.w DATA_05CE3A,X                     ;$05CE53 |
     STA $00                                 ;$05CE56 |
-    LDA.w $0F32                             ;$05CE58 |
+    LDA.w InGameTimerTens_0F32              ;$05CE58 |
     TAX                                     ;$05CE5B |
     LDA.w DATA_05CE42,X                     ;$05CE5C |
     AND.w #$00FF                            ;$05CE5F |
     CLC                                     ;$05CE62 |
     ADC $00                                 ;$05CE63 |
     STA $00                                 ;$05CE65 |
-    LDA.w $0F33                             ;$05CE67 |
+    LDA.w InGameTimerOnes_0F33              ;$05CE67 |
     AND.w #$00FF                            ;$05CE6A |
     CLC                                     ;$05CE6D |
     ADC $00                                 ;$05CE6E |
@@ -5881,7 +5881,7 @@ CODE_05CECA:
     LDX.b #$03                              ;$05CED9 |
 CODE_05CEDB:
     LDY.b #$02
-    LDA.w $0F40                             ;$05CEDD |
+    LDA.w ScoreIncrement_0F40               ;$05CEDD |
     BEQ CODE_05CF05                         ;$05CEE0 |
     CMP.w #$0063                            ;$05CEE2 |
     BCS CODE_05CEE9                         ;$05CEE5 |
@@ -5889,15 +5889,15 @@ CODE_05CEDB:
 CODE_05CEE9:
     SEC
     SBC.w DATA_05CEC2,Y                     ;$05CEEA |
-    STA.w $0F40                             ;$05CEED |
+    STA.w ScoreIncrement_0F40               ;$05CEED |
     STA $02                                 ;$05CEF0 |
     LDA.w DATA_05CEC6,Y                     ;$05CEF2 |
     CLC                                     ;$05CEF5 |
-    ADC.w $0F34,X                           ;$05CEF6 |
-    STA.w $0F34,X                           ;$05CEF9 |
-    LDA.w $0F36,X                           ;$05CEFC |
+    ADC.w PlayerScore_0F34,X                ;$05CEF6 |
+    STA.w PlayerScore_0F34,X                ;$05CEF9 |
+    LDA.w PlayerScore_0F34+2,X              ;$05CEFC |
     ADC.w #$0000                            ;$05CEFF |
-    STA.w $0F36,X                           ;$05CF02 |
+    STA.w PlayerScore_0F34+2,X              ;$05CF02 |
 CODE_05CF05:
     LDX.w BonusStarsGained_1900
     BEQ CODE_05CF36                         ;$05CF08 |
@@ -5923,7 +5923,7 @@ CODE_05CF05:
 CODE_05CF34:
     REP #$20
 CODE_05CF36:
-    LDA.w $0F40
+    LDA.w ScoreIncrement_0F40
     BNE CODE_05CF4D                         ;$05CF39 |
     LDX.w BonusStarsGained_1900             ;$05CF3B |
     BNE CODE_05CF4D                         ;$05CF3E |
@@ -5948,7 +5948,7 @@ CODE_05CF59:
     DEY                                     ;$05CF62 |
     DEY                                     ;$05CF63 |
     BPL CODE_05CF59                         ;$05CF64 |
-    LDA.w $0F40                             ;$05CF66 |
+    LDA.w ScoreIncrement_0F40               ;$05CF66 |
     BEQ CODE_05CFA0                         ;$05CF69 |
     STZ $00                                 ;$05CF6B |
     LDA.l DynStripeImgSize_7F837B           ;$05CF6D |
@@ -6815,19 +6815,19 @@ CODE_05DB7F:
 
 CODE_05DB82:
     LDX.b #$0C
-    LDA.w $0F31                             ;$05DB84 |
+    LDA.w InGameTimerHundreds_0F31          ;$05DB84 |
     CMP.b #$02                              ;$05DB87 |
     BMI CODE_05DBA6                         ;$05DB89 |
-    LDA.w $0F32                             ;$05DB8B |
+    LDA.w InGameTimerTens_0F32              ;$05DB8B |
     CMP.b #$03                              ;$05DB8E |
     BMI CODE_05DBA6                         ;$05DB90 |
     BNE CODE_05DB9B                         ;$05DB92 |
-    LDA.w $0F33                             ;$05DB94 |
+    LDA.w InGameTimerOnes_0F33              ;$05DB94 |
     CMP.b #$05                              ;$05DB97 |
     BMI CODE_05DBA6                         ;$05DB99 |
 CODE_05DB9B:
     LDX.b #$0E
-    LDA.w $0F32                             ;$05DB9D |
+    LDA.w InGameTimerTens_0F32              ;$05DB9D |
     CMP.b #$05                              ;$05DBA0 |
     BMI CODE_05DBA6                         ;$05DBA2 |
     LDX.b #$10                              ;$05DBA4 |
