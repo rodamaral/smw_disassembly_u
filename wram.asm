@@ -1659,12 +1659,12 @@ BooRingYPosLow_0FB6: skip 2
 BooRingYPosHigh_0FB8: skip 2
 BooRingOffscreen_0FBA: skip 2
 BooRingLoadIndex_0FBC: skip 2
-Map16Pointers_0FBE: skip 1024
-ItemMemorySetting_13BE: skip 1
+Map16Pointers_0FBE: skip 1024 ;done
+ItemMemorySetting_13BE: skip 1 ;done
 Translevel_13BF: skip 2 ;done
-OverworldLayer1Tile_13C1: skip 2
+OverworldLayer1Tile_13C1: skip 2 ;done
 CurrentSubmap_13C3: skip 2 ;done
-MoonCounter_13C5: skip 1
+MoonCounter_13C5: skip 1 ;UNUSED ;done
 CutsceneID_13C6: skip 1 ;done
 YoshiColor_13C7: skip 1 ;done
 ; 7E13C8 unused
@@ -2315,13 +2315,13 @@ BonusOneUpsRemain_1920: skip 1
 FinalMessageTimer_1921: skip 2
 ; 7E1923 - 7E1924 unused
 skip 2
-LevelModeSetting_1925: skip 1
+LevelModeSetting_1925: skip 1 ;done
 ; 7E1926 - 7E1927 unused
 skip 2
 LevelLoadObject_1928: skip 1
 ; 7E1929 unused
 skip 1
-LevelEntranceType_192A: skip 1
+LevelEntranceType_192A: skip 1 ;done
 SpriteTileset_192B: skip 1
 ; 7E192C unused
 skip 1
@@ -2388,10 +2388,10 @@ Layer2VramAddr_1CE6: skip 2
 Layer2VramBuffer_1CE8: skip 256 ;done
 OWSubmapSwapProcess_1DE8: skip 1
 OWLoadEventFlag_1DE9:
-CreditsScreenNumber_1DE9: skip 1
-OverworldEvent_1DEA: skip 1
-EventTileIndex_1DEB: skip 2
-EventLength_1DED: skip 2
+CreditsScreenNumber_1DE9: skip 1 ;done
+OverworldEvent_1DEA: skip 1 ;done
+EventTileIndex_1DEB: skip 2 ;done
+EventLength_1DED: skip 2 ;done
 ; 7E1DEF unused
 skip 1
 OverworldFreeCamXPos_1DF0: skip 2
@@ -2431,8 +2431,8 @@ ClusterSprMisc_1E66: skip 20
 ClusterSprMisc_1E7A: skip 20
 ClusterSprMisc_1E8E: skip 20
 OWLevelSettings_1EA2: skip 96 ;done
-OWEventsActivated_1F02: skip 15
-OWPlayerSubmap_1F11: skip 2
+OWEventsActivated_1F02: skip 15 ;done
+OWPlayerSubmap_1F11: skip 2 ;done
 OWPlayerAnimation_1F13: skip 4
 OWPlayerXPos_1F17: skip 2
 OWPlayerYPos_1F19: skip 6
@@ -2441,8 +2441,8 @@ OWPlayerYPosPtr_1F21: skip 6
 SwitchBlockFlags_1F27: skip 4
 ; 7E1F2B - 7E1F2D unused
 skip 3
-ExitsCompleted_1F2E: skip 1
-AllDragonCoinsCollected_1F2F: skip 12
+ExitsCompleted_1F2E: skip 1 ;done
+AllDragonCoinsCollected_1F2F: skip 12 ;done
 ; 7E1F3B unused
 skip 1
 Checkpoint1upCollected_1F3C: skip 12
@@ -2462,7 +2462,7 @@ skip 3
 SaveDataBufferExits_1FD5: skip 1
 SpriteMisc_1FD6: skip 12
 SpriteDisableTimer_1FE2: skip 12
-MoonCollected_1FEE: skip 12
+MoonCollected_1FEE: skip 12 ;done
 ; 7E1FFA unused
 skip 1
 LightningFlashIndex_1FFB: skip 1

@@ -2618,7 +2618,7 @@ GM10_level_start_00968E:
     ORA.w ShowMarioStart_141D               ;$009699 |
     ORA.w OverworldOverride_0109            ;$00969C |
     BNE CODE_0096AB                         ;$00969F |
-    LDA.w $13C1                             ;$0096A1 |
+    LDA.w OverworldLayer1Tile_13C1          ;$0096A1 |
     CMP.b #$56                              ;$0096A4 |
     BEQ CODE_0096AB                         ;$0096A6 |
 CODE_0096A8:
@@ -2722,9 +2722,9 @@ GM17_game_over_main_009759:
     BPL CODE_009788                         ;$009775 |
     LDX.b #$0C                              ;$009777 |
 CODE_009779:
-    STZ.w $1F2F,X
+    STZ.w AllDragonCoinsCollected_1F2F,X
     STZ.w $0006,X                           ;$00977C |
-    STZ.w $1FEE,X                           ;$00977F |
+    STZ.w MoonCollected_1FEE,X              ;$00977F |
     DEX                                     ;$009782 |
     BPL CODE_009779                         ;$009783 |
     INC.w $13C9                             ;$009785 |
@@ -3952,7 +3952,7 @@ GM0C_overworld_load_00A087:
     LDY.w $13C9                             ;$00A0EE |
     BEQ CODE_00A11B                         ;$00A0F1 |
     JSR CODE_00A195                         ;$00A0F3 |
-    LDA.w $1F2E                             ;$00A0F6 |
+    LDA.w ExitsCompleted_1F2E               ;$00A0F6 |
     BNE CODE_00A101                         ;$00A0F9 |
     JSR fade_to_title_screen_009C89         ;$00A0FB |
     JMP increment_game_mode_0093F4          ;$00A0FE |
@@ -6631,7 +6631,7 @@ CODE_00BEEC:
     LDA.l LoadBlkPtrs+1,X                   ;$00BEFC |
     STA.b Layer1DataPtr_65+1                ;$00BF00 |
     STZ.b Layer1DataPtr_65+2                ;$00BF02 |
-    LDA.w $1925                             ;$00BF04 |
+    LDA.w LevelModeSetting_1925             ;$00BF04 |
     ASL                                     ;$00BF07 |
     TAY                                     ;$00BF08 |
     LDA.b [Layer1DataPtr_65],Y              ;$00BF09 |
@@ -6814,7 +6814,7 @@ CODE_00C00D:
     ORA.w #$0002                            ;$00C035 |
     STA $04                                 ;$00C038 |
 CODE_00C03A:
-    LDA.w $13BE
+    LDA.w ItemMemorySetting_13BE
     AND.w #$000F                            ;$00C03D |
     ASL                                     ;$00C040 |
     TAX                                     ;$00C041 |
@@ -6970,7 +6970,7 @@ CODE_00C13E:
     LDA.b #$0D                              ;$00C176 |
     STA $06                                 ;$00C178 |
     REP #$20                                ;$00C17A |
-    LDA.w $0FBE,Y                           ;$00C17C |
+    LDA.w Map16Pointers_0FBE,Y              ;$00C17C |
     STA $04                                 ;$00C17F |
     LDY.w #$0000                            ;$00C181 |
     LDA [$04],Y                             ;$00C184 |
@@ -7081,7 +7081,7 @@ CODE_00C222:
     LDA.b #$0D                              ;$00C258 |
     STA $06                                 ;$00C25A |
     REP #$20                                ;$00C25C |
-    LDA.w $0FBE,Y                           ;$00C25E |
+    LDA.w Map16Pointers_0FBE,Y              ;$00C25E |
     STA $04                                 ;$00C261 |
     LDY.w #$0000                            ;$00C263 |
     LDA [$04],Y                             ;$00C266 |
@@ -12268,11 +12268,11 @@ process_page_0_tiles_no_climb:
     BNE return_00F376                       ;$00F313 | |
     LDA.b #$0F                              ;$00F315 | |
     JSL CODE_00F38A                         ;$00F317 | | give the player three lives,
-    INC.w $13C5                             ;$00F31B | | increase an unused 3up moon flag,
+    INC.w MoonCounter_13C5                  ;$00F31B | | increase an unused 3up moon flag,
     PHX                                     ;$00F31E | |
     JSR get_level_bit_flag                  ;$00F31F | |
-    ORA.w $1FEE,Y                           ;$00F322 | |
-    STA.w $1FEE,Y                           ;$00F325 | | set the "collected 3up moon" flag,
+    ORA.w MoonCollected_1FEE,Y              ;$00F322 | |
+    STA.w MoonCollected_1FEE,Y              ;$00F325 | | set the "collected 3up moon" flag,
     PLX                                     ;$00F328 |/
     BRA .clear_tile                         ;$00F329 / and clear the tile with item memory.
 
@@ -12296,8 +12296,8 @@ process_page_0_tiles_no_climb:
     BCC .not_all_collected                  ;$00F34B | | If five have been collected,
     PHX                                     ;$00F34D | |
     JSR get_level_bit_flag                  ;$00F34E | |
-    ORA.w $1F2F,Y                           ;$00F351 | |
-    STA.w $1F2F,Y                           ;$00F354 | | set the "collected five yoshi coins" flag.
+    ORA.w AllDragonCoinsCollected_1F2F,Y    ;$00F351 | |
+    STA.w AllDragonCoinsCollected_1F2F,Y    ;$00F354 | | set the "collected five yoshi coins" flag.
     PLX                                     ;$00F357 |/
 .not_all_collected                          ;        |
     LDA.b #$1C                              ;$00F358 |\ Play the yoshi coin sound,

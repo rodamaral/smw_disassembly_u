@@ -104,7 +104,7 @@ CODE_0580BD:
     STA $00                                 ;$0580E6 |
     LDA.l MAP16AppTable,X                   ;$0580E8 |
 CODE_0580EC:
-    STA.w $0FBE,Y
+    STA.w Map16Pointers_0FBE,Y
     INY                                     ;$0580EF |
     INY                                     ;$0580F0 |
     CLC                                     ;$0580F1 |
@@ -204,7 +204,7 @@ CODE_058188:
     LDX.w #$0000                            ;$0581A2 |
 CODE_0581A5:
     LDA $00
-    STA.w $0FBE,X                           ;$0581A7 |
+    STA.w Map16Pointers_0FBE,X              ;$0581A7 |
     LDA $00                                 ;$0581AA |
     CLC                                     ;$0581AC |
     ADC.w #$0008                            ;$0581AD |
@@ -263,7 +263,7 @@ CODE_05823D:
     BCC CODE_058253                         ;$05823F |
     REP #$20                                ;$058241 |
     LDA $02                                 ;$058243 |
-    STA.w $0FBE,X                           ;$058245 |
+    STA.w Map16Pointers_0FBE,X              ;$058245 |
     LDA $02                                 ;$058248 |
     CLC                                     ;$05824A |
     ADC.w #$0008                            ;$05824B |
@@ -273,7 +273,7 @@ CODE_05823D:
 CODE_058253:
     REP #$20
     LDA $00                                 ;$058255 |
-    STA.w $0FBE,X                           ;$058257 |
+    STA.w Map16Pointers_0FBE,X              ;$058257 |
     LDA $00                                 ;$05825A |
     CLC                                     ;$05825C |
     ADC.w #$0008                            ;$05825D |
@@ -310,7 +310,7 @@ CODE_058281:
     LDX.w #$0003                            ;$05829A |
 CODE_05829D:
     LDA $00
-    STA.w $0FBE,Y                           ;$05829F |
+    STA.w Map16Pointers_0FBE,Y              ;$05829F |
     CLC                                     ;$0582A2 |
     ADC.w #$0008                            ;$0582A3 |
     STA $00                                 ;$0582A6 |
@@ -324,7 +324,7 @@ CODE_05829D:
     LDX.w #$0003                            ;$0582B2 |
 CODE_0582B5:
     LDA $00
-    STA.w $0FBE,Y                           ;$0582B7 |
+    STA.w Map16Pointers_0FBE,Y              ;$0582B7 |
     CLC                                     ;$0582BA |
     ADC.w #$0008                            ;$0582BB |
     STA $00                                 ;$0582BE |
@@ -407,7 +407,7 @@ LoadLevel:
     JSR CODE_0584E3                         ;$0583B2 |
     JSR CODE_0581FB                         ;$0583B5 |
 LoadAgain:
-    LDA.w $1925
+    LDA.w LevelModeSetting_1925
     CMP.b #$09                              ;$0583BB |
     BEQ LoadLevelDone                       ;$0583BD |
     CMP.b #$0B                              ;$0583BF |
@@ -421,7 +421,7 @@ LoadAgain:
     JSR LoadLevelData                       ;$0583CF |
 LevLoadNotEmpty:
     SEP #$30
-    LDA.w $1925                             ;$0583D4 |
+    LDA.w LevelModeSetting_1925             ;$0583D4 |
     BEQ LoadLevelDone                       ;$0583D7 |
     CMP.b #$0A                              ;$0583D9 |
     BEQ LoadLevelDone                       ;$0583DB |
@@ -509,7 +509,7 @@ CODE_0584E3:
     INY                                     ;$0584F6 |
     LDA.b [Layer1DataPtr_65],Y              ;$0584F7 |
     AND.b #$1F                              ;$0584F9 |
-    STA.w $1925                             ;$0584FB |
+    STA.w LevelModeSetting_1925             ;$0584FB |
     TAX                                     ;$0584FE |
     LDA.l LevXYPPCCCTtbl,X                  ;$0584FF |
     STA.b SpriteYXPPCCCT_64                 ;$058503 |
@@ -606,7 +606,7 @@ CODE_058590:
     ASL                                     ;$0585B0 |
     ROL                                     ;$0585B1 |
     ROL                                     ;$0585B2 |
-    STA.w $13BE                             ;$0585B3 |
+    STA.w ItemMemorySetting_13BE            ;$0585B3 |
     LDA.b [Layer1DataPtr_65],Y              ;$0585B6 |
     AND.b #$30                              ;$0585B8 |
     LSR                                     ;$0585BA |
@@ -711,7 +711,7 @@ CODE_05863E:
     STA $03                                 ;$05865E |
     LDA.l LoadBlkTable2,X                   ;$058660 |
     STA $06                                 ;$058664 |
-    LDA.w $1925                             ;$058666 |
+    LDA.w LevelModeSetting_1925             ;$058666 |
     AND.w #$001F                            ;$058669 |
     ASL                                     ;$05866C |
     TAY                                     ;$05866D |
@@ -901,7 +901,7 @@ set_map16_for_VRAM_upload_05877E:
     LDA.w #$0007                            ;$0587B2 |
     STA $00                                 ;$0587B5 |
     LDA.l MAP16AppTable,X                   ;$0587B7 |
--   STA.w $0FBE,Y                           ;$0587BB |
+-   STA.w Map16Pointers_0FBE,Y              ;$0587BB |
     INY                                     ;$0587BE |
     INY                                     ;$0587BF |
     CLC                                     ;$0587C0 |
@@ -967,7 +967,7 @@ set_map16_for_VRAM_upload_05877E:
 
 execute_level_mode_setting_05881A:
     SEP #$30
-    LDA.w $1925                             ;$05881C |
+    LDA.w LevelModeSetting_1925             ;$05881C |
     JSL execute_pointer_long                ;$05881F |
 
 PtrsLong058823:
@@ -1006,7 +1006,7 @@ PtrsLong058823:
 
 execute_level_mode_setting_058883:
     SEP #$30
-    LDA.w $1925                             ;$058885 |
+    LDA.w LevelModeSetting_1925             ;$058885 |
     JSL execute_pointer_long                ;$058888 |
 
 PtrsLong05888C:
@@ -1045,7 +1045,7 @@ PtrsLong05888C:
 
 CODE_0588EC:
     SEP #$30
-    LDA.w $1925                             ;$0588EE |
+    LDA.w LevelModeSetting_1925             ;$0588EE |
     JSL execute_pointer_long                ;$0588F1 |
 
 PtrsLong0588F5:
@@ -1084,7 +1084,7 @@ PtrsLong0588F5:
 
 CODE_058955:
     SEP #$30
-    LDA.w $1925                             ;$058957 |
+    LDA.w LevelModeSetting_1925             ;$058957 |
     JSL execute_pointer_long                ;$05895A |
 
 PtrsLong05895E:
@@ -1128,7 +1128,7 @@ DATA_0589BE:
 CODE_0589CE:
     PHP
     REP #$30                                ;$0589CF |
-    LDA.w $1925                             ;$0589D1 |
+    LDA.w LevelModeSetting_1925             ;$0589D1 |
     AND.w #$00FF                            ;$0589D4 |
     ASL                                     ;$0589D7 |
     TAX                                     ;$0589D8 |
@@ -1204,7 +1204,7 @@ CODE_058A55:
     LDA $00                                 ;$058A62 |
     ASL                                     ;$058A64 |
     TAY                                     ;$058A65 |
-    LDA.w $0FBE,Y                           ;$058A66 |
+    LDA.w Map16Pointers_0FBE,Y              ;$058A66 |
     STA $0A                                 ;$058A69 |
     LDY.w #$0000                            ;$058A6B |
     LDA [$0A],Y                             ;$058A6E |
@@ -1238,7 +1238,7 @@ Return058A9A:
 CODE_058A9B:
     PHP
     REP #$30                                ;$058A9C |
-    LDA.w $1925                             ;$058A9E |
+    LDA.w LevelModeSetting_1925             ;$058A9E |
     AND.w #$00FF                            ;$058AA1 |
     ASL                                     ;$058AA4 |
     TAX                                     ;$058AA5 |
@@ -1329,7 +1329,7 @@ CODE_058B35:
     LDA $00                                 ;$058B42 |
     ASL                                     ;$058B44 |
     TAY                                     ;$058B45 |
-    LDA.w $0FBE,Y                           ;$058B46 |
+    LDA.w Map16Pointers_0FBE,Y              ;$058B46 |
     STA $0A                                 ;$058B49 |
     LDY.w #$0000                            ;$058B4B |
     LDA [$0A],Y                             ;$058B4E |
@@ -1372,7 +1372,7 @@ CODE_058B84:
 CODE_058B8D:
     PHP
     REP #$30                                ;$058B8E |
-    LDA.w $1925                             ;$058B90 |
+    LDA.w LevelModeSetting_1925             ;$058B90 |
     AND.w #$00FF                            ;$058B93 |
     ASL                                     ;$058B96 |
     TAX                                     ;$058B97 |
@@ -1455,7 +1455,7 @@ CODE_058C23:
     LDA $00                                 ;$058C30 |
     ASL                                     ;$058C32 |
     TAY                                     ;$058C33 |
-    LDA.w $0FBE,Y                           ;$058C34 |
+    LDA.w Map16Pointers_0FBE,Y              ;$058C34 |
     STA $0A                                 ;$058C37 |
     LDY.w #$0000                            ;$058C39 |
     LDA [$0A],Y                             ;$058C3C |
@@ -1493,7 +1493,7 @@ Return058C70:
 CODE_058C71:
     PHP
     REP #$30                                ;$058C72 |
-    LDA.w $1925                             ;$058C74 |
+    LDA.w LevelModeSetting_1925             ;$058C74 |
     AND.w #$00FF                            ;$058C77 |
     ASL                                     ;$058C7A |
     TAX                                     ;$058C7B |
@@ -1591,7 +1591,7 @@ CODE_058D1A:
     LDA $00                                 ;$058D27 |
     ASL                                     ;$058D29 |
     TAY                                     ;$058D2A |
-    LDA.w $0FBE,Y                           ;$058D2B |
+    LDA.w Map16Pointers_0FBE,Y              ;$058D2B |
     STA $0A                                 ;$058D2E |
     LDY.w #$0000                            ;$058D30 |
     LDA [$0A],Y                             ;$058D33 |
@@ -3219,7 +3219,7 @@ level_bit_masks:
     LSR                                     ;$05B369 |
     LSR                                     ;$05B36A |
     TAX                                     ;$05B36B |
-    LDA.w $1F02,X                           ;$05B36C |
+    LDA.w OWEventsActivated_1F02,X          ;$05B36C |
     PLX                                     ;$05B36F |
     AND.l level_bit_masks,X                 ;$05B370 |
     RTL                                     ;$05B374 |
@@ -6377,7 +6377,7 @@ CODE_05D7D2:
     STA.b PlayerXPos_94+1                   ;$05D831 |
     LDA.w DATA_05FE00,Y                     ;$05D833 |
     AND.b #$07                              ;$05D836 |
-    STA.w $192A                             ;$05D838 |
+    STA.w LevelEntranceType_192A            ;$05D838 |
 CODE_05D83B:
     JMP CODE_05D8B7
 
@@ -6542,7 +6542,7 @@ CODE_05D8B7:
     LSR                                     ;$05D97B |
     LSR                                     ;$05D97C |
     LSR                                     ;$05D97D |
-    STA.w $192A                             ;$05D97E |
+    STA.w LevelEntranceType_192A            ;$05D97E |
     LDA.w DATA_05F400,Y                     ;$05D981 |
     STA $02                                 ;$05D984 |
     AND.b #$03                              ;$05D986 |
@@ -6582,7 +6582,7 @@ CODE_05D9B8:
     STZ.w MidwayFlag_13CE                   ;$05D9C6 |
     LDY.w Translevel_13BF                   ;$05D9C9 |
     LDA.w DATA_05D608,Y                     ;$05D9CC |
-    STA.w $1DEA                             ;$05D9CF |
+    STA.w OverworldEvent_1DEA               ;$05D9CF |
     SEP #$10                                ;$05D9D2 |
     LDX.w Translevel_13BF                   ;$05D9D4 |
     LDA.w OWLevelSettings_1EA2,X            ;$05D9D7 |
@@ -6675,7 +6675,7 @@ CODE_05DA60:
     LDA.b #$C0                              ;$05DA75 |
     STA.b Layer1YPos_1C                     ;$05DA77 |
     STA.b Layer2YPos_20                     ;$05DA79 |
-    STZ.w $192A                             ;$05DA7B |
+    STZ.w LevelEntranceType_192A            ;$05DA7B |
     LDA.b #$EE                              ;$05DA7E |
     STA.b SpriteDataPtr_CE                  ;$05DA80 |
     LDA.b #$C3                              ;$05DA82 |

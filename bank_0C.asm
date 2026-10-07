@@ -783,7 +783,7 @@ CODE_0C9492:
     LDX.w #$0000                            ;$0C94A8 |
 CODE_0C94AB:
     LDA $00
-    STA.w $0FBE,X                           ;$0C94AD |
+    STA.w Map16Pointers_0FBE,X              ;$0C94AD |
     LDA $00                                 ;$0C94B0 |
     CLC                                     ;$0C94B2 |
     ADC.w #$0008                            ;$0C94B3 |
@@ -826,7 +826,7 @@ CODE_0C94EB:
     LDA $02                                 ;$0C94F9 |
     ASL                                     ;$0C94FB |
     TAX                                     ;$0C94FC |
-    LDA.w $0FBE,X                           ;$0C94FD |
+    LDA.w Map16Pointers_0FBE,X              ;$0C94FD |
     STA.b Layer2DataPtr_68                  ;$0C9500 |
     LDY.w #$0000                            ;$0C9502 |
     LDA $00                                 ;$0C9505 |

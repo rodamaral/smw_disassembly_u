@@ -1488,7 +1488,7 @@ CODE_0DA57F:
     LDA $00                                 ;$0DA596 |
     CMP.b #$08                              ;$0DA598 |
     BNE CODE_0DA5A7                         ;$0DA59A |
-    LDA.w $1FEE,Y                           ;$0DA59C |
+    LDA.w MoonCollected_1FEE,Y              ;$0DA59C |
     AND.l DATA_0DA8A6,X                     ;$0DA59F |
     BEQ CODE_0DA5B1                         ;$0DA5A3 |
     BRA Return0DA5B0                        ;$0DA5A5 |
@@ -1537,7 +1537,7 @@ CODE_0DA5F0:
     PHA                                     ;$0DA5F1 |
     TYA                                     ;$0DA5F2 |
     PHA                                     ;$0DA5F3 |
-    LDX.w $13BE                             ;$0DA5F4 |
+    LDX.w ItemMemorySetting_13BE            ;$0DA5F4 |
     LDA.b #$F8                              ;$0DA5F7 |
     CLC                                     ;$0DA5F9 |
     ADC.l DATA_0DA8AE,X                     ;$0DA5FA |
@@ -1943,7 +1943,7 @@ CODE_0DA8D8:
     PHA                                     ;$0DA8DD |
     TYA                                     ;$0DA8DE |
     PHA                                     ;$0DA8DF |
-    LDX.w $13BE                             ;$0DA8E0 |
+    LDX.w ItemMemorySetting_13BE            ;$0DA8E0 |
     LDA.b #$F8                              ;$0DA8E3 |
     CLC                                     ;$0DA8E5 |
     ADC.l DATA_0DA8AE,X                     ;$0DA8E6 |
@@ -3388,10 +3388,10 @@ CODE_0DB2CA:
     LDA.w Translevel_13BF                   ;$0DB2D1 |
     AND.b #$07                              ;$0DB2D4 |
     TAX                                     ;$0DB2D6 |
-    LDA.w $1F2F,Y                           ;$0DB2D7 |
+    LDA.w AllDragonCoinsCollected_1F2F,Y    ;$0DB2D7 |
     AND.l DATA_0DA8A6,X                     ;$0DB2DA |
     BNE Return0DB2C9                        ;$0DB2DE |
-    LDX.w $13BE                             ;$0DB2E0 |
+    LDX.w ItemMemorySetting_13BE            ;$0DB2E0 |
     LDA.b #$F8                              ;$0DB2E3 |
     CLC                                     ;$0DB2E5 |
     ADC.l DATA_0DA8AE,X                     ;$0DB2E6 |
@@ -3454,7 +3454,7 @@ ADDR_0DB34A:
     PHA                                     ;$0DB34B |
     TXA                                     ;$0DB34C |
     PHA                                     ;$0DB34D |
-    LDX.w $13BE                             ;$0DB34E |
+    LDX.w ItemMemorySetting_13BE            ;$0DB34E |
     LDA.b #$F8                              ;$0DB351 |
     CLC                                     ;$0DB353 |
     ADC.l DATA_0DA8AE,X                     ;$0DB354 |
