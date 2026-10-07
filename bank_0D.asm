@@ -1334,7 +1334,7 @@ CODE_0DA40F:                                ; normal object processing code
 
 CODE_0DA415:
     SEP #$30
-    LDA.w $1931                             ;$0DA417 |
+    LDA.w ObjectTileset_1931                ;$0DA417 |
     JSL execute_pointer_long                ;$0DA41A |
 
 PtrsLong0DA41E:

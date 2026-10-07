@@ -39,8 +39,8 @@ CODE_058052:
     BNE CODE_058052                         ;$05805E |
     LDA.b #$0C                              ;$058060 |
     STA.b Layer2DataPtr_68+2                ;$058062 |
-    STZ.w $1932                             ;$058064 |
-    STZ.w $1931                             ;$058067 |
+    STZ.w Empty_1932                        ;$058064 |
+    STZ.w ObjectTileset_1931                ;$058067 |
     LDX.w #$B900                            ;$05806A |
     STX $0D                                 ;$05806D |
     REP #$20                                ;$05806F |
@@ -228,7 +228,7 @@ DATA_0581BB:
 
 CODE_0581FB:
     SEP #$30
-    LDA.w $1931                             ;$0581FD |
+    LDA.w ObjectTileset_1931                ;$0581FD |
     ASL                                     ;$058200 |
     TAX                                     ;$058201 |
     LDA.b #$05                              ;$058202 |
@@ -291,7 +291,7 @@ CODE_058262:
     INY                                     ;$058272 |
     CPY.w #$0040                            ;$058273 |
     BNE CODE_058237                         ;$058276 |
-    LDA.w $1931                             ;$058278 |
+    LDA.w ObjectTileset_1931                ;$058278 |
     BEQ CODE_058281                         ;$05827B |
     CMP.b #$07                              ;$05827D |
     BNE CODE_0582C5                         ;$05827F |
@@ -403,7 +403,7 @@ CODE_05833A:
 LoadLevel:
     PHP
     SEP #$30                                ;$0583AD |
-    STZ.w $1933                             ;$0583AF |
+    STZ.w LayerProcessing_1933              ;$0583AF |
     JSR CODE_0584E3                         ;$0583B2 |
     JSR CODE_0581FB                         ;$0583B5 |
 LoadAgain:
@@ -435,8 +435,8 @@ LevLoadNotEmpty:
     BEQ LoadLevelDone                       ;$0583EB |
     CMP.b #$1E                              ;$0583ED |
     BEQ LoadLevelDone                       ;$0583EF |
-    INC.w $1933                             ;$0583F1 |
-    LDA.w $1933                             ;$0583F4 |
+    INC.w LayerProcessing_1933              ;$0583F1 |
+    LDA.w LayerProcessing_1933              ;$0583F4 |
     CMP.b #$02                              ;$0583F7 |
     BEQ LoadLevelDone                       ;$0583F9 |
     LDA.b Layer2DataPtr_68                  ;$0583FB |
@@ -452,7 +452,7 @@ LevLoadNotEmpty:
     JMP LoadAgain                           ;$05840F |
 
 LoadLevelDone:
-    STZ.w $1933
+    STZ.w LayerProcessing_1933
     PLP                                     ;$058415 |
     RTS                                     ;$058416 |
 
@@ -505,7 +505,7 @@ CODE_0584E3:
     LSR                                     ;$0584F0 |
     LSR                                     ;$0584F1 |
     LSR                                     ;$0584F2 |
-    STA.w $1930                             ;$0584F3 |
+    STA.w BackgroundPalette_1930            ;$0584F3 |
     INY                                     ;$0584F6 |
     LDA.b [Layer1DataPtr_65],Y              ;$0584F7 |
     AND.b #$1F                              ;$0584F9 |
@@ -599,8 +599,8 @@ CODE_058590:
     INY                                     ;$0585A1 |
     LDA.b [Layer1DataPtr_65],Y              ;$0585A2 |
     AND.b #$0F                              ;$0585A4 |
-    STA.w $1931                             ;$0585A6 |
-    STA.w $1932                             ;$0585A9 |
+    STA.w ObjectTileset_1931                ;$0585A6 |
+    STA.w Empty_1932                             ;$0585A9 |
     LDA.b [Layer1DataPtr_65],Y              ;$0585AC |
     AND.b #$C0                              ;$0585AE |
     ASL                                     ;$0585B0 |
@@ -683,7 +683,7 @@ LoadLevelData:
     ORA.b LvlLoadObjNo_5A                   ;$05862B |
     STA.b LvlLoadObjNo_5A                   ;$05862D |
     LDA.b ScreenMode_5B                     ;$05862F |
-    LDY.w $1933                             ;$058631 |
+    LDY.w LayerProcessing_1933              ;$058631 |
     BEQ CODE_058637                         ;$058634 |
     LSR                                     ;$058636 |
 CODE_058637:
@@ -703,7 +703,7 @@ CODE_05863E:
     ORA.b LevelLoadPos_57                   ;$05864C |
     STA.b LevelLoadPos_57                   ;$05864E |
     REP #$20                                ;$058650 |
-    LDA.w $1933                             ;$058652 |
+    LDA.w LayerProcessing_1933              ;$058652 |
     AND.w #$00FF                            ;$058655 |
     ASL                                     ;$058658 |
     TAX                                     ;$058659 |
@@ -1183,7 +1183,7 @@ CODE_058A10:
     STA.b Map16HighPtr_6E+2                 ;$058A38 |
     SEP #$10                                ;$058A3A |
     LDY.b #$0D                              ;$058A3C |
-    LDA.w $1931                             ;$058A3E |
+    LDA.w ObjectTileset_1931                ;$058A3E |
     CMP.b #$10                              ;$058A41 |
     BMI CODE_058A47                         ;$058A43 |
     LDY.b #$05                              ;$058A45 |
@@ -1304,7 +1304,7 @@ CODE_058AD5:
     STA.b Map16HighPtr_6E+2                 ;$058B14 |
     SEP #$10                                ;$058B16 |
     LDY.b #$0D                              ;$058B18 |
-    LDA.w $1931                             ;$058B1A |
+    LDA.w ObjectTileset_1931                ;$058B1A |
     CMP.b #$10                              ;$058B1D |
     BMI CODE_058B23                         ;$058B1F |
     LDY.b #$05                              ;$058B21 |
@@ -1378,7 +1378,7 @@ CODE_058B8D:
     TAX                                     ;$058B97 |
     SEP #$20                                ;$058B98 |
     LDY.w #$0000                            ;$058B9A |
-    LDA.w $1931                             ;$058B9D |
+    LDA.w ObjectTileset_1931                ;$058B9D |
     CMP.b #$03                              ;$058BA0 |
     BNE CODE_058BA7                         ;$058BA2 |
     LDY.w #$1000                            ;$058BA4 |
@@ -1434,7 +1434,7 @@ CODE_058BDE:
     STA.b Map16HighPtr_6E+2                 ;$058C06 |
     SEP #$10                                ;$058C08 |
     LDY.b #$0D                              ;$058C0A |
-    LDA.w $1931                             ;$058C0C |
+    LDA.w ObjectTileset_1931                ;$058C0C |
     CMP.b #$10                              ;$058C0F |
     BMI CODE_058C15                         ;$058C11 |
     LDY.b #$05                              ;$058C13 |
@@ -1499,7 +1499,7 @@ CODE_058C71:
     TAX                                     ;$058C7B |
     SEP #$20                                ;$058C7C |
     LDY.w #$0000                            ;$058C7E |
-    LDA.w $1931                             ;$058C81 |
+    LDA.w ObjectTileset_1931                ;$058C81 |
     CMP.b #$03                              ;$058C84 |
     BNE CODE_058C8B                         ;$058C86 |
     LDY.w #$1000                            ;$058C88 |
@@ -1566,7 +1566,7 @@ CODE_058CBA:
     STA.b Map16HighPtr_6E+2                 ;$058CF9 |
     SEP #$10                                ;$058CFB |
     LDY.b #$0D                              ;$058CFD |
-    LDA.w $1931                             ;$058CFF |
+    LDA.w ObjectTileset_1931                ;$058CFF |
     CMP.b #$10                              ;$058D02 |
     BMI CODE_058D08                         ;$058D04 |
     LDY.b #$05                              ;$058D06 |
@@ -3553,7 +3553,7 @@ update_animated_tile_gfx_05BB39:
     BRA .CODE_05BB88                        ;$05BB7F | Handle the look of the tile
 
 .CODE_05BB81:
-    LDY.w $1931
+    LDY.w ObjectTileset_1931
     CLC                                     ;$05BB84 |
     ADC.w DATA_05B98B,Y                     ;$05BB85 |
 .CODE_05BB88:
@@ -4690,7 +4690,7 @@ process_layer_3_05C40C:
     BEQ +                                   ;$05C40F |
     JMP .not_a_tide_05C494                  ;$05C411 |
 +   REP #$20                                ;$05C414 |
-    LDY.w $1931                             ;$05C416 |
+    LDY.w ObjectTileset_1931                ;$05C416 |
     CPY.b #$01                              ;$05C419 |
     BEQ +                                   ;$05C41B |
     CPY.b #$03                              ;$05C41D |
@@ -6714,7 +6714,7 @@ CODE_05DA60:
     STA.b Layer2DataPtr_68+2                ;$05DACE |
 CODE_05DAD0:
     LDA.l DATA_05D760,X
-    STA.w $1931                             ;$05DAD4 |
+    STA.w ObjectTileset_1931                ;$05DAD4 |
 CODE_05DAD7:
     LDA.w SublevelCount_141A
     BEQ CODE_05DAEB                         ;$05DADA |

@@ -962,6 +962,7 @@ SpriteNumber_9E: skip 12
 !Goomba_0F = $0F
 !Paragoomba_10 = $10
 !BuzzyBeetle_11 = $11
+!SpinyFalling_14 = $14
 !FishH_15 = $15
 !FishV_16 = $16
 !FishFlying_17 = $17
@@ -2327,11 +2328,11 @@ skip 1
 ForegroundPalette_192D: skip 1
 SpritePalette_192E: skip 1
 BackAreaColor_192F: skip 1
-BackgroundPalette_1930: skip 1
-ObjectTileset_1931: skip 1
-Empty_1932: skip 1
-LayerProcessing_1933: skip 2
-MarioStartFlag_1935: skip 1
+BackgroundPalette_1930: skip 1 ;done
+ObjectTileset_1931: skip 1 ;done
+Empty_1932: skip 1 ;done
+LayerProcessing_1933: skip 2 ;done
+MarioStartFlag_1935: skip 1 ;done
 ; 7E1936 - 7E1937 unused
 skip 2
 

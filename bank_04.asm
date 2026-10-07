@@ -5435,7 +5435,7 @@ CODE_04DB9D:
     LDA.w OWPlayerSubmap_1F11,X             ;$04DBA3 |
     TAX                                     ;$04DBA6 |
     LDA.l DATA_04DC02,X                     ;$04DBA7 |
-    STA.w $1931                             ;$04DBAB |
+    STA.w ObjectTileset_1931                ;$04DBAB |
     JSL CODE_00A594                         ;$04DBAE |
     LDA.b #$FE                              ;$04DBB2 |
     STA.w $0703                             ;$04DBB4 |
@@ -5489,7 +5489,7 @@ CODE_04DC09:
     LDA.w OWPlayerSubmap_1F11,X             ;$04DC11 |
     TAX                                     ;$04DC14 |
     LDA.l DATA_04DC02,X                     ;$04DC15 |
-    STA.w $1931                             ;$04DC19 |
+    STA.w ObjectTileset_1931                ;$04DC19 |
     LDA.b #$11                              ;$04DC1C |
     STA.w $192B                             ;$04DC1E |
     LDA.b #$07                              ;$04DC21 |

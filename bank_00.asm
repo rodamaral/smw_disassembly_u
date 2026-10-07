@@ -2365,13 +2365,13 @@ GM19_credits_castle_load_009468:
     JSR SetUpScreen                         ;$00946E |
     LDX.w CutsceneID_13C6                   ;$009471 |
     LDA.b #$18                              ;$009474 |
-    STA.w $1931                             ;$009476 |
+    STA.w ObjectTileset_1931                ;$009476 |
     LDA.b #$14                              ;$009479 |
     STA.w $192B                             ;$00947B |
     LDA.w CutsceneBgColor-1,X               ;$00947E |
     STA.w $192F                             ;$009481 |
     LDA.w CutsceneCastlePal,X               ;$009484 |
-    STA.w $1930                             ;$009487 |
+    STA.w BackgroundPalette_1930            ;$009487 |
     STZ.w $192E                             ;$00948A |
     LDA.b #$01                              ;$00948D |
     STA.w $192D                             ;$00948F |
@@ -2384,7 +2384,7 @@ GM19_credits_castle_load_009468:
     JSR upload_music_bank_3                 ;$0094A0 |
     JSL CODE_0C93DD                         ;$0094A3 |
     JSR DisableHDMA                         ;$0094A7 |
-    INC.w $1931                             ;$0094AA |
+    INC.w ObjectTileset_1931                ;$0094AA |
     INC.w $192B                             ;$0094AD |
     BRA CODE_0094D7                         ;$0094B0 |
 
@@ -2585,7 +2585,7 @@ GM27_the_end_load_00963D:
     LDA.b #$03                              ;$00964E |
     STA.w $192F                             ;$009650 |
     LDA.b #$03                              ;$009653 |
-    STA.w $1930                             ;$009655 |
+    STA.w BackgroundPalette_1930            ;$009655 |
     JSR UploadSpriteGFX                     ;$009658 |
     JSR LoadPalette                         ;$00965B |
     LDX.b #$0B                              ;$00965E |
@@ -2774,7 +2774,7 @@ load_boss_room_0097BC:
     STZ.w ScreenShakeYOffset_1888           ;$0097CD |
     JSR CODE_0085FA                         ;$0097D0 |
     LDA.b #$FF                              ;$0097D3 |
-    STA.w $1931                             ;$0097D5 |
+    STA.w ObjectTileset_1931                ;$0097D5 |
     JSL CODE_03D958                         ;$0097D8 |
     BIT.w IRQNMICommand_0D9B                ;$0097DC |
     BVC .Iggy_Larry_009801                  ;$0097DF |
@@ -2792,7 +2792,7 @@ load_boss_room_0097BC:
     LDA.b #$C8                              ;$0097F6 |
     STA.b OAMAddress_3F                     ;$0097F8 |
     LDA.b #$12                              ;$0097FA |
-+   DEC.w $1931                             ;$0097FC |
++   DEC.w ObjectTileset_1931                ;$0097FC |
     BRA +                                   ;$0097FF |
 
 .Iggy_Larry_009801:
@@ -3795,10 +3795,10 @@ DATA_009F88:
     db $02,$81,$01,$02,$81,$01,$02,$80
 
 load_layer3_009FB8:
-    LDA.w $1931
+    LDA.w ObjectTileset_1931
     ASL                                     ;$009FBB |
     CLC                                     ;$009FBC |
-    ADC.w $1931                             ;$009FBD |
+    ADC.w ObjectTileset_1931                ;$009FBD |
     STA $00                                 ;$009FC0 |
     LDA.w $1BE3                             ;$009FC2 |
     BEQ CODE_00A012                         ;$009FC5 |
@@ -3825,7 +3825,7 @@ CODE_009FEA:
     ASL
     BMI CODE_00A012                         ;$009FEB |
     BEQ CODE_00A007                         ;$009FED |
-    LDA.w $1931                             ;$009FEF |
+    LDA.w ObjectTileset_1931                ;$009FEF |
     CMP.b #$01                              ;$009FF2 |
     BEQ CODE_009FFA                         ;$009FF4 |
     CMP.b #$03                              ;$009FF6 |
@@ -4343,9 +4343,9 @@ animate_red_level_tile:                     ;        |
     RTS                                     ;$00A435 /
 
 restore_SP1_tiles:                          ;        \ (This routine is pretty much useless in vanilla SMW) 
-    LDA.w $1935                             ;$00A436 |\ Check for a request to DMA tiles 4A-4F and 5A-5F 
+    LDA.w MarioStartFlag_1935               ;$00A436 |\ Check for a request to DMA tiles 4A-4F and 5A-5F 
     BEQ .return                             ;$00A439 |/
-    STZ.w $1935                             ;$00A43B | Prevent continuous tile uploading
+    STZ.w MarioStartFlag_1935               ;$00A43B | Prevent continuous tile uploading
     REP #$20                                ;$00A43E | 16 bit A
     LDY.b #$80                              ;$00A440 |\ Set VRAM to increment after $2119 writes
     STY.w $2115                             ;$00A442 |/
@@ -4619,7 +4619,7 @@ CODE_00A676:
     STZ.w ColorFadeTimer_1495               ;$00A68C |
     STZ.w SpriteInPipeMode_1419             ;$00A68F |
     LDY.b #$01                              ;$00A692 |
-    LDX.w $1931                             ;$00A694 |
+    LDX.w ObjectTileset_1931                ;$00A694 |
     CPX.b #$10                              ;$00A697 |
     BCS CODE_00A6CC                         ;$00A699 |
     LDA.w DATA_00A625,X                     ;$00A69B |
@@ -4905,7 +4905,7 @@ CODE_00A8B3:
     SEP #$30                                ;$00A8B8 |
     LDA.b #$01                              ;$00A8BA |
     STA.w $143A                             ;$00A8BC |
-    STA.w $1935                             ;$00A8BF |
+    STA.w MarioStartFlag_1935               ;$00A8BF |
     RTS                                     ;$00A8C2 |
 
 SPRITEGFXLIST:
@@ -5011,11 +5011,11 @@ UpdtCrrntSpritGFX:
     STA.w SpriteGFXFile_0101,X              ;$00AA13 |
     DEX                                     ;$00AA16 |
     BPL UpdtCrrntSpritGFX                   ;$00AA17 |
-    LDA.w $1931                             ;$00AA19 |
+    LDA.w ObjectTileset_1931                ;$00AA19 |
     CMP.b #$FE                              ;$00AA1C |
     BCS SetallFGBG80                        ;$00AA1E |
     LDX.b #$03                              ;$00AA20 |
-    LDA.w $1931                             ;$00AA22 |
+    LDA.w ObjectTileset_1931                ;$00AA22 |
     ASL                                     ;$00AA25 |
     ASL                                     ;$00AA26 |
     TAY                                     ;$00AA27 |
@@ -5072,7 +5072,7 @@ UploadGFXFile:
 SkipSpecial:
     REP #$20
     LDA.w #$0000                            ;$00AA82 |
-    LDX.w $1931                             ;$00AA85 |
+    LDX.w ObjectTileset_1931                ;$00AA85 |
     CPX.b #$11                              ;$00AA88 |
     BCC CODE_00AA90                         ;$00AA8A |
     CPY.b #$08                              ;$00AA8C |
@@ -5332,7 +5332,7 @@ LoadPalette:
     JSR LoadColors                          ;$00AC90 |
     LDA.w #$B0B0                            ;$00AC93 |
     STA $00                                 ;$00AC96 |
-    LDA.w $1930                             ;$00AC98 |
+    LDA.w BackgroundPalette_1930            ;$00AC98 |
     AND.w #$000F                            ;$00AC9B |
     TAY                                     ;$00AC9E |
     LDA.w DATA_00ABD3,Y                     ;$00AC9F |
@@ -5412,7 +5412,7 @@ CODE_00AD25:
     LDY.w #$B732                            ;$00AD2F |
 CODE_00AD32:
     STY $00
-    LDA.w $1931                             ;$00AD34 |
+    LDA.w ObjectTileset_1931                ;$00AD34 |
     AND.w #$000F                            ;$00AD37 |
     DEC A                                   ;$00AD3A |
     TAY                                     ;$00AD3B |
@@ -6606,7 +6606,7 @@ CODE_00BEBE:
     SEP #$20                                ;$00BEC9 |
     LDA.b ScreenMode_5B                     ;$00BECB |
     STA $09                                 ;$00BECD |
-    LDA.w $1933                             ;$00BECF |
+    LDA.w LayerProcessing_1933              ;$00BECF |
     BEQ CODE_00BED6                         ;$00BED2 |
     LSR $09                                 ;$00BED4 |
 CODE_00BED6:
@@ -6624,7 +6624,7 @@ CODE_00BED6:
 CODE_00BEEC:
     CPY.w #$0200
     BCS ADDR_00BEBB                         ;$00BEEF |
-    LDA.w $1933                             ;$00BEF1 |
+    LDA.w LayerProcessing_1933              ;$00BEF1 |
     ASL                                     ;$00BEF4 |
     TAX                                     ;$00BEF5 |
     LDA.l LoadBlkPtrs,X                     ;$00BEF6 |
@@ -6712,7 +6712,7 @@ CODE_00BF57:
     SBC.w #$0080                            ;$00BF84 |
     TAX                                     ;$00BF87 |
     LDY.b Layer1YPos_1C                     ;$00BF88 |
-    LDA.w $1933                             ;$00BF8A |
+    LDA.w LayerProcessing_1933              ;$00BF8A |
     BEQ CODE_00BFB2                         ;$00BF8D |
     LDX.b Layer2XPos_1E                     ;$00BF8F |
     LDA.b Layer2YPos_20                     ;$00BF91 |
@@ -6727,7 +6727,7 @@ CODE_00BF9B:
     SEC                                     ;$00BF9F |
     SBC.w #$0080                            ;$00BFA0 |
     TAY                                     ;$00BFA3 |
-    LDA.w $1933                             ;$00BFA4 |
+    LDA.w LayerProcessing_1933              ;$00BFA4 |
     BEQ CODE_00BFB2                         ;$00BFA7 |
     LDA.b Layer2XPos_1E                     ;$00BFA9 |
     SEC                                     ;$00BFAB |
@@ -6913,7 +6913,7 @@ CODE_00C0C4:
 CODE_00C0FB:
     LDA.b ScreenMode_5B
     STA $00                                 ;$00C0FD |
-    LDA.w $1933                             ;$00C0FF |
+    LDA.w LayerProcessing_1933              ;$00C0FF |
     BEQ CODE_00C106                         ;$00C102 |
     LSR $00                                 ;$00C104 |
 CODE_00C106:
@@ -7026,7 +7026,7 @@ CODE_00C1AC:
     TAY                                     ;$00C1DE |
     LDA.b ScreenMode_5B                     ;$00C1DF |
     STA $00                                 ;$00C1E1 |
-    LDA.w $1933                             ;$00C1E3 |
+    LDA.w LayerProcessing_1933              ;$00C1E3 |
     BEQ CODE_00C1EA                         ;$00C1E6 |
     LSR $00                                 ;$00C1E8 |
 CODE_00C1EA:
@@ -7731,7 +7731,7 @@ DATA_00C848:
 
 castle_enter_animation:
     STZ.w $13E2
-    LDX.w $1931                             ;$00C873 |
+    LDX.w ObjectTileset_1931                ;$00C873 |
     BIT.w DATA_00A625,X                     ;$00C876 |
     BMI CODE_00C889                         ;$00C879 |
     BVS ADDR_00C883                         ;$00C87B |
@@ -7773,7 +7773,7 @@ CODE_00C8BC:
     BPL CODE_00C8D1                         ;$00C8BD |
     JSR disable_controls                    ;$00C8BF |
     LDY.b #$B0                              ;$00C8C2 |
-    LDX.w $1931                             ;$00C8C4 |
+    LDX.w ObjectTileset_1931                ;$00C8C4 |
     BIT.w DATA_00A625,X                     ;$00C8C7 |
     BMI CODE_00C8CE                         ;$00C8CA |
     LDY.b #$7F                              ;$00C8CC |
@@ -7788,7 +7788,7 @@ CODE_00C8D1:
     BEQ CODE_00C8E1                         ;$00C8DD |
     LDA.b #$5F                              ;$00C8DF |
 CODE_00C8E1:
-    LDX.w $1931
+    LDX.w ObjectTileset_1931
     BIT.w DATA_00A625,X                     ;$00C8E4 |
     BVC CODE_00C8EC                         ;$00C8E7 |
     SEC                                     ;$00C8E9 |
@@ -10887,7 +10887,7 @@ level_collision:
     AND.b #$82                              ;$00E948 |\ Isolate the layer 2 collision flags.
     STA $8E                                 ;$00E94A |/
     LDA.b #$01                              ;$00E94C |\ Set the layer being processed to layer 2.
-    STA.w $1933                             ;$00E94E |/
+    STA.w LayerProcessing_1933              ;$00E94E |/
     REP #$20                                ;$00E951 |\
     LDA.b PlayerXPos_94                     ;$00E953 | | Offset the player's X position by
     CLC                                     ;$00E955 | |
@@ -10916,7 +10916,7 @@ level_collision:
     STA $8E                                 ;$00E97F | |
     ASL                                     ;$00E981 | |
     BMI no_layer_collision                  ;$00E982 |/ If the sixth bit is set, don't process layer 1 collision.
-    STZ.w $1933                             ;$00E984 | Set the layer being processed to layer 1.
+    STZ.w LayerProcessing_1933              ;$00E984 | Set the layer being processed to layer 1.
     ASL $8D                                 ;$00E987 |
     JSR layer_collision                     ;$00E989 | Process layer 1 collision.
 no_layer_collision:                         ;        |
@@ -11257,7 +11257,7 @@ normal_collision:
 .center_page_0
     CPY.b #$9C                              ;$00EBDD \
     BNE .not_castle_door                    ;$00EBDF |\ If the tile is part of the castle door
-    LDA.w $1931                             ;$00EBE1 | |
+    LDA.w ObjectTileset_1931                ;$00EBE1 | |
     CMP.b #$01                              ;$00EBE4 | | and the tileset is the castle tileset,
     BEQ .castle_door                        ;$00EBE6 |/ process castle door.
 .not_castle_door                            ;        |
@@ -11495,7 +11495,7 @@ CODE_00ED69:
     ADC.b #$10                              ;$00ED82 |
     STA.b PlayerYPosBlock_90                ;$00ED84 |
 CODE_00ED86:
-    LDA.w $1931
+    LDA.w ObjectTileset_1931
     CMP.b #$03                              ;$00ED89 |
     BEQ CODE_00ED91                         ;$00ED8B |
     CMP.b #$0E                              ;$00ED8D |
@@ -11566,7 +11566,7 @@ CODE_00EDF3:
 CODE_00EDF7:
     LDA.b PlayerYSpeed_7D
     BMI Return00EE39                        ;$00EDF9 |
-    LDA.w $1931                             ;$00EDFB |
+    LDA.w ObjectTileset_1931                ;$00EDFB |
     CMP.b #$03                              ;$00EDFE |
     BEQ CODE_00EE06                         ;$00EE00 |
     CMP.b #$0E                              ;$00EE02 |
@@ -11606,7 +11606,7 @@ Return00EE39:
 
 CODE_00EE3A:
     LDY.w Map16_1693
-    LDA.w $1931                             ;$00EE3D |
+    LDA.w ObjectTileset_1931                ;$00EE3D |
     CMP.b #$02                              ;$00EE40 |
     BEQ CODE_00EE48                         ;$00EE42 |
     CMP.b #$08                              ;$00EE44 |
@@ -11970,7 +11970,7 @@ CODE_00F127:
     CMP.b #$5C                              ;$00F12F |
     BCS CODE_00F140                         ;$00F131 |
     XBA                                     ;$00F133 |
-    LDA.w $1931                             ;$00F134 |
+    LDA.w ObjectTileset_1931                ;$00F134 |
     CMP.b #$05                              ;$00F137 |
     BEQ CODE_00F154                         ;$00F139 |
     CMP.b #$0D                              ;$00F13B |
@@ -11986,7 +11986,7 @@ CODE_00F144:
     BCS CODE_00F160                         ;$00F14A |
 CODE_00F14C:
     XBA
-    LDA.w $1931                             ;$00F14D |
+    LDA.w ObjectTileset_1931                ;$00F14D |
     CMP.b #$01                              ;$00F150 |
     BNE CODE_00F15F                         ;$00F152 |
 CODE_00F154:
@@ -12007,7 +12007,7 @@ CODE_00F160:
     BCC CODE_00F17F                         ;$00F165 |
     XBA                                     ;$00F167 |
     PHX                                     ;$00F168 |
-    LDX.w $1931                             ;$00F169 |
+    LDX.w ObjectTileset_1931                ;$00F169 |
     LDA.l DATA_00A625,X                     ;$00F16C |
     PLX                                     ;$00F170 |
     AND.b #$03                              ;$00F171 |
@@ -12079,7 +12079,7 @@ CODE_00F1DA:
     TRB.b InteractionPtYPos_98              ;$00F1DF |
     CPY.b #$06                              ;$00F1E1 |
     BNE CODE_00F1EC                         ;$00F1E3 |
-    LDY.w $1931                             ;$00F1E5 |
+    LDY.w ObjectTileset_1931                ;$00F1E5 |
     CPY.b #$04                              ;$00F1E8 |
     BEQ CODE_00F1F9                         ;$00F1EA |
 CODE_00F1EC:
@@ -13716,7 +13716,7 @@ smoke_sparkle:
     LDA.b InteractionPtYPos_98              ;$00FD77 |
     AND.b #$F0                              ;$00FD79 |
     STA.w SmokeSprYPos_17C4,Y               ;$00FD7B |
-    LDA.w $1933                             ;$00FD7E |
+    LDA.w LayerProcessing_1933              ;$00FD7E |
     BEQ CODE_00FD97                         ;$00FD81 |
     LDA.b InteractionPtXPos_9A              ;$00FD83 |
     SEC                                     ;$00FD85 |
