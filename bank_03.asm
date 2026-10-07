@@ -6922,9 +6922,9 @@ BowserItemBoxProp:
 BowserItemBoxGfx:
     LDA.w $190D
     BEQ CODE_03B457                         ;$03B452 |
-    STZ.w $0DC2                             ;$03B454 |
+    STZ.w PlayerItembox_0DC2                ;$03B454 |
 CODE_03B457:
-    LDA.w $0DC2
+    LDA.w PlayerItembox_0DC2
     BEQ Return03B48B                        ;$03B45A |
     PHX                                     ;$03B45C |
     LDX.b #$03                              ;$03B45D |
@@ -8437,7 +8437,7 @@ CODE_03C500:
     LDA.b #$20                              ;$03C50B |
     STA.b OBJCWWindow_43                    ;$03C50D |
     LDA.b #$80                              ;$03C50F |
-    STA.w $0D9F                             ;$03C511 |
+    STA.w HDMAEnable_0D9F                   ;$03C511 |
     LDA.b SpritePhase_C2,X                  ;$03C514 |
     AND.b #$01                              ;$03C516 |
     TAY                                     ;$03C518 |

@@ -389,7 +389,7 @@ CODE_048261:
     BEQ .CODE_048366                        ;$04835B |
     CMP.b #!OwWalking_04                    ;$04835D |
     BNE .CODE_04839A                        ;$04835F |
-    LDA.w $0DD8                             ;$048361 |
+    LDA.w PlayerSwitching_0DD8              ;$048361 |
     BNE .CODE_04839A                        ;$048364 |
 .CODE_048366:
     LDA.w axlr0000P1Frame_0DA8
@@ -550,7 +550,7 @@ CODE_048509:
     STA $01                                 ;$04850F |
     STZ $00                                 ;$048511 |
     REP #$20                                ;$048513 |
-    LDX.w $0DD6                             ;$048515 |
+    LDX.w PlayerTurnOW_0DD6                 ;$048515 |
     LDY.b #$34                              ;$048518 |
 CODE_04851A:
     LDA.w DATA_048431,Y
@@ -576,7 +576,7 @@ CODE_04853B:
     PHK                                     ;$04853C |
     PLB                                     ;$04853D |
     REP #$20                                ;$04853E |
-    LDX.w $0DD6                             ;$048540 |
+    LDX.w PlayerTurnOW_0DD6                 ;$048540 |
     LDY.w $1DF6                             ;$048543 |
     LDA.w DATA_04849D,Y                     ;$048546 |
     PHA                                     ;$048549 |
@@ -702,7 +702,7 @@ CODE_048625:
 
 CODE_04862E:
     REP #$30
-    LDX.w $0DD6                             ;$048630 |
+    LDX.w PlayerTurnOW_0DD6                 ;$048630 |
     LDA.w $1F17,X                           ;$048633 |
     SEC                                     ;$048636 |
     SBC.b Layer1XPos_1A                     ;$048637 |
@@ -765,7 +765,7 @@ CODE_048676:
     LDA $01                                 ;$0486A2 |
     STA $07                                 ;$0486A4 |
     STA.b OWScreenYCurrentTile_8B           ;$0486A6 |
-    LDA.w $0DD6                             ;$0486A8 |
+    LDA.w PlayerTurnOW_0DD6                 ;$0486A8 |
     LSR                                     ;$0486AB |
     TAY                                     ;$0486AC |
     LDA.w $1F13,Y                           ;$0486AD |
@@ -783,13 +783,13 @@ CODE_0486BC:
     STA $07                                 ;$0486C3 |
 CODE_0486C5:
     REP #$30
-    LDA.w $0DD6                             ;$0486C7 |
+    LDA.w PlayerTurnOW_0DD6                 ;$0486C7 |
     XBA                                     ;$0486CA |
     LSR                                     ;$0486CB |
     STA $04                                 ;$0486CC |
     LDX.w #$0000                            ;$0486CE |
     JSR CODE_048789                         ;$0486D1 |
-    LDA.w $0DD6                             ;$0486D4 |
+    LDA.w PlayerTurnOW_0DD6                 ;$0486D4 |
     LSR                                     ;$0486D7 |
     TAY                                     ;$0486D8 |
     LDX.w #$0000                            ;$0486D9 |
@@ -819,7 +819,7 @@ CODE_048709:
     LDA $03                                 ;$048714 |
     STA $07                                 ;$048716 |
     STA.b OWScreenYCurrentTile_8B           ;$048718 |
-    LDA.w $0DD6                             ;$04871A |
+    LDA.w PlayerTurnOW_0DD6                 ;$04871A |
     LSR                                     ;$04871D |
     EOR.b #$02                              ;$04871E |
     TAY                                     ;$048720 |
@@ -838,7 +838,7 @@ CODE_048730:
     STA $07                                 ;$048737 |
 CODE_048739:
     REP #$30
-    LDA.w $0DB2                             ;$04873B |
+    LDA.w IsTwoPlayerGame_0DB2              ;$04873B |
     AND.w #$00FF                            ;$04873E |
     BEQ CODE_048786                         ;$048741 |
     LDA $0C                                 ;$048743 |
@@ -852,7 +852,7 @@ CODE_048739:
     STA $04                                 ;$048756 |
     LDX.w #$0020                            ;$048758 |
     JSR CODE_048789                         ;$04875B |
-    LDA.w $0DD6                             ;$04875E |
+    LDA.w PlayerTurnOW_0DD6                 ;$04875E |
     LSR                                     ;$048761 |
     EOR.w #$0002                            ;$048762 |
     TAY                                     ;$048765 |
@@ -1272,7 +1272,7 @@ CODE_048DBD:
     SEP #$10                                ;$048DC0 |
     JSR CODE_048E55                         ;$048DC2 |
     REP #$30                                ;$048DC5 |
-    LDA.w $0DD4                             ;$048DC7 |
+    LDA.w LevelExitMode_0DD5-1              ;$048DC7 |
     AND.w #$FF00                            ;$048DCA |
     BEQ CODE_048DDF                         ;$048DCD |
     BMI CODE_048DDF                         ;$048DCF |
@@ -1289,7 +1289,7 @@ CODE_048DDF:
     AND.w #$FF00                            ;$048DEA |
     STA.w CutsceneID_13C6                   ;$048DED |
     SEP #$10                                ;$048DF0 |
-    LDX.w $0DD6                             ;$048DF2 |
+    LDX.w PlayerTurnOW_0DD6                 ;$048DF2 |
     LDA.w $1F17,X                           ;$048DF5 |
     LSR                                     ;$048DF8 |
     LSR                                     ;$048DF9 |
@@ -1351,8 +1351,8 @@ CODE_048E55:
     AND.w #$00FF                            ;$048E5A |
     ASL                                     ;$048E5D |
     ASL                                     ;$048E5E |
-    STA.w $0DD6                             ;$048E5F |
-    LDX.w $0DD6                             ;$048E62 |
+    STA.w PlayerTurnOW_0DD6                 ;$048E5F |
+    LDX.w PlayerTurnOW_0DD6                 ;$048E62 |
     LDA.w $1F1F,X                           ;$048E65 |
     STA $00                                 ;$048E68 |
     LDA.w $1F21,X                           ;$048E6A |
@@ -1393,7 +1393,7 @@ CODE_048E9E:
     ASL                                     ;$048EB6 |
     TAX                                     ;$048EB7 |
     REP #$20                                ;$048EB8 |
-    LDY.w $0DD6                             ;$048EBA |
+    LDY.w PlayerTurnOW_0DD6                 ;$048EBA |
     LDA.w DATA_048E49,X                     ;$048EBD |
     STA.w $1F17,Y                           ;$048EC0 |
     LDA.w DATA_048E4F,X                     ;$048EC3 |
@@ -1411,7 +1411,7 @@ ADDR_048ECD:
 ADDR_048ED9:
     LDA.w LevelExitMode_0DD5
     BMI CODE_048EE1                         ;$048EDC |
-    STZ.w $0DE5,X                           ;$048EDE |
+    STZ.w OWSpriteNumber_0DE5,X             ;$048EDE |
 CODE_048EE1:
     REP #$30
     JSR CODE_049831                         ;$048EE3 |
@@ -1422,7 +1422,7 @@ CODE_048EE1:
 
 CODE_048EF1:
     LDA.b #$08
-    STA.w $0DB1                             ;$048EF3 |
+    STA.w KeepModeActive_0DB1               ;$048EF3 |
     LDA.w OWPlayerSubmap_1F11               ;$048EF6 |
     CMP.b #$01                              ;$048EF9 |
     BNE CODE_048F13                         ;$048EFB |
@@ -1437,7 +1437,7 @@ CODE_048EF1:
     BRL CODE_048F7A                         ;$048F10 |
 CODE_048F13:
     REP #$20
-    LDX.w $0DD6                             ;$048F15 |
+    LDX.w PlayerTurnOW_0DD6                 ;$048F15 |
     LDA.w $1F17,X                           ;$048F18 |
     LSR                                     ;$048F1B |
     LSR                                     ;$048F1C |
@@ -1508,7 +1508,7 @@ CODE_048F96:
     DEX                                     ;$048F9C |
     BPL CODE_048F96                         ;$048F9D |
     REP #$30                                ;$048F9F |
-    LDX.w $0DD6                             ;$048FA1 |
+    LDX.w PlayerTurnOW_0DD6                 ;$048FA1 |
     TXA                                     ;$048FA4 |
     EOR.w #$0004                            ;$048FA5 |
     TAY                                     ;$048FA8 |
@@ -1538,7 +1538,7 @@ CODE_048F96:
     LDA.w LevelExitMode_0DD5                ;$048FDC |
     CMP.b #$E0                              ;$048FDF |
     BNE CODE_048FFB                         ;$048FE1 |
-    DEC.w $0DB1                             ;$048FE3 |
+    DEC.w KeepModeActive_0DB1               ;$048FE3 |
     BMI ADDR_048FE9                         ;$048FE6 |
     RTS                                     ;$048FE8 |
 
@@ -1546,7 +1546,7 @@ ADDR_048FE9:
     INC.w $13CA
     JSR CODE_049037                         ;$048FEC |
     LDA.b #$02                              ;$048FEF |
-    STA.w $0DB1                             ;$048FF1 |
+    STA.w KeepModeActive_0DB1               ;$048FF1 |
     LDA.b #!OwWalking_04                    ;$048FF4 |
     STA.w OWProcess_13D9                    ;$048FF6 |
     BRA CODE_049003                         ;$048FF9 |
@@ -1561,7 +1561,7 @@ CODE_049000:
 CODE_049003:
     REP #$20
     STZ $06                                 ;$049005 |
-    LDX.w $0DD6                             ;$049007 |
+    LDX.w PlayerTurnOW_0DD6                 ;$049007 |
     LDA.w $1F17,X                           ;$04900A |
     LSR                                     ;$04900D |
     LSR                                     ;$04900E |
@@ -1659,7 +1659,7 @@ DATA_04910E:
     db $01,$00
 
 CODE_049120:
-    STZ.w $0DD8
+    STZ.w PlayerSwitching_0DD8
     LDY.w $0EF7                             ;$049123 |
     BMI OWPU_NotOnPipe                      ;$049126 |
     LDA.w LevelExitMode_0DD5                ;$049128 |
@@ -1727,7 +1727,7 @@ OWPU_NotOnPipe:
     BEQ CODE_0491E9                         ;$04919B |
     BCS CODE_0491E9                         ;$04919D |
 OWPU_EnterLevel:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$0491A2 |
     AND.b #$02                              ;$0491A3 |
     TAX                                     ;$0491A5 |
@@ -1740,10 +1740,10 @@ CODE_0491B1:
     TYA
     STA.w $1F13,X                           ;$0491B2 |
     LDX.w CurrentPlayer_0DB3                ;$0491B5 |
-    LDA.w $0DB6,X                           ;$0491B8 |
-    STA.w $0DBF                             ;$0491BB |
-    LDA.w $0DB4,X                           ;$0491BE |
-    STA.w $0DBE                             ;$0491C1 |
+    LDA.w SavedPlayerCoins_0DB6,X           ;$0491B8 |
+    STA.w PlayerCoins_0DBF                  ;$0491BB |
+    LDA.w SavedPlayerLives_0DB4,X           ;$0491BE |
+    STA.w PlayerLives_0DBE                  ;$0491C1 |
     LDA.w $0DB8,X                           ;$0491C4 |
     STA.b Powerup_19                        ;$0491C7 |
     LDA.w SavedPlayerYoshi_0DBA,X           ;$0491C9 |
@@ -1751,9 +1751,9 @@ CODE_0491B1:
     STA.w YoshiColor_13C7                   ;$0491CF |
     STA.w RidingYoshi_187A                  ;$0491D2 |
     LDA.w $0DBC,X                           ;$0491D5 |
-    STA.w $0DC2                             ;$0491D8 |
+    STA.w PlayerItembox_0DC2                ;$0491D8 |
     LDA.b #$02                              ;$0491DB |
-    STA.w $0DB1                             ;$0491DD |
+    STA.w KeepModeActive_0DB1               ;$0491DD |
     LDA.b #$80                              ;$0491E0 |
     STA.w SPCIO2_1DFB                       ;$0491E2 |
     INC.w GameMode_0100                     ;$0491E5 |
@@ -1761,7 +1761,7 @@ CODE_0491B1:
 
 CODE_0491E9:
     REP #$20
-    LDX.w $0DD6                             ;$0491EB |
+    LDX.w PlayerTurnOW_0DD6                 ;$0491EB |
     LDA.w $1F17,X                           ;$0491EE |
     LSR                                     ;$0491F1 |
     LSR                                     ;$0491F2 |
@@ -1835,7 +1835,7 @@ CODE_04926E:
     DEC.w $144E
     BPL CODE_049287                         ;$049271 |
     STZ.w $144E                             ;$049273 |
-    LDA.w $0DD6                             ;$049276 |
+    LDA.w PlayerTurnOW_0DD6                 ;$049276 |
     LSR                                     ;$049279 |
     AND.b #$02                              ;$04927A |
     TAX                                     ;$04927C |
@@ -1877,7 +1877,7 @@ CODE_0492B5:
     BPL CODE_0492B5                         ;$0492BA |
 CODE_0492BC:
     TYA
-    STA.w $0DD3                             ;$0492BD |
+    STA.w OWPlayerDirection_0DD3            ;$0492BD |
     LDX.w #$0000                            ;$0492C0 |
     CPY.w #$0004                            ;$0492C3 |
     BCS CODE_0492CB                         ;$0492C6 |
@@ -1889,7 +1889,7 @@ CODE_0492CB:
     CLC                                     ;$0492D1 |
     ADC.w DATA_049058,Y                     ;$0492D2 |
     STA $00,X                               ;$0492D5 |
-    LDA.w $0DD6                             ;$0492D7 |
+    LDA.w PlayerTurnOW_0DD6                 ;$0492D7 |
     LSR                                     ;$0492DA |
     LSR                                     ;$0492DB |
     TAX                                     ;$0492DC |
@@ -1923,7 +1923,7 @@ CODE_049315:
     CMP.w #$00FF                            ;$04931B |
     BNE CODE_049349                         ;$04931E |
     PHX                                     ;$049320 |
-    LDX.w $0DD6                             ;$049321 |
+    LDX.w PlayerTurnOW_0DD6                 ;$049321 |
     LDA.w $1F19,X                           ;$049324 |
     CMP.w DATA_049082                       ;$049327 |
     BNE CODE_049346                         ;$04932A |
@@ -1986,7 +1986,7 @@ CODE_04938E:
     BNE CODE_0493B5                         ;$049396 |
     LDA.w DATA_04A0E4,X                     ;$049398 |
     CLC                                     ;$04939B |
-    ADC.w $0DD6                             ;$04939C |
+    ADC.w PlayerTurnOW_0DD6                 ;$04939C |
     PHA                                     ;$04939F |
     TXA                                     ;$0493A0 |
     ASL                                     ;$0493A1 |
@@ -2021,20 +2021,20 @@ CODE_0493C7:
 CODE_0493D4:
     TXA
     CLC                                     ;$0493D5 |
-    ADC.w $0DD6                             ;$0493D6 |
+    ADC.w PlayerTurnOW_0DD6                 ;$0493D6 |
     TAX                                     ;$0493D9 |
 CODE_0493DA:
     LDA $00
     CLC                                     ;$0493DC |
     ADC.w $1F17,X                           ;$0493DD |
-    STA.w $0DC7,X                           ;$0493E0 |
+    STA.w OverworldDestXPos_0DC7,X          ;$0493E0 |
     TXA                                     ;$0493E3 |
     EOR.w #$0002                            ;$0493E4 |
     TAX                                     ;$0493E7 |
     LDA $02                                 ;$0493E8 |
     CLC                                     ;$0493EA |
     ADC.w $1F17,X                           ;$0493EB |
-    STA.w $0DC7,X                           ;$0493EE |
+    STA.w OverworldDestXPos_0DC7,X          ;$0493EE |
     TXA                                     ;$0493F1 |
     LSR                                     ;$0493F2 |
     AND.w #$0002                            ;$0493F3 |
@@ -2081,7 +2081,7 @@ DATA_04944E:
     db $01,$00,$00,$01,$00,$01,$00
 
 CODE_04945D:
-    LDA.w $0DD8
+    LDA.w PlayerSwitching_0DD8
     BEQ CODE_049468                         ;$049460 |
     LDA.b #!OwFadeIn_08                     ;$049462 |
     STA.w OWProcess_13D9                    ;$049464 |
@@ -2089,13 +2089,13 @@ CODE_04945D:
 
 CODE_049468:
     REP #$30
-    LDA.w $0DD6                             ;$04946A |
+    LDA.w PlayerTurnOW_0DD6                 ;$04946A |
     CLC                                     ;$04946D |
     ADC.w #$0002                            ;$04946E |
     TAY                                     ;$049471 |
     LDX.w #$0002                            ;$049472 |
 CODE_049475:
-    LDA.w $0DC7,Y
+    LDA.w OverworldDestXPos_0DC7,Y
     SEC                                     ;$049478 |
     SBC.w $1F17,Y                           ;$049479 |
     STA $00,X                               ;$04947C |
@@ -2177,7 +2177,7 @@ CODE_0494FA:
     EOR.w #$FFFF                            ;$0494FE |
     INC A                                   ;$049501 |
 CODE_049502:
-    STA.w $0DCF,X
+    STA.w OWPlayerSpeed_0DCF,X
     LDA $08                                 ;$049505 |
     EOR.w #$FFFF                            ;$049507 |
     INC A                                   ;$04950A |
@@ -2198,7 +2198,7 @@ CODE_049522:
     LDA.w $1444
     BEQ CODE_04955C                         ;$049525 |
     STZ.w $1B78                             ;$049527 |
-    LDX.w $0DD6                             ;$04952A |
+    LDX.w PlayerTurnOW_0DD6                 ;$04952A |
     LDA.w $1F1F,X                           ;$04952D |
     STA $00                                 ;$049530 |
     LDA.w $1F21,X                           ;$049532 |
@@ -2226,7 +2226,7 @@ CODE_04955C:
     STA.w $1B7E                             ;$04955F |
     LDA.w #$0008                            ;$049562 |
     STA $08                                 ;$049565 |
-    LDY.w $0DD3                             ;$049567 |
+    LDY.w OWPlayerDirection_0DD3            ;$049567 |
     TYA                                     ;$04956A |
     AND.w #$00FF                            ;$04956B |
     EOR.w #$0002                            ;$04956E |
@@ -2242,7 +2242,7 @@ ADDR_049575:
     BEQ ADDR_049575                         ;$04957F |
     TAY                                     ;$049581 |
 CODE_049582:
-    LDX.w $0DD6
+    LDX.w PlayerTurnOW_0DD6
     LDA.w $1F1F,X                           ;$049585 |
     STA $00                                 ;$049588 |
     LDA.w $1F21,X                           ;$04958A |
@@ -2256,7 +2256,7 @@ CODE_04959A:
     CLC                                     ;$04959C |
     ADC.w DATA_049058,Y                     ;$04959D |
     STA $00,X                               ;$0495A0 |
-    LDA.w $0DD6                             ;$0495A2 |
+    LDA.w PlayerTurnOW_0DD6                 ;$0495A2 |
     LSR                                     ;$0495A5 |
     LSR                                     ;$0495A6 |
     TAX                                     ;$0495A7 |
@@ -2300,7 +2300,7 @@ CODE_0495DE:
     LDY.w #$0001                            ;$0495FC |
 CODE_0495FF:
     STY.w $1B80
-    LDX.w $0DD6                             ;$049602 |
+    LDX.w PlayerTurnOW_0DD6                 ;$049602 |
     LDA $00                                 ;$049605 |
     STA.w $1F1F,X                           ;$049607 |
     LDA $02                                 ;$04960A |
@@ -2350,7 +2350,7 @@ CODE_049654:
     CMP.w #$006E                            ;$04965E |
     BCS CODE_049676                         ;$049661 |
 CODE_049663:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$049666 |
     AND.w #$0002                            ;$049667 |
     TAX                                     ;$04966A |
@@ -2360,7 +2360,7 @@ CODE_049663:
     BRA CODE_049687                         ;$049674 |
 
 CODE_049676:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$049679 |
     AND.w #$0002                            ;$04967A |
     TAX                                     ;$04967D |
@@ -2402,7 +2402,7 @@ CODE_0496A5:
     STA.w OWLevelSettings_1EA2,X            ;$0496CE |
     PLY                                     ;$0496D1 |
 CODE_0496D2:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$0496D5 |
     AND.w #$0002                            ;$0496D6 |
     TAX                                     ;$0496D9 |
@@ -2508,13 +2508,13 @@ CODE_049777:
     ADC.w #$0002                            ;$04978B |
     STA $04                                 ;$04978E |
 CODE_049790:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$049793 |
     AND.w #$0002                            ;$049794 |
     TAX                                     ;$049797 |
     LDA $04                                 ;$049798 |
     STA.w $1F13,X                           ;$04979A |
-    LDX.w $0DD6                             ;$04979D |
+    LDX.w PlayerTurnOW_0DD6                 ;$04979D |
     LDA $00                                 ;$0497A0 |
     AND.w #$00FF                            ;$0497A2 |
     CMP.w #$0080                            ;$0497A5 |
@@ -2524,7 +2524,7 @@ CODE_0497AD:
     CLC
     ADC.w $1F17,X                           ;$0497AE |
     AND.w #$FFFC                            ;$0497B1 |
-    STA.w $0DC7,X                           ;$0497B4 |
+    STA.w OverworldDestXPos_0DC7,X          ;$0497B4 |
     LDA $01                                 ;$0497B7 |
     AND.w #$00FF                            ;$0497B9 |
     CMP.w #$0080                            ;$0497BC |
@@ -2534,9 +2534,9 @@ CODE_0497C4:
     CLC
     ADC.w $1F19,X                           ;$0497C5 |
     AND.w #$FFFC                            ;$0497C8 |
-    STA.w $0DC9,X                           ;$0497CB |
+    STA.w OverworldDestYPos_0DC9,X          ;$0497CB |
     SEP #$20                                ;$0497CE |
-    LDA.w $0DC7,X                           ;$0497D0 |
+    LDA.w OverworldDestXPos_0DC7,X          ;$0497D0 |
     AND.b #$0F                              ;$0497D3 |
     BNE CODE_0497E3                         ;$0497D5 |
     LDY.w #$0004                            ;$0497D7 |
@@ -2547,7 +2547,7 @@ CODE_0497E1:
     BRA CODE_0497F4
 
 CODE_0497E3:
-    LDA.w $0DC9,X
+    LDA.w OverworldDestYPos_0DC9,X
     AND.b #$0F                              ;$0497E6 |
     BNE CODE_0497F4                         ;$0497E8 |
     LDY.w #$0000                            ;$0497EA |
@@ -2555,7 +2555,7 @@ CODE_0497E3:
     BMI CODE_0497F4                         ;$0497EF |
     LDY.w #$0002                            ;$0497F1 |
 CODE_0497F4:
-    STY.w $0DD3
+    STY.w OWPlayerDirection_0DD3
     LDA.w OWProcess_13D9                    ;$0497F7 |
     CMP.b #!OwSubmap_0A                     ;$0497FA |
     BEQ CODE_049831                         ;$0497FC |
@@ -2563,7 +2563,7 @@ CODE_0497F4:
 
 CODE_049801:
     REP #$20
-    LDA.w $0DD6                             ;$049803 |
+    LDA.w PlayerTurnOW_0DD6                 ;$049803 |
     CLC                                     ;$049806 |
     ADC.w #$0002                            ;$049807 |
     TAX                                     ;$04980A |
@@ -2572,7 +2572,7 @@ CODE_04980E:
     LDA.w $13D5,Y
     AND.w #$00FF                            ;$049811 |
     CLC                                     ;$049814 |
-    ADC.w $0DCF,Y                           ;$049815 |
+    ADC.w OWPlayerSpeed_0DCF,Y              ;$049815 |
     STA.w $13D5,Y                           ;$049818 |
     AND.w #$FF00                            ;$04981B |
     BPL CODE_049823                         ;$04981E |
@@ -2596,7 +2596,7 @@ CODE_049831:
     BNE CODE_049882                         ;$04983D |
 CODE_04983F:
     REP #$30
-    LDX.w $0DD6                             ;$049841 |
+    LDX.w PlayerTurnOW_0DD6                 ;$049841 |
     LDA.w $1F17,X                           ;$049844 |
     STA $00                                 ;$049847 |
     LDA.w $1F19,X                           ;$049849 |
@@ -2714,7 +2714,7 @@ CODE_049903:
     STA $08                                 ;$04990E |
     STZ $09                                 ;$049910 |
     REP #$20                                ;$049912 |
-    LDX.w $0DD6                             ;$049914 |
+    LDX.w PlayerTurnOW_0DD6                 ;$049914 |
     LDA.w $1F17,X                           ;$049917 |
     LSR                                     ;$04991A |
     LSR                                     ;$04991B |
@@ -2811,7 +2811,7 @@ DATA_049A0E:
 
 CODE_049A24:
     REP #$20
-    LDA.w $0DD6                             ;$049A26 |
+    LDA.w PlayerTurnOW_0DD6                 ;$049A26 |
     LSR                                     ;$049A29 |
     LSR                                     ;$049A2A |
     TAX                                     ;$049A2B |
@@ -2821,7 +2821,7 @@ CODE_049A24:
     LDA.w #$001A                            ;$049A35 |
     STA $02                                 ;$049A38 |
     LDY.b #$41                              ;$049A3A |
-    LDX.w $0DD6                             ;$049A3C |
+    LDX.w PlayerTurnOW_0DD6                 ;$049A3C |
 CODE_049A3F:
     LDA.w $1F19,X
     CMP.w DATA_049964,Y                     ;$049A42 |
@@ -2863,7 +2863,7 @@ CODE_049A90:
     RTS                                     ;$049A92 |
 
 CODE_049A93:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     AND.w #$00FF                            ;$049A96 |
     LSR                                     ;$049A99 |
     LSR                                     ;$049A9A |
@@ -3051,12 +3051,12 @@ CODE_049D95:
     RTS                                     ;$049D99 |
 
 CODE_049D9A:
-    LDA.w $0DB2
+    LDA.w IsTwoPlayerGame_0DB2
     BEQ CODE_049DAF                         ;$049D9D |
     LDA.w CurrentPlayer_0DB3                ;$049D9F |
     EOR.b #$01                              ;$049DA2 |
     TAX                                     ;$049DA4 |
-    LDA.w $0DB4,X                           ;$049DA5 |
+    LDA.w SavedPlayerLives_0DB4,X           ;$049DA5 |
     BMI CODE_049DAF                         ;$049DA8 |
     LDA.w LevelExitMode_0DD5                ;$049DAA |
     BNE CODE_049DBC                         ;$049DAD |
@@ -3068,10 +3068,10 @@ CODE_049DAF:
     JMP CODE_049831                         ;$049DB9 |
 
 CODE_049DBC:
-    DEC.w $0DB1
+    DEC.w KeepModeActive_0DB1
     BPL CODE_049DCC                         ;$049DBF |
     LDA.b #$02                              ;$049DC1 |
-    STA.w $0DB1                             ;$049DC3 |
+    STA.w KeepModeActive_0DB1               ;$049DC3 |
     STZ.w LevelExitMode_0DD5                ;$049DC6 |
     INC.w OWProcess_13D9                    ;$049DC9 |
 CODE_049DCC:
@@ -3083,10 +3083,10 @@ CODE_049DD1:
     EOR.b #$01                              ;$049DD4 |
     STA.w CurrentPlayer_0DB3                ;$049DD6 |
     TAX                                     ;$049DD9 |
-    LDA.w $0DB6,X                           ;$049DDA |
-    STA.w $0DBF                             ;$049DDD |
-    LDA.w $0DB4,X                           ;$049DE0 |
-    STA.w $0DBE                             ;$049DE3 |
+    LDA.w SavedPlayerCoins_0DB6,X           ;$049DDA |
+    STA.w PlayerCoins_0DBF                  ;$049DDD |
+    LDA.w SavedPlayerLives_0DB4,X           ;$049DE0 |
+    STA.w PlayerLives_0DBE                  ;$049DE3 |
     LDA.w $0DB8,X                           ;$049DE6 |
     STA.b Powerup_19                        ;$049DE9 |
     LDA.w SavedPlayerYoshi_0DBA,X           ;$049DEB |
@@ -3094,7 +3094,7 @@ CODE_049DD1:
     STA.w YoshiColor_13C7                   ;$049DF1 |
     STA.w RidingYoshi_187A                  ;$049DF4 |
     LDA.w $0DBC,X                           ;$049DF7 |
-    STA.w $0DC2                             ;$049DFA |
+    STA.w PlayerItembox_0DC2                ;$049DFA |
     JSL CODE_05DBF2                         ;$049DFD |
     REP #$20                                ;$049E01 |
     JSR CODE_048E55                         ;$049E03 |
@@ -3104,28 +3104,28 @@ CODE_049DD1:
     STA.w CurrentSubmap_13C3                ;$049E0E |
     STZ.w $13C4                             ;$049E11 |
     LDA.b #$02                              ;$049E14 |
-    STA.w $0DB1                             ;$049E16 |
+    STA.w KeepModeActive_0DB1               ;$049E16 |
     LDA.b #$0A                              ;$049E19 |
     STA.w OWProcess_13D9                    ;$049E1B |
-    INC.w $0DD8                             ;$049E1E |
+    INC.w PlayerSwitching_0DD8              ;$049E1E |
     RTS                                     ;$049E21 |
 
 CODE_049E22:
-    DEC.w $0DB1
+    DEC.w KeepModeActive_0DB1
     BPL Return049E4B                        ;$049E25 |
     LDA.b #$02                              ;$049E27 |
-    STA.w $0DB1                             ;$049E29 |
-    LDX.w $0DAF                             ;$049E2C |
-    LDA.w $0DAE                             ;$049E2F |
+    STA.w KeepModeActive_0DB1               ;$049E29 |
+    LDX.w MosaicDirection_0DAF              ;$049E2C |
+    LDA.w Brightness_0DAE                   ;$049E2F |
     CLC                                     ;$049E32 |
     ADC.l DATA_009F2F,X                     ;$049E33 |
-    STA.w $0DAE                             ;$049E37 |
+    STA.w Brightness_0DAE                   ;$049E37 |
     CMP.l DATA_009F33,X                     ;$049E3A |
     BNE Return049E4B                        ;$049E3E |
     INC.w OWProcess_13D9                    ;$049E40 |
-    LDA.w $0DAF                             ;$049E43 |
+    LDA.w MosaicDirection_0DAF              ;$049E43 |
     EOR.b #$01                              ;$049E46 |
-    STA.w $0DAF                             ;$049E48 |
+    STA.w MosaicDirection_0DAF              ;$049E48 |
 Return049E4B:
     RTS
 
@@ -3159,7 +3159,7 @@ CODE_049E78:
     LDA.w $1DF7                             ;$049E7A |
     AND.w #$00FF                            ;$049E7D |
     STA $00                                 ;$049E80 |
-    LDX.w $0DD6                             ;$049E82 |
+    LDX.w PlayerTurnOW_0DD6                 ;$049E82 |
     LDA.w $1F19,X                           ;$049E85 |
     SEC                                     ;$049E88 |
     SBC $00                                 ;$049E89 |
@@ -5017,7 +5017,7 @@ CODE_04D6E9:
     STA.b Layer1PrevTileDown_4F             ;$04D6F2 |
     LDA.w #!ScrollRightDown_0202            ;$04D6F4 |
     STA.b Layer1ScrollDir_55                ;$04D6F7 |
-    LDA.w $0DD6                             ;$04D6F9 |
+    LDA.w PlayerTurnOW_0DD6                 ;$04D6F9 |
     LSR                                     ;$04D6FC |
     LSR                                     ;$04D6FD |
     AND.w #$00FF                            ;$04D6FE |
@@ -5060,7 +5060,7 @@ CODE_04D750:
     STA.w $4310,X                           ;$04D754 |
     DEX                                     ;$04D757 |
     BPL CODE_04D750                         ;$04D758 |
-    LDA.w $0DD6                             ;$04D75A |
+    LDA.w PlayerTurnOW_0DD6                 ;$04D75A |
     LSR                                     ;$04D75D |
     LSR                                     ;$04D75E |
     TAX                                     ;$04D75F |
@@ -5424,11 +5424,11 @@ CODE_04DB81:
 CODE_04DB95:
     STA.b OBJCWWindow_43
     LDA.b #$80                              ;$04DB97 |
-    STA.w $0D9F                             ;$04DB99 |
+    STA.w HDMAEnable_0D9F                   ;$04DB99 |
     RTS                                     ;$04DB9C |
 
 CODE_04DB9D:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$04DBA0 |
     LSR                                     ;$04DBA1 |
     TAX                                     ;$04DBA2 |
@@ -5454,11 +5454,11 @@ CODE_04DBCF:
     STZ.w $1DE8
     LDA.b #$04                              ;$04DBD2 |
     STA.w OWProcess_13D9                    ;$04DBD4 |
-    LDA.w $0DD6                             ;$04DBD7 |
+    LDA.w PlayerTurnOW_0DD6                 ;$04DBD7 |
     LSR                                     ;$04DBDA |
     LSR                                     ;$04DBDB |
     TAY                                     ;$04DBDC |
-    LDA.w $0DB2                             ;$04DBDD |
+    LDA.w IsTwoPlayerGame_0DB2              ;$04DBDD |
     BEQ CODE_04DBF3                         ;$04DBE0 |
     LDA.w $1B9E                             ;$04DBE2 |
     BNE CODE_04DBF3                         ;$04DBE5 |
@@ -5482,7 +5482,7 @@ DATA_04DC02:
 
 CODE_04DC09:
     SEP #$30
-    LDA.w $0DD6                             ;$04DC0B |
+    LDA.w PlayerTurnOW_0DD6                 ;$04DC0B |
     LSR                                     ;$04DC0E |
     LSR                                     ;$04DC0F |
     TAX                                     ;$04DC10 |
@@ -5578,7 +5578,7 @@ CODE_04DCB6:
     DEC A                                   ;$04DCCC |
     STA $01                                 ;$04DCCD |
     REP #$20                                ;$04DCCF |
-    LDA.w $0DD6                             ;$04DCD1 |
+    LDA.w PlayerTurnOW_0DD6                 ;$04DCD1 |
     LSR                                     ;$04DCD4 |
     LSR                                     ;$04DCD5 |
     AND.w #$00FF                            ;$04DCD6 |
@@ -6144,7 +6144,7 @@ CODE_04E61C:
     LDA.b #!ExitShowSave_E0                 ;$04E627 |
     STA.w LevelExitMode_0DD5                ;$04E629 |
     LDA.b #$0F                              ;$04E62C |
-    STA.w $0DB1                             ;$04E62E |
+    STA.w KeepModeActive_0DB1               ;$04E62E |
     RTS                                     ;$04E631 |
 
 CODE_04E632:
@@ -7272,7 +7272,7 @@ CODE_04F29B:
     STA $00                                 ;$04F2AB |
     LDX.w KeyholeXPos_1436                  ;$04F2AD |
 CODE_04F2B0:
-    LDY.w $0DD6
+    LDY.w PlayerTurnOW_0DD6
     LDA.w $1F17,Y                           ;$04F2B3 |
     STA.l SwitchAniXPosLow_B978,X           ;$04F2B6 |
     LDA.w $1F18,Y                           ;$04F2BA |
@@ -7453,7 +7453,7 @@ CODE_04F407:
     STZ.b Layer12Window_41
     STZ.b Layer34Window_42                  ;$04F409 |
     STZ.b OBJCWWindow_43                    ;$04F40B |
-    STZ.w $0D9F                             ;$04F40D |
+    STZ.w HDMAEnable_0D9F                   ;$04F40D |
     RTS                                     ;$04F410 |
 
 DATA_04F411:
@@ -7464,7 +7464,7 @@ DATA_04F413:
 
 CODE_04F415:
     LDX.b #$00
-    LDA.w $0DB4                             ;$04F417 |
+    LDA.w SavedPlayerLives_0DB4             ;$04F417 |
     CMP.w $0DB5                             ;$04F41A |
     BPL CODE_04F420                         ;$04F41D |
     INX                                     ;$04F41F |
@@ -7571,8 +7571,8 @@ CODE_04F513:
     AND.b #$10                              ;$04F519 |
     BEQ CODE_04F52B                         ;$04F51B |
     LDX.w CurrentPlayer_0DB3                ;$04F51D |
-    LDA.w $0DB4,X                           ;$04F520 |
-    STA.w $0DBE                             ;$04F523 |
+    LDA.w SavedPlayerLives_0DB4,X           ;$04F520 |
+    STA.w PlayerLives_0DBE                  ;$04F523 |
     JSL CODE_009C13                         ;$04F526 |
     RTS                                     ;$04F52A |
 
@@ -7599,15 +7599,15 @@ CODE_04F54B:
     TXA                                     ;$04F54E |
     EOR.b #$01                              ;$04F54F |
     TAY                                     ;$04F551 |
-    LDA.w $0DB4,X                           ;$04F552 |
+    LDA.w SavedPlayerLives_0DB4,X           ;$04F552 |
     BEQ CODE_04F56C                         ;$04F555 |
     BMI CODE_04F56C                         ;$04F557 |
-    LDA.w $0DB4,Y                           ;$04F559 |
+    LDA.w SavedPlayerLives_0DB4,Y           ;$04F559 |
     CMP.b #$62                              ;$04F55C |
     BPL CODE_04F56C                         ;$04F55E |
     INC A                                   ;$04F560 |
-    STA.w $0DB4,Y                           ;$04F561 |
-    DEC.w $0DB4,X                           ;$04F564 |
+    STA.w SavedPlayerLives_0DB4,Y           ;$04F561 |
+    DEC.w SavedPlayerLives_0DB4,X           ;$04F564 |
     LDA.b #$23                              ;$04F567 |
     STA.w SPCIO3_1DFC                       ;$04F569 |
 CODE_04F56C:
@@ -7639,7 +7639,7 @@ CODE_04F5A1:
     BPL CODE_04F5A1                         ;$04F5AA |
     INX                                     ;$04F5AC |
     REP #$20                                ;$04F5AD |
-    LDY.w $0DB4                             ;$04F5AF |
+    LDY.w SavedPlayerLives_0DB4             ;$04F5AF |
     BMI CODE_04F5BF                         ;$04F5B2 |
     LDA.w #$38FC                            ;$04F5B4 |
     STA.l $7F83C1,X                         ;$04F5B7 |
@@ -7670,7 +7670,7 @@ CODE_04F5CF:
     STA.l $7F83BB,X                         ;$04F5FA |
     SEP #$20                                ;$04F5FE |
 CODE_04F600:
-    LDA.w $0DB4
+    LDA.w SavedPlayerLives_0DB4
     JSR CODE_04F60E                         ;$04F603 |
     TXA                                     ;$04F606 |
     CLC                                     ;$04F607 |
@@ -7752,7 +7752,7 @@ CODE_04F6B1:
     LDA.w DATA_04F665,X                     ;$04F6BB |
 CODE_04F6BE:
     PHA
-    STX.w $0DDE                             ;$04F6BF |
+    STX.w SaveFileDelete_0DDE               ;$04F6BF |
     JSR CODE_04F853                         ;$04F6C2 |
     PLA                                     ;$04F6C5 |
     DEC A                                   ;$04F6C6 |
@@ -7826,10 +7826,10 @@ CODE_04F748:
 CODE_04F76E:
     LDX.b #$02
 CODE_04F770:
-    LDA.w $0DE5,X
+    LDA.w OWSpriteNumber_0DE5,X
     BNE CODE_04F7AB                         ;$04F773 |
     LDA.b #$05                              ;$04F775 |
-    STA.w $0DE5,X                           ;$04F777 |
+    STA.w OWSpriteNumber_0DE5,X             ;$04F777 |
     JSR CODE_04FE5B                         ;$04F77A |
     AND.b #$07                              ;$04F77D |
     TAY                                     ;$04F77F |
@@ -7860,7 +7860,7 @@ CODE_04F7AB:
     LDX.b #$04                              ;$04F7AE |
 CODE_04F7B0:
     TXA
-    STA.w $0DE0,X                           ;$04F7B1 |
+    STA.w OWCloudYSpeed_0DE0,X              ;$04F7B1 |
     DEX                                     ;$04F7B4 |
     BPL CODE_04F7B0                         ;$04F7B5 |
     LDX.b #$04                              ;$04F7B7 |
@@ -7869,13 +7869,13 @@ CODE_04F7B9:
 CODE_04F7BB:
     STX $01
     LDX $00                                 ;$04F7BD |
-    LDY.w $0DE0,X                           ;$04F7BF |
+    LDY.w OWCloudYSpeed_0DE0,X              ;$04F7BF |
     LDA.w $0E45,Y                           ;$04F7C2 |
     STA $02                                 ;$04F7C5 |
     LDA.w $0E75,Y                           ;$04F7C7 |
     STA $03                                 ;$04F7CA |
     LDX $01                                 ;$04F7CC |
-    LDY.w $0DDF,X                           ;$04F7CE |
+    LDY.w OWCloudYSpeed_0DE0-1,X            ;$04F7CE |
     LDA.w $0E75,Y                           ;$04F7D1 |
     XBA                                     ;$04F7D4 |
     LDA.w $0E45,Y                           ;$04F7D5 |
@@ -7885,10 +7885,10 @@ CODE_04F7BB:
     BPL CODE_04F7ED                         ;$04F7DE |
     PHY                                     ;$04F7E0 |
     LDY $00                                 ;$04F7E1 |
-    LDA.w $0DE0,Y                           ;$04F7E3 |
-    STA.w $0DDF,X                           ;$04F7E6 |
+    LDA.w OWCloudYSpeed_0DE0,Y              ;$04F7E3 |
+    STA.w OWCloudYSpeed_0DE0-1,X            ;$04F7E6 |
     PLA                                     ;$04F7E9 |
-    STA.w $0DE0,Y                           ;$04F7EA |
+    STA.w OWCloudYSpeed_0DE0,Y              ;$04F7EA |
 CODE_04F7ED:
     DEX
     BNE CODE_04F7BB                         ;$04F7EE |
@@ -7896,7 +7896,7 @@ CODE_04F7ED:
     DEX                                     ;$04F7F2 |
     BNE CODE_04F7B9                         ;$04F7F3 |
     LDA.b #$30                              ;$04F7F5 |
-    STA.w $0DDF                             ;$04F7F7 |
+    STA.w OWCloudOAMIndex_0DDF              ;$04F7F7 |
     STZ.w $0EF7                             ;$04F7FA |
     LDX.b #$0F                              ;$04F7FD |
     LDY.b #$2D                              ;$04F7FF |
@@ -7909,15 +7909,15 @@ CODE_04F801:
 CODE_04F80D:
     CPX.b #$05
     BCC CODE_04F819                         ;$04F80F |
-    STX.w $0DDE                             ;$04F811 |
+    STX.w SaveFileDelete_0DDE               ;$04F811 |
     JSR CODE_04F853                         ;$04F814 |
     BRA CODE_04F825                         ;$04F817 |
 
 CODE_04F819:
     PHX
-    LDA.w $0DE0,X                           ;$04F81A |
+    LDA.w OWCloudYSpeed_0DE0,X              ;$04F81A |
     TAX                                     ;$04F81D |
-    STX.w $0DDE                             ;$04F81E |
+    STX.w SaveFileDelete_0DDE               ;$04F81E |
     JSR CODE_04F853                         ;$04F821 |
     PLX                                     ;$04F824 |
 CODE_04F825:
@@ -7940,7 +7940,7 @@ DATA_04F843:
 CODE_04F853:
     JSR CODE_04F87C
     BNE Return04F828                        ;$04F856 |
-    LDA.w $0DE5,X                           ;$04F858 |
+    LDA.w OWSpriteNumber_0DE5,X             ;$04F858 |
     JSL execute_pointer                     ;$04F85B |
 
 OWSprites:
@@ -7960,7 +7960,7 @@ DATA_04F875:
     db $80,$40,$20,$10,$08,$04,$02
 
 CODE_04F87C:
-    LDY.w $0DE5,X
+    LDY.w OWSpriteNumber_0DE5,X
     LDA.w Return04F828,Y                    ;$04F87F |
 CODE_04F882:
     STA $00
@@ -7971,7 +7971,7 @@ CODE_04F882:
     CPY.b #$01                              ;$04F88E |
     BNE CODE_04F8A3                         ;$04F890 |
 CODE_04F892:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$04F895 |
     LSR                                     ;$04F896 |
     TAY                                     ;$04F897 |
@@ -8040,7 +8040,7 @@ ADDR_04F8F6:
     DEX                                     ;$04F90E |
     DEX                                     ;$04F90F |
     BPL ADDR_04F8E8                         ;$04F910 |
-    LDX.w $0DDE                             ;$04F912 |
+    LDX.w SaveFileDelete_0DDE               ;$04F912 |
     JSR CODE_04FE62                         ;$04F915 |
     LDA.b #$32                              ;$04F918 |
     XBA                                     ;$04F91A |
@@ -8098,7 +8098,7 @@ ADDR_04F97F:
     LDA.w $0DF5,X                           ;$04F984 |
     ASL                                     ;$04F987 |
     JSR ADDR_04F993                         ;$04F988 |
-    LDX.w $0DDE                             ;$04F98B |
+    LDX.w SaveFileDelete_0DDE               ;$04F98B |
     LDA.w $0E05,X                           ;$04F98E |
     ASL                                     ;$04F991 |
     ASL                                     ;$04F992 |
@@ -8145,7 +8145,7 @@ ADDR_04F9C8:
     BEQ ADDR_04F9D7                         ;$04F9D2 |
     STA.w $0E95,X                           ;$04F9D4 |
 ADDR_04F9D7:
-    LDY.w $0DD6
+    LDY.w PlayerTurnOW_0DD6
     LDA.w $1F19,Y                           ;$04F9DA |
     STA.w $0E45,X                           ;$04F9DD |
     LDA.w $1F1A,Y                           ;$04F9E0 |
@@ -8368,7 +8368,7 @@ CODE_04FB37:
 CODE_04FB5D:
     SEP #$20
     BCC CODE_04FB64                         ;$04FB5F |
-    STZ.w $0DE5,X                           ;$04FB61 |
+    STZ.w OWSpriteNumber_0DE5,X             ;$04FB61 |
 CODE_04FB64:
     LDA.b #$32
     JSR CODE_04FB77                         ;$04FB66 |
@@ -8385,9 +8385,9 @@ CODE_04FB77:
 CODE_04FB7A:
     SEC
 CODE_04FB7B:
-    LDY.w $0DDF
+    LDY.w OWCloudOAMIndex_0DDF
     JSR CODE_04FB0A                         ;$04FB7E |
-    STY.w $0DDF                             ;$04FB81 |
+    STY.w OWCloudOAMIndex_0DDF              ;$04FB81 |
 Return04FB84:
     RTS
 
@@ -8492,7 +8492,7 @@ DATA_04FC36:
     db $FA,$F9,$F9,$F8,$F7,$F7,$F6,$F5
 
 CODE_04FC46:
-    LDA.w $0DD6
+    LDA.w PlayerTurnOW_0DD6
     LSR                                     ;$04FC49 |
     LSR                                     ;$04FC4A |
     TAY                                     ;$04FC4B |
@@ -8529,7 +8529,7 @@ CODE_04FC7C:
 CODE_04FC8D:
     PHY
     PHX                                     ;$04FC8E |
-    LDX.w $0DDE                             ;$04FC8F |
+    LDX.w SaveFileDelete_0DDE               ;$04FC8F |
     JSR CODE_04FE62                         ;$04FC92 |
     PLX                                     ;$04FC95 |
     LDA $07                                 ;$04FC96 |
@@ -8575,7 +8575,7 @@ CODE_04FCD4:
     JSR CODE_04FAED                         ;$04FCD6 |
     DEC $04                                 ;$04FCD9 |
     BNE CODE_04FC8D                         ;$04FCDB |
-    LDX.w $0DDE                             ;$04FCDD |
+    LDX.w SaveFileDelete_0DDE               ;$04FCDD |
     RTS                                     ;$04FCE0 |
 
 CODE_04FCE1:
@@ -8651,7 +8651,7 @@ CODE_04FD55:
 CODE_04FD68:
     TYA
     STA.w $0DF5,X                           ;$04FD69 |
-    LDX.w $0DDE                             ;$04FD6C |
+    LDX.w SaveFileDelete_0DDE               ;$04FD6C |
 Return04FD6F:
     RTS
 
@@ -8792,7 +8792,7 @@ CODE_04FE62:
     TAX                                     ;$04FE66 |
     LDY.b #$02                              ;$04FE67 |
     JSR CODE_04FE7D                         ;$04FE69 |
-    LDX.w $0DDE                             ;$04FE6C |
+    LDX.w SaveFileDelete_0DDE               ;$04FE6C |
     LDA $02                                 ;$04FE6F |
     SEC                                     ;$04FE71 |
     SBC.w $0E55,X                           ;$04FE72 |
@@ -8827,7 +8827,7 @@ CODE_04FEA0:
     SBC.b #$10                              ;$04FEA2 |
     TAX                                     ;$04FEA4 |
     JSR CODE_04FEAB                         ;$04FEA5 |
-    LDX.w $0DDE                             ;$04FEA8 |
+    LDX.w SaveFileDelete_0DDE               ;$04FEA8 |
 CODE_04FEAB:
     LDA.w $0E95,X
     ASL                                     ;$04FEAE |
@@ -8878,7 +8878,7 @@ ADDR_04FEEF:
     REP #$20                                ;$04FEF6 |
     CLC                                     ;$04FEF8 |
     ADC.w #$0008                            ;$04FEF9 |
-    LDY.w $0DD6                             ;$04FEFC |
+    LDY.w PlayerTurnOW_0DD6                 ;$04FEFC |
     SEC                                     ;$04FEFF |
     SBC.w $1F17,Y                           ;$04FF00 |
     STA $00                                 ;$04FF03 |
@@ -8894,7 +8894,7 @@ ADDR_04FF0B:
     REP #$20                                ;$04FF16 |
     CLC                                     ;$04FF18 |
     ADC.w #$0008                            ;$04FF19 |
-    LDY.w $0DD6                             ;$04FF1C |
+    LDY.w PlayerTurnOW_0DD6                 ;$04FF1C |
     SEC                                     ;$04FF1F |
     SBC.w $1F19,Y                           ;$04FF20 |
     STA $02                                 ;$04FF23 |
@@ -8972,7 +8972,7 @@ ADDR_04FF98:
     DEX                                     ;$04FF9A |
     DEX                                     ;$04FF9B |
     BPL ADDR_04FF6B                         ;$04FF9C |
-    LDX.w $0DDE                             ;$04FF9E |
+    LDX.w SaveFileDelete_0DDE               ;$04FF9E |
     LDA $00                                 ;$04FFA1 |
     STA.w $0E95,X                           ;$04FFA3 |
     LDA $02                                 ;$04FFA6 |

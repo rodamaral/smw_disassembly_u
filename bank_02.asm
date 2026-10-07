@@ -5,9 +5,9 @@ DATA_028000:
 
 ReleaseItembox028008:
     PHX
-    LDA.w $0DC2                             ;$028009 |
+    LDA.w PlayerItembox_0DC2                ;$028009 |
     BEQ .NoItem028070                       ;$02800C |
-    STZ.w $0DC2                             ;$02800E |
+    STZ.w PlayerItembox_0DC2                ;$02800E |
     PHA                                     ;$028011 |
     LDA.b #$0C                              ;$028012 |
     STA.w SPCIO3_1DFC                       ;$028014 |

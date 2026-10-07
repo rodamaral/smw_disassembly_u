@@ -1535,7 +1535,7 @@ DynGfxTile7FPtr_0D99: skip 2
 ; === $7E0D9B ===
 ; 1 byte
 ; flag to determine which NMI and IRQ code to run for various game modes
-IRQNMICommand_0D9B: skip 1
+IRQNMICommand_0D9B: skip 1 ;done
 ; Valid values
 !IRQNMIStandard_00 = 0
 !IRQNMICutscenes_01 = 1
@@ -1549,48 +1549,48 @@ IRQNMICommand_0D9B: skip 1
 ; unused
 skip 1
 
-ThroughMain_0D9D: skip 1
-ThroughSub_0D9E: skip 1
-HDMAEnable_0D9F: skip 1
-ControllersPresent_0DA0: skip 1
+ThroughMain_0D9D: skip 1 ;done
+ThroughSub_0D9E: skip 1 ;done
+HDMAEnable_0D9F: skip 1 ;done
+ControllersPresent_0DA0: skip 1 ;done
 ; 7E0DA1 unused
 skip 1
-byetudlrP1Hold_0DA2: skip 1
-byetudlrP2Hold_0DA3: skip 1
-axlr0000P1Hold_0DA4: skip 1
-axlr0000P2Hold_0DA5: skip 1
-byetudlrP1Frame_0DA6: skip 1
-byetudlrP2Frame_0DA7: skip 1
-axlr0000P1Frame_0DA8: skip 1
-axlr0000P2Frame_0DA9: skip 1
-byetudlrP1Mask_0DAA: skip 1
-byetudlrP2Mask_0DAB: skip 1
-axlr0000P1Mask_0DAC: skip 1
-axlr0000P2Mask_0DAD: skip 1
-Brightness_0DAE: skip 1
-MosaicDirection_0DAF: skip 1
-MosaicSize_0DB0: skip 1
-KeepModeActive_0DB1: skip 1
-IsTwoPlayerGame_0DB2: skip 1
-CurrentPlayer_0DB3: skip 1
-SavedPlayerLives_0DB4: skip 2
-SavedPlayerCoins_0DB6: skip 2
+byetudlrP1Hold_0DA2: skip 1 ;done
+byetudlrP2Hold_0DA3: skip 1 ;done
+axlr0000P1Hold_0DA4: skip 1; done
+axlr0000P2Hold_0DA5: skip 1 ;done
+byetudlrP1Frame_0DA6: skip 1 ;done
+byetudlrP2Frame_0DA7: skip 1 ;done
+axlr0000P1Frame_0DA8: skip 1 ;done
+axlr0000P2Frame_0DA9: skip 1 ;done
+byetudlrP1Mask_0DAA: skip 1 ;done
+byetudlrP2Mask_0DAB: skip 1 ;done
+axlr0000P1Mask_0DAC: skip 1 ;done
+axlr0000P2Mask_0DAD: skip 1 ;done
+Brightness_0DAE: skip 1 ;done
+MosaicDirection_0DAF: skip 1 ;done
+MosaicSize_0DB0: skip 1 ;done
+KeepModeActive_0DB1: skip 1 ;done
+IsTwoPlayerGame_0DB2: skip 1 ;done
+CurrentPlayer_0DB3: skip 1 ;done
+SavedPlayerLives_0DB4: skip 2 ;done
+SavedPlayerCoins_0DB6: skip 2 ;done
 SavedPlayerPowerup_0DB7: skip 2
 SavedPlayerYoshi_0DBA: skip 2 ;done
 SavedPlayerItembox_0DBC: skip 2
-PlayerLives_0DBE: skip 1
-PlayerCoins_0DBF: skip 1
-GreenStarBlockCoins_0DC0: skip 1
+PlayerLives_0DBE: skip 1 ;done
+PlayerCoins_0DBF: skip 1 ;done
+GreenStarBlockCoins_0DC0: skip 1 ;done
 CarryYoshiLevels_0DC1: skip 1 ;done
-PlayerItembox_0DC2: skip 1
+PlayerItembox_0DC2: skip 1 ;done
 ; 7E0DC3 - 7E0DC6 unused
 skip 4
-OverworldDestXPos_0DC7: skip 2
-OverworldDestYPos_0DC9: skip 6
-OWPlayerSpeed_0DCF: skip 4
-OWPlayerDirection_0DD3: skip 2
+OverworldDestXPos_0DC7: skip 2 ;done
+OverworldDestYPos_0DC9: skip 6 ;done
+OWPlayerSpeed_0DCF: skip 4 ; done
+OWPlayerDirection_0DD3: skip 2 ;done
 
-LevelExitMode_0DD5: skip 1
+LevelExitMode_0DD5: skip 1 ;done
 ; Valid values
 !ExitNothing_00 = $00
 !ExitNormal_01 = $01
@@ -1602,17 +1602,17 @@ LevelExitMode_0DD5: skip 1
 !ExitDeath_80 = $80
 !ExitShowSave_E0 = $E0
 
-PlayerTurnOW_0DD6: skip 2
-PlayerSwitching_0DD8: skip 1
+PlayerTurnOW_0DD6: skip 2 ;done
+PlayerSwitching_0DD8: skip 1 ;done
 ; 7E0DD9 unused
 skip 1
-MusicBackup_0DDA: skip 1
+MusicBackup_0DDA: skip 1 ;done
 ; 7E0DDB - 7E0DDD unused
 skip 3
-SaveFileDelete_0DDE: skip 1
-OWCloudOAMIndex_0DDF: skip 1
-OWCloudYSpeed_0DE0: skip 5
-OWSpriteNumber_0DE5: skip 16
+SaveFileDelete_0DDE: skip 1 ;done
+OWCloudOAMIndex_0DDF: skip 1 ;done
+OWCloudYSpeed_0DE0: skip 5 ;done
+OWSpriteNumber_0DE5: skip 16 ;done
 OWSpriteMisc_0DF5: skip 16
 OWSpriteMisc_0E05: skip 16
 OWSpriteMisc_0E15: skip 16

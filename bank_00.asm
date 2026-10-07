@@ -320,9 +320,9 @@ NMI_start:                                  ;        \
     LDY.w CutsceneID_13C6                   ;$00827C |\ Skip to NMI return if the credits are not playing
     CPY.b #$08                              ;$00827F | |
     BNE .NMI_return                         ;$008281 |/
-    LDY.w $0DAE                             ;$008283 |\ Set screen brightness from mirror
+    LDY.w Brightness_0DAE                   ;$008283 |\ Set screen brightness from mirror
     STY.w $2100                             ;$008286 |/
-    LDY.w $0D9F                             ;$008289 |\ Enable HDMA channels
+    LDY.w HDMAEnable_0D9F                   ;$008289 |\ Enable HDMA channels
     STY.w $420C                             ;$00828C |/
     JMP IRQ_NMI_return                      ;$00828F | Finish off NMI
 .level_NMI_return                           ;        |
@@ -339,9 +339,9 @@ NMI_start:                                  ;        \
     STZ.w $2111                             ;$0082A7 |/
     STZ.w $2112                             ;$0082AA |\ Reset layer Y three scroll position
     STZ.w $2112                             ;$0082AD |/
-    LDA.w $0DAE                             ;$0082B0 |\ Mirror brightness and force blank settings
+    LDA.w Brightness_0DAE                   ;$0082B0 |\ Mirror brightness and force blank settings
     STA.w $2100                             ;$0082B3 |/ to the display register
-    LDA.w $0D9F                             ;$0082B6 |\ Enable HDMA channels based off the HDMA mirror
+    LDA.w HDMAEnable_0D9F                   ;$0082B6 |\ Enable HDMA channels based off the HDMA mirror
     STA.w $420C                             ;$0082B9 |/
     REP #$30                                ;$0082BC |\ Restore everything saved at the beginning of NMI
     PLB                                     ;$0082BE | |
@@ -412,9 +412,9 @@ NMI_start:                                  ;        \
     LDA.w IRQNMICommand_0D9B                ;$008345 |\ If we are not at bowser there are a few extra
     LSR                                     ;$008348 | | Items we still need to process otherwise
     BCC .skip_bowser                        ;$008349 |/ We can finish off NMI
-    LDA.w $0DAE                             ;$00834B |\ Set the screen brightness from $0DAE
+    LDA.w Brightness_0DAE                   ;$00834B |\ Set the screen brightness from $0DAE
     STA.w $2100                             ;$00834E |/
-    LDA.w $0D9F                             ;$008351 |\ Enable HDMA channels
+    LDA.w HDMAEnable_0D9F                   ;$008351 |\ Enable HDMA channels
     STA.w $420C                             ;$008354 |/
     LDA.b #$81                              ;$008357 | Enable NMI and autojoy
     JMP mode_7_scroll                       ;$008359 | Set the mode 7 scroll values -- statusbar unused
@@ -1716,24 +1716,24 @@ update_status_tileset_008E1A:
     LDA.w $13CC                             ;$008F1D | handle coin incrementation and overflow
     BEQ .handle_lives_008F3B                ;$008F20 |
     DEC.w $13CC                             ;$008F22 |
-    INC.w $0DBF                             ;$008F25 |
-    LDA.w $0DBF                             ;$008F28 |
+    INC.w PlayerCoins_0DBF                  ;$008F25 |
+    LDA.w PlayerCoins_0DBF                  ;$008F28 |
     CMP.b #$64                              ;$008F2B |
     BCC .handle_lives_008F3B                ;$008F2D |\
     INC.w $18E4                             ;$008F2F || if coins >= 100
-    LDA.w $0DBF                             ;$008F32 || increase life incrementer
+    LDA.w PlayerCoins_0DBF                  ;$008F32 || increase life incrementer
     SEC                                     ;$008F35 || and subtract 100 coins
     SBC.b #$64                              ;$008F36 ||
-    STA.w $0DBF                             ;$008F38 |/
+    STA.w PlayerCoins_0DBF                  ;$008F38 |/
 
 .handle_lives_008F3B:
-    LDA.w $0DBE
+    LDA.w PlayerLives_0DBE
     BMI +                                   ;$008F3E |
     CMP.b #$62                              ;$008F40 |
     BCC +                                   ;$008F42 |
     LDA.b #$62                              ;$008F44 | if lives >= 98
-    STA.w $0DBE                             ;$008F46 | set it to 98
-+   LDA.w $0DBE                             ;$008F49 |
+    STA.w PlayerLives_0DBE                  ;$008F46 | set it to 98
++   LDA.w PlayerLives_0DBE                  ;$008F49 |
     INC A                                   ;$008F4C | display in tileset one more life than we actually have
     JSR hex_to_dec_009045                   ;$008F4D |
     TXY                                     ;$008F50 |
@@ -1755,7 +1755,7 @@ update_status_tileset_008E1A:
     STA.w PlayerBonusStars_0F48,X           ;$008F70 |/
 
 .draw_coin_count_008F73:
-    LDA.w $0DBF                             ;$008F73 |
+    LDA.w PlayerCoins_0DBF                  ;$008F73 |
     JSR hex_to_dec_009045                   ;$008F76 |
     TXY                                     ;$008F79 |
     BNE +                                   ;$008F7A |
@@ -1910,7 +1910,7 @@ draw_reserve_item_009079:
     STA.w $0201,Y                           ;$00908B |
 CODE_00908E:
     STY $01
-    LDY.w $0DC2                             ;$009090 |
+    LDY.w PlayerItembox_0DC2                ;$009090 |
     BEQ Return0090D0                        ;$009093 |
     LDA.w DATA_008E01,Y                     ;$009095 |
     STA $00                                 ;$009098 |
@@ -1933,7 +1933,7 @@ CODE_0090AB:
     LDA.b #$30                              ;$0090B7 |
     ORA $00                                 ;$0090B9 |
     STA.w $0203,Y                           ;$0090BB |
-    LDX.w $0DC2                             ;$0090BE |
+    LDX.w PlayerItembox_0DC2                ;$0090BE |
     LDA.w DATA_008DF9,X                     ;$0090C1 |
     STA.w $0202,Y                           ;$0090C4 |
     TYA                                     ;$0090C7 |
@@ -1991,7 +1991,7 @@ try_castle_entrance_00919B:
 +   LDA.w SublevelCount_141A                ;$0091A6 |\
     BNE ++                                  ;$0091A9 || if entering from overworld (main level)
     LDA.b #$1E                              ;$0091AB || set the Green star block coin counter
-    STA.w $0DC0                             ;$0091AD |/
+    STA.w GreenStarBlockCoins_0DC0          ;$0091AD |/
 ++  RTS                                     ;$0091B0 |
 
 CODE_0091B1:
@@ -2087,7 +2087,7 @@ setup_window_HDMA_009250:
     LDA.b #$00                              ;$00925B |\ HDMA Data bank $00
     STA.w $4377                             ;$00925D |/
 DisableHDMA:                                ;        |
-    STZ.w $0D9F                             ;$009260 | Disable HDMA
+    STZ.w HDMAEnable_0D9F                   ;$009260 | Disable HDMA
 clear_window_HDMA:                          ;        |
     REP #$10                                ;$009263 | 16 bit x/y
     LDX.w #$01BE                            ;$009265 |\
@@ -2128,7 +2128,7 @@ WindowHDMAenable:
     BCC WindowHDMAenable                    ;$00929E |
 CODE_0092A0:
     LDA.b #$80
-    STA.w $0D9F                             ;$0092A2 |
+    STA.w HDMAEnable_0D9F                   ;$0092A2 |
     SEP #$10                                ;$0092A5 |
     RTS                                     ;$0092A7 |
 
@@ -2161,7 +2161,7 @@ CODE_0092C8:
     STA.w $4367                             ;$0092E2 |
     STA.w $4377                             ;$0092E5 |
     LDA.b #$E0                              ;$0092E8 |
-    STA.w $0D9F                             ;$0092EA |
+    STA.w HDMAEnable_0D9F                   ;$0092EA |
 CODE_0092ED:
     REP #$30
     LDY.w #$0008                            ;$0092EF |
@@ -2695,8 +2695,8 @@ CODE_00973B:
     AND.b #$BF
     STA.w MusicBackup_0DDA                  ;$00973D |
 CODE_009740:
-    STZ.w $0DAE
-    STZ.w $0DAF                             ;$009743 |
+    STZ.w Brightness_0DAE
+    STZ.w MosaicDirection_0DAF              ;$009743 |
     INC.w GameMode_0100                     ;$009746 |
     JMP Mode04Finish                        ;$009749 |
 
@@ -2715,10 +2715,10 @@ GM17_game_over_main_009759:
     BNE CODE_00978B                         ;$009760 |
     DEC.w $143D                             ;$009762 |
     BNE CODE_00978E                         ;$009765 |
-    LDA.w $0DBE                             ;$009767 |
+    LDA.w PlayerLives_0DBE                  ;$009767 |
     BPL CODE_009788                         ;$00976A |
     STZ.w CarryYoshiLevels_0DC1             ;$00976C |
-    LDA.w $0DB4                             ;$00976F |
+    LDA.w SavedPlayerLives_0DB4             ;$00976F |
     ORA.w $0DB5                             ;$009772 |
     BPL CODE_009788                         ;$009775 |
     LDX.b #$0C                              ;$009777 |
@@ -2765,8 +2765,8 @@ CODE_0097AE:
 
 load_boss_room_0097BC:
     LDA.b #$0F
-    STA.w $0DAE                             ;$0097BE |
-    STZ.w $0DB0                             ;$0097C1 |
+    STA.w Brightness_0DAE                   ;$0097BE |
+    STZ.w MosaicSize_0DB0                   ;$0097C1 |
     JSR GMPPMosaic                          ;$0097C4 |
     LDA.b #$20                              ;$0097C7 |
     STA.b Mode7XScale_38                    ;$0097C9 |
@@ -3199,7 +3199,7 @@ CODE_009B38:
     BNE CODE_009B6D                         ;$009B3F |
     LDY.b #$02                              ;$009B41 |
 CODE_009B43:
-    LSR.w $0DDE
+    LSR.w SaveFileDelete_0DDE
     BCC CODE_009B67                         ;$009B46 |
     PHY                                     ;$009B48 |
     LDA.w DATA_009CCB,Y                     ;$009B49 |
@@ -3225,8 +3225,8 @@ CODE_009B67:
 CODE_009B6D:
     STX.w $1B92
     LDA.w DATA_009B17,X                     ;$009B70 |
-    ORA.w $0DDE                             ;$009B73 |
-    STA.w $0DDE                             ;$009B76 |
+    ORA.w SaveFileDelete_0DDE               ;$009B73 |
+    STA.w SaveFileDelete_0DDE               ;$009B76 |
     STA $05                                 ;$009B79 |
     LDX.b #$00                              ;$009B7B |
     JMP CODE_009D3C                         ;$009B7D |
@@ -3423,7 +3423,7 @@ GM08_title_file_select_009CD1:
     INC.w GameMode_0100                     ;$009CE0 |
     CPX.b #$03                              ;$009CE3 |
     BNE CODE_009CEF                         ;$009CE5 |
-    STZ.w $0DDE                             ;$009CE7 |
+    STZ.w SaveFileDelete_0DDE               ;$009CE7 |
     LDX.b #$00                              ;$009CEA |
     JMP CODE_009D3A                         ;$009CEC |
 
@@ -3595,7 +3595,7 @@ GM0A_title_player_select_009DFA:
 .CODE_009E08:
     LDY.b #$04
     JSR CODE_009ACB                         ;$009E0A |
-    STX.w $0DB2                             ;$009E0D |
+    STX.w IsTwoPlayerGame_0DB2              ;$009E0D |
     JSR CODE_00A195                         ;$009E10 |
     JSL CODE_04DAAD                         ;$009E13 |
 CODE_009E17:
@@ -3603,23 +3603,23 @@ CODE_009E17:
     STA.w SPCIO2_1DFB                       ;$009E19 |
     LDA.b #$FF                              ;$009E1C |
     STA.w $0DB5                             ;$009E1E |
-    LDX.w $0DB2                             ;$009E21 |
+    LDX.w IsTwoPlayerGame_0DB2              ;$009E21 |
     LDA.b #$04                              ;$009E24 |
 .CODE_009E26:
-    STA.w $0DB4,X
+    STA.w SavedPlayerLives_0DB4,X
     DEX                                     ;$009E29 |
     BPL .CODE_009E26                        ;$009E2A |
-    STA.w $0DBE                             ;$009E2C |
-    STZ.w $0DBF                             ;$009E2F |
+    STA.w PlayerLives_0DBE                  ;$009E2C |
+    STZ.w PlayerCoins_0DBF                  ;$009E2F |
     STZ.w CarryYoshiLevels_0DC1             ;$009E32 |
     STZ.b Powerup_19                        ;$009E35 |
-    STZ.w $0DC2                             ;$009E37 |
+    STZ.w PlayerItembox_0DC2                ;$009E37 |
     STZ.w $13C9                             ;$009E3A |
     REP #$20                                ;$009E3D |
-    STZ.w $0DB6                             ;$009E3F |
+    STZ.w SavedPlayerCoins_0DB6             ;$009E3F |
     STZ.w $0DB8                             ;$009E42 |
     STZ.w SavedPlayerYoshi_0DBA             ;$009E45 |
-    STZ.w $0DC2                             ;$009E48 |
+    STZ.w PlayerItembox_0DC2                ;$009E48 |
     STZ.w PlayerBonusStars_0F48             ;$009E4B |
     STZ.w $0F34                             ;$009E4E |
     STZ.w $0F37                             ;$009E51 |
@@ -3731,7 +3731,7 @@ CODE_009F1F:
 KeepModeActive:
     LDA.b #$01
 CODE_009F2B:
-    STA.w $0DB1
+    STA.w KeepModeActive_0DB1
     RTS                                     ;$009F2E |
 
 DATA_009F2F:
@@ -3744,29 +3744,29 @@ DATA_009F33:
     db $0F,$00,$00,$F0
 
 GMs_transition_mosaic_009F37:
-    DEC.w $0DB1
+    DEC.w KeepModeActive_0DB1
     BPL Return009F6E                        ;$009F3A |
     JSR KeepModeActive                      ;$009F3C |
-    LDY.w $0DAF                             ;$009F3F |
-    LDA.w $0DB0                             ;$009F42 |
+    LDY.w MosaicDirection_0DAF              ;$009F3F |
+    LDA.w MosaicSize_0DB0                   ;$009F42 |
     CLC                                     ;$009F45 |
     ADC.w DATA_009F31,Y                     ;$009F46 |
-    STA.w $0DB0                             ;$009F49 |
+    STA.w MosaicSize_0DB0                   ;$009F49 |
 CODE_009F4C:
-    LDA.w $0DAE
+    LDA.w Brightness_0DAE
     CLC                                     ;$009F4F |
     ADC.w DATA_009F2F,Y                     ;$009F50 |
-    STA.w $0DAE                             ;$009F53 |
+    STA.w Brightness_0DAE                   ;$009F53 |
     CMP.w DATA_009F33,Y                     ;$009F56 |
     BNE CODE_009F66                         ;$009F59 |
 GMPPMosaic:
     INC.w GameMode_0100
-    LDA.w $0DAF                             ;$009F5E |
+    LDA.w MosaicDirection_0DAF              ;$009F5E |
     EOR.b #$01                              ;$009F61 |
-    STA.w $0DAF                             ;$009F63 |
+    STA.w MosaicDirection_0DAF              ;$009F63 |
 CODE_009F66:
     LDA.b #$03
-    ORA.w $0DB0                             ;$009F68 |
+    ORA.w MosaicSize_0DB0                   ;$009F68 |
     STA.w $2106                             ;$009F6B |
 Return009F6E:
     RTS
@@ -3776,11 +3776,11 @@ GMs_transition_fade_009F6F:
     BPL Return009F6E                        ;$009F72 |
     JSR KeepModeActive                      ;$009F74 |
 CODE_009F77:
-    LDY.w $0DAF
+    LDY.w MosaicDirection_0DAF
     BRA CODE_009F4C                         ;$009F7A |
 
 GM28_the_end_fade_009F7C:
-    DEC.w $0DB1
+    DEC.w KeepModeActive_0DB1
     BPL Return009F6E                        ;$009F7F |
     LDA.b #$08                              ;$009F81 |
     JSR CODE_009F2B                         ;$009F83 |
@@ -3930,21 +3930,21 @@ GM0C_overworld_load_00A087:
     JSR SetUpScreen                         ;$00A0B6 |
     STZ.w MusicBackup_0DDA                  ;$00A0B9 |
     LDX.w CurrentPlayer_0DB3                ;$00A0BC |
-    LDA.w $0DBE                             ;$00A0BF |
+    LDA.w PlayerLives_0DBE                  ;$00A0BF |
     BPL .CODE_00A0C7                        ;$00A0C2 |
     INC.w $1B87                             ;$00A0C4 |
 .CODE_00A0C7:
-    STA.w $0DB4,X
+    STA.w SavedPlayerLives_0DB4,X
     LDA.b Powerup_19                        ;$00A0CA |
     STA.w $0DB8,X                           ;$00A0CC |
-    LDA.w $0DBF                             ;$00A0CF |
-    STA.w $0DB6,X                           ;$00A0D2 |
+    LDA.w PlayerCoins_0DBF                  ;$00A0CF |
+    STA.w SavedPlayerCoins_0DB6,X           ;$00A0D2 |
     LDA.w CarryYoshiLevels_0DC1             ;$00A0D5 |
     BEQ .CODE_00A0DD                        ;$00A0D8 |
     LDA.w YoshiColor_13C7                   ;$00A0DA |
 .CODE_00A0DD:
     STA.w SavedPlayerYoshi_0DBA,X
-    LDA.w $0DC2                             ;$00A0E0 |
+    LDA.w PlayerItembox_0DC2                ;$00A0E0 |
     STA.w $0DBC,X                           ;$00A0E3 |
     LDA.b #$03                              ;$00A0E6 |
     STA.b ColorAddition_44                  ;$00A0E8 |
@@ -4468,7 +4468,7 @@ DMA_OW_tilemap:                             ;        \
     STA.w $4310,X                           ;$00A53F | | Source $7F4000, size $0800 byte
     DEX                                     ;$00A542 | |
     BPL .layer_2_DMA_copy_loop              ;$00A543 |/
-    LDA.w $0DD6                             ;$00A545 |\ Check the map of the current player
+    LDA.w PlayerTurnOW_0DD6                 ;$00A545 |\ Check the map of the current player
     LSR                                     ;$00A548 | |
     LSR                                     ;$00A549 | |
     TAX                                     ;$00A54A | |
@@ -7467,7 +7467,7 @@ execute_player_animation_00C593:
     JMP normal_exit_level_00C95B            ;$00C5CB |
 
 ..CODE_00C5CE:
-    STZ.w $0D9F
+    STZ.w HDMAEnable_0D9F
 ..CODE_00C5D1:
     LDA.b #$01
     STA.w MessageBoxExpand_1B88             ;$00C5D3 |
@@ -8092,7 +8092,7 @@ CODE_00CAFE:
     BNE CODE_00CABD                         ;$00CB08 |
 CODE_00CB0A:
     LDA.b #$80
-    STA.w $0D9F                             ;$00CB0C |
+    STA.w HDMAEnable_0D9F                   ;$00CB0C |
     SEP #$10                                ;$00CB0F |
     RTS                                     ;$00CB11 |
 
@@ -8801,7 +8801,7 @@ death_animation:
     BNE .keep_yoshi                         ;$00D0D3 | |
     STZ.w CarryYoshiLevels_0DC1             ;$00D0D5 | | get rid of him.
 .keep_yoshi                                 ;        |/
-    DEC.w $0DBE                             ;$00D0D8 |\ Decrease the player's lives.
+    DEC.w PlayerLives_0DBE                  ;$00D0D8 |\ Decrease the player's lives.
     BPL .not_game_over                      ;$00D0DB |/ If it's negative, show "GAME OVER"
     LDA.b #$0A                              ;$00D0DD |\ Play the game over music.
     STA.w SPCIO2_1DFB                       ;$00D0DF |/
@@ -12038,7 +12038,7 @@ CODE_00F17F:
     CMP.b #$FF                              ;$00F1A1 |
     BNE CODE_00F1AE                         ;$00F1A3 |
     LDA.b #$05                              ;$00F1A5 |
-    LDY.w $0DC0                             ;$00F1A7 |
+    LDY.w GreenStarBlockCoins_0DC0          ;$00F1A7 |
     BEQ CODE_00F1D0                         ;$00F1AA |
     BRA CODE_00F1CE                         ;$00F1AC |
 
@@ -13409,7 +13409,7 @@ LvlEndPowerUp:
     TAX                                     ;$00FB31 |
 .CODE_00FB32:
     LDA.l DATA_00FADF,X
-    LDX.w $0DC2                             ;$00FB36 |
+    LDX.w PlayerItembox_0DC2                ;$00FB36 |
     CMP.l DATA_00FAFB,X                     ;$00FB39 |
     BNE +                                   ;$00FB3D |
     LDA.b #!1Up_78                          ;$00FB3F |

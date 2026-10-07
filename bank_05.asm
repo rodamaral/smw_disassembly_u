@@ -116,10 +116,10 @@ CODE_0580EC:
     LDA.w $1928                             ;$0580FE |
     CMP.b #$20                              ;$058101 |
     BNE CODE_0580BD                         ;$058103 |
-    LDA.w $0D9D                             ;$058105 |
+    LDA.w ThroughMain_0D9D                  ;$058105 |
     STA.w $212C                             ;$058108 |
     STA.w $212E                             ;$05810B |
-    LDA.w $0D9E                             ;$05810E |
+    LDA.w ThroughSub_0D9E                   ;$05810E |
     STA.w $212D                             ;$058111 |
     STA.w $212F                             ;$058114 |
     REP #$20                                ;$058117 |
@@ -514,9 +514,9 @@ CODE_0584E3:
     LDA.l LevXYPPCCCTtbl,X                  ;$0584FF |
     STA.b SpriteYXPPCCCT_64                 ;$058503 |
     LDA.l LevMainScrnTbl,X                  ;$058505 |
-    STA.w $0D9D                             ;$058509 |
+    STA.w ThroughMain_0D9D                  ;$058509 |
     LDA.l LevSubScrnTbl,X                   ;$05850C |
-    STA.w $0D9E                             ;$058510 |
+    STA.w ThroughSub_0D9E                   ;$058510 |
     LDA.l LevCGADSUBtable,X                 ;$058513 |
     STA.b ColorSettings_40                  ;$058517 |
     LDA.l SpecialLevTable,X                 ;$058519 |
@@ -3188,23 +3188,23 @@ CODE_05B330:
     CLC                                     ;$05B332 |
     ADC.w $13CC                             ;$05B333 |
     STA.w $13CC                             ;$05B336 |
-    LDA.w $0DC0                             ;$05B339 |
+    LDA.w GreenStarBlockCoins_0DC0          ;$05B339 |
     BEQ Return05B35A                        ;$05B33C |
     SEC                                     ;$05B33E |
     SBC $00                                 ;$05B33F |
     BPL CODE_05B345                         ;$05B341 |
     LDA.b #$00                              ;$05B343 |
 CODE_05B345:
-    STA.w $0DC0
+    STA.w GreenStarBlockCoins_0DC0
     BRA Return05B35A                        ;$05B348 |
 
 CODE_05B34A:
     INC.w $13CC
     LDA.b #$01                              ;$05B34D |
     STA.w SPCIO3_1DFC                       ;$05B34F |
-    LDA.w $0DC0                             ;$05B352 |
+    LDA.w GreenStarBlockCoins_0DC0          ;$05B352 |
     BEQ Return05B35A                        ;$05B355 |
-    DEC.w $0DC0                             ;$05B357 |
+    DEC.w GreenStarBlockCoins_0DC0          ;$05B357 |
 Return05B35A:
     RTL
 
@@ -6318,7 +6318,7 @@ CODE_05D7BD:
     LDA.w ExitTableLow_19B8,X
     STA.w LoadingLevelNumber_17BB           ;$05D7C0 |
     STA $0E                                 ;$05D7C3 |
-    LDA.w $0DD6                             ;$05D7C5 |
+    LDA.w PlayerTurnOW_0DD6                 ;$05D7C5 |
     LSR                                     ;$05D7C8 |
     LSR                                     ;$05D7C9 |
     TAY                                     ;$05D7CA |
@@ -6389,7 +6389,7 @@ CODE_05D83E:
     REP #$30                                ;$05D847 |
     STZ.b Layer1XPos_1A                     ;$05D849 |
     STZ.b Layer2XPos_1E                     ;$05D84B |
-    LDX.w $0DD6                             ;$05D84D |
+    LDX.w PlayerTurnOW_0DD6                 ;$05D84D |
     LDA.w $1F1F,X                           ;$05D850 |
     AND.w #$000F                            ;$05D853 |
     STA $00                                 ;$05D856 |
@@ -6418,7 +6418,7 @@ CODE_05D83E:
     ORA $02                                 ;$05D87D |
     ORA $00                                 ;$05D87F |
     TAX                                     ;$05D881 |
-    LDA.w $0DD6                             ;$05D882 |
+    LDA.w PlayerTurnOW_0DD6                 ;$05D882 |
     AND.w #$00FF                            ;$05D885 |
     LSR                                     ;$05D888 |
     LSR                                     ;$05D889 |
@@ -6803,7 +6803,7 @@ CODE_05DB49:
 
 CODE_05DB6E:
     LDX.b #$0A
-    LDA.w $0DC0                             ;$05DB70 |
+    LDA.w GreenStarBlockCoins_0DC0          ;$05DB70 |
     CMP.b #$16                              ;$05DB73 |
     BPL CODE_05DB7F                         ;$05DB75 |
     LDX.b #$08                              ;$05DB77 |
@@ -6877,7 +6877,7 @@ CODE_05DBF7:
     BEQ CODE_05DC0A                         ;$05DC06 |
     LDX.b #$01                              ;$05DC08 |
 CODE_05DC0A:
-    LDA.w $0DB4,X
+    LDA.w SavedPlayerLives_0DB4,X
     INC A                                   ;$05DC0D |
     JSR CODE_05DC3A                         ;$05DC0E |
     CPX.b #$00                              ;$05DC11 |

@@ -2840,7 +2840,7 @@ CODE_0CAB7C:
     LDA.b #$22                              ;$0CAB92 |
     STA.b ColorAddition_44                  ;$0CAB94 |
     LDA.b #$80                              ;$0CAB96 |
-    STA.w $0D9F                             ;$0CAB98 |
+    STA.w HDMAEnable_0D9F                   ;$0CAB98 |
     RTS                                     ;$0CAB9B |
 
 DATA_0CAB9C:
