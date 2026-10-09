@@ -1494,7 +1494,7 @@ CODE_0DA57F:
     BRA Return0DA5B0                        ;$0DA5A5 |
 
 CODE_0DA5A7:
-    LDA.w $1F3C,Y
+    LDA.w Checkpoint1upCollected_1F3C,Y
     AND.l DATA_0DA8A6,X                     ;$0DA5AA |
     BEQ CODE_0DA5B1                         ;$0DA5AE |
 Return0DA5B0:
@@ -3809,7 +3809,7 @@ CODE_0DB58B:
     LDX.b #$00
 CODE_0DB58D:
     LDY.b LevelLoadPos_57
-    LDA.w $1F27,X                           ;$0DB58F |
+    LDA.w SwitchBlockFlags_1F27,X           ;$0DB58F |
     BNE CODE_0DB59E                         ;$0DB592 |
     JSR StzTo6ePointer0080E7                ;$0DB594 |
     LDA.l DATA_0DB589,X                     ;$0DB597 |
@@ -4312,7 +4312,7 @@ CODE_0DB937:
     JSR StzTo6ePointer0080E7
     LDA.l DATA_0DB91A,X                     ;$0DB93A |
     STA $0F                                 ;$0DB93E |
-    LDA.w $1F29,X                           ;$0DB940 |
+    LDA.w SwitchBlockFlags_1F27+2,X         ;$0DB940 |
     BEQ CODE_0DB94E                         ;$0DB943 |
     JSR Sta1To6ePointer                     ;$0DB945 |
     LDA.l DATA_0DB91C,X                     ;$0DB948 |

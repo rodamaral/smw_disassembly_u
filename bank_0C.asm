@@ -925,7 +925,7 @@ DMA_credits_BG:                             ;               \
     STA.w $4313                             ;$0C95BA |/
     LDA.b #$02                              ;$0C95BD |\ Start DMA on channel 1
     STA.w $420B                             ;$0C95BF |/
-    STZ.w $1FFE                             ;$0C95C2 | Clear BG update flag
+    STZ.w CreditsUpdateBG_1FFE              ;$0C95C2 | Clear BG update flag
     PLB                                     ;$0C95C5 | Restore databank
     RTL                                     ;$0C95C6        / Done with BG DMA
 
@@ -2807,7 +2807,7 @@ CODE_0CAB3B:
 CODE_0CAB57:
     PHA
     PHX                                     ;$0CAB58 |
-    INC.w $1FFE                             ;$0CAB59 |
+    INC.w CreditsUpdateBG_1FFE              ;$0CAB59 |
     INC.w LevelLoadObject_1928              ;$0CAB5C |
     JSR CODE_0CABB2                         ;$0CAB5F |
     PLX                                     ;$0CAB62 |

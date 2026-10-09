@@ -5691,18 +5691,18 @@ DATA_02AA1F:
 
     LDX.b #$0E                              ;$02AA33 |
 ADDR_02AA35:
-    STZ.w $1E66,X
+    STZ.w ClusterSprMisc_1E66,X
     STZ.w ClusterSprMisc_0F86,X             ;$02AA38 |
     LDA.b #$08                              ;$02AA3B |
     STA.w ClusterSprNumber_1892,X           ;$02AA3D |
     JSL GetRand                             ;$02AA40 |
     CLC                                     ;$02AA44 |
     ADC.b Layer1XPos_1A                     ;$02AA45 |
-    STA.w $1E16,X                           ;$02AA47 |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02AA47 |
     STA.w ClusterSprMisc_0F4A,X             ;$02AA4A |
     LDA.b Layer1XPos_1A+1                   ;$02AA4D |
     ADC.b #$00                              ;$02AA4F |
-    STA.w $1E3E,X                           ;$02AA51 |
+    STA.w ClusterSprXPosHigh_1E3E,X         ;$02AA51 |
     LDY $03                                 ;$02AA54 |
     LDA.b [SpriteDataPtr_CE],Y              ;$02AA56 |
     PHA                                     ;$02AA58 |
@@ -5710,7 +5710,7 @@ ADDR_02AA35:
     STA.w ClusterSprYPosLow_1E02,X          ;$02AA5B |
     PLA                                     ;$02AA5E |
     AND.b #$01                              ;$02AA5F |
-    STA.w $1E2A,X                           ;$02AA61 |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02AA61 |
     DEX                                     ;$02AA64 |
     BPL ADDR_02AA35                         ;$02AA65 |
     RTS                                     ;$02AA67 |
@@ -5726,7 +5726,7 @@ CODE_02AA73:
     LDA.b #$05
     STA.w ClusterSprNumber_1892,X           ;$02AA75 |
     LDA.w DATA_02AA68,X                     ;$02AA78 |
-    STA.w $1E16,X                           ;$02AA7B |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02AA7B |
     LDA.b #$F0                              ;$02AA7E |
     STA.w ClusterSprYPosLow_1E02,X          ;$02AA80 |
     TXA                                     ;$02AA83 |
@@ -5746,23 +5746,23 @@ CODE_02AA92:
     LDA.w DATA_02AA0B,X                     ;$02AA97 |
     PHA                                     ;$02AA9A |
     AND.b #$F0                              ;$02AA9B |
-    STA.w $1E66,X                           ;$02AA9D |
+    STA.w ClusterSprMisc_1E66,X             ;$02AA9D |
     PLA                                     ;$02AAA0 |
     ASL                                     ;$02AAA1 |
     ASL                                     ;$02AAA2 |
     ASL                                     ;$02AAA3 |
     ASL                                     ;$02AAA4 |
-    STA.w $1E52,X                           ;$02AAA5 |
+    STA.w ClusterSprMisc_1E52,X             ;$02AAA5 |
     LDA.w DATA_02AA1F,X                     ;$02AAA8 |
     PHA                                     ;$02AAAB |
     AND.b #$F0                              ;$02AAAC |
-    STA.w $1E8E,X                           ;$02AAAE |
+    STA.w ClusterSprMisc_1E8E,X             ;$02AAAE |
     PLA                                     ;$02AAB1 |
     ASL                                     ;$02AAB2 |
     ASL                                     ;$02AAB3 |
     ASL                                     ;$02AAB4 |
     ASL                                     ;$02AAB5 |
-    STA.w $1E7A,X                           ;$02AAB6 |
+    STA.w ClusterSprMisc_1E7A,X             ;$02AAB6 |
     DEX                                     ;$02AAB9 |
     BPL CODE_02AA92                         ;$02AABA |
     RTS                                     ;$02AABC |
@@ -5783,18 +5783,18 @@ CODE_02AAC0:
     BCS CODE_02AB11                         ;$02AAD3 |
     LDX.b #$13                              ;$02AAD5 |
 CODE_02AAD7:
-    STZ.w $1E66,X
+    STZ.w ClusterSprMisc_1E66,X
     STZ.w ClusterSprMisc_0F86,X             ;$02AADA |
     LDA.b #$03                              ;$02AADD |
     STA.w ClusterSprNumber_1892,X           ;$02AADF |
     JSL GetRand                             ;$02AAE2 |
     CLC                                     ;$02AAE6 |
     ADC.b Layer1XPos_1A                     ;$02AAE7 |
-    STA.w $1E16,X                           ;$02AAE9 |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02AAE9 |
     STA.w ClusterSprMisc_0F4A,X             ;$02AAEC |
     LDA.b Layer1XPos_1A+1                   ;$02AAEF |
     ADC.b #$00                              ;$02AAF1 |
-    STA.w $1E3E,X                           ;$02AAF3 |
+    STA.w ClusterSprXPosHigh_1E3E,X         ;$02AAF3 |
     LDA.w RandomNumber_148D+1               ;$02AAF6 |
     AND.b #$3F                              ;$02AAF9 |
     ADC.b #$08                              ;$02AAFB |
@@ -5803,7 +5803,7 @@ CODE_02AAD7:
     STA.w ClusterSprYPosLow_1E02,X          ;$02AB00 |
     LDA.b Layer1YPos_1C+1                   ;$02AB03 |
     ADC.b #$00                              ;$02AB05 |
-    STA.w $1E2A,X                           ;$02AB07 |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02AB07 |
     DEX                                     ;$02AB0A |
     BPL CODE_02AAD7                         ;$02AB0B |
     INC.w BooRingIndex_18BA                 ;$02AB0D |
@@ -12946,10 +12946,10 @@ CODE_02DF4C:
     LDA $00                                 ;$02DF51 |
     CLC                                     ;$02DF53 |
     ADC.w DATA_02DF22,X                     ;$02DF54 |
-    STA.w $1E16,Y                           ;$02DF57 |
+    STA.w ClusterSprXPosLow_1E16,Y          ;$02DF57 |
     LDA $01                                 ;$02DF5A |
     ADC.w DATA_02DF27,X                     ;$02DF5C |
-    STA.w $1E3E,Y                           ;$02DF5F |
+    STA.w ClusterSprXPosHigh_1E3E,Y         ;$02DF5F |
     PLX                                     ;$02DF62 |
     LDA.b SpriteYPosLow_D8,X                ;$02DF63 |
     SEC                                     ;$02DF65 |
@@ -12958,12 +12958,12 @@ CODE_02DF4C:
     LDA.w SpriteYPosHigh_14D4,X             ;$02DF6B |
     SEC                                     ;$02DF6E |
     SBC.b #$00                              ;$02DF6F |
-    STA.w $1E2A,Y                           ;$02DF71 |
+    STA.w ClusterSprYPosHigh_1E2A,Y         ;$02DF71 |
     LDA.b #$7F                              ;$02DF74 |
     STA.w ClusterSprMisc_0F4A,Y             ;$02DF76 |
-    LDA.w $1E16,Y                           ;$02DF79 |
+    LDA.w ClusterSprXPosLow_1E16,Y          ;$02DF79 |
     CMP.b Layer1XPos_1A                     ;$02DF7C |
-    LDA.w $1E3E,Y                           ;$02DF7E |
+    LDA.w ClusterSprXPosHigh_1E3E,Y         ;$02DF7E |
     SBC.b Layer1XPos_1A+1                   ;$02DF81 |
     BNE Return02DF8A                        ;$02DF83 |
     LDA.b #$06                              ;$02DF85 |
@@ -16416,32 +16416,32 @@ reappearing_boo_02F83D:
     RTS                                     ;$02F864 |
 
 .CODE_02F865:
-    LDA.w $1E66,X
+    LDA.w ClusterSprMisc_1E66,X
     STA $00                                 ;$02F868 |
-    LDA.w $1E52,X                           ;$02F86A |
+    LDA.w ClusterSprMisc_1E52,X             ;$02F86A |
     STA $01                                 ;$02F86D |
     LDA.w BooRingIndex_18BA                 ;$02F86F |
     AND.b #$01                              ;$02F872 |
     BNE .CODE_02F880                        ;$02F874 |
-    LDA.w $1E8E,X                           ;$02F876 |
+    LDA.w ClusterSprMisc_1E8E,X             ;$02F876 |
     STA $00                                 ;$02F879 |
-    LDA.w $1E7A,X                           ;$02F87B |
+    LDA.w ClusterSprMisc_1E7A,X             ;$02F87B |
     STA $01                                 ;$02F87E |
 .CODE_02F880:
     LDA $00
     CLC                                     ;$02F882 |
     ADC.b Layer1XPos_1A                     ;$02F883 |
-    STA.w $1E16,X                           ;$02F885 |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02F885 |
     LDA.b Layer1XPos_1A+1                   ;$02F888 |
     ADC.b #$00                              ;$02F88A |
-    STA.w $1E3E,X                           ;$02F88C |
+    STA.w ClusterSprXPosHigh_1E3E,X         ;$02F88C |
     LDA $01                                 ;$02F88F |
     CLC                                     ;$02F891 |
     ADC.b Layer1YPos_1C                     ;$02F892 |
     STA.w ClusterSprYPosLow_1E02,X          ;$02F894 |
     LDA.b Layer1YPos_1C+1                   ;$02F897 |
     ADC.b #$00                              ;$02F899 |
-    STA.w $1E2A,X                           ;$02F89B |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02F89B |
 .CODE_02F89E:
     TXA
     ASL                                     ;$02F89F |
@@ -16463,9 +16463,9 @@ reappearing_boo_02F83D:
     CLC                                     ;$02F8B8 |
     ADC.w DATA_02F837,Y                     ;$02F8B9 |
     STA.w ClusterSprYPosLow_1E02,X          ;$02F8BC |
-    LDA.w $1E2A,X                           ;$02F8BF |
+    LDA.w ClusterSprYPosHigh_1E2A,X         ;$02F8BF |
     ADC.w DATA_02F839,Y                     ;$02F8C2 |
-    STA.w $1E2A,X                           ;$02F8C5 |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02F8C5 |
 .CODE_02F8C8:
     LDY.w BooCloudTimerMirror_185E
     CPY.b #$20                              ;$02F8CB |
@@ -16661,7 +16661,7 @@ CODE_02FA16:
     INC.w ClusterSprMisc_0F4A,X             ;$02FA28 |
 CODE_02FA2B:
     LDY.w DATA_02FA0A,X
-    LDA.w $1E16,X                           ;$02FA2E |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FA2E |
     SEC                                     ;$02FA31 |
     SBC.b Layer2XPos_1E                     ;$02FA32 |
     STA.w $0300,Y                           ;$02FA34 |
@@ -16835,10 +16835,10 @@ CODE_02FB77:
 CODE_02FB87:
     CLC
     ADC.w $0FB2,Y                           ;$02FB88 |
-    STA.w $1E16,X                           ;$02FB8B |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02FB8B |
     LDA.w $0FB4,Y                           ;$02FB8E |
     ADC $00                                 ;$02FB91 |
-    STA.w $1E3E,X                           ;$02FB93 |
+    STA.w ClusterSprXPosHigh_1E3E,X         ;$02FB93 |
     STZ $01                                 ;$02FB96 |
     LDA $06                                 ;$02FB98 |
     BPL CODE_02FB9E                         ;$02FB9A |
@@ -16849,7 +16849,7 @@ CODE_02FB9E:
     STA.w ClusterSprYPosLow_1E02,X          ;$02FBA2 |
     LDA.w $0FB8,Y                           ;$02FBA5 |
     ADC $01                                 ;$02FBA8 |
-    STA.w $1E2A,X                           ;$02FBAA |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02FBAA |
     JSR CODE_02FC8D                         ;$02FBAD |
 CODE_02FBB0:
     TXA
@@ -16892,18 +16892,18 @@ CODE_02FBE2:
     LDA.b #$20                              ;$02FBEB |
     STA.w ClusterSprMisc_0F9A,X             ;$02FBED |
     STZ $00                                 ;$02FBF0 |
-    LDA.w $1E16,X                           ;$02FBF2 |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FBF2 |
     SBC.b Layer1XPos_1A                     ;$02FBF5 |
     ADC.b Layer1XPos_1A                     ;$02FBF7 |
     PHP                                     ;$02FBF9 |
     ADC $00                                 ;$02FBFA |
-    STA.w $1E16,X                           ;$02FBFC |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02FBFC |
     STA.b SpriteXPosLow_E4                  ;$02FBFF | WARN: unindexed table
     LDA.b Layer1XPos_1A+1                   ;$02FC01 |
     ADC.b #$00                              ;$02FC03 |
     PLP                                     ;$02FC05 |
     ADC.b #$00                              ;$02FC06 |
-    STA.w $1E3E,X                           ;$02FC08 |
+    STA.w ClusterSprXPosHigh_1E3E,X         ;$02FC08 |
     STA.w SpriteXPosHigh_14E0               ;$02FC0B | WARN: unindexed table
     LDA.w ClusterSprYPosLow_1E02,X          ;$02FC0E |
     SBC.b Layer1YPos_1C                     ;$02FC11 |
@@ -16914,7 +16914,7 @@ CODE_02FBE2:
     STA.w ClusterSprMisc_0F72,X             ;$02FC1C |
     LDA.b Layer1YPos_1C+1                   ;$02FC1F |
     ADC.b #$00                              ;$02FC21 |
-    STA.w $1E2A,X                           ;$02FC23 |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02FC23 |
     STA.w SpriteYPosHigh_14D4               ;$02FC26 | WARN: unindexed table
     PHX                                     ;$02FC29 |
     LDX.b #$00                              ;$02FC2A |
@@ -16923,9 +16923,9 @@ CODE_02FBE2:
     PLX                                     ;$02FC31 |
     LDA $00                                 ;$02FC32 |
     ADC.b #$09                              ;$02FC34 |
-    STA.w $1E52,X                           ;$02FC36 |
+    STA.w ClusterSprMisc_1E52,X             ;$02FC36 |
     LDA $01                                 ;$02FC39 |
-    STA.w $1E66,X                           ;$02FC3B |
+    STA.w ClusterSprMisc_1E66,X             ;$02FC3B |
 CODE_02FC3E:
     LDX.w CurrentSprite_15E9
 CODE_02FC41:
@@ -16951,23 +16951,23 @@ CODE_02FC55:
     AND.b #$03                              ;$02FC67 |
     BNE CODE_02FC78                         ;$02FC69 |
     JSR CODE_02FE71                         ;$02FC6B |
-    LDA.w $1E52,X                           ;$02FC6E |
+    LDA.w ClusterSprMisc_1E52,X             ;$02FC6E |
     CMP.b #$E1                              ;$02FC71 |
     BMI CODE_02FC78                         ;$02FC73 |
-    DEC.w $1E52,X                           ;$02FC75 |
+    DEC.w ClusterSprMisc_1E52,X             ;$02FC75 |
 CODE_02FC78:
     LDA.w ClusterSprYPosLow_1E02,X
     AND.b #$FC                              ;$02FC7B |
     CMP.w ClusterSprMisc_0F72,X             ;$02FC7D |
     BNE CODE_02FC8D                         ;$02FC80 |
-    LDA.w $1E52,X                           ;$02FC82 |
+    LDA.w ClusterSprMisc_1E52,X             ;$02FC82 |
     BPL CODE_02FC8D                         ;$02FC85 |
     STZ.w ClusterSprMisc_0F86,X             ;$02FC87 |
-    STZ.w $1E66,X                           ;$02FC8A |
+    STZ.w ClusterSprMisc_1E66,X             ;$02FC8A |
 CODE_02FC8D:
-    LDA.w $1E16,X
+    LDA.w ClusterSprXPosLow_1E16,X
     STA $00                                 ;$02FC90 |
-    LDA.w $1E3E,X                           ;$02FC92 |
+    LDA.w ClusterSprXPosHigh_1E3E,X         ;$02FC92 |
     STA $01                                 ;$02FC95 |
     REP #$20                                ;$02FC97 |
     LDA $00                                 ;$02FC99 |
@@ -16985,14 +16985,14 @@ CODE_02FC8D:
     ADC.b #$10                              ;$02FCB2 |
     PHP                                     ;$02FCB4 |
     CMP.b Layer1YPos_1C                     ;$02FCB5 |
-    LDA.w $1E2A,X                           ;$02FCB7 |
+    LDA.w ClusterSprYPosHigh_1E2A,X         ;$02FCB7 |
     SBC.b Layer1YPos_1C+1                   ;$02FCBA |
     PLP                                     ;$02FCBC |
     ADC.b #$00                              ;$02FCBD |
     BNE CODE_02FCD9                         ;$02FCBF |
-    LDA.w $1E16,X                           ;$02FCC1 |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FCC1 |
     CMP.b Layer1XPos_1A                     ;$02FCC4 |
-    LDA.w $1E3E,X                           ;$02FCC6 |
+    LDA.w ClusterSprXPosHigh_1E3E,X         ;$02FCC6 |
     SBC.b Layer1XPos_1A+1                   ;$02FCC9 |
     BEQ Return02FCD8                        ;$02FCCB |
     LDA.w DATA_02FF50,X                     ;$02FCCD |
@@ -17024,10 +17024,10 @@ CODE_02FCE2:
     LDA.w ClusterSprMisc_0F4A,X             ;$02FCF8 |
     AND.b #$01                              ;$02FCFB |
     TAY                                     ;$02FCFD |
-    LDA.w $1E66,X                           ;$02FCFE |
+    LDA.w ClusterSprMisc_1E66,X             ;$02FCFE |
     CLC                                     ;$02FD01 |
     ADC.w DATA_02FBBB,Y                     ;$02FD02 |
-    STA.w $1E66,X                           ;$02FD05 |
+    STA.w ClusterSprMisc_1E66,X             ;$02FD05 |
     CMP.w DATA_02FBBD,Y                     ;$02FD08 |
     BNE CODE_02FD1A                         ;$02FD0B |
     INC.w ClusterSprMisc_0F4A,X             ;$02FD0D |
@@ -17058,14 +17058,14 @@ CODE_02FD36:
     ADC.w ClusterSprYPosLow_1E02,X          ;$02FD38 |
     STA.w ClusterSprYPosLow_1E02,X          ;$02FD3B |
     LDA $00                                 ;$02FD3E |
-    ADC.w $1E2A,X                           ;$02FD40 |
-    STA.w $1E2A,X                           ;$02FD43 |
+    ADC.w ClusterSprYPosHigh_1E2A,X         ;$02FD40 |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02FD43 |
 CODE_02FD46:
     LDA.b #$0E
 CODE_02FD48:
     STA $02
     LDY.w DATA_02FF50,X                     ;$02FD4A |
-    LDA.w $1E16,X                           ;$02FD4D |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FD4D |
     SEC                                     ;$02FD50 |
     SBC.b Layer1XPos_1A                     ;$02FD51 |
     STA.w $0300,Y                           ;$02FD53 |
@@ -17088,7 +17088,7 @@ CODE_02FD48:
     LDA.w BooRingTiles,X                    ;$02FD70 |
     STA.w $0302,Y                           ;$02FD73 |
     PLX                                     ;$02FD76 |
-    LDA.w $1E66,X                           ;$02FD77 |
+    LDA.w ClusterSprMisc_1E66,X             ;$02FD77 |
     ASL                                     ;$02FD7A |
     LDA.b #$00                              ;$02FD7B |
     BCS CODE_02FD81                         ;$02FD7D |
@@ -17130,48 +17130,48 @@ BatCeilingTiles:
 
 CODE_02FDBC:
     JSR CODE_02FFA3
-    LDA.w $1E52,X                           ;$02FDBF |
+    LDA.w ClusterSprMisc_1E52,X             ;$02FDBF |
     CMP.b #$40                              ;$02FDC2 |
     BPL CODE_02FDCC                         ;$02FDC4 |
     CLC                                     ;$02FDC6 |
     ADC.b #$03                              ;$02FDC7 |
-    STA.w $1E52,X                           ;$02FDC9 |
+    STA.w ClusterSprMisc_1E52,X             ;$02FDC9 |
 CODE_02FDCC:
-    LDA.w $1E2A,X
+    LDA.w ClusterSprYPosHigh_1E2A,X
     BEQ CODE_02FDE0                         ;$02FDCF |
     LDA.w ClusterSprYPosLow_1E02,X          ;$02FDD1 |
     CMP.b #$80                              ;$02FDD4 |
     BCC CODE_02FDE0                         ;$02FDD6 |
     AND.b #$F0                              ;$02FDD8 |
     STA.w ClusterSprYPosLow_1E02,X          ;$02FDDA |
-    STZ.w $1E52,X                           ;$02FDDD |
+    STZ.w ClusterSprMisc_1E52,X             ;$02FDDD |
 CODE_02FDE0:
     TXA
     EOR.b Frame_13                          ;$02FDE1 |
     LSR                                     ;$02FDE3 |
     BCC CODE_02FE48                         ;$02FDE4 |
-    LDA.w $1E52,X                           ;$02FDE6 |
+    LDA.w ClusterSprMisc_1E52,X             ;$02FDE6 |
     BNE CODE_02FE10                         ;$02FDE9 |
-    LDA.w $1E66,X                           ;$02FDEB |
+    LDA.w ClusterSprMisc_1E66,X             ;$02FDEB |
     CLC                                     ;$02FDEE |
-    ADC.w $1E16,X                           ;$02FDEF |
-    STA.w $1E16,X                           ;$02FDF2 |
-    LDA.w $1E16,X                           ;$02FDF5 |
-    EOR.w $1E66,X                           ;$02FDF8 |
+    ADC.w ClusterSprXPosLow_1E16,X          ;$02FDEF |
+    STA.w ClusterSprXPosLow_1E16,X          ;$02FDF2 |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FDF5 |
+    EOR.w ClusterSprMisc_1E66,X             ;$02FDF8 |
     BPL CODE_02FE10                         ;$02FDFB |
-    LDA.w $1E16,X                           ;$02FDFD |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FDFD |
     CLC                                     ;$02FE00 |
     ADC.b #$20                              ;$02FE01 |
     CMP.b #$30                              ;$02FE03 |
     BCS CODE_02FE10                         ;$02FE05 |
-    LDA.w $1E66,X                           ;$02FE07 |
+    LDA.w ClusterSprMisc_1E66,X             ;$02FE07 |
     EOR.b #$FF                              ;$02FE0A |
     INC A                                   ;$02FE0C |
-    STA.w $1E66,X                           ;$02FE0D |
+    STA.w ClusterSprMisc_1E66,X             ;$02FE0D |
 CODE_02FE10:
     LDA.b PlayerXPos_94
     SEC                                     ;$02FE12 |
-    SBC.w $1E16,X                           ;$02FE13 |
+    SBC.w ClusterSprXPosLow_1E16,X          ;$02FE13 |
     CLC                                     ;$02FE16 |
     ADC.b #$0C                              ;$02FE17 |
     CMP.b #$1E                              ;$02FE19 |
@@ -17199,7 +17199,7 @@ CODE_02FE29:
     STA.w BonusTimer_14AB                   ;$02FE45 |
 CODE_02FE48:
     LDY.w DATA_02FF64,X
-    LDA.w $1E16,X                           ;$02FE4B |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FE4B |
     SEC                                     ;$02FE4E |
     SBC.b Layer1XPos_1A                     ;$02FE4F |
     STA.w OAMMirror_0200,Y                  ;$02FE51 |
@@ -17227,9 +17227,9 @@ CODE_02FE71:
 CODE_02FE77:
     STA $02
     STZ $03                                 ;$02FE79 |
-    LDA.w $1E16,X                           ;$02FE7B |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FE7B |
     STA $00                                 ;$02FE7E |
-    LDA.w $1E3E,X                           ;$02FE80 |
+    LDA.w ClusterSprXPosHigh_1E3E,X         ;$02FE80 |
     STA $01                                 ;$02FE83 |
     REP #$20                                ;$02FE85 |
     LDA.b PlayerXPos_94                     ;$02FE87 |
@@ -17243,7 +17243,7 @@ CODE_02FE77:
     LDA.w ClusterSprYPosLow_1E02,X          ;$02FE96 |
     ADC.b #$03                              ;$02FE99 |
     STA $02                                 ;$02FE9B |
-    LDA.w $1E2A,X                           ;$02FE9D |
+    LDA.w ClusterSprYPosHigh_1E2A,X         ;$02FE9D |
     ADC.b #$00                              ;$02FEA0 |
     STA $03                                 ;$02FEA2 |
     REP #$20                                ;$02FEA4 |
@@ -17283,7 +17283,7 @@ DATA_02FECB:
     LDA.w ClusterSprYPosLow_1E02,X          ;$02FED3 |
     CLC                                     ;$02FED6 |
     ADC.b #$50                              ;$02FED7 |
-    LDA.w $1E2A,X                           ;$02FED9 |
+    LDA.w ClusterSprYPosHigh_1E2A,X         ;$02FED9 |
     ADC.b #$00                              ;$02FEDC |
     CMP.b #$02                              ;$02FEDE |
     BPL ADDR_02FF0E                         ;$02FEE0 |
@@ -17295,13 +17295,13 @@ DATA_02FECB:
     CLC                                     ;$02FEEB |
     ADC.w DATA_02FEC9,Y                     ;$02FEEC |
     ROL $00                                 ;$02FEEF |
-    CMP.w $1E16,X                           ;$02FEF1 |
+    CMP.w ClusterSprXPosLow_1E16,X          ;$02FEF1 |
     PHP                                     ;$02FEF4 |
     LDA.b Layer1XPos_1A+1                   ;$02FEF5 |
     LSR $00                                 ;$02FEF7 |
     ADC.w DATA_02FECB,Y                     ;$02FEF9 |
     PLP                                     ;$02FEFC |
-    SBC.w $1E3E,X                           ;$02FEFD |
+    SBC.w ClusterSprXPosHigh_1E3E,X         ;$02FEFD |
     STA $00                                 ;$02FF00 |
     LSR $01                                 ;$02FF02 |
     BCC ADDR_02FF0A                         ;$02FF04 |
@@ -17338,7 +17338,7 @@ ADDR_02FF1E:
     LSR $00                                 ;$02FF37 |
     ADC.w DATA_02FEC7,Y                     ;$02FF39 |
     PLP                                     ;$02FF3C |
-    SBC.w $1E2A,X                           ;$02FF3D |
+    SBC.w ClusterSprYPosHigh_1E2A,X         ;$02FF3D |
     STA $00                                 ;$02FF40 |
     LDY $01                                 ;$02FF42 |
     BEQ ADDR_02FF4A                         ;$02FF44 |
@@ -17365,12 +17365,12 @@ CODE_02FF6C:
     SEC                                     ;$02FF78 |
     SBC.b #$08                              ;$02FF79 |
     STA.w ScoreSprYPosLow_16E7,Y            ;$02FF7B |
-    LDA.w $1E2A,X                           ;$02FF7E |
+    LDA.w ClusterSprYPosHigh_1E2A,X         ;$02FF7E |
     SBC.b #$00                              ;$02FF81 |
     STA.w ScoreSprYPosHigh_16F9,Y           ;$02FF83 |
-    LDA.w $1E16,X                           ;$02FF86 |
+    LDA.w ClusterSprXPosLow_1E16,X          ;$02FF86 |
     STA.w ScoreSprXPosLow_16ED,Y            ;$02FF89 |
-    LDA.w $1E3E,X                           ;$02FF8C |
+    LDA.w ClusterSprXPosHigh_1E3E,X         ;$02FF8C |
     STA.w ScoreSprXPosHigh_16F3,Y           ;$02FF8F |
     LDA.b #$30                              ;$02FF92 |
     STA.w ScoreSprTimer_16FF,Y              ;$02FF94 |
@@ -17387,16 +17387,16 @@ CODE_02FF98:
     RTS                                     ;$02FFA2 |
 
 CODE_02FFA3:
-    LDA.w $1E52,X
+    LDA.w ClusterSprMisc_1E52,X
     ASL                                     ;$02FFA6 |
     ASL                                     ;$02FFA7 |
     ASL                                     ;$02FFA8 |
     ASL                                     ;$02FFA9 |
     CLC                                     ;$02FFAA |
-    ADC.w $1E7A,X                           ;$02FFAB |
-    STA.w $1E7A,X                           ;$02FFAE |
+    ADC.w ClusterSprMisc_1E7A,X             ;$02FFAB |
+    STA.w ClusterSprMisc_1E7A,X             ;$02FFAE |
     PHP                                     ;$02FFB1 |
-    LDA.w $1E52,X                           ;$02FFB2 |
+    LDA.w ClusterSprMisc_1E52,X             ;$02FFB2 |
     LSR                                     ;$02FFB5 |
     LSR                                     ;$02FFB6 |
     LSR                                     ;$02FFB7 |
@@ -17411,8 +17411,8 @@ CODE_02FFC2:
     ADC.w ClusterSprYPosLow_1E02,X          ;$02FFC3 |
     STA.w ClusterSprYPosLow_1E02,X          ;$02FFC6 |
     TYA                                     ;$02FFC9 |
-    ADC.w $1E2A,X                           ;$02FFCA |
-    STA.w $1E2A,X                           ;$02FFCD |
+    ADC.w ClusterSprYPosHigh_1E2A,X         ;$02FFCA |
+    STA.w ClusterSprYPosHigh_1E2A,X         ;$02FFCD |
     RTS                                     ;$02FFD0 |
 
 CODE_02FFD1:

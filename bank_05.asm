@@ -6390,17 +6390,17 @@ CODE_05D83E:
     STZ.b Layer1XPos_1A                     ;$05D849 |
     STZ.b Layer2XPos_1E                     ;$05D84B |
     LDX.w PlayerTurnOW_0DD6                 ;$05D84D |
-    LDA.w $1F1F,X                           ;$05D850 |
+    LDA.w OWPlayerXPosPtr_1F1F,X            ;$05D850 |
     AND.w #$000F                            ;$05D853 |
     STA $00                                 ;$05D856 |
-    LDA.w $1F21,X                           ;$05D858 |
+    LDA.w OWPlayerYPosPtr_1F21,X            ;$05D858 |
     AND.w #$000F                            ;$05D85B |
     ASL                                     ;$05D85E |
     ASL                                     ;$05D85F |
     ASL                                     ;$05D860 |
     ASL                                     ;$05D861 |
     STA $02                                 ;$05D862 |
-    LDA.w $1F1F,X                           ;$05D864 |
+    LDA.w OWPlayerXPosPtr_1F1F,X            ;$05D864 |
     AND.w #$0010                            ;$05D867 |
     ASL                                     ;$05D86A |
     ASL                                     ;$05D86B |
@@ -6408,7 +6408,7 @@ CODE_05D83E:
     ASL                                     ;$05D86D |
     ORA $00                                 ;$05D86E |
     STA $00                                 ;$05D870 |
-    LDA.w $1F21,X                           ;$05D872 |
+    LDA.w OWPlayerYPosPtr_1F21,X            ;$05D872 |
     AND.w #$0010                            ;$05D875 |
     ASL                                     ;$05D878 |
     ASL                                     ;$05D879 |

@@ -258,7 +258,7 @@ NMI_start:                                  ;        \
     LDA.w CutsceneID_13C6                   ;$0081F7 |\ Skip the end credits code 
     CMP.b #$08                              ;$0081FA | | if the current cutscene is not $08 (end credits)
     BNE .not_end_credits                    ;$0081FC |/
-    LDA.w $1FFE                             ;$0081FE |\ Skip updating the credits BG
+    LDA.w CreditsUpdateBG_1FFE              ;$0081FE |\ Skip updating the credits BG
     BEQ .draw_mario                         ;$008201 |/ If a new BG is not yet needed
     JSL DMA_credits_BG                      ;$008203 | Update the Credits BG
     BRA .draw_mario                         ;$008207 | Continue with NMI by drawing mario
@@ -3298,7 +3298,7 @@ CODE_009BD9:
     LDY.w #$0000
     STY $8A                                 ;$009BDC |
 CODE_009BDE:
-    LDA.w $1F49,Y
+    LDA.w SaveDataBuffer_1F49,Y
     STA.l $700000,X                         ;$009BE1 |
     CLC                                     ;$009BE5 |
     ADC $8A                                 ;$009BE6 |
@@ -3708,7 +3708,7 @@ TBL_009EF0:
 CODE_WRITEOW:
     LDX.b #$8D
 CODE_009F08:
-    STZ.w $1F48,X
+    STZ.w SaveDataBuffer_1F49-1,X
     DEX                                     ;$009F0B |
     BNE CODE_009F08                         ;$009F0C |
     LDX.b #$0E                              ;$009F0E |
@@ -3722,7 +3722,7 @@ CODE_009F10:
     LDX.b #$15                              ;$009F1D |
 CODE_009F1F:
     LDA.w TBL_009EF0,X
-    STA.w $1FB8,X                           ;$009F22 |
+    STA.w SaveDataBufferSubmap_1FB8,X       ;$009F22 |
     DEX                                     ;$009F25 |
     BPL CODE_009F1F                         ;$009F26 |
     RTS                                     ;$009F28 |
@@ -4023,7 +4023,7 @@ CODE_00A195:
     REP #$10
     LDX.w #$008C                            ;$00A197 |
 CODE_00A19A:
-    LDA.w $1F49,X
+    LDA.w SaveDataBuffer_1F49,X
     STA.w OWLevelSettings_1EA2,X            ;$00A19D |
     DEX                                     ;$00A1A0 |
     BPL CODE_00A19A                         ;$00A1A1 |
@@ -12206,8 +12206,8 @@ process_center_page_0_tiles:
     PHX                                     ;$00F2B0 | |
     JSL TriggerInivis1Up                    ;$00F2B1 | | trigger an invisible 1up,
     JSR get_level_bit_flag                  ;$00F2B5 | |
-    ORA.w $1F3C,Y                           ;$00F2B8 | |
-    STA.w $1F3C,Y                           ;$00F2BB | | and set the "triggered invisible 1up" flag.
+    ORA.w Checkpoint1upCollected_1F3C,Y     ;$00F2B8 | |
+    STA.w Checkpoint1upCollected_1F3C,Y     ;$00F2BB | | and set the "triggered invisible 1up" flag.
     PLX                                     ;$00F2BE | |
 .return                                     ;        |/
     RTS                                     ;$00F2BF /

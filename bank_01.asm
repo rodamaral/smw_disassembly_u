@@ -13547,15 +13547,15 @@ CODE_01E28C:
     LDA.b #$00                              ;$01E291 |
     STA.w ClusterSprYPosLow_1E02,Y          ;$01E293 |
     LDA.b #$01                              ;$01E296 |
-    STA.w $1E2A,Y                           ;$01E298 |
+    STA.w ClusterSprYPosHigh_1E2A,Y         ;$01E298 |
     LDA.b #$18                              ;$01E29B |
-    STA.w $1E16,Y                           ;$01E29D |
+    STA.w ClusterSprXPosLow_1E16,Y          ;$01E29D |
     LDA.b #$00                              ;$01E2A0 |
-    STA.w $1E3E,Y                           ;$01E2A2 |
+    STA.w ClusterSprXPosHigh_1E3E,Y         ;$01E2A2 |
     LDA.b #$01                              ;$01E2A5 |
-    STA.w $1E66,Y                           ;$01E2A7 |
+    STA.w ClusterSprMisc_1E66,Y             ;$01E2A7 |
     LDA.b #$10                              ;$01E2AA |
-    STA.w $1E52,Y                           ;$01E2AC |
+    STA.w ClusterSprMisc_1E52,Y             ;$01E2AC |
     RTS                                     ;$01E2AF |
 
 DATA_01E2B0:

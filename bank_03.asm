@@ -6196,7 +6196,7 @@ CODE_03AEC8:
 CODE_03AED0:
     INC.b SpritePhase_C2,X
     LDA.b #$80                              ;$03AED2 |
-    STA.w $1FEB                             ;$03AED4 |
+    STA.w SpriteDisableTimer_1FE2+9         ;$03AED4 | NOTE: hardcoded slot 9
     RTS                                     ;$03AED7 |
 
 DATA_03AED8:
@@ -8663,7 +8663,7 @@ peach_fireworks_03C796:
     STA.w $0701                             ;$03C7B0 |
     LDA.w DATA_03C78E,Y                     ;$03C7B3 |
     STA.w $0702                             ;$03C7B6 |
-    LDA.w $1FEB                             ;$03C7B9 |
+    LDA.w SpriteDisableTimer_1FE2+9         ;$03C7B9 | NOTE: hardcoded slot 9
     BNE Return03C80F                        ;$03C7BC |
     LDA.w Sprite_1534,X                     ;$03C7BE |
     CMP.b #$04                              ;$03C7C1 |
@@ -8700,7 +8700,7 @@ CODE_03C7D0:
     STA.w Sprite_1534,Y                     ;$03C7FB |
     TAX                                     ;$03C7FE |
     LDA.w DATA_03C792,X                     ;$03C7FF |
-    STA.w $1FEB                             ;$03C802 |
+    STA.w SpriteDisableTimer_1FE2+9         ;$03C802 | NOTE: hardcoded slot 9
     LDA.w DATA_03C776,X                     ;$03C805 |
     STA.w SpriteXPosLow_E4,y                ;$03C808 |
     PLX                                     ;$03C80B |
@@ -10653,7 +10653,7 @@ CODE_03DFCC:
     STZ.w $0684,X                           ;$03DFD8 |
     STZ.w $0685,X                           ;$03DFDB |
     TXY                                     ;$03DFDE |
-    LDX.w $1FFB                             ;$03DFDF |
+    LDX.w LightningFlashIndex_1FFB          ;$03DFDF |
     BNE CODE_03E01B                         ;$03DFE2 |
     LDA.w FinalCutscene_190D                ;$03DFE4 |
     BEQ CODE_03DFF0                         ;$03DFE7 |
@@ -10665,27 +10665,27 @@ CODE_03DFF0:
     LDA.b Frame_14
     LSR                                     ;$03DFF2 |
     BCC CODE_03E036                         ;$03DFF3 |
-    DEC.w $1FFC                             ;$03DFF5 |
+    DEC.w LightningWaitTimer_1FFC           ;$03DFF5 |
     BNE CODE_03E036                         ;$03DFF8 |
     TAX                                     ;$03DFFA |
     LDA.l CODE_04F708,X                     ;$03DFFB |
     AND.b #$07                              ;$03DFFF |
     TAX                                     ;$03E001 |
     LDA.l DATA_04F6F8,X                     ;$03E002 |
-    STA.w $1FFC                             ;$03E006 |
+    STA.w LightningWaitTimer_1FFC           ;$03E006 |
     LDA.l DATA_04F700,X                     ;$03E009 |
-    STA.w $1FFB                             ;$03E00D |
+    STA.w LightningFlashIndex_1FFB          ;$03E00D |
     TAX                                     ;$03E010 |
     LDA.b #$08                              ;$03E011 |
-    STA.w $1FFD                             ;$03E013 |
+    STA.w LightningTimer_1FFD               ;$03E013 |
     LDA.b #$18                              ;$03E016 |
     STA.w SPCIO3_1DFC                       ;$03E018 |
 CODE_03E01B:
-    DEC.w $1FFD
+    DEC.w LightningTimer_1FFD
     BPL CODE_03E028                         ;$03E01E |
-    DEC.w $1FFB                             ;$03E020 |
+    DEC.w LightningFlashIndex_1FFB          ;$03E020 |
     LDA.b #$04                              ;$03E023 |
-    STA.w $1FFD                             ;$03E025 |
+    STA.w LightningTimer_1FFD               ;$03E025 |
 CODE_03E028:
     TXA
     ASL                                     ;$03E029 |

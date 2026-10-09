@@ -2428,54 +2428,55 @@ LastUsedMusic_1DFF: skip 1 ;done
 skip 1 ;done
 DebugFreeRoam_1E01: skip 1; done
 ClusterSprYPosLow_1E02: skip 20 ;done
-ClusterSprXPosLow_1E16: skip 20
-ClusterSprYPosHigh_1E2A: skip 20
-ClusterSprXPosHigh_1E3E: skip 20
-ClusterSprMisc_1E52: skip 20
-ClusterSprMisc_1E66: skip 20
-ClusterSprMisc_1E7A: skip 20
-ClusterSprMisc_1E8E: skip 20
+ClusterSprXPosLow_1E16: skip 20 ;done
+ClusterSprYPosHigh_1E2A: skip 20 ;done
+ClusterSprXPosHigh_1E3E: skip 20 ;done
+ClusterSprMisc_1E52: skip 20 ;done
+ClusterSprMisc_1E66: skip 20 ;done
+ClusterSprMisc_1E7A: skip 20 ;done
+ClusterSprMisc_1E8E: skip 20 ;done
 OWLevelSettings_1EA2: skip 96 ;done
 OWEventsActivated_1F02: skip 15 ;done
 OWPlayerSubmap_1F11: skip 2 ;done
-OWPlayerAnimation_1F13: skip 4
-OWPlayerXPos_1F17: skip 2
-OWPlayerYPos_1F19: skip 6
-OWPlayerXPosPtr_1F1F: skip 2
-OWPlayerYPosPtr_1F21: skip 6
-SwitchBlockFlags_1F27: skip 4
+OWPlayerAnimation_1F13: skip 4 ;done
+OWPlayerXPos_1F17: skip 2 ;done
+OWPlayerYPos_1F19: skip 6 ;done
+OWPlayerXPosPtr_1F1F: skip 2 ;done
+OWPlayerYPosPtr_1F21: skip 6 ;done
+SwitchBlockFlags_1F27: skip 4 ;done
 ; 7E1F2B - 7E1F2D unused
-skip 3
+skip 3 ;done
 ExitsCompleted_1F2E: skip 1 ;done
 AllDragonCoinsCollected_1F2F: skip 12 ;done
 ; 7E1F3B unused
-skip 1
-Checkpoint1upCollected_1F3C: skip 12
+skip 1 ;done
+Checkpoint1upCollected_1F3C: skip 12 ;done
 ; 7E1F48 unused
-skip 1
+skip 1 ;done
 SaveDataBuffer_1F49:         skip 96 ;done
 SaveDataBufferEvents_1FA9:   skip 15 ;done
-SaveDataBufferSubmap_1FB8:   skip 2
-SaveDataBufferAni_1FBA:      skip 4
-SaveDataBufferXPos_1FBE:     skip 2
-SaveDataBufferYPos_1FC0:     skip 6
-SaveDataBufferXPosPtr_1FC6:  skip 2
-SaveDataBufferYPosPtr_1FC8:  skip 6
-SaveDataBufferSwitches_1FCE: skip 4
+SaveDataBufferSubmap_1FB8:   skip 2 ;done
+SaveDataBufferAni_1FBA:      skip 4 ;done
+SaveDataBufferXPos_1FBE:     skip 2 ;done
+SaveDataBufferYPos_1FC0:     skip 6 ;done
+SaveDataBufferXPosPtr_1FC6:  skip 2 ;done
+SaveDataBufferYPosPtr_1FC8:  skip 6 ;done
+SaveDataBufferSwitches_1FCE: skip 4 ;done
 ; 7E1FD2 - 7E1FD4 unused
-skip 3
-SaveDataBufferExits_1FD5: skip 1
+skip 3 ;done
+; SaveDataBufferExits_1FD5:
+skip 1 ;done ;unused
 SpriteUnused_1FD6: skip 12 ;done
 SpriteDisableTimer_1FE2: skip 12 ;done
 MoonCollected_1FEE: skip 12 ;done
 ; 7E1FFA unused
 skip 1
-LightningFlashIndex_1FFB: skip 1
-LightningWaitTimer_1FFC: skip 1
-LightningTimer_1FFD: skip 1
-CreditsUpdateBG_1FFE: skip 1
+LightningFlashIndex_1FFB: skip 1 ;done
+LightningWaitTimer_1FFC: skip 1 ;done
+LightningTimer_1FFD: skip 1 ;done
+CreditsUpdateBG_1FFE: skip 1 ;done
 ; 7E1FFF unused
-skip 1
+skip 1 ;done
 
 NonMirroredWRAM_2000:
 MarioGraphics_2000: skip 23808 ;done
