@@ -657,7 +657,7 @@ CODE_028528:
     TAX                                     ;$028566 |
     LDA.l DATA_028510,X                     ;$028567 |
     STA.w ExtSprXSpeed_1747,Y               ;$02856B |
-    LDA.w $148E                             ;$02856E |
+    LDA.w RandomNumber_148D+1               ;$02856E |
     AND.b #$07                              ;$028571 |
     TAX                                     ;$028573 |
     LDA.l DATA_028518,X                     ;$028574 |
@@ -745,7 +745,7 @@ CODE_0285EF:
     LDA.w SpriteXPosHigh_14E0,X             ;$02860B |
     ADC.b #$00                              ;$02860E |
     STA.w MinExtSpriteXPosHigh_18EA,Y       ;$028610 |
-    LDA.w $148E                             ;$028613 |
+    LDA.w RandomNumber_148D+1               ;$028613 |
     AND.b #$07                              ;$028616 |
     CLC                                     ;$028618 |
     ADC.b #$07                              ;$028619 |
@@ -5795,7 +5795,7 @@ CODE_02AAD7:
     LDA.b Layer1XPos_1A+1                   ;$02AAEF |
     ADC.b #$00                              ;$02AAF1 |
     STA.w $1E3E,X                           ;$02AAF3 |
-    LDA.w $148E                             ;$02AAF6 |
+    LDA.w RandomNumber_148D+1               ;$02AAF6 |
     AND.b #$3F                              ;$02AAF9 |
     ADC.b #$08                              ;$02AAFB |
     CLC                                     ;$02AAFD |
@@ -6688,7 +6688,7 @@ CODE_02B196:
     LDA.b Layer1XPos_1A+1                   ;$02B19B |
     ADC.b #$00                              ;$02B19D |
     STA.w SpriteXPosHigh_14E0,X             ;$02B19F |
-    LDA.w $148E                             ;$02B1A2 |
+    LDA.w RandomNumber_148D+1               ;$02B1A2 |
     AND.b #$03                              ;$02B1A5 |
     TAY                                     ;$02B1A7 |
     LDA.w DATA_02B157,Y                     ;$02B1A8 |
@@ -6884,7 +6884,7 @@ GenerateEerie:
     LDA.b Layer1YPos_1C+1                   ;$02B2FC |
     ADC.b #$00                              ;$02B2FE |
     STA.w SpriteYPosHigh_14D4,X             ;$02B300 |
-    LDA.w $148E                             ;$02B303 |
+    LDA.w RandomNumber_148D+1               ;$02B303 |
     AND.b #$01                              ;$02B306 |
     TAY                                     ;$02B308 |
     LDA.w DATA_02B2D0,Y                     ;$02B309 |
@@ -11220,7 +11220,7 @@ CODE_02D2B2:
     PLA                                     ;$02D2BF |
     PLP                                     ;$02D2C0 |
     ADC.b #$00                              ;$02D2C1 |
-    STA.w $1491                             ;$02D2C3 |
+    STA.w SpriteXMovement_1491              ;$02D2C3 |
     RTS                                     ;$02D2C6 |
 
     STA $00                                 ;$02D2C7 |
@@ -13769,7 +13769,7 @@ ScalePlatformMain:
     PLA                                     ;$02E561 |
     STA.b SpriteYSpeed_AA,X                 ;$02E562 |
     LDY.b #$00                              ;$02E564 |
-    LDA.w $1491                             ;$02E566 |
+    LDA.w SpriteXMovement_1491              ;$02E566 |
     EOR.b #$FF                              ;$02E569 |
     INC A                                   ;$02E56B |
     BPL +                                   ;$02E56C |
@@ -15026,7 +15026,7 @@ CODE_02EE80:
     AND.b #!Block_Right_01                  ;$02EE92 |
     BNE Return02EEA8                        ;$02EE94 |
     LDY.b #$00                              ;$02EE96 |
-    LDA.w $1491                             ;$02EE98 |
+    LDA.w SpriteXMovement_1491              ;$02EE98 |
     BPL CODE_02EE9E                         ;$02EE9B |
     DEY                                     ;$02EE9D |
 CODE_02EE9E:

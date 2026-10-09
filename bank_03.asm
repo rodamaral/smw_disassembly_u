@@ -1014,7 +1014,7 @@ MegaMoleNoYoshi:
     ADC.b #$FF                              ;$038807 |
     STA.b PlayerYPos_96+1                   ;$038809 |
     LDY.b #$00                              ;$03880B |
-    LDA.w $1491                             ;$03880D |
+    LDA.w SpriteXMovement_1491              ;$03880D |
     BPL CODE_038813                         ;$038810 |
     DEY                                     ;$038812 |
 CODE_038813:
@@ -1654,7 +1654,7 @@ CODE_038CB2:
     LDA.b #$01                              ;$038CCC |
     STA.w OnSolidSprite_1471                ;$038CCE |
     LDY.b #$00                              ;$038CD1 |
-    LDA.w $1491                             ;$038CD3 |
+    LDA.w SpriteXMovement_1491              ;$038CD3 |
     BPL CODE_038CD9                         ;$038CD6 |
     DEY                                     ;$038CD8 |
 CODE_038CD9:
@@ -1812,7 +1812,7 @@ Return038DEF:
 
 CODE_038DF0:
     JSL UpdateSpritePos
-    LDA.w $1491                             ;$038DF4 |
+    LDA.w SpriteXMovement_1491              ;$038DF4 |
     STA.w Sprite_1528,X                     ;$038DF7 |
     JSL InvisBlkMainRt                      ;$038DFA |
     RTS                                     ;$038DFE |
@@ -6049,7 +6049,7 @@ CODE_03AD88:
     LDA.w SpriteXPosHigh_14E0,X             ;$03AD8E |
     ADC $00                                 ;$03AD91 |
     STA.w MinExtSpriteXPosHigh_18EA,Y       ;$03AD93 |
-    LDA.w $148E                             ;$03AD96 |
+    LDA.w RandomNumber_148D+1               ;$03AD96 |
     AND.b #$1F                              ;$03AD99 |
     ADC.b SpriteYPosLow_D8,X                ;$03AD9B |
     STA.w MinorSprYPosLow_17FC,Y            ;$03AD9D |
@@ -8447,66 +8447,66 @@ CODE_03C500:
     STA.w $0702                             ;$03C522 |
     LDA.b SpriteLock_9D                     ;$03C525 |
     BNE Return03C4F9                        ;$03C527 |
-    LDA.w $1482                             ;$03C529 |
+    LDA.w LightSkipInit_1482                ;$03C529 |
     BNE CODE_03C54D                         ;$03C52C |
     LDA.b #$00                              ;$03C52E |
-    STA.w $1476                             ;$03C530 |
+    STA.w LightBotWinOpenPos_1476           ;$03C530 |
     LDA.b #$90                              ;$03C533 |
-    STA.w $1478                             ;$03C535 |
+    STA.w LightBotWinClosePos_1478          ;$03C535 |
     LDA.b #$78                              ;$03C538 |
-    STA.w LightTopWinOpenPos_1472            ;$03C53A |
+    STA.w LightTopWinOpenPos_1472           ;$03C53A |
     LDA.b #$87                              ;$03C53D |
-    STA.w $1474                             ;$03C53F |
+    STA.w LightTopWinClosePos_1474          ;$03C53F |
     LDA.b #$01                              ;$03C542 |
-    STA.w $1486                             ;$03C544 |
-    STZ.w $1483                             ;$03C547 |
-    INC.w $1482                             ;$03C54A |
+    STA.w LightExists_1486                  ;$03C544 |
+    STZ.w LightMoveDir_1483                 ;$03C547 |
+    INC.w LightSkipInit_1482                ;$03C54A |
 CODE_03C54D:
-    LDY.w $1483
-    LDA.w $1476                             ;$03C550 |
+    LDY.w LightMoveDir_1483
+    LDA.w LightBotWinOpenPos_1476           ;$03C550 |
     CLC                                     ;$03C553 |
     ADC.w DATA_03C48F,Y                     ;$03C554 |
-    STA.w $1476                             ;$03C557 |
-    LDA.w $1478                             ;$03C55A |
+    STA.w LightBotWinOpenPos_1476           ;$03C557 |
+    LDA.w LightBotWinClosePos_1478          ;$03C55A |
     CLC                                     ;$03C55D |
     ADC.w DATA_03C48F,Y                     ;$03C55E |
-    STA.w $1478                             ;$03C561 |
+    STA.w LightBotWinClosePos_1478          ;$03C561 |
     CMP.w DATA_03C491,Y                     ;$03C564 |
     BNE CODE_03C572                         ;$03C567 |
-    LDA.w $1483                             ;$03C569 |
+    LDA.w LightMoveDir_1483                 ;$03C569 |
     INC A                                   ;$03C56C |
     AND.b #$01                              ;$03C56D |
-    STA.w $1483                             ;$03C56F |
+    STA.w LightMoveDir_1483                 ;$03C56F |
 CODE_03C572:
     LDA.b Frame_13
     AND.b #$03                              ;$03C574 |
     BNE Return03C4F9                        ;$03C576 |
     LDY.b #$00                              ;$03C578 |
     LDA.w LightTopWinOpenPos_1472           ;$03C57A |
-    STA.w $147A                             ;$03C57D |
+    STA.w LightWinOpenCalc_147A             ;$03C57D |
     SEC                                     ;$03C580 |
-    SBC.w $1476                             ;$03C581 |
+    SBC.w LightBotWinOpenPos_1476           ;$03C581 |
     BCS CODE_03C58A                         ;$03C584 |
     INY                                     ;$03C586 |
     EOR.b #$FF                              ;$03C587 |
     INC A                                   ;$03C589 |
 CODE_03C58A:
-    STA.w $1480
-    STY.w $1484                             ;$03C58D |
-    STZ.w $147E                             ;$03C590 |
+    STA.w LightLeftWidth_1480
+    STY.w LightLeftRelPos_1484              ;$03C58D |
+    STZ.w LightWinOpenMove_147E             ;$03C590 |
     LDY.b #$00                              ;$03C593 |
-    LDA.w $1474                             ;$03C595 |
-    STA.w $147C                             ;$03C598 |
+    LDA.w LightTopWinClosePos_1474          ;$03C595 |
+    STA.w LightWinCloseCalc_147C            ;$03C598 |
     SEC                                     ;$03C59B |
-    SBC.w $1478                             ;$03C59C |
+    SBC.w LightBotWinClosePos_1478          ;$03C59C |
     BCS CODE_03C5A5                         ;$03C59F |
     INY                                     ;$03C5A1 |
     EOR.b #$FF                              ;$03C5A2 |
     INC A                                   ;$03C5A4 |
 CODE_03C5A5:
-    STA.w $1481
-    STY.w $1485                             ;$03C5A8 |
-    STZ.w $147F                             ;$03C5AB |
+    STA.w LightRightWidth_1481
+    STY.w LightRightRelPos_1485             ;$03C5A8 |
+    STZ.w LightWinCloseMove_147F            ;$03C5AB |
     LDA.b SpritePhase_C2,X                  ;$03C5AE |
     STA $0F                                 ;$03C5B0 |
     PHX                                     ;$03C5B2 |
@@ -8515,37 +8515,37 @@ CODE_03C5A5:
 CODE_03C5B8:
     CPX.w #$005F
     BCC CODE_03C607                         ;$03C5BB |
-    LDA.w $147E                             ;$03C5BD |
+    LDA.w LightWinOpenMove_147E             ;$03C5BD |
     CLC                                     ;$03C5C0 |
-    ADC.w $1480                             ;$03C5C1 |
-    STA.w $147E                             ;$03C5C4 |
+    ADC.w LightLeftWidth_1480               ;$03C5C1 |
+    STA.w LightWinOpenMove_147E             ;$03C5C4 |
     BCS CODE_03C5CD                         ;$03C5C7 |
     CMP.b #$CF                              ;$03C5C9 |
     BCC CODE_03C5E0                         ;$03C5CB |
 CODE_03C5CD:
     SBC.b #$CF
-    STA.w $147E                             ;$03C5CF |
-    INC.w $147A                             ;$03C5D2 |
-    LDA.w $1484                             ;$03C5D5 |
+    STA.w LightWinOpenMove_147E             ;$03C5CF |
+    INC.w LightWinOpenCalc_147A             ;$03C5D2 |
+    LDA.w LightLeftRelPos_1484              ;$03C5D5 |
     BNE CODE_03C5E0                         ;$03C5D8 |
-    DEC.w $147A                             ;$03C5DA |
-    DEC.w $147A                             ;$03C5DD |
+    DEC.w LightWinOpenCalc_147A             ;$03C5DA |
+    DEC.w LightWinOpenCalc_147A             ;$03C5DD |
 CODE_03C5E0:
-    LDA.w $147F
+    LDA.w LightWinCloseMove_147F
     CLC                                     ;$03C5E3 |
-    ADC.w $1481                             ;$03C5E4 |
-    STA.w $147F                             ;$03C5E7 |
+    ADC.w LightRightWidth_1481              ;$03C5E4 |
+    STA.w LightWinCloseMove_147F            ;$03C5E7 |
     BCS CODE_03C5F0                         ;$03C5EA |
     CMP.b #$CF                              ;$03C5EC |
     BCC CODE_03C603                         ;$03C5EE |
 CODE_03C5F0:
     SBC.b #$CF
-    STA.w $147F                             ;$03C5F2 |
-    INC.w $147C                             ;$03C5F5 |
-    LDA.w $1485                             ;$03C5F8 |
+    STA.w LightWinCloseMove_147F            ;$03C5F2 |
+    INC.w LightWinCloseCalc_147C            ;$03C5F5 |
+    LDA.w LightRightRelPos_1485             ;$03C5F8 |
     BNE CODE_03C603                         ;$03C5FB |
-    DEC.w $147C                             ;$03C5FD |
-    DEC.w $147C                             ;$03C600 |
+    DEC.w LightWinCloseCalc_147C            ;$03C5FD |
+    DEC.w LightWinCloseCalc_147C            ;$03C600 |
 CODE_03C603:
     LDA $0F
     BNE CODE_03C60F                         ;$03C605 |
@@ -8558,7 +8558,7 @@ CODE_03C607:
 CODE_03C60F:
     LDA.w $147A
     STA.w $04A0,X                           ;$03C612 |
-    LDA.w $147C                             ;$03C615 |
+    LDA.w LightWinCloseCalc_147C            ;$03C615 |
 CODE_03C618:
     STA.w $04A1,X
     INX                                     ;$03C61B |

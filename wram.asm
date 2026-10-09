@@ -1851,37 +1851,37 @@ OnSolidSprite_1471: skip 1 ;done
 LightTopWinOpenPos_1472: skip 1 ;done
 ; 7E1473 unused
 skip 1
-LightTopWinClosePos_1474: skip 1
+LightTopWinClosePos_1474: skip 1 ;done
 ; 7E1475 unused
 skip 1
-LightBotWinOpenPos_1476: skip 1
+LightBotWinOpenPos_1476: skip 1 ;done
 ; 7E1477 unused
 skip 1
-LightBotWinClosePos_1478: skip 1
+LightBotWinClosePos_1478: skip 1 ;done
 ; 7E1479 unused
 skip 1
-LightWinOpenCalc_147A: skip 1
+LightWinOpenCalc_147A: skip 1 ;done
 ; 7E147B unused
 skip 1
-LightWinCloseCalc_147C: skip 1
+LightWinCloseCalc_147C: skip 1 ;done
 ; 7E147D unused
 skip 1
-LightWinOpenMove_147E: skip 1
-LightWinCloseMove_147F: skip 1
-LightLeftWidth_1480: skip 1
-LightRightWidth_1481: skip 1
-LightSkipInit_1482: skip 1
-LightMoveDir_1483: skip 1
-LightLeftRelPos_1484: skip 1
-LightRightRelPos_1485: skip 1
-LightExists_1486: skip 1
+LightWinOpenMove_147E: skip 1 ;done
+LightWinCloseMove_147F: skip 1 ;done
+LightLeftWidth_1480: skip 1 ;done
+LightRightWidth_1481: skip 1 ;done
+LightSkipInit_1482: skip 1 ;done
+LightMoveDir_1483: skip 1 ;done
+LightLeftRelPos_1484: skip 1 ;done
+LightRightRelPos_1485: skip 1 ;done
+LightExists_1486: skip 1 ;done
 ; 7E1487 - 7E148A unused
 skip 4
-RNGCalc_148B: skip 2
-RandomNumber_148D: skip 2
-CarryingFlagMirror_148F: skip 1
-StarTimer_1490: skip 1
-SpriteXMovement_1491: skip 1
+RNGCalc_148B: skip 2 ;done
+RandomNumber_148D: skip 2 ;done
+CarryingFlagMirror_148F: skip 1 ;done
+StarTimer_1490: skip 1 ;done
+SpriteXMovement_1491: skip 1 ;done
 PlayerPeaceSign_1492: skip 1 ;done
 EndLevelTimer_1493: skip 1;done
 ColorFadeDir_1494: skip 1 ;done

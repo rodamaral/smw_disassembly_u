@@ -889,7 +889,7 @@ return_0185C2:
     RTS
 
 call_sprite_main_0185C3:
-    STZ.w $1491                             ;$0185C3 |
+    STZ.w SpriteXMovement_1491              ;$0185C3 |
     LDA.b SpriteNumber_9E,X                 ;$0185C6 |
     JSL execute_pointer                     ;$0185C8 |
 
@@ -6000,7 +6000,7 @@ CODE_01ABF8:
     PLP                                     ;$01AC06 |
     ADC.b #$00                              ;$01AC07 |
 CODE_01AC09:
-    STA.w $1491
+    STA.w SpriteXMovement_1491
     RTS                                     ;$01AC0C |
 
 SpriteOffScreen1:
@@ -6276,7 +6276,7 @@ CODE_01ADE8:
     STA.b SpriteXSpeed_B6,X                 ;$01ADEA |
 CODE_01ADEC:
     JSR SubSprXPosNoGrvty
-    LDA.w $1491                             ;$01ADEF |
+    LDA.w SpriteXMovement_1491              ;$01ADEF |
     STA.w Sprite_1528,X                     ;$01ADF2 |
     INC.w SpriteAnimationTimer_1570,X       ;$01ADF5 |
 CODE_01ADF8:
@@ -6640,7 +6640,7 @@ CODE_01B062:
     LDA.w DATA_01B029,Y                     ;$01B06B |
     STA.b SpriteXSpeed_B6,X                 ;$01B06E |
     JSL GetRand                             ;$01B070 |
-    LDA.w $148E                             ;$01B074 |
+    LDA.w RandomNumber_148D+1               ;$01B074 |
     AND.b #$03                              ;$01B077 |
     TAY                                     ;$01B079 |
     LDA.w DATA_01B025,Y                     ;$01B07A |
@@ -6952,9 +6952,9 @@ CODE_01B2A5:
 
 CODE_01B2B0:
     JSR SubSprYPosNoGrvty
-    STZ.w $1491                             ;$01B2B3 |
+    STZ.w SpriteXMovement_1491              ;$01B2B3 |
 CODE_01B2B6:
-    LDA.w $1491
+    LDA.w SpriteXMovement_1491
     STA.w Sprite_1528,X                     ;$01B2B9 |
     JSR CODE_01B457                         ;$01B2BC |
     JSR SubOffscreen1Bnk1                   ;$01B2BF |
@@ -7310,7 +7310,7 @@ OrangePlatform:
     LDA.b SpriteLock_9D                     ;$01B53D |
     BNE Return01B558                        ;$01B53F |
     JSR SubSprXPosNoGrvty                   ;$01B541 |
-    LDA.w $1491                             ;$01B544 |
+    LDA.w SpriteXMovement_1491              ;$01B544 |
     STA.w Sprite_1528,X                     ;$01B547 |
     JSR CODE_01B457                         ;$01B54A |
     BCC Return01B558                        ;$01B54D |
@@ -7338,7 +7338,7 @@ CODE_01B56A:
     BNE CODE_01B574                         ;$01B56F |
     JSR SubSprYPosNoGrvty                   ;$01B571 |
 CODE_01B574:
-    STZ.w $1491
+    STZ.w SpriteXMovement_1491
     LDA.b SpriteNumber_9E,X                 ;$01B577 |
     CMP.b #!SpikeBall_A4                    ;$01B579 |
     BNE CODE_01B580                         ;$01B57B |
@@ -7811,7 +7811,7 @@ CODE_01B88F:
     SBC.b #$00                              ;$01B89B |
     STA.b PlayerYPos_96+1                   ;$01B89D |
     LDY.b #$00                              ;$01B89F |
-    LDA.w $1491                             ;$01B8A1 |
+    LDA.w SpriteXMovement_1491              ;$01B8A1 |
     BPL CODE_01B8A7                         ;$01B8A4 |
     DEY                                     ;$01B8A6 |
 CODE_01B8A7:
@@ -9906,7 +9906,7 @@ CODE_01C795:
     PHA                                     ;$01C7C4 |
     SEC                                     ;$01C7C5 |
     SBC.b SpritePhase_C2,X                  ;$01C7C6 |
-    STA.w $1491                             ;$01C7C8 |
+    STA.w SpriteXMovement_1491              ;$01C7C8 |
     PLA                                     ;$01C7CB |
     STA.b SpritePhase_C2,X                  ;$01C7CC |
     LDY.w SpriteOAMIndex_15EA,X             ;$01C7CE |
@@ -10265,7 +10265,7 @@ CODE_01CA45:
     AND.b #!Block_Sides_03                  ;$01CA58 |
     BNE CODE_01CA6E                         ;$01CA5A |
     LDY.b #$00                              ;$01CA5C |
-    LDA.w $1491                             ;$01CA5E |
+    LDA.w SpriteXMovement_1491              ;$01CA5E |
     BPL CODE_01CA64                         ;$01CA61 |
     DEY                                     ;$01CA63 |
 CODE_01CA64:
