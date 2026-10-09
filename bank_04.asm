@@ -272,7 +272,7 @@ CODE_048261:
 
 .CODE_04829E:
     REP #$20
-    LDA.w $1DF2                             ;$0482A0 |
+    LDA.w OWFreeCamYPos_1DF2                ;$0482A0 |
     SEC                                     ;$0482A3 |
     SBC.b Layer1YPos_1C                     ;$0482A4 |
     STA $01                                 ;$0482A6 |
@@ -284,7 +284,7 @@ CODE_048261:
     SEP #$20                                ;$0482AF |
     STA $05                                 ;$0482B1 |
     REP #$20                                ;$0482B3 |
-    LDA.w $1DF0                             ;$0482B5 |
+    LDA.w OWFreeCamXPos_1DF0                ;$0482B5 |
     SEC                                     ;$0482B8 |
     SBC.b Layer1XPos_1A                     ;$0482B9 |
     STA $00                                 ;$0482BB |
@@ -304,10 +304,10 @@ CODE_048261:
     CMP.b #$02
     BCS .CODE_0482ED                        ;$0482D3 |
     REP #$20                                ;$0482D5 |
-    LDA.w $1DF0                             ;$0482D7 |
+    LDA.w OWFreeCamXPos_1DF0                ;$0482D7 |
     STA.b Layer1XPos_1A                     ;$0482DA |
     STA.b Layer2XPos_1E                     ;$0482DC |
-    LDA.w $1DF2                             ;$0482DE |
+    LDA.w OWFreeCamYPos_1DF2                ;$0482DE |
     STA.b Layer1YPos_1C                     ;$0482E1 |
     STA.b Layer2YPos_20                     ;$0482E3 |
     SEP #$20                                ;$0482E5 |
@@ -411,9 +411,9 @@ CODE_048261:
     BNE .CODE_04839A                        ;$04838A |
     REP #$20                                ;$04838C |
     LDA.b Layer1XPos_1A                     ;$04838E |
-    STA.w $1DF0                             ;$048390 |
+    STA.w OWFreeCamXPos_1DF0                ;$048390 |
     LDA.b Layer1YPos_1C                     ;$048393 |
-    STA.w $1DF2                             ;$048395 |
+    STA.w OWFreeCamYPos_1DF2                ;$048395 |
     SEP #$20                                ;$048398 |
 .CODE_04839A:
     LDA.w PauseFlag_13D4
@@ -567,7 +567,7 @@ CODE_048531:
     DEY                                     ;$048532 |
     BPL CODE_04851A                         ;$048533 |
 CODE_048535:
-    STY.w $1DF6
+    STY.w StarWarpIndex_1DF6
     SEP #$20                                ;$048538 |
     RTS                                     ;$04853A |
 
@@ -577,7 +577,7 @@ CODE_04853B:
     PLB                                     ;$04853D |
     REP #$20                                ;$04853E |
     LDX.w PlayerTurnOW_0DD6                 ;$048540 |
-    LDY.w $1DF6                             ;$048543 |
+    LDY.w StarWarpIndex_1DF6                ;$048543 |
     LDA.w DATA_04849D,Y                     ;$048546 |
     PHA                                     ;$048549 |
     AND.w #$01FF                            ;$04854A |
@@ -1697,8 +1697,8 @@ OWPU_ABXY:
 CODE_049165:
     JSR CODE_048509
     BNE OWPU_IsOnPipeRTS                    ;$049168 |
-    STZ.w $1DF7                             ;$04916A |
-    STZ.w $1DF8                             ;$04916D |
+    STZ.w StarWarpLaunchSpeed_1DF7          ;$04916A |
+    STZ.w StarWarpLaunchTimer_1DF8          ;$04916D |
     LDA.b #$0D                              ;$049170 |
     STA.w SPCIO0_1DF9                       ;$049172 |
     LDA.b #!OwStarWarp_0B                   ;$049175 |
@@ -3135,10 +3135,10 @@ CODE_049E4C:
     RTS                                     ;$049E51 |
 
 CODE_049E52:
-    LDA.w $1DF7
+    LDA.w StarWarpLaunchSpeed_1DF7
     BNE CODE_049E63                         ;$049E55 |
-    INC.w $1DF8                             ;$049E57 |
-    LDA.w $1DF8                             ;$049E5A |
+    INC.w StarWarpLaunchTimer_1DF8          ;$049E57 |
+    LDA.w StarWarpLaunchTimer_1DF8          ;$049E5A |
     CMP.b #$31                              ;$049E5D |
     BNE CODE_049E93                         ;$049E5F |
     BRA CODE_049E69                         ;$049E61 |
@@ -3148,15 +3148,15 @@ CODE_049E63:
     AND.b #$07                              ;$049E65 |
     BNE CODE_049E78                         ;$049E67 |
 CODE_049E69:
-    INC.w $1DF7
-    LDA.w $1DF7                             ;$049E6C |
+    INC.w StarWarpLaunchSpeed_1DF7
+    LDA.w StarWarpLaunchSpeed_1DF7          ;$049E6C |
     CMP.b #$05                              ;$049E6F |
     BNE CODE_049E78                         ;$049E71 |
     LDA.b #$04                              ;$049E73 |
-    STA.w $1DF7                             ;$049E75 |
+    STA.w StarWarpLaunchSpeed_1DF7          ;$049E75 |
 CODE_049E78:
     REP #$20
-    LDA.w $1DF7                             ;$049E7A |
+    LDA.w StarWarpLaunchSpeed_1DF7          ;$049E7A |
     AND.w #$00FF                            ;$049E7D |
     STA $00                                 ;$049E80 |
     LDX.w PlayerTurnOW_0DD6                 ;$049E82 |
@@ -5334,7 +5334,7 @@ CODE_04DAE9:
 
 CODE_04DAEF:
     SEP #$30
-    LDA.w $1DE8                             ;$04DAF1 |
+    LDA.w OWSubmapSwapProcess_1DE8          ;$04DAF1 |
     JSL execute_pointer                     ;$04DAF4 |
 
 Ptrs04DAF8:
@@ -5383,7 +5383,7 @@ CODE_04DB43:
     STA.w OWTransitionXCalc_1B8D            ;$04DB46 |
     LDA.w DATA_04DB14,X                     ;$04DB49 |
     STA.w OWTransitionYCalc_1B8F            ;$04DB4C |
-    INC.w $1DE8                             ;$04DB4F |
+    INC.w OWSubmapSwapProcess_1DE8          ;$04DB4F |
     TXA                                     ;$04DB52 |
     EOR.w #$0002                            ;$04DB53 |
     TAX                                     ;$04DB56 |
@@ -5444,14 +5444,14 @@ CODE_04DB9D:
     STZ.w $0803                             ;$04DBBC |
     LDA.b #$06                              ;$04DBBF |
     STA.w $0680                             ;$04DBC1 |
-    INC.w $1DE8                             ;$04DBC4 |
+    INC.w OWSubmapSwapProcess_1DE8          ;$04DBC4 |
     RTS                                     ;$04DBC7 |
 
 DATA_04DBC8:
     db $02,$03,$04,$06,$07,$09,$05
 
 CODE_04DBCF:
-    STZ.w $1DE8
+    STZ.w OWSubmapSwapProcess_1DE8
     LDA.b #$04                              ;$04DBD2 |
     STA.w OWProcess_13D9                    ;$04DBD4 |
     LDA.w PlayerTurnOW_0DD6                 ;$04DBD7 |
@@ -5574,7 +5574,7 @@ CODE_04DCB6:
     STA.b Layer1DataPtr_65+2                ;$04DCC2 |
     LDX.w #$0000                            ;$04DCC4 |
     STX $00                                 ;$04DCC7 |
-    LDA.w $1DE8                             ;$04DCC9 |
+    LDA.w OWSubmapSwapProcess_1DE8          ;$04DCC9 |
     DEC A                                   ;$04DCCC |
     STA $01                                 ;$04DCCD |
     REP #$20                                ;$04DCCF |
@@ -5633,7 +5633,7 @@ CODE_04DCE8:
     LDA $00                                 ;$04DD35 |
     AND.b #$FF                              ;$04DD37 |
     BNE CODE_04DCE8                         ;$04DD39 |
-    INC.w $1DE8                             ;$04DD3B |
+    INC.w OWSubmapSwapProcess_1DE8          ;$04DD3B |
     PLP                                     ;$04DD3E |
     RTS                                     ;$04DD3F |
 
@@ -7967,7 +7967,7 @@ CODE_04F882:
     LDY.w OWProcess_13D9                    ;$04F884 |
     CPY.b #$0A                              ;$04F887 |
     BNE CODE_04F892                         ;$04F889 |
-    LDY.w $1DE8                             ;$04F88B |
+    LDY.w OWSubmapSwapProcess_1DE8          ;$04F88B |
     CPY.b #$01                              ;$04F88E |
     BNE CODE_04F8A3                         ;$04F890 |
 CODE_04F892:

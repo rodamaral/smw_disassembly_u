@@ -13545,7 +13545,7 @@ CODE_01E28C:
     LDA.b #$01
     STA.w ClusterSprNumber_1892,Y           ;$01E28E |
     LDA.b #$00                              ;$01E291 |
-    STA.w $1E02,Y                           ;$01E293 |
+    STA.w ClusterSprYPosLow_1E02,Y          ;$01E293 |
     LDA.b #$01                              ;$01E296 |
     STA.w $1E2A,Y                           ;$01E298 |
     LDA.b #$18                              ;$01E29B |

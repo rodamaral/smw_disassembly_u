@@ -278,7 +278,7 @@ NMI_start:                                  ;        \
     LDA.w OWProcess_13D9                    ;$008222 |\ If not switching submaps, skip OW layer DMA
     CMP.b #!OwSubmap_0A                     ;$008225 | | and handle the regular OW routines
     BNE .regular_OW_handle                  ;$008227 |/
-    LDY.w $1DE8                             ;$008229 |
+    LDY.w OWSubmapSwapProcess_1DE8          ;$008229 |
     DEY                                     ;$00822C |\ If submap loading is finished, skip layer data DMA
     DEY                                     ;$00822D | | and handle the regular OW routines
     CPY.b #$04                              ;$00822E | |
@@ -8182,13 +8182,13 @@ no_animation:                               ;        \
     LDA.b axlr0000Press_18                  ;$00CC6E |\ If A isn't pressed, don't cycle the debug action.
     CMP.b #$80                              ;$00CC70 | |
     BNE .no_cycle                           ;$00CC72 |/
-    INC.w $1E01                             ;$00CC74 | Increase the debug action.
-    LDA.w $1E01                             ;$00CC77 |\ If the debug action is $03,
+    INC.w DebugFreeRoam_1E01                ;$00CC74 | Increase the debug action.
+    LDA.w DebugFreeRoam_1E01                ;$00CC77 |\ If the debug action is $03,
     CMP.b #$03                              ;$00CC7A | |
     BCC .no_cycle                           ;$00CC7C | | reset it to $00.
-    STZ.w $1E01                             ;$00CC7E |/
+    STZ.w DebugFreeRoam_1E01                ;$00CC7E |/
 .no_cycle                                   ;        |
-    LDA.w $1E01                             ;$00CC81 |
+    LDA.w DebugFreeRoam_1E01                ;$00CC81 |
     BRA .skip_debug                         ;$00CC84 / Skip the debugging code.
                                             ;        \
     LSR                                     ;$00CC86 |\ If the debug action is $01,

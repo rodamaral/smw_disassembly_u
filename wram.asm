@@ -2392,31 +2392,30 @@ Layer1VramAddr_1BE4: skip 2;done
 Layer1VramBuffer_1BE6: skip 256 ;done
 Layer2VramAddr_1CE6: skip 2 ;done
 Layer2VramBuffer_1CE8: skip 256 ;done
-OWSubmapSwapProcess_1DE8: skip 1
-OWLoadEventFlag_1DE9:
+OWSubmapSwapProcess_1DE8: skip 1 ;done
+OWLoadEventFlag_1DE9: ;done
 CreditsScreenNumber_1DE9: skip 1 ;done
 OverworldEvent_1DEA: skip 1 ;done
 EventTileIndex_1DEB: skip 2 ;done
 EventLength_1DED: skip 2 ;done
 ; 7E1DEF unused
-skip 1
-OverworldFreeCamXPos_1DF0: skip 2
-OverworldFreeCamYPos_1DF2: skip 2
-TitleInputIndex_1DF4: skip 1
+skip 1 ;done
+OWFreeCamXPos_1DF0: skip 2 ;done
+OWFreeCamYPos_1DF2: skip 2 ;done
+TitleInputIndex_1DF4: skip 1 ;done
 
 ; Timer used for multiple purposes:
 ; How long a particular input during the intro sequence will remain pressed.
 ; How long the Nintendo Presents screen will remain active.
 ; How long a Switch Palace message will remain active.
 ; How long the player has to wait before they can dismiss the intro message.
-NintendoPresentsTimer_1DF5:
-IntroSequenceTimer_1DF5:
-SwitchPalaceTimer_1DF5:
-VariousPromptTimer_1DF5: skip 1
+NintendoPresentsTimer_1DF5: ;done
+IntroSequenceTimer_1DF5: ;done
+SwitchPalaceTimer_1DF5: skip 1 ;done
 
-StarWarpIndex_1DF6: skip 1
-StarWarpLaunchSpeed_1DF7: skip 1
-StarWarpLaunchTimer_1DF8: skip 1
+StarWarpIndex_1DF6: skip 1 ;done
+StarWarpLaunchSpeed_1DF7: skip 1 ;done
+StarWarpLaunchTimer_1DF8: skip 1 ;done
 SPCIO0_1DF9: skip 1 ;done
 SPCIO1_1DFA: skip 1 ;done
 SPCIO2_1DFB: skip 1 ;done
@@ -2427,8 +2426,8 @@ skip 2 ;done
 LastUsedMusic_1DFF: skip 1 ;done
 ; 7E1E00 unused
 skip 1 ;done
-DebugFreeRoam_1E01: skip 1
-ClusterSprYPosLow_1E02: skip 20
+DebugFreeRoam_1E01: skip 1; done
+ClusterSprYPosLow_1E02: skip 20 ;done
 ClusterSprXPosLow_1E16: skip 20
 ClusterSprYPosHigh_1E2A: skip 20
 ClusterSprXPosHigh_1E3E: skip 20
