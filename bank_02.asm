@@ -1240,7 +1240,7 @@ CODE_02894C:
 CODE_028967:
     LDA.b #$0E
     STA.w SPCIO2_1DFB                       ;$028969 |
-    INC.w $1432                             ;$02896C |
+    INC.w DirectCoinInit_1432               ;$02896C |
     STZ.w DirectCoinTimer_190C              ;$02896F |
 CODE_028972:
     LDA.b InteractionPtXPos_9A

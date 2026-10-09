@@ -1248,7 +1248,7 @@ CODE_048D91:
     PLB                                     ;$048D93 |
     STZ.w $1B9E                             ;$048D94 |
     LDA.b #$0F                              ;$048D97 |
-    STA.w $144E                             ;$048D99 |
+    STA.w Layer1ScrollXPosUpd_144E          ;$048D99 |
     LDX.b #$02                              ;$048D9C |
     LDA.w $1F13                             ;$048D9E |
     CMP.b #$12                              ;$048DA1 |
@@ -1832,9 +1832,9 @@ OWPU_NotAutoWalk:
     BRA CODE_04928C                         ;$04926C |
 
 CODE_04926E:
-    DEC.w $144E
+    DEC.w Layer1ScrollXPosUpd_144E
     BPL CODE_049287                         ;$049271 |
-    STZ.w $144E                             ;$049273 |
+    STZ.w Layer1ScrollXPosUpd_144E          ;$049273 |
     LDA.w PlayerTurnOW_0DD6                 ;$049276 |
     LSR                                     ;$049279 |
     AND.b #$02                              ;$04927A |
@@ -2046,9 +2046,9 @@ CODE_0493DA:
     ORA $00                                 ;$049400 |
     STA.w $1F13,X                           ;$049402 |
     LDA.w #$000F                            ;$049405 |
-    STA.w $144E                             ;$049408 |
+    STA.w Layer1ScrollXPosUpd_144E          ;$049408 |
     INC.w OWProcess_13D9                    ;$04940B |
-    STZ.w $1444                             ;$04940E |
+    STZ.w Layer1ScrollTimer_1444            ;$04940E |
 CODE_049411:
     JMP CODE_049831
 
@@ -2195,7 +2195,7 @@ CODE_04951B:
     JMP CODE_049801                         ;$04951F |
 
 CODE_049522:
-    LDA.w $1444
+    LDA.w Layer1ScrollTimer_1444
     BEQ CODE_04955C                         ;$049525 |
     STZ.w $1B78                             ;$049527 |
     LDX.w PlayerTurnOW_0DD6                 ;$04952A |
@@ -2369,7 +2369,7 @@ CODE_049676:
     STA.w $1F13,X                           ;$049684 |
 CODE_049687:
     LDA.w #$0001
-    STA.w $1444                             ;$04968A |
+    STA.w Layer1ScrollTimer_1444            ;$04968A |
     LDA.w OverworldLayer1Tile_13C1          ;$04968D |
     CMP.w #$005F                            ;$049690 |
     BEQ CODE_0496A5                         ;$049693 |

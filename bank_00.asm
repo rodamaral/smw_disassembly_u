@@ -264,7 +264,7 @@ NMI_start:                                  ;        \
     BRA .draw_mario                         ;$008207 | Continue with NMI by drawing mario
 .not_end_credits                            ;        |
     JSL generic_layer_1_and_2_upload        ;$008209 | Primary level data DMA
-    LDA.w $143A                             ;$00820D |\ Check if the transition screens need DMAed
+    LDA.w UploadMarioStart_143A             ;$00820D |\ Check if the transition screens need DMAed
     BEQ .skip_transition_DMA                ;$008210 |/
     JSR DMA_transition_screen               ;$008212 | DMA start/bonus/game over/time up transition screens
     BRA .skip_OW_NMI                        ;$008215 | Skip past regular and OW NMI
@@ -355,7 +355,7 @@ NMI_start:                                  ;        \
     LDA.b LagFlag_10                        ;$0082C4 |\ if mode 7 is lagging branch
     BNE .lagging_mode_7_NMI                 ;$0082C6 | |
     INC.b LagFlag_10                        ;$0082C8 |/ Otherwise increment the lag counter
-    LDA.w $143A                             ;$0082CA |\ Check if the transition screens need DMAed
+    LDA.w UploadMarioStart_143A             ;$0082CA |\ Check if the transition screens need DMAed
     BEQ .skip_mode_7_transition_DMA         ;$0082CD |/
     JSR DMA_transition_screen               ;$0082CF | DMA start/bonus/game over/time up transition screens
     BRA .draw_status_bar                    ;$0082D2 | Skip dynamic graphics DMA
@@ -422,7 +422,7 @@ NMI_start:                                  ;        \
     LDY.b #$24                              ;$00835C | Load the VTimer trigger
     BIT.w IRQNMICommand_0D9B                ;$00835E |\ If we are running in the platform boss mode
     BVC .skip_vtimer_change                 ;$008361 |/ skip to the end of NMI
-    LDA.w $13FC                             ;$008363 |\ If we are fighting Morton or Roy
+    LDA.w ActiveBoss_13FC                   ;$008363 |\ If we are fighting Morton or Roy
     ASL                                     ;$008366 | |
     TAX                                     ;$008367 | |
     LDA.w boss_ceiling_height,X             ;$008368 | | Check against the boss ceiling height
@@ -1806,7 +1806,7 @@ update_status_tileset_008E1A:
     BPL -                                   ;$008FD6 |/
 
 .draw_dragon_coins_008FD8:
-    LDA.w $1422                             ;$008FD8 |
+    LDA.w DragonCoinsShown_1422             ;$008FD8 |
     CMP.b #$05                              ;$008FDB |
     BCC +                                   ;$008FDD |
     LDA.b #$00                              ;$008FDF | if more than 4 coins, draw zero
@@ -2663,7 +2663,7 @@ CODE_0096E9:
     LDX.b #$07                              ;$0096F8 |
 CODE_0096FA:
     LDA.b Layer1XPos_1A,X
-    STA.w $1462,X                           ;$0096FC |
+    STA.w NextLayer1XPos_1462,X             ;$0096FC |
     DEX                                     ;$0096FF |
     BPL CODE_0096FA                         ;$009700 |
     JSR upload_level_music                  ;$009702 |
@@ -2710,9 +2710,9 @@ GM16_game_over_load_009750:
 
 GM17_game_over_main_009759:
     JSL OAM_reset_7F8000
-    LDA.w $143C                             ;$00975D |
+    LDA.w GameOverAnimation_143C            ;$00975D |
     BNE CODE_00978B                         ;$009760 |
-    DEC.w $143D                             ;$009762 |
+    DEC.w GameOverTimer_143D                ;$009762 |
     BNE CODE_00978E                         ;$009765 |
     LDA.w PlayerLives_0DBE                  ;$009767 |
     BPL CODE_009788                         ;$00976A |
@@ -2735,19 +2735,19 @@ CODE_00978B:
     SEC
     SBC.b #$04                              ;$00978C |
 CODE_00978E:
-    STA.w $143C
+    STA.w GameOverAnimation_143C
     CLC                                     ;$009791 |
     ADC.b #$A0                              ;$009792 |
     STA $00                                 ;$009794 |
     ROL $01                                 ;$009796 |
-    LDX.w $143B                             ;$009798 |
+    LDX.w DeathMessage_143B                 ;$009798 |
     LDY.b #$48                              ;$00979B |
 CODE_00979D:
     CPY.b #$28
     BNE CODE_0097AE                         ;$00979F |
     LDA.b #$78                              ;$0097A1 |
     SEC                                     ;$0097A3 |
-    SBC.w $143C                             ;$0097A4 |
+    SBC.w GameOverAnimation_143C            ;$0097A4 |
     STA $00                                 ;$0097A7 |
     ROL                                     ;$0097A9 |
     EOR.b #$01                              ;$0097AA |
@@ -2778,7 +2778,7 @@ load_boss_room_0097BC:
     BIT.w IRQNMICommand_0D9B                ;$0097DC |
     BVC .Iggy_Larry_009801                  ;$0097DF |
     JSR CODE_009925                         ;$0097E1 |
-    LDY.w $13FC                             ;$0097E4 |
+    LDY.w ActiveBoss_13FC                   ;$0097E4 |
     CPY.b #$03                              ;$0097E7 |
     BCC .Roy_Morton_Ludwig_0097F1           ;$0097E9 |
     BNE .Reznor_00983B                      ;$0097EB |
@@ -2805,10 +2805,10 @@ load_boss_room_0097BC:
     LDA.w #$FFD0                            ;$009813 |
     STA.b PlayerYPos_96                     ;$009816 |
     STZ.b Layer1XPos_1A                     ;$009818 |
-    STZ.w $1462                             ;$00981A |
+    STZ.w NextLayer1XPos_1462               ;$00981A |
     LDA.w #$FF90                            ;$00981D |
     STA.b Layer1YPos_1C                     ;$009820 |
-    STA.w $1464                             ;$009822 |
+    STA.w NextLayer1YPos_1464               ;$009822 |
     LDA.w #$0080                            ;$009825 |
     STA.b Mode7CenterX_2A                   ;$009828 |
     LDA.w #$0050                            ;$00982A |
@@ -2927,9 +2927,9 @@ CODE_009925:
     LDA.w #$0020                            ;$009929 |
     STA.b PlayerXPos_94                     ;$00992C |
     STZ.b Layer1XPos_1A                     ;$00992E |
-    STZ.w $1462                             ;$009930 |
+    STZ.w NextLayer1XPos_1462               ;$009930 |
     STZ.b Layer1YPos_1C                     ;$009933 |
-    STZ.w $1464                             ;$009935 |
+    STZ.w NextLayer1YPos_1464               ;$009935 |
     LDA.w #$0080                            ;$009938 |
     STA.b Mode7CenterX_2A                   ;$00993B |
     LDA.w #$00A0                            ;$00993D |
@@ -2947,7 +2947,7 @@ CODE_009925:
 
 CODE_00995B:
     REP #$30
-    LDA.w $13FC                             ;$00995D |
+    LDA.w ActiveBoss_13FC                   ;$00995D |
     AND.w #$00FF                            ;$009960 |
     ASL                                     ;$009963 |
     TAX                                     ;$009964 |
@@ -3067,7 +3067,7 @@ CODE_009A52:
     BCS CODE_009A6F                         ;$009A56 |
     JSL update_screen_position_00F6DB       ;$009A58 |
     JSL scroll_commands_and_layer_3_05BC00  ;$009A5C |
-    LDA.w $13FC                             ;$009A60 |
+    LDA.w ActiveBoss_13FC                   ;$009A60 |
     CMP.b #$04                              ;$009A63 |
     BEQ CODE_009A6F                         ;$009A65 |
     JSR CODE_0086C7                         ;$009A67 |
@@ -4516,7 +4516,7 @@ CODE_00A594:
 GM12_level_load_2_00A59C:
     JSR CODE_0085FA
     JSR disable_controls                    ;$00A59F |
-    STZ.w $143A                             ;$00A5A2 |
+    STZ.w UploadMarioStart_143A             ;$00A5A2 |
     JSR SetUpScreen                         ;$00A5A5 |
     JSR GM04DoDMA                           ;$00A5A8 |
     JSL CODE_05809E                         ;$00A5AB |
@@ -4785,7 +4785,7 @@ CODE_00A7B6:
     STA.w BackgroundVertOffset_1417
 CODE_00A7B9:
     LDA.w #$0080
-    STA.w $142A                             ;$00A7BC |
+    STA.w CameraMoveTrigger_142A            ;$00A7BC |
     SEP #$20                                ;$00A7BF |
     RTS                                     ;$00A7C1 |
 
@@ -4903,7 +4903,7 @@ CODE_00A8B3:
     BCC CODE_00A886                         ;$00A8B6 |
     SEP #$30                                ;$00A8B8 |
     LDA.b #$01                              ;$00A8BA |
-    STA.w $143A                             ;$00A8BC |
+    STA.w UploadMarioStart_143A             ;$00A8BC |
     STA.w MarioStartFlag_1935               ;$00A8BF |
     RTS                                     ;$00A8C2 |
 
@@ -7550,7 +7550,7 @@ CODE_00C71C:
     BCC CODE_00C73F                         ;$00C71E |
     LDA.b #$1B                              ;$00C720 |
     STA.w SPCIO3_1DFC                       ;$00C722 |
-    INC.w $143E                             ;$00C725 |
+    INC.w Layer1ScrollCmd_143E              ;$00C725 |
     LDA.b #$4C                              ;$00C728 |
     LDY.b #$F4                              ;$00C72A |
     LDX.b #$C0                              ;$00C72C |
@@ -7621,12 +7621,12 @@ CODE_00C789:
     LDA.b #$09                              ;$00C798 |
     STA.w SPCIO0_1DF9                       ;$00C79A |
 CODE_00C79D:
-    INC.w $143E
+    INC.w Layer1ScrollCmd_143E
     BRA CODE_00C7F6                         ;$00C7A0 |
 
 CODE_00C7A2:
     BNE CODE_00C7A9
-    INC.w $1445                             ;$00C7A4 |
+    INC.w Layer2ScrollTimer_1445            ;$00C7A4 |
     BRA CODE_00C7F6                         ;$00C7A7 |
 
 CODE_00C7A9:
@@ -7634,21 +7634,21 @@ CODE_00C7A9:
     BNE CODE_00C7B6                         ;$00C7AA |
     LDA.b #$0E                              ;$00C7AC |
     STA.w SPCIO0_1DF9                       ;$00C7AE |
-    INC.w $1446                             ;$00C7B1 |
+    INC.w Layer1ScrollXSpeed_1446           ;$00C7B1 |
     BRA CODE_00C7F6                         ;$00C7B4 |
 
 CODE_00C7B6:
     DEC A
     BNE CODE_00C7C0                         ;$00C7B7 |
     LDY.b #$88                              ;$00C7B9 |
-    STY.w $1445                             ;$00C7BB |
+    STY.w Layer2ScrollTimer_1445            ;$00C7BB |
     BRA CODE_00C7F6                         ;$00C7BE |
 
 CODE_00C7C0:
     DEC A
     BNE CODE_00C7CE                         ;$00C7C1 |
     LDA.b #$38                              ;$00C7C3 |
-    STA.w $1446                             ;$00C7C5 |
+    STA.w Layer1ScrollXSpeed_1446           ;$00C7C5 |
     LDA.b #$07                              ;$00C7C8 |
     TRB.b PlayerXPos_94                     ;$00C7CA |
     BRA CODE_00C7F6                         ;$00C7CC |
@@ -7660,7 +7660,7 @@ CODE_00C7CE:
     STA.w SPCIO3_1DFC                       ;$00C7D3 |
     LDA.b #$D8                              ;$00C7D6 |
     STA.b PlayerXSpeed_7B                   ;$00C7D8 |
-    INC.w $143E                             ;$00C7DA |
+    INC.w Layer1ScrollCmd_143E              ;$00C7DA |
     BRA CODE_00C79D                         ;$00C7DD |
 
 CODE_00C7DF:
@@ -8384,13 +8384,13 @@ return_00CDDC:                              ;        |
 screen_scrolling:
     LDA.w HorizLayer1Setting_1411
     BEQ return_00CDDC                       ;$00CDE0 |
-    LDY.w $13FE                             ;$00CDE2 |
-    LDA.w $13FD                             ;$00CDE5 |
+    LDY.w CameraScrollDir_13FE              ;$00CDE2 |
+    LDA.w CameraIsScrolling_13FD            ;$00CDE5 |
     STA.b SpriteLock_9D                     ;$00CDE8 |
     BNE CODE_00CE4C                         ;$00CDEA |
     LDA.w CameraProperMove_1400             ;$00CDEC |
     BEQ CODE_00CDF6                         ;$00CDEF |
-    STZ.w $13FE                             ;$00CDF1 |
+    STZ.w CameraScrollDir_13FE              ;$00CDF1 |
     BRA CODE_00CE48                         ;$00CDF4 |
 
 CODE_00CDF6:
@@ -8413,13 +8413,13 @@ ScrollScreen:
     BCC CODE_00CE4C                         ;$00CE13 |
     TAX                                     ;$00CE15 |
     REP #$20                                ;$00CE16 |
-    LDA.w $142A                             ;$00CE18 |
+    LDA.w CameraMoveTrigger_142A            ;$00CE18 |
     CMP.w DATA_00F6CB,X                     ;$00CE1B |
     SEP #$20                                ;$00CE1E |
     BEQ CODE_00CE4C                         ;$00CE20 |
     LDA.b #$01                              ;$00CE22 |
-    TRB.w $142A                             ;$00CE24 |
-    INC.w $13FD                             ;$00CE27 |
+    TRB.w CameraMoveTrigger_142A            ;$00CE24 |
+    INC.w CameraIsScrolling_13FD            ;$00CE27 |
     LDA.b #$00                              ;$00CE2A |
     CPX.b #$02                              ;$00CE2C |
     BNE CODE_00CE33                         ;$00CE2E |
@@ -8436,7 +8436,7 @@ CODE_00CE33:
     STY.w SPCIO3_1DFC                       ;$00CE41 |
 CODE_00CE44:
     TXA
-    STA.w $13FE                             ;$00CE45 |
+    STA.w CameraScrollDir_13FE              ;$00CE45 |
 CODE_00CE48:
     TAY
 CODE_00CE49:
@@ -8445,21 +8445,21 @@ CODE_00CE4C:
     LDX.b #$00
     LDA.b PlayerDir_76                      ;$00CE4E |
     ASL                                     ;$00CE50 |
-    STA.w $13FF                             ;$00CE51 |
+    STA.w CameraScrollPlayerDir_13FF        ;$00CE51 |
     REP #$20                                ;$00CE54 |
-    LDA.w $142A                             ;$00CE56 |
+    LDA.w CameraMoveTrigger_142A            ;$00CE56 |
     CMP.w DATA_00F6CB,Y                     ;$00CE59 |
     BEQ CODE_00CE6D                         ;$00CE5C |
     CLC                                     ;$00CE5E |
     ADC.w DATA_00F6BF,Y                     ;$00CE5F |
-    LDY.w $13FF                             ;$00CE62 |
+    LDY.w CameraScrollPlayerDir_13FF        ;$00CE62 |
     CMP.w DATA_00F6B3,Y                     ;$00CE65 |
     BNE CODE_00CE70                         ;$00CE68 |
-    STX.w $13FE                             ;$00CE6A |
+    STX.w CameraScrollDir_13FE              ;$00CE6A |
 CODE_00CE6D:
-    STX.w $13FD
+    STX.w CameraIsScrolling_13FD
 CODE_00CE70:
-    STA.w $142A
+    STA.w CameraMoveTrigger_142A
     STX.w CameraProperMove_1400             ;$00CE73 |
     SEP #$20                                ;$00CE76 |
 CODE_00CE78:
@@ -8815,11 +8815,11 @@ death_animation:
     BNE .not_time_up                        ;$00D0F1 | |
     LDX.b #$1D                              ;$00D0F3 | | show the "TIME UP" message.
 .show_message                               ;        |/
-    STX.w $143B                             ;$00D0F5 | Set the death message.
+    STX.w DeathMessage_143B                 ;$00D0F5 | Set the death message.
     LDA.b #$C0                              ;$00D0F8 |\ Set the death message timer.
-    STA.w $143C                             ;$00D0FA |/
+    STA.w GameOverAnimation_143C            ;$00D0FA |/
     LDA.b #$FF                              ;$00D0FD |\ Set how long the death message should persist.
-    STA.w $143D                             ;$00D0FF |/
+    STA.w GameOverTimer_143D                ;$00D0FF |/
     LDY.b #!FadeToGameOver_15               ;$00D102 | Load the "GAME OVER" or "TIME UP" game mode,
 .not_time_up                                ;        |
     STY.w GameMode_0100                     ;$00D104 | and set the game mode.
@@ -9775,7 +9775,7 @@ CODE_00D9B5:
     TAY                                     ;$00D9BC |
 CODE_00D9BD:
     INY
-    LDA.w $13FA                             ;$00D9BE |
+    LDA.w PlayerCanJumpWater_13FA           ;$00D9BE |
     BNE CODE_00D9CC                         ;$00D9C1 |
     DEY                                     ;$00D9C3 |
     LDA.b Frame_14                          ;$00D9C4 |
@@ -9808,7 +9808,7 @@ CODE_00D9EB:
     LDA.b byetudlrPress_16
     ORA.b axlr0000Press_18                  ;$00D9ED |
     BPL CODE_00DA0B                         ;$00D9EF |
-    LDA.w $13FA                             ;$00D9F1 |
+    LDA.w PlayerCanJumpWater_13FA           ;$00D9F1 |
     BNE CODE_00DA0B                         ;$00D9F4 |
     JSR CODE_00DAA9                         ;$00D9F6 |
     LDA.b PlayerInAir_72                    ;$00D9F9 |
@@ -10938,7 +10938,7 @@ no_layer_collision:                         ;        |
     BNE CODE_00E9FB                         ;$00E9AB |
     REP #$20                                ;$00E9AD |
     LDY.b #$00                              ;$00E9AF |
-    LDA.w $1462                             ;$00E9B1 |
+    LDA.w NextLayer1XPos_1462               ;$00E9B1 |
     CLC                                     ;$00E9B4 |
     ADC.w #$00E8                            ;$00E9B5 |
     CMP.b PlayerXPos_94                     ;$00E9B8 |
@@ -10948,7 +10948,7 @@ no_layer_collision:                         ;        |
     LDA.b PlayerXPos_94                     ;$00E9BF |
     SEC                                     ;$00E9C1 |
     SBC.w #$0008                            ;$00E9C2 |
-    CMP.w $1462                             ;$00E9C5 |
+    CMP.w NextLayer1XPos_1462               ;$00E9C5 |
 CODE_00E9C8:
     SEP #$20
     BEQ CODE_00E9FB                         ;$00E9CA |
@@ -10958,7 +10958,7 @@ CODE_00E9C8:
     LDA.b #!Block_Screen_80                 ;$00E9D3 |
     TSB.b PlayerBlocked_77                  ;$00E9D5 |
     REP #$20                                ;$00E9D7 |
-    LDA.w $1446                             ;$00E9D9 |
+    LDA.w Layer1ScrollXSpeed_1446           ;$00E9D9 |
     LSR                                     ;$00E9DC |
     LSR                                     ;$00E9DD |
     LSR                                     ;$00E9DE |
@@ -10971,7 +10971,7 @@ CODE_00E9C8:
     BMI CODE_00E9F6                         ;$00E9EA |
     LDA $00                                 ;$00E9EC |
     STA.b PlayerXSpeed_7B                   ;$00E9EE |
-    LDA.w $144E                             ;$00E9F0 |
+    LDA.w Layer1ScrollXPosUpd_144E          ;$00E9F0 |
     STA.w PlayerXPosSpx_13DA                ;$00E9F3 |
 CODE_00E9F6:
     LDA.w DATA_00E90A,Y
@@ -11016,7 +11016,7 @@ CODE_00EA34:
     BNE CODE_00EA42                         ;$00EA3D |
     STZ.w PlayerBehindNet_13F9              ;$00EA3F |
 CODE_00EA42:
-    STZ.w $13FA
+    STZ.w PlayerCanJumpWater_13FA
     LDA.b LevelIsWater_85                   ;$00EA45 |
     BNE CODE_00EA5E                         ;$00EA47 |
     LSR $8A                                 ;$00EA49 |
@@ -11045,7 +11045,7 @@ CODE_00EA65:
     BMI CODE_00EA75                         ;$00EA71 |
     STA.b PlayerYSpeed_7D                   ;$00EA73 |
 CODE_00EA75:
-    INC.w $13FA
+    INC.w PlayerCanJumpWater_13FA
     LDA.b byetudlrHold_15                   ;$00EA78 |
     AND.b #$88                              ;$00EA7A |
     CMP.b #$88                              ;$00EA7C |
@@ -12189,18 +12189,18 @@ process_center_page_0_tiles:
     SBC.b #$6F                              ;$00F28E | |
     CMP.b #$04                              ;$00F290 | | If it's an invisible 1up point, process it.
     BCS .not_invisible_1up                  ;$00F292 |/
-    CMP.w $1421                             ;$00F294 |\ If it is the next 1up point,
+    CMP.w OneUpCheckpoints_1421             ;$00F294 |\ If it is the next 1up point,
     BEQ .next_1up_point                     ;$00F297 |/ increase the number of 1up points reached.
     INC A                                   ;$00F299 |\ If it is the current 1up point,
-    CMP.w $1421                             ;$00F29A | | don't reset the sequence.
+    CMP.w OneUpCheckpoints_1421             ;$00F29A | | don't reset the sequence.
     BEQ .return                             ;$00F29D |/
-    LDA.w $1421                             ;$00F29F |\ If the invisible 1up was already triggered,
+    LDA.w OneUpCheckpoints_1421             ;$00F29F |\ If the invisible 1up was already triggered,
     CMP.b #$04                              ;$00F2A2 | | don't try to trigger it again.
     BCS .return                             ;$00F2A4 |/
     LDA.b #$FF                              ;$00F2A6 | Reset the 1up point sequence.
 .next_1up_point                             ;        |
     INC A                                   ;$00F2A8 |\ Increase the number of 1up points reached.
-    STA.w $1421                             ;$00F2A9 |/
+    STA.w OneUpCheckpoints_1421             ;$00F2A9 |/
     CMP.b #$04                              ;$00F2AC |\ If four points have been reached,
     BNE .return                             ;$00F2AE | |
     PHX                                     ;$00F2B0 | |
@@ -12290,8 +12290,8 @@ process_page_0_tiles_no_climb:
     STA.b InteractionPtYPos_98              ;$00F33D |/
 .is_upper_yoshi_coin                        ;        |
     JSL give_yoshi_coin_points              ;$00F33F | Give yoshi coin points.
-    INC.w $1422                             ;$00F343 |\ Increase the number of yoshi coins collected.
-    LDA.w $1422                             ;$00F346 | |
+    INC.w DragonCoinsShown_1422             ;$00F343 |\ Increase the number of yoshi coins collected.
+    LDA.w DragonCoinsShown_1422             ;$00F346 | |
     CMP.b #$05                              ;$00F349 | |
     BCC .not_all_collected                  ;$00F34B | | If five have been collected,
     PHX                                     ;$00F34D | |
@@ -12319,8 +12319,8 @@ return_00F376:                              ;        |
     RTS                                     ;$00F376 /
 
 give_yoshi_coin_points:
-    LDA.w $1420                             ;$00F377 \
-    INC.w $1420                             ;$00F37A |
+    LDA.w DragonCoinsCollected_1420         ;$00F377 \
+    INC.w DragonCoinsCollected_1420         ;$00F37A |
     CLC                                     ;$00F37D |
     ADC.b #$09                              ;$00F37E |
     CMP.b #$0D                              ;$00F380 |
@@ -12831,20 +12831,20 @@ update_screen_position_00F6DB:
     PHK                                     ;$00F6DC |
     PLB                                     ;$00F6DD |
     REP #$20                                ;$00F6DE | A->16
-    LDA.w $142A                             ;$00F6E0 |
+    LDA.w CameraMoveTrigger_142A            ;$00F6E0 |
     SEC                                     ;$00F6E3 |
     SBC.w #$000C                            ;$00F6E4 |
-    STA.w $142C                             ;$00F6E7 | set horizontal static camera region positions
+    STA.w CameraLeftBuffer_142C             ;$00F6E7 | set horizontal static camera region positions
     CLC                                     ;$00F6EA |
     ADC.w #$0018                            ;$00F6EB |
-    STA.w $142E                             ;$00F6EE |
-    LDA.w $1462                             ;$00F6F1 |
+    STA.w CameraRightBuffer_142E            ;$00F6EE |
+    LDA.w NextLayer1XPos_1462               ;$00F6F1 |
     STA.b Layer1XPos_1A                     ;$00F6F4 |
-    LDA.w $1464                             ;$00F6F6 |
+    LDA.w NextLayer1YPos_1464               ;$00F6F6 |
     STA.b Layer1YPos_1C                     ;$00F6F9 |
-    LDA.w $1466                             ;$00F6FB |
+    LDA.w NextLayer2XPos_1466               ;$00F6FB |
     STA.b Layer2XPos_1E                     ;$00F6FE |
-    LDA.w $1468                             ;$00F700 |
+    LDA.w NextLayer2YPos_1468               ;$00F700 |
     STA.b Layer2YPos_20                     ;$00F703 |
     LDA.b ScreenMode_5B                     ;$00F705 |
     LSR                                     ;$00F707 |
@@ -12859,13 +12859,13 @@ update_screen_position_00F6DB:
     SEC                                     ;$00F71C |
     SBC.b Layer1XPos_1A                     ;$00F71D |
     STA $00                                 ;$00F71F |
-    CMP.w $142A                             ;$00F721 |
+    CMP.w CameraMoveTrigger_142A            ;$00F721 |
     BPL +                                   ;$00F724 |
     LDY.b #!ScrollLeftUp_00                 ;$00F726 |
 +   STY.b Layer1ScrollDir_55                ;$00F728 |
     STY.b Layer2ScrollDir_56                ;$00F72A |
     SEC                                     ;$00F72C |
-    SBC.w $142C,Y                           ;$00F72D |
+    SBC.w CameraLeftBuffer_142C,Y           ;$00F72D |
     BEQ .CODE_00F75A                        ;$00F730 |
     STA $02                                 ;$00F732 |
     EOR.w DATA_00F6A3,Y                     ;$00F734 |
@@ -12896,20 +12896,20 @@ update_screen_position_00F6DB:
     AND.w #$FF00                            ;$00F760 |
     JSR ProcessVerticalScroll00F7F4         ;$00F763 |
     LDY.w HorizLayer1Setting_1411           ;$00F766 |
-    BEQ .CODE_00F79D                                ;$00F769 |
+    BEQ .CODE_00F79D                        ;$00F769 |
     LDY.b #$00                              ;$00F76B |
     LDA.b PlayerXPos_94                     ;$00F76D |
     SEC                                     ;$00F76F |
     SBC.b Layer1XPos_1A                     ;$00F770 |
     STA $00                                 ;$00F772 |
-    CMP.w $142A                             ;$00F774 |
+    CMP.w CameraMoveTrigger_142A            ;$00F774 |
     BMI +                                   ;$00F777 |
     LDY.b #$02                              ;$00F779 |
 +   SEC                                     ;$00F77B |
-    SBC.w $142C,Y                           ;$00F77C |
+    SBC.w CameraLeftBuffer_142C,Y           ;$00F77C |
     STA $02                                 ;$00F77F |
     EOR.w DATA_00F6A3,Y                     ;$00F781 |
-    BPL .CODE_00F79D                                ;$00F784 |
+    BPL .CODE_00F79D                        ;$00F784 |
     JSR CODE_00F8AB                         ;$00F786 |
     LDA $02                                 ;$00F789 |
     CLC                                     ;$00F78B |
@@ -12952,23 +12952,23 @@ update_screen_position_00F6DB:
     SEP #$20
     LDA.b Layer1XPos_1A                     ;$00F7C4 |
     SEC                                     ;$00F7C6 |
-    SBC.w $1462                             ;$00F7C7 |
+    SBC.w NextLayer1XPos_1462               ;$00F7C7 |
     STA.w Layer1DXPos_17BD                  ;$00F7CA |
     LDA.b Layer1YPos_1C                     ;$00F7CD |
     SEC                                     ;$00F7CF |
-    SBC.w $1464                             ;$00F7D0 |
+    SBC.w NextLayer1YPos_1464               ;$00F7D0 |
     STA.w Layer1DYPos_17BC                  ;$00F7D3 |
     LDA.b Layer2XPos_1E                     ;$00F7D6 |
     SEC                                     ;$00F7D8 |
-    SBC.w $1466                             ;$00F7D9 |
+    SBC.w NextLayer2XPos_1466               ;$00F7D9 |
     STA.w Layer2DXPos_17BF                  ;$00F7DC |
     LDA.b Layer2YPos_20                     ;$00F7DF |
     SEC                                     ;$00F7E1 |
-    SBC.w $1468                             ;$00F7E2 |
+    SBC.w NextLayer2YPos_1468               ;$00F7E2 |
     STA.w Layer2DYPos_17BE                  ;$00F7E5 |
     LDX.b #$07                              ;$00F7E8 |
 -   LDA.b Layer1XPos_1A,X                   ;$00F7EA |
-    STA.w $1462,X                           ;$00F7EC |
+    STA.w NextLayer1XPos_1462,X             ;$00F7EC |
     DEX                                     ;$00F7EF |
     BPL -                                   ;$00F7F0 |
     PLB                                     ;$00F7F2 |
@@ -13070,13 +13070,13 @@ ProcessVerticalScroll00F7F4:
     RTS
 
 CODE_00F8AB:
-    LDY.w $13FD
+    LDY.w CameraIsScrolling_13FD
     BNE Return00F8DE                        ;$00F8AE |
     SEP #$20                                ;$00F8B0 |
-    LDX.w $13FF                             ;$00F8B2 |
+    LDX.w CameraScrollPlayerDir_13FF        ;$00F8B2 |
     REP #$20                                ;$00F8B5 |
     LDY.b #$08                              ;$00F8B7 |
-    LDA.w $142A                             ;$00F8B9 |
+    LDA.w CameraMoveTrigger_142A            ;$00F8B9 |
     CMP.w DATA_00F6B3,X                     ;$00F8BC |
     BPL CODE_00F8C3                         ;$00F8BF |
     LDY.b #$0A                              ;$00F8C1 |

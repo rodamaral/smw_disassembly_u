@@ -4703,7 +4703,7 @@ CODE_03A279:
     LSR                                     ;$03A27D |
     TAY                                     ;$03A27E |
     LDA.w DATA_03A265,Y                     ;$03A27F |
-    STA.w $1429                             ;$03A282 |
+    STA.w BowserPalette_1429                ;$03A282 |
     LDA.w SpriteAnimationTimer_1570,X       ;$03A285 |
     CLC                                     ;$03A288 |
     ADC.b #$1E                              ;$03A289 |
@@ -4712,7 +4712,7 @@ CODE_03A279:
     LDA.b Frame_14                          ;$03A291 |
     LSR                                     ;$03A293 |
     AND.b #$03                              ;$03A294 |
-    STA.w $1428                             ;$03A296 |
+    STA.w ClownCarPropeller_1428            ;$03A296 |
     LDA.b #$90                              ;$03A299 |
     STA.b Mode7CenterX_2A                   ;$03A29B |
     LDA.b #$C8                              ;$03A29D |
@@ -4773,10 +4773,10 @@ CODE_03A305:
     LDA.w Sprite_151C,X                     ;$03A308 |
     CMP.b #$09                              ;$03A30B |
     BEQ CODE_03A31A                         ;$03A30D |
-    STZ.w $1427                             ;$03A30F |
+    STZ.w ClownCarImage_1427                ;$03A30F |
     LDA.w SpriteLava_1558,X                 ;$03A312 |
     BEQ CODE_03A31A                         ;$03A315 |
-    INC.w $1427                             ;$03A317 |
+    INC.w ClownCarImage_1427                ;$03A317 |
 CODE_03A31A:
     JSR CODE_03A5AD
     JSL UpdateXPosNoGrvty                   ;$03A31D |
@@ -5194,7 +5194,7 @@ CODE_03A6B6:
     TYA
     STA.w SpriteAnimationTimer_1570,X       ;$03A6B7 |
     LDA.b #$02                              ;$03A6BA |
-    STA.w $1427                             ;$03A6BC |
+    STA.w ClownCarImage_1427                ;$03A6BC |
 Return03A6BF:
     RTS
 
@@ -5745,7 +5745,7 @@ DATA_03AB62:
 
 CODE_03AB64:
     LDA.b #$03
-    STA.w $1427                             ;$03AB66 |
+    STA.w ClownCarImage_1427                ;$03AB66 |
     JSR CODE_03A4FD                         ;$03AB69 |
     JSR CODE_03A4D2                         ;$03AB6C |
     JSR CODE_03A4ED                         ;$03AB6F |
@@ -8454,7 +8454,7 @@ CODE_03C500:
     LDA.b #$90                              ;$03C533 |
     STA.w $1478                             ;$03C535 |
     LDA.b #$78                              ;$03C538 |
-    STA.w $1472                             ;$03C53A |
+    STA.w LightTopWinOpenPos_1472            ;$03C53A |
     LDA.b #$87                              ;$03C53D |
     STA.w $1474                             ;$03C53F |
     LDA.b #$01                              ;$03C542 |
@@ -8482,7 +8482,7 @@ CODE_03C572:
     AND.b #$03                              ;$03C574 |
     BNE Return03C4F9                        ;$03C576 |
     LDY.b #$00                              ;$03C578 |
-    LDA.w $1472                             ;$03C57A |
+    LDA.w LightTopWinOpenPos_1472           ;$03C57A |
     STA.w $147A                             ;$03C57D |
     SEC                                     ;$03C580 |
     SBC.w $1476                             ;$03C581 |
@@ -10349,7 +10349,7 @@ CODE_03DD7D:
     PHK                                     ;$03DD7F |
     PLB                                     ;$03DD80 |
     LDY.b SpritePhase_C2,X                  ;$03DD81 |
-    STY.w $13FC                             ;$03DD83 |
+    STY.w ActiveBoss_13FC                   ;$03DD83 |
     CPY.b #$04                              ;$03DD86 |
     BNE CODE_03DD97                         ;$03DD88 |
     JSR CODE_03DE8E                         ;$03DD8A |
@@ -10363,7 +10363,7 @@ CODE_03DD97:
     STA.b LevelScreens_5D                   ;$03DD99 |
     INC A                                   ;$03DD9B |
     STA.b LastScreenHoriz_5E                ;$03DD9C |
-    LDY.w $13FC                             ;$03DD9E |
+    LDY.w ActiveBoss_13FC                   ;$03DD9E |
     LDX.w DATA_03DD78,Y                     ;$03DDA1 |
     LDA.w KoopaPalPtrLo,Y                   ;$03DDA4 |
     STA $00                                 ;$03DDA7 |
@@ -10539,7 +10539,7 @@ CODE_03DEDF:
     LDA.w IRQNMICommand_0D9B                ;$03DF00 |
     LSR                                     ;$03DF03 |
     BCC CODE_03DF44                         ;$03DF04 |
-    LDA.w $1428                             ;$03DF06 |
+    LDA.w ClownCarPropeller_1428            ;$03DF06 |
     AND.w #$0003                            ;$03DF09 |
     ASL                                     ;$03DF0C |
     TAX                                     ;$03DF0D |
@@ -10613,7 +10613,7 @@ CODE_03DF76:
 CODE_03DF96:
     CPX.w #$000A
     BNE CODE_03DFA6                         ;$03DF99 |
-    LDA.w $1427                             ;$03DF9B |
+    LDA.w ClownCarImage_1427                ;$03DF9B |
     AND.w #$0003                            ;$03DF9E |
     ASL                                     ;$03DFA1 |
     TAY                                     ;$03DFA2 |
@@ -10696,7 +10696,7 @@ CODE_03E031:
     STA.w $0684,Y
     SEP #$20                                ;$03E034 |
 CODE_03E036:
-    LDX.w $1429
+    LDX.w BowserPalette_1429
     LDA.l DATA_03DFC4,X                     ;$03E039 |
     TAX                                     ;$03E03D |
     LDA.b #$0E                              ;$03E03E |

@@ -1734,13 +1734,13 @@ VerticalScrollEnabled_13F1: skip 1 ;done
 skip 1
 PBalloonFlag_13F3: skip 1 ;done
 BonusRoomBlocks_13F4: skip 5 ;done
-PlayerBehindNet_13F9: skip 1
-PlayerCanJumpWater_13FA: skip 1
-PlayerIsFrozen_13FB: skip 1
-ActiveBoss_13FC: skip 1
-CameraIsScrolling_13FD: skip 1
-CameraScrollDir_13FE: skip 1
-CameraScrollPlayerDir_13FF: skip 1
+PlayerBehindNet_13F9: skip 1 ;done
+PlayerCanJumpWater_13FA: skip 1 ;done
+PlayerIsFrozen_13FB: skip 1 ;done
+ActiveBoss_13FC: skip 1 ;done
+CameraIsScrolling_13FD: skip 1 ;done
+CameraScrollDir_13FE: skip 1 ;done
+CameraScrollPlayerDir_13FF: skip 1 ;done
 CameraProperMove_1400: skip 1 ;done
 CameraScrollTimer_1401: skip 1 ;done
 NoteBlockActive_1402: skip 1 ;done
@@ -1780,76 +1780,75 @@ SecretGoalTape_141C: skip 1 ;done
 ShowMarioStart_141D: skip 1 ;done
 YoshiHasWings_141E: skip 1 ;done
 DisableNoYoshiIntro_141F: skip 1 ;done
-DragonCoinsCollected_1420: skip 1
-OneUpCheckpoints_1421: skip 1
-DragonCoinsShown_1422: skip 1
-SwitchPalacePressed_1423: skip 1
-DisplayBonusStars_1424: skip 1
-BonusGameFlag_1425: skip 1
+DragonCoinsCollected_1420: skip 1 ;done
+OneUpCheckpoints_1421: skip 1 ;done
+DragonCoinsShown_1422: skip 1 ;done
+SwitchPalacePressed_1423: skip 1 ;done
+DisplayBonusStars_1424: skip 1 ;done
+BonusGameFlag_1425: skip 1 ;done
 
-MessageBoxTrigger_1426: skip 1
+MessageBoxTrigger_1426: skip 1 ;done
 ; Valid values
 !MessageNone_00 = $00
 !Message_01 = $01
 !Message_02 = $02
 !MessageYoshi_03 = $03
 
-ClownCarImage_1427: skip 1
-ClownCarPropeller_1428: skip 1
-BowserPalette_1429: skip 1
-CameraMoveTrigger_142A: skip 2
-CameraLeftBuffer_142C: skip 2
-CameraRightBuffer_142E: skip 2
-SolidTileStart_1430: skip 1
-SolidTileEnd_1431: skip 1
-DirectCoinInit_1432: skip 1
-SpotlightSize_1433: skip 1
-KeyholeTimer_1434: skip 1
-KeyholeDirection_1435: skip 1
-KeyholeXPos_1436: skip 2
-KeyholeYPos_1438: skip 2
-UploadMarioStart_143A: skip 1
-DeathMessage_143B: skip 1
-GameOverAnimation_143C: skip 1
-GameOverTimer_143D: skip 1
-Layer1ScrollCmd_143E: skip 1
-Layer2ScrollCmd_143F: skip 1
-Layer1ScrollBits_1440: skip 1
-Layer2ScrollBits_1441: skip 1
-Layer1ScrollType_1442: skip 1
-CutsceneTextTimer_1443:
-SelectedStartingZone_1443:
-Layer2ScrollType_1443: skip 1
-Layer1ScrollTimer_1444: skip 1
-Layer2ScrollTimer_1445: skip 1
-Layer1ScrollXSpeed_1446: skip 2
-Layer1ScrollYSpeed_1448: skip 2
-Layer2ScrollXSpeed_144A: skip 2
-Layer2ScrollYSpeed_144C: skip 2
-Layer1ScrollXPosUpd_144E: skip 2
-Layer1ScrollYPosUpd_1450: skip 2
-Layer2ScrollXPosUpd_1452: skip 2
-Layer2ScrollYPosUpd_1454: skip 2
-ScrollLayerIndex_1456: skip 1
-CreditsJumpingYoshi_1457: skip 1
-Layer3ScrollXSpeed_1458: skip 2
-Layer3ScrollYSpeed_145A: skip 2
-Layer3ScrollXPosUpd_145C: skip 2
+ClownCarImage_1427: skip 1 ;done
+ClownCarPropeller_1428: skip 1 ;done
+BowserPalette_1429: skip 1 ;done
+CameraMoveTrigger_142A: skip 2 ;done
+CameraLeftBuffer_142C: skip 2 ;done
+CameraRightBuffer_142E: skip 2 ;done
+SolidTileStart_1430: skip 1 ;done
+SolidTileEnd_1431: skip 1 ;done
+DirectCoinInit_1432: skip 1 ;done
+SpotlightSize_1433: skip 1 ;done
+KeyholeTimer_1434: skip 1 ;done
+KeyholeDirection_1435: skip 1 ;done
+KeyholeXPos_1436: skip 2 ;done
+KeyholeYPos_1438: skip 2 ;done
+UploadMarioStart_143A: skip 1 ;done
+DeathMessage_143B: skip 1 ;done
+GameOverAnimation_143C: skip 1 ;done
+GameOverTimer_143D: skip 1 ;done
+Layer1ScrollCmd_143E: skip 1 ;done
+Layer2ScrollCmd_143F: skip 1 ;done
+Layer1ScrollBits_1440: skip 1 ;done
+Layer2ScrollBits_1441: skip 1 ;done
+Layer1ScrollType_1442: skip 1 ;done
+CutsceneTextTimer_1443:  ;done
+Layer2ScrollType_1443: skip 1  ;done
+Layer1ScrollTimer_1444: skip 1 ;done
+Layer2ScrollTimer_1445: skip 1 ;done
+Layer1ScrollXSpeed_1446: skip 2 ;done
+Layer1ScrollYSpeed_1448: skip 2 ;done
+Layer2ScrollXSpeed_144A: skip 2 ;done
+Layer2ScrollYSpeed_144C: skip 2 ;done
+Layer1ScrollXPosUpd_144E: skip 2 ;done
+Layer1ScrollYPosUpd_1450: skip 2 ;done
+Layer2ScrollXPosUpd_1452: skip 2 ;done
+Layer2ScrollYPosUpd_1454: skip 2 ;done
+ScrollLayerIndex_1456: skip 1 ;done
+CreditsJumpingYoshi_1457: skip 1 ;done
+Layer3ScrollXSpeed_1458: skip 2 ;done
+Layer3ScrollYSpeed_145A: skip 2 ;done
+Layer3ScrollXPosUpd_145C: skip 2 ;done
 ; 7E145E - 7E145F unused
 skip 2
-Layer3ScroolDir_1460: skip 1
+Layer3ScroolDir_1460: skip 1 ;done
 ; 7E1461 unused
 skip 1
-NextLayer1XPos_1462: skip 2
-NextLayer1YPos_1464: skip 2
-NextLayer2XPos_1466: skip 2
-NextLayer2YPos_1468: skip 2
-Layer3HorizOffset_146A: skip 2
+NextLayer1XPos_1462: skip 2 ;done
+NextLayer1YPos_1464: skip 2 ;done
+NextLayer2XPos_1466: skip 2 ;done
+NextLayer2YPos_1468: skip 2 ;done
+Layer3HorizOffset_146A: skip 2 ;done
 ; 7E146C - 7E146F unused
 skip 4
-CarryingFlag_1470: skip 1
-OnSolidSprite_1471: skip 1
-LightTopWinOpenPos_1472: skip 1
+CarryingFlag_1470: skip 1 ;done
+OnSolidSprite_1471: skip 1 ;done
+LightTopWinOpenPos_1472: skip 1 ;done
 ; 7E1473 unused
 skip 1
 LightTopWinClosePos_1474: skip 1
