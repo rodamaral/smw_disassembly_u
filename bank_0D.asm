@@ -1455,7 +1455,7 @@ CODE_0DA53D:
     LDA $0A
     AND.b #$1F                              ;$0DA53F |
     STA.w LevelLoadObject_1928              ;$0DA541 |
-    STA.w $1BA1                             ;$0DA544 |
+    STA.w LevelLoadObjectTile_1BA1          ;$0DA544 |
     RTS                                     ;$0DA547 |
 
 DATA_0DA548:
@@ -1545,7 +1545,7 @@ CODE_0DA5F0:
     LDA.b #$19                              ;$0DA600 |
     ADC.l DATA_0DA8B1,X                     ;$0DA602 |
     STA $09                                 ;$0DA606 |
-    LDA.w $1BA1                             ;$0DA608 |
+    LDA.w LevelLoadObjectTile_1BA1          ;$0DA608 |
     ASL                                     ;$0DA60B |
     ASL                                     ;$0DA60C |
     STA $0E                                 ;$0DA60D |
@@ -1662,7 +1662,7 @@ CODE_0DA6BA:
     STA.b Map16LowPtr_6B+1                  ;$0DA6C2 |
     STA.b Map16HighPtr_6E+1                 ;$0DA6C4 |
     LDA.w LevelLoadObject_1928              ;$0DA6C6 |
-    STA.w $1BA1                             ;$0DA6C9 |
+    STA.w LevelLoadObjectTile_1BA1          ;$0DA6C9 |
     RTS                                     ;$0DA6CC |
 
 DATA_0DA6CD:
@@ -1951,7 +1951,7 @@ CODE_0DA8D8:
     LDA.b #$19                              ;$0DA8EC |
     ADC.l DATA_0DA8B1,X                     ;$0DA8EE |
     STA $09                                 ;$0DA8F2 |
-    LDA.w $1BA1                             ;$0DA8F4 |
+    LDA.w LevelLoadObjectTile_1BA1          ;$0DA8F4 |
     ASL                                     ;$0DA8F7 |
     ASL                                     ;$0DA8F8 |
     STA $0E                                 ;$0DA8F9 |
@@ -2026,7 +2026,7 @@ CODE_0DA95D:
     ADC.b #$01                              ;$0DA96E |
     STA.b Map16LowPtr_6B+1                  ;$0DA970 |
     STA.b Map16HighPtr_6E+1                 ;$0DA972 |
-    INC.w $1BA1                             ;$0DA974 |
+    INC.w LevelLoadObjectTile_1BA1          ;$0DA974 |
     LDA.b LevelLoadPos_57                   ;$0DA977 |
     AND.b #$F0                              ;$0DA979 |
     TAY                                     ;$0DA97B |
@@ -2109,7 +2109,7 @@ CODE_0DA9D6:
     STA.b Map16LowPtr_6B+1                  ;$0DA9E5 |
     STA.b Map16HighPtr_6E+1                 ;$0DA9E7 |
     STA $05                                 ;$0DA9E9 |
-    DEC.w $1BA1                             ;$0DA9EB |
+    DEC.w LevelLoadObjectTile_1BA1          ;$0DA9EB |
     RTS                                     ;$0DA9EE |
 
 CODE_0DA9EF:
@@ -2124,7 +2124,7 @@ CODE_0DA9EF:
     STA.b Map16LowPtr_6B+1                  ;$0DA9FE |
     STA.b Map16HighPtr_6E+1                 ;$0DAA00 |
     STA $05                                 ;$0DAA02 |
-    INC.w $1BA1                             ;$0DAA04 |
+    INC.w LevelLoadObjectTile_1BA1          ;$0DAA04 |
     RTS                                     ;$0DAA07 |
 
 Sta1To6ePointer:
@@ -3399,7 +3399,7 @@ CODE_0DB2CA:
     LDA.b #$19                              ;$0DB2EC |
     ADC.l DATA_0DA8B1,X                     ;$0DB2EE |
     STA $09                                 ;$0DB2F2 |
-    LDA.w $1BA1                             ;$0DB2F4 |
+    LDA.w LevelLoadObjectTile_1BA1          ;$0DB2F4 |
     ASL                                     ;$0DB2F7 |
     ASL                                     ;$0DB2F8 |
     STA $0E                                 ;$0DB2F9 |
@@ -3462,7 +3462,7 @@ ADDR_0DB34A:
     LDA.b #$19                              ;$0DB35A |
     ADC.l DATA_0DA8B1,X                     ;$0DB35C |
     STA $09                                 ;$0DB360 |
-    LDA.w $1BA1                             ;$0DB362 |
+    LDA.w LevelLoadObjectTile_1BA1          ;$0DB362 |
     ASL                                     ;$0DB365 |
     ASL                                     ;$0DB366 |
     STA $0E                                 ;$0DB367 |

@@ -15926,7 +15926,7 @@ SideExitMain:
 
 CODE_02F4D5:
     LDA.b #$01
-    STA.w $1B96                             ;$02F4D7 |
+    STA.w SideExitEnabled_1B96              ;$02F4D7 |
     LDA.b SpriteXPosLow_E4,X                ;$02F4DA |
     AND.b #$10                              ;$02F4DC |
     BNE Return02F4E6                        ;$02F4DE |

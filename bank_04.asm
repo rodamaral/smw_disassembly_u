@@ -255,7 +255,7 @@ CODE_048261:
     JMP .CODE_048410                        ;$04827E |
 
 .CODE_048281:
-    LDA.w OverworldPromptProcess_1B87
+    LDA.w OWPromptProcess_1B87
     BEQ .CODE_048295                        ;$048284 |
     CMP.b #$05                              ;$048286 |
     BCS +                                   ;$048288 |
@@ -356,8 +356,8 @@ CODE_048261:
     ASL                                     ;$048328 |
     ASL                                     ;$048329 |
     CLC                                     ;$04832A |
-    ADC.w $1B7C,Y                           ;$04832B |
-    STA.w $1B7C,Y                           ;$04832E |
+    ADC.w Layer1PosSpx_1B7C,Y               ;$04832B |
+    STA.w Layer1PosSpx_1B7C,Y               ;$04832E |
     LDA.w $0001,Y                           ;$048331 |
     PHY                                     ;$048334 |
     PHP                                     ;$048335 |
@@ -397,7 +397,7 @@ CODE_048261:
     AND.b #$30                              ;$04836C |
     BEQ .CODE_048375                        ;$04836E |
     LDA.b #$01                              ;$048370 |
-    STA.w $1B87                             ;$048372 |
+    STA.w OWPromptProcess_1B87              ;$048372 |
 .CODE_048375:
     LDX.w CurrentPlayer_0DB3
     LDA.w OWPlayerSubmap_1F11,X             ;$048378 |
@@ -440,7 +440,7 @@ CODE_048261:
     BRA .CODE_04840D                        ;$0483C1 |
 
 .CODE_0483C3:
-    LDX.w $1BA0
+    LDX.w OWEarthquake_1BA0
     BEQ .CODE_04840A                        ;$0483C6 |
     CPX.b #$FE                              ;$0483C8 |
     BNE .CODE_0483D6                        ;$0483CA |
@@ -473,7 +473,7 @@ CODE_048261:
     CMP.b #!OwPostEvent_02                  ;$0483FA |
     BNE .CODE_04840A                        ;$0483FC |
 .CODE_0483FE:
-    DEC.w OverworldEarthquake_1BA0
+    DEC.w OWEarthquake_1BA0
     BNE .CODE_04840D                        ;$048401 |
     LDA.b #$22                              ;$048403 |
     STA.w SPCIO0_1DF9                       ;$048405 |
@@ -1246,7 +1246,7 @@ CODE_048D91:
     PHB
     PHK                                     ;$048D92 |
     PLB                                     ;$048D93 |
-    STZ.w $1B9E                             ;$048D94 |
+    STZ.w SwapOverworldMusic_1B9E           ;$048D94 |
     LDA.b #$0F                              ;$048D97 |
     STA.w Layer1ScrollXPosUpd_144E          ;$048D99 |
     LDX.b #$02                              ;$048D9C |
@@ -1603,7 +1603,7 @@ CODE_049043:
     BPL CODE_049043                         ;$04904A |
     STZ.w ShowSavePrompt_13CA               ;$04904C |
     LDA.b #$05                              ;$04904F |
-    STA.w $1B87                             ;$049051 |
+    STA.w OWPromptProcess_1B87              ;$049051 |
 CODE_049054:
     PLP
     PLY                                     ;$049055 |
@@ -1690,7 +1690,7 @@ OWPU_NoLR:
     BNE OWPU_ABXY                           ;$049156 |
     BRL CODE_0491E9                         ;$049158 |
 OWPU_ABXY:
-    STZ.w $1B9E
+    STZ.w SwapOverworldMusic_1B9E
     LDA.w OverworldLayer1Tile_13C1          ;$04915E |
     CMP.b #$5F                              ;$049161 |
     BNE OWPU_NotOnStar                      ;$049163 |
@@ -1715,7 +1715,7 @@ OWPU_IsOnPipe:
     JSR CODE_048509
     BNE OWPU_IsOnPipeRTS                    ;$04918B |
 CODE_04918D:
-    INC.w $1B9C
+    INC.w EnteringStarWarp_1B9C
     STZ.w LevelExitMode_0DD5                ;$049190 |
     LDA.b #!FadeToOverworld_0B              ;$049193 |
     STA.w GameMode_0100                     ;$049195 |
@@ -1910,8 +1910,8 @@ CODE_0492CB:
 CODE_0492FE:
     BRL CODE_049384
 CODE_049301:
-    STZ.w $1B78
-    STZ.w $1B7A                             ;$049304 |
+    STZ.w HardcodedPathIsUsed_1B78
+    STZ.w HardcodedPathIndex_1B7A           ;$049304 |
     LDX $08                                 ;$049307 |
     LDA.l OWLayer1Translevel_D000,X         ;$049309 |
     AND.w #$00FF                            ;$04930D |
@@ -1952,14 +1952,14 @@ CODE_04934D:
     AND.w #$00FF                            ;$049352 |
     TAX                                     ;$049355 |
     DEC A                                   ;$049356 |
-    STA.w $1B7A                             ;$049357 |
+    STA.w HardcodedPathIndex_1B7A           ;$049357 |
     STY $02                                 ;$04935A |
     LDA.w DATA_0490CA,X                     ;$04935C |
     AND.w #$00FF                            ;$04935F |
     CMP $02                                 ;$049362 |
     BNE CODE_04937A                         ;$049364 |
     LDA.w #$0001                            ;$049366 |
-    STA.w $1B78                             ;$049369 |
+    STA.w HardcodedPathIsUsed_1B78          ;$049369 |
     LDA.w DATA_049086,X                     ;$04936C |
     AND.w #$00FF                            ;$04936F |
     BRA CODE_049384                         ;$049372 |
@@ -2123,7 +2123,7 @@ CODE_049484:
 CODE_0494A4:
     STY $08
     SEP #$20                                ;$0494A6 |
-    LDX.w $1B80                             ;$0494A8 |
+    LDX.w OWClimbing_1B80                   ;$0494A8 |
     LDA.w DATA_049414,X                     ;$0494AB |
     ASL                                     ;$0494AE |
     ASL                                     ;$0494AF |
@@ -2154,7 +2154,7 @@ CODE_0494A4:
 CODE_0494DA:
     REP #$20
     STA $0E                                 ;$0494DC |
-    LDX.w $1B80                             ;$0494DE |
+    LDX.w OWClimbing_1B80                   ;$0494DE |
     LDA.w DATA_049414,X                     ;$0494E1 |
     AND.w #$00FF                            ;$0494E4 |
     ASL                                     ;$0494E7 |
@@ -2197,7 +2197,7 @@ CODE_04951B:
 CODE_049522:
     LDA.w Layer1ScrollTimer_1444
     BEQ CODE_04955C                         ;$049525 |
-    STZ.w $1B78                             ;$049527 |
+    STZ.w HardcodedPathIsUsed_1B78          ;$049527 |
     LDX.w PlayerTurnOW_0DD6                 ;$04952A |
     LDA.w $1F1F,X                           ;$04952D |
     STA $00                                 ;$049530 |
@@ -2223,7 +2223,7 @@ CODE_049522:
 
 CODE_04955C:
     LDA.w OverworldLayer1Tile_13C1
-    STA.w $1B7E                             ;$04955F |
+    STA.w OverworldTightPath_1B7E           ;$04955F |
     LDA.w #$0008                            ;$049562 |
     STA $08                                 ;$049565 |
     LDY.w OWPlayerDirection_0DD3            ;$049567 |
@@ -2261,16 +2261,16 @@ CODE_04959A:
     LSR                                     ;$0495A6 |
     TAX                                     ;$0495A7 |
     JSR OW_TilePos_Calc                     ;$0495A8 |
-    LDA.w $1B78                             ;$0495AB |
+    LDA.w HardcodedPathIsUsed_1B78          ;$0495AB |
     BEQ CODE_0495CE                         ;$0495AE |
     STY $06                                 ;$0495B0 |
-    LDX.w $1B7A                             ;$0495B2 |
+    LDX.w HardcodedPathIndex_1B7A           ;$0495B2 |
     INX                                     ;$0495B5 |
     LDA.w DATA_0490CA,X                     ;$0495B6 |
     AND.w #$00FF                            ;$0495B9 |
     CMP $06                                 ;$0495BC |
     BNE ADDR_049575                         ;$0495BE |
-    STX.w $1B7A                             ;$0495C0 |
+    STX.w HardcodedPathIndex_1B7A           ;$0495C0 |
     LDA.w DATA_049086,X                     ;$0495C3 |
     AND.w #$00FF                            ;$0495C6 |
     CMP.w #$0058                            ;$0495C9 |
@@ -2299,7 +2299,7 @@ CODE_0495DE:
     BNE CODE_0495FF                         ;$0495FA |
     LDY.w #$0001                            ;$0495FC |
 CODE_0495FF:
-    STY.w $1B80
+    STY.w OWClimbing_1B80
     LDX.w PlayerTurnOW_0DD6                 ;$049602 |
     LDA $00                                 ;$049605 |
     STA.w $1F1F,X                           ;$049607 |
@@ -2317,15 +2317,15 @@ CODE_049616:
     JSR CODE_049A24                         ;$04961C |
     PLY                                     ;$04961F |
     LDA.b #$01                              ;$049620 |
-    STA.w $1B9E                             ;$049622 |
+    STA.w SwapOverworldMusic_1B9E           ;$049622 |
     JSR CODE_04F407                         ;$049625 |
-    STZ.w $1B8C                             ;$049628 |
+    STZ.w OWTransitionFlag_1B8C             ;$049628 |
     REP #$20                                ;$04962B |
     STZ.w $0701                             ;$04962D |
     LDA.w #$7000                            ;$049630 |
-    STA.w $1B8D                             ;$049633 |
+    STA.w OWTransitionXCalc_1B8D            ;$049633 |
     LDA.w #$5400                            ;$049636 |
-    STA.w $1B8F                             ;$049639 |
+    STA.w OWTransitionYCalc_1B8F            ;$049639 |
     SEP #$20                                ;$04963C |
     LDA.b #!OwSubmap_0A                     ;$04963E |
     STA.w OWProcess_13D9                    ;$049640 |
@@ -2411,7 +2411,7 @@ CODE_0496D2:
     STA $0E                                 ;$0496E0 |
     LDA.w #$0001                            ;$0496E2 |
     STA $04                                 ;$0496E5 |
-    LDA.w $1B7E                             ;$0496E7 |
+    LDA.w OverworldTightPath_1B7E           ;$0496E7 |
     AND.w #$00FF                            ;$0496EA |
     STA $00                                 ;$0496ED |
     LDX.w #$0017                            ;$0496EF |
@@ -2592,7 +2592,7 @@ CODE_049831:
     LDA.w OWProcess_13D9                    ;$049833 |
     CMP.b #!OwSubmap_0A                     ;$049836 |
     BEQ CODE_049882                         ;$049838 |
-    LDA.w $1BA0                             ;$04983A |
+    LDA.w OWEarthquake_1BA0                 ;$04983A |
     BNE CODE_049882                         ;$04983D |
 CODE_04983F:
     REP #$30
@@ -5282,7 +5282,7 @@ CODE_04DA9D:
     LDA $0F
     JSR CODE_04E677                         ;$04DA9F |
     SEP #$10                                ;$04DAA2 |
-    STZ.w $1B86                             ;$04DAA4 |
+    STZ.w OWEventProcess_1B86               ;$04DAA4 |
     LDA $0F                                 ;$04DAA7 |
     JSR CODE_04E9F1                         ;$04DAA9 |
 Return04DAAC:
@@ -5361,47 +5361,47 @@ DATA_04DB14:
 
 CODE_04DB18:
     REP #$20
-    LDX.w $1B8C                             ;$04DB1A |
-    LDA.w $1B8D                             ;$04DB1D |
+    LDX.w OWTransitionFlag_1B8C             ;$04DB1A |
+    LDA.w OWTransitionXCalc_1B8D            ;$04DB1D |
     CLC                                     ;$04DB20 |
     ADC.w DATA_04DB08,X                     ;$04DB21 |
-    STA.w $1B8D                             ;$04DB24 |
+    STA.w OWTransitionXCalc_1B8D            ;$04DB24 |
     SEC                                     ;$04DB27 |
     SBC.w DATA_04DB0C,X                     ;$04DB28 |
     EOR.w DATA_04DB08,X                     ;$04DB2B |
     BPL CODE_04DB43                         ;$04DB2E |
-    LDA.w $1B8F                             ;$04DB30 |
+    LDA.w OWTransitionYCalc_1B8F            ;$04DB30 |
     CLC                                     ;$04DB33 |
     ADC.w DATA_04DB10,X                     ;$04DB34 |
-    STA.w $1B8F                             ;$04DB37 |
+    STA.w OWTransitionYCalc_1B8F            ;$04DB37 |
     SEC                                     ;$04DB3A |
     SBC.w DATA_04DB14,X                     ;$04DB3B |
     EOR.w DATA_04DB10,X                     ;$04DB3E |
     BMI CODE_04DB5F                         ;$04DB41 |
 CODE_04DB43:
     LDA.w DATA_04DB0C,X
-    STA.w $1B8D                             ;$04DB46 |
+    STA.w OWTransitionXCalc_1B8D            ;$04DB46 |
     LDA.w DATA_04DB14,X                     ;$04DB49 |
-    STA.w $1B8F                             ;$04DB4C |
+    STA.w OWTransitionYCalc_1B8F            ;$04DB4C |
     INC.w $1DE8                             ;$04DB4F |
     TXA                                     ;$04DB52 |
     EOR.w #$0002                            ;$04DB53 |
     TAX                                     ;$04DB56 |
-    STX.w $1B8C                             ;$04DB57 |
+    STX.w OWTransitionFlag_1B8C             ;$04DB57 |
     BEQ CODE_04DB5F                         ;$04DB5A |
     JSR CODE_049A93                         ;$04DB5C |
 CODE_04DB5F:
     SEP #$20
-    LDA.w $1B90                             ;$04DB61 |
+    LDA.w OWTransitionYCalc_1B8F+1          ;$04DB61 |
     ASL                                     ;$04DB64 |
     STA $00                                 ;$04DB65 |
-    LDA.w $1B8E                             ;$04DB67 |
+    LDA.w OWTransitionXCalc_1B8D+1          ;$04DB67 |
     CLC                                     ;$04DB6A |
     ADC.b #$80                              ;$04DB6B |
     XBA                                     ;$04DB6D |
     LDA.b #$80                              ;$04DB6E |
     SEC                                     ;$04DB70 |
-    SBC.w $1B8E                             ;$04DB71 |
+    SBC.w OWTransitionXCalc_1B8D+1          ;$04DB71 |
     REP #$20                                ;$04DB74 |
     LDX.b #$00                              ;$04DB76 |
     LDY.b #$A8                              ;$04DB78 |
@@ -5460,7 +5460,7 @@ CODE_04DBCF:
     TAY                                     ;$04DBDC |
     LDA.w IsTwoPlayerGame_0DB2              ;$04DBDD |
     BEQ CODE_04DBF3                         ;$04DBE0 |
-    LDA.w $1B9E                             ;$04DBE2 |
+    LDA.w SwapOverworldMusic_1B9E           ;$04DBE2 |
     BNE CODE_04DBF3                         ;$04DBE5 |
     TYA                                     ;$04DBE7 |
     EOR.b #$01                              ;$04DBE8 |
@@ -5473,7 +5473,7 @@ CODE_04DBF3:
     TAX                                     ;$04DBF6 |
     LDA.l DATA_04DBC8,X                     ;$04DBF7 |
     STA.w SPCIO2_1DFB                       ;$04DBFB |
-    STZ.w $1B9E                             ;$04DBFE |
+    STZ.w SwapOverworldMusic_1B9E           ;$04DBFE |
 Return04DC01:
     RTS
 
@@ -6074,7 +6074,7 @@ CODE_04E56B:
     RTS                                     ;$04E56F |
 
 CODE_04E570:
-    LDA.w $1B86
+    LDA.w OWEventProcess_1B86
     JSL execute_pointer                     ;$04E573 |
 
 Ptrs04E577:
@@ -6157,7 +6157,7 @@ CODE_04E632:
     RTS                                     ;$04E63F |
 
 CODE_04E640:
-    INC.w $1B86
+    INC.w OWEventProcess_1B86
     LDA.w OverworldEvent_1DEA               ;$04E643 |
     JSR CODE_04E677                         ;$04E646 |
     TYA                                     ;$04E649 |
@@ -6165,19 +6165,19 @@ CODE_04E640:
     ASL                                     ;$04E64B |
     ASL                                     ;$04E64C |
     ASL                                     ;$04E64D |
-    STA.w $1B82                             ;$04E64E |
+    STA.w OWEventXPos_1B82                  ;$04E64E |
     TYA                                     ;$04E651 |
     AND.b #$F0                              ;$04E652 |
-    STA.w $1B83                             ;$04E654 |
+    STA.w OWEventYPos_1B83                  ;$04E654 |
     LDA.b #$28                              ;$04E657 |
-    STA.w $1B84                             ;$04E659 |
+    STA.w OWEventSize_1B84                  ;$04E659 |
     LDA.w Translevel_13BF                   ;$04E65C |
     CMP.b #$18                              ;$04E65F |
     BNE CODE_04E668                         ;$04E661 |
     LDA.b #$FF                              ;$04E663 |
-    STA.w $1BA0                             ;$04E665 |
+    STA.w OWEarthquake_1BA0                 ;$04E665 |
 CODE_04E668:
-    LDA.w $1B86
+    LDA.w OWEventProcess_1B86
     CMP.b #$02                              ;$04E66B |
     BEQ CODE_04E674                         ;$04E66D |
     LDA.b #$16                              ;$04E66F |
@@ -6196,7 +6196,7 @@ CODE_04E67B:
     BPL CODE_04E67B                         ;$04E682 |
 CODE_04E684:
     LDA.b #$02
-    STA.w $1B86                             ;$04E686 |
+    STA.w OWEventProcess_1B86               ;$04E686 |
     RTS                                     ;$04E689 |
 
 CODE_04E68A:
@@ -6240,7 +6240,7 @@ CODE_04E6CA:
     RTS                                     ;$04E6D2 |
 
 CODE_04E6D3:
-    INC.w $1B86
+    INC.w OWEventProcess_1B86
     LDA.w OverworldEvent_1DEA               ;$04E6D6 |
     ASL                                     ;$04E6D9 |
     TAX                                     ;$04E6DA |
@@ -6252,8 +6252,8 @@ CODE_04E6D3:
     CMP.w EventTileIndex_1DEB               ;$04E6EB |
     SEP #$20                                ;$04E6EE |
     BNE Return04E6F8                        ;$04E6F0 |
-    INC.w $1B86                             ;$04E6F2 |
-    INC.w $1B86                             ;$04E6F5 |
+    INC.w OWEventProcess_1B86               ;$04E6F2 |
+    INC.w OWEventProcess_1B86               ;$04E6F5 |
 Return04E6F8:
     RTS
 
@@ -6267,7 +6267,7 @@ CODE_04E6F9:
     ASL                                     ;$04E706 |
     TAX                                     ;$04E707 |
     LDA.l DATA_04DD8D,X                     ;$04E708 |
-    STA.w $1B84                             ;$04E70C |
+    STA.w OWEventSize_1B84                  ;$04E70C |
     LDA.l DATA_04DD8F,X                     ;$04E70F |
     STA $00                                 ;$04E713 |
     AND.w #$1FFF                            ;$04E715 |
@@ -6282,18 +6282,18 @@ CODE_04E6F9:
     LSR                                     ;$04E724 |
     SEP #$20                                ;$04E725 |
     AND.b #$F8                              ;$04E727 |
-    STA.w $1B83                             ;$04E729 |
+    STA.w OWEventYPos_1B83                  ;$04E729 |
     LDA $00                                 ;$04E72C |
     AND.b #$3E                              ;$04E72E |
     ASL                                     ;$04E730 |
     ASL                                     ;$04E731 |
-    STA.w $1B82                             ;$04E732 |
+    STA.w OWEventXPos_1B82                  ;$04E732 |
     REP #$20                                ;$04E735 |
     LDA.w #$4000                            ;$04E737 |
     STA $0C                                 ;$04E73A |
     LDA.w #$EFFF                            ;$04E73C |
     STA $0A                                 ;$04E73F |
-    LDA.w $1B84                             ;$04E741 |
+    LDA.w OWEventSize_1B84                  ;$04E741 |
     CMP.w #$0900                            ;$04E744 |
     BCC CODE_04E74F                         ;$04E747 |
     JSR CODE_04E76C                         ;$04E749 |
@@ -6310,7 +6310,7 @@ CODE_04E752:
     SEP #$30                                ;$04E761 |
     LDA.b #$15                              ;$04E763 |
     STA.w SPCIO3_1DFC                       ;$04E765 |
-    INC.w $1B86                             ;$04E768 |
+    INC.w OWEventProcess_1B86               ;$04E768 |
     RTS                                     ;$04E76B |
 
 CODE_04E76C:
@@ -6581,9 +6581,9 @@ CODE_04E9F3:
 CODE_04E9F9:
     DEX
     BPL CODE_04E9F3                         ;$04E9FA |
-    LDA.w $1B86                             ;$04E9FC |
+    LDA.w OWEventProcess_1B86               ;$04E9FC |
     BEQ Return04EA24                        ;$04E9FF |
-    STZ.w $1B86                             ;$04EA01 |
+    STZ.w OWEventProcess_1B86               ;$04EA01 |
     INC.w OWProcess_13D9                    ;$04EA04 |
     LDA.w OverworldEvent_1DEA               ;$04EA07 |
     AND.b #$07                              ;$04EA0A |
@@ -6673,7 +6673,7 @@ CODE_04EAA4:
     LDA.w ColorFadeTimer_1495
     CMP.b #$40                              ;$04EAA7 |
     BCC CODE_04EAC9                         ;$04EAA9 |
-    INC.w $1B86                             ;$04EAAB |
+    INC.w OWEventProcess_1B86               ;$04EAAB |
     JSR CODE_04EE30                         ;$04EAAE |
     JSR CODE_04E496                         ;$04EAB1 |
     REP #$20                                ;$04EAB4 |
@@ -6683,7 +6683,7 @@ CODE_04EAA4:
     SEP #$20                                ;$04EABF |
     BCS Return04EAC8                        ;$04EAC1 |
     LDA.b #$03                              ;$04EAC3 |
-    STA.w $1B86                             ;$04EAC5 |
+    STA.w OWEventProcess_1B86               ;$04EAC5 |
 Return04EAC8:
     RTS
 
@@ -6692,7 +6692,7 @@ CODE_04EAC9:
     REP #$30                                ;$04EACC |
     LDY.w #$008C                            ;$04EACE |
     LDX.w #$0006                            ;$04EAD1 |
-    LDA.w $1B84                             ;$04EAD4 |
+    LDA.w OWEventSize_1B84                  ;$04EAD4 |
     CMP.w #$0900                            ;$04EAD7 |
     BCC CODE_04EAE2                         ;$04EADA |
     LDY.w #$000C                            ;$04EADC |
@@ -6790,14 +6790,14 @@ DATA_04EBE1:
     db $28,$28
 
 CODE_04EBEB:
-    DEC.w $1B84
+    DEC.w OWEventSize_1B84
     BPL CODE_04EBF4                         ;$04EBEE |
-    INC.w $1B86                             ;$04EBF0 |
+    INC.w OWEventProcess_1B86               ;$04EBF0 |
     RTS                                     ;$04EBF3 |
 
 CODE_04EBF4:
-    LDA.w $1B84
-    LDY.w $1B86                             ;$04EBF7 |
+    LDA.w OWEventSize_1B84
+    LDY.w OWEventProcess_1B86               ;$04EBF7 |
     CPY.b #$01                              ;$04EBFA |
     BEQ CODE_04EC17                         ;$04EBFC |
     CMP.b #$10                              ;$04EBFE |
@@ -6861,11 +6861,11 @@ CODE_04EC34:
     RTS                                     ;$04EC66 |
 
 CODE_04EC67:
-    LDA.w $1B82
+    LDA.w OWEventXPos_1B82
     SEC                                     ;$04EC6A |
     SBC.b Layer2XPos_1E                     ;$04EC6B |
     STA $00                                 ;$04EC6D |
-    LDA.w $1B83                             ;$04EC6F |
+    LDA.w OWEventYPos_1B83                  ;$04EC6F |
     CLC                                     ;$04EC72 |
     SBC.b Layer2YPos_20                     ;$04EC73 |
     STA $01                                 ;$04EC75 |
@@ -6893,14 +6893,14 @@ CODE_04EC97:
     BPL CODE_04EC97                         ;$04EC9E |
     SEP #$10                                ;$04ECA0 |
     LDA.b #$07                              ;$04ECA2 |
-    STA.w $1B86                             ;$04ECA4 |
+    STA.w OWEventProcess_1B86               ;$04ECA4 |
     RTS                                     ;$04ECA7 |
 
 CODE_04ECA8:
     SEP #$30
     LDA.b #$01                              ;$04ECAA |
     STA.w SPCIO3_1DFC                       ;$04ECAC |
-    INC.w $1B86                             ;$04ECAF |
+    INC.w OWEventProcess_1B86               ;$04ECAF |
     LDA.w OverworldEvent_1DEA               ;$04ECB2 |
     AND.b #$FF                              ;$04ECB5 |
     ASL                                     ;$04ECB7 |
@@ -6910,12 +6910,12 @@ CODE_04ECA8:
     ASL                                     ;$04ECBE |
     ASL                                     ;$04ECBF |
     ASL                                     ;$04ECC0 |
-    STA.w $1B82                             ;$04ECC1 |
+    STA.w OWEventXPos_1B82                  ;$04ECC1 |
     LDA.l DATA_04D85D,X                     ;$04ECC4 |
     AND.b #$F0                              ;$04ECC8 |
-    STA.w $1B83                             ;$04ECCA |
+    STA.w OWEventYPos_1B83                  ;$04ECCA |
     LDA.b #$1C                              ;$04ECCD |
-    STA.w $1B84                             ;$04ECCF |
+    STA.w OWEventSize_1B84                  ;$04ECCF |
     RTS                                     ;$04ECD2 |
 
 DATA_04ECD3:
@@ -7448,7 +7448,7 @@ CODE_04F3FA:
 CODE_04F3FF:
     LDA.b #$22
     STA.w SPCIO3_1DFC                       ;$04F401 |
-    INC.w $1B87                             ;$04F404 |
+    INC.w OWPromptProcess_1B87              ;$04F404 |
 CODE_04F407:
     STZ.b Layer12Window_41
     STZ.b Layer34Window_42                  ;$04F409 |
@@ -7469,13 +7469,13 @@ CODE_04F415:
     BPL CODE_04F420                         ;$04F41D |
     INX                                     ;$04F41F |
 CODE_04F420:
-    STX.w $1B8A
+    STX.w OWPromptArrowDir_1B8A
     LDX.w MessageBoxExpand_1B88             ;$04F423 |
     LDA.w MessageBoxTimer_1B89              ;$04F426 |
     CMP.l DATA_04F413,X                     ;$04F429 |
     BNE CODE_04F44B                         ;$04F42D |
-    INC.w $1B87                             ;$04F42F |
-    LDA.w $1B87                             ;$04F432 |
+    INC.w OWPromptProcess_1B87              ;$04F42F |
+    LDA.w OWPromptProcess_1B87              ;$04F432 |
     CMP.b #$07                              ;$04F435 |
     BNE CODE_04F43D                         ;$04F437 |
     LDY.b #$1E                              ;$04F439 |
@@ -7484,7 +7484,7 @@ CODE_04F43D:
     DEC A
     AND.b #$03                              ;$04F43E |
     BNE Return04F44A                        ;$04F440 |
-    STZ.w $1B87                             ;$04F442 |
+    STZ.w OWPromptProcess_1B87              ;$04F442 |
     STZ.w MessageBoxExpand_1B88             ;$04F445 |
     BRA CODE_04F407                         ;$04F448 |
 
@@ -7590,12 +7590,12 @@ CODE_04F53B:
     BCS CODE_04F541                         ;$04F53E |
     DEX                                     ;$04F540 |
 CODE_04F541:
-    CPX.w $1B8A
+    CPX.w OWPromptArrowDir_1B8A
     BEQ CODE_04F54B                         ;$04F544 |
     LDA.b #$18                              ;$04F546 |
-    STA.w $1B8B                             ;$04F548 |
+    STA.w OWPromptArrowTimer_1B8B           ;$04F548 |
 CODE_04F54B:
-    STX.w $1B8A
+    STX.w OWPromptArrowDir_1B8A
     TXA                                     ;$04F54E |
     EOR.b #$01                              ;$04F54F |
     TAY                                     ;$04F551 |
@@ -7652,11 +7652,11 @@ CODE_04F5BF:
     STA.l $7F83CB,X                         ;$04F5CB |
 CODE_04F5CF:
     SEP #$20
-    INC.w $1B8B                             ;$04F5D1 |
-    LDA.w $1B8B                             ;$04F5D4 |
+    INC.w OWPromptArrowTimer_1B8B           ;$04F5D1 |
+    LDA.w OWPromptArrowTimer_1B8B           ;$04F5D4 |
     AND.b #$18                              ;$04F5D7 |
     BEQ CODE_04F600                         ;$04F5D9 |
-    LDA.w $1B8A                             ;$04F5DB |
+    LDA.w OWPromptArrowDir_1B8A             ;$04F5DB |
     ASL                                     ;$04F5DE |
     TAY                                     ;$04F5DF |
     REP #$20                                ;$04F5E0 |

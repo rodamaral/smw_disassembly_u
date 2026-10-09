@@ -2348,49 +2348,49 @@ SpriteLoadStatus_1938: skip 128 ;done
 ExitTableLow_19B8: skip 32 ;done
 ExitTableHigh_19D8: skip 32 ;done
 ItemMemoryTable_19F8: skip 384 ;done
-HardcodedPathIsUsed_1B78: skip 2
-HardcodedPathIndex_1B7A: skip 2
-Layer1PosSpx_1B7C: skip 2
-OverworldTightPath_1B7E: skip 1
+HardcodedPathIsUsed_1B78: skip 2 ;done
+HardcodedPathIndex_1B7A: skip 2 ;done
+Layer1PosSpx_1B7C: skip 2 ;done
+OverworldTightPath_1B7E: skip 1 ;done
 ; 7E1B7F unused
-skip 1
-OverworldClimbing_1B80: skip 2
-OverworldEventXPos_1B82: skip 1
-OverworldEventYPos_1B83: skip 1
-OverworldEventSize_1B84: skip 2
-OverworldEventProcess_1B86: skip 1
-OverworldPromptProcess_1B87: skip 1
+skip 1 ;done
+OWClimbing_1B80: skip 2 ;done
+OWEventXPos_1B82: skip 1 ;done
+OWEventYPos_1B83: skip 1 ;done
+OWEventSize_1B84: skip 2 ;done
+OWEventProcess_1B86: skip 1 ;done
+OWPromptProcess_1B87: skip 1 ; done
 MessageBoxExpand_1B88: skip 1 ;done
 MessageBoxTimer_1B89: skip 1 ;done
-OWPromptArrowDir_1B8A: skip 1
-OWPromptArrowTimer_1B8B: skip 1
-OWTransitionFlag_1B8C: skip 1
-OWTransitionXCalc_1B8D: skip 2
-OWTransitionYCalc_1B8F: skip 2
-BlinkCursorTimer_1B91: skip 1
-BlinkCursorPos_1B92: skip 1
+OWPromptArrowDir_1B8A: skip 1 ;done
+OWPromptArrowTimer_1B8B: skip 1 ;done
+OWTransitionFlag_1B8C: skip 1 ;done
+OWTransitionXCalc_1B8D: skip 2 ;done
+OWTransitionYCalc_1B8F: skip 2 ;done
+BlinkCursorTimer_1B91: skip 1 ;done
+BlinkCursorPos_1B92: skip 1 ;done
 UseSecondaryExit_1B93: skip 1 ;done
-DisableBonusSprite_1B94: skip 1
+DisableBonusSprite_1B94: skip 1 ;done
 YoshiHeavenFlag_1B95: skip 1 ;done
-SideExitEnabled_1B96: skip 1
+SideExitEnabled_1B96: skip 1 ;done
 Empty_1B97: skip 2
-ShowPeaceSign_1B99: skip 1
-BGFastScrollActive_1B9A: skip 1
+ShowPeaceSign_1B99: skip 1 ;done
+BGFastScrollActive_1B9A: skip 1 ;done
 RemoveYoshiFlag_1B9B: skip 1 ;done
-EnteringStarWarp_1B9C: skip 1
-Layer3TideTimer_1B9D: skip 1
-SwapOverworldMusic_1B9E: skip 1
-ReznorBridgeCount_1B9F: skip 1
-OverworldEarthquake_1BA0: skip 1
-LevelLoadObjectTile_1BA1: skip 1
-Mode7TileIndex_1BA2: skip 1
-Mode7GfxBuffer_1BA3: skip 15
-GfxBppConvertBuffer_1BB2: skip 10
-GfxBppConvertFlag_1BBC: skip 39
-Layer3Setting_1BE3: skip 1
-Layer1VramAddr_1BE4: skip 2
+EnteringStarWarp_1B9C: skip 1 ;done
+Layer3TideTimer_1B9D: skip 1 ;done
+SwapOverworldMusic_1B9E: skip 1 ;done
+ReznorBridgeCount_1B9F: skip 1 ;done
+OWEarthquake_1BA0: skip 1;done
+LevelLoadObjectTile_1BA1: skip 1;done
+Mode7TileIndex_1BA2: skip 1 ;done
+Mode7GfxBuffer_1BA3: skip 15 ;done
+GfxBppConvertBuffer_1BB2: skip 10 ;done
+GfxBppConvertFlag_1BBC: skip 39 ;done
+Layer3Setting_1BE3: skip 1;done
+Layer1VramAddr_1BE4: skip 2;done
 Layer1VramBuffer_1BE6: skip 256 ;done
-Layer2VramAddr_1CE6: skip 2
+Layer2VramAddr_1CE6: skip 2 ;done
 Layer2VramBuffer_1CE8: skip 256 ;done
 OWSubmapSwapProcess_1DE8: skip 1
 OWLoadEventFlag_1DE9:

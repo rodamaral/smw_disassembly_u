@@ -7315,7 +7315,7 @@ OrangePlatform:
     JSR CODE_01B457                         ;$01B54A |
     BCC Return01B558                        ;$01B54D |
     LDA.b #$01                              ;$01B54F |
-    STA.w $1B9A                             ;$01B551 |
+    STA.w BGFastScrollActive_1B9A           ;$01B551 |
     LDA.b #$08                              ;$01B554 |
     STA.b SpriteXSpeed_B6,X                 ;$01B556 |
 Return01B558:
@@ -10737,7 +10737,7 @@ CODE_01CDC4:
     CLC                                     ;$01CDD2 |
     ADC $00                                 ;$01CDD3 |
 CODE_01CDD5:
-    STA.w $1BA2
+    STA.w Mode7TileIndex_1BA2
     JSL CODE_03DEDF                         ;$01CDD8 |
     JSR CODE_01CDA7                         ;$01CDDC |
     LDA.b SpriteLock_9D                     ;$01CDDF |

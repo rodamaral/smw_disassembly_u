@@ -943,7 +943,7 @@ DMA_stripe_image:
 
 generic_layer_1_and_2_upload:               ;        \ 
     SEP #$30                                ;$0087AD | 8 bit AXY
-    LDA.w $1BE4                             ;$0087AF |\ if a kayer 1 VRAM destination is set, 
+    LDA.w Layer1VramAddr_1BE4               ;$0087AF |\ if a kayer 1 VRAM destination is set, 
     BNE .layer_1_direction_check            ;$0087B2 |/ Handle layer 1 tilemap DMA
     JMP .layer_2_upload_check               ;$0087B4 / If not, jump to the layer 2 DMA check
 
@@ -956,9 +956,9 @@ generic_layer_1_and_2_upload:               ;        \
 .horizontal_layer_1_DMA                     ;        \ 
     LDY.b #$81                              ;$0087C0 |\ Set VRAM increment after $2119 writes and
     STY.w $2115                             ;$0087C2 |/ Set address increment by 32 for "vertical" writes
-    LDA.w $1BE5                             ;$0087C5 |\ Set the VRAM destination for layer 1 tilemap 
+    LDA.w Layer1VramAddr_1BE4+1             ;$0087C5 |\ Set the VRAM destination for layer 1 tilemap 
     STA.w $2116                             ;$0087C8 | | Left, upper screen 8x8 strip
-    LDA.w $1BE4                             ;$0087CB | |
+    LDA.w Layer1VramAddr_1BE4               ;$0087CB | |
     STA.w $2117                             ;$0087CE |/
     LDX.b #$06                              ;$0087D1 | Number of DMA settings to copy
 .left_upper_layer_1_DMA_setup               ;        |
@@ -969,9 +969,9 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$0087DC |\ Run DMA on channel 1
     STA.w $420B                             ;$0087DE |/
     STY.w $2115                             ;$0087E1 | Rewrite VRAM increment and remap setting
-    LDA.w $1BE5                             ;$0087E4 |\ Write the next VRAM address
+    LDA.w Layer1VramAddr_1BE4+1             ;$0087E4 |\ Write the next VRAM address
     STA.w $2116                             ;$0087E7 | | Which is #$0800 bytes higher
-    LDA.w $1BE4                             ;$0087EA | | Left, lower screen 8x8 strip
+    LDA.w Layer1VramAddr_1BE4               ;$0087EA | | Left, lower screen 8x8 strip
     CLC                                     ;$0087ED | |
     ADC.b #$08                              ;$0087EE | |
     STA.w $2117                             ;$0087F0 |/
@@ -984,10 +984,10 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$0087FE |\ Run DMA on channel 1
     STA.w $420B                             ;$008800 |/
     STY.w $2115                             ;$008803 | Rewrite VRAM increment and remap setting
-    LDA.w $1BE5                             ;$008806 |\ Write the next VRAM address
+    LDA.w Layer1VramAddr_1BE4+1             ;$008806 |\ Write the next VRAM address
     INC A                                   ;$008809 | | Which is a single byte higher
     STA.w $2116                             ;$00880A | | Right, upper screen 8x8 strip
-    LDA.w $1BE4                             ;$00880D | |
+    LDA.w Layer1VramAddr_1BE4               ;$00880D | |
     STA.w $2117                             ;$008810 |/
     LDX.b #$06                              ;$008813 | Number of DMA settings to copy
 .right_upper_layer_1_DMA_setup              ;        |
@@ -998,10 +998,10 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$00881E |\ Run DMA on channel 1
     STA.w $420B                             ;$008820 |/
     STY.w $2115                             ;$008823 | Rewrite VRAM increment and remap setting
-    LDA.w $1BE5                             ;$008826 |\ Write the next VRAM address
+    LDA.w Layer1VramAddr_1BE4+1             ;$008826 |\ Write the next VRAM address
     INC A                                   ;$008829 | | Which is #$0801 bytes higher
     STA.w $2116                             ;$00882A | | Right, lower screen 8x8 strip
-    LDA.w $1BE4                             ;$00882D | |
+    LDA.w Layer1VramAddr_1BE4               ;$00882D | |
     CLC                                     ;$008830 | |
     ADC.b #$08                              ;$008831 | |
     STA.w $2117                             ;$008833 |/
@@ -1018,9 +1018,9 @@ generic_layer_1_and_2_upload:               ;        \
 .vertical_layer_1                           ;        \ 
     LDY.b #$80                              ;$008849 |\ Set VRAM increment after $2119 writes and
     STY.w $2115                             ;$00884B |/ Set address increment by 1 for "horizontal" writes
-    LDA.w $1BE5                             ;$00884E |\ Set the VRAM destination for layer 1 tilemap
+    LDA.w Layer1VramAddr_1BE4+1             ;$00884E |\ Set the VRAM destination for layer 1 tilemap
     STA.w $2116                             ;$008851 | | Lower, left screen 8x8 strip
-    LDA.w $1BE4                             ;$008854 | |
+    LDA.w Layer1VramAddr_1BE4               ;$008854 | |
     STA.w $2117                             ;$008857 |/
     LDX.b #$06                              ;$00885A | Number of DMA settings to copy
 .lower_left_layer_1_DMA_setup               ;        |
@@ -1031,9 +1031,9 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$008865 |\ Run DMA on channel 1
     STA.w $420B                             ;$008867 |/
     STY.w $2115                             ;$00886A | Rewrite VRAM increment and remap setting
-    LDA.w $1BE5                             ;$00886D |\ Write the next VRAM address
+    LDA.w Layer1VramAddr_1BE4+1             ;$00886D |\ Write the next VRAM address
     STA.w $2116                             ;$008870 | | Which is #$0400 bytes higher
-    LDA.w $1BE4                             ;$008873 | | Lower, right screen 8x8 strip
+    LDA.w Layer1VramAddr_1BE4               ;$008873 | | Lower, right screen 8x8 strip
     CLC                                     ;$008876 | |
     ADC.b #$04                              ;$008877 | |
     STA.w $2117                             ;$008879 |/
@@ -1048,11 +1048,11 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$00888C |\ Run DMA on channel 1
     STA.w $420B                             ;$00888E |/
     STY.w $2115                             ;$008891 | Rewrite VRAM increment and remap setting
-    LDA.w $1BE5                             ;$008894 |\ Write the next VRAM address
+    LDA.w Layer1VramAddr_1BE4+1             ;$008894 |\ Write the next VRAM address
     CLC                                     ;$008897 | | Which is #$0020 bytes higher
     ADC.b #$20                              ;$008898 | | Upper, left screen 8x8 strip
     STA.w $2116                             ;$00889A | |
-    LDA.w $1BE4                             ;$00889D | |
+    LDA.w Layer1VramAddr_1BE4               ;$00889D | |
     STA.w $2117                             ;$0088A0 |/
     LDX.b #$06                              ;$0088A3 | Number of DMA settings to copy
 .upper_left_layer_1_DMA_setup               ;        |
@@ -1063,11 +1063,11 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$0088AE |\ Run DMA on channel 1
     STA.w $420B                             ;$0088B0 |/
     STY.w $2115                             ;$0088B3 | Rewrite VRAM increment and remap setting
-    LDA.w $1BE5                             ;$0088B6 |\ Write the next VRAM address
+    LDA.w Layer1VramAddr_1BE4+1             ;$0088B6 |\ Write the next VRAM address
     CLC                                     ;$0088B9 | | Which is #$0420 bytes higher
     ADC.b #$20                              ;$0088BA | | Upper, right screen 8x8 strip
     STA.w $2116                             ;$0088BC | |
-    LDA.w $1BE4                             ;$0088BF | |
+    LDA.w Layer1VramAddr_1BE4               ;$0088BF | |
     CLC                                     ;$0088C2 | |
     ADC.b #$04                              ;$0088C3 |/
     STA.w $2117                             ;$0088C5 |
@@ -1083,8 +1083,8 @@ generic_layer_1_and_2_upload:               ;        \
     STA.w $420B                             ;$0088DA |/
 .layer_2_upload_check                       ;        |
     LDA.b #$00                              ;$0088DD |\ Reset the VRAM upload address
-    STA.w $1BE4                             ;$0088DF |/
-    LDA.w $1CE6                             ;$0088E2 |\ if a kayer 1 VRAM destination is set, 
+    STA.w Layer1VramAddr_1BE4               ;$0088DF |/
+    LDA.w Layer2VramAddr_1CE6               ;$0088E2 |\ if a kayer 1 VRAM destination is set, 
     BNE .layer_2_direction_check            ;$0088E5 |/ Handle layer 1 tilemap DMA
     JMP .return                             ;$0088E7 / No more data to upload, return
 
@@ -1097,9 +1097,9 @@ generic_layer_1_and_2_upload:               ;        \
 .horizontal_layer_2_DMA                     ;        \ 
     LDY.b #$81                              ;$0088F3 |\ Set VRAM increment after $2119 writes and
     STY.w $2115                             ;$0088F5 |/ Set address increment by 32 for "vertical" writes
-    LDA.w $1CE7                             ;$0088F8 |\ Set the VRAM destination for layer 2 tilemap 
+    LDA.w Layer2VramAddr_1CE6+1             ;$0088F8 |\ Set the VRAM destination for layer 2 tilemap 
     STA.w $2116                             ;$0088FB | | Left, upper screen 8x8 strip
-    LDA.w $1CE6                             ;$0088FE | |
+    LDA.w Layer2VramAddr_1CE6               ;$0088FE | |
     STA.w $2117                             ;$008901 |/
     LDX.b #$06                              ;$008904 | Number of DMA settings to copy Number of DMA settings to copy
 .left_upper_layer_2_DMA_setup               ;        |
@@ -1110,9 +1110,9 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$00890F |\ Run DMA on channel 1
     STA.w $420B                             ;$008911 |/
     STY.w $2115                             ;$008914 | Rewrite VRAM increment and remap setting
-    LDA.w $1CE7                             ;$008917 |\ Write the next VRAM address
+    LDA.w Layer2VramAddr_1CE6+1             ;$008917 |\ Write the next VRAM address
     STA.w $2116                             ;$00891A | | Which is #$0800 bytes higher
-    LDA.w $1CE6                             ;$00891D | | Left, lower screen 8x8 strip
+    LDA.w Layer2VramAddr_1CE6               ;$00891D | | Left, lower screen 8x8 strip
     CLC                                     ;$008920 | |
     ADC.b #$08                              ;$008921 | |
     STA.w $2117                             ;$008923 |/
@@ -1125,10 +1125,10 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$008931 |\ Run DMA on channel 1
     STA.w $420B                             ;$008933 |/
     STY.w $2115                             ;$008936 | Rewrite VRAM increment and remap setting
-    LDA.w $1CE7                             ;$008939 |\ Write the next VRAM address
+    LDA.w Layer2VramAddr_1CE6+1             ;$008939 |\ Write the next VRAM address
     INC A                                   ;$00893C | | Which is a single byte higher
     STA.w $2116                             ;$00893D | | Right, upper screen 8x8 strip
-    LDA.w $1CE6                             ;$008940 | |
+    LDA.w Layer2VramAddr_1CE6               ;$008940 | |
     STA.w $2117                             ;$008943 |/
     LDX.b #$06                              ;$008946 | Number of DMA settings to copy
 .right_upper_layer_2_DMA_setup              ;        |
@@ -1139,10 +1139,10 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$008951 |\ Run DMA on channel 1
     STA.w $420B                             ;$008953 |/
     STY.w $2115                             ;$008956 | Rewrite VRAM increment and remap setting
-    LDA.w $1CE7                             ;$008959 |\ Write the next VRAM address
+    LDA.w Layer2VramAddr_1CE6+1             ;$008959 |\ Write the next VRAM address
     INC A                                   ;$00895C | | Which is #$0801 bytes higher
     STA.w $2116                             ;$00895D | | Right, lower screen 8x8 strip
-    LDA.w $1CE6                             ;$008960 | |
+    LDA.w Layer2VramAddr_1CE6               ;$008960 | |
     CLC                                     ;$008963 | |
     ADC.b #$08                              ;$008964 | |
     STA.w $2117                             ;$008966 |/
@@ -1159,9 +1159,9 @@ generic_layer_1_and_2_upload:               ;        \
 .vertical_layer_2                           ;        \ 
     LDY.b #$80                              ;$00897C |\ Set VRAM increment after $2119 writes and
     STY.w $2115                             ;$00897E |/ Set address increment by 1 for "horizontal" writes
-    LDA.w $1CE7                             ;$008981 |\ Set the VRAM destination for layer 2 tilemap
+    LDA.w Layer2VramAddr_1CE6+1             ;$008981 |\ Set the VRAM destination for layer 2 tilemap
     STA.w $2116                             ;$008984 | | Lower, left screen 8x8 strip
-    LDA.w $1CE6                             ;$008987 | |
+    LDA.w Layer2VramAddr_1CE6               ;$008987 | |
     STA.w $2117                             ;$00898A |/
     LDX.b #$06                              ;$00898D | Number of DMA settings to copy
 .lower_left_layer_2_DMA_setup               ;        |
@@ -1172,9 +1172,9 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$008998 |\ Run DMA on channel 1
     STA.w $420B                             ;$00899A |/
     STY.w $2115                             ;$00899D | Rewrite VRAM increment and remap setting
-    LDA.w $1CE7                             ;$0089A0 |\ Write the next VRAM address
+    LDA.w Layer2VramAddr_1CE6+1             ;$0089A0 |\ Write the next VRAM address
     STA.w $2116                             ;$0089A3 | | Which is #$0400 bytes higher
-    LDA.w $1CE6                             ;$0089A6 | | Lower, right screen 8x8 strip
+    LDA.w Layer2VramAddr_1CE6               ;$0089A6 | | Lower, right screen 8x8 strip
     CLC                                     ;$0089A9 | |
     ADC.b #$04                              ;$0089AA | |
     STA.w $2117                             ;$0089AC |/
@@ -1189,11 +1189,11 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$0089BF |\ Run DMA on channel 1
     STA.w $420B                             ;$0089C1 |/
     STY.w $2115                             ;$0089C4 | Rewrite VRAM increment and remap setting
-    LDA.w $1CE7                             ;$0089C7 |\ Write the next VRAM address
+    LDA.w Layer2VramAddr_1CE6+1             ;$0089C7 |\ Write the next VRAM address
     CLC                                     ;$0089CA | | Which is #$0020 bytes higher
     ADC.b #$20                              ;$0089CB | | Upper, left screen 8x8 strip
     STA.w $2116                             ;$0089CD | |
-    LDA.w $1CE6                             ;$0089D0 | |
+    LDA.w Layer2VramAddr_1CE6               ;$0089D0 | |
     STA.w $2117                             ;$0089D3 |/
     LDX.b #$06                              ;$0089D6 | Number of DMA settings to copy
 .upper_left_layer_2_DMA_setup               ;        |
@@ -1204,11 +1204,11 @@ generic_layer_1_and_2_upload:               ;        \
     LDA.b #$02                              ;$0089E1 |\ Run DMA on channel 1
     STA.w $420B                             ;$0089E3 |/
     STY.w $2115                             ;$0089E6 | Rewrite VRAM increment and remap setting
-    LDA.w $1CE7                             ;$0089E9 |\ Write the next VRAM address
+    LDA.w Layer2VramAddr_1CE6+1             ;$0089E9 |\ Write the next VRAM address
     CLC                                     ;$0089EC | | Which is #$0420 bytes higher
     ADC.b #$20                              ;$0089ED | | Upper, right screen 8x8 strip
     STA.w $2116                             ;$0089EF | |
-    LDA.w $1CE6                             ;$0089F2 | |
+    LDA.w Layer2VramAddr_1CE6               ;$0089F2 | |
     CLC                                     ;$0089F5 | |
     ADC.b #$04                              ;$0089F6 |/
     STA.w $2117                             ;$0089F8 |
@@ -1224,7 +1224,7 @@ generic_layer_1_and_2_upload:               ;        \
     STA.w $420B                             ;$008A0D |/
 .return                                     ;        |
     LDA.b #$00                              ;$008A10 |\ Reset the VRAM upload address
-    STA.w $1CE6                             ;$008A12 |/
+    STA.w Layer2VramAddr_1CE6               ;$008A12 |/
     RTL                                     ;$008A15 / Return from generic layer uploader
 
 .layer_1_DMA_settings_1
@@ -3128,9 +3128,9 @@ CODE_009ACB:
     JSR SetUp0DA0GM4                        ;$009ACC |
     PLY                                     ;$009ACF |
 CODE_009AD0:
-    INC.w $1B91
+    INC.w BlinkCursorTimer_1B91
     JSR CODE_009E82                         ;$009AD3 |
-    LDX.w $1B92                             ;$009AD6 |
+    LDX.w BlinkCursorPos_1B92               ;$009AD6 |
     LDA.b byetudlrPress_16                  ;$009AD9 |
     AND.b #$90                              ;$009ADB |
     BNE CODE_009AE3                         ;$009ADD |
@@ -3154,7 +3154,7 @@ CODE_009AEA:
     BEQ Return009B16                        ;$009AF7 |
     LDY.b #$06                              ;$009AF9 |
     STY.w SPCIO3_1DFC                       ;$009AFB |
-    STZ.w $1B91                             ;$009AFE |
+    STZ.w BlinkCursorTimer_1B91             ;$009AFE |
     LSR                                     ;$009B01 |
     LSR                                     ;$009B02 |
     TAY                                     ;$009B03 |
@@ -3169,7 +3169,7 @@ CODE_009B0D:
 CODE_009B11:
     LDA.b #$00
 CODE_009B13:
-    STA.w $1B92
+    STA.w BlinkCursorPos_1B92
 Return009B16:
     RTS
 
@@ -3222,7 +3222,7 @@ CODE_009B67:
     JMP fade_to_title_screen_009C89         ;$009B6A |
 
 CODE_009B6D:
-    STX.w $1B92
+    STX.w BlinkCursorPos_1B92
     LDA.w DATA_009B17,X                     ;$009B70 |
     ORA.w SaveFileDelete_0DDE               ;$009B73 |
     STA.w SaveFileDelete_0DDE               ;$009B76 |
@@ -3329,7 +3329,7 @@ CODE_009C0F:
     RTL                                     ;$009C12 |
 
 CODE_009C13:
-    INC.w $1B87
+    INC.w OWPromptProcess_1B87
     INC.w MessageBoxExpand_1B88             ;$009C16 |
     LDY.b #$1B                              ;$009C19 |
     JSR CODE_009D29                         ;$009C1B |
@@ -3644,10 +3644,10 @@ DATA_009E7E:
     db $01,$02,$04,$08
 
 CODE_009E82:
-    LDX.w $1B92
+    LDX.w BlinkCursorPos_1B92
     LDA.w DATA_009E7E,X                     ;$009E85 |
     TAX                                     ;$009E88 |
-    LDA.w $1B91                             ;$009E89 |
+    LDA.w BlinkCursorTimer_1B91             ;$009E89 |
     EOR.b #$1F                              ;$009E8C |
     AND.b #$18                              ;$009E8E |
     BNE CODE_009E94                         ;$009E90 |
@@ -3799,7 +3799,7 @@ load_layer3_009FB8:
     CLC                                     ;$009FBC |
     ADC.w ObjectTileset_1931                ;$009FBD |
     STA $00                                 ;$009FC0 |
-    LDA.w $1BE3                             ;$009FC2 |
+    LDA.w Layer3Setting_1BE3                ;$009FC2 |
     BEQ CODE_00A012                         ;$009FC5 |
     DEC A                                   ;$009FC7 |
     CLC                                     ;$009FC8 |
@@ -3855,7 +3855,7 @@ CODE_00A01B:
     LDA.b #$04
     TRB.b ColorSettings_40                  ;$00A01D |
 CODE_00A01F:
-    LDA.w $1BE3
+    LDA.w Layer3Setting_1BE3
     BEQ Return00A044                        ;$00A022 |
     DEC A                                   ;$00A024 |
     CLC                                     ;$00A025 |
@@ -3931,7 +3931,7 @@ GM0C_overworld_load_00A087:
     LDX.w CurrentPlayer_0DB3                ;$00A0BC |
     LDA.w PlayerLives_0DBE                  ;$00A0BF |
     BPL .CODE_00A0C7                        ;$00A0C2 |
-    INC.w $1B87                             ;$00A0C4 |
+    INC.w OWPromptProcess_1B87              ;$00A0C4 |
 .CODE_00A0C7:
     STA.w SavedPlayerLives_0DB4,X
     LDA.b Powerup_19                        ;$00A0CA |
@@ -5092,10 +5092,10 @@ CODE_00AA99:
     BEQ CODE_00AAA9                         ;$00AAA4 |
     LDA.w #$0000                            ;$00AAA6 |
 CODE_00AAA9:
-    STA.w $1BBC
+    STA.w GfxBppConvertFlag_1BBC
     LDY.b #$7F                              ;$00AAAC |
 CODE_00AAAE:
-    LDA.w $1BBC
+    LDA.w GfxBppConvertFlag_1BBC
     BEQ CODE_00AACD                         ;$00AAB1 |
     CPY.b #$7E                              ;$00AAB3 |
     BCC CODE_00AABE                         ;$00AAB5 |
@@ -5119,7 +5119,7 @@ CODE_00AACF:
     STA.w $2118                             ;$00AAD1 |
     XBA                                     ;$00AAD4 |
     ORA [$00]                               ;$00AAD5 |
-    STA.w $1BB2,X                           ;$00AAD7 |
+    STA.w GfxBppConvertBuffer_1BB2,X        ;$00AAD7 |
     INC $00                                 ;$00AADA |
     INC $00                                 ;$00AADC |
     DEX                                     ;$00AADE |
@@ -5131,7 +5131,7 @@ CODE_00AAE3:
     STA $0C                                 ;$00AAE8 |
     LDA [$00]                               ;$00AAEA |
     XBA                                     ;$00AAEC |
-    ORA.w $1BB2,X                           ;$00AAED |
+    ORA.w GfxBppConvertBuffer_1BB2,X        ;$00AAED |
     AND $0A                                 ;$00AAF0 |
     ORA $0C                                 ;$00AAF2 |
     STA.w $2118                             ;$00AAF4 |
@@ -5157,7 +5157,7 @@ AddressWrite1:
     STA.w $2118                             ;$00AB11 |
     XBA                                     ;$00AB14 |
     ORA [$00]                               ;$00AB15 |
-    STA.w $1BB2,X                           ;$00AB17 |
+    STA.w GfxBppConvertBuffer_1BB2,X        ;$00AB17 |
     INC $00                                 ;$00AB1A |
     INC $00                                 ;$00AB1C |
     DEX                                     ;$00AB1E |
@@ -5169,7 +5169,7 @@ AddressWrite2:
     STA $0C                                 ;$00AB28 |
     LDA [$00]                               ;$00AB2A |
     XBA                                     ;$00AB2C |
-    ORA.w $1BB2,X                           ;$00AB2D |
+    ORA.w GfxBppConvertBuffer_1BB2,X        ;$00AB2D |
     AND $0A                                 ;$00AB30 |
     ORA $0C                                 ;$00AB32 |
     STA.w $2118                             ;$00AB34 |
@@ -10919,7 +10919,7 @@ level_collision:
     ASL $8D                                 ;$00E987 |
     JSR layer_collision                     ;$00E989 | Process layer 1 collision.
 no_layer_collision:                         ;        |
-    LDA.w $1B96                             ;$00E98C |\ If side exits are enabled,
+    LDA.w SideExitEnabled_1B96              ;$00E98C |\ If side exits are enabled,
     BEQ .no_side_exits                      ;$00E98F | |
     REP #$20                                ;$00E991 | |
     LDA.b PlayerXPosScrRel_7E               ;$00E993 | |
@@ -13574,7 +13574,7 @@ CODE_00FC7A:
     LDA.b #$02
     STA.w SPCIO1_1DFA                       ;$00FC7C |
     LDX.b #$00                              ;$00FC7F |
-    LDA.w $1B94                             ;$00FC81 |
+    LDA.w DisableBonusSprite_1B94           ;$00FC81 |
     BNE CODE_00FC98                         ;$00FC84 |
     LDX.b #$05                              ;$00FC86 |
     LDA.w SpriteMemorySetting_1692          ;$00FC88 |

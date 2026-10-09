@@ -742,7 +742,7 @@ FlyingTurnBlocks:
     JSR CODE_0386A8
     LDA.b SpriteLock_9D                     ;$0385F9 |
     BNE Return038675                        ;$0385FB |
-    LDA.w $1B9A                             ;$0385FD |
+    LDA.w BGFastScrollActive_1B9A           ;$0385FD |
     BEQ CODE_038629                         ;$038600 |
     LDA.w Sprite_1534,X                     ;$038602 |
     INC.w Sprite_1534,X                     ;$038605 |
@@ -773,16 +773,16 @@ CODE_038636:
     JSL UpdateYPosNoGrvty
     PLA                                     ;$03863A |
     STA.b SpriteYSpeed_AA,X                 ;$03863B |
-    LDA.w $1B9A                             ;$03863D |
+    LDA.w BGFastScrollActive_1B9A           ;$03863D |
     STA.b SpriteXSpeed_B6,X                 ;$038640 |
     JSL UpdateXPosNoGrvty                   ;$038642 |
     STA.w Sprite_1528,X                     ;$038646 |
     JSL InvisBlkMainRt                      ;$038649 |
     BCC Return038675                        ;$03864D |
-    LDA.w $1B9A                             ;$03864F |
+    LDA.w BGFastScrollActive_1B9A           ;$03864F |
     BNE Return038675                        ;$038652 |
     LDA.b #$08                              ;$038654 |
-    STA.w $1B9A                             ;$038656 |
+    STA.w BGFastScrollActive_1B9A           ;$038656 |
     LDA.b #$7F                              ;$038659 |
     STA.w SpriteAnimation_1602,X            ;$03865B |
     LDY.b #$09                              ;$03865E |
@@ -3306,7 +3306,7 @@ Reznor:
     STA.b SpriteYPosLow_D8                  ;$0398B4 | NOTE: hardcoded slot 0
     STZ.w SpriteYPosHigh_14D4               ;$0398B6 | NOTE: hardcoded slot 0
     LDA.b #$2C                              ;$0398B9 |
-    STA.w $1BA2                             ;$0398BB |
+    STA.w Mode7TileIndex_1BA2               ;$0398BB |
     JSL CODE_03DEDF                         ;$0398BE |
     PLX                                     ;$0398C2 |
     REP #$20                                ;$0398C3 |
@@ -4708,7 +4708,7 @@ CODE_03A279:
     CLC                                     ;$03A288 |
     ADC.b #$1E                              ;$03A289 |
     ORA.w SpriteDir_157C,X                  ;$03A28B |
-    STA.w $1BA2                             ;$03A28E |
+    STA.w Mode7TileIndex_1BA2               ;$03A28E |
     LDA.b Frame_14                          ;$03A291 |
     LSR                                     ;$03A293 |
     AND.b #$03                              ;$03A294 |
@@ -9991,7 +9991,7 @@ CODE_03D70C:
     CMP.b #$02                              ;$03D71A |
     BCC CODE_03D757                         ;$03D71C |
 BreakBridge:
-    LDX.w $1B9F
+    LDX.w ReznorBridgeCount_1B9F
     CPX.b #$0C                              ;$03D721 |
     BCS CODE_03D757                         ;$03D723 |
     LDA.l DATA_03D700,X                     ;$03D725 |
@@ -10007,7 +10007,7 @@ BreakBridge:
     JSR CODE_03D77F                         ;$03D73C |
     JSR CODE_03D759                         ;$03D73F |
     JSR CODE_03D77F                         ;$03D742 |
-    INC.w $1B9F                             ;$03D745 |
+    INC.w ReznorBridgeCount_1B9F            ;$03D745 |
     BRA CODE_03D757                         ;$03D748 |
 
 CODE_03D74A:
@@ -10416,13 +10416,13 @@ CODE_03DDEC:
     JSR CODE_03DE3C                         ;$03DDF6 |
     LDY.b #$08                              ;$03DDF9 |
 CODE_03DDFB:
-    LDA.w $1BA3,X
+    LDA.w Mode7GfxBuffer_1BA3,X
     ASL                                     ;$03DDFE |
     ROL                                     ;$03DDFF |
     ROL                                     ;$03DE00 |
     ROL                                     ;$03DE01 |
     AND.b #$07                              ;$03DE02 |
-    STA.w $1BA3,X                           ;$03DE04 |
+    STA.w Mode7GfxBuffer_1BA3,X             ;$03DE04 |
     STA.w $2119                             ;$03DE07 |
     INX                                     ;$03DE0A |
     DEY                                     ;$03DE0B |
@@ -10436,7 +10436,7 @@ CODE_03DE15:
     LDY.b #$08                              ;$03DE16 |
     STY $05                                 ;$03DE18 |
 CODE_03DE1A:
-    LDY.w $1BA3,X
+    LDY.w Mode7GfxBuffer_1BA3,X
     STY.w $2119                             ;$03DE1D |
     DEX                                     ;$03DE20 |
     DEC $05                                 ;$03DE21 |
@@ -10462,7 +10462,7 @@ CODE_03DE3C:
     LDY.b #$08                              ;$03DE40 |
 CODE_03DE42:
     ASL
-    ROR.w $1BA3,X                           ;$03DE43 |
+    ROR.w Mode7GfxBuffer_1BA3,X             ;$03DE43 |
     INX                                     ;$03DE46 |
     DEY                                     ;$03DE47 |
     BNE CODE_03DE42                         ;$03DE48 |
@@ -10552,7 +10552,7 @@ CODE_03DEDF:
     LDA.w #$0008                            ;$03DF26 |
     STA $06                                 ;$03DF29 |
     LDX.w #$0380                            ;$03DF2B |
-    LDA.w $1BA2                             ;$03DF2E |
+    LDA.w Mode7TileIndex_1BA2               ;$03DF2E |
     AND.w #$007F                            ;$03DF31 |
     CMP.w #$002C                            ;$03DF34 |
     BCC CODE_03DF3C                         ;$03DF37 |
@@ -10566,7 +10566,7 @@ CODE_03DF44:
     STY $00
     BCS CODE_03DF55                         ;$03DF46 |
 CODE_03DF48:
-    LDA.w $1BA2
+    LDA.w Mode7TileIndex_1BA2
     AND.w #$007F                            ;$03DF4B |
     ASL                                     ;$03DF4E |
     ASL                                     ;$03DF4F |
@@ -10576,7 +10576,7 @@ CODE_03DF48:
 CODE_03DF55:
     STX $02
     PHA                                     ;$03DF57 |
-    LDY.w $1BA1                             ;$03DF58 |
+    LDY.w LevelLoadObjectTile_1BA1          ;$03DF58 |
     BPL CODE_03DF60                         ;$03DF5B |
     CLC                                     ;$03DF5D |
     ADC $00                                 ;$03DF5E |
@@ -10589,7 +10589,7 @@ CODE_03DF60:
 CODE_03DF69:
     LDA.w DATA_03D9DE,Y
     INY                                     ;$03DF6C |
-    BIT.w $1BA2                             ;$03DF6D |
+    BIT.w Mode7TileIndex_1BA2               ;$03DF6D |
     BPL CODE_03DF76                         ;$03DF70 |
     EOR.b #$01                              ;$03DF72 |
     DEY                                     ;$03DF74 |

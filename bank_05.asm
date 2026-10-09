@@ -736,7 +736,7 @@ CODE_05863E:
     ASL                                     ;$058691 |
     ADC.w LevelLoadObject_1928              ;$058692 |
     STA.w LevelLoadObject_1928              ;$058695 |
-    STA.w $1BA1                             ;$058698 |
+    STA.w LevelLoadObjectTile_1BA1          ;$058698 |
     ASL                                     ;$05869B |
     CLC                                     ;$05869C |
     ADC.w LevelLoadObject_1928              ;$05869D |
@@ -1149,7 +1149,7 @@ CODE_0589CE:
     LDA.b Layer1TileUp_45,X                 ;$0589FC |
     AND.b #$0F                              ;$0589FE |
     ASL                                     ;$058A00 |
-    STA.w $1BE5                             ;$058A01 |
+    STA.w Layer1VramAddr_1BE4+1             ;$058A01 |
     LDY.w #$0020                            ;$058A04 |
     LDA.b Layer1TileUp_45,X                 ;$058A07 |
     AND.b #$10                              ;$058A09 |
@@ -1157,7 +1157,7 @@ CODE_0589CE:
     LDY.w #$0024                            ;$058A0D |
 CODE_058A10:
     TYA
-    STA.w $1BE4                             ;$058A11 |
+    STA.w Layer1VramAddr_1BE4               ;$058A11 |
     REP #$20                                ;$058A14 |
     LDA.b Layer1TileUp_45,X                 ;$058A16 |
     AND.w #$01F0                            ;$058A18 |
@@ -1269,7 +1269,7 @@ CODE_058AD5:
     LSR                                     ;$058ADB |
     AND.b #$03                              ;$058ADC |
     ORA $00                                 ;$058ADE |
-    STA.w $1BE4                             ;$058AE0 |
+    STA.w Layer1VramAddr_1BE4               ;$058AE0 |
     LDA.b Layer1TileUp_45,X                 ;$058AE3 |
     AND.b #$03                              ;$058AE5 |
     ASL                                     ;$058AE7 |
@@ -1278,7 +1278,7 @@ CODE_058AD5:
     ASL                                     ;$058AEA |
     ASL                                     ;$058AEB |
     ASL                                     ;$058AEC |
-    STA.w $1BE5                             ;$058AED |
+    STA.w Layer1VramAddr_1BE4+1             ;$058AED |
     REP #$20                                ;$058AF0 |
     LDA.b Layer1TileUp_45,X                 ;$058AF2 |
     AND.w #$01F0                            ;$058AF4 |
@@ -1400,7 +1400,7 @@ CODE_058BA7:
     LDA.b Layer2TileUp_49,X                 ;$058BCA |
     AND.b #$0F                              ;$058BCC |
     ASL                                     ;$058BCE |
-    STA.w $1CE7                             ;$058BCF |
+    STA.w Layer2VramAddr_1CE6+1             ;$058BCF |
     LDY.w #$0030                            ;$058BD2 |
     LDA.b Layer2TileUp_49,X                 ;$058BD5 |
     AND.b #$10                              ;$058BD7 |
@@ -1408,7 +1408,7 @@ CODE_058BA7:
     LDY.w #$0034                            ;$058BDB |
 CODE_058BDE:
     TYA
-    STA.w $1CE6                             ;$058BDF |
+    STA.w Layer2VramAddr_1CE6               ;$058BDF |
     REP #$30                                ;$058BE2 |
     LDA.b Layer2TileUp_49,X                 ;$058BE4 |
     AND.w #$01F0                            ;$058BE6 |
@@ -1531,7 +1531,7 @@ CODE_058CBA:
     LSR                                     ;$058CC0 |
     AND.b #$03                              ;$058CC1 |
     ORA $00                                 ;$058CC3 |
-    STA.w $1CE6                             ;$058CC5 |
+    STA.w Layer2VramAddr_1CE6               ;$058CC5 |
     LDA.b Layer2TileUp_49,X                 ;$058CC8 |
     AND.b #$03                              ;$058CCA |
     ASL                                     ;$058CCC |
@@ -1540,7 +1540,7 @@ CODE_058CBA:
     ASL                                     ;$058CCF |
     ASL                                     ;$058CD0 |
     ASL                                     ;$058CD1 |
-    STA.w $1CE7                             ;$058CD2 |
+    STA.w Layer2VramAddr_1CE6+1             ;$058CD2 |
     REP #$20                                ;$058CD5 |
     LDA.b Layer2TileUp_49,X                 ;$058CD7 |
     AND.w #$01F0                            ;$058CD9 |
@@ -1641,7 +1641,7 @@ CODE_058D7A:
     LDA.w LevelLoadObject_1928              ;$058D7D |
     AND.b #$0F                              ;$058D80 |
     ASL                                     ;$058D82 |
-    STA.w $1CE7                             ;$058D83 |
+    STA.w Layer2VramAddr_1CE6+1             ;$058D83 |
     LDY.b #$30                              ;$058D86 |
     LDA.w LevelLoadObject_1928              ;$058D88 |
     AND.b #$10                              ;$058D8B |
@@ -1649,7 +1649,7 @@ CODE_058D7A:
     LDY.b #$34                              ;$058D8F |
 CODE_058D91:
     TYA
-    STA.w $1CE6                             ;$058D92 |
+    STA.w Layer2VramAddr_1CE6               ;$058D92 |
     REP #$20                                ;$058D95 |
     LDA.w #$B900                            ;$058D97 |
     STA.b Map16LowPtr_6B                    ;$058D9A |
@@ -4763,7 +4763,7 @@ process_layer_3_05C40C:
     BNE .CODE_05C4C0                        ;$05C4A3 |
     LDA.w Layer3ScrollYSpeed_145A           ;$05C4A5 |
     BNE +                                   ;$05C4A8 |
-    DEC.w $1B9D                             ;$05C4AA |
+    DEC.w Layer3TideTimer_1B9D              ;$05C4AA |
     BNE .CODE_05C4EC                        ;$05C4AD |
 +   CMP.w DATA_05C408,Y                     ;$05C4AF |
     BEQ +                                   ;$05C4B2 |
@@ -4771,7 +4771,7 @@ process_layer_3_05C40C:
     ADC.w DATA_05C406,Y                     ;$05C4B5 |
     STA.w Layer3ScrollYSpeed_145A           ;$05C4B8 |
 +   LDA.b #$4B                              ;$05C4BB |
-    STA.w $1B9D                             ;$05C4BD |
+    STA.w Layer3TideTimer_1B9D              ;$05C4BD |
 .CODE_05C4C0:
     LDA.b Layer3YPos_24
     CMP.w DATA_05C40A,Y                     ;$05C4C2 |
@@ -5045,7 +5045,7 @@ ADDR_05C6B4:
     INC.w Layer1ScrollBits_1440             ;$05C6BF |
     STZ.w Layer1ScrollXSpeed_1446           ;$05C6C2 |
     LDA.w #$FCF0                            ;$05C6C5 |
-    STA.w $1B97                             ;$05C6C8 |
+    STA.w Empty_1B97                        ;$05C6C8 |
     BRA ADDR_05C6EC                         ;$05C6CB |
 
     LDY.b #$16                              ;$05C6CD |
@@ -5175,7 +5175,7 @@ CODE_05C7B6:
     JMP CODE_05C32B                         ;$05C7B9 |
 
 CODE_05C7BC:
-    LDA.w $1B9A
+    LDA.w BGFastScrollActive_1B9A
     BEQ CODE_05C7ED                         ;$05C7BF |
 CODE_05C7C1:
     LDA.b #!ScrollRightDown_02
@@ -6506,7 +6506,7 @@ CODE_05D8B7:
     ASL                                     ;$05D92E |
     ROL                                     ;$05D92F |
     ROL                                     ;$05D930 |
-    STA.w $1BE3                             ;$05D931 |
+    STA.w Layer3Setting_1BE3                ;$05D931 |
     STZ.b Layer1YPos_1C+1                   ;$05D934 |
     STZ.b Layer2YPos_20+1                   ;$05D936 |
     LDA.w DATA_05F600,Y                     ;$05D938 |
@@ -6693,7 +6693,7 @@ CODE_05DA60:
     STZ.w HorizLayer1Setting_1411           ;$05DA9E |
     STZ.b ScreenMode_5B                     ;$05DAA1 |
     LDA.l DATA_05D78A,X                     ;$05DAA3 |
-    STA.w $1BE3                             ;$05DAA7 |
+    STA.w Layer3Setting_1BE3                ;$05DAA7 |
     STX $00                                 ;$05DAAA |
     TXA                                     ;$05DAAC |
     ASL                                     ;$05DAAD |
