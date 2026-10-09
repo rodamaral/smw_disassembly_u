@@ -646,7 +646,7 @@ CODE_0485A7:
     JSL set_player_pose                     ;$0485C5 |
     PLB                                     ;$0485C9 |
     LDA.b #$03                              ;$0485CA |
-    STA.w $13F9                             ;$0485CC |
+    STA.w PlayerBehindNet_13F9              ;$0485CC |
     JSL draw_mario_and_yoshi_00E2BD         ;$0485CF |
     LDA.b #$06                              ;$0485D3 |
     STA.w $0D84                             ;$0485D5 |
@@ -1543,7 +1543,7 @@ CODE_048F96:
     RTS                                     ;$048FE8 |
 
 ADDR_048FE9:
-    INC.w $13CA
+    INC.w ShowSavePrompt_13CA
     JSR CODE_049037                         ;$048FEC |
     LDA.b #$02                              ;$048FEF |
     STA.w KeepModeActive_0DB1               ;$048FF1 |
@@ -1552,7 +1552,7 @@ ADDR_048FE9:
     BRA CODE_049003                         ;$048FF9 |
 
 CODE_048FFB:
-    INC.w $13CA
+    INC.w ShowSavePrompt_13CA
     BRA CODE_049003                         ;$048FFE |
 
 CODE_049000:
@@ -1593,7 +1593,7 @@ CODE_049037:
     PHY                                     ;$049038 |
     PHP                                     ;$049039 |
     SEP #$30                                ;$04903A |
-    LDA.w $13CA                             ;$04903C |
+    LDA.w ShowSavePrompt_13CA               ;$04903C |
     BEQ CODE_049054                         ;$04903F |
     LDX.b #$5F                              ;$049041 |
 CODE_049043:
@@ -1601,7 +1601,7 @@ CODE_049043:
     STA.w SaveDataBuffer_1F49,X             ;$049046 |
     DEX                                     ;$049049 |
     BPL CODE_049043                         ;$04904A |
-    STZ.w $13CA                             ;$04904C |
+    STZ.w ShowSavePrompt_13CA               ;$04904C |
     LDA.b #$05                              ;$04904F |
     STA.w $1B87                             ;$049051 |
 CODE_049054:
@@ -2569,11 +2569,11 @@ CODE_049801:
     TAX                                     ;$04980A |
     LDY.w #$0002                            ;$04980B |
 CODE_04980E:
-    LDA.w $13D5,Y
+    LDA.w Layer3ScrollType_13D5,Y
     AND.w #$00FF                            ;$049811 |
     CLC                                     ;$049814 |
     ADC.w OWPlayerSpeed_0DCF,Y              ;$049815 |
-    STA.w $13D5,Y                           ;$049818 |
+    STA.w Layer3ScrollType_13D5,Y           ;$049818 |
     AND.w #$FF00                            ;$04981B |
     BPL CODE_049823                         ;$04981E |
     ORA.w #$00FF                            ;$049820 |
@@ -2678,8 +2678,8 @@ CODE_0498C6:
     STZ.w $1F13
     LDA.b #$80                              ;$0498C9 |
     CLC                                     ;$0498CB |
-    ADC.w $13D7                             ;$0498CC |
-    STA.w $13D7                             ;$0498CF |
+    ADC.w IntroMarchYPosSpx_13D7            ;$0498CC |
+    STA.w IntroMarchYPosSpx_13D7            ;$0498CF |
     PHP                                     ;$0498D2 |
     LDA.b #$0F                              ;$0498D3 |
     CMP.b #$08                              ;$0498D5 |
@@ -6200,7 +6200,7 @@ CODE_04E684:
     RTS                                     ;$04E689 |
 
 CODE_04E68A:
-    STX.w $13D1
+    STX.w StructureCrushIndex_13D1
     TXA                                     ;$04E68D |
     ASL                                     ;$04E68E |
     TAX                                     ;$04E68F |
@@ -6223,7 +6223,7 @@ CODE_04E6A7:
 
 CODE_04E6B3:
     TXA
-    STA.w $13D0                             ;$04E6B4 |
+    STA.w StructureCrushTile_13D0           ;$04E6B4 |
     CPX.w #$0003                            ;$04E6B7 |
     BMI CODE_04E6CA                         ;$04E6BA |
     LDA.l DATA_04E5AC,X                     ;$04E6BC |
@@ -7079,7 +7079,7 @@ CODE_04EEAA:
     STA $0D                                 ;$04EEB9 |
     LDA.w #$EE7A                            ;$04EEBB |
     STA $0A                                 ;$04EEBE |
-    LDA.w $13D1                             ;$04EEC0 |
+    LDA.w StructureCrushIndex_13D1          ;$04EEC0 |
     AND.w #$00FF                            ;$04EEC3 |
     ASL                                     ;$04EEC6 |
     TAX                                     ;$04EEC7 |
@@ -7087,7 +7087,7 @@ CODE_04EEAA:
     STA $00                                 ;$04EECC |
     LDA.l DynStripeImgSize_7F837B           ;$04EECE |
     TAX                                     ;$04EED2 |
-    LDA.w $13D0                             ;$04EED3 |
+    LDA.w StructureCrushTile_13D0           ;$04EED3 |
     AND.w #$00FF                            ;$04EED6 |
     CMP.w #$0003                            ;$04EED9 |
     BMI CODE_04EF27                         ;$04EEDC |
@@ -7127,7 +7127,7 @@ CODE_04EEAA:
     ADC.w #$0010                            ;$04EF23 |
     TAX                                     ;$04EF26 |
 CODE_04EF27:
-    LDA.w $13D0
+    LDA.w StructureCrushTile_13D0
     AND.w #$00FF                            ;$04EF2A |
     CMP.w #$0002                            ;$04EF2D |
     BPL CODE_04EF38                         ;$04EF30 |

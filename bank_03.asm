@@ -2825,7 +2825,7 @@ RexNoAdjustSpeed:
     LDA.w RexSpeed,Y
     STA.b SpriteXSpeed_B6,X                 ;$039567 |
 RexInAir:
-    LDA.w $1FE2,X
+    LDA.w SpriteDisableTimer_1FE2,X 
     BNE RexHalfSmushed                      ;$03956C |
     JSL UpdateSpritePos                     ;$03956E |
 RexHalfSmushed:
@@ -2865,7 +2865,7 @@ MarioBeatsRex:
 
 SmushRex:
     LDA.b #$0C
-    STA.w $1FE2,X                           ;$0395C3 |
+    STA.w SpriteDisableTimer_1FE2,X         ;$0395C3 |
     STZ.w dscccccc_1662,X                   ;$0395C6 |
     RTS                                     ;$0395C9 |
 
@@ -2964,7 +2964,7 @@ RexGfxRt:
     LDA.b #$05                              ;$039683 |
     STA.w SpriteAnimation_1602,X            ;$039685 |
 RexGfxAlive:
-    LDA.w $1FE2,X
+    LDA.w SpriteDisableTimer_1FE2,X 
     BEQ RexNotHalfSmushed                   ;$03968B |
     LDA.b #$02                              ;$03968D |
     STA.w SpriteAnimation_1602,X            ;$03968F |
@@ -5840,7 +5840,7 @@ CODE_03AC03:
     STZ.w $0701                             ;$03AC14 |
     STZ.w $0702                             ;$03AC17 |
     LDA.b #$03                              ;$03AC1A |
-    STA.w $13F9                             ;$03AC1C |
+    STA.w PlayerBehindNet_13F9              ;$03AC1C |
     JSR CODE_03AC63                         ;$03AC1F |
 CODE_03AC22:
     LDA.w SpriteStun_1540,X

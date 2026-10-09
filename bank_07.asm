@@ -4548,7 +4548,7 @@ ZeroSpriteTables:
     STZ.w SpritePlayerContact_154C,X        ;$07F742 |
     STZ.w SpriteLava_1558,X                 ;$07F745 |
     STZ.w SpriteSprContact_1564,X           ;$07F748 |
-    STZ.w $1FE2,X                           ;$07F74B |
+    STZ.w SpriteDisableTimer_1FE2,X         ;$07F74B |
     STZ.w SpriteKill_1626,X                 ;$07F74E |
     STZ.w SpriteAnimationTimer_1570,X       ;$07F751 |
     STZ.b SpriteXSpeed_B6,X                 ;$07F754 |
@@ -4567,7 +4567,7 @@ ZeroSpriteTables:
     STZ.w Sprite_160E,X                     ;$07F779 |
     STZ.w Sprite_1594,X                     ;$07F77C |
     STZ.w Sprite_1504,X                     ;$07F77F |
-    STZ.w $1FD6,X                           ;$07F782 |
+    STZ.w SpriteUnused_1FD6,X               ;$07F782 |
     LDA.b #$01                              ;$07F785 |
     STA.w SpriteOffscreenX_15A0,X           ;$07F787 |
     RTL                                     ;$07F78A |

@@ -2339,7 +2339,7 @@ CODE_0CA75A:
     JSL set_player_pose                     ;$0CA75F |
     PLB                                     ;$0CA763 |
 CODE_0CA764:
-    STZ.w $13F9
+    STZ.w PlayerBehindNet_13F9
     LDA.w PlayerAniTimer_1496               ;$0CA767 |
     BEQ CODE_0CA76F                         ;$0CA76A |
     DEC.w PlayerAniTimer_1496               ;$0CA76C |
@@ -5940,7 +5940,7 @@ CODE_0CD65B:
     BEQ Return0CD6C3                        ;$0CD65F |
     LDA.w $1445                             ;$0CD661 |
     BNE CODE_0CD66B                         ;$0CD664 |
-    LDX.w $13DB                             ;$0CD666 |
+    LDX.w PlayerWalkingPose_13DB            ;$0CD666 |
     BRA CODE_0CD680                         ;$0CD669 |
 
 CODE_0CD66B:
@@ -6035,7 +6035,7 @@ CODE_0CD6F6:
     BPL CODE_0CD6F6                         ;$0CD6FA |
     LDA.w $1446                             ;$0CD6FC |
     BNE CODE_0CD752                         ;$0CD6FF |
-    LDA.w $13DB                             ;$0CD701 |
+    LDA.w PlayerWalkingPose_13DB            ;$0CD701 |
     ASL                                     ;$0CD704 |
     LDY.b Powerup_19                        ;$0CD705 |
     BEQ CODE_0CD70A                         ;$0CD707 |
@@ -6206,7 +6206,7 @@ CODE_0CD818:
     STA.w $144C                             ;$0CD81E |
     TYA                                     ;$0CD821 |
     LSR                                     ;$0CD822 |
-    LDA.w $13DB                             ;$0CD823 |
+    LDA.w PlayerWalkingPose_13DB            ;$0CD823 |
     ROL                                     ;$0CD826 |
     TAY                                     ;$0CD827 |
     LDA.w DATA_0CD7ED,Y                     ;$0CD828 |

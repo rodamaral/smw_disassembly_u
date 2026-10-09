@@ -2823,20 +2823,20 @@ cape_layers_interact_02950B:
     LDA.b ScreenMode_5B                     ;$029510 |
     BPL Return02953B                        ;$029512 | if there is collision with either Layer 2 or 3
     INC $0F                                 ;$029514 | calculate shifted cape position
-    LDA.w $13E9                             ;$029516 |
+    LDA.w CapeInteractionXPos_13E9          ;$029516 |
     CLC                                     ;$029519 |
     ADC.b LayerXDiff_26                     ;$02951A |
-    STA.w $13E9                             ;$02951C |
-    LDA.w $13EA                             ;$02951F |
+    STA.w CapeInteractionXPos_13E9          ;$02951C |
+    LDA.w CapeInteractionXPos_13E9+1        ;$02951F |
     ADC.b LayerXDiff_26+1                   ;$029522 |
-    STA.w $13EA                             ;$029524 |
-    LDA.w $13EB                             ;$029527 |
+    STA.w CapeInteractionXPos_13E9+1        ;$029524 |
+    LDA.w CapeInteractionYPos_13EB          ;$029527 |
     CLC                                     ;$02952A |
     ADC.b LayerYDiff_28                     ;$02952B |
-    STA.w $13EB                             ;$02952D |
-    LDA.w $13EC                             ;$029530 |
+    STA.w CapeInteractionYPos_13EB          ;$02952D |
+    LDA.w CapeInteractionYPos_13EB+1        ;$029530 |
     ADC.b LayerYDiff_28+1                   ;$029533 |
-    STA.w $13EC                             ;$029535 |
+    STA.w CapeInteractionYPos_13EB+1        ;$029535 |
     JSR CapeLayerInteraction029540          ;$029538 |
 Return02953B:
     RTS
@@ -2855,24 +2855,24 @@ CapeLayerInteraction029540:
     INC A                                   ;$029547 |
     AND.b ScreenMode_5B                     ;$029548 |
     BEQ CapeHorizontalLayer0295AE           ;$02954A |
-    LDA.w $13EB                             ;$02954C | if vertical layer
+    LDA.w CapeInteractionYPos_13EB          ;$02954C | if vertical layer
     CLC                                     ;$02954F |
     ADC.w DATA_02953C,Y                     ;$029550 |
     AND.b #$F0                              ;$029553 |
     STA $00                                 ;$029555 |
     STA.b InteractionPtYPos_98              ;$029557 |
-    LDA.w $13EC                             ;$029559 |
+    LDA.w CapeInteractionYPos_13EB+1        ;$029559 |
     ADC.b #$00                              ;$02955C |
     CMP.b LevelScreens_5D                   ;$02955E |
     BCS Return0295AD                        ;$029560 |
     STA $03                                 ;$029562 |
     STA.b InteractionPtYPos_98+1            ;$029564 |
-    LDA.w $13E9                             ;$029566 |
+    LDA.w CapeInteractionXPos_13E9          ;$029566 |
     CLC                                     ;$029569 |
     ADC.w DATA_02953E,Y                     ;$02956A |
     STA $01                                 ;$02956D |
     STA.b InteractionPtXPos_9A              ;$02956F |
-    LDA.w $13EA                             ;$029571 |
+    LDA.w CapeInteractionXPos_13E9+1        ;$029571 |
     ADC.b #$00                              ;$029574 |
     CMP.b #$02                              ;$029576 |
     BCS Return0295AD                        ;$029578 |
@@ -2905,24 +2905,24 @@ Return0295AD:
     RTS
 
 CapeHorizontalLayer0295AE:
-    LDA.w $13EB
+    LDA.w CapeInteractionYPos_13EB
     CLC                                     ;$0295B1 |
     ADC.w DATA_02953C,Y                     ;$0295B2 |
     AND.b #$F0                              ;$0295B5 |
     STA $00                                 ;$0295B7 |
     STA.b InteractionPtYPos_98              ;$0295B9 |
-    LDA.w $13EC                             ;$0295BB |
+    LDA.w CapeInteractionYPos_13EB+1        ;$0295BB |
     ADC.b #$00                              ;$0295BE |
     CMP.b #$02                              ;$0295C0 |
     BCS Return0295AD                        ;$0295C2 |
     STA $02                                 ;$0295C4 |
     STA.b InteractionPtYPos_98+1            ;$0295C6 |
-    LDA.w $13E9                             ;$0295C8 |
+    LDA.w CapeInteractionXPos_13E9          ;$0295C8 |
     CLC                                     ;$0295CB |
     ADC.w DATA_02953E,Y                     ;$0295CC |
     STA $01                                 ;$0295CF |
     STA.b InteractionPtXPos_9A              ;$0295D1 |
-    LDA.w $13EA                             ;$0295D3 |
+    LDA.w CapeInteractionXPos_13E9+1        ;$0295D3 |
     ADC.b #$00                              ;$0295D6 |
     CMP.b LevelScreens_5D                   ;$0295D8 |
     BCS Return0295AD                        ;$0295DA |
@@ -9397,12 +9397,12 @@ CODE_02C4E3:
     BMI CODE_02C504                         ;$02C4EC |
     LDY.w Sprite_160E,X                     ;$02C4EE |
     BEQ CODE_02C504                         ;$02C4F1 |
-    LDA.w $1FE2,X                           ;$02C4F3 |
+    LDA.w SpriteDisableTimer_1FE2,X         ;$02C4F3 |
     BNE CODE_02C502                         ;$02C4F6 |
     LDA.b #$19                              ;$02C4F8 |
     STA.w SPCIO3_1DFC                       ;$02C4FA |
     LDA.b #$20                              ;$02C4FD |
-    STA.w $1FE2,X                           ;$02C4FF |
+    STA.w SpriteDisableTimer_1FE2,X         ;$02C4FF |
 CODE_02C502:
     LDA.b #$07
 CODE_02C504:
@@ -12765,7 +12765,7 @@ GenSumoLightning:
     TYX                                     ;$02DDBA |
     JSL InitSpriteTables                    ;$02DDBB |
     LDA.b #$10                              ;$02DDBF |
-    STA.w $1FE2,X                           ;$02DDC1 |
+    STA.w SpriteDisableTimer_1FE2,X         ;$02DDC1 |
     PLX                                     ;$02DDC4 |
 Return02DDC5:
     RTS
@@ -12869,7 +12869,7 @@ CODE_02DEB0:
     LDA.b #$30                              ;$02DEB5 |
     STA.b SpriteYSpeed_AA,X                 ;$02DEB7 |
     JSR UpdateYPosNoGrvtyB1                 ;$02DEB9 |
-    LDA.w $1FE2,X                           ;$02DEBC |
+    LDA.w SpriteDisableTimer_1FE2,X         ;$02DEBC |
     BNE CODE_02DEEA                         ;$02DEBF |
     JSL CODE_019138                         ;$02DEC1 |
     LDA.w SpriteBlocked_1588,X              ;$02DEC5 |

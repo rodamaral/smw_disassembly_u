@@ -3186,8 +3186,8 @@ ADDR_05B329:
 CODE_05B330:
     STA $00
     CLC                                     ;$05B332 |
-    ADC.w $13CC                             ;$05B333 |
-    STA.w $13CC                             ;$05B336 |
+    ADC.w CoinAdder_13CC                    ;$05B333 |
+    STA.w CoinAdder_13CC                    ;$05B336 |
     LDA.w GreenStarBlockCoins_0DC0          ;$05B339 |
     BEQ Return05B35A                        ;$05B33C |
     SEC                                     ;$05B33E |
@@ -3199,7 +3199,7 @@ CODE_05B345:
     BRA Return05B35A                        ;$05B348 |
 
 CODE_05B34A:
-    INC.w $13CC
+    INC.w CoinAdder_13CC
     LDA.b #$01                              ;$05B34D |
     STA.w SPCIO3_1DFC                       ;$05B34F |
     LDA.w GreenStarBlockCoins_0DC0          ;$05B352 |
@@ -3622,7 +3622,7 @@ scroll_commands_and_layer_3_05BC00:
     SEC                                     ;$05BC39 |
     SBC.b Layer2YPos_20                     ;$05BC3A |
     STA.w Layer2DYPos_17BE                  ;$05BC3C |
-    LDA.w $13D5                             ;$05BC3F |
+    LDA.w Layer3ScrollType_13D5             ;$05BC3F |
     BNE +                                   ;$05BC42 |
     JSR process_layer_3_05C40C              ;$05BC44 |
 +   PLB                                     ;$05BC47 |
@@ -5598,7 +5598,7 @@ CODE_05CC77:
     INC.w $18E4                             ;$05CC81 |
 CODE_05CC84:
     LDA.b #$01
-    STA.w $13D5                             ;$05CC86 |
+    STA.w Layer3ScrollType_13D5             ;$05CC86 |
     LDA.b #$08                              ;$05CC89 |
     TSB.b MainBGMode_3E                     ;$05CC8B |
     REP #$30                                ;$05CC8D |
@@ -5751,7 +5751,7 @@ CODE_05CDC9:
     INC A                                   ;$05CDD0 |
     STA.l DynStripeImgSize_7F837B           ;$05CDD1 |
 CODE_05CDD5:
-    DEC.w $13D6
+    DEC.w DrumrollTimer_13D6
     BPL Return05CDE8                        ;$05CDD8 |
     LDA.w BonusStarsGained_1900             ;$05CDDA |
     STA.w $1424                             ;$05CDDD |
@@ -5928,7 +5928,7 @@ CODE_05CF36:
     LDX.w BonusStarsGained_1900             ;$05CF3B |
     BNE CODE_05CF4D                         ;$05CF3E |
     LDX.b #$30                              ;$05CF40 |
-    STX.w $13D6                             ;$05CF42 |
+    STX.w DrumrollTimer_13D6                ;$05CF42 |
     INC.w OWProcess_13D9                    ;$05CF45 |
     LDX.b #$12                              ;$05CF48 |
     STX.w SPCIO3_1DFC                       ;$05CF4A |
@@ -6296,7 +6296,7 @@ CODE_05D796:
     PHK                                     ;$05D797 |
     PLB                                     ;$05D798 |
     SEP #$30                                ;$05D799 |
-    STZ.w $13CF                             ;$05D79B |
+    STZ.w SkipMidwayCastleIntro_13CF        ;$05D79B |
     LDA.w YoshiHeavenFlag_1B95              ;$05D79E |
     BNE CODE_05D7A8                         ;$05D7A1 |
     LDY.w BonusGameFlag_1425                ;$05D7A3 |
@@ -6578,7 +6578,7 @@ CODE_05D9B8:
     LSR                                     ;$05D9C0 |
     LSR                                     ;$05D9C1 |
     LSR                                     ;$05D9C2 |
-    STA.w $13CD                             ;$05D9C3 |
+    STA.w DisableMidway_13CD                ;$05D9C3 |
     STZ.w MidwayFlag_13CE                   ;$05D9C6 |
     LDY.w Translevel_13BF                   ;$05D9C9 |
     LDA.w DATA_05D608,Y                     ;$05D9CC |
@@ -6588,7 +6588,7 @@ CODE_05D9B8:
     LDA.w OWLevelSettings_1EA2,X            ;$05D9D7 |
     AND.b #$40                              ;$05D9DA |
     BEQ CODE_05D9EC                         ;$05D9DC |
-    STA.w $13CF                             ;$05D9DE |
+    STA.w SkipMidwayCastleIntro_13CF        ;$05D9DE |
     LDA $02                                 ;$05D9E1 |
     LSR                                     ;$05D9E3 |
     LSR                                     ;$05D9E4 |
@@ -6663,7 +6663,7 @@ CODE_05DA38:
 CODE_05DA5E:
     LDX.b #$05
 CODE_05DA60:
-    LDA.w $13CF
+    LDA.w SkipMidwayCastleIntro_13CF
     BNE CODE_05DAD0                         ;$05DA63 |
     LDA.l DATA_05D790,X                     ;$05DA65 |
     STA.b PlayerYPos_96                     ;$05DA69 |

@@ -1669,22 +1669,22 @@ CutsceneID_13C6: skip 1 ;done
 YoshiColor_13C7: skip 1 ;done
 ; 7E13C8 unused
 skip 1
-ShowContinueEnd_13C9: skip 1
-ShowSavePrompt_13CA: skip 1
-UnusedStarCounter_13CB: skip 1
-CoinAdder_13CC: skip 1
-DisableMidway_13CD: skip 1
+ShowContinueEnd_13C9: skip 1 ;done
+ShowSavePrompt_13CA: skip 1 ;done
+UnusedStarCounter_13CB: skip 1 ;done
+CoinAdder_13CC: skip 1 ;done
+DisableMidway_13CD: skip 1 ;done
 MidwayFlag_13CE: skip 1 ;done
-SkipMidwayCastleIntro_13CF: skip 1
-StructureCrushTile_13D0: skip 1
-StructureCrushIndex_13D1: skip 1
-SwitchPalaceColor_13D2: skip 1
+SkipMidwayCastleIntro_13CF: skip 1 ;done
+StructureCrushTile_13D0: skip 1 ;done
+StructureCrushIndex_13D1: skip 1 ;done
+SwitchPalaceColor_13D2: skip 1 ;done
 RamLevelReset_13D3:
-PauseTimer_13D3: skip 1
-PauseFlag_13D4: skip 1
-Layer3ScrollType_13D5: skip 1
-DrumrollTimer_13D6: skip 1
-IntroMarchYPosSpx_13D7: skip 2
+PauseTimer_13D3: skip 1 ;done
+PauseFlag_13D4: skip 1 ;done
+Layer3ScrollType_13D5: skip 1 ;done
+DrumrollTimer_13D6: skip 1 ;done
+IntroMarchYPosSpx_13D7: skip 2 ;done
 
 
 EndMarchPhase_13D9:
@@ -1708,32 +1708,32 @@ OWProcess_13D9: skip 1 ;done
 !OwStarWarp_0B = $0B ; Activate star warp.
 !OwStart_0C = $0C ; Player intro march (entering overworld for the first time).
 
-PlayerXPosSpx_13DA: skip 1
-PlayerWalkingPose_13DB: skip 1
+PlayerXPosSpx_13DA: skip 1 ;done
+PlayerWalkingPose_13DB: skip 1 ;done
 PlayerYPosSpx_13DC: skip 1 ; unused
-PlayerTurningPose_13DD: skip 1
-PlayerOverworldPose_13DE: skip 1
-PlayerCapePose_13DF: skip 1
-PlayerPose_13E0: skip 1
-SlopeType_13E1: skip 1
-SpinjumpFireball_13E2: skip 1
-WallRunFlag_13E3: skip 1
-PlayerPMeter_13E4: skip 1
-PlayerPoseLenTimer_13E5: skip 1
+PlayerTurningPose_13DD: skip 1 ;done
+PlayerOverworldPose_13DE: skip 1 ;done
+PlayerCapePose_13DF: skip 1 ;done
+PlayerPose_13E0: skip 1 ;done
+SlopeType_13E1: skip 1 ;done
+SpinjumpFireball_13E2: skip 1 ;done
+WallRunFlag_13E3: skip 1 ;done
+PlayerPMeter_13E4: skip 1 ;done
+PlayerPoseLenTimer_13E5: skip 1 ;done
 ; 7E13E6 - 7E13E7 unused
 skip 2
-CapeInteracts_13E8: skip 1
-CapeInteractionXPos_13E9: skip 2
-CapeInteractionYPos_13EB: skip 2
+CapeInteracts_13E8: skip 1 ;done
+CapeInteractionXPos_13E9: skip 2 ;done
+CapeInteractionYPos_13EB: skip 2 ;done
 PlayerSlopePose_13ED: skip 1 ;done
-CurrentSlope_13EE: skip 1
-PlayerGroundType_13EF: skip 1
-NetDoorDirIndex_13F0: skip 1
-VerticalScrollEnabled_13F1: skip 1
+CurrentSlope_13EE: skip 1 ;done
+PlayerGroundType_13EF: skip 1 ;done
+NetDoorDirIndex_13F0: skip 1 ;done
+VerticalScrollEnabled_13F1: skip 1 ;done
 ; 7E13F2 unused
 skip 1
 PBalloonFlag_13F3: skip 1 ;done
-BonusRoomBlocks_13F4: skip 5
+BonusRoomBlocks_13F4: skip 5 ;done
 PlayerBehindNet_13F9: skip 1
 PlayerCanJumpWater_13FA: skip 1
 PlayerIsFrozen_13FB: skip 1
@@ -2460,8 +2460,8 @@ SaveDataBufferSwitches_1FCE: skip 4
 ; 7E1FD2 - 7E1FD4 unused
 skip 3
 SaveDataBufferExits_1FD5: skip 1
-SpriteMisc_1FD6: skip 12
-SpriteDisableTimer_1FE2: skip 12
+SpriteUnused_1FD6: skip 12 ;done
+SpriteDisableTimer_1FE2: skip 12 ;done
 MoonCollected_1FEE: skip 12 ;done
 ; 7E1FFA unused
 skip 1
