@@ -1454,7 +1454,7 @@ CODE_0DA512:
 CODE_0DA53D:
     LDA $0A
     AND.b #$1F                              ;$0DA53F |
-    STA.w $1928                             ;$0DA541 |
+    STA.w LevelLoadObject_1928              ;$0DA541 |
     STA.w $1BA1                             ;$0DA544 |
     RTS                                     ;$0DA547 |
 
@@ -1661,7 +1661,7 @@ CODE_0DA6BA:
     LDA $05                                 ;$0DA6C0 |
     STA.b Map16LowPtr_6B+1                  ;$0DA6C2 |
     STA.b Map16HighPtr_6E+1                 ;$0DA6C4 |
-    LDA.w $1928                             ;$0DA6C6 |
+    LDA.w LevelLoadObject_1928              ;$0DA6C6 |
     STA.w $1BA1                             ;$0DA6C9 |
     RTS                                     ;$0DA6CC |
 

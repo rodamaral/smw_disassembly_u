@@ -954,12 +954,12 @@ FindTurningBlkSlot:
     BEQ CODE_028807                         ;$028797 |
     DEY                                     ;$028799 |
     BPL FindTurningBlkSlot                  ;$02879A |
-    DEC.w $18CD                             ;$02879C |
+    DEC.w BounceSpriteSlotIdx_18CD          ;$02879C |
     BPL CODE_0287A6                         ;$02879F |
     LDA.b #$03                              ;$0287A1 |
-    STA.w $18CD                             ;$0287A3 |
+    STA.w BounceSpriteSlotIdx_18CD          ;$0287A3 |
 CODE_0287A6:
-    LDY.w $18CD
+    LDY.w BounceSpriteSlotIdx_18CD
     LDA.w BounceSprNumber_1699,Y            ;$0287A9 |
     CMP.b #$07                              ;$0287AC |
     BNE NoResetTurningBlk                   ;$0287AE |
@@ -1011,7 +1011,7 @@ CODE_0287A6:
     PLA                                     ;$028801 |
     STA.b InteractionPtXPos_9A              ;$028802 |
 NoResetTurningBlk:
-    LDY.w $18CD
+    LDY.w BounceSpriteSlotIdx_18CD
 CODE_028807:
     LDA $04
     CMP.b #$10                              ;$028809 |
@@ -1019,7 +1019,7 @@ CODE_028807:
     STZ $04                                 ;$02880D |
     TAX                                     ;$02880F |
     LDA.w CODE_028780,X                     ;$028810 |
-    STA.w $1901,Y                           ;$028813 |
+    STA.w BounceSprYXPPCCCT_1901,Y          ;$028813 |
     BRA CODE_02882A                         ;$028816 |
 
 CODE_028818:
@@ -1031,7 +1031,7 @@ CODE_028818:
 CODE_028823:
     TAX
     LDA.w BlockBounce,X                     ;$028824 |
-    STA.w $1901,Y                           ;$028827 |
+    STA.w BounceSprYXPPCCCT_1901,Y          ;$028827 |
 CODE_02882A:
     LDA $04
     INC A                                   ;$02882C |
@@ -1066,7 +1066,7 @@ CODE_02882A:
     CMP.b #$07                              ;$028871 |
     BNE CODE_02887A                         ;$028873 |
     LDA.b #$FF                              ;$028875 |
-    STA.w $18CE,Y                           ;$028877 |
+    STA.w TurnBlockSpinTimer_18CE,Y         ;$028877 |
 CODE_02887A:
     JSR SprBlkInteract
 CODE_02887D:
@@ -1482,14 +1482,14 @@ minor_sprites_and_loading_028AB1:
     JSR handle_sprite_generator_02AFFD      ;$028B17 |
     JSR cape_spin_interactions_0294F5       ;$028B1A |
     JSR load_sprites_from_level_02A7FC      ;$028B1D |
-    LDA.w $18C0                             ;$028B20 |\ 
+    LDA.w SpriteRespawnTimer_18C0           ;$028B20 |\ 
     BEQ +                                   ;$028B23 || Handle sprites that respawn (e.g. Lakitu)
     LDA.b Frame_13                          ;$028B25 ||\ 
     AND.b #$01                              ;$028B27 |||
     ORA.b SpriteLock_9D                     ;$028B29 ||| Only respawn the sprite if:
-    ORA.w $18BF                             ;$028B2B ||| - On an even frame
+    ORA.w SpriteWillAppear_18BF             ;$028B2B ||| - On an even frame
     BNE +                                   ;$028B2E ||| - Game isn't frozen
-    DEC.w $18C0                             ;$028B30 ||| - Actually time to respawn
+    DEC.w SpriteRespawnTimer_18C0           ;$028B30 ||| - Actually time to respawn
     BNE +                                   ;$028B33 ||| - There is an empty sprite slot
     JSL FindFreeSprSlot                     ;$028B35 |||
     BMI +                                   ;$028B39 |/
@@ -1506,9 +1506,9 @@ minor_sprites_and_loading_028AB1:
     LDA.b Layer1XPos_1A+1                   ;$028B4F ||
     SBC.b #$00                              ;$028B51 ||
     STA.w SpriteXPosHigh_14E0,X             ;$028B53 ||
-    LDA.w $18C3                             ;$028B56 ||
+    LDA.w SpriteRespawnYPos_18C3            ;$028B56 ||
     STA.b SpriteYPosLow_D8,X                ;$028B59 ||
-    LDA.w $18C4                             ;$028B5B ||
+    LDA.w SpriteRespawnYPos_18C3+1          ;$028B5B ||
     STA.w SpriteYPosHigh_14D4,X             ;$028B5E ||
     JSL InitSpriteTables                    ;$028B61 |/
 +   PLB                                     ;$028B65 ||
@@ -2249,9 +2249,9 @@ CODE_0290A8:
     STA.w BounceSprYSpeed_16B1,X            ;$0290B5 |
     JSR BounceSprGfx                        ;$0290B8 |
 CODE_0290BB:
-    LDA.w $18CE,X
+    LDA.w TurnBlockSpinTimer_18CE,X
     BEQ CODE_0290C4                         ;$0290BE |
-    DEC.w $18CE,X                           ;$0290C0 |
+    DEC.w TurnBlockSpinTimer_18CE,X         ;$0290C0 |
     RTS                                     ;$0290C3 |
 
 CODE_0290C4:
@@ -2453,7 +2453,7 @@ CODE_029201:
     SBC $03                                 ;$02923F |
     STA $00                                 ;$029241 |
     STA.w OAMMirror_0200,Y                  ;$029243 |
-    LDA.w $1901,X                           ;$029246 |
+    LDA.w BounceSprYXPPCCCT_1901,X          ;$029246 |
     ORA.b SpriteYXPPCCCT_64                 ;$029249 |
     STA.w $0203,Y                           ;$02924B |
     LDA.w BounceSprNumber_1699,X            ;$02924E |
@@ -5738,7 +5738,7 @@ CODE_02AA73:
     RTS                                     ;$02AA8C |
 
 CODE_02AA8D:
-    STZ.w $190A
+    STZ.w BooCloudTimer_190A
     LDX.b #$13                              ;$02AA90 |
 CODE_02AA92:
     LDA.b #$07
@@ -5806,11 +5806,11 @@ CODE_02AAD7:
     STA.w $1E2A,X                           ;$02AB07 |
     DEX                                     ;$02AB0A |
     BPL CODE_02AAD7                         ;$02AB0B |
-    INC.w $18BA                             ;$02AB0D |
+    INC.w BooRingIndex_18BA                 ;$02AB0D |
     RTS                                     ;$02AB10 |
 
 CODE_02AB11:
-    LDY.w $18BA
+    LDY.w BooRingIndex_18BA
     CPY.b #$02                              ;$02AB14 |
     BCS Return02AB77                        ;$02AB16 |
     LDY.b #$01                              ;$02AB18 |
@@ -5827,7 +5827,7 @@ CODE_02AB28:
     BNE CODE_02AB71                         ;$02AB2B |
     LDA.b #$04                              ;$02AB2D |
     STA.w ClusterSprNumber_1892,X           ;$02AB2F |
-    LDA.w $18BA                             ;$02AB32 |
+    LDA.w BooRingIndex_18BA                 ;$02AB32 |
     STA.w ClusterSprMisc_0F86,X             ;$02AB35 |
     LDA $0E                                 ;$02AB38 |
     STA.w ClusterSprMisc_0F72,X             ;$02AB3A |
@@ -5837,7 +5837,7 @@ CODE_02AB28:
     BEQ CODE_02AB6D                         ;$02AB44 |
     LDY $03                                 ;$02AB46 |
     LDA.b [SpriteDataPtr_CE],Y              ;$02AB48 |
-    LDY.w $18BA                             ;$02AB4A |
+    LDY.w BooRingIndex_18BA                 ;$02AB4A |
     PHA                                     ;$02AB4D |
     AND.b #$F0                              ;$02AB4E |
     STA.w $0FB6,Y                           ;$02AB50 |
@@ -5859,7 +5859,7 @@ CODE_02AB71:
     DEX
     BPL CODE_02AB28                         ;$02AB72 |
 CODE_02AB74:
-    INC.w $18BA
+    INC.w BooRingIndex_18BA
 Return02AB77:
     RTS
 
@@ -6201,9 +6201,9 @@ CODE_02ADE4:
 CODE_02AE03:
     LDA.w $ADCC,Y
     CLC                                     ;$02AE06 |
-    ADC.w $18E4                             ;$02AE07 |
-    STA.w $18E4                             ;$02AE0A |
-    STZ.w $18E5                             ;$02AE0D |
+    ADC.w GivePlayerLives_18E4              ;$02AE07 |
+    STA.w GivePlayerLives_18E4              ;$02AE0A |
+    STZ.w GiveLivesTimer_18E5               ;$02AE0D |
     BRA CODE_02AE35                         ;$02AE10 |
 
 CODE_02AE12:
@@ -6494,12 +6494,12 @@ handle_sprite_generator_02AFFD:
     RTS
 
 TurnOffGen2:
-    INC.w $18BF
-    STZ.w $18C0                             ;$02B02E |
+    INC.w SpriteWillAppear_18BF
+    STZ.w SpriteRespawnTimer_18C0           ;$02B02E |
     RTS                                     ;$02B031 |
 
 TurnOffGenerators:
-    STZ.w $18B9
+    STZ.w CurrentGenerator_18B9
     RTS                                     ;$02B035 |
 
 GenerateFire:
@@ -6591,7 +6591,7 @@ GenMultiBullets:
     STZ.w DiagonalBulletTimer_18FE          ;$02B0DC |
     LDA.b #$09                              ;$02B0DF |
     STA.w SPCIO3_1DFC                       ;$02B0E1 |
-    LDY.w $18B9                             ;$02B0E4 |
+    LDY.w CurrentGenerator_18B9             ;$02B0E4 |
     LDA.w CODE_02B0BD,Y                     ;$02B0E7 |
     LDX.w CODE_02B0BF,Y                     ;$02B0EA |
     STA $0D                                 ;$02B0ED |
@@ -6810,7 +6810,7 @@ GenerateDolphin:
     LDA.b Frame_14
     AND.b #$1F                              ;$02B26E |
     BNE Return02B2CF                        ;$02B270 |
-    LDY.w $18B9                             ;$02B272 |
+    LDY.w CurrentGenerator_18B9             ;$02B272 |
     LDX.w DATA_02B263,Y                     ;$02B275 |
     LDA.w DATA_02B265,Y                     ;$02B278 |
     STA $00                                 ;$02B27B |
@@ -6841,7 +6841,7 @@ CODE_02B288:
     TAY                                     ;$02B2AE |
     LDA.w DATA_02B264,Y                     ;$02B2AF |
     STA.b SpriteYSpeed_AA,X                 ;$02B2B2 |
-    LDY.w $18B9                             ;$02B2B4 |
+    LDY.w CurrentGenerator_18B9             ;$02B2B4 |
     LDA.b Layer1XPos_1A                     ;$02B2B7 |
     CLC                                     ;$02B2B9 |
     ADC.w Return02B259,Y                    ;$02B2BA |
@@ -7970,7 +7970,7 @@ CODE_02BA92:
     BCS Return02BABF                        ;$02BAAD |
     SEC                                     ;$02BAAF |
     SBC.b #$44                              ;$02BAB0 |
-    STA.w $18D6                             ;$02BAB2 |
+    STA.w EatenBerryType_18D6               ;$02BAB2 |
     LDY.b #$0B                              ;$02BAB5 |
 CODE_02BAB7:
     LDA.w SpriteStatus_14C8,Y
@@ -8461,7 +8461,7 @@ CODE_02BE4E:
     BNE CODE_02BEB5                         ;$02BE52 |
     JSL GenericSprGfxRt2                    ;$02BE54 |
     LDY.w SpriteOAMIndex_15EA,X             ;$02BE58 |
-    LDA.w $192B                             ;$02BE5B |
+    LDA.w SpriteTileset_192B                ;$02BE5B |
     CMP.b #$02                              ;$02BE5E |
     BNE CODE_02BE79                         ;$02BE60 |
     PHX                                     ;$02BE62 |
@@ -9211,7 +9211,7 @@ CODE_02C390:
     LSR                                     ;$02C3A7 |
     LDA.b #$09                              ;$02C3A8 |
     BCC CODE_02C3AF                         ;$02C3AA |
-    STA.w $18B9                             ;$02C3AC |
+    STA.w CurrentGenerator_18B9             ;$02C3AC |
 CODE_02C3AF:
     STA.w ChuckIsWhistling_18FD
     RTS                                     ;$02C3B2 |
@@ -10290,7 +10290,7 @@ ADDR_02CC05:
     LDA.b PlayerAnimation_71                ;$02CC1E |
     CMP.b #!AniHurt_01                      ;$02CC20 |
     BCS Return02CBFD                        ;$02CC22 |
-    LDA.w $18B5                             ;$02CC24 |
+    LDA.w StandingOnCage_18B5               ;$02CC24 |
     BEQ ADDR_02CC2D                         ;$02CC27 |
     JSL ADDR_00FF07                         ;$02CC29 |
 ADDR_02CC2D:
@@ -10361,7 +10361,7 @@ ADDR_02CC93:
     STY.b PlayerYSpeed_7D                   ;$02CCA4 |
     LDY.b #$01                              ;$02CCA6 |
     STY.w OnSolidSprite_1471                ;$02CCA8 |
-    STY.w $18B5                             ;$02CCAB |
+    STY.w StandingOnCage_18B5               ;$02CCAB |
 ADDR_02CCAE:
     SEP #$20
     RTL                                     ;$02CCB0 |
@@ -10476,7 +10476,7 @@ CODE_02CD7F:
     JSL InvisBlkMainRt
     JSR GetDrawInfo2                        ;$02CD83 |
     PHX                                     ;$02CD86 |
-    LDX.w $191E                             ;$02CD87 |
+    LDX.w BigSwitchPressTimer_191E          ;$02CD87 |
     LDA.w DATA_02CD55,X                     ;$02CD8A |
     STA $02                                 ;$02CD8D |
     LDX.b #$07                              ;$02CD8F |
@@ -11432,7 +11432,7 @@ Layer3SmashPtrs:
     dw CODE_02D489
 
 CODE_02D419:
-    LDA.w $18BF
+    LDA.w SpriteWillAppear_18BF
     BEQ CODE_02D422                         ;$02D41C |
     JSR OffScrEraseSprBnk2                  ;$02D41E |
     RTS                                     ;$02D421 |
@@ -12933,12 +12933,12 @@ CODE_02DF37:
     BEQ CODE_02DF4C                         ;$02DF3A |
     DEY                                     ;$02DF3C |
     BPL CODE_02DF37                         ;$02DF3D |
-    DEC.w $191D                             ;$02DF3F |
+    DEC.w SumoClustOverwrite_191D           ;$02DF3F |
     BPL CODE_02DF49                         ;$02DF42 |
     LDA.b #$09                              ;$02DF44 |
-    STA.w $191D                             ;$02DF46 |
+    STA.w SumoClustOverwrite_191D           ;$02DF46 |
 CODE_02DF49:
-    LDY.w $191D
+    LDY.w SumoClustOverwrite_191D
 CODE_02DF4C:
     PHX
     LDA.w SpriteAnimationTimer_1570,X       ;$02DF4D |
@@ -13440,7 +13440,7 @@ CODE_02E2DE:
     JSL CODE_019138
     LDA.b SpriteXSpeed_B6,X                 ;$02E2E2 |
     BNE CODE_02E2F3                         ;$02E2E4 |
-    LDA.w $18D7                             ;$02E2E6 |
+    LDA.w SprMap16TouchVertHigh_18D7        ;$02E2E6 |
     BNE CODE_02E2FF                         ;$02E2E9 |
     LDA.w SprMap16TouchVertLow_185F         ;$02E2EB |
     CMP.b #$25                              ;$02E2EE |
@@ -13944,7 +13944,7 @@ CODE_02E67A:
     CLC                                     ;$02E698 |
     ADC.b #$02                              ;$02E699 |
     STA.w $0301,Y                           ;$02E69B |
-    STA.w $18B6                             ;$02E69E |
+    STA.w TileGenerateTrackB_18B6           ;$02E69E |
     CLC                                     ;$02E6A1 |
     ADC.b #$40                              ;$02E6A2 |
     STA.w $0305,Y                           ;$02E6A4 |
@@ -13987,11 +13987,11 @@ CODE_02E6EB:
 CODE_02E6F4:
     LDA.w LakituBaitRelY_185E
     STA.w $0300,Y                           ;$02E6F7 |
-    LDA.w $18B6                             ;$02E6FA |
+    LDA.w TileGenerateTrackB_18B6           ;$02E6FA |
     STA.w $0301,Y                           ;$02E6FD |
     CLC                                     ;$02E700 |
     ADC.b #$08                              ;$02E701 |
-    STA.w $18B6                             ;$02E703 |
+    STA.w TileGenerateTrackB_18B6           ;$02E703 |
     LDA.b #$89                              ;$02E706 |
     STA.w $0302,Y                           ;$02E708 |
     LDA.b #$35                              ;$02E70B |
@@ -14250,7 +14250,7 @@ GrowingPipeGfx:
     LDA.w GrowingPipeTiles1,Y
     STA.w GrowingPipeTile_185E              ;$02E8BD |
     LDA.w GrowingPipeTiles2,Y               ;$02E8C0 |
-    STA.w $18B6                             ;$02E8C3 |
+    STA.w TileGenerateTrackB_18B6           ;$02E8C3 |
     LDA.w GrowingPipeTile_185E              ;$02E8C6 |
     STA.b TileGenerate_9C                   ;$02E8C9 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8CB |
@@ -14262,7 +14262,7 @@ GrowingPipeGfx:
     LDA.w SpriteYPosHigh_14D4,X             ;$02E8D8 |
     STA.b InteractionPtYPos_98+1            ;$02E8DB |
     JSL generate_tile                       ;$02E8DD |
-    LDA.w $18B6                             ;$02E8E1 |
+    LDA.w TileGenerateTrackB_18B6           ;$02E8E1 |
     STA.b TileGenerate_9C                   ;$02E8E4 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8E6 |
     CLC                                     ;$02E8E8 |
@@ -14884,7 +14884,7 @@ FloatingSkullInit:
     RTL                                     ;$02ED89 |
 
 CODE_02ED8A:
-    STZ.w $18BC
+    STZ.w SkullRaftSpeed_18BC
     INC.b SpritePhase_C2,X                  ;$02ED8D |
     LDA.b #$02                              ;$02ED8F |
     STA $00                                 ;$02ED91 |
@@ -14981,7 +14981,7 @@ CODE_02EE21:
 CODE_02EE36:
     DEY
     BPL CODE_02EE21                         ;$02EE37 |
-    LDA.w $18BC                             ;$02EE39 |
+    LDA.w SkullRaftSpeed_18BC               ;$02EE39 |
     STA.b SpriteXSpeed_B6,X                 ;$02EE3C |
     LDA.b SpriteYSpeed_AA,X                 ;$02EE3E |
     CMP.b #$20                              ;$02EE40 |
@@ -15001,7 +15001,7 @@ CODE_02EE57:
     LDA.b PlayerYSpeed_7D                   ;$02EE5D |
     BMI Return02EEA8                        ;$02EE5F |
     LDA.b #$0C                              ;$02EE61 |
-    STA.w $18BC                             ;$02EE63 |
+    STA.w SkullRaftSpeed_18BC               ;$02EE63 |
     LDA.w SpriteOAMIndex_15EA,X             ;$02EE66 |
     TAX                                     ;$02EE69 |
     INC.w $0301,X                           ;$02EE6A |
@@ -15057,7 +15057,7 @@ ADDR_02EEB5:
     LDA.b SpritePhase_C2,X
     BNE ADDR_02EEBE                         ;$02EEB7 |
     INC.b SpritePhase_C2,X                  ;$02EEB9 |
-    STZ.w $18E3                             ;$02EEBB |
+    STZ.w GameCloudCoinCount_18E3           ;$02EEBB |
 ADDR_02EEBE:
     LDA.b SpriteLock_9D
     BNE ADDR_02EF1C                         ;$02EEC0 |
@@ -15144,7 +15144,7 @@ ADDR_02EF1C:
     RTS                                     ;$02EF66 |
 
 ADDR_02EF67:
-    LDA.w $18E3
+    LDA.w GameCloudCoinCount_18E3
     CMP.b #$0A                              ;$02EF6A |
     BCC ADDR_02EFAA                         ;$02EF6C |
     LDY.b #$0B                              ;$02EF6E |
@@ -15601,15 +15601,15 @@ ADDR_02F29D:
     STA.w SpriteStatus_14C8,X               ;$02F29F |
     LDA.b #$D0                              ;$02F2A2 |
     STA.b SpriteYSpeed_AA,X                 ;$02F2A4 |
-    INC.w $18D2                             ;$02F2A6 |
-    LDA.w $18D2                             ;$02F2A9 |
+    INC.w StarKillCounter_18D2              ;$02F2A6 |
+    LDA.w StarKillCounter_18D2              ;$02F2A9 |
     CMP.b #$09                              ;$02F2AC |
     BCC ADDR_02F2B5                         ;$02F2AE |
     LDA.b #$09                              ;$02F2B0 |
-    STA.w $18D2                             ;$02F2B2 |
+    STA.w StarKillCounter_18D2              ;$02F2B2 |
 ADDR_02F2B5:
     JSL GivePoints
-    LDY.w $18D2                             ;$02F2B9 |
+    LDY.w StarKillCounter_18D2              ;$02F2B9 |
     CPY.b #$08                              ;$02F2BC |
     BCS Return02F2C6                        ;$02F2BE |
     LDA.w DATA_02D57F,Y                     ;$02F2C0 |
@@ -16420,7 +16420,7 @@ reappearing_boo_02F83D:
     STA $00                                 ;$02F868 |
     LDA.w $1E52,X                           ;$02F86A |
     STA $01                                 ;$02F86D |
-    LDA.w $18BA                             ;$02F86F |
+    LDA.w BooRingIndex_18BA                 ;$02F86F |
     AND.b #$01                              ;$02F872 |
     BNE .CODE_02F880                        ;$02F874 |
     LDA.w $1E8E,X                           ;$02F876 |
@@ -16752,7 +16752,7 @@ CODE_02FAB3:
     LDX.w $0FBC,Y                           ;$02FAE6 |
     STZ.w SpriteLoadStatus_1938,X           ;$02FAE9 |
     PLX                                     ;$02FAEC |
-    DEC.w $18BA                             ;$02FAED |
+    DEC.w BooRingIndex_18BA                 ;$02FAED |
 CODE_02FAF0:
     PHX
     LDA.w ClusterSprMisc_0F72,X             ;$02FAF1 |
@@ -17193,7 +17193,7 @@ CODE_02FE29:
     BCS CODE_02FE48                         ;$02FE36 |
     STZ.w ClusterSprNumber_1892,X           ;$02FE38 |
     JSR CODE_02FF6C                         ;$02FE3B |
-    DEC.w $1920                             ;$02FE3E |
+    DEC.w BonusOneUpsRemain_1920            ;$02FE3E |
     BNE CODE_02FE48                         ;$02FE41 |
     LDA.b #$58                              ;$02FE43 |
     STA.w BonusTimer_14AB                   ;$02FE45 |

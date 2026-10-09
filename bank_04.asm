@@ -5491,7 +5491,7 @@ CODE_04DC09:
     LDA.l DATA_04DC02,X                     ;$04DC15 |
     STA.w ObjectTileset_1931                ;$04DC19 |
     LDA.b #$11                              ;$04DC1C |
-    STA.w $192B                             ;$04DC1E |
+    STA.w SpriteTileset_192B                ;$04DC1E |
     LDA.b #$07                              ;$04DC21 |
     STA.w LevelModeSetting_1925             ;$04DC23 |
     LDA.b #!Layer12Vert_03                  ;$04DC26 |

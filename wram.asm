@@ -2241,50 +2241,50 @@ YoshiXPos_18B0: skip 2 ;done
 YoshiYPos_18B2: skip 2 ;done
 ; 7E18B4 unused
 skip 1
-StandingOnCage_18B5: skip 1
-TileGenerateTrackB_18B6: skip 1
+StandingOnCage_18B5: skip 1 ;done
+TileGenerateTrackB_18B6: skip 1 ;done
 ; 7E18B7 unused
 skip 1
-RunClusterSprites_18B8: skip 1
-CurrentGenerator_18B9: skip 1
-BooRingIndex_18BA: skip 1
+RunClusterSprites_18B8: skip 1 ;done
+CurrentGenerator_18B9: skip 1 ;done
+BooRingIndex_18BA: skip 1 ;done
 ; 7E18BB unused
 skip 1
-SkullRaftSpeed_18BC: skip 1
-PlayerStunnedTimer_18BD: skip 1
-PlayerClimbFlag_18BE: skip 1
-SpriteWillAppear_18BF: skip 1
-SpriteRespawnTimer_18C0: skip 1
-SpriteRespawnNumber_18C1: skip 1
-PlayerInCloud_18C2: skip 1
-SpriteRespawnYPos_18C3: skip 2
+SkullRaftSpeed_18BC: skip 1 ;done
+PlayerStunnedTimer_18BD: skip 1 ;done
+PlayerClimbFlag_18BE: skip 1 ;done
+SpriteWillAppear_18BF: skip 1 ;done
+SpriteRespawnTimer_18C0: skip 1 ;done
+SpriteRespawnNumber_18C1: skip 1 ;done
+PlayerInCloud_18C2: skip 1 ;done
+SpriteRespawnYPos_18C3: skip 2 ;done
 ; 7E18C5 - 7E18CC unused
 skip 8
-BounceSpriteSlotIdx_18CD: skip 1
-TurnBlockSpinTimer_18CE: skip 4
-StarKillCounter_18D2: skip 1
-PlayerSparkleTimer_18D3: skip 1
-RedBerriesEaten_18D4: skip 1
-PinkBerriesEaten_18D5: skip 1
-EatenBerryType_18D6: skip 1
-SprMap16TouchVertHigh_18D7: skip 1
+BounceSpriteSlotIdx_18CD: skip 1 ;done
+TurnBlockSpinTimer_18CE: skip 4 ;done
+StarKillCounter_18D2: skip 1 ;done
+PlayerSparkleTimer_18D3: skip 1 ;done
+RedBerriesEaten_18D4: skip 1 ;done
+PinkBerriesEaten_18D5: skip 1 ;done
+EatenBerryType_18D6: skip 1 ;done
+SprMap16TouchVertHigh_18D7: skip 1 ;done
 ; 7E18D8 unused
 skip 1
 NoYoshiIntroTimer_18D9: skip 1 ;done
 YoshiEggSprite_18DA: skip 1 ;done
 Unread_18DB: skip 1 ;done
 DuckingYoshi_18DC: skip 1 ;done
-SilverCoinsCollected_18DD: skip 1
-EggLaidTimer_18DE: skip 1
+SilverCoinsCollected_18DD: skip 1 ;done
+EggLaidTimer_18DE: skip 1 ;done
 YoshiSlot_18DF: skip 1 ; TODO: should be YoshiPlus1 or something that indicates it is not really the slot
-LakituCloudTimer_18E0: skip 1
-LakituCloudSlot_18E1: skip 1
-YoshiSlotMirror_18E2: skip 1
-GameCloudCoinCount_18E3: skip 1
-GivePlayerLives_18E4: skip 1
-GiveLivesTimer_18E5: skip 1
+LakituCloudTimer_18E0: skip 1 ;done
+LakituCloudSlot_18E1: skip 1 ;done
+YoshiSlotMirror_18E2: skip 1 ;done
+GameCloudCoinCount_18E3: skip 1 ;done
+GivePlayerLives_18E4: skip 1 ;done
+GiveLivesTimer_18E5: skip 1 ;done
 ; 7E18E6 unused
-skip 1
+skip 1 ;done
 YoshiCanStomp_18E7: skip 1 ;done
 YoshiGrowingTimer_18E8: skip 1 ;done
 SmokeSpriteSlotFull_18E9: skip 1 ;done
@@ -2298,42 +2298,42 @@ ChuckIsWhistling_18FD: skip 1 ;done
 DiagonalBulletTimer_18FE: skip 1 ;done
 ShooterSlotIdx_18FF: skip 1 ;done
 BonusStarsGained_1900: skip 1 ;done
-BounceSpriteYXPPCCCT_1901: skip 4
-IggyLarryPlatTilt_1905: skip 1
-IggyLarryPlatWait_1906: skip 1
-IggyLarryPlatPhase_1907: skip 1
+BounceSprYXPPCCCT_1901: skip 4 ;done
+IggyLarryPlatTilt_1905: skip 1 ;done
+IggyLarryPlatWait_1906: skip 1 ;done
+IggyLarryPlatPhase_1907: skip 1 ;done
 ; 7E1908 unused
-skip 1
-BlockSnakeActive_1909: skip 1
-BooCloudTimer_190A: skip 1
-BooTransparency_190B: skip 1
-DirectCoinTimer_190C: skip 1
-FinalCutscene_190D: skip 1
-SpriteBuoyancy_190E: skip 1
+skip 1 ;done
+BlockSnakeActive_1909: skip 1 ;done
+BooCloudTimer_190A: skip 1 ;done
+BooTransparency_190B: skip 1 ;done
+DirectCoinTimer_190C: skip 1 ;done
+FinalCutscene_190D: skip 1 ;done
+SpriteBuoyancy_190E: skip 1 ;done
 wcdj5sDp_190F: skip 12 ;done
 Empty_191B: skip 1 ;done
 YoshiHasKey_191C: skip 1 ;done
-SumoClustOverwrite_191D: skip 1
-BigSwitchPressTimer_191E: skip 1
+SumoClustOverwrite_191D: skip 1 ;done
+BigSwitchPressTimer_191E: skip 1 ;done
 ; 7E191F unused
-skip 1
-BonusOneUpsRemain_1920: skip 1
-FinalMessageTimer_1921: skip 2
+skip 1 ;done
+BonusOneUpsRemain_1920: skip 1 ;done
+FinalMessageTimer_1921: skip 2 ;done
 ; 7E1923 - 7E1924 unused
-skip 2
+skip 2 ;done
 LevelModeSetting_1925: skip 1 ;done
 ; 7E1926 - 7E1927 unused
-skip 2
-LevelLoadObject_1928: skip 1
+skip 2 ;done
+LevelLoadObject_1928: skip 1 ;done
 ; 7E1929 unused
-skip 1
+skip 1 ;done
 LevelEntranceType_192A: skip 1 ;done
-SpriteTileset_192B: skip 1
+SpriteTileset_192B: skip 1 ;done
 ; 7E192C unused
-skip 1
-ForegroundPalette_192D: skip 1
-SpritePalette_192E: skip 1
-BackAreaColor_192F: skip 1
+skip 1 ;done
+ForegroundPalette_192D: skip 1 ;done
+SpritePalette_192E: skip 1 ;done
+BackAreaColor_192F: skip 1 ;done
 BackgroundPalette_1930: skip 1 ;done
 ObjectTileset_1931: skip 1 ;done
 Empty_1932: skip 1 ;done

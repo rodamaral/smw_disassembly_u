@@ -18,7 +18,7 @@ CODE_05801E:
     INX                                     ;$058030 |
     CPX.w #$0200                            ;$058031 |
     BNE .CODE_058026                        ;$058034 |
-    STZ.w $1928                             ;$058036 |
+    STZ.w LevelLoadObject_1928              ;$058036 |
     LDA.b Layer2DataPtr_68+2                ;$058039 |
     CMP.b #$FF                              ;$05803B |
     BNE CODE_058074                         ;$05803D |
@@ -69,7 +69,7 @@ CODE_058079:
 CODE_05809E:
     PHP
     SEP #$20                                ;$05809F |
-    STZ.w $1928                             ;$0580A1 |
+    STZ.w LevelLoadObject_1928              ;$0580A1 |
     REP #$30                                ;$0580A4 |
     LDA.w #$FFFF                            ;$0580A6 |
     STA.b Layer1PrevTileUp_4D               ;$0580A9 |
@@ -112,8 +112,8 @@ CODE_0580EC:
     DEC $00                                 ;$0580F5 |
     BPL CODE_0580EC                         ;$0580F7 |
     SEP #$20                                ;$0580F9 |
-    INC.w $1928                             ;$0580FB |
-    LDA.w $1928                             ;$0580FE |
+    INC.w LevelLoadObject_1928              ;$0580FB |
+    LDA.w LevelLoadObject_1928              ;$0580FE |
     CMP.b #$20                              ;$058101 |
     BNE CODE_0580BD                         ;$058103 |
     LDA.w ThroughMain_0D9D                  ;$058105 |
@@ -448,7 +448,7 @@ LevLoadNotEmpty:
     STA.b Layer1DataPtr_65+1                ;$058406 |
     LDA.b Layer2DataPtr_68+2                ;$058408 |
     STA.b Layer1DataPtr_65+2                ;$05840A |
-    STZ.w $1928                             ;$05840C |
+    STZ.w LevelLoadObject_1928              ;$05840C |
     JMP LoadAgain                           ;$05840F |
 
 LoadLevelDone:
@@ -538,13 +538,13 @@ LevelModeEven:
     LSR                                     ;$058538 |
     LSR                                     ;$058539 |
     LSR                                     ;$05853A |
-    STA.w $192F                             ;$05853B |
+    STA.w BackAreaColor_192F                ;$05853B |
     INY                                     ;$05853E |
     LDA.b [Layer1DataPtr_65],Y              ;$05853F |
     STA $00                                 ;$058541 |
     TAX                                     ;$058543 |
     AND.b #$0F                              ;$058544 |
-    STA.w $192B                             ;$058546 |
+    STA.w SpriteTileset_192B                ;$058546 |
     TXA                                     ;$058549 |
     LSR                                     ;$05854A |
     LSR                                     ;$05854B |
@@ -589,13 +589,13 @@ CODE_058563:
 CODE_058590:
     LDA $00
     AND.b #$07                              ;$058592 |
-    STA.w $192D                             ;$058594 |
+    STA.w ForegroundPalette_192D            ;$058594 |
     LDA $00                                 ;$058597 |
     AND.b #$38                              ;$058599 |
     LSR                                     ;$05859B |
     LSR                                     ;$05859C |
     LSR                                     ;$05859D |
-    STA.w $192E                             ;$05859E |
+    STA.w SpritePalette_192E                ;$05859E |
     INY                                     ;$0585A1 |
     LDA.b [Layer1DataPtr_65],Y              ;$0585A2 |
     AND.b #$0F                              ;$0585A4 |
@@ -734,12 +734,12 @@ CODE_05863E:
     LDA $0A                                 ;$05868D |
     AND.b #$80                              ;$05868F |
     ASL                                     ;$058691 |
-    ADC.w $1928                             ;$058692 |
-    STA.w $1928                             ;$058695 |
+    ADC.w LevelLoadObject_1928              ;$058692 |
+    STA.w LevelLoadObject_1928              ;$058695 |
     STA.w $1BA1                             ;$058698 |
     ASL                                     ;$05869B |
     CLC                                     ;$05869C |
-    ADC.w $1928                             ;$05869D |
+    ADC.w LevelLoadObject_1928              ;$05869D |
     TAY                                     ;$0586A0 |
     LDA [$00],Y                             ;$0586A1 |
     STA.b Map16LowPtr_6B                    ;$0586A3 |
@@ -1638,12 +1638,12 @@ CODE_058D71:
 CODE_058D7A:
     PHP
     SEP #$30                                ;$058D7B |
-    LDA.w $1928                             ;$058D7D |
+    LDA.w LevelLoadObject_1928              ;$058D7D |
     AND.b #$0F                              ;$058D80 |
     ASL                                     ;$058D82 |
     STA.w $1CE7                             ;$058D83 |
     LDY.b #$30                              ;$058D86 |
-    LDA.w $1928                             ;$058D88 |
+    LDA.w LevelLoadObject_1928              ;$058D88 |
     AND.b #$10                              ;$058D8B |
     BEQ CODE_058D91                         ;$058D8D |
     LDY.b #$34                              ;$058D8F |
@@ -1657,7 +1657,7 @@ CODE_058D91:
     STA.b Map16HighPtr_6E                   ;$058D9F |
     LDA.w #$9100                            ;$058DA1 |
     STA $0A                                 ;$058DA4 |
-    LDA.w $1928                             ;$058DA6 |
+    LDA.w LevelLoadObject_1928              ;$058DA6 |
     AND.w #$00F0                            ;$058DA9 |
     BEQ CODE_058DBE                         ;$058DAC |
     LDA.b Map16LowPtr_6B                    ;$058DAE |
@@ -1677,7 +1677,7 @@ CODE_058DBE:
     LDY.b #$0D                              ;$058DC8 |
     STY $0C                                 ;$058DCA |
     REP #$30                                ;$058DCC |
-    LDA.w $1928                             ;$058DCE |
+    LDA.w LevelLoadObject_1928              ;$058DCE |
     AND.w #$000F                            ;$058DD1 |
     STA $08                                 ;$058DD4 |
     LDX.w #$0000                            ;$058DD6 |
@@ -5595,7 +5595,7 @@ CODE_05CC77:
     BNE CODE_05CC84                         ;$05CC7A |
     CPY.w InGameTimerOnes_0F33              ;$05CC7C |
     BNE CODE_05CC84                         ;$05CC7F |
-    INC.w $18E4                             ;$05CC81 |
+    INC.w GivePlayerLives_18E4              ;$05CC81 |
 CODE_05CC84:
     LDA.b #$01
     STA.w Layer3ScrollType_13D5             ;$05CC86 |
@@ -6484,7 +6484,7 @@ CODE_05D8B7:
     STA.w SpriteMemorySetting_1692          ;$05D8FD |
     LDA.b [SpriteDataPtr_CE]                ;$05D900 |
     AND.b #$C0                              ;$05D902 |
-    STA.w $190E                             ;$05D904 |
+    STA.w SpriteBuoyancy_190E               ;$05D904 |
     REP #$10                                ;$05D907 |
     SEP #$20                                ;$05D909 |
     LDY $0E                                 ;$05D90B |
@@ -6687,7 +6687,7 @@ CODE_05DA60:
     STA.w SpriteMemorySetting_1692          ;$05DA8E |
     LDA.b [SpriteDataPtr_CE]                ;$05DA91 |
     AND.b #$C0                              ;$05DA93 |
-    STA.w $190E                             ;$05DA95 |
+    STA.w SpriteBuoyancy_190E               ;$05DA95 |
     STZ.w HorizLayer2Setting_1413           ;$05DA98 |
     STZ.w VertLayer2Setting_1414            ;$05DA9B |
     STZ.w HorizLayer1Setting_1411           ;$05DA9E |
@@ -6798,7 +6798,7 @@ CODE_05DB49:
     STA.w SpriteMemorySetting_1692          ;$05DB63 |
     LDA.b [SpriteDataPtr_CE]                ;$05DB66 |
     AND.b #$80                              ;$05DB68 |
-    STA.w $190E                             ;$05DB6A |
+    STA.w SpriteBuoyancy_190E               ;$05DB6A |
     RTS                                     ;$05DB6D |
 
 CODE_05DB6E:

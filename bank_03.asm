@@ -118,8 +118,8 @@ CODE_0380D5:
     BNE Return0380F9                        ;$0380D8 |
     LDA.b #$08                              ;$0380DA |
     STA.w SpriteStun_1540,X                 ;$0380DC |
-    INC.w $190B                             ;$0380DF |
-    LDA.w $190B                             ;$0380E2 |
+    INC.w BooTransparency_190B              ;$0380DF |
+    LDA.w BooTransparency_190B              ;$0380E2 |
     CMP.b #$02                              ;$0380E5 |
     BNE CODE_0380EE                         ;$0380E7 |
     LDY.b #$10                              ;$0380E9 |
@@ -249,7 +249,7 @@ CODE_0381BC:
     BNE Return0381D2                        ;$0381BF |
     LDA.b #$08                              ;$0381C1 |
     STA.w SpriteStun_1540,X                 ;$0381C3 |
-    DEC.w $190B                             ;$0381C6 |
+    DEC.w BooTransparency_190B              ;$0381C6 |
     BNE Return0381D2                        ;$0381C9 |
     INC.b SpritePhase_C2,X                  ;$0381CB |
     LDA.b #$C0                              ;$0381CD |
@@ -2202,7 +2202,7 @@ CODE_039086:
     LDA.b #$20                              ;$039094 |
     STA.w SpriteTurnTimer_15AC,X            ;$039096 |
 CODE_039099:
-    LDA.w $18BF
+    LDA.w SpriteWillAppear_18BF
     BEQ CODE_0390A2                         ;$03909C |
     TYA                                     ;$03909E |
     EOR.b #$01                              ;$03909F |
@@ -2231,7 +2231,7 @@ CODE_0390AF:
 CODE_0390C9:
     LDA.b SpriteXSpeed_B6,X
     PHA                                     ;$0390CB |
-    LDY.w $18BF                             ;$0390CC |
+    LDY.w SpriteWillAppear_18BF             ;$0390CC |
     BNE CODE_0390DC                         ;$0390CF |
     LDA.w Layer1DXPos_17BD                  ;$0390D1 |
     ASL                                     ;$0390D4 |
@@ -2473,7 +2473,7 @@ CreateEatBlock:
     LDA.b #$00                              ;$0392A1 |
     JSL FinishOAMWrite                      ;$0392A3 |
     LDY.b #$04                              ;$0392A7 |
-    LDA.w $1909                             ;$0392A9 |
+    LDA.w BlockSnakeActive_1909             ;$0392A9 |
     CMP.b #$FF                              ;$0392AC |
     BEQ CODE_0392C0                         ;$0392AE |
     LDA.b Frame_13                          ;$0392B0 |
@@ -2495,7 +2495,7 @@ CODE_0392C0:
     JSL UpdateXPosNoGrvty                   ;$0392D2 |
     STZ.w Sprite_1528,X                     ;$0392D6 |
     JSL InvisBlkMainRt                      ;$0392D9 |
-    LDA.w $1909                             ;$0392DD |
+    LDA.w BlockSnakeActive_1909             ;$0392DD |
     CMP.b #$FF                              ;$0392E0 |
     BEQ Return03932B                        ;$0392E2 |
     LDA.b SpriteYPosLow_D8,X                ;$0392E4 |
@@ -2898,15 +2898,15 @@ RexStarKill:
     JSR SubHorzPosBnk3                      ;$0395FB |
     LDA.w RexKilledSpeed,Y                  ;$0395FE |
     STA.b SpriteXSpeed_B6,X                 ;$039601 |
-    INC.w $18D2                             ;$039603 |
-    LDA.w $18D2                             ;$039606 |
+    INC.w StarKillCounter_18D2              ;$039603 |
+    LDA.w StarKillCounter_18D2              ;$039606 |
     CMP.b #$08                              ;$039609 |
     BCC ADDR_039612                         ;$03960B |
     LDA.b #$08                              ;$03960D |
-    STA.w $18D2                             ;$03960F |
+    STA.w StarKillCounter_18D2              ;$03960F |
 ADDR_039612:
     JSL GivePoints
-    LDY.w $18D2                             ;$039616 |
+    LDY.w StarKillCounter_18D2              ;$039616 |
     CPY.b #$08                              ;$039619 |
     BCS Return039623                        ;$03961B |
     LDA.w $7FFF,Y                           ;$03961D |
@@ -5836,7 +5836,7 @@ CODE_03AC03:
     BNE CODE_03AC22                         ;$03AC0B |
     LDA.b #!AniFrozen_0B                    ;$03AC0D |
     STA.b PlayerAnimation_71                ;$03AC0F |
-    INC.w $190D                             ;$03AC11 |
+    INC.w FinalCutscene_190D                ;$03AC11 |
     STZ.w $0701                             ;$03AC14 |
     STZ.w $0702                             ;$03AC17 |
     LDA.b #$03                              ;$03AC1A |
@@ -6178,10 +6178,10 @@ CODE_03AEAF:
     JSR CODE_03D674
     LDA.w SpriteStun_1540,X                 ;$03AEB2 |
     BNE Return03AEC7                        ;$03AEB5 |
-    LDY.w $1921                             ;$03AEB7 |
+    LDY.w FinalMessageTimer_1921            ;$03AEB7 |
     CPY.b #$54                              ;$03AEBA |
     BEQ CODE_03AEC8                         ;$03AEBC |
-    INC.w $1921                             ;$03AEBE |
+    INC.w FinalMessageTimer_1921            ;$03AEBE |
     LDA.w DATA_03AE5B,Y                     ;$03AEC1 |
     STA.w SpriteStun_1540,X                 ;$03AEC4 |
 Return03AEC7:
@@ -6920,7 +6920,7 @@ BowserItemBoxProp:
     db $37,$77,$B7,$F7
 
 BowserItemBoxGfx:
-    LDA.w $190D
+    LDA.w FinalCutscene_190D
     BEQ CODE_03B457                         ;$03B452 |
     STZ.w PlayerItembox_0DC2                ;$03B454 |
 CODE_03B457:
@@ -6967,7 +6967,7 @@ BowserSceneGfx:
     PHX
     LDY.b #$BC                              ;$03B4AD |
     STZ $01                                 ;$03B4AF |
-    LDA.w $190D                             ;$03B4B1 |
+    LDA.w FinalCutscene_190D                ;$03B4B1 |
     STA $0F                                 ;$03B4B4 |
     CMP.b #$01                              ;$03B4B6 |
     LDX.b #$10                              ;$03B4B8 |
@@ -7906,18 +7906,18 @@ CODE_03C11E:
     LDA.b SpriteLock_9D
     ORA.w EndLevelTimer_1493                ;$03C120 |
     BNE Return03C175                        ;$03C123 |
-    LDA.w $1906                             ;$03C125 |
+    LDA.w IggyLarryPlatWait_1906            ;$03C125 |
     BEQ CODE_03C12D                         ;$03C128 |
-    DEC.w $1906                             ;$03C12A |
+    DEC.w IggyLarryPlatWait_1906            ;$03C12A |
 CODE_03C12D:
     LDA.b Frame_13
     AND.b #$01                              ;$03C12F |
-    ORA.w $1906                             ;$03C131 |
+    ORA.w IggyLarryPlatWait_1906            ;$03C131 |
     BNE Return03C175                        ;$03C134 |
-    LDA.w $1905                             ;$03C136 |
+    LDA.w IggyLarryPlatTilt_1905            ;$03C136 |
     AND.b #$01                              ;$03C139 |
     TAX                                     ;$03C13B |
-    LDA.w $1907                             ;$03C13C |
+    LDA.w IggyLarryPlatPhase_1907           ;$03C13C |
     CMP.b #$04                              ;$03C13F |
     BCC CODE_03C145                         ;$03C141 |
     INX                                     ;$03C143 |
@@ -7935,14 +7935,14 @@ CODE_03C145:
     PLA                                     ;$03C159 |
     CMP.l IggyPlatBounds,X                  ;$03C15A |
     BNE Return03C175                        ;$03C15E |
-    INC.w $1905                             ;$03C160 |
+    INC.w IggyLarryPlatTilt_1905            ;$03C160 |
     LDA.b #$40                              ;$03C163 |
-    STA.w $1906                             ;$03C165 |
-    INC.w $1907                             ;$03C168 |
-    LDA.w $1907                             ;$03C16B |
+    STA.w IggyLarryPlatWait_1906            ;$03C165 |
+    INC.w IggyLarryPlatPhase_1907           ;$03C168 |
+    LDA.w IggyLarryPlatPhase_1907           ;$03C16B |
     CMP.b #$06                              ;$03C16E |
     BNE Return03C175                        ;$03C170 |
-    STZ.w $1907                             ;$03C172 |
+    STZ.w IggyLarryPlatPhase_1907           ;$03C172 |
 Return03C175:
     RTS
 
@@ -9928,7 +9928,7 @@ DATA_03D526:
 CODE_03D674:
     PHX
     REP #$30                                ;$03D675 |
-    LDX.w $1921                             ;$03D677 |
+    LDX.w FinalMessageTimer_1921            ;$03D677 |
     BEQ CODE_03D6A8                         ;$03D67A |
     DEX                                     ;$03D67C |
     LDY.w #$0000                            ;$03D67D |
@@ -10655,7 +10655,7 @@ CODE_03DFCC:
     TXY                                     ;$03DFDE |
     LDX.w $1FFB                             ;$03DFDF |
     BNE CODE_03E01B                         ;$03DFE2 |
-    LDA.w $190D                             ;$03DFE4 |
+    LDA.w FinalCutscene_190D                ;$03DFE4 |
     BEQ CODE_03DFF0                         ;$03DFE7 |
     REP #$20                                ;$03DFE9 |
     LDA.w $0701                             ;$03DFEB |

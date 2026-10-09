@@ -1719,7 +1719,7 @@ update_status_tileset_008E1A:
     LDA.w PlayerCoins_0DBF                  ;$008F28 |
     CMP.b #$64                              ;$008F2B |
     BCC .handle_lives_008F3B                ;$008F2D |\
-    INC.w $18E4                             ;$008F2F || if coins >= 100
+    INC.w GivePlayerLives_18E4              ;$008F2F || if coins >= 100
     LDA.w PlayerCoins_0DBF                  ;$008F32 || increase life incrementer
     SEC                                     ;$008F35 || and subtract 100 coins
     SBC.b #$64                              ;$008F36 ||
@@ -2366,14 +2366,14 @@ GM19_credits_castle_load_009468:
     LDA.b #$18                              ;$009474 |
     STA.w ObjectTileset_1931                ;$009476 |
     LDA.b #$14                              ;$009479 |
-    STA.w $192B                             ;$00947B |
+    STA.w SpriteTileset_192B                ;$00947B |
     LDA.w CutsceneBgColor-1,X               ;$00947E |
-    STA.w $192F                             ;$009481 |
+    STA.w BackAreaColor_192F                ;$009481 |
     LDA.w CutsceneCastlePal,X               ;$009484 |
     STA.w BackgroundPalette_1930            ;$009487 |
-    STZ.w $192E                             ;$00948A |
+    STZ.w SpritePalette_192E                ;$00948A |
     LDA.b #$01                              ;$00948D |
-    STA.w $192D                             ;$00948F |
+    STA.w ForegroundPalette_192D            ;$00948F |
     CPX.b #$08                              ;$009492 |
     BNE CODE_0094B2                         ;$009494 |
     JSR CODE_00955E                         ;$009496 |
@@ -2384,7 +2384,7 @@ GM19_credits_castle_load_009468:
     JSL CODE_0C93DD                         ;$0094A3 |
     JSR DisableHDMA                         ;$0094A7 |
     INC.w ObjectTileset_1931                ;$0094AA |
-    INC.w $192B                             ;$0094AD |
+    INC.w SpriteTileset_192B                ;$0094AD |
     BRA CODE_0094D7                         ;$0094B0 |
 
 CODE_0094B2:
@@ -2499,7 +2499,7 @@ GM1D_ending_yoshi_load_009583:
     JSR CODE_0096CF                         ;$00958A |
     DEC.w GameMode_0100                     ;$00958D |
     LDA.b #$16                              ;$009590 |
-    STA.w $192B                             ;$009592 |
+    STA.w SpriteTileset_192B                ;$009592 |
     JSR GM12_level_load_2_00A59C            ;$009595 |
     DEC.w GameMode_0100                     ;$009598 |
     JSR TurnOffIO                           ;$00959B |
@@ -2528,14 +2528,14 @@ GM23_ending_enemy_scene_0095C1:
     CMP.b #$0A                              ;$0095D5 |
     BNE CODE_0095E0                         ;$0095D7 |
     LDA.b #$13                              ;$0095D9 |
-    STA.w $192B                             ;$0095DB |
+    STA.w SpriteTileset_192B                ;$0095DB |
     BRA CODE_0095E9                         ;$0095DE |
 
 CODE_0095E0:
     CMP.b #$0C
     BNE CODE_0095E9                         ;$0095E2 |
     LDA.b #$17                              ;$0095E4 |
-    STA.w $192B                             ;$0095E6 |
+    STA.w SpriteTileset_192B                ;$0095E6 |
 CODE_0095E9:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$0095EC |
@@ -2580,9 +2580,9 @@ GM27_the_end_load_00963D:
     JSR SetUpScreen                         ;$009643 |
     JSR CODE_00955E                         ;$009646 |
     LDA.b #$19                              ;$009649 |
-    STA.w $192B                             ;$00964B |
+    STA.w SpriteTileset_192B                ;$00964B |
     LDA.b #$03                              ;$00964E |
-    STA.w $192F                             ;$009650 |
+    STA.w BackAreaColor_192F                ;$009650 |
     LDA.b #$03                              ;$009653 |
     STA.w BackgroundPalette_1930            ;$009655 |
     JSR UploadSpriteGFX                     ;$009658 |
@@ -2820,7 +2820,7 @@ load_boss_room_0097BC:
     SEP #$20                                ;$009839 |
 .Reznor_00983B:
     LDA.b #$13
-+   STA.w $192B                             ;$00983D |
++   STA.w SpriteTileset_192B                ;$00983D |
     JSR UploadSpriteGFX                     ;$009840 |
     LDA.b #$11                              ;$009843 |
     STA.w $212E                             ;$009845 |
@@ -4979,7 +4979,7 @@ UploadSpriteGFX:
     LDA.b #$80
     STA.w $2115                             ;$00A9DC |
     LDX.b #$03                              ;$00A9DF |
-    LDA.w $192B                             ;$00A9E1 |
+    LDA.w SpriteTileset_192B                ;$00A9E1 |
     ASL                                     ;$00A9E4 |
     ASL                                     ;$00A9E5 |
     TAY                                     ;$00A9E6 |
@@ -5289,7 +5289,7 @@ LoadPalette:
     LDA.w #$0009                            ;$00AC2B |
     STA $08                                 ;$00AC2E |
     JSR LoadColors                          ;$00AC30 |
-    LDA.w $192F                             ;$00AC33 |
+    LDA.w BackAreaColor_192F                ;$00AC33 |
     AND.w #$000F                            ;$00AC36 |
     ASL                                     ;$00AC39 |
     TAY                                     ;$00AC3A |
@@ -5297,7 +5297,7 @@ LoadPalette:
     STA.w $0701                             ;$00AC3E |
     LDA.w #$B190                            ;$00AC41 |
     STA $00                                 ;$00AC44 |
-    LDA.w $192D                             ;$00AC46 |
+    LDA.w ForegroundPalette_192D            ;$00AC46 |
     AND.w #$000F                            ;$00AC49 |
     TAY                                     ;$00AC4C |
     LDA.w DATA_00ABD3,Y                     ;$00AC4D |
@@ -5314,7 +5314,7 @@ LoadPalette:
     JSR LoadColors                          ;$00AC67 |
     LDA.w #$B318                            ;$00AC6A |
     STA $00                                 ;$00AC6D |
-    LDA.w $192E                             ;$00AC6F |
+    LDA.w SpritePalette_192E                ;$00AC6F |
     AND.w #$000F                            ;$00AC72 |
     TAY                                     ;$00AC75 |
     LDA.w DATA_00ABD3,Y                     ;$00AC76 |
@@ -5511,9 +5511,9 @@ CODE_00ADD9:
 
 CODE_00AE15:
     LDA.b #$02
-    STA.w $192E                             ;$00AE17 |
+    STA.w SpritePalette_192E                ;$00AE17 |
     LDA.b #$07                              ;$00AE1A |
-    STA.w $192D                             ;$00AE1C |
+    STA.w ForegroundPalette_192D            ;$00AE1C |
     JSR LoadPalette                         ;$00AE1F |
     REP #$30                                ;$00AE22 |
     LDA.w #$0017                            ;$00AE24 |
@@ -7471,7 +7471,7 @@ execute_player_animation_00C593:
     LDA.b #$01
     STA.w MessageBoxExpand_1B88             ;$00C5D3 |
     LDA.b #$07                              ;$00C5D6 |
-    STA.w $1928                             ;$00C5D8 |
+    STA.w LevelLoadObject_1928              ;$00C5D8 |
     JSR disable_controls                    ;$00C5DB |
     JMP no_special_collision                ;$00C5DE |
 
@@ -8233,9 +8233,9 @@ no_animation:                               ;        \
     BNE .return                             ;$00CCC8 |/
     STZ.w CapeInteracts_13E8                ;$00CCCA | Clear the cape spin interaction flag.
     STZ.w PlayerOverworldPose_13DE          ;$00CCCD | Clear the looking up flag.
-    LDA.w $18BD                             ;$00CCD0 |\ If the player is not frozen,
+    LDA.w PlayerStunnedTimer_18BD           ;$00CCD0 |\ If the player is not frozen,
     BEQ not_frozen_physics                  ;$00CCD3 |/ run regular physics.
-    DEC.w $18BD                             ;$00CCD5 | Decrease the freeze timer.
+    DEC.w PlayerStunnedTimer_18BD           ;$00CCD5 | Decrease the freeze timer.
     STZ.b PlayerXSpeed_7B                   ;$00CCD8 | Freeze the player's X position.
     LDA.b #$0F                              ;$00CCDA |\ Make the player face the screen.
     STA.w PlayerPose_13E0                   ;$00CCDC |/
@@ -11770,7 +11770,7 @@ CODE_00EF60:
     BPL CODE_00EF68                         ;$00EF63 |
     INC.w PlayerGroundType_13EF             ;$00EF65 |
 CODE_00EF68:
-    STZ.w $18B5
+    STZ.w StandingOnCage_18B5
     STZ.b PlayerInAir_72                    ;$00EF6B |
     STZ.b PlayerClimb_74                    ;$00EF6D |
     STZ.w BouncingFlag_1406                 ;$00EF6F |
@@ -12681,7 +12681,7 @@ HurtMario:
     ORA.w StarTimer_1490                    ;$00F5BE |
     ORA.w EndLevelTimer_1493                ;$00F5C1 |
     BNE Return00F628                        ;$00F5C4 |
-    STZ.w $18E3                             ;$00F5C6 |
+    STZ.w GameCloudCoinCount_18E3           ;$00F5C6 |
     LDA.w WallRunFlag_13E3                  ;$00F5C9 |
     BEQ CODE_00F5D5                         ;$00F5CC |
     PHB                                     ;$00F5CE |
@@ -13318,9 +13318,9 @@ FlatPalaceSwitch:
 TriggerGoalTape:
     STZ.w PBalloonFlag_13F3
     STZ.w PBalloonTimer_1891                ;$00FA83 |
-    STZ.w $18C0                             ;$00FA86 |
-    STZ.w $18B9                             ;$00FA89 |
-    STZ.w $18DD                             ;$00FA8C |
+    STZ.w SpriteRespawnTimer_18C0           ;$00FA86 |
+    STZ.w CurrentGenerator_18B9             ;$00FA89 |
+    STZ.w SilverCoinsCollected_18DD         ;$00FA8C |
     LDY.b #$0B                              ;$00FA8F |
 .LvlEndSprLoopStrt:
     LDA.w SpriteStatus_14C8,Y
@@ -13512,16 +13512,16 @@ CODE_00FBF0:
     CMP.b #$20                              ;$00FBFD |
     BMI CODE_00FC1E                         ;$00FBFF |
     JSL CODE_05B34A                         ;$00FC01 |
-    LDA.w $18DD                             ;$00FC05 |
+    LDA.w SilverCoinsCollected_18DD         ;$00FC05 |
     CMP.b #$0D                              ;$00FC08 |
     BCC CODE_00FC0E                         ;$00FC0A |
     LDA.b #$0D                              ;$00FC0C |
 CODE_00FC0E:
     JSL GivePoints
-    LDA.w $18DD                             ;$00FC12 |
+    LDA.w SilverCoinsCollected_18DD         ;$00FC12 |
     CLC                                     ;$00FC15 |
     ADC.b #$02                              ;$00FC16 |
-    STA.w $18DD                             ;$00FC18 |
+    STA.w SilverCoinsCollected_18DD         ;$00FC18 |
     STZ.w SpriteStatus_14C8,X               ;$00FC1B |
 CODE_00FC1E:
     JSL CoinSprGfx

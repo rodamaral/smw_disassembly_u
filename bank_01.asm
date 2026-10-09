@@ -732,7 +732,7 @@ InitMontyMole:
 
 InitCreateEatBlk:
     LDA.b #$FF
-    STA.w $1909                             ;$0184D8 |
+    STA.w BlockSnakeActive_1909             ;$0184D8 |
     BRA InitMontyMole                       ;$0184DB |
 
 InitBulletBill:
@@ -5475,14 +5475,14 @@ DefaultInteractR:
     BNE CODE_01A87E                         ;$01A845 |
 CODE_01A847:
     JSL kick_sfx_smoke_effect_01AB6F
-    INC.w $18D2                             ;$01A84B |
-    LDA.w $18D2                             ;$01A84E |
+    INC.w StarKillCounter_18D2              ;$01A84B |
+    LDA.w StarKillCounter_18D2              ;$01A84E |
     CMP.b #$08                              ;$01A851 |
     BCC +                                   ;$01A853 |\
     LDA.b #$08                              ;$01A855 ||
-    STA.w $18D2                             ;$01A857 |/
+    STA.w StarKillCounter_18D2              ;$01A857 |/
 +   JSL GivePoints                          ;$01A85A |
-    LDY.w $18D2                             ;$01A85E |
+    LDY.w StarKillCounter_18D2              ;$01A85E |
     CPY.b #$08                              ;$01A861 |
     BCS +                                   ;$01A863 |\
     LDA.w Return01A61D,Y                    ;$01A865 ||
@@ -6075,9 +6075,9 @@ OffScrEraseSprite:
     LDA.b SpriteNumber_9E,X
     CMP.b #!Magikoopa_1F                    ;$01AC82 |
     BNE CODE_01AC8E                         ;$01AC84 |
-    STA.w $18C1                             ;$01AC86 |
+    STA.w SpriteRespawnNumber_18C1          ;$01AC86 |
     LDA.b #$FF                              ;$01AC89 |
-    STA.w $18C0                             ;$01AC8B |
+    STA.w SpriteRespawnTimer_18C0           ;$01AC8B |
 CODE_01AC8E:
     LDA.w SpriteStatus_14C8,X
     CMP.b #!StatusNormal_08                 ;$01AC91 |
@@ -6629,7 +6629,7 @@ CODE_01B041:
 CODE_01B054:
     JSR IsOnGround
     BEQ CODE_01B09C                         ;$01B057 |
-    LDA.w $190E                             ;$01B059 |
+    LDA.w SpriteBuoyancy_190E               ;$01B059 |
     BEQ CODE_01B062                         ;$01B05C |
     JSL CODE_0284BC                         ;$01B05E |
 CODE_01B062:
@@ -6871,7 +6871,7 @@ CODE_01B224:
 InitFallingPlat:
     INC.w SpriteAnimation_1602,X
 InitOrangePlat:
-    LDA.w $190E
+    LDA.w SpriteBuoyancy_190E
     BNE InitFloatingPlat                    ;$01B231 |
     INC.b SpritePhase_C2,X                  ;$01B233 |
     RTS                                     ;$01B235 |
@@ -8520,7 +8520,7 @@ CODE_01BDBA:
 CODE_01BDCF:
     DEY
     BPL CODE_01BDBA                         ;$01BDD0 |
-    STZ.w $18BF                             ;$01BDD2 |
+    STZ.w SpriteWillAppear_18BF             ;$01BDD2 |
     RTS                                     ;$01BDD5 |
 
 Magikoopa:
@@ -8541,7 +8541,7 @@ MagiKoopaPtrs:
     dw CODE_01BF16
 
 CODE_01BDF2:
-    LDA.w $18BF
+    LDA.w SpriteWillAppear_18BF
     BEQ CODE_01BDFB                         ;$01BDF5 |
     STZ.w SpriteStatus_14C8,X               ;$01BDF7 |
     RTS                                     ;$01BDFA |
@@ -9302,7 +9302,7 @@ DrawBerryGfx:
     LDA.b #$80                              ;$01C35E |
     STA.w $0302,Y                           ;$01C360 |
     PHX                                     ;$01C363 |
-    LDX.w $18D6                             ;$01C364 |
+    LDX.w EatenBerryType_18D6               ;$01C364 |
     LDA.w EatenBerryGfxProp,X               ;$01C367 |
     ORA.b SpriteYXPPCCCT_64                 ;$01C36A |
     STA.w $0303,Y                           ;$01C36C |
@@ -11405,7 +11405,7 @@ CODE_01D286:
     LDA.b PlayerInAir_72                    ;$01D290 |
     BNE CODE_01D299                         ;$01D292 |
     LDA.b #$28                              ;$01D294 |
-    STA.w $18BD                             ;$01D296 |
+    STA.w PlayerStunnedTimer_18BD           ;$01D296 |
 CODE_01D299:
     LDA.b #$09
     STA.w SPCIO3_1DFC                       ;$01D29B |
@@ -12437,7 +12437,7 @@ rope_mechanism_01D9D3:
     SBC.b SpriteXPosLow_E4,X                ;$01D9EB |
     EOR.b #$FF                              ;$01D9ED |
     INC A                                   ;$01D9EF |
-    STA.w $18B6                             ;$01D9F0 |
+    STA.w TileGenerateTrackB_18B6           ;$01D9F0 |
     LDA.b PlayerBlocked_77                  ;$01D9F3 |
     AND.b #!Block_Sides_03                  ;$01D9F5 |
     BNE .return_01DA09                      ;$01D9F7 |
@@ -12501,7 +12501,7 @@ rope_mechanism_01D9D3:
     INC.b PlayerYPos_96                     ;$01DA66 |
 .CODE_01DA68:
     SEP #$20
-    LDA.w $18B6                             ;$01DA6A |
+    LDA.w TileGenerateTrackB_18B6           ;$01DA6A |
     JSR CODE_01DA90                         ;$01DA6D |
     LDA.b SpriteXPosLow_E4,X                ;$01DA70 |
     SEC                                     ;$01DA72 |
@@ -13232,7 +13232,7 @@ CODE_01E035:
     LDX.w CurrentSprite_15E9                ;$01E039 |
     LDY.b #$29                              ;$01E03C |
     LDA.w BonusGame1UpCount_1890            ;$01E03E |
-    STA.w $1920                             ;$01E041 |
+    STA.w BonusOneUpsRemain_1920            ;$01E041 |
     BNE CODE_01E04C                         ;$01E044 |
     LDA.b #$58                              ;$01E046 |
     STA.w BonusTimer_14AB                   ;$01E048 |
@@ -14225,14 +14225,14 @@ CODE_01E7A8:
     JMP LakituCloudGfx
 
 NoCloudGfx:
-    LDY.w $18E0
+    LDY.w LakituCloudTimer_18E0
     BEQ CODE_01E7C5                         ;$01E7AE |
     LDA.b Frame_14                          ;$01E7B0 |
     AND.b #$03                              ;$01E7B2 |
     BNE CODE_01E7C5                         ;$01E7B4 |
-    LDA.w $18E0                             ;$01E7B6 |
+    LDA.w LakituCloudTimer_18E0             ;$01E7B6 |
     BEQ CODE_01E7C5                         ;$01E7B9 |
-    DEC.w $18E0                             ;$01E7BB |
+    DEC.w LakituCloudTimer_18E0             ;$01E7BB |
     BNE CODE_01E7C5                         ;$01E7BE |
     LDA.b #$1F                              ;$01E7C0 |
     STA.w SpriteStun_1540,X                 ;$01E7C2 |
@@ -14243,9 +14243,9 @@ CODE_01E7C5:
     BNE CODE_01E7A8                         ;$01E7CB |
     STZ.w SpriteStatus_14C8,X               ;$01E7CD |
     LDA.b #$FF                              ;$01E7D0 |
-    STA.w $18C0                             ;$01E7D2 |
+    STA.w SpriteRespawnTimer_18C0           ;$01E7D2 |
     LDA.b #$1E                              ;$01E7D5 |
-    STA.w $18C1                             ;$01E7D7 |
+    STA.w SpriteRespawnNumber_18C1          ;$01E7D7 |
     RTS                                     ;$01E7DA |
 
 CODE_01E7DB:
@@ -14390,7 +14390,7 @@ LakituCloudGfx:
     LDA.b #$30                              ;$01E8E0 |
 CODE_01E8E2:
     STA $0E
-    STA.w $18B6                             ;$01E8E4 |
+    STA.w TileGenerateTrackB_18B6           ;$01E8E4 |
     ORA.b #$04                              ;$01E8E7 |
     STA $0F                                 ;$01E8E9 |
     LDA $00                                 ;$01E8EB |
@@ -14445,7 +14445,7 @@ CODE_01E935:
     LDY.b #$02                              ;$01E94A |
     LDA.b #$01                              ;$01E94C |
     JSR FinishOAMWriteRt                    ;$01E94E |
-    LDA.w $18B6                             ;$01E951 |
+    LDA.w TileGenerateTrackB_18B6           ;$01E951 |
     STA.w SpriteOAMIndex_15EA,X             ;$01E954 |
     LDY.b #$02                              ;$01E957 |
     LDA.b #$01                              ;$01E959 |
@@ -15439,16 +15439,16 @@ process_eaten_berry_01F0D3:
     LDA.b #$06
     STA.w SPCIO0_1DF9                       ;$01F0D5 | play Yoshi gulp sound
     JSL CODE_05B34A                         ;$01F0D8 |
-    LDA.w $18D6                             ;$01F0DC |
+    LDA.w EatenBerryType_18D6               ;$01F0DC |
     BEQ .return_01F12D                      ;$01F0DF | if swallowing a Coin Berry, return
-    STZ.w $18D6                             ;$01F0E1 |
+    STZ.w EatenBerryType_18D6               ;$01F0E1 |
     CMP.b #$01                              ;$01F0E4 |
     BNE .green_pink_berry_01F0F9            ;$01F0E6 |\
-    INC.w $18D4                             ;$01F0E8 || Red Berry:
-    LDA.w $18D4                             ;$01F0EB ||
+    INC.w RedBerriesEaten_18D4              ;$01F0E8 || Red Berry:
+    LDA.w RedBerriesEaten_18D4              ;$01F0EB ||
     CMP.b #$0A                              ;$01F0EE ||
     BNE .return_01F12D                      ;$01F0F0 ||
-    STZ.w $18D4                             ;$01F0F2 || if ate 10 berries
+    STZ.w RedBerriesEaten_18D4              ;$01F0F2 || if ate 10 berries
     LDA.b #$74                              ;$01F0F5 || prepare to lay a Mushroom egg
     BRA .prepare_egg_type_01F125            ;$01F0F7 |/
 
@@ -15468,11 +15468,11 @@ process_eaten_berry_01F0D3:
     BRA .return_01F12D                      ;$01F114 |
 
 .pink_berry_01F116:
-    INC.w $18D5
-    LDA.w $18D5                             ;$01F119 |
+    INC.w PinkBerriesEaten_18D5
+    LDA.w PinkBerriesEaten_18D5             ;$01F119 |
     CMP.b #$02                              ;$01F11C |
     BNE .return_01F12D                      ;$01F11E |
-    STZ.w $18D5                             ;$01F120 | if ate 2 berries
+    STZ.w PinkBerriesEaten_18D5             ;$01F120 | if ate 2 berries
     LDA.b #$6A                              ;$01F123 | prepare to lay a Coin Game Cloud egg
 .prepare_egg_type_01F125:
     STA.w YoshiEggSprite_18DA
@@ -16524,7 +16524,7 @@ BooPBooBlock:
     JSR SubOffscreen0Bnk1
     LDA.b #$10                              ;$01F8DF |
 CODE_01F8E1:
-    STA.w $18B6
+    STA.w TileGenerateTrackB_18B6
     LDA.w SpriteStatus_14C8,X               ;$01F8E4 |
     CMP.b #!StatusNormal_08                 ;$01F8E7 |
     BNE CODE_01F8EF                         ;$01F8E9 |
@@ -16640,7 +16640,7 @@ CODE_01F9A2:
     LDA.b PlayerYPosMirror_D3
     PHA                                     ;$01F9A4 |
     SEC                                     ;$01F9A5 |
-    SBC.w $18B6                             ;$01F9A6 |
+    SBC.w TileGenerateTrackB_18B6           ;$01F9A6 |
     STA.b PlayerYPosMirror_D3               ;$01F9A9 |
     LDA.b PlayerYPosMirror_D3+1             ;$01F9AB |
     PHA                                     ;$01F9AD |

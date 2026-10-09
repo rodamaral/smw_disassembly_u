@@ -679,9 +679,9 @@ DATA_0C93CF:
 
 CODE_0C93DD:
     REP #$30
-    STZ.w $1928                             ;$0C93DF |
+    STZ.w LevelLoadObject_1928              ;$0C93DF |
 CODE_0C93E2:
-    LDA.w $1928
+    LDA.w LevelLoadObject_1928
     AND.w #$00FF                            ;$0C93E5 |
     ASL                                     ;$0C93E8 |
     TAX                                     ;$0C93E9 |
@@ -711,15 +711,15 @@ CODE_0C9409:
     REP #$20                                ;$0C9420 |
     JSR CODE_0C944C                         ;$0C9422 |
     JSR CODE_0C94C0                         ;$0C9425 |
-    INC.w $1928                             ;$0C9428 |
-    LDA.w $1928                             ;$0C942B |
+    INC.w LevelLoadObject_1928              ;$0C9428 |
+    LDA.w LevelLoadObject_1928              ;$0C942B |
     CMP.w #$0007                            ;$0C942E |
     BNE CODE_0C93E2                         ;$0C9431 |
     LDA.w #$5840                            ;$0C9433 |
     STA.b StaffRollLinePos_65               ;$0C9436 |
     SEP #$30                                ;$0C9438 |
     STZ.b StaffRollCurLine_67               ;$0C943A |
-    STZ.w $1928                             ;$0C943C |
+    STZ.w LevelLoadObject_1928              ;$0C943C |
     JSL DMA_credits_BG                      ;$0C943F |
     JSR CODE_0CA051                         ;$0C9443 |
     LDA.b #$09                              ;$0C9446 |
@@ -808,7 +808,7 @@ CODE_0C94C0:
     STA.b Layer2DataPtr_68+2                ;$0C94D6 |
     LDY.w #$00F0                            ;$0C94D8 |
     STY $04                                 ;$0C94DB |
-    LDA.w $1928                             ;$0C94DD |
+    LDA.w LevelLoadObject_1928              ;$0C94DD |
     XBA                                     ;$0C94E0 |
     AND.b #$00                              ;$0C94E1 |
     TAX                                     ;$0C94E3 |
@@ -897,7 +897,7 @@ DMA_credits_BG:                             ;               \
     STA.w $4310,Y                           ;$0C9580 | |
     DEY                                     ;$0C9583 | |
     BPL .DMA_copy_1                         ;$0C9584 |/
-    LDA.w $1928                             ;$0C9586 |\  Set the DMA source high byte
+    LDA.w LevelLoadObject_1928              ;$0C9586 |\  Set the DMA source high byte
     ASL                                     ;$0C9589 | | ($1928 << 3) | #$40
     ASL                                     ;$0C958A | | $1928 may be 00 to 07
     ASL                                     ;$0C958B | |
@@ -917,7 +917,7 @@ DMA_credits_BG:                             ;               \
     STA.w $4310,Y                           ;$0C95AB | |
     DEY                                     ;$0C95AE | |
     BPL .DMA_copy_2                         ;$0C95AF |/
-    LDA.w $1928                             ;$0C95B1 |\  Set the DMA source high byte
+    LDA.w LevelLoadObject_1928              ;$0C95B1 |\  Set the DMA source high byte
     ASL                                     ;$0C95B4 | | ($1928 << 3) | #$44
     ASL                                     ;$0C95B5 | | $1928 may be 00 to 07
     ASL                                     ;$0C95B6 | |
@@ -1890,7 +1890,7 @@ CODE_0CA3C9:
     STA.w $0B42                             ;$0CA400 |
     LDA.b #$E2                              ;$0CA403 |
     STA.w MessageBoxTimer_1B89              ;$0CA405 |
-    STA.w $1928                             ;$0CA408 |
+    STA.w LevelLoadObject_1928              ;$0CA408 |
     LDA.b #$0A                              ;$0CA40B |
     STA.w SPCIO2_1DFB                       ;$0CA40D |
     LDX.b #$0D                              ;$0CA410 |
@@ -2778,7 +2778,7 @@ CODE_0CAB1F:
     LDX.w MessageBoxExpand_1B88
     LDA.b #$33                              ;$0CAB22 |
     STA.b Layer12Window_41                  ;$0CAB24 |
-    LDY.w $1928                             ;$0CAB26 |
+    LDY.w LevelLoadObject_1928              ;$0CAB26 |
     BNE CODE_0CAB2F                         ;$0CAB29 |
     CPX.b #$00                              ;$0CAB2B |
     BEQ CODE_0CAB3B                         ;$0CAB2D |
@@ -2808,7 +2808,7 @@ CODE_0CAB57:
     PHA
     PHX                                     ;$0CAB58 |
     INC.w $1FFE                             ;$0CAB59 |
-    INC.w $1928                             ;$0CAB5C |
+    INC.w LevelLoadObject_1928              ;$0CAB5C |
     JSR CODE_0CABB2                         ;$0CAB5F |
     PLX                                     ;$0CAB62 |
     PLA                                     ;$0CAB63 |
@@ -2861,7 +2861,7 @@ CODE_0CABB2:
     LDA.b #$12                              ;$0CABC1 |
     STA.w $0691                             ;$0CABC3 |
     REP #$30                                ;$0CABC6 |
-    LDA.w $1928                             ;$0CABC8 |
+    LDA.w LevelLoadObject_1928              ;$0CABC8 |
     AND.w #$00FF                            ;$0CABCB |
     TAY                                     ;$0CABCE |
     LDA.w DATA_0CABA4,Y                     ;$0CABCF |
