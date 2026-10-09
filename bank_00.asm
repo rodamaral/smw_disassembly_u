@@ -8261,11 +8261,11 @@ not_frozen_physics:                         ;        \
     REP #$20                                ;$00CD02 |\
     LDA.b PlayerXPos_94                     ;$00CD04 | |
     STA.w KeyholeXPos_1436                  ;$00CD06 | | Update the platform X position,
-    STA.w $14B4                             ;$00CD09 | |
+    STA.w IggyLarryPlatIntXPos_14B4         ;$00CD09 | |
     LDA.b PlayerYPos_96                     ;$00CD0C | | and update the platform Y position.
     AND.w #$FFF0                            ;$00CD0E | |
     STA.w KeyholeYPos_1438                  ;$00CD11 | |
-    STA.w $14B6                             ;$00CD14 |/
+    STA.w IggyLarryPlatIntYPos_14B6         ;$00CD14 |/
     JSR boss_platform_collision             ;$00CD17 | Apply the platform collision.
     BRA .apply_boss_room_collision          ;$00CD1A /
 
@@ -13169,13 +13169,13 @@ CODE_00F962:
     LDA.b PlayerInAir_72
     BEQ CODE_00F983                         ;$00F964 |
     REP #$20                                ;$00F966 |
-    LDA.w $14B8                             ;$00F968 |
+    LDA.w IggyLarryTempXPos_14B8            ;$00F968 |
     AND.w #$00FF                            ;$00F96B |
-    STA.w $14B4                             ;$00F96E |
+    STA.w IggyLarryPlatIntXPos_14B4         ;$00F96E |
     STA.w KeyholeXPos_1436                  ;$00F971 |
-    LDA.w $14BA                             ;$00F974 |
+    LDA.w IggyLarryTempYPos_14BA            ;$00F974 |
     AND.w #$00F0                            ;$00F977 |
-    STA.w $14B6                             ;$00F97A |
+    STA.w IggyLarryPlatIntYPos_14B6         ;$00F97A |
     STA.w KeyholeYPos_1438                  ;$00F97D |
     JSR boss_platform_collision             ;$00F980 |
 CODE_00F983:
@@ -13206,11 +13206,11 @@ CODE_00F9A8:
     LDA.b PlayerXPos_94                     ;$00F9AA |
     CLC                                     ;$00F9AC |
     ADC.w #$0008                            ;$00F9AD |
-    STA.w $14B4                             ;$00F9B0 |
+    STA.w IggyLarryPlatIntXPos_14B4         ;$00F9B0 |
     LDA.b PlayerYPos_96                     ;$00F9B3 |
     CLC                                     ;$00F9B5 |
     ADC.w #$0020                            ;$00F9B6 |
-    STA.w $14B6                             ;$00F9B9 |
+    STA.w IggyLarryPlatIntYPos_14B6         ;$00F9B9 |
 CODE_00F9BC:
     SEP #$20
     PHB                                     ;$00F9BE |
@@ -13231,12 +13231,12 @@ boss_platform_collision:
     REP #$20                                ;$00F9D5 |
     PLA                                     ;$00F9D7 |
     STA.b Mode7Angle_36                     ;$00F9D8 |
-    LDA.w $14B8                             ;$00F9DA |
+    LDA.w IggyLarryTempXPos_14B8            ;$00F9DA |
     AND.w #$00FF                            ;$00F9DD |
     SEC                                     ;$00F9E0 |
     SBC.w #$0008                            ;$00F9E1 |
     STA.b PlayerXPos_94                     ;$00F9E4 |
-    LDA.w $14BA                             ;$00F9E6 |
+    LDA.w IggyLarryTempYPos_14BA            ;$00F9E6 |
     AND.w #$00FF                            ;$00F9E9 |
     SEC                                     ;$00F9EC |
     SBC.w #$0020                            ;$00F9ED |

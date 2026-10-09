@@ -5062,17 +5062,17 @@ CODE_02A592:
     LDA.w ExtSprXPosLow_171F,X              ;$02A592 | calculate interaction point for sprites
     CLC                                     ;$02A595 |
     ADC.b #$04                              ;$02A596 | interaction point 4px to the right of the sprite position
-    STA.w $14B4                             ;$02A598 |
+    STA.w IggyLarryPlatIntXPos_14B4         ;$02A598 |
     LDA.w ExtSprXPosHigh_1733,X             ;$02A59B |
     ADC.b #$00                              ;$02A59E |
-    STA.w $14B5                             ;$02A5A0 | x high byte
+    STA.w IggyLarryPlatIntXPos_14B4+1       ;$02A5A0 | x high byte
     LDA.w ExtSprYPosLow_1715,X              ;$02A5A3 |
     CLC                                     ;$02A5A6 |
     ADC.b #$08                              ;$02A5A7 | interaction point 8px down from the sprite position
-    STA.w $14B6                             ;$02A5A9 |
+    STA.w IggyLarryPlatIntYPos_14B6         ;$02A5A9 |
     LDA.w ExtSprYPosHigh_1729,X             ;$02A5AC |
     ADC.b #$00                              ;$02A5AF |
-    STA.w $14B7                             ;$02A5B1 | y high byte
+    STA.w IggyLarryPlatIntYPos_14B6+1       ;$02A5B1 | y high byte
     JSL CODE_01CC9D                         ;$02A5B4 |
     LDX.w CurrentSprite_15E9                ;$02A5B8 |
     RTS                                     ;$02A5BB |

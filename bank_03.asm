@@ -4718,7 +4718,7 @@ CODE_03A279:
     LDA.b #$C8                              ;$03A29D |
     STA.b Mode7CenterY_2C                   ;$03A29F |
     JSL CODE_03DEDF                         ;$03A2A1 |
-    LDA.w $14B5                             ;$03A2A5 |
+    LDA.w BowserHurtState_14B5              ;$03A2A5 |
     BEQ CODE_03A2AD                         ;$03A2A8 |
     JSR CODE_03AF59                         ;$03A2AA |
 CODE_03A2AD:
@@ -4753,12 +4753,12 @@ CODE_03A2CE:
     STZ.b SpriteYXPPCCCT_64                 ;$03A2DF |
 CODE_03A2E1:
     JSR CODE_03A661
-    LDA.w $14B0                             ;$03A2E4 |
+    LDA.w BowserWaitTimer_14B0              ;$03A2E4 |
     BEQ CODE_03A2F2                         ;$03A2E7 |
     LDA.b Frame_13                          ;$03A2E9 |
     AND.b #$03                              ;$03A2EB |
     BNE CODE_03A2F2                         ;$03A2ED |
-    DEC.w $14B0                             ;$03A2EF |
+    DEC.w BowserWaitTimer_14B0              ;$03A2EF |
 CODE_03A2F2:
     LDA.b Frame_13
     AND.b #$7F                              ;$03A2F4 |
@@ -4926,7 +4926,7 @@ CODE_03A482:
     LDA.b #$07                              ;$03A485 |
     STA.w Sprite_151C,X                     ;$03A487 |
     LDA.b #$78                              ;$03A48A |
-    STA.w $14B0                             ;$03A48C |
+    STA.w BowserWaitTimer_14B0              ;$03A48C |
 Return03A48F:
     RTS
 
@@ -5005,7 +5005,7 @@ Return03A4FC:
     RTS
 
 CODE_03A4FD:
-    LDA.w $14B0
+    LDA.w BowserWaitTimer_14B0
     BNE Return03A52C                        ;$03A500 |
     LDA.w Sprite_151C,X                     ;$03A502 |
     CMP.b #$08                              ;$03A505 |
@@ -5015,7 +5015,7 @@ CODE_03A4FD:
     CMP.b #$03                              ;$03A50F |
     BEQ CODE_03A51A                         ;$03A511 |
     LDA.b #$FF                              ;$03A513 |
-    STA.w $14B6                             ;$03A515 |
+    STA.w BowserSteelieTimer_14B6           ;$03A515 |
     BRA Return03A52C                        ;$03A518 |
 
 CODE_03A51A:
@@ -5050,12 +5050,12 @@ DATA_03A56D:
     db $00,$00,$00,$00,$00,$00,$00,$00
 
 CODE_03A5AD:
-    LDA.w $14B1
+    LDA.w BowserWaitTimer_14B1
     BEQ CODE_03A5D8                         ;$03A5B0 |
-    DEC.w $14B1                             ;$03A5B2 |
+    DEC.w BowserWaitTimer_14B1              ;$03A5B2 |
     BNE CODE_03A5BD                         ;$03A5B5 |
     LDA.b #$54                              ;$03A5B7 |
-    STA.w $14B0                             ;$03A5B9 |
+    STA.w BowserWaitTimer_14B0              ;$03A5B9 |
     RTS                                     ;$03A5BC |
 
 CODE_03A5BD:
@@ -5064,7 +5064,7 @@ CODE_03A5BD:
     TAY                                     ;$03A5BF |
     LDA.w DATA_03A52D,Y                     ;$03A5C0 |
     STA.w SpriteAnimationTimer_1570,X       ;$03A5C3 |
-    LDA.w $14B1                             ;$03A5C6 |
+    LDA.w BowserWaitTimer_14B1              ;$03A5C6 |
     CMP.b #$80                              ;$03A5C9 |
     BNE CODE_03A5D5                         ;$03A5CB |
     JSR CODE_03B019                         ;$03A5CD |
@@ -5076,9 +5076,9 @@ CODE_03A5D5:
     RTS                                     ;$03A5D7 |
 
 CODE_03A5D8:
-    LDA.w $14B6
+    LDA.w BowserSteelieTimer_14B6
     BEQ Return03A60D                        ;$03A5DB |
-    DEC.w $14B6                             ;$03A5DD |
+    DEC.w BowserSteelieTimer_14B6           ;$03A5DD |
     BEQ CODE_03A60E                         ;$03A5E0 |
     LSR                                     ;$03A5E2 |
     LSR                                     ;$03A5E3 |
@@ -5094,7 +5094,7 @@ CODE_03A5D8:
     INC.b Mode7Angle_36+1                   ;$03A5F8 |
     STZ.b SpriteYXPPCCCT_64                 ;$03A5FA |
 CODE_03A5FC:
-    LDA.w $14B6
+    LDA.w BowserSteelieTimer_14B6
     CMP.b #$80                              ;$03A5FF |
     BNE CODE_03A60B                         ;$03A601 |
     LDA.b #$09                              ;$03A603 |
@@ -5108,12 +5108,12 @@ Return03A60D:
 
 CODE_03A60E:
     LDA.b #$60
-    LDY.w $14B8                             ;$03A610 |
+    LDY.w BowserAttackType_14B8             ;$03A610 |
     CPY.b #$02                              ;$03A613 |
     BEQ CODE_03A619                         ;$03A615 |
     LDA.b #$20                              ;$03A617 |
 CODE_03A619:
-    STA.w $14B0
+    STA.w BowserWaitTimer_14B0
     RTS                                     ;$03A61C |
 
 CODE_03A61D:
@@ -5147,14 +5147,14 @@ DATA_03A64D:
     db $0C,$08,$04,$00
 
 CODE_03A661:
-    LDA.w $14B5
+    LDA.w BowserHurtState_14B5
     BEQ Return03A6BF                        ;$03A664 |
-    STZ.w $14B1                             ;$03A666 |
-    STZ.w $14B6                             ;$03A669 |
-    DEC.w $14B5                             ;$03A66C |
+    STZ.w BowserWaitTimer_14B1              ;$03A666 |
+    STZ.w BowserSteelieTimer_14B6           ;$03A669 |
+    DEC.w BowserHurtState_14B5              ;$03A66C |
     BNE CODE_03A691                         ;$03A66F |
     LDA.b #$50                              ;$03A671 |
-    STA.w $14B0                             ;$03A673 |
+    STA.w BowserWaitTimer_14B0              ;$03A673 |
     DEC.w SpriteMisc_187B,X                 ;$03A676 |
     BNE CODE_03A691                         ;$03A679 |
     LDA.w Sprite_151C,X                     ;$03A67B |
@@ -5170,7 +5170,7 @@ CODE_03A691:
     PLY
     PLY                                     ;$03A692 |
     PHA                                     ;$03A693 |
-    LDA.w $14B5                             ;$03A694 |
+    LDA.w BowserHurtState_14B5              ;$03A694 |
     LSR                                     ;$03A697 |
     LSR                                     ;$03A698 |
     TAY                                     ;$03A699 |
@@ -5249,7 +5249,7 @@ CODE_03A706:
     STZ.b SpriteYSpeed_AA,X                 ;$03A713 |
     STZ.w Sprite_1528,X                     ;$03A715 |
     STZ.w Sprite_1534,X                     ;$03A718 |
-    STZ.w $14B2                             ;$03A71B |
+    STZ.w BowserFlyawayCounter_14B2         ;$03A71B |
     RTS                                     ;$03A71E |
 
 DATA_03A71F:
@@ -5308,7 +5308,7 @@ CODE_03A74F:
     BNE CODE_03A76D                         ;$03A768 |
     INC.w Sprite_1534,X                     ;$03A76A |
 CODE_03A76D:
-    LDY.w $14B2
+    LDY.w BowserFlyawayCounter_14B2
     CPY.b #$02                              ;$03A770 |
     BEQ CODE_03A794                         ;$03A772 |
     LDA.b Frame_13                          ;$03A774 |
@@ -5321,7 +5321,7 @@ CODE_03A76D:
     STA.b Mode7YScale_39                    ;$03A783 |
     CMP.w DATA_03A72D,Y                     ;$03A785 |
     BNE CODE_03A78D                         ;$03A788 |
-    INC.w $14B2                             ;$03A78A |
+    INC.w BowserFlyawayCounter_14B2         ;$03A78A |
 CODE_03A78D:
     LDA.w SpriteXPosHigh_14E0,X
     CMP.b #$FE                              ;$03A790 |
@@ -5330,10 +5330,10 @@ CODE_03A794:
     LDA.b #$03
     STA.w Sprite_151C,X                     ;$03A796 |
     LDA.b #$80                              ;$03A799 |
-    STA.w $14B0                             ;$03A79B |
+    STA.w BowserWaitTimer_14B0              ;$03A79B |
     JSL GetRand                             ;$03A79E |
     AND.b #$F0                              ;$03A7A2 |
-    STA.w $14B7                             ;$03A7A4 |
+    STA.w BowserFireXPos_14B7               ;$03A7A4 |
     LDA.b #$1D                              ;$03A7A7 |
     STA.w SPCIO2_1DFB                       ;$03A7A9 |
 Return03A7AC:
@@ -5347,7 +5347,7 @@ CODE_03A7AD:
     STA.w SpriteXPosHigh_14E0,X             ;$03A7B5 |
     LDA.b #$60                              ;$03A7B8 |
     STA.b SpriteXPosLow_E4,X                ;$03A7BA |
-    LDA.w $14B0                             ;$03A7BC |
+    LDA.w BowserWaitTimer_14B0              ;$03A7BC |
     BNE CODE_03A7DF                         ;$03A7BF |
     LDA.b #$18                              ;$03A7C1 |
     STA.w SPCIO2_1DFB                       ;$03A7C3 |
@@ -5462,7 +5462,7 @@ CODE_03A877:
     CMP.b #$3F                              ;$03A883 |
     BNE CODE_03A892                         ;$03A885 |
     PHA                                     ;$03A887 |
-    LDY.w $14B4                             ;$03A888 |
+    LDY.w BowserMusicIndex_14B4             ;$03A888 |
     LDA.w BowserSoundMusic,Y                ;$03A88B |
     STA.w SPCIO2_1DFB                       ;$03A88E |
     PLA                                     ;$03A891 |
@@ -5476,13 +5476,13 @@ CODE_03A892:
     RTS                                     ;$03A89C |
 
 CODE_03A89D:
-    LDA.w $14B4
+    LDA.w BowserMusicIndex_14B4
     INC A                                   ;$03A8A0 |
     STA.w Sprite_151C,X                     ;$03A8A1 |
     STZ.b SpriteXSpeed_B6,X                 ;$03A8A4 |
     STZ.b SpriteYSpeed_AA,X                 ;$03A8A6 |
     LDA.b #$80                              ;$03A8A8 |
-    STA.w $14B0                             ;$03A8AA |
+    STA.w BowserWaitTimer_14B0              ;$03A8AA |
     RTS                                     ;$03A8AD |
 
 CODE_03A8AE:
@@ -6299,8 +6299,8 @@ CODE_03AF72:
     INY                                     ;$03AF9E |
     DEX                                     ;$03AF9F |
     BPL CODE_03AF72                         ;$03AFA0 |
-    LDA.w $14B3                             ;$03AFA2 |
-    INC.w $14B3                             ;$03AFA5 |
+    LDA.w ClownCarTeardropPos_14B3          ;$03AFA2 |
+    INC.w ClownCarTeardropPos_14B3          ;$03AFA5 |
     LSR                                     ;$03AFA8 |
     LSR                                     ;$03AFA9 |
     LSR                                     ;$03AFAA |
@@ -6444,8 +6444,8 @@ CODE_03B078:
     JSR CODE_03B0D6                         ;$03B09E |
     STZ.b PlayerYSpeed_7D                   ;$03B0A1 |
     JSR SubHorzPosBnk3                      ;$03B0A3 |
-    LDA.w $14B1                             ;$03B0A6 |
-    ORA.w $14B6                             ;$03B0A9 |
+    LDA.w BowserWaitTimer_14B1              ;$03B0A6 |
+    ORA.w BowserSteelieTimer_14B6           ;$03B0A9 |
     BEQ CODE_03B0B3                         ;$03B0AC |
     LDA.w DATA_03B076,Y                     ;$03B0AE |
     BRA CODE_03B0B6                         ;$03B0B1 |
@@ -6504,13 +6504,13 @@ CODE_03B0F3:
     JSL GetSpriteClippingA                  ;$03B10C |
     JSL CheckForContact                     ;$03B110 |
     BCC Return03B160                        ;$03B114 |
-    LDA.w $14B5                             ;$03B116 |
+    LDA.w BowserHurtState_14B5              ;$03B116 |
     BNE Return03B160                        ;$03B119 |
     LDA.b #$4C                              ;$03B11B |
-    STA.w $14B5                             ;$03B11D |
-    STZ.w $14B3                             ;$03B120 |
+    STA.w BowserHurtState_14B5              ;$03B11D |
+    STZ.w ClownCarTeardropPos_14B3          ;$03B120 |
     LDA.w Sprite_151C,X                     ;$03B123 |
-    STA.w $14B4                             ;$03B126 |
+    STA.w BowserMusicIndex_14B4             ;$03B126 |
     LDA.b #$28                              ;$03B129 |
     STA.w SPCIO3_1DFC                       ;$03B12B |
     LDA.w Sprite_151C,X                     ;$03B12E |

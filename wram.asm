@@ -1915,44 +1915,51 @@ BlueSwitchTimer_14AD: skip 1 ;done
 SilverSwitchTimer_14AE: skip 1 ;done
 OnOffSwitch_14AF: skip 1 ;done
 
-LakituCloudTempXPos_14B0:
-IggyLarryRotCenterX_14B0:
-BrSwingCenterXPos_14B0: skip 1
+BowserWaitTimer_14B0: ;done
+LakituCloudTempXPos_14B0: ;done
+RotationCenterX_14B0: skip 1 ;done
 
-BowserWaitTimer_14B1: skip 1
+BowserWaitTimer_14B1: skip 1 ;done
 
-BowserAttackTimer_14B2:
-LakituCloudTempYPos_14B2:
-IggyLarryRotCenterY_14B2:
-BrSwingCenterYPos_14B2:
-BowserFlyawayCounter_14B2: skip 1
+LakituCloudTempYPos_14B2: ;done
+RotationCenterY_14B2: ;done
+BowserFlyawayCounter_14B2: skip 1 ;done
 
-ClownCarTeardropPos_14B3: skip 1
+ClownCarTeardropPos_14B3: skip 1 ;done
 
-IggyLarryPlatIntXPos_14B4:
-BrSwingXDist_14B4:
-BowserMusicIndex_14B4: skip 1
+IggyLarryPlatIntXPos_14B4: ;done
+BrSwingXDist_14B4: ;done
+BowserMusicIndex_14B4: skip 1 ;done
 
-BowserHurtState_14B5: skip 1
-IggyLarryPlatIntYPos_14B6:
-BrSwingYDist_14B6:
-BowserSteelieTimer_14B6: skip 1
-BowserFireXPos_14B7: skip 1
-IggyLarryTempXPos_14B8:
-BrSwingPlatXPos_14B8:
-BowserAttackType_14B8: skip 2
-IggyLarryTempYPos_14BA:
-BrSwingPlatYPos_14BA: skip 2
-BrSwingRadiusX_14BC: skip 2
+BowserHurtState_14B5: skip 1 ;done
+
+IggyLarryPlatIntYPos_14B6: ;done
+BrSwingYDist_14B6: ;done
+BowserSteelieTimer_14B6: skip 1 ;done
+
+BowserFireXPos_14B7: skip 1 ;done
+
+IggyLarryTempXPos_14B8: ;done
+RotationXPos_14B8: ;done
+BowserAttackType_14B8: skip 2 ;done
+
+IggyLarryTempYPos_14BA: ;done
+RotationYPos_14BA: ;done
+BrSwingPlatYPos_14BA: skip 2 ;done
+
+RotationRadiusX_14BC: skip 2 ;done
 ; 7E14BE unused
 skip 1
-BrSwingRadiusY_14BF: skip 2
+
+RotationRadiusY_14BF: skip 2 ;done
 ; 7E14C1 unused
 skip 1
-BrSwingSine_14C2: skip 2
+
+RotationSine_14C2: skip 2 ;done
 ; 7E14C4 unused
 skip 1
-BrSwingCosine_14C5: skip 2
+
+RotationCosine_14C5: skip 2 ;done
 ; 7E14C7 unused
 skip 1
 
