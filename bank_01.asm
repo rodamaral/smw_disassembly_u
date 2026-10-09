@@ -3330,7 +3330,7 @@ CODE_01980F:
     JSR SubSprGfx2Entry1                    ;$01981E |
     PLA                                     ;$019821 |
     STA.w SpriteOAMIndex_15EA,X             ;$019822 |
-    LDA.w $1EEB                             ;$019825 |
+    LDA.w OWLevelSettings_1EA2+$49          ;$019825 |
     BMI return_0198A6                       ;$019828 |
     LDA.w SpriteAnimation_1602,X            ;$01982A |
     CMP.b #$06                              ;$01982D |
@@ -7993,7 +7993,7 @@ CODE_01B9B1:
     BEQ CODE_01B9CC                         ;$01B9C9 |
     INY                                     ;$01B9CB |
 CODE_01B9CC:
-    LDA.w $1EEB
+    LDA.w OWLevelSettings_1EA2+$49
     BPL CODE_01B9D6                         ;$01B9CF |
     INY                                     ;$01B9D1 |
     INY                                     ;$01B9D2 |

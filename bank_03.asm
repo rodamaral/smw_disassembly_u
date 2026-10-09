@@ -8556,7 +8556,7 @@ CODE_03C607:
     BRA CODE_03C618                         ;$03C60D |
 
 CODE_03C60F:
-    LDA.w $147A
+    LDA.w LightWinOpenCalc_147A
     STA.w $04A0,X                           ;$03C612 |
     LDA.w LightWinCloseCalc_147C            ;$03C615 |
 CODE_03C618:

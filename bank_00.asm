@@ -5063,7 +5063,7 @@ UploadGFXFile:
     JSL CODE_00BA28
     CPY.b #$01                              ;$00AA6F |
     BNE SkipSpecial                         ;$00AA71 |
-    LDA.w $1EEB                             ;$00AA73 |
+    LDA.w OWLevelSettings_1EA2+$49          ;$00AA73 |
     BPL SkipSpecial                         ;$00AA76 |
     LDY.b #$31                              ;$00AA78 |
     JSL CODE_00BA28                         ;$00AA7A |
@@ -5406,7 +5406,7 @@ DATA_00AD1E:
 CODE_00AD25:
     REP #$30
     LDY.w #$B3D8                            ;$00AD27 |
-    LDA.w $1EEA                             ;$00AD2A |
+    LDA.w OWLevelSettings_1EA2+$48          ;$00AD2A |
     BPL CODE_00AD32                         ;$00AD2D |
     LDY.w #$B732                            ;$00AD2F |
 CODE_00AD32:
@@ -7455,7 +7455,7 @@ execute_player_animation_00C593:
     dw return_00C592                        ;$00C5B3 | 0D Disable animation (used when entering doors or after a bonus game)
 
 .bowser_defeated_animation_00C5B5:
-    STZ.w $13DE
+    STZ.w PlayerOverworldPose_13DE
     STZ.w PlayerSlopePose_13ED              ;$00C5B8 |
     LDA.w EndLevelTimer_1493                ;$00C5BB |
     BEQ ..CODE_00C5CE                       ;$00C5BE |

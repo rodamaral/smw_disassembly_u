@@ -1212,15 +1212,15 @@ CODE_058A55:
     INY                                     ;$058A73 |
     INY                                     ;$058A74 |
     LDA [$0A],Y                             ;$058A75 |
-    STA.w $1BE8,X                           ;$058A77 |
+    STA.w Layer1VramBuffer_1BE6+2,X         ;$058A77 |
     INY                                     ;$058A7A |
     INY                                     ;$058A7B |
     LDA [$0A],Y                             ;$058A7C |
-    STA.w $1C66,X                           ;$058A7E |
+    STA.w Layer1VramBuffer_1BE6+$80,X       ;$058A7E |
     INY                                     ;$058A81 |
     INY                                     ;$058A82 |
     LDA [$0A],Y                             ;$058A83 |
-    STA.w $1C68,X                           ;$058A85 |
+    STA.w Layer1VramBuffer_1BE6+$82,X       ;$058A85 |
     INX                                     ;$058A88 |
     INX                                     ;$058A89 |
     INX                                     ;$058A8A |
@@ -1337,7 +1337,7 @@ CODE_058B35:
     INY                                     ;$058B53 |
     INY                                     ;$058B54 |
     LDA [$0A],Y                             ;$058B55 |
-    STA.w $1C66,X                           ;$058B57 |
+    STA.w Layer1VramBuffer_1BE6+$80,X       ;$058B57 |
     INX                                     ;$058B5A |
     INX                                     ;$058B5B |
     INY                                     ;$058B5C |
@@ -1347,7 +1347,7 @@ CODE_058B35:
     INY                                     ;$058B63 |
     INY                                     ;$058B64 |
     LDA [$0A],Y                             ;$058B65 |
-    STA.w $1C66,X                           ;$058B67 |
+    STA.w Layer1VramBuffer_1BE6+$80,X       ;$058B67 |
     INX                                     ;$058B6A |
     INX                                     ;$058B6B |
     LDA $08                                 ;$058B6C |
@@ -1465,17 +1465,17 @@ CODE_058C23:
     INY                                     ;$058C44 |
     LDA [$0A],Y                             ;$058C45 |
     ORA $03                                 ;$058C47 |
-    STA.w $1CEA,X                           ;$058C49 |
+    STA.w Layer2VramBuffer_1CE8+2,X         ;$058C49 |
     INY                                     ;$058C4C |
     INY                                     ;$058C4D |
     LDA [$0A],Y                             ;$058C4E |
     ORA $03                                 ;$058C50 |
-    STA.w $1D68,X                           ;$058C52 |
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058C52 |
     INY                                     ;$058C55 |
     INY                                     ;$058C56 |
     LDA [$0A],Y                             ;$058C57 |
     ORA $03                                 ;$058C59 |
-    STA.w $1D6A,X                           ;$058C5B |
+    STA.w Layer2VramBuffer_1CE8+$82,X       ;$058C5B |
     INX                                     ;$058C5E |
     INX                                     ;$058C5F |
     INX                                     ;$058C60 |
@@ -1601,7 +1601,7 @@ CODE_058D1A:
     INY                                     ;$058D3B |
     LDA [$0A],Y                             ;$058D3C |
     ORA $03                                 ;$058D3E |
-    STA.w $1D68,X                           ;$058D40 |
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058D40 |
     INX                                     ;$058D43 |
     INX                                     ;$058D44 |
     INY                                     ;$058D45 |
@@ -1613,7 +1613,7 @@ CODE_058D1A:
     INY                                     ;$058D4F |
     LDA [$0A],Y                             ;$058D50 |
     ORA $03                                 ;$058D52 |
-    STA.w $1D68,X                           ;$058D54 |
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058D54 |
     INX                                     ;$058D57 |
     INX                                     ;$058D58 |
     LDA $08                                 ;$058D59 |
@@ -1698,15 +1698,15 @@ CODE_058DD9:
     INY                                     ;$058DF1 |
     INY                                     ;$058DF2 |
     LDA [$0A],Y                             ;$058DF3 |
-    STA.w $1CEA,X                           ;$058DF5 |
+    STA.w Layer2VramBuffer_1CE8+2,X         ;$058DF5 |
     INY                                     ;$058DF8 |
     INY                                     ;$058DF9 |
     LDA [$0A],Y                             ;$058DFA |
-    STA.w $1D68,X                           ;$058DFC |
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058DFC |
     INY                                     ;$058DFF |
     INY                                     ;$058E00 |
     LDA [$0A],Y                             ;$058E01 |
-    STA.w $1D6A,X                           ;$058E03 |
+    STA.w Layer2VramBuffer_1CE8+$82,X       ;$058E03 |
     INX                                     ;$058E06 |
     INX                                     ;$058E07 |
     INX                                     ;$058E08 |

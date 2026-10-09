@@ -3020,7 +3020,7 @@ CODE_0CADF6:
     PHY                                     ;$0CAE08 |
     PHX                                     ;$0CAE09 |
     JSL load_stripe_image                   ;$0CAE0A |
-    LDA.w $1EEB                             ;$0CAE0E |
+    LDA.w OWLevelSettings_1EA2+$49          ;$0CAE0E |
     BPL CODE_0CAE48                         ;$0CAE11 |
     LDA.w CreditsScreenNumber_1DE9          ;$0CAE13 |
     ASL                                     ;$0CAE16 |

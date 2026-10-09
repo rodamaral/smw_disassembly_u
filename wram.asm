@@ -1651,14 +1651,14 @@ skip 20
 ClusterSprMisc_0F72: skip 20 ;done
 ClusterSprMisc_0F86: skip 20 ;done
 ClusterSprMisc_0F9A: skip 20 ;done
-BooRingAngleLow_0FAE: skip 2
-BooRingAngleHigh_0FB0: skip 2
-BooRingXPosLow_0FB2: skip 2
-BooRingXPosHigh_0FB4: skip 2
-BooRingYPosLow_0FB6: skip 2
-BooRingYPosHigh_0FB8: skip 2
-BooRingOffscreen_0FBA: skip 2
-BooRingLoadIndex_0FBC: skip 2
+BooRingAngleLow_0FAE: skip 2 ;done
+BooRingAngleHigh_0FB0: skip 2 ;done
+BooRingXPosLow_0FB2: skip 2 ;done
+BooRingXPosHigh_0FB4: skip 2 ;done
+BooRingYPosLow_0FB6: skip 2 ;done
+BooRingYPosHigh_0FB8: skip 2 ;done
+BooRingOffscreen_0FBA: skip 2 ;done
+BooRingLoadIndex_0FBC: skip 2 ;done
 Map16Pointers_0FBE: skip 1024 ;done
 ItemMemorySetting_13BE: skip 1 ;done
 Translevel_13BF: skip 2 ;done

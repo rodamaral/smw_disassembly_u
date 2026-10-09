@@ -3102,7 +3102,7 @@ CODE_049DD1:
     LDX.w CurrentPlayer_0DB3                ;$049E08 |
     LDA.w OWPlayerSubmap_1F11,X             ;$049E0B |
     STA.w CurrentSubmap_13C3                ;$049E0E |
-    STZ.w $13C4                             ;$049E11 |
+    STZ.w CurrentSubmap_13C3+1              ;$049E11 |
     LDA.b #$02                              ;$049E14 |
     STA.w KeepModeActive_0DB1               ;$049E16 |
     LDA.b #$0A                              ;$049E19 |

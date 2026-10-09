@@ -282,7 +282,7 @@ CODE_0282AF:
     STX $0C                                 ;$0282BE |
     LDX.w #$0038                            ;$0282C0 |
     LDY.w #$00E0                            ;$0282C3 |
-    LDA.w $1884                             ;$0282C6 |
+    LDA.w SpriteMisc_187B+9                 ;$0282C6 | NOTE: hardcoded slot 9
     CMP.b #$01                              ;$0282C9 |
     BNE CODE_0282D8                         ;$0282CB |
     LDX.w #$0039                            ;$0282CD |
@@ -332,7 +332,7 @@ CODE_028318:
     LDA $02                                 ;$028326 |
     CMP.b #$F0                              ;$028328 |
     BCC CODE_028367                         ;$02832A |
-    LDA.w $1884                             ;$02832C |
+    LDA.w SpriteMisc_187B+9                 ;$02832C | NOTE: hardcoded slot 9
     CMP.b #$01                              ;$02832F |
     BEQ CODE_028367                         ;$028331 |
     PLY                                     ;$028333 |
@@ -375,7 +375,7 @@ CODE_028374:
     SEP #$10
     LDA.b #$01                              ;$028376 |
     STA.w BossBGSpriteUpdate_188C           ;$028378 |
-    LDA.w $1884                             ;$02837B |
+    LDA.w SpriteMisc_187B+9                 ;$02837B | NOTE: hardcoded slot 9
     CMP.b #$01                              ;$02837E |
     BNE CODE_028398                         ;$028380 |
     LDA.b #$CD                              ;$028382 |
@@ -2375,7 +2375,7 @@ TileFromBounceSpr0:
     CMP.b #$0B                              ;$0291A6 |
     BNE CODE_0291B6                         ;$0291A8 |
 CODE_0291AA:
-    LDY.w $186B
+    LDY.w MulticoinTimer_186B
     CPY.b #$01                              ;$0291AD |
     BNE CODE_0291B6                         ;$0291AF |
     STZ.w MulticoinTimer_186B               ;$0291B1 |
@@ -5840,18 +5840,18 @@ CODE_02AB28:
     LDY.w BooRingIndex_18BA                 ;$02AB4A |
     PHA                                     ;$02AB4D |
     AND.b #$F0                              ;$02AB4E |
-    STA.w $0FB6,Y                           ;$02AB50 |
+    STA.w BooRingYPosLow_0FB6,Y             ;$02AB50 |
     PLA                                     ;$02AB53 |
     AND.b #$01                              ;$02AB54 |
-    STA.w $0FB8,Y                           ;$02AB56 |
+    STA.w BooRingYPosHigh_0FB8,Y            ;$02AB56 |
     LDA $00                                 ;$02AB59 |
-    STA.w $0FB2,Y                           ;$02AB5B |
+    STA.w BooRingXPosLow_0FB2,Y             ;$02AB5B |
     LDA $01                                 ;$02AB5E |
-    STA.w $0FB4,Y                           ;$02AB60 |
+    STA.w BooRingXPosHigh_0FB4,Y            ;$02AB60 |
     LDA.b #$00                              ;$02AB63 |
-    STA.w $0FBA,Y                           ;$02AB65 |
+    STA.w BooRingOffscreen_0FBA,Y           ;$02AB65 |
     LDA $02                                 ;$02AB68 |
-    STA.w $0FBC,Y                           ;$02AB6A |
+    STA.w BooRingLoadIndex_0FBC,Y           ;$02AB6A |
 CODE_02AB6D:
     DEC $0E
     BMI CODE_02AB74                         ;$02AB6F |
@@ -16712,7 +16712,7 @@ DATA_02FA85:
 
 CODE_02FA98:
     LDY.w ClusterSprMisc_0F86,X
-    LDA.w $0FBA,Y                           ;$02FA9B |
+    LDA.w BooRingOffscreen_0FBA,Y           ;$02FA9B |
     BEQ CODE_02FAA4                         ;$02FA9E |
     STZ.w ClusterSprNumber_1892,X           ;$02FAA0 |
     RTS                                     ;$02FAA3 |
@@ -16727,15 +16727,15 @@ CODE_02FAA4:
     DEC $00                                 ;$02FAB1 |
 CODE_02FAB3:
     CLC
-    ADC.w $0FAE,Y                           ;$02FAB4 |
-    STA.w $0FAE,Y                           ;$02FAB7 |
-    LDA.w $0FB0,Y                           ;$02FABA |
+    ADC.w BooRingAngleLow_0FAE,Y            ;$02FAB4 |
+    STA.w BooRingAngleLow_0FAE,Y            ;$02FAB7 |
+    LDA.w BooRingAngleHigh_0FB0,Y           ;$02FABA |
     ADC $00                                 ;$02FABD |
     AND.b #$01                              ;$02FABF |
-    STA.w $0FB0,Y                           ;$02FAC1 |
-    LDA.w $0FB2,Y                           ;$02FAC4 |
+    STA.w BooRingAngleHigh_0FB0,Y           ;$02FAC1 |
+    LDA.w BooRingXPosLow_0FB2,Y             ;$02FAC4 |
     STA $00                                 ;$02FAC7 |
-    LDA.w $0FB4,Y                           ;$02FAC9 |
+    LDA.w BooRingXPosHigh_0FB4,Y            ;$02FAC9 |
     STA $01                                 ;$02FACC |
     REP #$20                                ;$02FACE |
     LDA $00                                 ;$02FAD0 |
@@ -16747,9 +16747,9 @@ CODE_02FAB3:
     SEP #$20                                ;$02FADC |
     BCC CODE_02FAF0                         ;$02FADE |
     LDA.b #$01                              ;$02FAE0 |
-    STA.w $0FBA,Y                           ;$02FAE2 |
+    STA.w BooRingOffscreen_0FBA,Y           ;$02FAE2 |
     PHX                                     ;$02FAE5 |
-    LDX.w $0FBC,Y                           ;$02FAE6 |
+    LDX.w BooRingLoadIndex_0FBC,Y           ;$02FAE6 |
     STZ.w SpriteLoadStatus_1938,X           ;$02FAE9 |
     PLX                                     ;$02FAEC |
     DEC.w BooRingIndex_18BA                 ;$02FAED |
@@ -16760,10 +16760,10 @@ CODE_02FAF0:
     TAX                                     ;$02FAF5 |
     LDA.w DATA_02FA84,X                     ;$02FAF6 |
     CLC                                     ;$02FAF9 |
-    ADC.w $0FAE,Y                           ;$02FAFA |
+    ADC.w BooRingAngleLow_0FAE,Y            ;$02FAFA |
     STA $00                                 ;$02FAFD |
     LDA.w DATA_02FA85,X                     ;$02FAFF |
-    ADC.w $0FB0,Y                           ;$02FB02 |
+    ADC.w BooRingAngleHigh_0FB0,Y           ;$02FB02 |
     AND.b #$01                              ;$02FB05 |
     STA $01                                 ;$02FB07 |
     PLX                                     ;$02FB09 |
@@ -16834,9 +16834,9 @@ CODE_02FB77:
     DEC $00                                 ;$02FB85 |
 CODE_02FB87:
     CLC
-    ADC.w $0FB2,Y                           ;$02FB88 |
+    ADC.w BooRingXPosLow_0FB2,Y             ;$02FB88 |
     STA.w ClusterSprXPosLow_1E16,X          ;$02FB8B |
-    LDA.w $0FB4,Y                           ;$02FB8E |
+    LDA.w BooRingXPosHigh_0FB4,Y            ;$02FB8E |
     ADC $00                                 ;$02FB91 |
     STA.w ClusterSprXPosHigh_1E3E,X         ;$02FB93 |
     STZ $01                                 ;$02FB96 |
@@ -16845,9 +16845,9 @@ CODE_02FB87:
     DEC $01                                 ;$02FB9C |
 CODE_02FB9E:
     CLC
-    ADC.w $0FB6,Y                           ;$02FB9F |
+    ADC.w BooRingYPosLow_0FB6,Y             ;$02FB9F |
     STA.w ClusterSprYPosLow_1E02,X          ;$02FBA2 |
-    LDA.w $0FB8,Y                           ;$02FBA5 |
+    LDA.w BooRingYPosHigh_0FB8,Y            ;$02FBA5 |
     ADC $01                                 ;$02FBA8 |
     STA.w ClusterSprYPosHigh_1E2A,X         ;$02FBAA |
     JSR CODE_02FC8D                         ;$02FBAD |
