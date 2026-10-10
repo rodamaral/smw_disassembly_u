@@ -5045,20 +5045,20 @@ CODE_02A56E:
     STZ $0E                                 ;$02A570 |
     STZ $0B                                 ;$02A572 |
     STZ.w SpriteBlockOffset_1694            ;$02A574 | reset scratch memory
-    LDA.w ReznorOAMIndex_140F               ;$02A577 |
-    BNE CODE_02A5BC                         ;$02A57A |
-    LDA.w IRQNMICommand_0D9B                ;$02A57C |
-    BPL CODE_02A5BC                         ;$02A57F |
-    AND.b #$40                              ;$02A581 |
-    BEQ CODE_02A592                         ;$02A583 | normal case
-    LDA.w IRQNMICommand_0D9B                ;$02A585 |
-    CMP.b #!IRQNMIBowser_C1                 ;$02A588 |
-    BEQ CODE_02A5BC                         ;$02A58A |
+    LDA.w ReznorOAMIndex_140F               ;$02A577 |\
+    BNE .normal_check_02A5BC                ;$02A57A ||
+    LDA.w IRQNMICommand_0D9B                ;$02A57C || Branch if in a non Mode 7 room or Reznor's room
+    BPL .normal_check_02A5BC                ;$02A57F |/
+    AND.b #$40                              ;$02A581 |\ Branch if in Iggy/Larry's room
+    BEQ .iggy_larry_room_02A592             ;$02A583 |/
+    LDA.w IRQNMICommand_0D9B                ;$02A585 |\
+    CMP.b #!IRQNMIBowser_C1                 ;$02A588 || Branch if in Bowser's room
+    BEQ .normal_check_02A5BC                ;$02A58A |/
     LDA.w ExtSprYPosLow_1715,X              ;$02A58C |
-    CMP.b #$A8                              ;$02A58F |
+    CMP.b #$A8                              ;$02A58F | Morton/Roy's room: return contact if lower than #$A8
     RTS                                     ;$02A591 |
 
-CODE_02A592:
+.iggy_larry_room_02A592:
     LDA.w ExtSprXPosLow_171F,X              ;$02A592 | calculate interaction point for sprites
     CLC                                     ;$02A595 |
     ADC.b #$04                              ;$02A596 | interaction point 4px to the right of the sprite position
@@ -5073,11 +5073,11 @@ CODE_02A592:
     LDA.w ExtSprYPosHigh_1729,X             ;$02A5AC |
     ADC.b #$00                              ;$02A5AF |
     STA.w IggyLarryPlatIntYPos_14B6+1       ;$02A5B1 | y high byte
-    JSL CODE_01CC9D                         ;$02A5B4 |
+    JSL sprite_iggy_plat_interact_01CC9D    ;$02A5B4 |
     LDX.w CurrentSprite_15E9                ;$02A5B8 |
     RTS                                     ;$02A5BB |
 
-CODE_02A5BC:
+.normal_check_02A5BC:
     JSR CODE_02A611
     ROL $0E                                 ;$02A5BF |
     LDA.w Map16_1693                        ;$02A5C1 | possibly reads uninit $1693

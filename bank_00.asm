@@ -13217,7 +13217,7 @@ CODE_00F9BC:
     LDA.b #$01                              ;$00F9BF |
     PHA                                     ;$00F9C1 |
     PLB                                     ;$00F9C2 |
-    JSL CODE_01CC9D                         ;$00F9C3 |
+    JSL sprite_iggy_plat_interact_01CC9D    ;$00F9C3 |
     PLB                                     ;$00F9C7 |
     RTS                                     ;$00F9C8 |
 

@@ -989,7 +989,7 @@ SpriteMainPtr:
     dw Platforms2
     dw Platforms2
     dw OrangePlatform
-    dw BrownChainedPlat
+    dw brown_chained_plat_01C773
     dw PalaceSwitch
     dw FloatingSkulls
     dw LineFuzzyPPlats
@@ -7693,73 +7693,69 @@ FinishOAMWriteRt:
     STA $07                                 ;$01B7D7 |
     LDA.w SpriteXPosHigh_14E0,X             ;$01B7D9 |
     STA $03                                 ;$01B7DC |
-CODE_01B7DE:
+.loop_01B7DE:
     TYA
     LSR                                     ;$01B7DF |
     LSR                                     ;$01B7E0 |
     TAX                                     ;$01B7E1 |
     LDA $0B                                 ;$01B7E2 |
-    BPL CODE_01B7F0                         ;$01B7E4 |
+    BPL .CODE_01B7F0                        ;$01B7E4 |
     LDA.w $0460,X                           ;$01B7E6 |
     AND.b #$02                              ;$01B7E9 |
     STA.w $0460,X                           ;$01B7EB |
-    BRA CODE_01B7F3                         ;$01B7EE |
+    BRA .CODE_01B7F3                        ;$01B7EE |
 
-CODE_01B7F0:
+.CODE_01B7F0:
     STA.w $0460,X
-CODE_01B7F3:
+.CODE_01B7F3:
     LDX.b #$00
     LDA.w $0300,Y                           ;$01B7F5 |
     SEC                                     ;$01B7F8 |
     SBC $07                                 ;$01B7F9 |
-    BPL CODE_01B7FE                         ;$01B7FB |
-    DEX                                     ;$01B7FD |
-CODE_01B7FE:
-    CLC
+    BPL +                                   ;$01B7FB |\
+    DEX                                     ;$01B7FD |/
++   CLC                                     ;$01B7FE |
     ADC $02                                 ;$01B7FF |
     STA $04                                 ;$01B801 |
     TXA                                     ;$01B803 |
     ADC $03                                 ;$01B804 |
     STA $05                                 ;$01B806 |
-    JSR CODE_01B844                         ;$01B808 |
-    BCC CODE_01B819                         ;$01B80B |
-    TYA                                     ;$01B80D |
-    LSR                                     ;$01B80E |
-    LSR                                     ;$01B80F |
-    TAX                                     ;$01B810 |
-    LDA.w $0460,X                           ;$01B811 |
-    ORA.b #$01                              ;$01B814 |
-    STA.w $0460,X                           ;$01B816 |
-CODE_01B819:
-    LDX.b #$00
+    JSR is_tile_offscreen_x_01B844          ;$01B808 |
+    BCC +                                   ;$01B80B |\
+    TYA                                     ;$01B80D ||
+    LSR                                     ;$01B80E ||
+    LSR                                     ;$01B80F ||
+    TAX                                     ;$01B810 ||
+    LDA.w $0460,X                           ;$01B811 ||
+    ORA.b #$01                              ;$01B814 ||
+    STA.w $0460,X                           ;$01B816 |/
++   LDX.b #$00                              ;$01B819 |
     LDA.w $0301,Y                           ;$01B81B |
     SEC                                     ;$01B81E |
     SBC $06                                 ;$01B81F |
-    BPL CODE_01B824                         ;$01B821 |
-    DEX                                     ;$01B823 |
-CODE_01B824:
-    CLC
+    BPL +                                   ;$01B821 |\
+    DEX                                     ;$01B823 |/
++   CLC                                     ;$01B824 |
     ADC $00                                 ;$01B825 |
     STA $09                                 ;$01B827 |
     TXA                                     ;$01B829 |
     ADC $01                                 ;$01B82A |
     STA $0A                                 ;$01B82C |
-    JSR CODE_01C9BF                         ;$01B82E |
-    BCC CODE_01B838                         ;$01B831 |
-    LDA.b #$F0                              ;$01B833 |
-    STA.w $0301,Y                           ;$01B835 |
-CODE_01B838:
-    INY
+    JSR is_tile_below_screen_01C9BF         ;$01B82E |
+    BCC +                                   ;$01B831 |\
+    LDA.b #$F0                              ;$01B833 ||
+    STA.w $0301,Y                           ;$01B835 |/
++   INY                                     ;$01B838 |
     INY                                     ;$01B839 |
     INY                                     ;$01B83A |
     INY                                     ;$01B83B |
     DEC $08                                 ;$01B83C |
-    BPL CODE_01B7DE                         ;$01B83E |
+    BPL .loop_01B7DE                        ;$01B83E |
     LDX.w CurrentSprite_15E9                ;$01B840 |
     RTS                                     ;$01B843 |
 
-CODE_01B844:
-    REP #$20
+is_tile_offscreen_x_01B844:                 ;        | Returns carry set if the tile is offscreen horizontally, clear if not
+    REP #$20                                ;$01B844 |
     LDA $04                                 ;$01B846 |
     SEC                                     ;$01B848 |
     SBC.b Layer1XPos_1A                     ;$01B849 |
@@ -7767,7 +7763,7 @@ CODE_01B844:
     SEP #$20                                ;$01B84E |
     RTS                                     ;$01B850 |
 
-    RTS                                     ;$01B851 |
+    RTS                                     ;$01B851 | unreachable code
 
 CODE_01B852:
     LDA.w SpriteWayOffscreenX_15C4,X
@@ -9865,24 +9861,23 @@ InitBrwnChainPlat:
     STA.w SpriteYPosHigh_14D4,X             ;$01C76F |
     RTS                                     ;$01C772 |
 
-BrownChainedPlat:
+brown_chained_plat_01C773:
     JSR SubOffscreen2Bnk1
     LDA.b SpriteLock_9D                     ;$01C776 |
-    BNE CODE_01C795                         ;$01C778 |
+    BNE .CODE_01C795                        ;$01C778 |
     LDA.b Frame_13                          ;$01C77A |
     AND.b #$03                              ;$01C77C |
     ORA.w SpriteAnimation_1602,X            ;$01C77E |
-    BNE CODE_01C795                         ;$01C781 |
+    BNE .CODE_01C795                        ;$01C781 |
     LDA.b #$01                              ;$01C783 |
     LDY.w Sprite_1504,X                     ;$01C785 |
-    BEQ CODE_01C795                         ;$01C788 |
-    BMI CODE_01C78E                         ;$01C78A |
-    LDA.b #$FF                              ;$01C78C |
-CODE_01C78E:
-    CLC
+    BEQ .CODE_01C795                        ;$01C788 |
+    BMI +                                   ;$01C78A |\
+    LDA.b #$FF                              ;$01C78C |/
++   CLC                                     ;$01C78E |
     ADC.w Sprite_1504,X                     ;$01C78F |
     STA.w Sprite_1504,X                     ;$01C792 |
-CODE_01C795:
+.CODE_01C795:
     LDA.w Sprite_151C,X
     PHA                                     ;$01C798 |
     LDA.w Sprite_1528,X                     ;$01C799 |
@@ -9895,9 +9890,9 @@ CODE_01C795:
     SBC.w Sprite_1528,X                     ;$01C7A8 |
     AND.b #$01                              ;$01C7AB |
     STA.w Sprite_1528,X                     ;$01C7AD |
-    JSR CODE_01CACB                         ;$01C7B0 |
-    JSR CODE_01CB20                         ;$01C7B3 |
-    JSR CODE_01CB53                         ;$01C7B6 |
+    JSR store_rotation_params_01CACB        ;$01C7B0 |
+    JSR set_rotation_trigonometry_01CB20    ;$01C7B3 |
+    JSR get_circle_coords_01CB53            ;$01C7B6 |
     PLA                                     ;$01C7B9 |
     STA.w Sprite_1528,X                     ;$01C7BA |
     PLA                                     ;$01C7BD |
@@ -9930,17 +9925,16 @@ CODE_01C795:
     LDA.w BrSwingPlatYPos_14BA              ;$01C7F5 |
     SEC                                     ;$01C7F8 |
     SBC.w RotationCenterY_14B2              ;$01C7F9 |
-    BPL CODE_01C802                         ;$01C7FC |
-    EOR.b #$FF                              ;$01C7FE |
-    INC A                                   ;$01C800 |
-    INY                                     ;$01C801 |
-CODE_01C802:
-    STY $00
+    BPL +                                   ;$01C7FC |\
+    EOR.b #$FF                              ;$01C7FE ||
+    INC A                                   ;$01C800 ||
+    INY                                     ;$01C801 |/
++   STY $00                                 ;$01C802 |
     STA.w $4205                             ;$01C804 |
     STZ.w $4204                             ;$01C807 |
     LDA.b #$05                              ;$01C80A |
     STA.w $4206                             ;$01C80C |
-    JSR DoNothing                           ;$01C80F |
+    JSR nop_wait_01CC94                     ;$01C80F |
     LDA.w $4214                             ;$01C812 |
     STA $02                                 ;$01C815 |
     STA $06                                 ;$01C817 |
@@ -9951,17 +9945,16 @@ CODE_01C802:
     LDA.w RotationXPos_14B8                 ;$01C822 |
     SEC                                     ;$01C825 |
     SBC.w RotationCenterX_14B0              ;$01C826 |
-    BPL CODE_01C82F                         ;$01C829 |
-    EOR.b #$FF                              ;$01C82B |
-    INC A                                   ;$01C82D |
-    INY                                     ;$01C82E |
-CODE_01C82F:
-    STY $01
+    BPL +                                   ;$01C829 |\
+    EOR.b #$FF                              ;$01C82B ||
+    INC A                                   ;$01C82D ||
+    INY                                     ;$01C82E |/
++   STY $01                                 ;$01C82F |
     STA.w $4205                             ;$01C831 |
     STZ.w $4204                             ;$01C834 |
     LDA.b #$05                              ;$01C837 |
     STA.w $4206                             ;$01C839 |
-    JSR DoNothing                           ;$01C83C |
+    JSR nop_wait_01CC94                     ;$01C83C |
     LDA.w $4214                             ;$01C83F |
     STA $04                                 ;$01C842 |
     STA $08                                 ;$01C844 |
@@ -9992,25 +9985,25 @@ CODE_01C82F:
     LDA.b #$31                              ;$01C875 |
     STA.w $0303,Y                           ;$01C877 |
     LDX.b #$03                              ;$01C87A |
-CODE_01C87C:
+.CODE_01C87C:
     INY
     INY                                     ;$01C87D |
     INY                                     ;$01C87E |
     INY                                     ;$01C87F |
     LDA $00                                 ;$01C880 |
-    BNE CODE_01C88E                         ;$01C882 |
+    BNE .CODE_01C88E                        ;$01C882 |
     LDA $0A                                 ;$01C884 |
     CLC                                     ;$01C886 |
     ADC $07                                 ;$01C887 |
     STA.w $0301,Y                           ;$01C889 |
-    BRA CODE_01C896                         ;$01C88C |
+    BRA .CODE_01C896                        ;$01C88C |
 
-CODE_01C88E:
+.CODE_01C88E:
     LDA $0A
     SEC                                     ;$01C890 |
     SBC $07                                 ;$01C891 |
     STA.w $0301,Y                           ;$01C893 |
-CODE_01C896:
+.CODE_01C896:
     LDA $06
     CLC                                     ;$01C898 |
     ADC $02                                 ;$01C899 |
@@ -10019,19 +10012,19 @@ CODE_01C896:
     ADC $03                                 ;$01C89F |
     STA $07                                 ;$01C8A1 |
     LDA $01                                 ;$01C8A3 |
-    BNE CODE_01C8B1                         ;$01C8A5 |
+    BNE .CODE_01C8B1                        ;$01C8A5 |
     LDA $0B                                 ;$01C8A7 |
     CLC                                     ;$01C8A9 |
     ADC $09                                 ;$01C8AA |
     STA.w $0300,Y                           ;$01C8AC |
-    BRA CODE_01C8B9                         ;$01C8AF |
+    BRA .CODE_01C8B9                        ;$01C8AF |
 
-CODE_01C8B1:
+.CODE_01C8B1:
     LDA $0B
     SEC                                     ;$01C8B3 |
     SBC $09                                 ;$01C8B4 |
     STA.w $0300,Y                           ;$01C8B6 |
-CODE_01C8B9:
+.CODE_01C8B9:
     LDA $08
     CLC                                     ;$01C8BB |
     ADC $04                                 ;$01C8BC |
@@ -10044,35 +10037,34 @@ CODE_01C8B9:
     LDA.b #$31                              ;$01C8CB |
     STA.w $0303,Y                           ;$01C8CD |
     DEX                                     ;$01C8D0 |
-    BPL CODE_01C87C                         ;$01C8D1 |
+    BPL .CODE_01C87C                        ;$01C8D1 |
     LDX.b #$03                              ;$01C8D3 |
-CODE_01C8D5:
-    STX $02
-    INY                                     ;$01C8D7 |
-    INY                                     ;$01C8D8 |
-    INY                                     ;$01C8D9 |
-    INY                                     ;$01C8DA |
-    LDA.w BrSwingPlatYPos_14BA              ;$01C8DB |
-    SEC                                     ;$01C8DE |
-    SBC.b Layer1YPos_1C                     ;$01C8DF |
-    SEC                                     ;$01C8E1 |
-    SBC.b #$10                              ;$01C8E2 |
-    STA.w $0301,Y                           ;$01C8E4 |
-    LDA.w RotationXPos_14B8                 ;$01C8E7 |
-    SEC                                     ;$01C8EA |
-    SBC.b Layer1XPos_1A                     ;$01C8EB |
-    CLC                                     ;$01C8ED |
-    ADC.w DATA_01C9B7,X                     ;$01C8EE |
-    STA.w $0300,Y                           ;$01C8F1 |
-    LDA.w BrwnChainPlatTiles,X              ;$01C8F4 |
-    STA.w $0302,Y                           ;$01C8F7 |
-    LDA.b #$31                              ;$01C8FA |
-    STA.w $0303,Y                           ;$01C8FC |
-    DEX                                     ;$01C8FF |
-    BPL CODE_01C8D5                         ;$01C900 |
+-   STX $02                                 ;$01C8D5 |\
+    INY                                     ;$01C8D7 ||
+    INY                                     ;$01C8D8 ||
+    INY                                     ;$01C8D9 ||
+    INY                                     ;$01C8DA ||
+    LDA.w BrSwingPlatYPos_14BA              ;$01C8DB ||
+    SEC                                     ;$01C8DE ||
+    SBC.b Layer1YPos_1C                     ;$01C8DF ||
+    SEC                                     ;$01C8E1 ||
+    SBC.b #$10                              ;$01C8E2 ||
+    STA.w $0301,Y                           ;$01C8E4 ||
+    LDA.w RotationXPos_14B8                 ;$01C8E7 ||
+    SEC                                     ;$01C8EA ||
+    SBC.b Layer1XPos_1A                     ;$01C8EB ||
+    CLC                                     ;$01C8ED ||
+    ADC.w .DATA_01C9B7,X                    ;$01C8EE ||
+    STA.w $0300,Y                           ;$01C8F1 ||
+    LDA.w .BrwnChainPlatTiles,X             ;$01C8F4 ||
+    STA.w $0302,Y                           ;$01C8F7 ||
+    LDA.b #$31                              ;$01C8FA ||
+    STA.w $0303,Y                           ;$01C8FC ||
+    DEX                                     ;$01C8FF ||
+    BPL -                                   ;$01C900 |/
     LDX.w CurrentSprite_15E9                ;$01C902 |
-    LDA.b #$09                              ;$01C905 |
-    STA $08                                 ;$01C907 |
+    LDA.b #$09                              ;$01C905 | Number of tiles total in the platform
+    STA $08                                 ;$01C907 | $08: loop counter
     LDA.w RotationCenterY_14B2              ;$01C909 |
     SEC                                     ;$01C90C |
     SBC.b #$08                              ;$01C90D |
@@ -10092,91 +10084,86 @@ CODE_01C8D5:
     STA $06                                 ;$01C92D |
     LDA.w $0304,Y                           ;$01C92F |
     STA $07                                 ;$01C932 |
-CODE_01C934:
-    TYA
-    LSR                                     ;$01C935 |
-    LSR                                     ;$01C936 |
-    TAX                                     ;$01C937 |
-    LDA.b #$02                              ;$01C938 |
-    STA.w $0460,X                           ;$01C93A |
-    LDX.b #$00                              ;$01C93D |
-    LDA.w $0300,Y                           ;$01C93F |
-    SEC                                     ;$01C942 |
-    SBC $07                                 ;$01C943 |
-    BPL CODE_01C948                         ;$01C945 |
-    DEX                                     ;$01C947 |
-CODE_01C948:
-    CLC
-    ADC $02                                 ;$01C949 |
-    STA $04                                 ;$01C94B |
-    TXA                                     ;$01C94D |
-    ADC $03                                 ;$01C94E |
-    STA $05                                 ;$01C950 |
-    JSR CODE_01B844                         ;$01C952 |
-    BCC CODE_01C960                         ;$01C955 |
-    TYA                                     ;$01C957 |
-    LSR                                     ;$01C958 |
-    LSR                                     ;$01C959 |
-    TAX                                     ;$01C95A |
-    LDA.b #$03                              ;$01C95B |
-    STA.w $0460,X                           ;$01C95D |
-CODE_01C960:
-    LDX.b #$00
-    LDA.w $0301,Y                           ;$01C962 |
-    SEC                                     ;$01C965 |
-    SBC $06                                 ;$01C966 |
-    BPL CODE_01C96B                         ;$01C968 |
-    DEX                                     ;$01C96A |
-CODE_01C96B:
-    CLC
-    ADC $00                                 ;$01C96C |
-    STA $09                                 ;$01C96E |
-    TXA                                     ;$01C970 |
-    ADC $01                                 ;$01C971 |
-    STA $0A                                 ;$01C973 |
-    JSR CODE_01C9BF                         ;$01C975 |
-    BCC CODE_01C97F                         ;$01C978 |
-    LDA.b #$F0                              ;$01C97A |
-    STA.w $0301,Y                           ;$01C97C |
-CODE_01C97F:
-    LDA $08
-    CMP.b #$09                              ;$01C981 |
-    BNE CODE_01C999                         ;$01C983 |
-    LDA $04                                 ;$01C985 |
-    STA.w RotationXPos_14B8                 ;$01C987 |
-    LDA $05                                 ;$01C98A |
-    STA.w RotationXPos_14B8+1               ;$01C98C |
-    LDA $09                                 ;$01C98F |
-    STA.w BrSwingPlatYPos_14BA              ;$01C991 |
-    LDA $0A                                 ;$01C994 |
-    STA.w BrSwingPlatYPos_14BA+1            ;$01C996 |
-CODE_01C999:
-    INY
-    INY                                     ;$01C99A |
-    INY                                     ;$01C99B |
-    INY                                     ;$01C99C |
-    DEC $08                                 ;$01C99D |
-    BPL CODE_01C934                         ;$01C99F |
+..loop_01C934:                              ;        |\
+    TYA                                     ;$01C934 ||
+    LSR                                     ;$01C935 ||
+    LSR                                     ;$01C936 ||
+    TAX                                     ;$01C937 ||
+    LDA.b #$02                              ;$01C938 ||
+    STA.w $0460,X                           ;$01C93A ||
+    LDX.b #$00                              ;$01C93D ||
+    LDA.w $0300,Y                           ;$01C93F ||
+    SEC                                     ;$01C942 ||
+    SBC $07                                 ;$01C943 ||
+    BPL +                                   ;$01C945 ||
+    DEX                                     ;$01C947 ||
++   CLC                                     ;$01C948 ||
+    ADC $02                                 ;$01C949 ||
+    STA $04                                 ;$01C94B ||
+    TXA                                     ;$01C94D ||
+    ADC $03                                 ;$01C94E ||
+    STA $05                                 ;$01C950 ||
+    JSR is_tile_offscreen_x_01B844          ;$01C952 ||
+    BCC +                                   ;$01C955 ||\
+    TYA                                     ;$01C957 |||
+    LSR                                     ;$01C958 |||
+    LSR                                     ;$01C959 |||
+    TAX                                     ;$01C95A |||
+    LDA.b #$03                              ;$01C95B |||
+    STA.w $0460,X                           ;$01C95D ||/
++   LDX.b #$00                              ;$01C960 ||
+    LDA.w $0301,Y                           ;$01C962 ||
+    SEC                                     ;$01C965 ||
+    SBC $06                                 ;$01C966 ||
+    BPL +                                   ;$01C968 ||\
+    DEX                                     ;$01C96A ||/
++   CLC                                     ;$01C96B ||
+    ADC $00                                 ;$01C96C ||
+    STA $09                                 ;$01C96E ||
+    TXA                                     ;$01C970 ||
+    ADC $01                                 ;$01C971 ||
+    STA $0A                                 ;$01C973 ||
+    JSR is_tile_below_screen_01C9BF         ;$01C975 ||
+    BCC +                                   ;$01C978 ||\
+    LDA.b #$F0                              ;$01C97A |||
+    STA.w $0301,Y                           ;$01C97C ||/
++   LDA $08                                 ;$01C97F ||
+    CMP.b #$09                              ;$01C981 ||
+    BNE +                                   ;$01C983 ||\
+    LDA $04                                 ;$01C985 |||
+    STA.w RotationXPos_14B8                 ;$01C987 |||
+    LDA $05                                 ;$01C98A |||
+    STA.w RotationXPos_14B8+1               ;$01C98C |||
+    LDA $09                                 ;$01C98F |||
+    STA.w BrSwingPlatYPos_14BA              ;$01C991 |||
+    LDA $0A                                 ;$01C994 |||
+    STA.w BrSwingPlatYPos_14BA+1            ;$01C996 ||/
++   INY                                     ;$01C999 ||
+    INY                                     ;$01C99A ||
+    INY                                     ;$01C99B ||
+    INY                                     ;$01C99C ||
+    DEC $08                                 ;$01C99D ||
+    BPL ..loop_01C934                       ;$01C99F |/
     LDX.w CurrentSprite_15E9                ;$01C9A1 |
     LDY.w SpriteOAMIndex_15EA,X             ;$01C9A4 |
     LDA.b #$F0                              ;$01C9A7 |
     STA.w $0305,Y                           ;$01C9A9 |
     LDA.b SpriteLock_9D                     ;$01C9AC |
-    BNE Return01C9B6                        ;$01C9AE |
-    JSR CODE_01CCF0                         ;$01C9B0 |
-    JMP CODE_01C9EC                         ;$01C9B3 |
+    BNE .return_01C9B6                      ;$01C9AE |
+    JSR update_brown_plat_angle_01CCF0      ;$01C9B0 |
+    JMP interaction_brown_plat_01C9EC       ;$01C9B3 |
 
-Return01C9B6:
+.return_01C9B6:
     RTS
 
-DATA_01C9B7:
+.DATA_01C9B7:
     db $E0,$F0,$00,$10
 
-BrwnChainPlatTiles:
+.BrwnChainPlatTiles:
     db $60,$61,$61,$62
 
-CODE_01C9BF:
-    REP #$20
+is_tile_below_screen_01C9BF:                ;        | Returns carry set if the tile is below the screen, clear if not
+    REP #$20                                ;$01C9BF |
     LDA $09                                 ;$01C9C1 |
     PHA                                     ;$01C9C3 |
     CLC                                     ;$01C9C4 |
@@ -10188,7 +10175,7 @@ CODE_01C9BF:
     PLA                                     ;$01C9D0 |
     STA $09                                 ;$01C9D1 |
     SEP #$20                                ;$01C9D3 |
-Return01C9D5:
+return_01C9D5:
     RTS
 
 DATA_01C9D6:
@@ -10199,17 +10186,17 @@ DATA_01C9D8:
 
 CODE_01C9DA:
     LDA.w Sprite_160E,X
-    BEQ Return01C9EB                        ;$01C9DD |
+    BEQ return_01C9EB                       ;$01C9DD |
     STZ.w Sprite_160E,X                     ;$01C9DF |
-CODE_01C9E2:
+redraw_mario_and_yoshi_01C9E2:
     PHX
     JSL draw_mario_and_yoshi_00E2BD         ;$01C9E3 |
     PLX                                     ;$01C9E7 |
     STX.w CurrentSprite_15E9                ;$01C9E8 |
-Return01C9EB:
+return_01C9EB:
     RTS
 
-CODE_01C9EC:
+interaction_brown_plat_01C9EC:
     LDA.w RotationXPos_14B8+1
     XBA                                     ;$01C9EF |
     LDA.w RotationXPos_14B8                 ;$01C9F0 |
@@ -10224,7 +10211,7 @@ CODE_01C9EC:
     AND.b #$01                              ;$01CA02 |
     ORA.b SpriteLock_9D                     ;$01CA04 |
     STA.w SpriteWayOffscreenX_15C4,X        ;$01CA06 |
-    BNE Return01C9D5                        ;$01CA09 |
+    BNE return_01C9D5                       ;$01CA09 |
     JSR CODE_01CA9C                         ;$01CA0B |
     STZ.w SpriteAnimation_1602,X            ;$01CA0E |
     BCC CODE_01C9DA                         ;$01CA11 |
@@ -10241,19 +10228,18 @@ CODE_01C9EC:
     CLC                                     ;$01CA27 |
     ADC.b #$18                              ;$01CA28 |
     CMP $0E                                 ;$01CA2A |
-    BCS Return01CA9B                        ;$01CA2C |
-    LDA.b PlayerYSpeed_7D                   ;$01CA2E |
-    BMI CODE_01C9E2                         ;$01CA30 |
+    BCS .return_01CA9B                      ;$01CA2C |
+    LDA.b PlayerYSpeed_7D                   ;$01CA2E |\
+    BMI redraw_mario_and_yoshi_01C9E2       ;$01CA30 |/
     STZ.b PlayerYSpeed_7D                   ;$01CA32 |
     LDA.b #$03                              ;$01CA34 |
     STA.w OnSolidSprite_1471                ;$01CA36 |
     STA.w SpriteAnimation_1602,X            ;$01CA39 |
     LDA.b #$28                              ;$01CA3C |
     LDY.w RidingYoshi_187A                  ;$01CA3E |
-    BEQ CODE_01CA45                         ;$01CA41 |
-    LDA.b #$38                              ;$01CA43 |
-CODE_01CA45:
-    STA $0F
+    BEQ +                                   ;$01CA41 |\
+    LDA.b #$38                              ;$01CA43 |/
++   STA $0F                                 ;$01CA45 |
     LDA.w RotationYPos_14BA                 ;$01CA47 |
     SEC                                     ;$01CA4A |
     SBC $0F                                 ;$01CA4B |
@@ -10263,28 +10249,26 @@ CODE_01CA45:
     STA.b PlayerYPos_96+1                   ;$01CA54 |
     LDA.b PlayerBlocked_77                  ;$01CA56 |
     AND.b #!Block_Sides_03                  ;$01CA58 |
-    BNE CODE_01CA6E                         ;$01CA5A |
-    LDY.b #$00                              ;$01CA5C |
-    LDA.w SpriteXMovement_1491              ;$01CA5E |
-    BPL CODE_01CA64                         ;$01CA61 |
-    DEY                                     ;$01CA63 |
-CODE_01CA64:
-    CLC
-    ADC.b PlayerXPos_94                     ;$01CA65 |
-    STA.b PlayerXPos_94                     ;$01CA67 |
-    TYA                                     ;$01CA69 |
-    ADC.b PlayerXPos_94+1                   ;$01CA6A |
-    STA.b PlayerXPos_94+1                   ;$01CA6C |
-CODE_01CA6E:
-    JSR CODE_01C9E2
+    BNE .CODE_01CA6E                        ;$01CA5A |\
+    LDY.b #$00                              ;$01CA5C ||
+    LDA.w SpriteXMovement_1491              ;$01CA5E ||
+    BPL +                                   ;$01CA61 ||\
+    DEY                                     ;$01CA63 ||/
++   CLC                                     ;$01CA64 ||
+    ADC.b PlayerXPos_94                     ;$01CA65 ||
+    STA.b PlayerXPos_94                     ;$01CA67 ||
+    TYA                                     ;$01CA69 ||
+    ADC.b PlayerXPos_94+1                   ;$01CA6A ||
+    STA.b PlayerXPos_94+1                   ;$01CA6C |/
+.CODE_01CA6E:                               ;        |
+    JSR redraw_mario_and_yoshi_01C9E2       ;$01CA6E | Redraw Mario
     LDA.b byetudlrPress_16                  ;$01CA71 |
-    BMI CODE_01CA79                         ;$01CA73 |
-    LDA.b #!Hide_AllStar_FF                 ;$01CA75 |
-    STA.b PlayerHiddenTiles_78              ;$01CA77 |
-CODE_01CA79:
-    LDA.b Frame_13
+    BMI +                                   ;$01CA73 |\ if just pressed B
+    LDA.b #!Hide_AllStar_FF                 ;$01CA75 ||
+    STA.b PlayerHiddenTiles_78              ;$01CA77 |/
++   LDA.b Frame_13                          ;$01CA79 |
     LSR                                     ;$01CA7B |
-    BCC Return01CA9B                        ;$01CA7C |
+    BCC .return_01CA9B                      ;$01CA7C |
     LDA.w Sprite_151C,X                     ;$01CA7E |
     CLC                                     ;$01CA81 |
     ADC.b #$80                              ;$01CA82 |
@@ -10294,11 +10278,11 @@ CODE_01CA79:
     TAY                                     ;$01CA8B |
     LDA.w Sprite_1504,X                     ;$01CA8C |
     CMP.w DATA_01C9D8,Y                     ;$01CA8F |
-    BEQ Return01CA9B                        ;$01CA92 |
+    BEQ .return_01CA9B                      ;$01CA92 |
     CLC                                     ;$01CA94 |
     ADC.w DATA_01C9D6,Y                     ;$01CA95 |
     STA.w Sprite_1504,X                     ;$01CA98 |
-Return01CA9B:
+.return_01CA9B:
     RTS
 
 CODE_01CA9C:
@@ -10324,7 +10308,7 @@ CODE_01CA9C:
     JSL CheckForContact                     ;$01CAC6 |
     RTS                                     ;$01CACA |
 
-CODE_01CACB:
+store_rotation_params_01CACB: ;; TODO: only for the Brow Platform
     LDA.b #$50
     STA.w RotationRadiusX_14BC              ;$01CACD |
     STZ.w RotationRadiusY_14BF              ;$01CAD0 |
@@ -10358,7 +10342,7 @@ CODE_01CACB:
     STA.b Mode7Angle_36+1                   ;$01CB1D |
     RTS                                     ;$01CB1F |
 
-CODE_01CB20:
+set_rotation_trigonometry_01CB20:
     LDA.b Mode7Angle_36+1
     STA.w BrPlatAngleParity_1866            ;$01CB22 |
     PHX                                     ;$01CB25 |
@@ -10385,50 +10369,46 @@ CODE_01CB20:
     RTS                                     ;$01CB52 |
 
 ; this is shared between the brown platform and Iggy platform
-CODE_01CB53:
+get_circle_coords_01CB53:
     REP #$20
     LDA.w RotationCosine_14C5               ;$01CB55 |
     STA $02                                 ;$01CB58 |
     LDA.w RotationRadiusX_14BC              ;$01CB5A |
     STA $00                                 ;$01CB5D |
     SEP #$20                                ;$01CB5F |
-    JSR CODE_01CC28                         ;$01CB61 |
+    JSR .multiply_radius_with_value_01CC28  ;$01CB61 |
     LDA.w BrPlatAngleParity_1866+1          ;$01CB64 |
     LSR                                     ;$01CB67 |
     REP #$20                                ;$01CB68 |
     LDA $04                                 ;$01CB6A |
-    BCC CODE_01CB72                         ;$01CB6C |
-    EOR.w #$FFFF                            ;$01CB6E |
-    INC A                                   ;$01CB71 |
-CODE_01CB72:
-    STA $08
+    BCC +                                   ;$01CB6C |\
+    EOR.w #$FFFF                            ;$01CB6E ||
+    INC A                                   ;$01CB71 |/
++   STA $08                                 ;$01CB72 |
     LDA $06                                 ;$01CB74 |
-    BCC CODE_01CB7C                         ;$01CB76 |
-    EOR.w #$FFFF                            ;$01CB78 |
-    INC A                                   ;$01CB7B |
-CODE_01CB7C:
-    STA $0A
+    BCC +                                   ;$01CB76 |\
+    EOR.w #$FFFF                            ;$01CB78 ||
+    INC A                                   ;$01CB7B |/
++   STA $0A                                 ;$01CB7C |
     LDA.w RotationSine_14C2                 ;$01CB7E |
     STA $02                                 ;$01CB81 |
     LDA.w RotationRadiusY_14BF              ;$01CB83 |
     STA $00                                 ;$01CB86 |
     SEP #$20                                ;$01CB88 |
-    JSR CODE_01CC28                         ;$01CB8A |
+    JSR .multiply_radius_with_value_01CC28  ;$01CB8A |
     LDA.w BrPlatAngleParity_1866            ;$01CB8D |
     LSR                                     ;$01CB90 |
     REP #$20                                ;$01CB91 |
     LDA $04                                 ;$01CB93 |
-    BCC CODE_01CB9B                         ;$01CB95 |
-    EOR.w #$FFFF                            ;$01CB97 |
-    INC A                                   ;$01CB9A |
-CODE_01CB9B:
-    STA $04
+    BCC +                                   ;$01CB95 |\
+    EOR.w #$FFFF                            ;$01CB97 ||
+    INC A                                   ;$01CB9A |/
++   STA $04                                 ;$01CB9B |
     LDA $06                                 ;$01CB9D |
-    BCC CODE_01CBA5                         ;$01CB9F |
-    EOR.w #$FFFF                            ;$01CBA1 |
-    INC A                                   ;$01CBA4 |
-CODE_01CBA5:
-    STA $06
+    BCC +                                   ;$01CB9F |\
+    EOR.w #$FFFF                            ;$01CBA1 ||
+    INC A                                   ;$01CBA4 |/
++   STA $06                                 ;$01CBA5 |
     LDA $04                                 ;$01CBA7 |
     CLC                                     ;$01CBA9 |
     ADC $08                                 ;$01CBAA |
@@ -10445,43 +10425,39 @@ CODE_01CBA5:
     LDA.w RotationRadiusY_14BF              ;$01CBC2 |
     STA $00                                 ;$01CBC5 |
     SEP #$20                                ;$01CBC7 |
-    JSR CODE_01CC28                         ;$01CBC9 |
+    JSR .multiply_radius_with_value_01CC28  ;$01CBC9 |
     LDA.w BrPlatAngleParity_1866+1          ;$01CBCC |
     LSR                                     ;$01CBCF |
     REP #$20                                ;$01CBD0 |
     LDA $04                                 ;$01CBD2 |
-    BCC CODE_01CBDA                         ;$01CBD4 |
-    EOR.w #$FFFF                            ;$01CBD6 |
-    INC A                                   ;$01CBD9 |
-CODE_01CBDA:
-    STA $08
+    BCC +                                   ;$01CBD4 |\
+    EOR.w #$FFFF                            ;$01CBD6 ||
+    INC A                                   ;$01CBD9 |/
++   STA $08                                 ;$01CBDA |
     LDA $06                                 ;$01CBDC |
-    BCC CODE_01CBE4                         ;$01CBDE |
-    EOR.w #$FFFF                            ;$01CBE0 |
-    INC A                                   ;$01CBE3 |
-CODE_01CBE4:
-    STA $0A
+    BCC +                                   ;$01CBDE |\
+    EOR.w #$FFFF                            ;$01CBE0 ||
+    INC A                                   ;$01CBE3 |/
++   STA $0A                                 ;$01CBE4 |
     LDA.w RotationSine_14C2                 ;$01CBE6 |
     STA $02                                 ;$01CBE9 |
     LDA.w RotationRadiusX_14BC              ;$01CBEB |
     STA $00                                 ;$01CBEE |
     SEP #$20                                ;$01CBF0 |
-    JSR CODE_01CC28                         ;$01CBF2 |
+    JSR .multiply_radius_with_value_01CC28  ;$01CBF2 |
     LDA.w BrPlatAngleParity_1866            ;$01CBF5 |
     LSR                                     ;$01CBF8 |
     REP #$20                                ;$01CBF9 |
     LDA $04                                 ;$01CBFB |
-    BCC CODE_01CC03                         ;$01CBFD |
-    EOR.w #$FFFF                            ;$01CBFF |
-    INC A                                   ;$01CC02 |
-CODE_01CC03:
-    STA $04
+    BCC +                                   ;$01CBFD |\
+    EOR.w #$FFFF                            ;$01CBFF ||
+    INC A                                   ;$01CC02 |/
++   STA $04                                 ;$01CC03 |
     LDA $06                                 ;$01CC05 |
-    BCC CODE_01CC0D                         ;$01CC07 |
-    EOR.w #$FFFF                            ;$01CC09 |
-    INC A                                   ;$01CC0C |
-CODE_01CC0D:
-    STA $06
+    BCC +                                   ;$01CC07 |\
+    EOR.w #$FFFF                            ;$01CC09 ||
+    INC A                                   ;$01CC0C |/
++   STA $06                                 ;$01CC0D |
     LDA $04                                 ;$01CC0F |
     SEC                                     ;$01CC11 |
     SBC $08                                 ;$01CC12 |
@@ -10496,12 +10472,12 @@ CODE_01CC0D:
     SEP #$20                                ;$01CC25 |
     RTS                                     ;$01CC27 |
 
-CODE_01CC28:
-    LDA $00
+.multiply_radius_with_value_01CC28:         ;        | Subroutine to do 16-bit cos/sin multiplication. Stores a radius in $00 and cos/sin value in $02
+    LDA $00                                 ;$01CC28 |
     STA.w $4202                             ;$01CC2A |
     LDA $02                                 ;$01CC2D |
     STA.w $4203                             ;$01CC2F |
-    JSR DoNothing                           ;$01CC32 |
+    JSR nop_wait_01CC94                     ;$01CC32 |
     LDA.w $4216                             ;$01CC35 |
     STA $04                                 ;$01CC38 |
     LDA.w $4217                             ;$01CC3A |
@@ -10510,7 +10486,7 @@ CODE_01CC28:
     STA.w $4202                             ;$01CC41 |
     LDA $03                                 ;$01CC44 |
     STA.w $4203                             ;$01CC46 |
-    JSR DoNothing                           ;$01CC49 |
+    JSR nop_wait_01CC94                     ;$01CC49 |
     LDA.w $4216                             ;$01CC4C |
     CLC                                     ;$01CC4F |
     ADC $05                                 ;$01CC50 |
@@ -10522,7 +10498,7 @@ CODE_01CC28:
     STA.w $4202                             ;$01CC5D |
     LDA $02                                 ;$01CC60 |
     STA.w $4203                             ;$01CC62 |
-    JSR DoNothing                           ;$01CC65 |
+    JSR nop_wait_01CC94                     ;$01CC65 |
     LDA.w $4216                             ;$01CC68 |
     CLC                                     ;$01CC6B |
     ADC $05                                 ;$01CC6C |
@@ -10534,7 +10510,7 @@ CODE_01CC28:
     STA.w $4202                             ;$01CC79 |
     LDA $03                                 ;$01CC7C |
     STA.w $4203                             ;$01CC7E |
-    JSR DoNothing                           ;$01CC81 |
+    JSR nop_wait_01CC94                     ;$01CC81 |
     LDA.w $4216                             ;$01CC84 |
     CLC                                     ;$01CC87 |
     ADC $06                                 ;$01CC88 |
@@ -10544,7 +10520,7 @@ CODE_01CC28:
     STA $07                                 ;$01CC91 |
     RTS                                     ;$01CC93 |
 
-DoNothing:
+nop_wait_01CC94:
     NOP
     NOP                                     ;$01CC95 |
     NOP                                     ;$01CC96 |
@@ -10555,13 +10531,13 @@ DoNothing:
     NOP                                     ;$01CC9B |
     RTS                                     ;$01CC9C |
 
-CODE_01CC9D:
+sprite_iggy_plat_interact_01CC9D:
     LDA.w IggyLarryPlatIntXPos_14B4+1
     ORA.w IggyLarryPlatIntYPos_14B6+1       ;$01CCA0 |
-    BNE CODE_01CCC5                         ;$01CCA3 |
-    JSR CODE_01CCC7                         ;$01CCA5 |
-    JSR CODE_01CB20                         ;$01CCA8 |
-    JSR CODE_01CB53                         ;$01CCAB |
+    BNE .return_01CCC5                      ;$01CCA3 |
+    JSR .store_rotation_params_01CCC7       ;$01CCA5 |
+    JSR set_rotation_trigonometry_01CB20    ;$01CCA8 |
+    JSR get_circle_coords_01CB53            ;$01CCAB |
     LDA.w IggyLarryTempYPos_14BA            ;$01CCAE |
     AND.b #$F0                              ;$01CCB1 |
     STA $00                                 ;$01CCB3 |
@@ -10572,28 +10548,28 @@ CODE_01CC9D:
     LSR                                     ;$01CCBB |
     ORA $00                                 ;$01CCBC |
     TAY                                     ;$01CCBE |
-    LDA.w $0AF6,Y                           ;$01CCBF |
+    LDA.w IggyLarryPlatInteract_0AF6,Y      ;$01CCBF |
     CMP.b #$15                              ;$01CCC2 |
     RTL                                     ;$01CCC4 |
 
-CODE_01CCC5:
+.return_01CCC5:
     CLC
     RTL                                     ;$01CCC6 |
 
-CODE_01CCC7:
-    REP #$20
+.store_rotation_params_01CCC7:            ;        |
+    REP #$20                                ;$01CCC7 |
     LDA.b Mode7CenterX_2A                   ;$01CCC9 |
     STA.w RotationCenterX_14B0              ;$01CCCB |
     LDA.b Mode7CenterY_2C                   ;$01CCCE |
-    STA.w RotationCenterY_14B2              ;$01CCD0 |
+    STA.w RotationCenterY_14B2              ;$01CCD0 | Store center of rotation
     LDA.w BrSwingXDist_14B4                 ;$01CCD3 |
     SEC                                     ;$01CCD6 |
     SBC.w RotationCenterX_14B0              ;$01CCD7 |
-    STA.w RotationRadiusX_14BC              ;$01CCDA |
+    STA.w RotationRadiusX_14BC              ;$01CCDA | Store horizontal radius of the position from center
     LDA.w BrSwingYDist_14B6                 ;$01CCDD |
     SEC                                     ;$01CCE0 |
     SBC.w RotationCenterY_14B2              ;$01CCE1 |
-    STA.w RotationRadiusY_14BF              ;$01CCE4 |
+    STA.w RotationRadiusY_14BF              ;$01CCE4 | Store vertical radius of interaction point from center
     SEP #$20                                ;$01CCE7 |
     RTS                                     ;$01CCE9 |
 
@@ -10606,7 +10582,7 @@ CODE_01CCEC:
     INC A                                   ;$01CCEE |
     RTS                                     ;$01CCEF |
 
-CODE_01CCF0:
+update_brown_plat_angle_01CCF0:
     LDA.w Sprite_1504,X
     ASL                                     ;$01CCF3 |
     ASL                                     ;$01CCF4 |
@@ -16762,7 +16738,7 @@ IggysBall:
     STA.w $0303,Y                           ;$01FA79 |
     PLX                                     ;$01FA7C |
     LDA.b SpriteLock_9D                     ;$01FA7D |
-    BNE Return01FAB3                        ;$01FA7F |
+    BNE .return_01FAB3                      ;$01FA7F |
     LDY.w SpriteDir_157C,X                  ;$01FA81 |
     LDA.w DATA_01FA56,Y                     ;$01FA84 |
     STA.b SpriteXSpeed_B6,X                 ;$01FA87 |
@@ -16770,27 +16746,24 @@ IggysBall:
     JSR SubSprYPosNoGrvty                   ;$01FA8C |
     LDA.b SpriteYSpeed_AA,X                 ;$01FA8F |
     CMP.b #$40                              ;$01FA91 |
-    BPL CODE_01FA9A                         ;$01FA93 |
-    CLC                                     ;$01FA95 |
-    ADC.b #$04                              ;$01FA96 |
-    STA.b SpriteYSpeed_AA,X                 ;$01FA98 |
-CODE_01FA9A:
-    JSR CODE_01FF98
-    BCC CODE_01FAA3                         ;$01FA9D |
-    LDA.b #$F0                              ;$01FA9F |
-    STA.b SpriteYSpeed_AA,X                 ;$01FAA1 |
-CODE_01FAA3:
-    JSR MarioSprInteractRt
+    BPL +                                   ;$01FA93 |\
+    CLC                                     ;$01FA95 ||
+    ADC.b #$04                              ;$01FA96 ||
+    STA.b SpriteYSpeed_AA,X                 ;$01FA98 |/
++   JSR iggy_ball_plat_interact_01FF98      ;$01FA9A |
+    BCC +                                   ;$01FA9D |\
+    LDA.b #$F0                              ;$01FA9F ||
+    STA.b SpriteYSpeed_AA,X                 ;$01FAA1 |/
++   JSR MarioSprInteractRt                  ;$01FAA3 |
     LDA.b SpriteYPosLow_D8,X                ;$01FAA6 |
     CMP.b #$44                              ;$01FAA8 |
-    BCC Return01FAB3                        ;$01FAAA |
+    BCC .return_01FAB3                      ;$01FAAA |
     CMP.b #$50                              ;$01FAAC |
-    BCS Return01FAB3                        ;$01FAAE |
+    BCS .return_01FAB3                      ;$01FAAE |
     JSR spin_kill_sprite_019ACB             ;$01FAB0 |
-Return01FAB3:
+.return_01FAB3:
     RTS
 
-DATA_01FAB4:
     db $FF,$01,$00,$80,$60,$A0,$40,$D0
     db $D8,$C0,$C8,$0C,$F4
 
@@ -16968,7 +16941,7 @@ PlatformKoopaKids:
     LDA.w DATA_01FAE5,Y                     ;$01FC02 |
     STA.w SpriteAnimation_1602,X            ;$01FC05 |
 .CODE_01FC08:
-    JSR CODE_01FD50
+    JSR koopa_kid_plat_interact_01FD50
     JSR CODE_01FC62                         ;$01FC0B |
 .CODE_01FC0E:
     LDA.w SpritePlayerContact_154C,X
@@ -17143,7 +17116,7 @@ CODE_01FD4A:
     BNE CODE_01FD0C                         ;$01FD4D |
     RTS                                     ;$01FD4F |
 
-CODE_01FD50:
+koopa_kid_plat_interact_01FD50:
     LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01FD52 |
     ADC.b #$08                              ;$01FD53 |
@@ -17166,7 +17139,7 @@ CODE_01FD50:
     STA.b Mode7Angle_36                     ;$01FD7B |
     SEP #$20                                ;$01FD7D |
     PHX                                     ;$01FD7F |
-    JSL CODE_01CC9D                         ;$01FD80 |
+    JSL sprite_iggy_plat_interact_01CC9D    ;$01FD80 |
     PLX                                     ;$01FD84 |
     REP #$20                                ;$01FD85 |
     LDA.b Mode7Angle_36                     ;$01FD87 |
@@ -17390,7 +17363,7 @@ CODE_01FF5B:
     PLX                                     ;$01FF96 |
     RTS                                     ;$01FF97 |
 
-CODE_01FF98:
+iggy_ball_plat_interact_01FF98:
     LDA.b SpriteXPosLow_E4,X
     CLC                                     ;$01FF9A |
     ADC.b #$08                              ;$01FF9B |
@@ -17406,7 +17379,7 @@ CODE_01FF98:
     ADC.b #$00                              ;$01FFB3 |
     STA.w IggyLarryPlatIntYPos_14B6+1       ;$01FFB5 |
     PHX                                     ;$01FFB8 |
-    JSL CODE_01CC9D                         ;$01FFB9 |
+    JSL sprite_iggy_plat_interact_01CC9D    ;$01FFB9 |
     PLX                                     ;$01FFBD |
     RTS                                     ;$01FFBE |
 
