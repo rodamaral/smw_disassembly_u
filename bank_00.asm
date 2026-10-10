@@ -256,7 +256,7 @@ NMI_start:                                  ;        \
     JSR draw_status_bar                     ;$0081F4 | Draw the status bar
 .transition_NMI                             ;        |
     LDA.w CutsceneID_13C6                   ;$0081F7 |\ Skip the end credits code 
-    CMP.b #$08                              ;$0081FA | | if the current cutscene is not $08 (end credits)
+    CMP.b #!SceneCastle_08                  ;$0081FA | | if the current cutscene is not $08 (end credits)
     BNE .not_end_credits                    ;$0081FC |/
     LDA.w CreditsUpdateBG_1FFE              ;$0081FE |\ Skip updating the credits BG
     BEQ .draw_mario                         ;$008201 |/ If a new BG is not yet needed
@@ -318,7 +318,7 @@ NMI_start:                                  ;        \
 .lagging_OW_NMI                             ;        |
     LDA.b #$81                              ;$00827A | Load Enable NMI and autojoy enabled
     LDY.w CutsceneID_13C6                   ;$00827C |\ Skip to NMI return if the credits are not playing
-    CPY.b #$08                              ;$00827F | |
+    CPY.b #!SceneCastle_08                  ;$00827F | |
     BNE .NMI_return                         ;$008281 |/
     LDY.w Brightness_0DAE                   ;$008283 |\ Set screen brightness from mirror
     STY.w $2100                             ;$008286 |/
@@ -2374,8 +2374,8 @@ GM19_credits_castle_load_009468:
     STZ.w SpritePalette_192E                ;$00948A |
     LDA.b #$01                              ;$00948D |
     STA.w ForegroundPalette_192D            ;$00948F |
-    CPX.b #$08                              ;$009492 |
-    BNE CODE_0094B2                         ;$009494 |
+    CPX.b #!SceneCastle_08                  ;$009492 |
+    BNE .CODE_0094B2                        ;$009494 |
     JSR CODE_00955E                         ;$009496 |
     LDA.b #$D2                              ;$009499 |
     STA.b StripeImage_12                    ;$00949B |
@@ -2385,9 +2385,9 @@ GM19_credits_castle_load_009468:
     JSR DisableHDMA                         ;$0094A7 |
     INC.w ObjectTileset_1931                ;$0094AA |
     INC.w SpriteTileset_192B                ;$0094AD |
-    BRA CODE_0094D7                         ;$0094B0 |
+    BRA .CODE_0094D7                        ;$0094B0 |
 
-CODE_0094B2:
+.CODE_0094B2:
     LDA.b #$15
     STA.w SPCIO2_1DFB                       ;$0094B4 |
     LDA.w DATA_009460,X                     ;$0094B7 |
@@ -2403,15 +2403,14 @@ CODE_0094B2:
     STA.b PlayerYPos_96                     ;$0094D0 |
     SEP #$20                                ;$0094D2 |
     INC.w CarryingFlagMirror_148F           ;$0094D4 |
-CODE_0094D7:
+.CODE_0094D7:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$0094DA |
     JSR CODE_00922F                         ;$0094DD |
     LDX.b #$0B                              ;$0094E0 |
-CODE_0094E2:
-    STZ.b Layer1XPos_1A,X
-    DEX                                     ;$0094E4 |
-    BPL CODE_0094E2                         ;$0094E5 |
+-   STZ.b Layer1XPos_1A,X                   ;$0094E2 |\
+    DEX                                     ;$0094E4 ||
+    BPL -                                   ;$0094E5 |/
     LDA.b #!Priority2_20                    ;$0094E7 |
     STA.b SpriteYXPPCCCT_64                 ;$0094E9 |
     JSR CODE_00A635                         ;$0094EB |
@@ -2424,28 +2423,28 @@ CODE_0094E2:
 GM1B_credits_castle_main_0094FD:
     JSL OAM_reset_7F8000
     LDA.w CutsceneID_13C6                   ;$009501 |
-    CMP.b #$08                              ;$009504 |
-    BEQ CODE_009557                         ;$009506 |
-    LDA.b axlr0000Hold_17                   ;$009508 |
-    AND.b #$00                              ;$00950A |
-    CMP.b #$30                              ;$00950C |
-    BNE CODE_009529                         ;$00950E |
-    LDA.b byetudlrHold_15                   ;$009510 |
-    AND.b #$08                              ;$009512 |
-    BEQ ADDR_009523                         ;$009514 |
-    LDA.w CutsceneID_13C6                   ;$009516 |
-    INC A                                   ;$009519 |
-    CMP.b #$09                              ;$00951A |
-    BCC ADDR_009520                         ;$00951C |
-    LDA.b #$01                              ;$00951E |
-ADDR_009520:
-    STA.w CutsceneID_13C6
-ADDR_009523:
-    LDA.b #!FadeToCutscene_18
+    CMP.b #!SceneCastle_08                  ;$009504 |
+    BEQ .run_credits_009557                 ;$009506 |
+    LDA.b axlr0000Hold_17                   ;$009508 |\ Debug cutscene select
+    AND.b #$00                              ;$00950A || this AND prevents running the debug code
+    CMP.b #$30                              ;$00950C || Pressing L + R would reload the cutscene
+    BNE .process_castle_cutscene_009529     ;$00950E |/
+
+.unreachable_debug:
+    LDA.b byetudlrHold_15                   ;$009510 |\ If Up is also being held,
+    AND.b #$08                              ;$009512 |/  advance to the next boss cutscene
+    BEQ ++                                  ;$009514 |\
+    LDA.w CutsceneID_13C6                   ;$009516 ||
+    INC A                                   ;$009519 ||
+    CMP.b #$09                              ;$00951A ||
+    BCC +                                   ;$00951C ||\ cycle cutscene
+    LDA.b #!SceneCastle_01                  ;$00951E ||/
++   STA.w CutsceneID_13C6                   ;$009520 |/
+++  LDA.b #!FadeToCutscene_18               ;$009523 |
     STA.w GameMode_0100                     ;$009525 |
     RTS                                     ;$009528 |
 
-CODE_009529:
+.process_castle_cutscene_009529:
     JSL CODE_0CC97E
     REP #$20                                ;$00952D |
     LDA.b Layer1XPos_1A                     ;$00952F |
@@ -2469,8 +2468,8 @@ CODE_009529:
     JSR timers_and_animation_00C47E         ;$009551 |
     JMP consolidate_OAM_008494              ;$009554 |
 
-CODE_009557:
-    JSL CODE_0C938D
+.run_credits_009557:
+    JSL run_credits_0C938D
     JMP consolidate_OAM_008494              ;$00955B |
 
 CODE_00955E:
@@ -2509,7 +2508,7 @@ GM1D_ending_yoshi_load_009583:
     JSR CODE_00961E                         ;$0095A8 |
 GM1F_ending_yoshi_main_0095AB:
     JSL OAM_reset_7F8000
-    JSL CODE_0C939A                         ;$0095AF |
+    JSL run_yoshi_ending_main_0C939A        ;$0095AF |
     INC.b Frame_14                          ;$0095B3 |
     JSL update_animated_tile_gfx_05BB39     ;$0095B5 |
     JMP consolidate_OAM_008494              ;$0095B9 |
@@ -7930,16 +7929,16 @@ beat_level_00C9FE:
     STA.w LevelExitMode_0DD5
     LDA.w CutsceneID_13C6                   ;$00CA01 |
     BEQ .not_a_cutscene_00CA25              ;$00CA04 |
-    LDX.b #$08                              ;$00CA06 |
+    LDX.b #!SceneCastle_08                  ;$00CA06 | X: current cutscene
     LDA.w Translevel_13BF                   ;$00CA08 |
-    CMP.b #$13                              ;$00CA0B |
-    BNE +                                   ;$00CA0D |
-    INC.w LevelExitMode_0DD5                ;$00CA0F |
+    CMP.b #$13                              ;$00CA0B | test if in Donut Secret House
+    BNE +                                   ;$00CA0D |\ and set the secret exit for Big Boo Boss
+    INC.w LevelExitMode_0DD5                ;$00CA0F |/
 +   CMP.b #$31                              ;$00CA12 |
     BEQ .set_cutscene_00CA20                ;$00CA14 |
 -   CMP.w levels_with_cutscene_00C9A7-1,X   ;$00CA16 |\ loop through list of level numbers
     BEQ .set_cutscene_00CA20                ;$00CA19 ||
-    DEX                                     ;$00CA1B ||
+    DEX                                     ;$00CA1B || decremente cutscene
     BNE -                                   ;$00CA1C |/
     BRA .not_a_cutscene_00CA25              ;$00CA1E |
 

@@ -628,7 +628,7 @@ DATA_0C9380:
     db $20,$00,$5F,$FE,$F8,$00,$30,$00
     db $5F,$FE,$FA,$08,$FF
 
-CODE_0C938D:
+run_credits_0C938D:
     PHB
     PHK                                     ;$0C938E |
     PLB                                     ;$0C938F |
@@ -638,7 +638,7 @@ CODE_0C938D:
     PLB                                     ;$0C9398 |
     RTL                                     ;$0C9399 |
 
-CODE_0C939A:
+run_yoshi_ending_main_0C939A:
     PHB
     PHK                                     ;$0C939B |
     PLB                                     ;$0C939C |
@@ -1324,7 +1324,7 @@ CODE_0C9F6A:
     STA.b Layer2XPos_1E,X                   ;$0C9F7D |
     LDA.b Layer3YPos_24                     ;$0C9F7F |
     CMP.w #$0559                            ;$0C9F81 |
-    BCS CODE_0C9FAC                         ;$0C9F84 |
+    BCS +                                   ;$0C9F84 |
     LDX.b #$02                              ;$0C9F86 |
     LDA.w #$0040                            ;$0C9F88 |
     STA.w Layer1ScrollXSpeed_1446,X         ;$0C9F8B |
@@ -1334,30 +1334,28 @@ CODE_0C9F6A:
     JSR CODE_0C9FCB                         ;$0C9F94 |
     LDA $00,X                               ;$0C9F97 |
     CMP $04                                 ;$0C9F99 |
-    BEQ CODE_0C9FAC                         ;$0C9F9B |
+    BEQ +                                   ;$0C9F9B |
     STA.b Layer3YPos_24                     ;$0C9F9D |
     LDA.b Layer3YPos_24                     ;$0C9F9F |
     AND.w #$0007                            ;$0C9FA1 |
     CMP.w #$0001                            ;$0C9FA4 |
-    BNE CODE_0C9FAC                         ;$0C9FA7 |
+    BNE +                                   ;$0C9FA7 |
     JSR CODE_0C9EB1                         ;$0C9FA9 |
-CODE_0C9FAC:
-    LDX.b #$0C
-CODE_0C9FAE:
-    LDA.b Layer3YPos_24
-    CMP.w DATA_0C9F5C,X                     ;$0C9FB0 |
-    BEQ CODE_0C9FBB                         ;$0C9FB3 |
-    DEX                                     ;$0C9FB5 |
-    DEX                                     ;$0C9FB6 |
-    BPL CODE_0C9FAE                         ;$0C9FB7 |
-    BRA CODE_0C9FC6                         ;$0C9FB9 |
++   LDX.b #$0C                              ;$0C9FAC |
+-   LDA.b Layer3YPos_24                     ;$0C9FAE |\
+    CMP.w DATA_0C9F5C,X                     ;$0C9FB0 ||
+    BEQ .CODE_0C9FBB                        ;$0C9FB3 ||
+    DEX                                     ;$0C9FB5 ||
+    DEX                                     ;$0C9FB6 ||
+    BPL -                                   ;$0C9FB7 |/
+    BRA .CODE_0C9FC6                        ;$0C9FB9 |
 
-CODE_0C9FBB:
+.CODE_0C9FBB:
     LDA.w MessageBoxExpand_1B88
     AND.w #$00FF                            ;$0C9FBE |
-    BNE CODE_0C9FC6                         ;$0C9FC1 |
+    BNE .CODE_0C9FC6                        ;$0C9FC1 |
     INC.w MessageBoxExpand_1B88             ;$0C9FC3 |
-CODE_0C9FC6:
+.CODE_0C9FC6:
     SEP #$20
     BRL CODE_0C9FEA                         ;$0C9FC8 |
 CODE_0C9FCB:
@@ -1367,10 +1365,9 @@ CODE_0C9FCB:
     ADC.w Layer1ScrollXSpeed_1446,X         ;$0C9FD2 |
     STA.w Layer1ScrollXPosUpd_144E,X        ;$0C9FD5 |
     AND.w #$FF00                            ;$0C9FD8 |
-    BPL CODE_0C9FE0                         ;$0C9FDB |
-    ORA.w #$00FF                            ;$0C9FDD |
-CODE_0C9FE0:
-    XBA
+    BPL +                                   ;$0C9FDB |\
+    ORA.w #$00FF                            ;$0C9FDD |/
++   XBA                                     ;$0C9FE0 |
     CLC                                     ;$0C9FE1 |
     ADC $00,X                               ;$0C9FE2 |
     STA $00,X                               ;$0C9FE4 |
@@ -2368,15 +2365,14 @@ CODE_0CA778:
     CLC                                     ;$0CA799 |
     ADC.b #$38                              ;$0CA79A |
     STA.w ScrollLayerIndex_1456             ;$0CA79C |
-    BCC CODE_0CA7AF                         ;$0CA79F |
-    LDA.w SpriteAnimation_1602              ;$0CA7A1 | NOTE: hardcoded slot 0
-    INC A                                   ;$0CA7A4 |
-    STA.w SpriteAnimation_1602              ;$0CA7A5 | NOTE: hardcoded slot 0
-    CMP.b #$03                              ;$0CA7A8 |
-    BCC CODE_0CA7AF                         ;$0CA7AA |
-    STZ.w SpriteAnimation_1602              ;$0CA7AC | NOTE: hardcoded slot 0
-CODE_0CA7AF:
-    LDA.b #$01
+    BCC +                                   ;$0CA79F |\
+    LDA.w SpriteAnimation_1602              ;$0CA7A1 || NOTE: hardcoded slot 0
+    INC A                                   ;$0CA7A4 ||
+    STA.w SpriteAnimation_1602              ;$0CA7A5 || NOTE: hardcoded slot 0
+    CMP.b #$03                              ;$0CA7A8 ||
+    BCC +                                   ;$0CA7AA ||
+    STZ.w SpriteAnimation_1602              ;$0CA7AC |/ NOTE: hardcoded slot 0
++   LDA.b #$01                              ;$0CA7AF |
     STA.w YoshiSlotMirror_18E2              ;$0CA7B1 |
 CODE_0CA7B4:
     JSL draw_mario_and_yoshi_00E2BD
@@ -4240,17 +4236,16 @@ CODE_0CC97E:
 CODE_0CC98C:
     LDA.b Frame_13
     AND.b #$03                              ;$0CC98E |
-    BNE CODE_0CC99A                         ;$0CC990 |
+    BNE +                                   ;$0CC990 |
     LDA.w Layer2ScrollYSpeed_144C+1         ;$0CC992 |
-    BEQ CODE_0CC99A                         ;$0CC995 |
+    BEQ +                                   ;$0CC995 |
     DEC.w Layer2ScrollYSpeed_144C+1         ;$0CC997 |
-CODE_0CC99A:
-    JSR CODE_0CD803
++   JSR CODE_0CD803                         ;$0CC99A |
     LDA.w CutsceneID_13C6                   ;$0CC99D |
     DEC A                                   ;$0CC9A0 |
     JSL execute_pointer                     ;$0CC9A1 |
 
-Ptrs0CC9A5:
+.cutscene_pointers_0CC9A5:
     dw CODE_0CC9B3
     dw CODE_0CC9CC
     dw CODE_0CCA2F
@@ -4484,10 +4479,9 @@ CODE_0CCB30:
     LDY.b #$30                              ;$0CCB32 |
     LDA.w CutsceneID_13C6                   ;$0CCB34 |
     DEC A                                   ;$0CCB37 |
-    BNE CODE_0CCB3C                         ;$0CCB38 |
-    LDY.b #$18                              ;$0CCB3A |
-CODE_0CCB3C:
-    TYA
+    BNE +                                   ;$0CCB38 |\
+    LDY.b #$18                              ;$0CCB3A |/
++   TYA                                     ;$0CCB3C |
     STA.w $0B14,X                           ;$0CCB3D |
     JSR CODE_0CD368                         ;$0CCB40 |
     DEC.w Layer2ScrollCmd_143F              ;$0CCB43 |

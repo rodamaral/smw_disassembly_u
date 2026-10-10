@@ -16771,7 +16771,7 @@ KoopaKid:
     LDA.b SpritePhase_C2,X
     JSL execute_pointer                     ;$01FAC3 |
 
-KoopaKidPtrs:
+.KoopaKidPtrs:
     dw WallKoopaKids
     dw WallKoopaKids
     dw WallKoopaKids
@@ -16791,35 +16791,35 @@ DATA_01FAE5:
 PlatformKoopaKids:
     LDA.b SpriteLock_9D
     ORA.w SpritePlayerContact_154C,X        ;$01FAF7 |
-    BNE +                                   ;$01FAFA |
-    JSR SubHorizPos                         ;$01FAFC |
-    STY $00                                 ;$01FAFF |
-    LDA.b Mode7Angle_36                     ;$01FB01 |
-    ASL                                     ;$01FB03 |
-    ROL                                     ;$01FB04 |
-    AND.b #$01                              ;$01FB05 |
-    CMP $00                                 ;$01FB07 |
-    BNE +                                   ;$01FB09 |
-    INC.w Sprite_1534,X                     ;$01FB0B |
-    LDA.w Sprite_1534,X                     ;$01FB0E |
-    AND.b #$7F                              ;$01FB11 |
-    BNE +                                   ;$01FB13 |
-    LDA.b #$7F                              ;$01FB15 |
-    STA.w SpriteSprContact_1564,X           ;$01FB17 |
+    BNE +                                   ;$01FAFA |\
+    JSR SubHorizPos                         ;$01FAFC ||
+    STY $00                                 ;$01FAFF ||
+    LDA.b Mode7Angle_36                     ;$01FB01 ||
+    ASL                                     ;$01FB03 ||
+    ROL                                     ;$01FB04 ||
+    AND.b #$01                              ;$01FB05 ||
+    CMP $00                                 ;$01FB07 ||
+    BNE +                                   ;$01FB09 ||
+    INC.w Sprite_1534,X                     ;$01FB0B ||
+    LDA.w Sprite_1534,X                     ;$01FB0E ||
+    AND.b #$7F                              ;$01FB11 ||
+    BNE +                                   ;$01FB13 ||
+    LDA.b #$7F                              ;$01FB15 ||
+    STA.w SpriteSprContact_1564,X           ;$01FB17 |/
 +   STZ.w SpriteOffscreenX_15A0,X           ;$01FB1A |
     LDA.w Sprite_163E,X                     ;$01FB1D |
-    BEQ .CODE_01FB36                        ;$01FB20 |
-    DEC A                                   ;$01FB22 |
-    BNE +                                   ;$01FB23 |\
-    INC.w CutsceneID_13C6                   ;$01FB25 ||
-    LDA.b #$FF                              ;$01FB28 ||
-    STA.w EndLevelTimer_1493                ;$01FB2A ||
-    LDA.b #$0B                              ;$01FB2D ||
-    STA.w SPCIO2_1DFB                       ;$01FB2F ||
-    STZ.w SpriteStatus_14C8,X               ;$01FB32 ||
+    BEQ .not_dying_01FB36                   ;$01FB20 |\
+    DEC A                                   ;$01FB22 ||
+    BNE +                                   ;$01FB23 ||\ Kill Platform Kid and trigger level end
+    INC.w CutsceneID_13C6                   ;$01FB25 |||
+    LDA.b #$FF                              ;$01FB28 |||
+    STA.w EndLevelTimer_1493                ;$01FB2A |||
+    LDA.b #$0B                              ;$01FB2D |||
+    STA.w SPCIO2_1DFB                       ;$01FB2F |||
+    STZ.w SpriteStatus_14C8,X               ;$01FB32 ||/
 +   RTS                                     ;$01FB35 |/
 
-.CODE_01FB36:
+.not_dying_01FB36:
     JSL LoadTweakerBytes
     LDA.b SpriteLock_9D                     ;$01FB3A |
     BEQ .CODE_01FB41                        ;$01FB3C |

@@ -1665,7 +1665,18 @@ Translevel_13BF: skip 2 ;done
 OverworldLayer1Tile_13C1: skip 2 ;done
 CurrentSubmap_13C3: skip 2 ;done
 MoonCounter_13C5: skip 1 ;UNUSED ;done
+
 CutsceneID_13C6: skip 1 ;done
+; Valid values:
+!SceneCastle_01 = $01
+!SceneCastle_02 = $02
+!SceneCastle_03 = $03
+!SceneCastle_04 = $04
+!SceneCastle_05 = $05
+!SceneCastle_06 = $06
+!SceneCastle_07 = $07
+!SceneCastle_08 = $08
+
 YoshiColor_13C7: skip 1 ;done
 ; 7E13C8 unused
 skip 1

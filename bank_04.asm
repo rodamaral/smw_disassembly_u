@@ -1252,39 +1252,38 @@ CODE_048D91:
     LDX.b #$02                              ;$048D9C |
     LDA.w OWPlayerAnimation_1F13            ;$048D9E |
     CMP.b #$12                              ;$048DA1 |
-    BEQ CODE_048DA9                         ;$048DA3 |
+    BEQ .CODE_048DA9                        ;$048DA3 |
     AND.b #$08                              ;$048DA5 |
-    BEQ CODE_048DAB                         ;$048DA7 |
-CODE_048DA9:
+    BEQ .CODE_048DAB                        ;$048DA7 |
+.CODE_048DA9:
     LDX.b #$0A
-CODE_048DAB:
+.CODE_048DAB:
     STX.w OWPlayerAnimation_1F13
     LDX.b #$02                              ;$048DAE |
     LDA.w OWPlayerAnimation_1F13+2          ;$048DB0 |
     CMP.b #$12                              ;$048DB3 |
-    BEQ CODE_048DBB                         ;$048DB5 |
+    BEQ .CODE_048DBB                        ;$048DB5 |
     AND.b #$08                              ;$048DB7 |
-    BEQ CODE_048DBD                         ;$048DB9 |
-CODE_048DBB:
+    BEQ .CODE_048DBD                        ;$048DB9 |
+.CODE_048DBB:
     LDX.b #$0A
-CODE_048DBD:
+.CODE_048DBD:
     STX.w OWPlayerAnimation_1F13+2
     SEP #$10                                ;$048DC0 |
     JSR CODE_048E55                         ;$048DC2 |
     REP #$30                                ;$048DC5 |
     LDA.w LevelExitMode_0DD5-1              ;$048DC7 |
     AND.w #$FF00                            ;$048DCA |
-    BEQ CODE_048DDF                         ;$048DCD |
-    BMI CODE_048DDF                         ;$048DCF |
-    LDA.w Translevel_13BF                   ;$048DD1 |
-    AND.w #$00FF                            ;$048DD4 |
-    CMP.w #$0018                            ;$048DD7 |
-    BNE CODE_048DDF                         ;$048DDA |
-    BRL CODE_048E34                         ;$048DDC |
-CODE_048DDF:
-    LDA.w CutsceneID_13C6
+    BEQ +                                   ;$048DCD |\
+    BMI +                                   ;$048DCF ||
+    LDA.w Translevel_13BF                   ;$048DD1 ||
+    AND.w #$00FF                            ;$048DD4 ||
+    CMP.w #$0018                            ;$048DD7 ||
+    BNE +                                   ;$048DDA ||
+    BRL .CODE_048E34                        ;$048DDC |/
++   LDA.w CutsceneID_13C6                   ;$048DDF |
     AND.w #$00FF                            ;$048DE2 |
-    BEQ CODE_048E38                         ;$048DE5 |
+    BEQ .CODE_048E38                        ;$048DE5 |
     LDA.w CutsceneID_13C6                   ;$048DE7 |
     AND.w #$FF00                            ;$048DEA |
     STA.w CutsceneID_13C6                   ;$048DED |
@@ -1314,28 +1313,28 @@ CODE_048DDF:
     TAX                                     ;$048E19 |
     LDA.w OWLevelSettings_1EA2,X            ;$048E1A |
     AND.w #$0080                            ;$048E1D |
-    BNE CODE_048E38                         ;$048E20 |
+    BNE .CODE_048E38                        ;$048E20 |
     LDY.w #$0014                            ;$048E22 |
-CODE_048E25:
+.CODE_048E25:
     LDA.w Translevel_13BF
     AND.w #$00FF                            ;$048E28 |
     CMP.w DATA_048D74,Y                     ;$048E2B |
-    BEQ CODE_048E38                         ;$048E2E |
+    BEQ .CODE_048E38                        ;$048E2E |
     DEY                                     ;$048E30 |
     DEY                                     ;$048E31 |
-    BPL CODE_048E25                         ;$048E32 |
-CODE_048E34:
+    BPL .CODE_048E25                        ;$048E32 |
+.CODE_048E34:
     SEP #$30
-    BRA CODE_048E47                         ;$048E36 |
+    BRA .CODE_048E47                         ;$048E36 |
 
-CODE_048E38:
+.CODE_048E38:
     SEP #$30
     LDX.w CurrentPlayer_0DB3                ;$048E3A |
     LDA.w OWPlayerSubmap_1F11,X             ;$048E3D |
     TAX                                     ;$048E40 |
     LDA.w DATA_048D8A,X                     ;$048E41 |
     STA.w SPCIO2_1DFB                       ;$048E44 |
-CODE_048E47:
+.CODE_048E47:
     PLB
     RTL                                     ;$048E48 |
 
