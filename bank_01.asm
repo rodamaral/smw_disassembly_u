@@ -3,22 +3,22 @@ ORG $018000
 DATA_018000:
     db $80,$40,$20,$10,$08,$04,$02,$01
 
-IsTouchingObjSide:
+is_touching_obj_side_018008:
     LDA.w SpriteBlocked_1588,X
     AND.b #$03                              ;$01800B |
     RTS                                     ;$01800D |
 
-IsOnGround:
+is_on_ground_01800E:
     LDA.w SpriteBlocked_1588,X
     AND.b #$04                              ;$018011 |
     RTS                                     ;$018013 |
 
-IsTouchingCeiling:
+is_touching_ceiling_018014:
     LDA.w SpriteBlocked_1588,X
     AND.b #$08                              ;$018017 |
     RTS                                     ;$018019 |
 
-UpdateYPosNoGrvty:
+update_y_no_gravity_01801A:
     PHB
     PHK                                     ;$01801B |
     PLB                                     ;$01801C |
@@ -26,7 +26,7 @@ UpdateYPosNoGrvty:
     PLB                                     ;$018020 |
     RTL                                     ;$018021 |
 
-UpdateXPosNoGrvty:
+update_x_no_gravity_018022:
     PHB
     PHK                                     ;$018023 |
     PLB                                     ;$018024 |
@@ -34,27 +34,27 @@ UpdateXPosNoGrvty:
     PLB                                     ;$018028 |
     RTL                                     ;$018029 |
 
-UpdateSpritePos:
+update_sprite_pos_01802A:
     PHB
     PHK                                     ;$01802B |
     PLB                                     ;$01802C |
-    JSR SubUpdateSprPos                     ;$01802D |
+    JSR update_sprite_pos_019032            ;$01802D |
     PLB                                     ;$018030 |
     RTL                                     ;$018031 |
 
-SprSprInteract:
+sprite_sprite_interact_018032:
     PHB
     PHK                                     ;$018033 |
     PLB                                     ;$018034 |
-    JSR SubSprSprInteract                   ;$018035 |
+    JSR subsprite_sprite_interact_01A40D    ;$018035 |
     PLB                                     ;$018038 |
     RTL                                     ;$018039 |
 
-SprSprPMarioSprRts:
+sprite_vs_sprite_or_mario_01803A:
     PHB
     PHK                                     ;$01803B |
     PLB                                     ;$01803C |
-    JSR SubSprSprPMarioSpr                  ;$01803D |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$01803D |
     PLB                                     ;$018040 |
     RTL                                     ;$018041 |
 
@@ -66,7 +66,7 @@ GenericSprGfxRt0:
     PLB                                     ;$018048 |
     RTL                                     ;$018049 |
 
-InvertAccum:
+invert_accumulator_01804A:
     EOR.b #$FF
     INC A                                   ;$01804C |
     RTS                                     ;$01804D |
@@ -211,10 +211,10 @@ handle_sprite_018126:
 handle_goal_powerup_018157:
     JSR call_sprite_main_0185C3
     JSR SubOffscreen0Bnk1                   ;$01815A |
-    JSR SubUpdateSprPos                     ;$01815D |
+    JSR update_sprite_pos_019032            ;$01815D |
     DEC.b SpriteYSpeed_AA,X                 ;$018160 |
     DEC.b SpriteYSpeed_AA,X                 ;$018162 |
-    JSR IsOnGround                          ;$018164 |
+    JSR is_on_ground_01800E                 ;$018164 |
     BEQ +                                   ;$018167 |
     JSR SetSomeYSpeed                       ;$018169 |
 +   RTS                                     ;$01816C |
@@ -263,7 +263,7 @@ initialize_sprite_018172:
     dw InitLakitu                           ;$0181B9 | 1E Lakitu
     dw InitMagikoopa                        ;$0181BB | 1F Magikoopa
     dw return_018583                        ;$0181BD | 20 Magikoopa's magic
-    dw FaceMario                            ;$0181BF | 21 Moving coin
+    dw face_mario_01857C                    ;$0181BF | 21 Moving coin
     dw InitVertNetKoopa                     ;$0181C1 | 22 Green vertical net Koopa
     dw InitVertNetKoopa                     ;$0181C3 | 23 Red vertical net Koopa
     dw InitHorzNetKoopa                     ;$0181C5 | 24 Green horizontal net Koopa
@@ -278,9 +278,9 @@ initialize_sprite_018172:
     dw InitKeyPBabyYoshi                    ;$0181D7 | 2D Baby Yoshi
     dw InitSpikeTop                         ;$0181D9 | 2E Spike Top
     dw return_0185C2                        ;$0181DB | 2F Portable springboard
-    dw FaceMario                            ;$0181DD | 30 Dry Bones that throws bones
-    dw FaceMario                            ;$0181DF | 31 Bony Beetle
-    dw FaceMario                            ;$0181E1 | 32 Dry Bones that stays on ledges
+    dw face_mario_01857C                    ;$0181DD | 30 Dry Bones that throws bones
+    dw face_mario_01857C                    ;$0181DF | 31 Bony Beetle
+    dw face_mario_01857C                    ;$0181E1 | 32 Dry Bones that stays on ledges
     dw InitFireball                         ;$0181E3 | 33 Podoboo/vertical fireball
     dw return_0185C2                        ;$0181E5 | 34 Boss fireball
     dw InitYoshi                            ;$0181E7 | 35 Yoshi
@@ -311,7 +311,7 @@ initialize_sprite_018172:
     dw InitMontyMole                        ;$018219 | 4E Monty Mole, ledge-dwelling
     dw InitPiranha                          ;$01821B | 4F Jumping Piranha Plant
     dw InitPiranha                          ;$01821D | 50 Jumping Piranha Plant that spits fireballs
-    dw FaceMario                            ;$01821F | 51 Ninji
+    dw face_mario_01857C                    ;$01821F | 51 Ninji
     dw InitMovingLedge                      ;$018221 | 52 Moving hole in ghost house ledge
     dw return_0185C2                        ;$018223 | 53 Throw block sprite
     dw InitClimbingDoor                     ;$018225 | 54 Revolving door for climbing net
@@ -374,7 +374,7 @@ initialize_sprite_018172:
     dw return_0185C2                        ;$018297 | 8D Ghost house exit sign and door
     dw return_0185C2                        ;$018299 | 8E Invisible "Warp Hole"
     dw InitScalePlats                       ;$01829B | 8F Scale platforms
-    dw FaceMario                            ;$01829D | 90 Large green gas bubble
+    dw face_mario_01857C                    ;$01829D | 90 Large green gas bubble
     dw Return018869                         ;$01829F | 91 Chargin' Chuck
     dw InitChuck                            ;$0182A1 | 92 Splittin' Chuck
     dw InitChuck                            ;$0182A3 | 93 Bouncin' Chuck
@@ -401,7 +401,7 @@ initialize_sprite_018172:
     dw return_0185C2                        ;$0182CD | A8 Blargg
     dw InitReznor                           ;$0182CF | A9 Reznor
     dw InitFishbone                         ;$0182D1 | AA Fishbone
-    dw FaceMario                            ;$0182D3 | AB Rex
+    dw face_mario_01857C                    ;$0182D3 | AB Rex
     dw InitWoodSpike                        ;$0182D5 | AC Wooden spike pointing down
     dw InitWoodSpike2                       ;$0182D7 | AD Wooden spike pointing up
     dw return_0185C2                        ;$0182D9 | AE Fishin' Boo
@@ -410,7 +410,7 @@ initialize_sprite_018172:
     dw InitCreateEatBlk                     ;$0182DF | B1 Creating/eating block
     dw return_0185C2                        ;$0182E1 | B2 Falling spike
     dw InitBowsersFire                      ;$0182E3 | B3 Bowser statue fireball
-    dw FaceMario                            ;$0182E5 | B4 Grinder that moves on the ground
+    dw face_mario_01857C                    ;$0182E5 | B4 Grinder that moves on the ground
     dw return_0185C2                        ;$0182E7 | B5 Unused
     dw InitDiagBouncer                      ;$0182E9 | B6 Reflecting fireball
     dw return_0185C2                        ;$0182EB | B7 Carrot Top Lift, upper right
@@ -421,13 +421,13 @@ initialize_sprite_018172:
     dw InitBowserStatue                     ;$0182F5 | BC Bowser statue
     dw InitSlidingKoopa                     ;$0182F7 | BD Sliding Koopa
     dw return_0185C2                        ;$0182F9 | BE Swooper
-    dw FaceMario                            ;$0182FB | BF Mega Mole
+    dw face_mario_01857C                    ;$0182FB | BF Mega Mole
     dw InitGreyLavaPlat                     ;$0182FD | C0 Sinking gray platform on lava
     dw InitMontyMole                        ;$0182FF | C1 Flying gray turn blocks
-    dw FaceMario                            ;$018301 | C2 Blurp
-    dw FaceMario                            ;$018303 | C3 Porcu-Puffer
+    dw face_mario_01857C                    ;$018301 | C2 Blurp
+    dw face_mario_01857C                    ;$018303 | C3 Porcu-Puffer
     dw return_0185C2                        ;$018305 | C4 Gray platform that falls
-    dw FaceMario                            ;$018307 | C5 Big Boo Boss
+    dw face_mario_01857C                    ;$018307 | C5 Big Boo Boss
     dw return_018313                        ;$018309 | C6 Spotlight/dark room sprite
     dw return_0185C2                        ;$01830B | C7 Invisible mushroom
     dw return_0185C2                        ;$01830D | C8 Light switch for dark room
@@ -478,7 +478,7 @@ DATA_01834C:
     db $10,$F0
 
 InitDiagBouncer:
-    JSR FaceMario
+    JSR face_mario_01857C
     LDA.w DATA_01834C,Y                     ;$018351 |
     STA.b SpriteXSpeed_B6,X                 ;$018354 |
     LDA.b #$F0                              ;$018356 |
@@ -783,7 +783,7 @@ InitDigginChuck:
     LDA.b #$04                              ;$018518 |
 CODE_01851A:
     STA.b SpritePhase_C2,X
-    JSR FaceMario                           ;$01851C |
+    JSR face_mario_01857C                   ;$01851C |
     LDA.w .DATA_018526,Y                    ;$01851F |
     STA.w Sprite_151C,X                     ;$018522 |
     RTS                                     ;$018525 |
@@ -794,10 +794,10 @@ CODE_01851A:
 InitSuperKoopa:
     LDA.b #$28
     STA.b SpriteYSpeed_AA,X                 ;$01852A |
-    BRA FaceMario                           ;$01852C |
+    BRA face_mario_01857C                   ;$01852C |
 
 InitSuperKoopaFthr:
-    JSR FaceMario
+    JSR face_mario_01857C
     LDA.b SpriteXPosLow_E4,X                ;$018531 |
     AND.b #$10                              ;$018533 |
     BEQ CODE_018547                         ;$018535 |
@@ -819,7 +819,7 @@ InitPokey:
     BNE +                                   ;$018550 |
     LDA.b #$07                              ;$018552 |
 +   STA.b SpritePhase_C2,X                  ;$018554 |
-    BRA FaceMario                           ;$018556 |
+    BRA face_mario_01857C                   ;$018556 |
 
 InitDinos:
     LDA.b #$04
@@ -827,13 +827,13 @@ InitDinos:
 InitBomb:
     LDA.b #$FF
     STA.w SpriteStun_1540,X                 ;$01855F |
-    BRA FaceMario                           ;$018562 |
+    BRA face_mario_01857C                   ;$018562 |
 
 InitBubbleSpr:
     JSR InitExplodingBlk
     STY.b SpritePhase_C2,X                  ;$018567 |
     DEC.w Sprite_1534,X                     ;$018569 |
-    BRA FaceMario                           ;$01856C |
+    BRA face_mario_01857C                   ;$01856C |
 
 InitGrnBounceKoopa:
     LDA.b SpriteYPosLow_D8,X
@@ -842,7 +842,7 @@ InitGrnBounceKoopa:
 InitStandardSprite:
     JSL GetRand
     STA.w SpriteAnimationTimer_1570,X       ;$018579 |
-FaceMario:
+face_mario_01857C:
     JSR SubHorizPos
     TYA                                     ;$01857F |
     STA.w SpriteDir_157C,X                  ;$018580 |
@@ -852,7 +852,7 @@ return_018583:
 InitBowsersFire:
     LDA.b #$17
     STA.w SPCIO3_1DFC                       ;$018586 |
-    BRA FaceMario                           ;$018589 |
+    BRA face_mario_01857C                   ;$018589 |
 
 InitPowerUp:
     INC.b SpritePhase_C2,X
@@ -862,7 +862,7 @@ InitFishbone:
     JSL GetRand
     AND.b #$1F                              ;$018592 |
     STA.w SpriteStun_1540,X                 ;$018594 |
-    JMP FaceMario                           ;$018597 |
+    JMP face_mario_01857C                   ;$018597 |
 
 InitDownPiranha:
     ASL.w SpriteYXPPCCCT_15F6,X
@@ -1373,7 +1373,7 @@ JumpOverShells:
     JSL GetSpriteClippingA                  ;$0188CD |
     JSL CheckForContact                     ;$0188D1 |
     BCC .JumpLoopNext_0188A8                ;$0188D5 |
-    JSR IsOnGround                          ;$0188D7 |
+    JSR is_on_ground_01800E                 ;$0188D7 |
     BEQ .JumpLoopNext_0188A8                ;$0188DA |
     LDA.w SpriteDir_157C,Y                  ;$0188DC |
     CMP.w SpriteDir_157C,X                  ;$0188DF |
@@ -1408,9 +1408,9 @@ set_koopa_animation_018913:
     STA.w SpriteAnimation_1602,X            ;$01891C |
 CODE_01891F:
     JSR CODE_018931
-    JSR SubUpdateSprPos                     ;$018922 |
+    JSR update_sprite_pos_019032            ;$018922 |
     STZ.b SpriteXSpeed_B6,X                 ;$018925 |
-    JSR IsOnGround                          ;$018927 |
+    JSR is_on_ground_01800E                 ;$018927 |
     BEQ .CODE_01892E                        ;$01892A |
     STZ.b SpriteYSpeed_AA,X                 ;$01892C |
 .CODE_01892E:
@@ -1440,7 +1440,7 @@ animated_shelless_koopa_018952:
     BEQ .not_knocked_or_kicking_0189B4      ;$018955 |
     CMP.b #$80                              ;$018957 |
     BNE .kick_timer_01896B                  ;$018959 |\
-    JSR FaceMario                           ;$01895B || if $163E is 0x80:
+    JSR face_mario_01857C                   ;$01895B || if $163E is 0x80:
     LDA.b SpriteNumber_9E,X                 ;$01895E ||
     CMP.b #!BlueKoopa_02                    ;$018960 ||
     BEQ +                                   ;$018962 ||\
@@ -1481,10 +1481,10 @@ animated_shelless_koopa_018952:
 .not_knocked_or_kicking_0189B4:
     LDA.w Sprite_1528,X
     BEQ .not_sliding_018A15                 ;$0189B7 |
-    JSR IsTouchingObjSide                   ;$0189B9 |
+    JSR is_touching_obj_side_018008         ;$0189B9 |
     BEQ +                                   ;$0189BC |
     STZ.b SpriteXSpeed_B6,X                 ;$0189BE |
-+   JSR IsOnGround                          ;$0189C0 |
++   JSR is_on_ground_01800E                 ;$0189C0 |
     BEQ .CODE_0189E6                        ;$0189C3 |\
     LDA.b LevelIsSlippery_86                ;$0189C5 || handle shell and sprite sliding together
     CMP.b #$01                              ;$0189C7 ||
@@ -1517,7 +1517,7 @@ animated_shelless_koopa_018952:
     RTS                                     ;$0189FC |
 
 .sliding_is_over_0189FD:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ ++                                  ;$018A00 |\
     LDA.b #$FF                              ;$018A02 ||
     LDY.b SpriteNumber_9E,X                 ;$018A04 ||
@@ -1540,13 +1540,13 @@ animated_shelless_koopa_018952:
 
 .CODE_018A29:
     STA.w Sprite_1528,Y
-    JSR IsTouchingObjSide                   ;$018A2C |
+    JSR is_touching_obj_side_018008         ;$018A2C |
     BEQ ..CODE_018A38                       ;$018A2F |
     LDA.b #$00                              ;$018A31 |
     STA.w SpriteXSpeed_B6,Y                 ;$018A33 |
     STA.b SpriteXSpeed_B6,X                 ;$018A36 |
 ..CODE_018A38:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ .CODE_018A62                        ;$018A3B |
     LDA.b LevelIsSlippery_86                ;$018A3D |
     CMP.b #$01                              ;$018A3F |
@@ -1656,12 +1656,12 @@ Spr0to13Start:
 CODE_018B00:
     JSR MarioSprInteractRt
 CODE_018B03:
-    JSR SubSprSprInteract
+    JSR subsprite_sprite_interact_01A40D
     JSR Spr0to13Gfx                         ;$018B06 |
     RTS                                     ;$018B09 |
 
 Spr0to13Main:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ .CODE_018B2E                        ;$018B0D |
     LDY.b SpriteNumber_9E,X                 ;$018B0F |
     LDA.w Spr0to13Prop,Y                    ;$018B11 |
@@ -1686,14 +1686,14 @@ Spr0to13Main:
     AND.b #$03                              ;$018B36 |
     BEQ +                                   ;$018B38 |
     STZ.b SpriteXSpeed_B6,X                 ;$018B3A |
-+   JSR IsTouchingCeiling                   ;$018B3C |
++   JSR is_touching_ceiling_018014          ;$018B3C |
     BEQ CODE_018B43                         ;$018B3F |
     STZ.b SpriteYSpeed_AA,X                 ;$018B41 |
 CODE_018B43:
     JSR SubOffscreen0Bnk1
-    JSR SubUpdateSprPos                     ;$018B46 |
+    JSR update_sprite_pos_019032            ;$018B46 |
     JSR SetAnimationFrame                   ;$018B49 |
-    JSR IsOnGround                          ;$018B4C |
+    JSR is_on_ground_01800E                 ;$018B4C |
     BEQ .SpriteInAir                        ;$018B4F |
 .SpriteOnGround:
     JSR SetSomeYSpeed
@@ -1708,7 +1708,7 @@ CODE_018B43:
     BNE .DontFollowMario                    ;$018B66 |
     LDA.w SpriteDir_157C,X                  ;$018B68 |
     PHA                                     ;$018B6B |
-    JSR FaceMario                           ;$018B6C |
+    JSR face_mario_01857C                   ;$018B6C |
     PLA                                     ;$018B6F |
     CMP.w SpriteDir_157C,X                  ;$018B70 |
     BEQ .DontFollowMario                    ;$018B73 |
@@ -1751,7 +1751,7 @@ CODE_018B43:
 .CODE_018BBA:
     JSR MarioSprInteractRt
 .CODE_018BBD:
-    JSR SubSprSprInteract
+    JSR subsprite_sprite_interact_01A40D
     JSR FlipIfTouchingObj                   ;$018BC0 |
 Spr0to13Gfx:
     LDA.w SpriteDir_157C,X
@@ -1806,17 +1806,17 @@ SpinyEgg:
     CMP.b #!StatusNormal_08                 ;$018C1F |
     BNE .CODE_018C44                        ;$018C21 |
     JSR SetAnimationFrame                   ;$018C23 |
-    JSR SubUpdateSprPos                     ;$018C26 |
+    JSR update_sprite_pos_019032            ;$018C26 |
     DEC.b SpriteYSpeed_AA,X                 ;$018C29 |
-    JSR IsOnGround                          ;$018C2B |
+    JSR is_on_ground_01800E                 ;$018C2B |
     BEQ +                                   ;$018C2E |
     LDA.b #$13                              ;$018C30 |
     STA.b SpriteNumber_9E,X                 ;$018C32 |
     JSL InitSpriteTables                    ;$018C34 |
-    JSR FaceMario                           ;$018C38 |
+    JSR face_mario_01857C                   ;$018C38 |
     JSR CODE_0197D5                         ;$018C3B |
 +   JSR FlipIfTouchingObj                   ;$018C3E |
-    JSR SubSprSprPMarioSpr                  ;$018C41 |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$018C41 |
 .CODE_018C44:
     JSR SubOffscreen0Bnk1
     LDA.b #$02                              ;$018C47 |
@@ -1856,14 +1856,14 @@ GreenParaKoopa:
     BRA .CODE_018C91                        ;$018C8A |
 
 .CODE_018C8C:
-    JSR SubUpdateSprPos
+    JSR update_sprite_pos_019032
     DEC.b SpriteYSpeed_AA,X                 ;$018C8F |
 .CODE_018C91:
-    JSR SubSprSprPMarioSpr
-    JSR IsTouchingCeiling                   ;$018C94 |
+    JSR sprite_vs_sprite_or_mario_018FC1
+    JSR is_touching_ceiling_018014          ;$018C94 |
     BEQ +                                   ;$018C97 |
     STZ.b SpriteYSpeed_AA,X                 ;$018C99 |
-+   JSR IsOnGround                          ;$018C9B |
++   JSR is_on_ground_01800E                 ;$018C9B |
     BEQ .CODE_018CAE                        ;$018C9E |
     JSR SetSomeYSpeed                       ;$018CA0 |
     LDA.b #$D0                              ;$018CA3 |
@@ -1939,7 +1939,7 @@ CODE_018CC6:
     LDA.b #$30                              ;$018D22 |
     STA.w SpriteStun_1540,X                 ;$018D24 |
 .CODE_018D27:
-    JSR SubSprSprPMarioSpr
+    JSR sprite_vs_sprite_or_mario_018FC1
 .CODE_018D2A:
     JSR CODE_018CB7
     RTS                                     ;$018D2D |
@@ -1953,7 +1953,7 @@ WingedGoomba:
 
 .CODE_018D39:
     JSR CODE_018DBB
-    JSR SubUpdateSprPos                     ;$018D3C |
+    JSR update_sprite_pos_019032            ;$018D3C |
     DEC.b SpriteYSpeed_AA,X                 ;$018D3F |
     LDA.b SpritePhase_C2,X                  ;$018D41 |
     LSR                                     ;$018D43 |
@@ -1970,15 +1970,15 @@ WingedGoomba:
     INC.w SpriteAnimationTimer_1570,X       ;$018D59 |
     INC.w SpriteAnimationTimer_1570,X       ;$018D5C |
 +   INC.w SpriteAnimationTimer_1570,X       ;$018D5F |
-    JSR IsTouchingCeiling                   ;$018D62 |
+    JSR is_touching_ceiling_018014          ;$018D62 |
     BEQ +                                   ;$018D65 |
     STZ.b SpriteYSpeed_AA,X                 ;$018D67 |
-+   JSR IsOnGround                          ;$018D69 |
++   JSR is_on_ground_01800E                 ;$018D69 |
     BEQ .CODE_018DA5                        ;$018D6C |
     LDA.b SpritePhase_C2,X                  ;$018D6E |
     AND.b #$3F                              ;$018D70 |
     BNE +                                   ;$018D72 |
-    JSR FaceMario                           ;$018D74 |
+    JSR face_mario_01857C                   ;$018D74 |
 +   JSR SetSomeYSpeed                       ;$018D77 |
     LDA.w Sprite_151C,X                     ;$018D7A |
     BNE +                                   ;$018D7D |
@@ -1999,7 +1999,7 @@ WingedGoomba:
 +   STY.b SpriteYSpeed_AA,X                 ;$018DA3 |
 .CODE_018DA5:
     JSR FlipIfTouchingObj
-    JSR SubSprSprPMarioSpr                  ;$018DA8 |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$018DA8 |
     RTS                                     ;$018DAB |
 
 CODE_018DAC:
@@ -2139,7 +2139,7 @@ ClassicPiranhas:
     JSR SetAnimationFrame                   ;$018EA1 |
     LDA.w Sprite_1594,X                     ;$018EA4 |
     BNE +                                   ;$018EA7 |
-    JSR SubSprSprPMarioSpr                  ;$018EA9 |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$018EA9 |
 +   LDA.b SpritePhase_C2,X                  ;$018EAC|
     AND.b #$03                              ;$018EAE |
     TAY                                     ;$018EB0 |
@@ -2201,11 +2201,11 @@ HoppingFlame:
     BNE .CODE_018F49                        ;$018F0F |
     INC.w SpriteAnimation_1602,X            ;$018F11 |
     JSR SetAnimationFrame                   ;$018F14 |
-    JSR SubUpdateSprPos                     ;$018F17 |
+    JSR update_sprite_pos_019032            ;$018F17 |
     DEC.b SpriteYSpeed_AA,X                 ;$018F1A |
     JSR CODE_018DBB                         ;$018F1C |
     ASL.b SpriteXSpeed_B6,X                 ;$018F1F |
-    JSR IsOnGround                          ;$018F21 |
+    JSR is_on_ground_01800E                 ;$018F21 |
     BEQ .CODE_018F43                        ;$018F24 |
     STZ.b SpriteXSpeed_B6,X                 ;$018F26 |
     JSR SetSomeYSpeed                       ;$018F28 |
@@ -2237,7 +2237,7 @@ CODE_018F50:
     LDA.w RandomNumber_148D                 ;$018F5A |
     AND.b #$03                              ;$018F5D |
     BNE +                                   ;$018F5F |
-    JSR FaceMario                           ;$018F61 |
+    JSR face_mario_01857C                   ;$018F61 |
 +   JSR IsSprOffScreen                      ;$018F64 |
     BNE +                                   ;$018F67 |
     JSR CODE_018EEF                         ;$018F69 |
@@ -2277,10 +2277,10 @@ Lakitu:
     SBC.b #$03                              ;$018FB3 |
     STA.w $0305,Y                           ;$018FB5 |
 +   LDA.w Sprite_151C,X                     ;$018FB8 |
-    BEQ SubSprSprPMarioSpr                  ;$018FBB |
-    JSL CODE_02E672                         ;$018FBD |
-SubSprSprPMarioSpr:
-    JSR SubSprSprInteract
+    BEQ sprite_vs_sprite_or_mario_018FC1    ;$018FBB |\
+    JSL CODE_02E672                         ;$018FBD |/
+sprite_vs_sprite_or_mario_018FC1:           ;        |
+    JSR subsprite_sprite_interact_01A40D    ;$018FC1 |
     JMP MarioSprInteractRt                  ;$018FC4 |
 
 BulletGfxProp:
@@ -2309,7 +2309,7 @@ BulletBill:
     JSR SubSprXPosNoGrvty                   ;$019008 |
     JSR SubSprYPosNoGrvty                   ;$01900B |
     JSR sprite_layers_interaction_019140    ;$01900E |
-    JSR SubSprSprPMarioSpr                  ;$019011 |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$019011 |
 +   JSR SubOffscreen0Bnk1                   ;$019014 |
     LDA.b SpriteYPosLow_D8,X                ;$019017 |
     SEC                                     ;$019019 |
@@ -2330,7 +2330,7 @@ DATA_01902E:
 DATA_019030:
     db $03,$01
 
-SubUpdateSprPos:
+update_sprite_pos_019032:
     JSR SubSprYPosNoGrvty
     LDY.b #$00                              ;$019035 |
     LDA.w SpriteInLiquid_164A,X             ;$019037 |
@@ -2785,7 +2785,7 @@ CODE_0193D9:
     LDA.b Frame_13
     AND.b #$03                              ;$0193DB |
     BNE CODE_019405                         ;$0193DD |
-    JSR IsTouchingObjSide                   ;$0193DF |
+    JSR is_touching_obj_side_018008         ;$0193DF |
     BNE CODE_019405                         ;$0193E2 |
     LDA.w ObjectTileset_1931                ;$0193E4 |
     CMP.b #$02                              ;$0193E7 |
@@ -3013,8 +3013,8 @@ most_carryable_sprites_01956A:
 
 .not_frozen_019571:
     JSR CODE_019624
-    JSR SubUpdateSprPos                     ;$019574 |
-    JSR IsOnGround                          ;$019577 |
+    JSR update_sprite_pos_019032            ;$019574 |
+    JSR is_on_ground_01800E                 ;$019577 |
     BEQ .CODE_019598                        ;$01957A |
     JSR CODE_0197D5                         ;$01957C |
     LDA.b SpriteNumber_9E,X                 ;$01957F |
@@ -3031,11 +3031,11 @@ most_carryable_sprites_01956A:
     STA.b SpriteYSpeed_AA,X                 ;$019592 ||
     JSL normalize_yoshi_egg_01F74C          ;$019594 |/
 .CODE_019598:
-    JSR IsTouchingCeiling
+    JSR is_touching_ceiling_018014
     BEQ +                                   ;$01959B |
     LDA.b #$10                              ;$01959D |
     STA.b SpriteYSpeed_AA,X                 ;$01959F |
-    JSR IsTouchingObjSide                   ;$0195A1 |
+    JSR is_touching_obj_side_018008         ;$0195A1 |
     BNE +                                   ;$0195A4 |\
     LDA.b SpriteXPosLow_E4,X                ;$0195A6 ||
     CLC                                     ;$0195A8 ||
@@ -3062,7 +3062,7 @@ most_carryable_sprites_01956A:
     JSL CODE_00F160                         ;$0195D2 ||
     LDA.b #$08                              ;$0195D6 ||
     STA.w SpriteDisableTimer_1FE2,X         ;$0195D8 |/
-+   JSR IsTouchingObjSide                   ;$0195DB |
++   JSR is_touching_obj_side_018008         ;$0195DB |
     BEQ .CODE_0195F2                        ;$0195DE |
     LDA.b SpriteNumber_9E,X                 ;$0195E0 |
     CMP.b #!BobOmb_0D                       ;$0195E2 |
@@ -3075,7 +3075,7 @@ most_carryable_sprites_01956A:
     PLP                                     ;$0195EF |
     ROR.b SpriteXSpeed_B6,X                 ;$0195F0 |
 .CODE_0195F2:
-    JSR SubSprSprPMarioSpr
+    JSR sprite_vs_sprite_or_mario_018FC1
 .CODE_0195F5:
     JSR specific_carryable_sprite_01A187
     JSR SubOffscreen0Bnk1                   ;$0195F8 |
@@ -3130,7 +3130,7 @@ CODE_019624:
     LDA.w SpriteOnTongue_15D0,Y             ;$019670 | check whether the Koopa is being licked by Yoshi
     BNE .unstun_sprite_01969C               ;$019673 | if being licked by Yoshi, branch
     JSL LoadSpriteTables                    ;$019675 | otherwise, normalize the sprite (convert to Status 08)
-    JSR FaceMario                           ;$019679 |
+    JSR face_mario_01857C                   ;$019679 |
     ASL.w SpriteYXPPCCCT_15F6,X             ;$01967C |
     LSR.w SpriteYXPPCCCT_15F6,X             ;$01967F | clear bit 0
     LDY.w Sprite_160E,X                     ;$019682 | get the ID of the Koopa that hopped into the sprite
@@ -3294,12 +3294,12 @@ CODE_0197D5:
     LDA.b SpriteXSpeed_B6,X
     PHP                                     ;$0197D7 |
     BPL CODE_0197DD                         ;$0197D8 |
-    JSR InvertAccum                         ;$0197DA |
+    JSR invert_accumulator_01804A           ;$0197DA |
 CODE_0197DD:
     LSR
     PLP                                     ;$0197DE |
     BPL CODE_0197E4                         ;$0197DF |
-    JSR InvertAccum                         ;$0197E1 |
+    JSR invert_accumulator_01804A           ;$0197E1 |
 CODE_0197E4:
     STA.b SpriteXSpeed_B6,X
     LDA.b SpriteYSpeed_AA,X                 ;$0197E6 |
@@ -3413,11 +3413,11 @@ disco_shell_0198A9:
     JMP CODE_019A2A                         ;$0198AD |
 
 .CODE_0198B0:
-    JSR SubUpdateSprPos
+    JSR update_sprite_pos_019032
     LDA.w Sprite_151C,X                     ;$0198B3 |
     AND.b #$1F                              ;$0198B6 |
     BNE .CODE_0198BD                        ;$0198B8 |
-    JSR FaceMario                           ;$0198BA |
+    JSR face_mario_01857C                   ;$0198BA |
 .CODE_0198BD:
     LDA.b SpriteXSpeed_B6,X
     LDY.w SpriteDir_157C,X                  ;$0198BF |
@@ -3435,7 +3435,7 @@ disco_shell_0198A9:
     DEC.b SpriteXSpeed_B6,X                 ;$0198D4 |
     DEC.b SpriteXSpeed_B6,X                 ;$0198D6 |
 .CODE_0198D8:
-    JSR IsTouchingObjSide
+    JSR is_touching_obj_side_018008
     BEQ .CODE_0198EA                        ;$0198DB |
     PHA                                     ;$0198DD |
     JSR CODE_01999E                         ;$0198DE |
@@ -3445,13 +3445,13 @@ disco_shell_0198A9:
     LDA.w return_0198A6,Y                   ;$0198E5 |
     STA.b SpriteXSpeed_B6,X                 ;$0198E8 |
 .CODE_0198EA:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ .CODE_0198F6                        ;$0198ED |
     JSR SetSomeYSpeed                       ;$0198EF |
     LDA.b #$10                              ;$0198F2 |
     STA.b SpriteYSpeed_AA,X                 ;$0198F4 |
 .CODE_0198F6:
-    JSR IsTouchingCeiling
+    JSR is_touching_ceiling_018014
     BEQ .CODE_0198FD                        ;$0198F9 |
     STZ.b SpriteYSpeed_AA,X                 ;$0198FB |
 .CODE_0198FD:
@@ -3500,7 +3500,7 @@ handle_kicked_sprite_019913:
     JSR UpdateDirection
     LDA.w SpriteSlope_15B8,X                ;$019949 |
     PHA                                     ;$01994C |
-    JSR SubUpdateSprPos                     ;$01994D |
+    JSR update_sprite_pos_019032            ;$01994D |
     PLA                                     ;$019950 |
     BEQ .CODE_019969                        ;$019951 |
     STA $00                                 ;$019953 |
@@ -3515,7 +3515,7 @@ handle_kicked_sprite_019913:
     BRA .CODE_019975                        ;$019967 |
 
 .CODE_019969:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ .CODE_019984                        ;$01996C |
     JSR SetSomeYSpeed                       ;$01996E |
     LDA.b #$10                              ;$019971 |
@@ -3530,11 +3530,11 @@ handle_kicked_sprite_019913:
     LDA.b #$B8
     STA.b SpriteYSpeed_AA,X                 ;$019982 |
 .CODE_019984:
-    JSR IsTouchingObjSide
+    JSR is_touching_obj_side_018008
     BEQ CODE_01998C                         ;$019987 |
     JSR CODE_01999E                         ;$019989 |
 CODE_01998C:
-    JSR SubSprSprPMarioSpr
+    JSR sprite_vs_sprite_or_mario_018FC1
 CODE_01998F:
     JSR SubOffscreen0Bnk1
     LDA.b SpriteNumber_9E,X                 ;$019992 |
@@ -3685,7 +3685,7 @@ handle_lava_killed_sprite_019A7B:
 
 .CODE_019A94:
     DEC.b SpriteXSpeed_B6,X
-    JSR IsTouchingObjSide                   ;$019A96 |
+    JSR is_touching_obj_side_018008         ;$019A96 |
     BEQ .CODE_019A9D                        ;$019A99 |
     STZ.b SpriteXSpeed_B6,X                 ;$019A9B |
 .CODE_019A9D:
@@ -3726,7 +3726,7 @@ spin_kill_sprite_019ACB:
 CODE_019AD6:
     LDA.b SpriteLock_9D
     BNE CODE_019ADD                         ;$019AD8 |
-    JSR SubUpdateSprPos                     ;$019ADA |
+    JSR update_sprite_pos_019032            ;$019ADA |
 CODE_019ADD:
     JSR SubOffscreen0Bnk1
     JSR HandleSpriteDeath                   ;$019AE0 |
@@ -3741,8 +3741,8 @@ handle_smushed_sprite_019AE4:
     RTS                                     ;$019AF0 |
 
 ShowSmushedGfx:
-    JSR SubUpdateSprPos
-    JSR IsOnGround                          ;$019AF4 |
+    JSR update_sprite_pos_019032
+    JSR is_on_ground_01800E                 ;$019AF4 |
     BEQ CODE_019AFE                         ;$019AF7 |
     JSR SetSomeYSpeed                       ;$019AF9 |
     STZ.b SpriteXSpeed_B6,X                 ;$019AFC |
@@ -4059,7 +4059,7 @@ KoopaWingTileSize:
 
 KoopaWingGfxRt:
     LDY.b #$00
-    JSR IsOnGround                          ;$019E2A |
+    JSR is_on_ground_01800E                 ;$019E2A |
     BNE CODE_019E35                         ;$019E2D |
     LDA.w SpriteAnimation_1602,X            ;$019E2F |
     AND.b #$01                              ;$019E32 |
@@ -4318,7 +4318,7 @@ handle_carryable_sprite_019F9B:
 
 .CODE_01A002:
     JSR CODE_019624
-    JSR SubSprSprInteract                   ;$01A005 |
+    JSR subsprite_sprite_interact_01A40D    ;$01A005 |
     LDA.w SpriteInPipeMode_1419             ;$01A008 |
     BNE .CODE_01A011                        ;$01A00B |
     BIT.b byetudlrHold_15                   ;$01A00D |
@@ -4495,7 +4495,7 @@ CODE_01A13B:
     STA.w SpriteAnimation_1602,X            ;$01A13D |
     CPY.b #$08                              ;$01A140 |
     BNE CODE_01A14D                         ;$01A142 |
-    JSR IsOnGround                          ;$01A144 |
+    JSR is_on_ground_01800E                 ;$01A144 |
     BEQ CODE_01A14D                         ;$01A147 |
     LDA.b #$D8                              ;$01A149 |
     STA.b SpriteYSpeed_AA,X                 ;$01A14B |
@@ -4658,7 +4658,7 @@ StunBabyYoshi:
     LDA.w SpriteStatus_14C8,X               ;$01A25D |
     CMP.b #!StatusCarryable_09              ;$01A260 |
     BNE +                                   ;$01A262 |
-    JSR IsOnGround                          ;$01A264 |
+    JSR is_on_ground_01800E                 ;$01A264 |
     BEQ +                                   ;$01A267 |
     LDA.b #$F0                              ;$01A269 |
     STA.b SpriteYSpeed_AA,X                 ;$01A26B |
@@ -4889,7 +4889,7 @@ Return01A40A:
 DATA_01A40B:
     db $02,$0A
 
-SubSprSprInteract:
+subsprite_sprite_interact_01A40D:
     TXA
     BEQ Return01A40A                        ;$01A40E |
     TAY                                     ;$01A410 |
@@ -5079,7 +5079,7 @@ sprites_are_colliding_01A4BA: ; Sprites are touching; the below blocks use a ser
     LDA.w SpriteStatus_14C8,X
     CMP.b #!StatusCarryable_09              ;$01A558 |
     BNE .try_turn_sprites_around_01A56D     ;$01A55A |
-    JSR IsOnGround                          ;$01A55C |
+    JSR is_on_ground_01800E                 ;$01A55C |
     BNE .try_turn_sprites_around_01A56D     ;$01A55F |
     LDA.b SpriteNumber_9E,X                 ;$01A561 |
     CMP.b #!Goomba_0F                       ;$01A563 |
@@ -5205,7 +5205,7 @@ CODE_01A63D:
     BRA CODE_01A64A                         ;$01A640 |
 
 CODE_01A642:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BNE CODE_01A64A                         ;$01A645 |
     JMP sprite_vs_carried_01A685            ;$01A647 |
 
@@ -5291,7 +5291,7 @@ kick_x_speeds_01A6D7:
 
 try_hop_kick_sprite_01A6D9:
     STY $00
-    JSR IsOnGround                          ;$01A6DB |
+    JSR is_on_ground_01800E                 ;$01A6DB |
     BEQ return_01A72D                       ;$01A6DE |
     LDA.w SpriteBlocked_1588,Y              ;$01A6E0 |
     AND.b #$04                              ;$01A6E3 |
@@ -5544,7 +5544,7 @@ CODE_01A87E:
     LDA.w SpriteStompCounter_1697           ;$01A8BB |
     BEQ CODE_01A8E6                         ;$01A8BE |
 .CODE_01A8C0:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ +                                   ;$01A8C3 |
     LDA.b PlayerInAir_72                    ;$01A8C5 |
     BEQ CODE_01A8E6                         ;$01A8C7 |
@@ -6290,7 +6290,7 @@ CODE_01ADEC:
     STA.w Sprite_1528,X                     ;$01ADF2 |
     INC.w SpriteAnimationTimer_1570,X       ;$01ADF5 |
 CODE_01ADF8:
-    JSR SubSprSprInteract
+    JSR subsprite_sprite_interact_01A40D
     JSR CODE_01B457                         ;$01ADFB |
     JSR SubOffscreen0Bnk1                   ;$01ADFE |
     LDA.w SpriteLava_1558,X                 ;$01AE01 |
@@ -6439,7 +6439,7 @@ thwomp_falling_01AEFA:
     ADC.b #$04                              ;$01AF03 ||
     STA.b SpriteYSpeed_AA,X                 ;$01AF05 |/
 +   JSR sprite_layers_interaction_019140    ;$01AF07 |
-    JSR IsOnGround                          ;$01AF0A |
+    JSR is_on_ground_01800E                 ;$01AF0A |
     BEQ +                                   ;$01AF0D |\
     JSR SetSomeYSpeed                       ;$01AF0F ||
     LDA.b #$18                              ;$01AF12 ||
@@ -6547,11 +6547,11 @@ Thwimp:
     LDA.b #$40
 .CODE_01AFCA:
     STA.b SpriteYSpeed_AA,X
-    JSR IsTouchingCeiling                   ;$01AFCC |
+    JSR is_touching_ceiling_018014          ;$01AFCC |
     BEQ +                                   ;$01AFCF |\
     LDA.b #$10                              ;$01AFD1 ||
     STA.b SpriteYSpeed_AA,X                 ;$01AFD3 |/
-+   JSR IsOnGround                          ;$01AFD5 |
++   JSR is_on_ground_01800E                 ;$01AFD5 |
     BEQ .CODE_01B006                        ;$01AFD8 |
     JSR SetSomeYSpeed                       ;$01AFDA |
     STZ.b SpriteXSpeed_B6,X                 ;$01AFDD |
@@ -6581,7 +6581,7 @@ Thwimp:
     JMP SubSprGfx0Entry0                    ;$01B008 |
 
 InitVerticalFish:
-    JSR FaceMario
+    JSR face_mario_01857C
     INC.w Sprite_151C,X                     ;$01B00E |
 Return01B011:
     RTS
@@ -6625,12 +6625,12 @@ CODE_01B041:
     JSR SetAnimationFrame
     LDA.w SpriteInLiquid_164A,X             ;$01B044 |
     BNE CODE_01B0A7                         ;$01B047 |
-    JSR SubUpdateSprPos                     ;$01B049 |
-    JSR IsTouchingObjSide                   ;$01B04C |
+    JSR update_sprite_pos_019032            ;$01B049 |
+    JSR is_touching_obj_side_018008         ;$01B04C |
     BEQ CODE_01B054                         ;$01B04F |
     JSR FlipSpriteDir                       ;$01B051 |
 CODE_01B054:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ CODE_01B09C                         ;$01B057 |
     LDA.w SpriteBuoyancy_190E               ;$01B059 |
     BEQ CODE_01B062                         ;$01B05C |
@@ -6700,7 +6700,7 @@ CODE_01B0D6:
     BNE CODE_01B0EA                         ;$01B0E5 |
     JSR SubSprYPosNoGrvty                   ;$01B0E7 |
 CODE_01B0EA:
-    JSR SubSprSprInteract
+    JSR subsprite_sprite_interact_01A40D
     JSR MarioSprInteractRt                  ;$01B0ED |
     BCC CODE_01B10A                         ;$01B0F0 |
     LDA.w SpriteInLiquid_164A,X             ;$01B0F2 |
@@ -6811,7 +6811,7 @@ JumpingFish:
     BNE CODE_01B209                         ;$01B1B6 |
     LDA.w SpriteInLiquid_164A,X             ;$01B1B8 |
     STA.w Sprite_151C,X                     ;$01B1BB |
-    JSR SubUpdateSprPos                     ;$01B1BE |
+    JSR update_sprite_pos_019032            ;$01B1BE |
     LDA.w SpriteInLiquid_164A,X             ;$01B1C1 |
     BEQ CODE_01B1EA                         ;$01B1C4 |
     LDA.b SpritePhase_C2,X                  ;$01B1C6 |
@@ -6851,7 +6851,7 @@ CODE_01B1EA:
 CODE_01B206:
     JSR SetAnimationFrame
 CODE_01B209:
-    JSR SubSprSprPMarioSpr
+    JSR sprite_vs_sprite_or_mario_018FC1
     JSR UpdateDirection                     ;$01B20C |
     JMP CODE_01B10A                         ;$01B20F |
 
@@ -6859,7 +6859,7 @@ DATA_01B212:
     db $08,$F8,$10,$F0
 
 InitFloatSpkBall:
-    JSR FaceMario
+    JSR face_mario_01857C
     LDY.w SpriteDir_157C,X                  ;$01B219 |
     LDA.b SpriteXPosLow_E4,X                ;$01B21C |
     AND.b #$10                              ;$01B21E |
@@ -8329,7 +8329,7 @@ MagikoopasMagic:
     JSR sprite_layers_interaction_019140    ;$01BC4F |
     PLA                                     ;$01BC52 |
     STA.b SpriteYSpeed_AA,X                 ;$01BC53 |
-    JSR IsTouchingCeiling                   ;$01BC55 |
+    JSR is_touching_ceiling_018014          ;$01BC55 |
     BEQ .CODE_01BCBD                        ;$01BC58 |
     LDA.w SpriteOffscreenX_15A0,X           ;$01BC5A |
     BNE .CODE_01BCBD                        ;$01BC5D |
@@ -8377,7 +8377,7 @@ MagikoopasMagic:
     RTS                                     ;$01BCBC |
 
 .CODE_01BCBD:
-    JSR SubSprSprPMarioSpr
+    JSR sprite_vs_sprite_or_mario_018FC1
     LDA.b Frame_13                          ;$01BCC0 |
     LSR                                     ;$01BCC2 |
     LSR                                     ;$01BCC3 |
@@ -8580,7 +8580,7 @@ CODE_01BDFB:
     LDA.b #$01                              ;$01BE3E |
     STA.b SpriteXSpeed_B6,X                 ;$01BE40 |
     JSR sprite_layers_interaction_019140    ;$01BE42 |
-    JSR IsOnGround                          ;$01BE45 |
+    JSR is_on_ground_01800E                 ;$01BE45 |
     BEQ Return01BE5E                        ;$01BE48 |
     LDA.w SprMap16TouchHorizHigh_1862       ;$01BE4A |
     BNE Return01BE5E                        ;$01BE4D |
@@ -8607,7 +8607,7 @@ DATA_01BE6C:
 
 CODE_01BE6E:
     STZ.w SpriteOnTongue_15D0,X
-    JSR SubSprSprPMarioSpr                  ;$01BE71 |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$01BE71 |
     JSR SubHorizPos                         ;$01BE74 |
     TYA                                     ;$01BE77 |
     STA.w SpriteDir_157C,X                  ;$01BE78 |
@@ -9408,7 +9408,7 @@ ADDR_01C41E:
     BRA CODE_01C42F                         ;$01C42A |
 
 CODE_01C42C:
-    JSR SubUpdateSprPos
+    JSR update_sprite_pos_019032
 CODE_01C42F:
     LDA.b Frame_13
     AND.b #$03                              ;$01C431 |
@@ -9416,12 +9416,12 @@ CODE_01C42F:
     DEC.b SpriteYSpeed_AA,X                 ;$01C435 |
 CODE_01C437:
     JSR SubOffscreen0Bnk1
-    JSR IsTouchingCeiling                   ;$01C43A |
+    JSR is_touching_ceiling_018014          ;$01C43A |
     BEQ CODE_01C443                         ;$01C43D |
     LDA.b #$00                              ;$01C43F |
     STA.b SpriteYSpeed_AA,X                 ;$01C441 |
 CODE_01C443:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BNE CODE_01C44A                         ;$01C446 |
     BRA CODE_01C47E                         ;$01C448 |
 
@@ -9459,7 +9459,7 @@ CODE_01C47E:
     LDA.w SpriteLava_1558,X
     ORA.b SpritePhase_C2,X                  ;$01C481 |
     BNE CODE_01C48D                         ;$01C483 |
-    JSR IsTouchingObjSide                   ;$01C485 |
+    JSR is_touching_obj_side_018008         ;$01C485 |
     BEQ CODE_01C48D                         ;$01C488 |
     JSR FlipSpriteDir                       ;$01C48A |
 CODE_01C48D:
@@ -10646,7 +10646,7 @@ CODE_01CD4E:
     CMP.b #$03                              ;$01CD52 |
     BCC CODE_01CD5E                         ;$01CD54 |
     JSL CODE_00FCF5                         ;$01CD56 |
-    JSR FaceMario                           ;$01CD5A |
+    JSR face_mario_01857C                   ;$01CD5A |
     RTS                                     ;$01CD5D |
 
 CODE_01CD5E:
@@ -11880,7 +11880,7 @@ CODE_01D64D:
     LDY.w SpriteAnimation_1602,X
     LDA.w DATA_01D5B0,Y                     ;$01D650 |
     JSR SubSprGfx0Entry0                    ;$01D653 |
-    JSR SubSprSprPMarioSpr                  ;$01D656 |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$01D656 |
     LDA.w SpriteStun_1540,X                 ;$01D659 |
     BEQ CODE_01D693                         ;$01D65C |
     DEC A                                   ;$01D65E |
@@ -11906,7 +11906,7 @@ CODE_01D671:
 
 CODE_01D681:
     JSR sprite_layers_interaction_019140
-    JSR IsOnGround                          ;$01D684 |
+    JSR is_on_ground_01800E                 ;$01D684 |
     BEQ CODE_01D68C                         ;$01D687 |
     JSR SetSomeYSpeed                       ;$01D689 |
 CODE_01D68C:
@@ -11920,14 +11920,14 @@ CODE_01D693:
     LSR                                     ;$01D696 |
     BCC CODE_01D6B5                         ;$01D697 |
     JSR sprite_layers_interaction_019140    ;$01D699 |
-    JSR IsTouchingObjSide                   ;$01D69C |
+    JSR is_touching_obj_side_018008         ;$01D69C |
     BEQ CODE_01D6AB                         ;$01D69F |
     LDA.b #$01                              ;$01D6A1 |
     STA.w Sprite_151C,X                     ;$01D6A3 |
     LDA.b #$07                              ;$01D6A6 |
     STA.w SpriteAnimationTimer_1570,X       ;$01D6A8 |
 CODE_01D6AB:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ CODE_01D6B5                         ;$01D6AE |
     LDA.b #$20                              ;$01D6B0 |
     STA.w SpriteStun_1540,X                 ;$01D6B2 |
@@ -12607,7 +12607,7 @@ CODE_01DB31:
 CODE_01DB44:
     LDA.b SpriteLock_9D
     BNE Return01DB59                        ;$01DB46 |
-    JSR SubUpdateSprPos                     ;$01DB48 |
+    JSR update_sprite_pos_019032            ;$01DB48 |
     LDA.w SpriteStun_1540,X                 ;$01DB4B |
     BNE Return01DB59                        ;$01DB4E |
     LDA.b SpriteYSpeed_AA,X                 ;$01DB50 |
@@ -12638,12 +12638,12 @@ CODE_01DB75:
     LDY.w SpriteDir_157C,X                  ;$01DB7B |
     LDA.w DATA_01DB5A,Y                     ;$01DB7E |
     STA.b SpriteXSpeed_B6,X                 ;$01DB81 |
-    JSR SubUpdateSprPos                     ;$01DB83 |
-    JSR IsOnGround                          ;$01DB86 |
+    JSR update_sprite_pos_019032            ;$01DB83 |
+    JSR is_on_ground_01800E                 ;$01DB86 |
     BEQ CODE_01DB8D                         ;$01DB89 |
     STZ.b SpriteYSpeed_AA,X                 ;$01DB8B |
 CODE_01DB8D:
-    JSR IsTouchingObjSide
+    JSR is_touching_obj_side_018008
     BEQ Return01DB95                        ;$01DB90 |
     JSR FlipSpriteDir                       ;$01DB92 |
 Return01DB95:
@@ -13588,7 +13588,7 @@ CODE_01E309:
     TAY                                     ;$01E31C |
     JSR CODE_0199E1                         ;$01E31D |
 CODE_01E320:
-    JSR FaceMario
+    JSR face_mario_01857C
     LDA.b SpriteNumber_9E,X                 ;$01E323 |
     CMP.b #!MontyMoleLedge_4E               ;$01E325 |
     BNE CODE_01E343                         ;$01E327 |
@@ -13645,7 +13645,7 @@ CODE_01E37F:
     JSR CODE_01E3EF
     LDA.b #$02                              ;$01E382 |
     STA.w SpriteAnimation_1602,X            ;$01E384 |
-    JSR IsOnGround                          ;$01E387 |
+    JSR is_on_ground_01800E                 ;$01E387 |
     BEQ Return01E38E                        ;$01E38A |
     INC.b SpritePhase_C2,X                  ;$01E38C |
 Return01E38E:
@@ -13666,7 +13666,7 @@ CODE_01E393:
     JSL GetRand                             ;$01E3A1 |
     AND.b #$01                              ;$01E3A5 |
     BNE Return01E3C6                        ;$01E3A7 |
-    JSR FaceMario                           ;$01E3A9 |
+    JSR face_mario_01857C                   ;$01E3A9 |
     LDA.b SpriteXSpeed_B6,X                 ;$01E3AC |
     CMP.w DATA_01E391,Y                     ;$01E3AE |
     BEQ Return01E3C6                        ;$01E3B1 |
@@ -13684,7 +13684,7 @@ Return01E3C6:
     RTS
 
 CODE_01E3C7:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ CODE_01E3E9                         ;$01E3CA |
     JSR SetAnimationFrame                   ;$01E3CC |
     JSR SetAnimationFrame                   ;$01E3CF |
@@ -13718,13 +13718,13 @@ CODE_01E3FB:
     STA.b SpriteYXPPCCCT_64                 ;$01E3FF |
     LDA.b SpriteLock_9D                     ;$01E401 |
     BNE CODE_01E41C                         ;$01E403 |
-    JSR SubSprSprPMarioSpr                  ;$01E405 |
-    JSR SubUpdateSprPos                     ;$01E408 |
-    JSR IsOnGround                          ;$01E40B |
+    JSR sprite_vs_sprite_or_mario_018FC1    ;$01E405 |
+    JSR update_sprite_pos_019032            ;$01E408 |
+    JSR is_on_ground_01800E                 ;$01E40B |
     BEQ CODE_01E413                         ;$01E40E |
     JSR SetSomeYSpeed                       ;$01E410 |
 CODE_01E413:
-    JSR IsTouchingObjSide
+    JSR is_touching_obj_side_018008
     BEQ Return01E41B                        ;$01E416 |
     JSR FlipSpriteDir                       ;$01E418 |
 Return01E41B:
@@ -13759,7 +13759,7 @@ CODE_01E43E:
     BNE CODE_01E453                         ;$01E449 |
     STZ.w Sprite_1534,X                     ;$01E44B |
     PHY                                     ;$01E44E |
-    JSR FaceMario                           ;$01E44F |
+    JSR face_mario_01857C                   ;$01E44F |
     PLY                                     ;$01E452 |
 CODE_01E453:
     LDA.b #$48
@@ -13808,8 +13808,8 @@ CODE_01E4AC:
     LDY.b #$02
     LDA.b #$01                              ;$01E4AE |
     JSR FinishOAMWriteRt                    ;$01E4B0 |
-    JSR SubUpdateSprPos                     ;$01E4B3 |
-    JSR IsOnGround                          ;$01E4B6 |
+    JSR update_sprite_pos_019032            ;$01E4B3 |
+    JSR is_on_ground_01800E                 ;$01E4B6 |
     BEQ Return01E4BF                        ;$01E4B9 |
     STZ.b SpriteYSpeed_AA,X                 ;$01E4BB |
     STZ.b SpriteXSpeed_B6,X                 ;$01E4BD |
@@ -13843,12 +13843,12 @@ CODE_01E4DD:
 CODE_01E4ED:
     STZ.b SpriteXSpeed_B6,X
 CODE_01E4EF:
-    JSR IsTouchingCeiling
+    JSR is_touching_ceiling_018014
     BEQ CODE_01E4F6                         ;$01E4F2 |
     STZ.b SpriteYSpeed_AA,X                 ;$01E4F4 |
 CODE_01E4F6:
     JSR SubOffscreen0Bnk1
-    JSR SubUpdateSprPos                     ;$01E4F9 |
+    JSR update_sprite_pos_019032            ;$01E4F9 |
     LDA.b SpriteNumber_9E,X                 ;$01E4FC |
     CMP.b #!BonyBeetle_31                   ;$01E4FE |
     BNE CODE_01E51E                         ;$01E500 |
@@ -13889,7 +13889,7 @@ CODE_01E53A:
     JMP CODE_01E5B6                         ;$01E53F |
 
 CODE_01E542:
-    JSR IsOnGround
+    JSR is_on_ground_01800E
     BEQ CODE_01E563                         ;$01E545 |
     JSR SetSomeYSpeed                       ;$01E547 |
     JSR SetAnimationFrame                   ;$01E54A |
@@ -13903,7 +13903,7 @@ CODE_01E557:
     LDA.w SpriteAnimationTimer_1570,X
     AND.b #$7F                              ;$01E55A |
     BNE CODE_01E561                         ;$01E55C |
-    JSR FaceMario                           ;$01E55E |
+    JSR face_mario_01857C                   ;$01E55E |
 CODE_01E561:
     BRA CODE_01E57B
 
@@ -13952,7 +13952,7 @@ CODE_01E5A7:
     STA.w SpriteStun_1540,X                 ;$01E5B3 |
 CODE_01E5B6:
     JSR CODE_01E5C4
-    JSR SubSprSprInteract                   ;$01E5B9 |
+    JSR subsprite_sprite_interact_01A40D    ;$01E5B9 |
     JSR FlipIfTouchingObj                   ;$01E5BC |
 CODE_01E5BF:
     JSL CODE_03C390
@@ -13994,7 +13994,7 @@ CODE_01E604:
     JSL HurtMario
     LDA.w FlashingTimer_1497                ;$01E608 |
     BNE Return01E610                        ;$01E60B |
-    JSR FaceMario                           ;$01E60D |
+    JSR face_mario_01857C                   ;$01E60D |
 Return01E610:
     RTS
 
@@ -14013,11 +14013,11 @@ SpringBoard:
 
 .springboard_physics_01E62A:
     JSR SubOffscreen0Bnk1
-    JSR SubUpdateSprPos                     ;$01E62D |
-    JSR IsOnGround                          ;$01E630 |
+    JSR update_sprite_pos_019032            ;$01E62D |
+    JSR is_on_ground_01800E                 ;$01E630 |
     BEQ +                                   ;$01E633 |\
     JSR CODE_0197D5                         ;$01E635 |/
-+   JSR IsTouchingObjSide                   ;$01E638 |
++   JSR is_touching_obj_side_018008         ;$01E638 |
     BEQ +                                   ;$01E63B |\
     JSR FlipSpriteDir                       ;$01E63D ||
     LDA.b SpriteXSpeed_B6,X                 ;$01E640 ||
@@ -14026,7 +14026,7 @@ SpringBoard:
     ROR.b SpriteXSpeed_B6,X                 ;$01E644 ||
     PLP                                     ;$01E646 ||
     ROR.b SpriteXSpeed_B6,X                 ;$01E647 |/
-+   JSR IsTouchingCeiling                   ;$01E649 |
++   JSR is_touching_ceiling_018014          ;$01E649 |
     BEQ +                                   ;$01E64C |\
     STZ.b SpriteYSpeed_AA,X                 ;$01E64E |/
 +   LDA.w SpriteStun_1540,X                 ;$01E650 |
@@ -14910,8 +14910,8 @@ yoshi_01EBCA:
     JMP .mounted_physics_01ED70             ;$01ECE7 |
 
 .unmounted_yoshi_physics_01ECEA:
-    JSR SubUpdateSprPos
-    JSR IsOnGround                          ;$01ECED |
+    JSR update_sprite_pos_019032
+    JSR is_on_ground_01800E                 ;$01ECED |
     BEQ +                                   ;$01ECF0 |\
     JSR SetSomeYSpeed                       ;$01ECF2 || if Yoshi is on the ground
     LDA.b SpritePhase_C2,X                  ;$01ECF5 ||
@@ -14921,7 +14921,7 @@ yoshi_01EBCA:
     LDA.b #$F0                              ;$01ECFD || 
     STA.b SpriteYSpeed_AA,X                 ;$01ECFF |/
 +   JSR UpdateDirection                     ;$01ED01 |
-    JSR IsTouchingObjSide                   ;$01ED04 |
+    JSR is_touching_obj_side_018008         ;$01ED04 |
     BEQ +                                   ;$01ED07 |\ if hitting wall, turn around
     JSR flip_sprite_dir_0190A2              ;$01ED09 |/
 +   LDA.b #$04                              ;$01ED0C |
@@ -16423,7 +16423,7 @@ DATA_01F873:
     db $08,$F8
 
 UnusedInit:
-    JSR FaceMario
+    JSR face_mario_01857C
     STA.w Sprite_1534,X                     ;$01F878 |
 Return01F87B:
     RTS
@@ -16853,7 +16853,7 @@ PlatformKoopaKids:
     BNE .CODE_01FB99                        ;$01FB85 |
     LDA.w SpriteDir_157C,X                  ;$01FB87 |
     PHA                                     ;$01FB8A |
-    JSR FaceMario                           ;$01FB8B |
+    JSR face_mario_01857C                   ;$01FB8B |
     PLA                                     ;$01FB8E |
     CMP.w SpriteDir_157C,X                  ;$01FB8F |
     BEQ .CODE_01FB99                        ;$01FB92 |

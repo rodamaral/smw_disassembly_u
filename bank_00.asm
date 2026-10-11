@@ -13502,7 +13502,7 @@ CODE_00FBD5:
 
 CODE_00FBF0:
     INC.w SpriteAnimationTimer_1570,X
-    JSL UpdateYPosNoGrvty                   ;$00FBF3 |
+    JSL update_y_no_gravity_01801A          ;$00FBF3 |
     INC.b SpriteYSpeed_AA,X                 ;$00FBF7 |
     INC.b SpriteYSpeed_AA,X                 ;$00FBF9 |
     LDA.b SpriteYSpeed_AA,X                 ;$00FBFB |
