@@ -1067,7 +1067,7 @@ CODE_0DA106:                                ; extended object subroutine
     SEP #$30                                ; $0DA106 | set 8-bit AXY
     LDA.b LvlLoadObjSize_59                 ; $0DA108 | object size/extended object number
     TAX                                     ; $0DA10A | goes into both A and X (the latter is used for some tables)
-    JSL execute_pointer_long                ; $0DA10B | call a 24-bit pointer (JSL $0086FA)
+    JSL execute_pointer_long_0086FA         ; $0DA10B | call a 24-bit pointer (JSL $0086FA)
 
 PtrsLong0DA10F:                             ; pointers to extended objects
     dl CODE_0DA512                          ; $0DA10F | 00 - screen exit
@@ -1335,7 +1335,7 @@ CODE_0DA40F:                                ; normal object processing code
 CODE_0DA415:
     SEP #$30
     LDA.w ObjectTileset_1931                ;$0DA417 |
-    JSL execute_pointer_long                ;$0DA41A |
+    JSL execute_pointer_long_0086FA         ;$0DA41A |
 
 PtrsLong0DA41E:
     dl CODE_0DA44B
@@ -1359,7 +1359,7 @@ CODE_0DA44B:
     LDX.b LvlLoadObjNo_5A                   ;$0DA44D |
     DEX                                     ;$0DA44F |
     TXA                                     ;$0DA450 |
-    JSL execute_pointer_long                ;$0DA451 |
+    JSL execute_pointer_long_0086FA         ;$0DA451 |
 
 PtrsLong0DA455:
     dl CODE_0DA8C3
@@ -2308,7 +2308,7 @@ CODE_0DAB42:
     JMP CODE_0DAB42                         ;$0DAB49 |
 
 CODE_0DAB4C:
-    JSL execute_pointer_long
+    JSL execute_pointer_long_0086FA
 
 PtrsLong0DAB50:
     dl CODE_0DAB6E
@@ -4799,7 +4799,7 @@ CODE_0DC190:
     LDX.b LvlLoadObjNo_5A                   ;$0DC192 |
     DEX                                     ;$0DC194 |
     TXA                                     ;$0DC195 |
-    JSL execute_pointer_long                ;$0DC196 |
+    JSL execute_pointer_long_0086FA         ;$0DC196 |
 
 PtrsLong0DC19A:
     dl CODE_0DA8C3
@@ -4951,7 +4951,7 @@ CODE_0DC341:
     LDA.b LvlLoadObjSize_59
     AND.b #$02                              ;$0DC343 |
     LSR                                     ;$0DC345 |
-    JSL execute_pointer_long                ;$0DC346 |
+    JSL execute_pointer_long_0086FA         ;$0DC346 |
 
 PtrsLong0DC34A:
     dl CODE_0DC358
@@ -5597,7 +5597,7 @@ CODE_0DCD90:
     LDX.b LvlLoadObjNo_5A                   ;$0DCD92 |
     DEX                                     ;$0DCD94 |
     TXA                                     ;$0DCD95 |
-    JSL execute_pointer_long                ;$0DCD96 |
+    JSL execute_pointer_long_0086FA         ;$0DCD96 |
 
 PtrsLong0DCD9A:
     dl CODE_0DA8C3
@@ -5824,7 +5824,7 @@ CODE_0DCF53:
     LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DCF55 |
     TAX                                     ;$0DCF57 |
-    JSL execute_pointer_long                ;$0DCF58 |
+    JSL execute_pointer_long_0086FA         ;$0DCF58 |
 
 PtrsLong0DCF5C:
     dl CODE_0DCF6E
@@ -6010,7 +6010,7 @@ ADDR_0DD070:
     LSR                                     ;$0DD073 |
     LSR                                     ;$0DD074 |
     LSR                                     ;$0DD075 |
-    JSL execute_pointer_long                ;$0DD076 |
+    JSL execute_pointer_long_0086FA         ;$0DD076 |
 
 PtrsLong0DD07A:
     dl ADDR_0DD080
@@ -6550,7 +6550,7 @@ CODE_0DD990:
     LDX.b LvlLoadObjNo_5A                   ;$0DD992 |
     DEX                                     ;$0DD994 |
     TXA                                     ;$0DD995 |
-    JSL execute_pointer_long                ;$0DD996 |
+    JSL execute_pointer_long_0086FA         ;$0DD996 |
 
 PtrsLong0DD99A:
     dl CODE_0DA8C3
@@ -6714,7 +6714,7 @@ CODE_0DDAE8:
 CODE_0DDAF2:
     LDA.b LvlLoadObjSize_59
     AND.b #$03                              ;$0DDAF4 |
-    JSL execute_pointer_long                ;$0DDAF6 |
+    JSL execute_pointer_long_0086FA         ;$0DDAF6 |
 
 PtrsLong0DDAFA:
     dl CODE_0DDB06
@@ -7113,7 +7113,7 @@ CODE_0DDD87:
     LSR                                     ;$0DDD8B |
     LSR                                     ;$0DDD8C |
     AND.b #$01                              ;$0DDD8D |
-    JSL execute_pointer_long                ;$0DDD8F |
+    JSL execute_pointer_long_0086FA         ;$0DDD8F |
 
 PtrsLong0DDD93:
     dl CODE_0DDD99
@@ -7854,7 +7854,7 @@ CODE_0DE890:
     LDX.b LvlLoadObjNo_5A                   ;$0DE892 |
     DEX                                     ;$0DE894 |
     TXA                                     ;$0DE895 |
-    JSL execute_pointer_long                ;$0DE896 |
+    JSL execute_pointer_long_0086FA         ;$0DE896 |
 
 PtrsLong0DE89A:
     dl CODE_0DA8C3

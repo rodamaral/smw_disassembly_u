@@ -185,7 +185,7 @@ handle_sprite_018126:
     BNE +                                   ;$01812E |
     JMP call_sprite_main_0185C3             ;$018130 |
 
-+   JSL execute_pointer                     ;$018133 |
++   JSL execute_pointer_0086DF              ;$018133 |
 
 .sprite_status_pointers:
     dw .erase_sprite_018151                 ;$018137 | 0 empty slot, unreachable
@@ -227,7 +227,7 @@ initialize_sprite_018172:
     LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,X               ;$018174 |
     LDA.b SpriteNumber_9E,X                 ;$018177 |
-    JSL execute_pointer                     ;$018179 |
+    JSL execute_pointer_0086DF              ;$018179 |
 
 .sprite_init_pointers:
     dw InitStandardSprite                   ;$01817D | 00 Green Koopa Troopa without shell
@@ -891,7 +891,7 @@ return_0185C2:
 call_sprite_main_0185C3:
     STZ.w SpriteXMovement_1491              ;$0185C3 |
     LDA.b SpriteNumber_9E,X                 ;$0185C6 |
-    JSL execute_pointer                     ;$0185C8 |
+    JSL execute_pointer_0086DF              ;$0185C8 |
 
 .sprite_main_pointers:
     dw ShellessKoopas                       ;$0185CC | 00 Green Koopa Troopa without shell
@@ -5585,7 +5585,7 @@ CODE_01A8E6:
 +   LDA.b SpriteNumber_9E,X                 ;$01A911 |
     CMP.b #!Throwblock_53                   ;$01A913 |
     BEQ ..return_01A91B                     ;$01A915 |\
-    JSL HurtMario                           ;$01A917 |/
+    JSL hurt_mario_00F5B7                   ;$01A917 |/
 ..return_01A91B:
     RTS
 
@@ -6394,7 +6394,7 @@ Thwomp:
     JSR SubOffscreen0Bnk1                   ;$01AEB1 |
     JSR MarioSprInteractRt                  ;$01AEB4 |
     LDA.b SpritePhase_C2,X                  ;$01AEB7 |
-    JSL execute_pointer                     ;$01AEB9 |
+    JSL execute_pointer_0086DF              ;$01AEB9 |
 
 .ThwompStatePtrs:
     dw thwomp_waiting_01AEC3
@@ -6709,7 +6709,7 @@ CODE_01B0EA:
     BNE CODE_01B107                         ;$01B0FA |
     LDA.w RidingYoshi_187A                  ;$01B0FC |
     BNE CODE_01B10A                         ;$01B0FF |
-    JSL HurtMario                           ;$01B101 |
+    JSL hurt_mario_00F5B7                   ;$01B101 |
     BRA CODE_01B10A                         ;$01B105 |
 
 CODE_01B107:
@@ -8531,7 +8531,7 @@ Magikoopa:
 CODE_01BDE2:
     LDA.b SpritePhase_C2,X
     AND.b #$03                              ;$01BDE4 |
-    JSL execute_pointer                     ;$01BDE6 |
+    JSL execute_pointer_0086DF              ;$01BDE6 |
 
 MagiKoopaPtrs:
     dw CODE_01BDF2
@@ -9559,7 +9559,7 @@ touched_powerup_01C537:
     LDA.b #$0B                              ;$01C548 |
     STA.w SPCIO3_1DFC                       ;$01C54A |
 +   LDA.w GivePowerPtrIndex,Y               ;$01C54D |
-    JSL execute_pointer                     ;$01C550 |
+    JSL execute_pointer_0086DF              ;$01C550 |
 
 .HandlePowerUpPtrs:
     dw GiveMarioMushroom
@@ -10739,7 +10739,7 @@ CODE_01CDD5:
     STA.w SpriteTurnTimer_15AC,X            ;$01CE08 |
 CODE_01CE0B:
     LDA.w Sprite_151C,X
-    JSL execute_pointer                     ;$01CE0E |
+    JSL execute_pointer_0086DF              ;$01CE0E |
 
 .MortonPtrs1:
     dw CODE_01CE1E                          ;$01CE12 | 0 spawn
@@ -10788,7 +10788,7 @@ CODE_01CE4C:
 
 CODE_01CE5F:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$01CE61 |
+    JSL execute_pointer_0086DF              ;$01CE61 |
 
 MortonPtrs2:
     dw CODE_01D116
@@ -10797,7 +10797,7 @@ MortonPtrs2:
 
 CODE_01CE6B:
     LDA.w Sprite_1528,X
-    JSL execute_pointer                     ;$01CE6E |
+    JSL execute_pointer_0086DF              ;$01CE6E |
 
 Ptrs01CE72:
     dw CODE_01CE78
@@ -11173,7 +11173,7 @@ DATA_01D0DE:
 
 CODE_01D116:
     LDA.w Sprite_1528,X
-    JSL execute_pointer                     ;$01D119 |
+    JSL execute_pointer_0086DF              ;$01D119 |
 
 MortonPtrs3:
     dw CODE_01D146
@@ -11453,7 +11453,7 @@ Return01D318:
     RTS
 
 CODE_01D319:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
 Return01D31D:
     RTS
 
@@ -12034,7 +12034,7 @@ CODE_01D74D:
     BNE Return01D6EC                        ;$01D75A |
 CODE_01D75C:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$01D75E |
+    JSL execute_pointer_0086DF              ;$01D75E |
 
 Ptrs01D762:
     dw CODE_01D7F4
@@ -13545,7 +13545,7 @@ DATA_01E2B0:
 MontyMole:
     JSR SubOffscreen0Bnk1
     LDA.b SpritePhase_C2,X                  ;$01E2D2 |
-    JSL execute_pointer                     ;$01E2D4 |
+    JSL execute_pointer_0086DF              ;$01E2D4 |
 
 Ptrs01E2D8:
     dw CODE_01E2E0
@@ -13991,7 +13991,7 @@ CODE_01E5EB:
     RTS                                     ;$01E603 |
 
 CODE_01E604:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
     LDA.w FlashingTimer_1497                ;$01E608 |
     BNE Return01E610                        ;$01E60B |
     JSR face_mario_01857C                   ;$01E60D |
@@ -15395,7 +15395,7 @@ process_yoshi_tongue_01F0A2:
     LDA.b #$06                              ;$01F0BF || prepare Yoshi's tongue to come out after the player hits him
     STA.w YoshiStartEatTimer_18AE           ;$01F0C1 |/
 +   LDA.w Sprite_1594,X                     ;$01F0C4 |
-    JSL execute_pointer                     ;$01F0C7 |
+    JSL execute_pointer_0086DF              ;$01F0C7 |
 
 .mouth_routine_pointers_01F0CB:
     dw normal_mouth_01F14B                  ;$01F0CB | 0
@@ -16761,7 +16761,7 @@ IggysBall:
 
 KoopaKid:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$01FAC3 |
+    JSL execute_pointer_0086DF              ;$01FAC3 |
 
 .KoopaKidPtrs:
     dw WallKoopaKids
@@ -17068,7 +17068,7 @@ CODE_01FC84:
     RTS                                     ;$01FD04 |
 
 CODE_01FD05:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
 Return01FD09:
     RTS
 

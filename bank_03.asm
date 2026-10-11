@@ -89,7 +89,7 @@ BigBooBoss:
     LDA.b SpriteLock_9D                     ;$0380A6 |
     BNE Return0380D4                        ;$0380A8 |
     LDA.b SpritePhase_C2,X                  ;$0380AA |
-    JSL execute_pointer                     ;$0380AC |
+    JSL execute_pointer_0086DF              ;$0380AC |
 
 .BooBossPtrs:
     dw CODE_0380BE                          ;$0380B | 0 stopped before fading in
@@ -1030,7 +1030,7 @@ MegaMoleContact:
     LDA.w SpritePlayerContact_154C,X
     ORA.w SpriteOnTongue_15D0,X             ;$038821 |
     BNE Return03882A                        ;$038824 |
-    JSL HurtMario                           ;$038826 |
+    JSL hurt_mario_00F5B7                   ;$038826 |
 Return03882A:
     RTS
 
@@ -1128,7 +1128,7 @@ CODE_0388C0:
     JSL update_x_no_gravity_018022 ;$0388CB |
     JSL update_y_no_gravity_01801A          ;$0388CF |
     LDA.b SpritePhase_C2,X                  ;$0388D3 |
-    JSL execute_pointer                     ;$0388D5 |
+    JSL execute_pointer_0086DF              ;$0388D5 |
 
 SwooperPtrs:
     dw CODE_0388E4
@@ -1348,7 +1348,7 @@ BowserStatue:
     BNE Return038A68                        ;$038A41 |
     JSR SubOffscreen0Bnk3                   ;$038A43 |
     LDA.b SpritePhase_C2,X                  ;$038A46 |
-    JSL execute_pointer                     ;$038A48 |
+    JSL execute_pointer_0086DF              ;$038A48 |
 
 BowserStatuePtrs:
     dw CODE_038A57
@@ -2280,7 +2280,7 @@ CODE_0390F3:
     JSL GetMarioClipping                    ;$03911F |
     JSL CheckForContact                     ;$039123 |
     BCC Return03912D                        ;$039127 |
-    JSL HurtMario                           ;$039129 |
+    JSL hurt_mario_00F5B7                   ;$039129 |
 Return03912D:
     RTS
 
@@ -2418,7 +2418,7 @@ CODE_039237:
     JSR SubOffscreen0Bnk3                   ;$03923B |
     JSL update_sprite_pos_01802A            ;$03923E |
     LDA.b SpritePhase_C2,X                  ;$039242 |
-    JSL execute_pointer                     ;$039244 |
+    JSL execute_pointer_0086DF              ;$039244 |
 
 FallingSpikePtrs:
     dw CODE_03924C
@@ -2629,7 +2629,7 @@ WoodenSpike:
     JSR CODE_039488                         ;$03942D |
     LDA.b SpritePhase_C2,X                  ;$039430 |
     AND.b #$03                              ;$039432 |
-    JSL execute_pointer                     ;$039434 |
+    JSL execute_pointer_0086DF              ;$039434 |
 
 WoodenSpikePtrs:
     dw CODE_039458
@@ -2707,7 +2707,7 @@ CODE_039488:
     ADC.b #$04                              ;$039494 |
     CMP.b #$08                              ;$039496 |
     BCS CODE_03949F                         ;$039498 |
-    JSL HurtMario                           ;$03949A |
+    JSL hurt_mario_00F5B7                   ;$03949A |
     RTS                                     ;$03949E |
 
 CODE_03949F:
@@ -2876,7 +2876,7 @@ RexWins:
     JSR SubHorzPosBnk3                      ;$0395D2 |
     TYA                                     ;$0395D5 |
     STA.w SpriteDir_157C,X                  ;$0395D6 |
-    JSL HurtMario                           ;$0395D9 |
+    JSL hurt_mario_00F5B7                   ;$0395D9 |
 NoRexContact:
     RTS
 
@@ -3049,7 +3049,7 @@ Fishbone:
     STA.w SpriteLava_1558,X                 ;$03971D |
 CODE_039720:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$039722 |
+    JSL execute_pointer_0086DF              ;$039722 |
 
 FishbonePtrs:
     dw CODE_03972F
@@ -3538,7 +3538,7 @@ HitPlatSide:
     BRA DrawReznor                          ;$039A75 |
 
 HitReznor:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
 DrawReznor:
     STZ.w SpriteAnimation_1602,X
     LDA.w SpriteDir_157C,X                  ;$039A7E |
@@ -3789,7 +3789,7 @@ DinoMainSubRt:
     JSL MarioSprInteract                    ;$039C58 |
     JSL update_sprite_pos_01802A            ;$039C5C |
     LDA.b SpritePhase_C2,X                  ;$039C60 |
-    JSL execute_pointer                     ;$039C62 |
+    JSL execute_pointer_0086DF              ;$039C62 |
 
 RhinoStatePtrs:
     dw CODE_039CA8
@@ -3939,7 +3939,7 @@ CODE_039D66:
     BCC Return039D9D                        ;$039D92 |
     LDA.w StarTimer_1490                    ;$039D94 |
     BNE Return039D9D                        ;$039D97 |
-    JSL HurtMario                           ;$039D99 |
+    JSL hurt_mario_00F5B7                   ;$039D99 |
 Return039D9D:
     RTS
 
@@ -4178,7 +4178,7 @@ Blargg:
     JSL MarioSprInteract                    ;$039F3F |
     JSR SubOffscreen0Bnk3                   ;$039F43 |
     LDA.b SpritePhase_C2,X                  ;$039F46 |
-    JSL execute_pointer                     ;$039F48 |
+    JSL execute_pointer_0086DF              ;$039F48 |
 
 BlarggPtrs:
     dw CODE_039F57
@@ -4782,7 +4782,7 @@ CODE_03A31A:
     JSL update_x_no_gravity_018022 ;$03A31D |
     JSL update_y_no_gravity_01801A          ;$03A321 |
     LDA.w Sprite_151C,X                     ;$03A325 |
-    JSL execute_pointer                     ;$03A328 |
+    JSL execute_pointer_0086DF              ;$03A328 |
 
 BowserFightPtrs:
     dw CODE_03A441
@@ -5985,7 +5985,7 @@ CODE_03AD18:
     LDA.b #$04                              ;$03AD1C |
     STA.w SpriteAnimation_1602,X            ;$03AD1E |
     LDA.b SpritePhase_C2,X                  ;$03AD21 |
-    JSL execute_pointer                     ;$03AD23 |
+    JSL execute_pointer_0086DF              ;$03AD23 |
 
 PeachPtrs:
     dw CODE_03AD37                          ;$02AD27 | 0 floating down
@@ -6466,7 +6466,7 @@ CODE_03B0C9:
     JSL MarioSprInteract                    ;$03B0CC |
     BCC Return03B0DB                        ;$03B0D0 |
 CODE_03B0D2:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
 CODE_03B0D6:
     LDA.b #$20
     STA.w SpritePlayerContact_154C,X        ;$03B0D8 |
@@ -8715,7 +8715,7 @@ CODE_03C810:
 
 Firework:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$03C818 |
+    JSL execute_pointer_0086DF              ;$03C818 |
 
 FireworkPtrs:
     dw CODE_03C828
@@ -9267,7 +9267,7 @@ CODE_03CC14:
     LDA.b SpriteLock_9D                     ;$03CC1E |
     BNE Return03CC37                        ;$03CC20 |
     LDA.w Sprite_151C,X                     ;$03CC22 |
-    JSL execute_pointer                     ;$03CC25 |
+    JSL execute_pointer_0086DF              ;$03CC25 |
 
 PipeKoopaPtrs:
     dw CODE_03CC8A                          ;$03CC29 | 0 in pipe
@@ -9568,7 +9568,7 @@ CODE_03CEE9:
     RTS                                     ;$03CEEC |
 
 CODE_03CEED:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
 Return03CEF1:
     RTS
 

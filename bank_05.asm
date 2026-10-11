@@ -968,7 +968,7 @@ set_map16_for_VRAM_upload_05877E:
 execute_level_mode_setting_05881A:
     SEP #$30
     LDA.w LevelModeSetting_1925             ;$05881C |
-    JSL execute_pointer_long                ;$05881F |
+    JSL execute_pointer_long_0086FA         ;$05881F |
 
 PtrsLong058823:
     dl CODE_0589CE
@@ -1007,7 +1007,7 @@ PtrsLong058823:
 execute_level_mode_setting_058883:
     SEP #$30
     LDA.w LevelModeSetting_1925             ;$058885 |
-    JSL execute_pointer_long                ;$058888 |
+    JSL execute_pointer_long_0086FA         ;$058888 |
 
 PtrsLong05888C:
     dl Return058C70
@@ -1046,7 +1046,7 @@ PtrsLong05888C:
 CODE_0588EC:
     SEP #$30
     LDA.w LevelModeSetting_1925             ;$0588EE |
-    JSL execute_pointer_long                ;$0588F1 |
+    JSL execute_pointer_long_0086FA         ;$0588F1 |
 
 PtrsLong0588F5:
     dl CODE_0589CE
@@ -1085,7 +1085,7 @@ PtrsLong0588F5:
 CODE_058955:
     SEP #$30
     LDA.w LevelModeSetting_1925             ;$058957 |
-    JSL execute_pointer_long                ;$05895A |
+    JSL execute_pointer_long_0086FA         ;$05895A |
 
 PtrsLong05895E:
     dl CODE_058D7A
@@ -3665,7 +3665,7 @@ execute_scroll_layer_1_05BC76:
     BNE Return05BC49                        ;$05BC7C |
     LDA.w Layer1ScrollCmd_143E              ;$05BC7E |
     BEQ Return05BC49                        ;$05BC81 |
-    JSL execute_pointer                     ;$05BC83 |
+    JSL execute_pointer_0086DF              ;$05BC83 |
 
 Ptrs05BC87:
     dw CODE_05C04D
@@ -3691,7 +3691,7 @@ execute_scroll_layer_2_05BCA5:
     BEQ Return05BC49                        ;$05BCAD |
     LDY.w SpriteLock_9D                     ;$05BCAF |
     BNE Return05BC49                        ;$05BCB2 |
-    JSL execute_pointer                     ;$05BCB4 |
+    JSL execute_pointer_0086DF              ;$05BCB4 |
 
 Ptrs05BCB8:
     dw CODE_05C04D
@@ -3724,7 +3724,7 @@ CODE_05BCD6:
 
 CODE_05BCE9:
     LDA.w Layer1ScrollCmd_143E
-    JSL execute_pointer                     ;$05BCEC |
+    JSL execute_pointer_0086DF              ;$05BCEC |
 
 Ptrs05BCF0:
     dw CODE_05BD36
@@ -3746,7 +3746,7 @@ Ptrs05BCF0:
 CODE_05BD0E:
     LDA.w Layer2ScrollCmd_143F
     BEQ Return05BD35                        ;$05BD11 |
-    JSL execute_pointer                     ;$05BD13 |
+    JSL execute_pointer_0086DF              ;$05BD13 |
 
 Ptrs05BD17:
     dw CODE_05BD4C
@@ -5556,7 +5556,7 @@ CODE_05CBFF:
 
 CODE_05CC07:
     LDA.w OWProcess_13D9
-    JSL execute_pointer                     ;$05CC0A |
+    JSL execute_pointer_0086DF              ;$05CC0A |
 
 Ptrs05CC0E:
     dw CODE_05CC66
@@ -6738,7 +6738,7 @@ CODE_05DAEF:
     ROL                                     ;$05DAF8 |
     ROL                                     ;$05DAF9 |
     ROL                                     ;$05DAFA |
-    JSL execute_pointer_long                ;$05DAFB |
+    JSL execute_pointer_long_0086FA         ;$05DAFB |
 
 PtrsLong05DAFF:
     dl CODE_05DB3E

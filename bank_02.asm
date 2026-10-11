@@ -1537,7 +1537,7 @@ DATA_028B8C:
     db $00,$00,$80,$80,$80,$C0,$40,$00
 
 CODE_028B94:
-    JSL execute_pointer
+    JSL execute_pointer_0086DF
 
 Ptrs028B98:
     dw Return028B77
@@ -1737,7 +1737,7 @@ CODE_028CC4:
     JSL GetMarioClipping                    ;$028CEC |
     JSL CheckForContact                     ;$028CF0 |
     BCC CODE_028CFA                         ;$028CF4 |
-    JSL HurtMario                           ;$028CF6 |
+    JSL hurt_mario_00F5B7                   ;$028CF6 |
 CODE_028CFA:
     DEC.w MinorSprTimer_1850,X
     BEQ CODE_028D62                         ;$028CFD |
@@ -2201,7 +2201,7 @@ handle_bounce_sprite_02904D:
     BEQ CODE_02905E                         ;$029059 |
     DEC.w BounceSprTimer_16C5,X             ;$02905B |
 CODE_02905E:
-    JSL execute_pointer
+    JSL execute_pointer_0086DF
 
 BounceSpritePtrs:
     dw Return02904C
@@ -3057,7 +3057,7 @@ handle_smoke_sprite_0296C0:
     LDA.w SmokeSprNumber_17C0,X
     BEQ .return_0296D7                      ;$0296C3 |
     AND.b #$7F                              ;$0296C5 |
-    JSL execute_pointer                     ;$0296C7 |
+    JSL execute_pointer_0086DF              ;$0296C7 |
 
 .Ptrs0296CB:
     dw .return_0296D7
@@ -3659,7 +3659,7 @@ extended_sprites_029B0A:
     LDY.w ExtSprTimer_176F,X                ;$029B1F ||
     BEQ +                                   ;$029B22 ||\ decrement timer if set
     DEC.w ExtSprTimer_176F,X                ;$029B24 ||/
-+   JSL execute_pointer                     ;$029B27 |/
++   JSL execute_pointer_0086DF              ;$029B27 |/
 
 .ExtendedSpritePtrs:
     dw .return_029B15                       ;$029B2B| 00
@@ -4947,7 +4947,7 @@ hurt_yoshi_02A473:
     RTS                                     ;$02A4AD |
 
 hurt_mario_02A4AE:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
     RTS                                     ;$02A4B2 |
 
 hurt_yoshi_x_speeds_02A4B3:
@@ -6471,7 +6471,7 @@ handle_sprite_generator_02AFFD:
     LDY.b SpriteLock_9D                     ;$02B003 |
     BNE .return_02B02A                      ;$02B005 |
     DEC A                                   ;$02B007 |
-    JSL execute_pointer                     ;$02B008 |
+    JSL execute_pointer_0086DF              ;$02B008 |
 
 .GeneratorPtrs:
     dw GenerateEerie
@@ -6987,7 +6987,7 @@ Return02B3AA:
 
 CODE_02B3AB:
     DEC A
-    JSL execute_pointer                     ;$02B3AC |
+    JSL execute_pointer_0086DF              ;$02B3AC |
 
 ShooterPtrs:
     dw ShootBullet
@@ -8324,7 +8324,7 @@ WallFollowersMain:
     BEQ wall_following_sprites_02BDB3       ;$02BD5A |
     LDA.b SpritePhase_C2,X                  ;$02BD5C |
     AND.b #$01                              ;$02BD5E |
-    JSL execute_pointer                     ;$02BD60 |
+    JSL execute_pointer_0086DF              ;$02BD60 |
 
 .UrchinPtrs:
     dw urchin_waiting_02BD68                ;$02BD54 | Even = waiting to move
@@ -8709,7 +8709,7 @@ CODE_02C01B:
     STA.b SpriteYSpeed_AA,X                 ;$02C022 |
 CODE_02C024:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$02C026 |
+    JSL execute_pointer_0086DF              ;$02C026 |
 
 RipVanFishPtrs:
     dw CODE_02C02E
@@ -9145,7 +9145,7 @@ chucks_02C22C:
     ADC.b #$03                              ;$02C332 |
 +   STA.b SpriteYSpeed_AA,X                 ;$02C334 |
     LDA.b SpritePhase_C2,X                  ;$02C336 |
-    JSL execute_pointer                     ;$02C338 |
+    JSL execute_pointer_0086DF              ;$02C338 |
 
 .ChuckPtrs:
     dw CODE_02C63B
@@ -9827,7 +9827,7 @@ CODE_02C79D:
 CODE_02C810:
     LDA.w RidingYoshi_187A
     BNE Return02C819                        ;$02C813 |
-    JSL HurtMario                           ;$02C815 |
+    JSL hurt_mario_00F5B7                   ;$02C815 |
 Return02C819:
     RTS
 
@@ -10531,7 +10531,7 @@ PeaBouncerMain:
     STA.w SPCIO3_1DFC                       ;$02CDEE |
 CODE_02CDF1:
     LDA.w Sprite_1528,X
-    JSL execute_pointer                     ;$02CDF4 |
+    JSL execute_pointer_0086DF              ;$02CDF4 |
 
 PeaBouncerPtrs:
     dw Return02CDFE
@@ -11422,7 +11422,7 @@ CODE_02D3FD:
     ADC.w SpriteXPosHigh_14E0,X             ;$02D403 |
     STA.w SpriteXPosHigh_14E0,X             ;$02D406 |
     LDA.b SpritePhase_C2,X                  ;$02D409 |
-    JSL execute_pointer                     ;$02D40B |
+    JSL execute_pointer_0086DF              ;$02D40B |
 
 Layer3SmashPtrs:
     dw CODE_02D419
@@ -11543,7 +11543,7 @@ CODE_02D4A8:
     BCS CODE_02D4E5                         ;$02D4D1 |
     LDA.b PlayerInAir_72                    ;$02D4D3 |
     BNE CODE_02D4DC                         ;$02D4D5 |
-    JSL HurtMario                           ;$02D4D7 |
+    JSL hurt_mario_00F5B7                   ;$02D4D7 |
     RTS                                     ;$02D4DB |
 
 CODE_02D4DC:
@@ -12621,7 +12621,7 @@ CODE_02DCB7:
     STZ.b SpriteXSpeed_B6,X                 ;$02DCD9 |
 CODE_02DCDB:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$02DCDD |
+    JSL execute_pointer_0086DF              ;$02DCDD |
 
 SumoBroPtrs:
     dw CODE_02DCEA
@@ -12988,7 +12988,7 @@ CODE_02DFAF:
     STZ.b SpriteYSpeed_AA,X                 ;$02DFBA |
 CODE_02DFBC:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$02DFBE |
+    JSL execute_pointer_0086DF              ;$02DFBE |
 
 VolcanoLotusPtrs:
     dw CODE_02DFC9
@@ -13194,7 +13194,7 @@ CODE_02E0CD:
     JSL sprite_vs_sprite_or_mario_01803A    ;$02E129 |
     JSR UpdateYPosNoGrvtyB1                 ;$02E12D |
     LDA.b SpritePhase_C2,X                  ;$02E130 |
-    JSL execute_pointer                     ;$02E132 |
+    JSL execute_pointer_0086DF              ;$02E132 |
 
 JumpingPiranhaPtrs:
     dw CODE_02E13C
@@ -14015,7 +14015,7 @@ CODE_02E727:
     JSR CODE_02EB3D                         ;$02E73C |
     LDA.b SpritePhase_C2,X                  ;$02E73F |
     AND.b #$01                              ;$02E741 |
-    JSL execute_pointer                     ;$02E743 |
+    JSL execute_pointer_0086DF              ;$02E743 |
 
 FishPtrs:
     dw CODE_02E74E
@@ -14315,7 +14315,7 @@ CODE_02E94C:
     JSR SubOffscreen0Bnk2                   ;$02E956 |
     JSL sprite_vs_sprite_or_mario_01803A    ;$02E959 |
     LDA.b SpritePhase_C2,X                  ;$02E95D |
-    JSL execute_pointer                     ;$02E95F |
+    JSL execute_pointer_0086DF              ;$02E95F |
 
 PipeLakituPtrs:
     dw CODE_02E96D
@@ -14634,7 +14634,7 @@ Return02EB7C:
 
 CODE_02EB7D:
     LDA.b SpritePhase_C2,X
-    JSL execute_pointer                     ;$02EB7F |
+    JSL execute_pointer_0086DF              ;$02EB7F |
 
 SuperKoopaPtrs:
     dw CODE_02EB8D
@@ -15579,7 +15579,7 @@ Return02F295:
     RTS
 
 CODE_02F296:
-    JSL HurtMario
+    JSL hurt_mario_00F5B7
     RTS                                     ;$02F29A |
 
 CODE_02F29B:
@@ -15676,7 +15676,7 @@ CODE_02F321:
     ADC.b #$03                              ;$02F32D |
     STA.b SpriteYSpeed_AA,X                 ;$02F32F |
     LDA.b SpritePhase_C2,X                  ;$02F331 |
-    JSL execute_pointer                     ;$02F333 |
+    JSL execute_pointer_0086DF              ;$02F333 |
 
 BirdsPtrs:
     dw CODE_02F342
@@ -16366,7 +16366,7 @@ Return02F820:
     RTS
 
 run_cluster_sprite_02F821:
-    JSL execute_pointer
+    JSL execute_pointer_0086DF
 
 .Ptrs02F825:
     dw Return02F820                         ;$02F825 | 0: empty slot
@@ -16620,7 +16620,7 @@ sumo_bro_flame_pillar_02F91C:
 hurt_mario_or_yoshi_02F9F5:                 ;        ||||
     LDA.w RidingYoshi_187A                  ;$02F9F5 ||||
     BNE hurt_yoshi_02F9FF                   ;$02F9F8 ||||\
-    JSL HurtMario                           ;$02F9FA ||||/
+    JSL hurt_mario_00F5B7                   ;$02F9FA ||||/
 return_02F9FE:                              ;        |||/
     RTS                                     ;$02F9FE ||/
 
