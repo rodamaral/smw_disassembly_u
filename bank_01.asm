@@ -230,207 +230,207 @@ initialize_sprite_018172:
     JSL execute_pointer                     ;$018179 |
 
 .sprite_init_pointers:
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitGrnBounceKoopa
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitBomb
-    dw InitKeyHole
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw UnusedInit
-    dw InitStandardSprite
-    dw InitStandardSprite
-    dw Return01B011
-    dw InitVerticalFish
-    dw InitFish
-    dw InitFish
-    dw InitMsgPSideExit
-    dw InitPiranha
-    dw return_0185C2
-    dw InitBulletBill
-    dw InitStandardSprite
-    dw InitLakitu
-    dw InitMagikoopa
-    dw return_018583
-    dw FaceMario
-    dw InitVertNetKoopa
-    dw InitVertNetKoopa
-    dw InitHorzNetKoopa
-    dw InitHorzNetKoopa
-    dw InitThwomp
-    dw Return01AEA2
-    dw InitBigBoo
-    dw InitKoopaKid
-    dw InitDownPiranha
-    dw return_0185C2
-    dw InitYoshiEgg
-    dw InitKeyPBabyYoshi
-    dw InitSpikeTop
-    dw return_0185C2
-    dw FaceMario
-    dw FaceMario
-    dw FaceMario
-    dw InitFireball
-    dw return_0185C2
-    dw InitYoshi
-    dw return_0185C2
-    dw InitBigBoo
-    dw InitEerie
-    dw InitEerie
-    dw InitUrchin
-    dw InitUrchin
-    dw InitUrchinWallFllw
-    dw InitRipVanFish
-    dw InitPSwitch
-    dw return_0185C2
-    dw return_0185C2
-    dw return_01843D
-    dw return_01843D
-    dw return_01843D
-    dw return_01843D
-    dw return_0185C2
-    dw InitDigginChuck
-    dw Return0183EE
-    dw Return0183EE
-    dw InitGrowingPipe
-    dw Return0183EE
-    dw InitPiranha
-    dw InitExplodingBlk
-    dw InitMontyMole
-    dw InitMontyMole
-    dw InitPiranha
-    dw InitPiranha
-    dw FaceMario
-    dw InitMovingLedge
-    dw return_0185C2
-    dw InitClimbingDoor
-    dw InitChckbrdPlat
-    dw Return01B25D
-    dw InitChckbrdPlat
-    dw Return01B25D
-    dw Return01B267
-    dw Return01B267
-    dw InitFloatingPlat
-    dw InitFallingPlat
-    dw InitFloatingPlat
-    dw InitOrangePlat
-    dw InitBrwnChainPlat
-    dw Return01AE90
-    dw InitFloatingSkull
-    dw InitLineBrwnPlat
-    dw InitLinePlat
-    dw InitLineRope
-    dw InitLineGuidedSpr
-    dw InitLineGuidedSpr
-    dw InitLineGuidedSpr
-    dw InitLineGuidedSpr
-    dw Return01D6C3
-    dw return_0185C2
-    dw return_01843D
-    dw InitPeaBouncer
-    dw return_0185C2
-    dw InitDinos
-    dw InitDinos
-    dw InitPokey
-    dw InitSuperKoopa
-    dw InitSuperKoopa
-    dw InitSuperKoopaFthr
-    dw InitPowerUp
-    dw InitPowerUp
-    dw InitPowerUp
-    dw InitPowerUp
-    dw InitPowerUp
-    dw return_018583
-    dw return_018583
-    dw InitGoalTape
-    dw return_0185C2
-    dw return_0185C2
-    dw return_0185C2
-    dw return_0185C2
-    dw InitKeyPBabyYoshi
-    dw InitChangingItem
-    dw InitBonusGame
-    dw InitFlyingQBlock
-    dw InitFlyingQBlock
-    dw return_0185C2
-    dw InitWiggler
-    dw return_0185C2
-    dw InitWingedCage
-    dw return_01843D
-    dw return_0185C2
-    dw return_0185C2
-    dw InitMsgPSideExit
-    dw return_0185C2
-    dw return_0185C2
-    dw InitScalePlats
-    dw FaceMario
-    dw Return018869
-    dw InitChuck
-    dw InitChuck
-    dw InitWhistlinChuck
-    dw InitClappinChuck
-    dw Return018869
-    dw InitPuntinChuck
-    dw InitPitchinChuck
-    dw Return0183EE
-    dw InitSumoBrother
-    dw InitHammerBrother
-    dw return_0185C2
-    dw InitBubbleSpr
-    dw InitBallNChain
-    dw InitBanzai
-    dw InitBowserScene
-    dw return_0185C2
-    dw return_0185C2
-    dw InitGreyChainPlat
-    dw InitFloatSpkBall
-    dw InitFuzzBallPSpark
-    dw InitFuzzBallPSpark
-    dw return_0185C2
-    dw return_0185C2
-    dw InitReznor
-    dw InitFishbone
-    dw FaceMario
-    dw InitWoodSpike
-    dw InitWoodSpike2
-    dw return_0185C2
-    dw return_0185C2
-    dw InitDiagBouncer
-    dw InitCreateEatBlk
-    dw return_0185C2
-    dw InitBowsersFire
-    dw FaceMario
-    dw return_0185C2
-    dw InitDiagBouncer
-    dw return_0185C2
-    dw return_0185C2
-    dw return_0185C2
-    dw InitTimedPlat
-    dw return_0185C2
-    dw InitBowserStatue
-    dw InitSlidingKoopa
-    dw return_0185C2
-    dw FaceMario
-    dw InitGreyLavaPlat
-    dw InitMontyMole
-    dw FaceMario
-    dw FaceMario
-    dw return_0185C2
-    dw FaceMario
-    dw return_018313
-    dw return_0185C2
-    dw return_0185C2
+    dw InitStandardSprite                   ;$01817D | 00 Green Koopa Troopa without shell
+    dw InitStandardSprite                   ;$01817F | 01 Red Koopa Troopa without shell
+    dw InitStandardSprite                   ;$018181 | 02 Blue Koopa Troopa without shell
+    dw InitStandardSprite                   ;$018183 | 03 Yellow Koopa Troopa without shell
+    dw InitStandardSprite                   ;$018185 | 04 Green Koopa Troopa
+    dw InitStandardSprite                   ;$018187 | 05 Red Koopa Troopa
+    dw InitStandardSprite                   ;$018189 | 06 Blue Koopa Troopa
+    dw InitStandardSprite                   ;$01818B | 07 Yellow Koopa Troopa
+    dw InitStandardSprite                   ;$01818D | 08 Green Koopa Troopa flying left
+    dw InitGrnBounceKoopa                   ;$01818F | 09 Green Koopa Troopa bouncing
+    dw InitStandardSprite                   ;$018191 | 0A Red Koopa Troopa flying vertically
+    dw InitStandardSprite                   ;$018193 | 0B Red Koopa Troopa flying horizontally
+    dw InitStandardSprite                   ;$018195 | 0C Yellow Koopa Troopa with wings
+    dw InitBomb                             ;$018197 | 0D Bob-Omb
+    dw InitKeyHole                          ;$018199 | 0E Keyhole
+    dw InitStandardSprite                   ;$01819B | 0F Goomba
+    dw InitStandardSprite                   ;$01819D | 10 Bouncing Goomba with wings
+    dw InitStandardSprite                   ;$01819F | 11 Buzzy Beetle
+    dw UnusedInit                           ;$0181A1 | 12 Unused
+    dw InitStandardSprite                   ;$0181A3 | 13 Spiny
+    dw InitStandardSprite                   ;$0181A5 | 14 Spiny falling
+    dw Return01B011                         ;$0181A7 | 15 Cheep Cheep swimming horizontally
+    dw InitVerticalFish                     ;$0181A9 | 16 Cheep Cheep swimming vertically
+    dw InitFish                             ;$0181AB | 17 Cheep Cheep flying
+    dw InitFish                             ;$0181AD | 18 Cheep Cheep jumping to surface
+    dw InitMsgPSideExit                     ;$0181AF | 19 Display text from level message 1
+    dw InitPiranha                          ;$0181B1 | 1A Classic Piranha Plant
+    dw return_0185C2                        ;$0181B3 | 1B Bouncing Football in place.
+    dw InitBulletBill                       ;$0181B5 | 1C Bullet Bill
+    dw InitStandardSprite                   ;$0181B7 | 1D Hopping flame
+    dw InitLakitu                           ;$0181B9 | 1E Lakitu
+    dw InitMagikoopa                        ;$0181BB | 1F Magikoopa
+    dw return_018583                        ;$0181BD | 20 Magikoopa's magic
+    dw FaceMario                            ;$0181BF | 21 Moving coin
+    dw InitVertNetKoopa                     ;$0181C1 | 22 Green vertical net Koopa
+    dw InitVertNetKoopa                     ;$0181C3 | 23 Red vertical net Koopa
+    dw InitHorzNetKoopa                     ;$0181C5 | 24 Green horizontal net Koopa
+    dw InitHorzNetKoopa                     ;$0181C7 | 25 Red horizontal net Koopa
+    dw InitThwomp                           ;$0181C9 | 26 Thwomp
+    dw Return01AEA2                         ;$0181CB | 27 Thwimp
+    dw InitBigBoo                           ;$0181CD | 28 Big Boo
+    dw InitKoopaKid                         ;$0181CF | 29 Koopa Kid
+    dw InitDownPiranha                      ;$0181D1 | 2A Upside-down Piranha Plant
+    dw return_0185C2                        ;$0181D3 | 2B Sumo Brother's lightning
+    dw InitYoshiEgg                         ;$0181D5 | 2C Yoshi egg
+    dw InitKeyPBabyYoshi                    ;$0181D7 | 2D Baby Yoshi
+    dw InitSpikeTop                         ;$0181D9 | 2E Spike Top
+    dw return_0185C2                        ;$0181DB | 2F Portable springboard
+    dw FaceMario                            ;$0181DD | 30 Dry Bones that throws bones
+    dw FaceMario                            ;$0181DF | 31 Bony Beetle
+    dw FaceMario                            ;$0181E1 | 32 Dry Bones that stays on ledges
+    dw InitFireball                         ;$0181E3 | 33 Podoboo/vertical fireball
+    dw return_0185C2                        ;$0181E5 | 34 Boss fireball
+    dw InitYoshi                            ;$0181E7 | 35 Yoshi
+    dw return_0185C2                        ;$0181E9 | 36 Unused
+    dw InitBigBoo                           ;$0181EB | 37 Boo
+    dw InitEerie                            ;$0181ED | 38 Eerie that moves straight
+    dw InitEerie                            ;$0181EF | 39 Eerie that moves in a wave
+    dw InitUrchin                           ;$0181F1 | 3A Urchin that moves a fixed distance
+    dw InitUrchin                           ;$0181F3 | 3B Urchin that moves between walls
+    dw InitUrchinWallFllw                   ;$0181F5 | 3C Urchin that follows walls
+    dw InitRipVanFish                       ;$0181F7 | 3D Rip Van Fish
+    dw InitPSwitch                          ;$0181F9 | 3E P-switch
+    dw return_0185C2                        ;$0181FB | 3F Para-Goomba
+    dw return_0185C2                        ;$0181FD | 40 Para-Bomb
+    dw return_01843D                        ;$0181FF | 41 Dolphin that swims and jumps in one direction
+    dw return_01843D                        ;$018201 | 42 Dolphin that swims and jumps back and forth
+    dw return_01843D                        ;$018203 | 43 Dolphin that swims and jumps up and down
+    dw return_01843D                        ;$018205 | 44 Torpedo Ted
+    dw return_0185C2                        ;$018207 | 45 Directional coins
+    dw InitDigginChuck                      ;$018209 | 46 Diggin' Chuck
+    dw Return0183EE                         ;$01820B | 47 Swimming/jumping fish
+    dw Return0183EE                         ;$01820D | 48 Diggin' Chuck's rock
+    dw InitGrowingPipe                      ;$01820F | 49 Growing/shrinking pipe
+    dw Return0183EE                         ;$018211 | 4A Goal Point Question Sphere
+    dw InitPiranha                          ;$018213 | 4B Pipe-dwelling Lakitu
+    dw InitExplodingBlk                     ;$018215 | 4C Exploding block
+    dw InitMontyMole                        ;$018217 | 4D Monty Mole, ground-dwelling
+    dw InitMontyMole                        ;$018219 | 4E Monty Mole, ledge-dwelling
+    dw InitPiranha                          ;$01821B | 4F Jumping Piranha Plant
+    dw InitPiranha                          ;$01821D | 50 Jumping Piranha Plant that spits fireballs
+    dw FaceMario                            ;$01821F | 51 Ninji
+    dw InitMovingLedge                      ;$018221 | 52 Moving hole in ghost house ledge
+    dw return_0185C2                        ;$018223 | 53 Throw block sprite
+    dw InitClimbingDoor                     ;$018225 | 54 Revolving door for climbing net
+    dw InitChckbrdPlat                      ;$018227 | 55 Checkerboard platform, horizontal
+    dw Return01B25D                         ;$018229 | 56 Flying rock platform, horizontal
+    dw InitChckbrdPlat                      ;$01822B | 57 Checkerboard platform, vertical
+    dw Return01B25D                         ;$01822D | 58 Flying rock platform, vertical
+    dw Return01B267                         ;$01822F | 59 Turn block bridge, horizontal and vertical
+    dw Return01B267                         ;$018231 | 5A Turn block bridge, horizontal
+    dw InitFloatingPlat                     ;$018233 | 5B Floating brown platform
+    dw InitFallingPlat                      ;$018235 | 5C Floating checkerboard platform
+    dw InitFloatingPlat                     ;$018237 | 5D Small orange floating platform
+    dw InitOrangePlat                       ;$018239 | 5E Large orange floating platform
+    dw InitBrwnChainPlat                    ;$01823B | 5F Swinging brown platform
+    dw Return01AE90                         ;$01823D | 60 Flat switch palace switch
+    dw InitFloatingSkull                    ;$01823F | 61 Floating skulls
+    dw InitLineBrwnPlat                     ;$018241 | 62 Brown line-guided platform
+    dw InitLinePlat                         ;$018243 | 63 Brown/checkered line-guided platform
+    dw InitLineRope                         ;$018245 | 64 Line-guided rope mechanism
+    dw InitLineGuidedSpr                    ;$018247 | 65 Chainsaw (line-guided)
+    dw InitLineGuidedSpr                    ;$018249 | 66 Upside-down chainsaw (line-guided)
+    dw InitLineGuidedSpr                    ;$01824B | 67 Grinder, line-guided
+    dw InitLineGuidedSpr                    ;$01824D | 68 Fuzzy, line-guided
+    dw Return01D6C3                         ;$01824F | 69 Unused
+    dw return_0185C2                        ;$018251 | 6A Coin game cloud
+    dw return_01843D                        ;$018253 | 6B Wall springboard (left wall)
+    dw InitPeaBouncer                       ;$018255 | 6C Wall springboard (right wall)
+    dw return_0185C2                        ;$018257 | 6D Invisible solid block
+    dw InitDinos                            ;$018259 | 6E Dino-Rhino
+    dw InitDinos                            ;$01825B | 6F Dino-Torch
+    dw InitPokey                            ;$01825D | 70 Pokey
+    dw InitSuperKoopa                       ;$01825F | 71 Super Koopa with red cape
+    dw InitSuperKoopa                       ;$018261 | 72 Super Koopa with yellow cape
+    dw InitSuperKoopaFthr                   ;$018263 | 73 Super Koopa on the ground
+    dw InitPowerUp                          ;$018265 | 74 Mushroom
+    dw InitPowerUp                          ;$018267 | 75 Flower
+    dw InitPowerUp                          ;$018269 | 76 Star
+    dw InitPowerUp                          ;$01826B | 77 Feather
+    dw InitPowerUp                          ;$01826D | 78 1-Up mushroom
+    dw return_018583                        ;$01826F | 79 Growing vine
+    dw return_018583                        ;$018271 | 7A Firework
+    dw InitGoalTape                         ;$018273 | 7B Goal tape
+    dw return_0185C2                        ;$018275 | 7C Peach (after Bowser fight)
+    dw return_0185C2                        ;$018277 | 7D P-Balloon
+    dw return_0185C2                        ;$018279 | 7E Flying red coin / Yoshi Wings
+    dw return_0185C2                        ;$01827B | 7F Flying golden mushroom
+    dw InitKeyPBabyYoshi                    ;$01827D | 80 Key
+    dw InitChangingItem                     ;$01827F | 81 Changing item
+    dw InitBonusGame                        ;$018281 | 82 Bonus game sprite
+    dw InitFlyingQBlock                     ;$018283 | 83 Flying question block that flies left
+    dw InitFlyingQBlock                     ;$018285 | 84 Flying question block that flies back and forth
+    dw return_0185C2                        ;$018287 | 85 Unused
+    dw InitWiggler                          ;$018289 | 86 Wiggler
+    dw return_0185C2                        ;$01828B | 87 Lakitu's cloud
+    dw InitWingedCage                       ;$01828D | 88 Winged cage (unused)
+    dw return_01843D                        ;$01828F | 89 Layer 3 Smash
+    dw return_0185C2                        ;$018291 | 8A Yoshi's House bird
+    dw return_0185C2                        ;$018293 | 8B Puff of smoke from Yoshi's House
+    dw InitMsgPSideExit                     ;$018295 | 8C Side exit enabler
+    dw return_0185C2                        ;$018297 | 8D Ghost house exit sign and door
+    dw return_0185C2                        ;$018299 | 8E Invisible "Warp Hole"
+    dw InitScalePlats                       ;$01829B | 8F Scale platforms
+    dw FaceMario                            ;$01829D | 90 Large green gas bubble
+    dw Return018869                         ;$01829F | 91 Chargin' Chuck
+    dw InitChuck                            ;$0182A1 | 92 Splittin' Chuck
+    dw InitChuck                            ;$0182A3 | 93 Bouncin' Chuck
+    dw InitWhistlinChuck                    ;$0182A5 | 94 Whistlin' Chuck
+    dw InitClappinChuck                     ;$0182A7 | 95 Clappin' Chuck
+    dw Return018869                         ;$0182A9 | 96 Unused
+    dw InitPuntinChuck                      ;$0182AB | 97 Puntin' Chuck
+    dw InitPitchinChuck                     ;$0182AD | 98 Pitchin' Chuck
+    dw Return0183EE                         ;$0182AF | 99 Volcano Lotus
+    dw InitSumoBrother                      ;$0182B1 | 9A Sumo Brother
+    dw InitHammerBrother                    ;$0182B3 | 9B Amazing Flying Hammer Brother
+    dw return_0185C2                        ;$0182B5 | 9C Flying gray blocks for Hammer Brother
+    dw InitBubbleSpr                        ;$0182B7 | 9D Sprite in a bubble
+    dw InitBallNChain                       ;$0182B9 | 9E Ball 'n' Chain
+    dw InitBanzai                           ;$0182BB | 9F Banzai Bill
+    dw InitBowserScene                      ;$0182BD | A0 Bowser battle activator
+    dw return_0185C2                        ;$0182BF | A1 Bowser's "bowling ball"
+    dw return_0185C2                        ;$0182C1 | A2 Mecha-Koopa
+    dw InitGreyChainPlat                    ;$0182C3 | A3 Rotating gray platform
+    dw InitFloatSpkBall                     ;$0182C5 | A4 Floating spike ball
+    dw InitFuzzBallPSpark                   ;$0182C7 | A5 Wall-following Sparky/Fuzzy
+    dw InitFuzzBallPSpark                   ;$0182C9 | A6 Hothead
+    dw return_0185C2                        ;$0182CB | A7 Iggy's ball projectile
+    dw return_0185C2                        ;$0182CD | A8 Blargg
+    dw InitReznor                           ;$0182CF | A9 Reznor
+    dw InitFishbone                         ;$0182D1 | AA Fishbone
+    dw FaceMario                            ;$0182D3 | AB Rex
+    dw InitWoodSpike                        ;$0182D5 | AC Wooden spike pointing down
+    dw InitWoodSpike2                       ;$0182D7 | AD Wooden spike pointing up
+    dw return_0185C2                        ;$0182D9 | AE Fishin' Boo
+    dw return_0185C2                        ;$0182DB | AF Boo Block
+    dw InitDiagBouncer                      ;$0182DD | B0 Reflecting stream of Boo Buddies
+    dw InitCreateEatBlk                     ;$0182DF | B1 Creating/eating block
+    dw return_0185C2                        ;$0182E1 | B2 Falling spike
+    dw InitBowsersFire                      ;$0182E3 | B3 Bowser statue fireball
+    dw FaceMario                            ;$0182E5 | B4 Grinder that moves on the ground
+    dw return_0185C2                        ;$0182E7 | B5 Unused
+    dw InitDiagBouncer                      ;$0182E9 | B6 Reflecting fireball
+    dw return_0185C2                        ;$0182EB | B7 Carrot Top Lift, upper right
+    dw return_0185C2                        ;$0182ED | B8 Carrot Top Lift, upper left
+    dw return_0185C2                        ;$0182EF | B9 Info Box
+    dw InitTimedPlat                        ;$0182F1 | BA Timed Lift
+    dw return_0185C2                        ;$0182F3 | BB Moving castle block
+    dw InitBowserStatue                     ;$0182F5 | BC Bowser statue
+    dw InitSlidingKoopa                     ;$0182F7 | BD Sliding Koopa
+    dw return_0185C2                        ;$0182F9 | BE Swooper
+    dw FaceMario                            ;$0182FB | BF Mega Mole
+    dw InitGreyLavaPlat                     ;$0182FD | C0 Sinking gray platform on lava
+    dw InitMontyMole                        ;$0182FF | C1 Flying gray turn blocks
+    dw FaceMario                            ;$018301 | C2 Blurp
+    dw FaceMario                            ;$018303 | C3 Porcu-Puffer
+    dw return_0185C2                        ;$018305 | C4 Gray platform that falls
+    dw FaceMario                            ;$018307 | C5 Big Boo Boss
+    dw return_018313                        ;$018309 | C6 Spotlight/dark room sprite
+    dw return_0185C2                        ;$01830B | C7 Invisible mushroom
+    dw return_0185C2                        ;$01830D | C8 Light switch for dark room
 
 InitGreyLavaPlat:
     INC.b SpriteYPosLow_D8,X
@@ -893,208 +893,208 @@ call_sprite_main_0185C3:
     LDA.b SpriteNumber_9E,X                 ;$0185C6 |
     JSL execute_pointer                     ;$0185C8 |
 
-SpriteMainPtr:
-    dw ShellessKoopas
-    dw ShellessKoopas
-    dw ShellessKoopas
-    dw ShellessKoopas
-    dw Spr0to13Start
-    dw Spr0to13Start
-    dw Spr0to13Start
-    dw Spr0to13Start
-    dw GreenParaKoopa
-    dw GreenParaKoopa
-    dw RedVertParaKoopa
-    dw RedHorzParaKoopa
-    dw Spr0to13Start
-    dw Bobomb
-    dw keyhole_01E1C8
-    dw Spr0to13Start
-    dw WingedGoomba
-    dw Spr0to13Start
-    dw Return01F87B
-    dw Spr0to13Start
-    dw SpinyEgg
-    dw Fish
-    dw Fish
-    dw GeneratedFish
-    dw JumpingFish
-    dw LevelMessage_01E75B
-    dw ClassicPiranhas
-    dw Bank3SprHandler
-    dw BulletBill
-    dw HoppingFlame
-    dw Lakitu
-    dw Magikoopa
-    dw MagikoopasMagic
-    dw PowerUpRt
-    dw ClimbingKoopa
-    dw ClimbingKoopa
-    dw ClimbingKoopa
-    dw ClimbingKoopa
-    dw Thwomp
-    dw Thwimp
-    dw BigBoo
-    dw KoopaKid
-    dw ClassicPiranhas
-    dw SumosLightning
-    dw YoshiEgg
-    dw return_0185C2
-    dw WallFollowers
-    dw SpringBoard
-    dw DryBonesAndBeetle
-    dw DryBonesAndBeetle
-    dw DryBonesAndBeetle
-    dw Fireballs
-    dw BossFireball
-    dw yoshi_01EBCA
-    dw DATA_01E41F
-    dw BooPBooBlock
-    dw Eerie
-    dw Eerie
-    dw WallFollowers
-    dw WallFollowers
-    dw WallFollowers
-    dw RipVanFish
-    dw LevelMessage_01E75B
-    dw ParachuteSprites
-    dw ParachuteSprites
-    dw Dolphin
-    dw Dolphin
-    dw Dolphin
-    dw TorpedoTed
-    dw DirectionalCoins
-    dw DigginChuck
-    dw SwimJumpFish
-    dw DigginChucksRock
-    dw GrowingPipe
-    dw GoalSphere
-    dw PipeLakitu
-    dw ExplodingBlock
-    dw MontyMole
-    dw MontyMole
-    dw JumpingPiranha
-    dw JumpingPiranha
-    dw Bank3SprHandler
-    dw MovingLedge
-    dw return_0185C2
-    dw ClimbingDoor
-    dw Platforms
-    dw Platforms
-    dw Platforms
-    dw Platforms
-    dw TurnBlockBridge
-    dw HorzTurnBlkBridge
-    dw Platforms2
-    dw Platforms2
-    dw Platforms2
-    dw OrangePlatform
-    dw brown_chained_plat_01C773
-    dw PalaceSwitch
-    dw FloatingSkulls
-    dw LineFuzzyPPlats
-    dw LineFuzzyPPlats
-    dw LineRopePChainsaw
-    dw LineRopePChainsaw
-    dw LineRopePChainsaw
-    dw LineGrinder
-    dw LineFuzzyPPlats
-    dw Return01D6C3
-    dw CoinCloud
-    dw PeaBouncer
-    dw PeaBouncer
-    dw InvisSolidPDinos
-    dw InvisSolidPDinos
-    dw InvisSolidPDinos
-    dw Pokey
-    dw RedSuperKoopa
-    dw YellowSuperKoopa
-    dw FeatherSuperKoopa
-    dw PowerUpRt
-    dw FireFlower
-    dw PowerUpRt
-    dw Feather
-    dw PowerUpRt
-    dw GrowingVine
-    dw Bank3SprHandler
-    dw GoalTape
-    dw Bank3SprHandler
-    dw balloon_key_fly_spr_01C1F2
-    dw balloon_key_fly_spr_01C1F2
-    dw balloon_key_fly_spr_01C1F2
-    dw balloon_key_fly_spr_01C1F2
-    dw ChangingItem
-    dw BonusGame
-    dw FlyingQBlock
-    dw FlyingQBlock
-    dw InitFlyingQBlock
-    dw Wiggler
-    dw LakituCloud
-    dw WingedCage
-    dw Layer3Smash
-    dw YoshisHouseBirds
-    dw YoshisHouseSmoke
-    dw SideExit
-    dw GhostHouseExit
-    dw WarpBlocks
-    dw ScalePlatforms
-    dw GasBubble
-    dw Chucks
-    dw Chucks
-    dw Chucks
-    dw Chucks
-    dw Chucks
-    dw Chucks
-    dw Chucks
-    dw Chucks
-    dw VolcanoLotus
-    dw SumoBrother
-    dw HammerBrother
-    dw FlyingPlatform
-    dw BubbleWithSprite
-    dw BanzaiBnCGrayPlat
-    dw BanzaiBnCGrayPlat
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw BanzaiBnCGrayPlat
-    dw FloatingSpikeBall
-    dw WallFollowers
-    dw WallFollowers
-    dw IggysBall
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw BooPBooBlock
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Grinder
-    dw Fireballs
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
-    dw Bank3SprHandler
+.sprite_main_pointers:
+    dw ShellessKoopas                       ;$0185CC | 00 Green Koopa Troopa without shell
+    dw ShellessKoopas                       ;$0185CE | 01 Red Koopa Troopa without shell
+    dw ShellessKoopas                       ;$0185D0 | 02 Blue Koopa Troopa without shell
+    dw ShellessKoopas                       ;$0185D2 | 03 Yellow Koopa Troopa without shell
+    dw Spr0to13Start                        ;$0185D4 | 04 Green Koopa Troopa
+    dw Spr0to13Start                        ;$0185D6 | 05 Red Koopa Troopa
+    dw Spr0to13Start                        ;$0185D8 | 06 Blue Koopa Troopa
+    dw Spr0to13Start                        ;$0185DA | 07 Yellow Koopa Troopa
+    dw GreenParaKoopa                       ;$0185DC | 08 Green Koopa Troopa flying left
+    dw GreenParaKoopa                       ;$0185DE | 09 Green Koopa Troopa bouncing
+    dw RedVertParaKoopa                     ;$0185E0 | 0A Red Koopa Troopa flying vertically
+    dw RedHorzParaKoopa                     ;$0185E2 | 0B Red Koopa Troopa flying horizontally
+    dw Spr0to13Start                        ;$0185E4 | 0C Yellow Koopa Troopa with wings
+    dw Bobomb                               ;$0185E6 | 0D Bob-Omb
+    dw keyhole_01E1C8                       ;$0185E8 | 0E Keyhole
+    dw Spr0to13Start                        ;$0185EA | 0F Goomba
+    dw WingedGoomba                         ;$0185EC | 10 Bouncing Goomba with wings
+    dw Spr0to13Start                        ;$0185EE | 11 Buzzy Beetle
+    dw Return01F87B                         ;$0185F0 | 12 Unused
+    dw Spr0to13Start                        ;$0185F2 | 13 Spiny
+    dw SpinyEgg                             ;$0185F4 | 14 Spiny falling
+    dw Fish                                 ;$0185F6 | 15 Cheep Cheep swimming horizontally
+    dw Fish                                 ;$0185F8 | 16 Cheep Cheep swimming vertically
+    dw GeneratedFish                        ;$0185FA | 17 Cheep Cheep flying
+    dw JumpingFish                          ;$0185FC | 18 Cheep Cheep jumping to surface
+    dw LevelMessage_01E75B                  ;$0185FE | 19 Display text from level message 1
+    dw ClassicPiranhas                      ;$018600 | 1A Classic Piranha Plant
+    dw Bank3SprHandler                      ;$018602 | 1B Bouncing Football in place.
+    dw BulletBill                           ;$018604 | 1C Bullet Bill
+    dw HoppingFlame                         ;$018606 | 1D Hopping flame
+    dw Lakitu                               ;$018608 | 1E Lakitu
+    dw Magikoopa                            ;$01860A | 1F Magikoopa
+    dw MagikoopasMagic                      ;$01860C | 20 Magikoopa's magic
+    dw PowerUpRt                            ;$01860E | 21 Moving coin
+    dw ClimbingKoopa                        ;$018610 | 22 Green vertical net Koopa
+    dw ClimbingKoopa                        ;$018612 | 23 Red vertical net Koopa
+    dw ClimbingKoopa                        ;$018614 | 24 Green horizontal net Koopa
+    dw ClimbingKoopa                        ;$018616 | 25 Red horizontal net Koopa
+    dw Thwomp                               ;$018618 | 26 Thwomp
+    dw Thwimp                               ;$01861A | 27 Thwimp
+    dw BigBoo                               ;$01861C | 28 Big Boo
+    dw KoopaKid                             ;$01861E | 29 Koopa Kid
+    dw ClassicPiranhas                      ;$018620 | 2A Upside-down Piranha Plant
+    dw SumosLightning                       ;$018622 | 2B Sumo Brother's lightning
+    dw YoshiEgg                             ;$018624 | 2C Yoshi egg
+    dw return_0185C2                        ;$018626 | 2D Baby Yoshi
+    dw WallFollowers                        ;$018628 | 2E Spike Top
+    dw SpringBoard                          ;$01862A | 2F Portable springboard
+    dw DryBonesAndBeetle                    ;$01862C | 30 Dry Bones that throws bones
+    dw DryBonesAndBeetle                    ;$01862E | 31 Bony Beetle
+    dw DryBonesAndBeetle                    ;$018630 | 32 Dry Bones that stays on ledges
+    dw Fireballs                            ;$018632 | 33 Podoboo/vertical fireball
+    dw BossFireball                         ;$018634 | 34 Boss fireball
+    dw yoshi_01EBCA                         ;$018636 | 35 Yoshi
+    dw DATA_01E41F                          ;$018638 | 36 Unused
+    dw BooPBooBlock                         ;$01863A | 37 Boo
+    dw Eerie                                ;$01863C | 38 Eerie that moves straight
+    dw Eerie                                ;$01863E | 39 Eerie that moves in a wave
+    dw WallFollowers                        ;$018640 | 3A Urchin that moves a fixed distance
+    dw WallFollowers                        ;$018642 | 3B Urchin that moves between walls
+    dw WallFollowers                        ;$018644 | 3C Urchin that follows walls
+    dw RipVanFish                           ;$018646 | 3D Rip Van Fish
+    dw LevelMessage_01E75B                  ;$018648 | 3E P-switch
+    dw ParachuteSprites                     ;$01864A | 3F Para-Goomba
+    dw ParachuteSprites                     ;$01864C | 40 Para-Bomb
+    dw Dolphin                              ;$01864E | 41 Dolphin that swims and jumps in one direction
+    dw Dolphin                              ;$018650 | 42 Dolphin that swims and jumps back and forth
+    dw Dolphin                              ;$018652 | 43 Dolphin that swims and jumps up and down
+    dw TorpedoTed                           ;$018654 | 44 Torpedo Ted
+    dw DirectionalCoins                     ;$018656 | 45 Directional coins
+    dw DigginChuck                          ;$018658 | 46 Diggin' Chuck
+    dw SwimJumpFish                         ;$01865A | 47 Swimming/jumping fish
+    dw DigginChucksRock                     ;$01865C | 48 Diggin' Chuck's rock
+    dw GrowingPipe                          ;$01865E | 49 Growing/shrinking pipe
+    dw GoalSphere                           ;$018660 | 4A Goal Point Question Sphere
+    dw PipeLakitu                           ;$018662 | 4B Pipe-dwelling Lakitu
+    dw ExplodingBlock                       ;$018664 | 4C Exploding block
+    dw MontyMole                            ;$018666 | 4D Monty Mole, ground-dwelling
+    dw MontyMole                            ;$018668 | 4E Monty Mole, ledge-dwelling
+    dw JumpingPiranha                       ;$01866A | 4F Jumping Piranha Plant
+    dw JumpingPiranha                       ;$01866C | 50 Jumping Piranha Plant that spits fireballs
+    dw Bank3SprHandler                      ;$01866E | 51 Ninji
+    dw MovingLedge                          ;$018670 | 52 Moving hole in ghost house ledge
+    dw return_0185C2                        ;$018672 | 53 Throw block sprite
+    dw ClimbingDoor                         ;$018674 | 54 Revolving door for climbing net
+    dw Platforms                            ;$018676 | 55 Checkerboard platform, horizontal
+    dw Platforms                            ;$018678 | 56 Flying rock platform, horizontal
+    dw Platforms                            ;$01867A | 57 Checkerboard platform, vertical
+    dw Platforms                            ;$01867C | 58 Flying rock platform, vertical
+    dw TurnBlockBridge                      ;$01867E | 59 Turn block bridge, horizontal and vertical
+    dw HorzTurnBlkBridge                    ;$018680 | 5A Turn block bridge, horizontal
+    dw Platforms2                           ;$018682 | 5B Floating brown platform
+    dw Platforms2                           ;$018684 | 5C Floating checkerboard platform
+    dw Platforms2                           ;$018686 | 5D Small orange floating platform
+    dw OrangePlatform                       ;$018688 | 5E Large orange floating platform
+    dw brown_chained_plat_01C773            ;$01868A | 5F Swinging brown platform
+    dw PalaceSwitch                         ;$01868C | 60 Flat switch palace switch
+    dw FloatingSkulls                       ;$01868E | 61 Floating skulls
+    dw LineFuzzyPPlats                      ;$018690 | 62 Brown line-guided platform
+    dw LineFuzzyPPlats                      ;$018692 | 63 Brown/checkered line-guided platform
+    dw LineRopePChainsaw                    ;$018694 | 64 Line-guided rope mechanism
+    dw LineRopePChainsaw                    ;$018696 | 65 Chainsaw (line-guided)
+    dw LineRopePChainsaw                    ;$018698 | 66 Upside-down chainsaw (line-guided)
+    dw LineGrinder                          ;$01869A | 67 Grinder, line-guided
+    dw LineFuzzyPPlats                      ;$01869C | 68 Fuzzy, line-guided
+    dw Return01D6C3                         ;$01869E | 69 Unused
+    dw CoinCloud                            ;$0186A0 | 6A Coin game cloud
+    dw PeaBouncer                           ;$0186A2 | 6B Wall springboard (left wall)
+    dw PeaBouncer                           ;$0186A4 | 6C Wall springboard (right wall)
+    dw InvisSolidPDinos                     ;$0186A6 | 6D Invisible solid block
+    dw InvisSolidPDinos                     ;$0186A8 | 6E Dino-Rhino
+    dw InvisSolidPDinos                     ;$0186AA | 6F Dino-Torch
+    dw Pokey                                ;$0186AC | 70 Pokey
+    dw RedSuperKoopa                        ;$0186AE | 71 Super Koopa with red cape
+    dw YellowSuperKoopa                     ;$0186B0 | 72 Super Koopa with yellow cape
+    dw FeatherSuperKoopa                    ;$0186B2 | 73 Super Koopa on the ground
+    dw PowerUpRt                            ;$0186B4 | 74 Mushroom
+    dw FireFlower                           ;$0186B6 | 75 Flower
+    dw PowerUpRt                            ;$0186B8 | 76 Star
+    dw Feather                              ;$0186BA | 77 Feather
+    dw PowerUpRt                            ;$0186BC | 78 1-Up mushroom
+    dw GrowingVine                          ;$0186BE | 79 Growing vine
+    dw Bank3SprHandler                      ;$0186C0 | 7A Firework
+    dw GoalTape                             ;$0186C2 | 7B Goal tape
+    dw Bank3SprHandler                      ;$0186C4 | 7C Peach (after Bowser fight)
+    dw balloon_key_fly_spr_01C1F2           ;$0186C6 | 7D P-Balloon
+    dw balloon_key_fly_spr_01C1F2           ;$0186C8 | 7E Flying red coin / Yoshi Wings
+    dw balloon_key_fly_spr_01C1F2           ;$0186CA | 7F Flying golden mushroom
+    dw balloon_key_fly_spr_01C1F2           ;$0186CC | 80 Key
+    dw ChangingItem                         ;$0186CE | 81 Changing item
+    dw BonusGame                            ;$0186D0 | 82 Bonus game sprite
+    dw FlyingQBlock                         ;$0186D2 | 83 Flying question block that flies left
+    dw FlyingQBlock                         ;$0186D4 | 84 Flying question block that flies back and forth
+    dw InitFlyingQBlock                     ;$0186D6 | 85 Unused
+    dw Wiggler                              ;$0186D8 | 86 Wiggler
+    dw LakituCloud                          ;$0186DA | 87 Lakitu's cloud
+    dw WingedCage                           ;$0186DC | 88 Winged cage (unused)
+    dw Layer3Smash                          ;$0186DE | 89 Layer 3 Smash
+    dw YoshisHouseBirds                     ;$0186E0 | 8A Yoshi's House bird
+    dw YoshisHouseSmoke                     ;$0186E2 | 8B Puff of smoke from Yoshi's House
+    dw SideExit                             ;$0186E4 | 8C Side exit enabler
+    dw GhostHouseExit                       ;$0186E6 | 8D Ghost house exit sign and door
+    dw WarpBlocks                           ;$0186E8 | 8E Invisible "Warp Hole"
+    dw ScalePlatforms                       ;$0186EA | 8F Scale platforms
+    dw GasBubble                            ;$0186EC | 90 Large green gas bubble
+    dw Chucks                               ;$0186EE | 91 Chargin' Chuck
+    dw Chucks                               ;$0186F0 | 92 Splittin' Chuck
+    dw Chucks                               ;$0186F2 | 93 Bouncin' Chuck
+    dw Chucks                               ;$0186F4 | 94 Whistlin' Chuck
+    dw Chucks                               ;$0186F6 | 95 Clappin' Chuck
+    dw Chucks                               ;$0186F8 | 96 Unused
+    dw Chucks                               ;$0186FA | 97 Puntin' Chuck
+    dw Chucks                               ;$0186FC | 98 Pitchin' Chuck
+    dw VolcanoLotus                         ;$0186FE | 99 Volcano Lotus
+    dw SumoBrother                          ;$018700 | 9A Sumo Brother
+    dw HammerBrother                        ;$018702 | 9B Amazing Flying Hammer Brother
+    dw FlyingPlatform                       ;$018704 | 9C Flying gray blocks for Hammer Brother
+    dw BubbleWithSprite                     ;$018706 | 9D Sprite in a bubble
+    dw BanzaiBnCGrayPlat                    ;$018708 | 9E Ball 'n' Chain
+    dw BanzaiBnCGrayPlat                    ;$01870A | 9F Banzai Bill
+    dw Bank3SprHandler                      ;$01870C | A0 Bowser battle activator
+    dw Bank3SprHandler                      ;$01870E | A1 Bowser's "bowling ball"
+    dw Bank3SprHandler                      ;$018710 | A2 Mecha-Koopa
+    dw BanzaiBnCGrayPlat                    ;$018712 | A3 Rotating gray platform
+    dw FloatingSpikeBall                    ;$018714 | A4 Floating spike ball
+    dw WallFollowers                        ;$018716 | A5 Wall-following Sparky/Fuzzy
+    dw WallFollowers                        ;$018718 | A6 Hothead
+    dw IggysBall                            ;$01871A | A7 Iggy's ball projectile
+    dw Bank3SprHandler                      ;$01871C | A8 Blargg
+    dw Bank3SprHandler                      ;$01871E | A9 Reznor
+    dw Bank3SprHandler                      ;$018720 | AA Fishbone
+    dw Bank3SprHandler                      ;$018722 | AB Rex
+    dw Bank3SprHandler                      ;$018724 | AC Wooden spike pointing down
+    dw Bank3SprHandler                      ;$018726 | AD Wooden spike pointing up
+    dw Bank3SprHandler                      ;$018728 | AE Fishin' Boo
+    dw BooPBooBlock                         ;$01872A | AF Boo Block
+    dw Bank3SprHandler                      ;$01872C | B0 Reflecting stream of Boo Buddies
+    dw Bank3SprHandler                      ;$01872E | B1 Creating/eating block
+    dw Bank3SprHandler                      ;$018730 | B2 Falling spike
+    dw Bank3SprHandler                      ;$018732 | B3 Bowser statue fireball
+    dw Grinder                              ;$018734 | B4 Grinder that moves on the ground
+    dw Fireballs                            ;$018736 | B5 Unused
+    dw Bank3SprHandler                      ;$018738 | B6 Reflecting fireball
+    dw Bank3SprHandler                      ;$01873A | B7 Carrot Top Lift, upper right
+    dw Bank3SprHandler                      ;$01873C | B8 Carrot Top Lift, upper left
+    dw Bank3SprHandler                      ;$01873E | B9 Info Box
+    dw Bank3SprHandler                      ;$018740 | BA Timed Lift
+    dw Bank3SprHandler                      ;$018742 | BB Moving castle block
+    dw Bank3SprHandler                      ;$018744 | BC Bowser statue
+    dw Bank3SprHandler                      ;$018746 | BD Sliding Koopa
+    dw Bank3SprHandler                      ;$018748 | BE Swooper
+    dw Bank3SprHandler                      ;$01874A | BF Mega Mole
+    dw Bank3SprHandler                      ;$01874C | C0 Sinking gray platform on lava
+    dw Bank3SprHandler                      ;$01874E | C1 Flying gray turn blocks
+    dw Bank3SprHandler                      ;$018750 | C2 Blurp
+    dw Bank3SprHandler                      ;$018752 | C3 Porcu-Puffer
+    dw Bank3SprHandler                      ;$018754 | C4 Gray platform that falls
+    dw Bank3SprHandler                      ;$018756 | C5 Big Boo Boss
+    dw Bank3SprHandler                      ;$018758 | C6 Spotlight/dark room sprite
+    dw Bank3SprHandler                      ;$01875A | C7 Invisible mushroom
+    dw Bank3SprHandler                      ;$01875C | C8 Light switch for dark room
 
 InvisSolidPDinos:
     JSL InvisBlkPDinosMain
