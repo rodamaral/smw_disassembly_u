@@ -4030,18 +4030,16 @@ CODE_00A19A:
     RTS                                     ;$00A1A5 |
 
 Clear_1A_13D3:
-    REP #$10
+    REP #$10                                ;$00A1A6 |
     SEP #$20                                ;$00A1A8 |
     LDX.w #$00BD                            ;$00A1AA |
-CODE_00A1AD:
-    STZ.b Layer1XPos_1A,X
+-   STZ.b Layer1XPos_1A,X                   ;$00A1AD |
     DEX                                     ;$00A1AF |
-    BPL CODE_00A1AD                         ;$00A1B0 |
+    BPL -                                   ;$00A1B0 |
     LDX.w #$07CE                            ;$00A1B2 |
-CODE_00A1B5:
-    STZ.w RamLevelReset_13D3,X
+-   STZ.w RamLevelReset_13D3,X              ;$00A1B5 |
     DEX                                     ;$00A1B8 |
-    BPL CODE_00A1B5                         ;$00A1B9 |
+    BPL -                                   ;$00A1B9 |
     SEP #$10                                ;$00A1BB |
     RTS                                     ;$00A1BD |
 
@@ -10438,19 +10436,19 @@ draw_mario_and_yoshi_00E2BD:
     PLB                                     ;$00E2BF |
     LDA.b PlayerHiddenTiles_78              ;$00E2C0 |
     CMP.b #!Hide_AllStar_FF                 ;$00E2C2 |
-    BEQ +                                   ;$00E2C4 |
-    JSL draw_yoshi_01EA70                   ;$00E2C6 |
+    BEQ +                                   ;$00E2C4 |\
+    JSL draw_yoshi_01EA70                   ;$00E2C6 |/
 +   LDY.w CyclePaletteTimer_149B            ;$00E2CA |
     BNE .CODE_00E308                        ;$00E2CD |
     LDY.w StarTimer_1490                    ;$00E2CF |
     BEQ .CODE_00E314                        ;$00E2D2 |
     LDA.b PlayerHiddenTiles_78              ;$00E2D4 |
     CMP.b #!Hide_AllStar_FF                 ;$00E2D6 |
-    BEQ +                                   ;$00E2D8 |
-    LDA.b Frame_14                          ;$00E2DA |
-    AND.b #$03                              ;$00E2DC |
-    BNE +                                   ;$00E2DE |
-    DEC.w StarTimer_1490                    ;$00E2E0 |
+    BEQ +                                   ;$00E2D8 |\
+    LDA.b Frame_14                          ;$00E2DA ||
+    AND.b #$03                              ;$00E2DC ||
+    BNE +                                   ;$00E2DE ||
+    DEC.w StarTimer_1490                    ;$00E2E0 |/
 +   LDA.b Frame_13                          ;$00E2E3 |
     CPY.b #$1E                              ;$00E2E5 |
     BCC .CODE_00E30A                        ;$00E2E7 |

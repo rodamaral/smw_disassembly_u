@@ -7424,7 +7424,7 @@ CODE_02B6CF:
     ADC.b #$02                              ;$02B6E4 |
     STA.b SpriteYSpeed_AA,X                 ;$02B6E6 |
 CODE_02B6E8:
-    JSL CODE_019138
+    JSL sprite_layers_interaction_019138
     LDA.w SpriteBlocked_1588,X              ;$02B6EC |
     AND.b #$04                              ;$02B6EF |
     BEQ CODE_02B6F5                         ;$02B6F1 |
@@ -8111,7 +8111,7 @@ CODE_02BBB7:
     EOR.b Frame_13                          ;$02BBB8 |
     LSR                                     ;$02BBBA |
     BCC CODE_02BBC1                         ;$02BBBB |
-    JSL CODE_019138                         ;$02BBBD |
+    JSL sprite_layers_interaction_019138    ;$02BBBD |
 CODE_02BBC1:
     LDA.b SpriteYSpeed_AA,X
     BMI CODE_02BBFB                         ;$02BBC3 |
@@ -8347,7 +8347,7 @@ urchin_moving_02BD75:
     BEQ .CODE_02BD91                        ;$02BD7E |
 +   JSR UpdateXPosNoGrvtyB1                 ;$02BD80 |
     JSR UpdateYPosNoGrvtyB1                 ;$02BD83 |
-    JSL CODE_019138                         ;$02BD86 |
+    JSL sprite_layers_interaction_019138    ;$02BD86 |
     LDA.w SpriteBlocked_1588,X              ;$02BD8A |
     AND.b #$0F                              ;$02BD8D |
     BEQ .return_02BDA6                      ;$02BD8F |
@@ -8381,7 +8381,7 @@ wall_following_sprites_02BDB3:
     STA.b SpriteYSpeed_AA,X                 ;$02BDBD |
     LDA.w DATA_02BC9F,Y                     ;$02BDBF |
     STA.b SpriteXSpeed_B6,X                 ;$02BDC2 |
-    JSL CODE_019138                         ;$02BDC4 |
+    JSL sprite_layers_interaction_019138    ;$02BDC4 |
     LDA.w SpriteBlocked_1588,X              ;$02BDC8 |
     AND.b #$0F                              ;$02BDCB |
     BNE .CODE_02BDE7                        ;$02BDCD |
@@ -8687,7 +8687,7 @@ CODE_02BFF3:
     JSR CODE_02C126
     JSR UpdateXPosNoGrvtyB1                 ;$02BFF6 |
     JSR UpdateYPosNoGrvtyB1                 ;$02BFF9 |
-    JSL CODE_019138                         ;$02BFFC |
+    JSL sprite_layers_interaction_019138    ;$02BFFC |
     PLA                                     ;$02C000 |
     STA.b SpriteYSpeed_AA,X                 ;$02C001 |
     PLA                                     ;$02C003 |
@@ -9038,7 +9038,7 @@ chucks_02C22C:
     JSR SubOffscreen0Bnk2
     JSR CODE_02C79D                         ;$02C25E |
     JSL SprSprInteract                      ;$02C261 |
-    JSL CODE_019138                         ;$02C265 |
+    JSL sprite_layers_interaction_019138    ;$02C265 |
     LDA.w SpriteBlocked_1588,X              ;$02C269 |
     AND.b #$08                              ;$02C26C |
     BEQ .CODE_02C274                        ;$02C26E |
@@ -11613,7 +11613,7 @@ DATA_02D51E:
 DATA_02D57F:
     db $FF,$13,$14,$15,$16,$17,$18,$19
 
-CODE_02D587:
+banzai_main_02D587:
     JSR CODE_02D5E4
     LDA.w SpriteStatus_14C8,X               ;$02D58A |
     CMP.b #!StatusFall_02                   ;$02D58D |
@@ -11675,40 +11675,38 @@ BanzaiPRotating:
     PLB                                     ;$02D619 |
     LDA.b SpriteNumber_9E,X                 ;$02D61A |
     CMP.b #!BanzaiBill_9F                   ;$02D61C |
-    BNE CODE_02D625                         ;$02D61E |
-    JSR CODE_02D587                         ;$02D620 |
-    BRA CODE_02D628                         ;$02D623 |
+    BNE .not_banzai_02D625                  ;$02D61E |
+    JSR banzai_main_02D587                  ;$02D620 |
+    BRA .return_02D628                      ;$02D623 |
 
-CODE_02D625:
-    JSR CODE_02D62A
-CODE_02D628:
+.not_banzai_02D625:
+    JSR ball_chain_and_gray_plat_02D62A
+.return_02D628:
     PLB
     RTL                                     ;$02D629 |
 
-CODE_02D62A:
+ball_chain_and_gray_plat_02D62A:
     JSR SubOffscreen3Bnk2
     LDA.b SpriteLock_9D                     ;$02D62D |
-    BNE CODE_02D653                         ;$02D62F |
+    BNE .CODE_02D653                        ;$02D62F |
     LDA.b SpriteXPosLow_E4,X                ;$02D631 |
     LDY.b #$02                              ;$02D633 |
     AND.b #$10                              ;$02D635 |
-    BNE CODE_02D63B                         ;$02D637 |
-    LDY.b #$FE                              ;$02D639 |
-CODE_02D63B:
-    TYA
+    BNE +                                   ;$02D637 |\
+    LDY.b #$FE                              ;$02D639 |/
++   TYA                                     ;$02D63B |
     LDY.b #$00                              ;$02D63C |
     CMP.b #$00                              ;$02D63E |
-    BPL CODE_02D643                         ;$02D640 |
-    DEY                                     ;$02D642 |
-CODE_02D643:
-    CLC
+    BPL +                                   ;$02D640 |\
+    DEY                                     ;$02D642 |/
++   CLC                                     ;$02D643 |
     ADC.w SpriteAnimation_1602,X            ;$02D644 |
     STA.w SpriteAnimation_1602,X            ;$02D647 |
     TYA                                     ;$02D64A |
     ADC.w Sprite_151C,X                     ;$02D64B |
     AND.b #$01                              ;$02D64E |
     STA.w Sprite_151C,X                     ;$02D650 |
-CODE_02D653:
+.CODE_02D653:
     LDA.w Sprite_151C,X
     STA $01                                 ;$02D656 |
     LDA.w SpriteAnimation_1602,X            ;$02D658 |
@@ -11737,36 +11735,32 @@ CODE_02D653:
     STA.w $4202                             ;$02D68B |
     LDA.w SpriteMisc_187B,X                 ;$02D68E |
     LDY $05                                 ;$02D691 |
-    BNE CODE_02D6A3                         ;$02D693 |
-    STA.w $4203                             ;$02D695 |
-    JSR CODE_02D800                         ;$02D698 |
-    ASL.w $4216                             ;$02D69B |
-    LDA.w $4217                             ;$02D69E |
-    ADC.b #$00                              ;$02D6A1 |
-CODE_02D6A3:
-    LSR $01
-    BCC CODE_02D6AA                         ;$02D6A5 |
-    EOR.b #$FF                              ;$02D6A7 |
-    INC A                                   ;$02D6A9 |
-CODE_02D6AA:
-    STA $04
+    BNE +                                   ;$02D693 |\
+    STA.w $4203                             ;$02D695 ||
+    JSR nop_wait_02D800                     ;$02D698 ||
+    ASL.w $4216                             ;$02D69B ||
+    LDA.w $4217                             ;$02D69E ||
+    ADC.b #$00                              ;$02D6A1 |/
++   LSR $01                                 ;$02D6A3 |
+    BCC +                                   ;$02D6A5 |\
+    EOR.b #$FF                              ;$02D6A7 ||
+    INC A                                   ;$02D6A9 |/
++   STA $04                                 ;$02D6AA |
     LDA $06                                 ;$02D6AC |
     STA.w $4202                             ;$02D6AE |
     LDA.w SpriteMisc_187B,X                 ;$02D6B1 |
     LDY $07                                 ;$02D6B4 |
-    BNE CODE_02D6C6                         ;$02D6B6 |
-    STA.w $4203                             ;$02D6B8 |
-    JSR CODE_02D800                         ;$02D6BB |
-    ASL.w $4216                             ;$02D6BE |
-    LDA.w $4217                             ;$02D6C1 |
-    ADC.b #$00                              ;$02D6C4 |
-CODE_02D6C6:
-    LSR $03
-    BCC CODE_02D6CD                         ;$02D6C8 |
-    EOR.b #$FF                              ;$02D6CA |
-    INC A                                   ;$02D6CC |
-CODE_02D6CD:
-    STA $06
+    BNE +                                   ;$02D6B6 |\
+    STA.w $4203                             ;$02D6B8 ||
+    JSR nop_wait_02D800                     ;$02D6BB ||
+    ASL.w $4216                             ;$02D6BE ||
+    LDA.w $4217                             ;$02D6C1 ||
+    ADC.b #$00                              ;$02D6C4 |/
++   LSR $03                                 ;$02D6C6 |
+    BCC +                                   ;$02D6C8 |\
+    EOR.b #$FF                              ;$02D6CA ||
+    INC A                                   ;$02D6CC |/
++   STA $06                                 ;$02D6CD |
     LDA.b SpriteXPosLow_E4,X                ;$02D6CF |
     PHA                                     ;$02D6D1 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02D6D2 |
@@ -11778,10 +11772,9 @@ CODE_02D6CD:
     LDY.w ClusterSprMisc_0F86,X             ;$02D6DD |
     STZ $00                                 ;$02D6E0 |
     LDA $04                                 ;$02D6E2 |
-    BPL CODE_02D6E8                         ;$02D6E4 |
-    DEC $00                                 ;$02D6E6 |
-CODE_02D6E8:
-    CLC
+    BPL +                                   ;$02D6E4 |\
+    DEC $00                                 ;$02D6E6 |/
++   CLC                                     ;$02D6E8 |
     ADC.b SpriteXPosLow_E4,X                ;$02D6E9 |
     STA.b SpriteXPosLow_E4,X                ;$02D6EB |
     PHP                                     ;$02D6ED |
@@ -11797,48 +11790,46 @@ CODE_02D6E8:
     STA.w SpriteXPosHigh_14E0,X             ;$02D700 |
     STZ $01                                 ;$02D703 |
     LDA $06                                 ;$02D705 |
-    BPL CODE_02D70B                         ;$02D707 |
-    DEC $01                                 ;$02D709 |
-CODE_02D70B:
-    CLC
+    BPL +                                   ;$02D707 |\
+    DEC $01                                 ;$02D709 |/
++   CLC                                     ;$02D70B |
     ADC.b SpriteYPosLow_D8,X                ;$02D70C |
     STA.b SpriteYPosLow_D8,X                ;$02D70E |
     LDA.w SpriteYPosHigh_14D4,X             ;$02D710 |
     ADC $01                                 ;$02D713 |
     STA.w SpriteYPosHigh_14D4,X             ;$02D715 |
     LDA.b SpriteNumber_9E,X                 ;$02D718 |
-    CMP.b #!BallChain_9E                    ;$02D71A |
-    BEQ CODE_02D750                         ;$02D71C |
+    CMP.b #!BallChain_9E                    ;$02D71A |\ branch if a Ball 'n' Chain
+    BEQ .ball_chain_02D750                  ;$02D71C |/
     JSL InvisBlkMainRt                      ;$02D71E |
-    BCC CODE_02D73D                         ;$02D722 |
-    LDA.b #$03                              ;$02D724 |
-    STA.w Sprite_160E,X                     ;$02D726 |
-    STA.w OnSolidSprite_1471                ;$02D729 |
-    LDA.w RidingYoshi_187A                  ;$02D72C |
-    BNE CODE_02D74B                         ;$02D72F |
-    PHX                                     ;$02D731 |
-    JSL draw_mario_and_yoshi_00E2BD         ;$02D732 |
-    PLX                                     ;$02D736 |
-    LDA.b #!Hide_AllStar_FF                 ;$02D737 |
-    STA.b PlayerHiddenTiles_78              ;$02D739 |
-    BRA CODE_02D74B                         ;$02D73B |
+    BCC ..not_on_top_02D73D                 ;$02D722 |\
+    LDA.b #$03                              ;$02D724 ||
+    STA.w Sprite_160E,X                     ;$02D726 || Set flags for Mario being on the platform
+    STA.w OnSolidSprite_1471                ;$02D729 ||
+    LDA.w RidingYoshi_187A                  ;$02D72C ||
+    BNE ..draw_platform_02D74B              ;$02D72F ||\ if not on Yoshi:
+    PHX                                     ;$02D731 |||
+    JSL draw_mario_and_yoshi_00E2BD         ;$02D732 |||
+    PLX                                     ;$02D736 |||
+    LDA.b #!Hide_AllStar_FF                 ;$02D737 |||
+    STA.b PlayerHiddenTiles_78              ;$02D739 ||/ Hide Mario and Yoshi from the next GFX routine
+    BRA ..draw_platform_02D74B              ;$02D73B |/
 
-CODE_02D73D:
+..not_on_top_02D73D:
     LDA.w Sprite_160E,X
-    BEQ CODE_02D74B                         ;$02D740 |
-    STZ.w Sprite_160E,X                     ;$02D742 |
-    PHX                                     ;$02D745 |
-    JSL draw_mario_and_yoshi_00E2BD         ;$02D746 |
-    PLX                                     ;$02D74A |
-CODE_02D74B:
-    JSR CODE_02D848
-    BRA CODE_02D757                         ;$02D74E |
+    BEQ ..draw_platform_02D74B              ;$02D740 |\ If Mario just jumped off the platform, make sure to draw Mario's sprite
+    STZ.w Sprite_160E,X                     ;$02D742 ||
+    PHX                                     ;$02D745 ||
+    JSL draw_mario_and_yoshi_00E2BD         ;$02D746 ||
+    PLX                                     ;$02D74A |/
+..draw_platform_02D74B:
+    JSR draw_gray_platform_02D848
+    BRA +                                   ;$02D74E |
 
-CODE_02D750:
+.ball_chain_02D750:
     JSL MarioSprInteract
-    JSR CODE_02D813                         ;$02D754 |
-CODE_02D757:
-    PLA
+    JSR draw_chained_ball_02D813            ;$02D754 |
++   PLA
     STA.w SpriteYPosHigh_14D4,X             ;$02D758 |
     PLA                                     ;$02D75B |
     STA.b SpriteYPosLow_D8,X                ;$02D75C |
@@ -11883,63 +11874,62 @@ CODE_02D757:
     TAX                                     ;$02D7A2 |
     LDA.b #$E8                              ;$02D7A3 |
     CPX.b #!BallChain_9E                    ;$02D7A5 |
-    BEQ CODE_02D7AB                         ;$02D7A7 |
-    LDA.b #$A2                              ;$02D7A9 |
-CODE_02D7AB:
-    STA $08
-    LDX.b #$01                              ;$02D7AD |
-CODE_02D7AF:
-    LDA $00
-    STA.w $0300,Y                           ;$02D7B1 |
-    LDA $01                                 ;$02D7B4 |
-    STA.w $0301,Y                           ;$02D7B6 |
-    LDA $08                                 ;$02D7B9 |
-    STA.w $0302,Y                           ;$02D7BB |
-    LDA.b #$33                              ;$02D7BE |
-    STA.w $0303,Y                           ;$02D7C0 |
-    LDA $00                                 ;$02D7C3 |
-    CLC                                     ;$02D7C5 |
-    ADC.b Layer1XPos_1A                     ;$02D7C6 |
-    SEC                                     ;$02D7C8 |
-    SBC $0A                                 ;$02D7C9 |
-    STA $00                                 ;$02D7CB |
-    ASL                                     ;$02D7CD |
-    ROR $00                                 ;$02D7CE |
-    LDA $00                                 ;$02D7D0 |
-    SEC                                     ;$02D7D2 |
-    SBC.b Layer1XPos_1A                     ;$02D7D3 |
-    CLC                                     ;$02D7D5 |
-    ADC $0A                                 ;$02D7D6 |
-    STA $00                                 ;$02D7D8 |
-    LDA $01                                 ;$02D7DA |
-    CLC                                     ;$02D7DC |
-    ADC.b Layer1YPos_1C                     ;$02D7DD |
-    SEC                                     ;$02D7DF |
-    SBC $0B                                 ;$02D7E0 |
-    STA $01                                 ;$02D7E2 |
-    ASL                                     ;$02D7E4 |
-    ROR $01                                 ;$02D7E5 |
-    LDA $01                                 ;$02D7E7 |
-    SEC                                     ;$02D7E9 |
-    SBC.b Layer1YPos_1C                     ;$02D7EA |
-    CLC                                     ;$02D7EC |
-    ADC $0B                                 ;$02D7ED |
-    STA $01                                 ;$02D7EF |
-    INY                                     ;$02D7F1 |
-    INY                                     ;$02D7F2 |
-    INY                                     ;$02D7F3 |
-    INY                                     ;$02D7F4 |
-    DEX                                     ;$02D7F5 |
-    BPL CODE_02D7AF                         ;$02D7F6 |
+    BEQ +                                   ;$02D7A7 |\
+    LDA.b #$A2                              ;$02D7A9 |/
++   STA $08                                 ;$02D7AB |
+    LDX.b #$01                              ;$02D7AD | loop counter
+..repeat_once_02D7AF:                       ;        |\
+    LDA $00                                 ;$02D7AF ||
+    STA.w $0300,Y                           ;$02D7B1 ||
+    LDA $01                                 ;$02D7B4 ||
+    STA.w $0301,Y                           ;$02D7B6 ||
+    LDA $08                                 ;$02D7B9 ||
+    STA.w $0302,Y                           ;$02D7BB ||
+    LDA.b #$33                              ;$02D7BE ||
+    STA.w $0303,Y                           ;$02D7C0 ||
+    LDA $00                                 ;$02D7C3 ||
+    CLC                                     ;$02D7C5 ||
+    ADC.b Layer1XPos_1A                     ;$02D7C6 ||
+    SEC                                     ;$02D7C8 ||
+    SBC $0A                                 ;$02D7C9 ||
+    STA $00                                 ;$02D7CB ||
+    ASL                                     ;$02D7CD ||
+    ROR $00                                 ;$02D7CE ||
+    LDA $00                                 ;$02D7D0 ||
+    SEC                                     ;$02D7D2 ||
+    SBC.b Layer1XPos_1A                     ;$02D7D3 ||
+    CLC                                     ;$02D7D5 ||
+    ADC $0A                                 ;$02D7D6 ||
+    STA $00                                 ;$02D7D8 ||
+    LDA $01                                 ;$02D7DA ||
+    CLC                                     ;$02D7DC ||
+    ADC.b Layer1YPos_1C                     ;$02D7DD ||
+    SEC                                     ;$02D7DF ||
+    SBC $0B                                 ;$02D7E0 ||
+    STA $01                                 ;$02D7E2 ||
+    ASL                                     ;$02D7E4 ||
+    ROR $01                                 ;$02D7E5 ||
+    LDA $01                                 ;$02D7E7 ||
+    SEC                                     ;$02D7E9 ||
+    SBC.b Layer1YPos_1C                     ;$02D7EA ||
+    CLC                                     ;$02D7EC ||
+    ADC $0B                                 ;$02D7ED ||
+    STA $01                                 ;$02D7EF ||
+    INY                                     ;$02D7F1 ||
+    INY                                     ;$02D7F2 ||
+    INY                                     ;$02D7F3 ||
+    INY                                     ;$02D7F4 ||
+    DEX                                     ;$02D7F5 || Loop for the second segment
+    BPL ..repeat_once_02D7AF                ;$02D7F6 |/
     PLX                                     ;$02D7F8 |
     LDY.b #$02                              ;$02D7F9 |
     LDA.b #$05                              ;$02D7FB |
     JMP CODE_02B7A7                         ;$02D7FD |
 
-CODE_02D800:
+nop_wait_02D800:
     NOP
-    NOP                                     ;$02D801 |
-    NOP                                     ;$02D802 |
+    NOP                                     ;$02D801 | db $EA
+    NOP                                     ;$02D802 | also used as the Ball 'n' Chain's tilemap (seriously)
     NOP                                     ;$02D803 |
     NOP                                     ;$02D804 |
     NOP                                     ;$02D805 |
@@ -11955,7 +11945,7 @@ DATA_02D80B:
 DATA_02D80F:
     db $33,$73,$B3,$F3
 
-CODE_02D813:
+draw_chained_ball_02D813:
     JSR GetDrawInfo2
     PHX                                     ;$02D816 |
     LDX.b #$03                              ;$02D817 |
@@ -11968,7 +11958,7 @@ CODE_02D819:
     CLC                                     ;$02D824 |
     ADC.w DATA_02D80B,X                     ;$02D825 |
     STA.w $0301,Y                           ;$02D828 |
-    LDA.w CODE_02D800,X                     ;$02D82B |
+    LDA.w nop_wait_02D800,X                 ;$02D82B |
     STA.w $0302,Y                           ;$02D82E |
     LDA.w DATA_02D80F,X                     ;$02D831 |
     STA.w $0303,Y                           ;$02D834 |
@@ -11987,27 +11977,26 @@ DATA_02D840:
 WoodPlatformTiles:
     db $A2,$60,$61,$62
 
-CODE_02D848:
+draw_gray_platform_02D848:
     JSR GetDrawInfo2
     PHX                                     ;$02D84B |
-    LDX.b #$03                              ;$02D84C |
-CODE_02D84E:
-    LDA $00
-    CLC                                     ;$02D850 |
-    ADC.w DATA_02D840,X                     ;$02D851 |
-    STA.w $0300,Y                           ;$02D854 |
-    LDA $01                                 ;$02D857 |
-    STA.w $0301,Y                           ;$02D859 |
-    LDA.w WoodPlatformTiles,X               ;$02D85C |
-    STA.w $0302,Y                           ;$02D85F |
-    LDA.b #$33                              ;$02D862 |
-    STA.w $0303,Y                           ;$02D864 |
-    INY                                     ;$02D867 |
-    INY                                     ;$02D868 |
-    INY                                     ;$02D869 |
-    INY                                     ;$02D86A |
-    DEX                                     ;$02D86B |
-    BPL CODE_02D84E                         ;$02D86C |
+    LDX.b #$03                              ;$02D84C | X: loop counter
+-   LDA $00                                 ;$02D84E |\
+    CLC                                     ;$02D850 ||
+    ADC.w DATA_02D840,X                     ;$02D851 ||
+    STA.w $0300,Y                           ;$02D854 ||
+    LDA $01                                 ;$02D857 ||
+    STA.w $0301,Y                           ;$02D859 ||
+    LDA.w WoodPlatformTiles,X               ;$02D85C ||
+    STA.w $0302,Y                           ;$02D85F ||
+    LDA.b #$33                              ;$02D862 ||
+    STA.w $0303,Y                           ;$02D864 ||
+    INY                                     ;$02D867 ||
+    INY                                     ;$02D868 ||
+    INY                                     ;$02D869 ||
+    INY                                     ;$02D86A ||
+    DEX                                     ;$02D86B ||
+    BPL -                                   ;$02D86C |/
     PLX                                     ;$02D86E |
     RTS                                     ;$02D86F |
 
@@ -12022,7 +12011,7 @@ CODE_02D876:
     LDA.w SpriteMisc_187B,X                 ;$02D87C |
     LSR                                     ;$02D87F |
     STA.w $4206                             ;$02D880 |
-    JSR CODE_02D800                         ;$02D883 |
+    JSR nop_wait_02D800                     ;$02D883 |
     LDA.w $4214                             ;$02D886 |
     STA $0E                                 ;$02D889 |
     LDA.w $4215                             ;$02D88B |
@@ -12126,7 +12115,7 @@ CODE_02D91D:
     JSR SubOffscreen0Bnk2                   ;$02D927 |
     JSR UpdateXPosNoGrvtyB1                 ;$02D92A |
     JSR UpdateYPosNoGrvtyB1                 ;$02D92D |
-    JSL CODE_019138                         ;$02D930 |
+    JSL sprite_layers_interaction_019138    ;$02D930 |
     LDY.w SpriteDir_157C,X                  ;$02D934 |
     LDA.w BubbleSprGfxProp2,Y               ;$02D937 |
     STA.b SpriteXSpeed_B6,X                 ;$02D93A |
@@ -12871,7 +12860,7 @@ CODE_02DEB0:
     JSR UpdateYPosNoGrvtyB1                 ;$02DEB9 |
     LDA.w SpriteDisableTimer_1FE2,X         ;$02DEBC |
     BNE CODE_02DEEA                         ;$02DEBF |
-    JSL CODE_019138                         ;$02DEC1 |
+    JSL sprite_layers_interaction_019138    ;$02DEC1 |
     LDA.w SpriteBlocked_1588,X              ;$02DEC5 |
     AND.b #$04                              ;$02DEC8 |
     BEQ CODE_02DEEA                         ;$02DECA |
@@ -12992,7 +12981,7 @@ CODE_02DF93:
     BPL CODE_02DFAF                         ;$02DFAB |
     INC.b SpriteYSpeed_AA,X                 ;$02DFAD |
 CODE_02DFAF:
-    JSL CODE_019138
+    JSL sprite_layers_interaction_019138
     LDA.w SpriteBlocked_1588,X              ;$02DFB3 |
     AND.b #$04                              ;$02DFB6 |
     BEQ CODE_02DFBC                         ;$02DFB8 |
@@ -13264,7 +13253,7 @@ CODE_02E17F:
     INC A                                   ;$02E18E |
     STA.b SpriteYSpeed_AA,X                 ;$02E18F |
 CODE_02E191:
-    JSL CODE_019138
+    JSL sprite_layers_interaction_019138
     LDA.w SpriteBlocked_1588,X              ;$02E195 |
     AND.b #$04                              ;$02E198 |
     BEQ Return02E176                        ;$02E19A |
@@ -13437,7 +13426,7 @@ CODE_02E2B0:
     RTS                                     ;$02E2DD |
 
 CODE_02E2DE:
-    JSL CODE_019138
+    JSL sprite_layers_interaction_019138
     LDA.b SpriteXSpeed_B6,X                 ;$02E2E2 |
     BNE CODE_02E2F3                         ;$02E2E4 |
     LDA.w SprMap16TouchVertHigh_18D7        ;$02E2E6 |
@@ -14021,7 +14010,7 @@ CODE_02E727:
     BNE Return02E74B                        ;$02E72D |
     JSR SubOffscreen0Bnk2                   ;$02E72F |
     JSL SprSprPMarioSprRts                  ;$02E732 |
-    JSL CODE_019138                         ;$02E736 |
+    JSL sprite_layers_interaction_019138    ;$02E736 |
     LDY.b #$00                              ;$02E73A |
     JSR CODE_02EB3D                         ;$02E73C |
     LDA.b SpritePhase_C2,X                  ;$02E73F |
@@ -15316,7 +15305,7 @@ CODE_02F090:
     LDA.w WigglerSpeed,Y
     STA.b SpriteXSpeed_B6,X                 ;$02F093 |
     INC.b SpriteYSpeed_AA,X                 ;$02F095 |
-    JSL CODE_019138                         ;$02F097 |
+    JSL sprite_layers_interaction_019138    ;$02F097 |
     LDA.w SpriteBlocked_1588,X              ;$02F09B |
     AND.b #$03                              ;$02F09E |
     BNE CODE_02F0AE                         ;$02F0A0 |

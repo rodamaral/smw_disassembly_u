@@ -667,7 +667,7 @@ CODE_03855E:
     JSL UpdateXPosNoGrvty                   ;$03856C |
     PLA                                     ;$038570 |
     STA.b SpriteXSpeed_B6,X                 ;$038571 |
-    JSL CODE_019138                         ;$038573 |
+    JSL sprite_layers_interaction_019138    ;$038573 |
     LDY.b #$04                              ;$038577 |
     LDA.w SpriteInLiquid_164A,X             ;$038579 |
     BEQ CODE_038580                         ;$03857C |
@@ -2084,7 +2084,7 @@ CODE_038FA4:
 CODE_038FC2:
     JSL UpdateYPosNoGrvty
     JSL UpdateXPosNoGrvty                   ;$038FC6 |
-    JSL CODE_019138                         ;$038FCA |
+    JSL sprite_layers_interaction_019138    ;$038FCA |
     LDA.w SpriteBlocked_1588,X              ;$038FCE |
     AND.b #$03                              ;$038FD1 |
     BEQ CODE_038FDC                         ;$038FD3 |
@@ -2542,7 +2542,7 @@ CODE_03932C:
     LDA.b #$01                              ;$039331 |
     STA.b SpriteXSpeed_B6,X                 ;$039333 |
     STA.b SpriteYSpeed_AA,X                 ;$039335 |
-    JSL CODE_019138                         ;$039337 |
+    JSL sprite_layers_interaction_019138    ;$039337 |
     LDA.w SpriteBlocked_1588,X              ;$03933B |
     PHA                                     ;$03933E |
     LDA.b #$FF                              ;$03933F |
@@ -2566,7 +2566,7 @@ CODE_03932C:
     PHA                                     ;$039361 |
     SBC.b #$00                              ;$039362 |
     STA.w SpriteYPosHigh_14D4,X             ;$039364 |
-    JSL CODE_019138                         ;$039367 |
+    JSL sprite_layers_interaction_019138    ;$039367 |
     PLA                                     ;$03936B |
     STA.w SpriteYPosHigh_14D4,X             ;$03936C |
     PLA                                     ;$03936F |

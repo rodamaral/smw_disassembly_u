@@ -991,7 +991,7 @@ CODE_048962:
     XBA                                     ;$04897A |
     LSR                                     ;$04897B |
     TAX                                     ;$04897C |
-    LDA.w CurrentPlayer_0DB3,X                           ;$04897D |
+    LDA.w CurrentPlayer_0DB3,X              ;$04897D |
     PLX                                     ;$048980 |
     AND.w #$FF00                            ;$048981 |
     BPL CODE_04898B                         ;$048984 |
@@ -1325,7 +1325,7 @@ CODE_048D91:
     BPL .CODE_048E25                        ;$048E32 |
 .CODE_048E34:
     SEP #$30
-    BRA .CODE_048E47                         ;$048E36 |
+    BRA .CODE_048E47                        ;$048E36 |
 
 .CODE_048E38:
     SEP #$30
@@ -1471,7 +1471,7 @@ CODE_048F13:
     STA.w OWLevelSettings_1EA2,X            ;$048F53 |
 CODE_048F56:
     SEP #$20
-    LDA.b #!OwBeforeTile_05                  ;$048F58 |
+    LDA.b #!OwBeforeTile_05                 ;$048F58 |
     STA.w OWProcess_13D9                    ;$048F5A |
     BRA CODE_048F7A                         ;$048F5D |
 
@@ -7871,11 +7871,11 @@ CODE_04F7BB:
     LDY.w OWCloudYSpeed_0DE0,X              ;$04F7BF |
     LDA.w OWSpriteYPosLow_0E45,Y            ;$04F7C2 |
     STA $02                                 ;$04F7C5 |
-    LDA.w OWSpriteYPosHigh_0E75,Y            ;$04F7C7 |
+    LDA.w OWSpriteYPosHigh_0E75,Y           ;$04F7C7 |
     STA $03                                 ;$04F7CA |
     LDX $01                                 ;$04F7CC |
     LDY.w OWCloudYSpeed_0DE0-1,X            ;$04F7CE |
-    LDA.w OWSpriteYPosHigh_0E75,Y            ;$04F7D1 |
+    LDA.w OWSpriteYPosHigh_0E75,Y           ;$04F7D1 |
     XBA                                     ;$04F7D4 |
     LDA.w OWSpriteYPosLow_0E45,Y            ;$04F7D5 |
     REP #$20                                ;$04F7D8 |
