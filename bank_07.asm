@@ -4606,6 +4606,8 @@ LoadTweakerBytes:
     PLY                                     ;$07F7D0 |
     RTL                                     ;$07F7D1 |
 
+; GLITCH: the following sprite tables are not reset upon initialization:
+; Sprite_1510, SpriteTurnTimer_15AC, SpriteSlope_15B8, SpriteOffscreenVert_186C
 InitSpriteTables:
     JSL ZeroSpriteTables
     JSL LoadSpriteTables                    ;$07F7D6 |
