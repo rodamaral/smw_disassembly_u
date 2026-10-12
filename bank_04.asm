@@ -283,7 +283,7 @@ CODE_048261:
     LSR
     SEP #$20                                ;$0482AF |
     STA $05                                 ;$0482B1 |
-    REP #$20                                ;$0482B3 |
+    REP #$20                                ;$0482B3 | A->16
     LDA.w OWFreeCamXPos_1DF0                ;$0482B5 |
     SEC                                     ;$0482B8 |
     SBC.b Layer1XPos_1A                     ;$0482B9 |
@@ -303,7 +303,7 @@ CODE_048261:
 .CODE_0482D1:
     CMP.b #$02
     BCS .CODE_0482ED                        ;$0482D3 |
-    REP #$20                                ;$0482D5 |
+    REP #$20                                ;$0482D5 | A->16
     LDA.w OWFreeCamXPos_1DF0                ;$0482D7 |
     STA.b Layer1XPos_1A                     ;$0482DA |
     STA.b Layer2XPos_1E                     ;$0482DC |
@@ -325,7 +325,7 @@ CODE_048261:
     NOP                                     ;$0482FB |
     NOP                                     ;$0482FC |
     NOP                                     ;$0482FD |
-    REP #$20                                ;$0482FE |
+    REP #$20                                ;$0482FE | A->16
     LDA.w $4214                             ;$048300 |
     LSR                                     ;$048303 |
     LSR                                     ;$048304 |
@@ -409,7 +409,7 @@ CODE_048261:
     LDA.w PauseFlag_13D4                    ;$048386 |
     LSR                                     ;$048389 |
     BNE .CODE_04839A                        ;$04838A |
-    REP #$20                                ;$04838C |
+    REP #$20                                ;$04838C | A->16
     LDA.b Layer1XPos_1A                     ;$04838E |
     STA.w OWFreeCamXPos_1DF0                ;$048390 |
     LDA.b Layer1YPos_1C                     ;$048393 |
@@ -491,7 +491,7 @@ CODE_048261:
 
 .CODE_048415:
     TAY
-    REP #$20                                ;$048416 |
+    REP #$20                                ;$048416 | A->16
     LDA.b Layer1XPos_1A,X                   ;$048418 |
     CLC                                     ;$04841A |
     ADC.w DATA_048211,Y                     ;$04841B |
@@ -549,7 +549,7 @@ CODE_048509:
     LDA.w OWPlayerSubmap_1F11,Y             ;$04850C |
     STA $01                                 ;$04850F |
     STZ $00                                 ;$048511 |
-    REP #$20                                ;$048513 |
+    REP #$20                                ;$048513 | A->16
     LDX.w PlayerTurnOW_0DD6                 ;$048515 |
     LDY.b #$34                              ;$048518 |
 CODE_04851A:
@@ -575,7 +575,7 @@ CODE_04853B:
     PHB
     PHK                                     ;$04853C |
     PLB                                     ;$04853D |
-    REP #$20                                ;$04853E |
+    REP #$20                                ;$04853E | A->16
     LDX.w PlayerTurnOW_0DD6                 ;$048540 |
     LDY.w StarWarpIndex_1DF6                ;$048543 |
     LDA.w DATA_04849D,Y                     ;$048546 |
@@ -901,7 +901,7 @@ CODE_048789:
     STA.w $02B7,X                           ;$0487BD |
     LDA.b #$60                              ;$0487C0 |
     STA.w $02BB,X                           ;$0487C2 |
-    REP #$20                                ;$0487C5 |
+    REP #$20                                ;$0487C5 | A->16
 CODE_0487C7:
     PLA
     STA $8A                                 ;$0487C8 |
@@ -1194,7 +1194,7 @@ CODE_048D1B:
     ADC.b OWScreenYCurrentTile_8B           ;$048D30 |
     STA.w $029D,X                           ;$048D32 |
     PLY                                     ;$048D35 |
-    REP #$20                                ;$048D36 |
+    REP #$20                                ;$048D36 | A->16
     LDA.w DATA_0489DE,Y                     ;$048D38 |
     CMP.w #$FFFF                            ;$048D3B |
     BEQ CODE_048D67                         ;$048D3E |
@@ -1391,7 +1391,7 @@ CODE_048E9E:
     BPL ADDR_048ECD                         ;$048EB4 |
     ASL                                     ;$048EB6 |
     TAX                                     ;$048EB7 |
-    REP #$20                                ;$048EB8 |
+    REP #$20                                ;$048EB8 | A->16
     LDY.w PlayerTurnOW_0DD6                 ;$048EBA |
     LDA.w DATA_048E49,X                     ;$048EBD |
     STA.w OWPlayerXPos_1F17,Y               ;$048EC0 |
@@ -1461,7 +1461,7 @@ CODE_048F13:
     LDA.w LevelExitMode_0DD5                ;$048F3A |
     BEQ CODE_048F56                         ;$048F3D |
     BPL CODE_048F5F                         ;$048F3F |
-    REP #$20                                ;$048F41 |
+    REP #$20                                ;$048F41 | A->16
     LDX $04                                 ;$048F43 |
     LDA.l OWLayer1Translevel_D000,X         ;$048F45 |
     AND.w #$00FF                            ;$048F49 |
@@ -1970,7 +1970,7 @@ CODE_049374:
 CODE_04937A:
     SEP #$20
     STZ.w LevelExitMode_0DD5                ;$04937C |
-    REP #$20                                ;$04937F |
+    REP #$20                                ;$04937F | A->16
     JMP CODE_049411                         ;$049381 |
 
 CODE_049384:
@@ -2136,7 +2136,7 @@ CODE_0494A4:
     NOP                                     ;$0494BD |
     NOP                                     ;$0494BE |
     NOP                                     ;$0494BF |
-    REP #$20                                ;$0494C0 |
+    REP #$20                                ;$0494C0 | A->16
     LDA.w $4216                             ;$0494C2 |
     STA.w $4204                             ;$0494C5 |
     SEP #$20                                ;$0494C8 |
@@ -2148,7 +2148,7 @@ CODE_0494A4:
     NOP                                     ;$0494D2 |
     NOP                                     ;$0494D3 |
     NOP                                     ;$0494D4 |
-    REP #$20                                ;$0494D5 |
+    REP #$20                                ;$0494D5 | A->16
     LDA.w $4214                             ;$0494D7 |
 CODE_0494DA:
     REP #$20
@@ -2319,7 +2319,7 @@ CODE_049616:
     STA.w SwapOverworldMusic_1B9E           ;$049622 |
     JSR CODE_04F407                         ;$049625 |
     STZ.w OWTransitionFlag_1B8C             ;$049628 |
-    REP #$20                                ;$04962B |
+    REP #$20                                ;$04962B | A->16
     STZ.w $0701                             ;$04962D |
     LDA.w #$7000                            ;$049630 |
     STA.w OWTransitionXCalc_1B8D            ;$049633 |
@@ -2712,7 +2712,7 @@ CODE_049903:
     LDA.w DATA_049060,X                     ;$04990B |
     STA $08                                 ;$04990E |
     STZ $09                                 ;$049910 |
-    REP #$20                                ;$049912 |
+    REP #$20                                ;$049912 | A->16
     LDX.w PlayerTurnOW_0DD6                 ;$049914 |
     LDA.w OWPlayerXPos_1F17,X               ;$049917 |
     LSR                                     ;$04991A |
@@ -3029,7 +3029,7 @@ CODE_049D6A:
 CODE_049D76:
     LDA.b #$FF
     STA.l $7F8381,X                         ;$049D78 |
-    REP #$20                                ;$049D7C |
+    REP #$20                                ;$049D7C | A->16
     RTS                                     ;$049D7E |
 
 CODE_049D7F:
@@ -3095,7 +3095,7 @@ CODE_049DD1:
     LDA.w $0DBC,X                           ;$049DF7 |
     STA.w PlayerItembox_0DC2                ;$049DFA |
     JSL CODE_05DBF2                         ;$049DFD |
-    REP #$20                                ;$049E01 |
+    REP #$20                                ;$049E01 | A->16
     JSR CODE_048E55                         ;$049E03 |
     SEP #$20                                ;$049E06 |
     LDX.w CurrentPlayer_0DB3                ;$049E08 |
@@ -5245,7 +5245,7 @@ CODE_04DA49:
     LDA.w OWEventsActivated_1F02,Y          ;$04DA5C |
     AND.l DATA_04E44B,X                     ;$04DA5F |
     BEQ .return_04DAAC                      ;$04DA63 |
-    REP #$20                                ;$04DA65 |
+    REP #$20                                ;$04DA65 | A->16
     LDA.w #!Addr_C800                       ;$04DA67 |
     STA $04                                 ;$04DA6A |
     LDA $0F                                 ;$04DA6C |
@@ -5396,7 +5396,7 @@ CODE_04DB5F:
     LDA.b #$80                              ;$04DB6E |
     SEC                                     ;$04DB70 |
     SBC.w OWTransitionXCalc_1B8D+1          ;$04DB71 |
-    REP #$20                                ;$04DB74 |
+    REP #$20                                ;$04DB74 | A->16
     LDX.b #$00                              ;$04DB76 |
     LDY.b #$A8                              ;$04DB78 |
 CODE_04DB7A:
@@ -5568,7 +5568,7 @@ CODE_04DCB6:
     LDA.w OWSubmapSwapProcess_1DE8          ;$04DCC9 |
     DEC A                                   ;$04DCCC |
     STA $01                                 ;$04DCCD |
-    REP #$20                                ;$04DCCF |
+    REP #$20                                ;$04DCCF | A->16
     LDA.w PlayerTurnOW_0DD6                 ;$04DCD1 |
     LSR                                     ;$04DCD4 |
     LSR                                     ;$04DCD5 |
@@ -5585,7 +5585,7 @@ CODE_04DCE8:
     LDX $00
     LDA.l Map16TilesLow_C800,X              ;$04DCEA |
     STA $02                                 ;$04DCEE |
-    REP #$20                                ;$04DCF0 |
+    REP #$20                                ;$04DCF0 | A->16
     LDA.l Map16TilesHigh_7FC800,X           ;$04DCF2 |
     STA $03                                 ;$04DCF6 |
     LDA $02                                 ;$04DCF8 |
@@ -5954,7 +5954,7 @@ CODE_04E4A9:
     STA $08                                 ;$04E4AD |
     LDA.b #$0C                              ;$04E4AF |
     STA $0B                                 ;$04E4B1 |
-    REP #$20                                ;$04E4B3 |
+    REP #$20                                ;$04E4B3 | A->16
     LDA.w #$0000                            ;$04E4B5 |
     STA $06                                 ;$04E4B8 |
     LDA.w #$8000                            ;$04E4BA |
@@ -5986,7 +5986,7 @@ CODE_04E4DC:
     STA.l OWLayer2Tilemap_7F4000,X          ;$04E4E7 |
     INY                                     ;$04E4EB |
     INX                                     ;$04E4EC |
-    REP #$20                                ;$04E4ED |
+    REP #$20                                ;$04E4ED | A->16
     TXA                                     ;$04E4EF |
     AND.w #$003F                            ;$04E4F0 |
     BNE CODE_04E4FF                         ;$04E4F3 |
@@ -6032,7 +6032,7 @@ CODE_04E52C:
     STA.l OWLayer2Tilemap_7F4000,X          ;$04E537 |
     INY                                     ;$04E53B |
     INX                                     ;$04E53C |
-    REP #$20                                ;$04E53D |
+    REP #$20                                ;$04E53D | A->16
     TXA                                     ;$04E53F |
     AND.w #$003F                            ;$04E540 |
     BNE CODE_04E54F                         ;$04E543 |
@@ -6217,7 +6217,7 @@ CODE_04E6B3:
     BMI CODE_04E6CA                         ;$04E6BA |
     LDA.l DATA_04E5AC,X                     ;$04E6BC |
     STA [$0A],Y                             ;$04E6C0 |
-    REP #$20                                ;$04E6C2 |
+    REP #$20                                ;$04E6C2 | A->16
     TYA                                     ;$04E6C4 |
     CLC                                     ;$04E6C5 |
     ADC.w #$0010                            ;$04E6C6 |
@@ -6233,7 +6233,7 @@ CODE_04E6D3:
     LDA.w OverworldEvent_1DEA               ;$04E6D6 |
     ASL                                     ;$04E6D9 |
     TAX                                     ;$04E6DA |
-    REP #$20                                ;$04E6DB |
+    REP #$20                                ;$04E6DB | A->16
     LDA.l DATA_04E359,X                     ;$04E6DD |
     STA.w EventTileIndex_1DEB               ;$04E6E1 |
     LDA.l DATA_04E35B,X                     ;$04E6E4 |
@@ -6277,7 +6277,7 @@ CODE_04E6F9:
     ASL                                     ;$04E730 |
     ASL                                     ;$04E731 |
     STA.w OWEventXPos_1B82                  ;$04E732 |
-    REP #$20                                ;$04E735 |
+    REP #$20                                ;$04E735 | A->16
     LDA.w #$4000                            ;$04E737 |
     STA $0C                                 ;$04E73A |
     LDA.w #$EFFF                            ;$04E73C |
@@ -6595,7 +6595,7 @@ CODE_04E9F1:
     TXA                                     ;$04EA2C |
     ASL                                     ;$04EA2D |
     TAX                                     ;$04EA2E |
-    REP #$20                                ;$04EA2F |
+    REP #$20                                ;$04EA2F | A->16
     LDA.l DATA_04E994,X                     ;$04EA31 |
     STA $00                                 ;$04EA35 |
     LDA.l DATA_04E93C,X                     ;$04EA37 |
@@ -6663,7 +6663,7 @@ CODE_04EAA4:
     INC.w OWEventProcess_1B86               ;$04EAAB |
     JSR CODE_04EE30                         ;$04EAAE |
     JSR CODE_04E496                         ;$04EAB1 |
-    REP #$20                                ;$04EAB4 |
+    REP #$20                                ;$04EAB4 | A->16
     INC.w EventTileIndex_1DEB               ;$04EAB6 |
     LDA.w EventTileIndex_1DEB               ;$04EAB9 |
     CMP.w EventLength_1DED                  ;$04EABC |
@@ -6966,7 +6966,7 @@ CODE_04ED83:
     STA.l Map16TilesLow_C800,X              ;$04EDCC |
     LDA.b #$04                              ;$04EDD0 |
     STA $0C                                 ;$04EDD2 |
-    REP #$20                                ;$04EDD4 |
+    REP #$20                                ;$04EDD4 | A->16
     LDA.w #$ECD3                            ;$04EDD6 |
     STA $0A                                 ;$04EDD9 |
     LDA $0E                                 ;$04EDDB |
@@ -7320,7 +7320,7 @@ CODE_04F33A:
     LDA.l SwitchAniYPosHigh_B928+$28,X      ;$04F33E |
     XBA                                     ;$04F342 |
     LDA.l SwitchAniZPosLow_B9C8,X           ;$04F343 |
-    REP #$20                                ;$04F347 |
+    REP #$20                                ;$04F347 | A->16
     CLC                                     ;$04F349 |
     ADC $02                                 ;$04F34A |
     STA $02                                 ;$04F34C |
@@ -7401,7 +7401,7 @@ CODE_04F3BF:
     STA.l SwitchAniXPosHigh_B900,X          ;$04F3CD |
     XBA                                     ;$04F3D1 |
     PLY                                     ;$04F3D2 |
-    REP #$20                                ;$04F3D3 |
+    REP #$20                                ;$04F3D3 | A->16
     SEC                                     ;$04F3D5 |
     SBC.w Layer1XPos_1A,y                   ;$04F3D6 |
     SEC                                     ;$04F3D9 |
@@ -7502,7 +7502,7 @@ CODE_04F45E:
     LDA.b #$80                              ;$04F475 |
     SEC                                     ;$04F477 |
     SBC.w MessageBoxTimer_1B89              ;$04F478 |
-    REP #$20                                ;$04F47B |
+    REP #$20                                ;$04F47B | A->16
     LDY.b #$48                              ;$04F47D |
 CODE_04F47F:
     STA.w $0548,Y
@@ -7623,7 +7623,7 @@ CODE_04F5A1:
     DEY                                     ;$04F5A9 |
     BPL CODE_04F5A1                         ;$04F5AA |
     INX                                     ;$04F5AC |
-    REP #$20                                ;$04F5AD |
+    REP #$20                                ;$04F5AD | A->16
     LDY.w SavedPlayerLives_0DB4             ;$04F5AF |
     BMI CODE_04F5BF                         ;$04F5B2 |
     LDA.w #$38FC                            ;$04F5B4 |
@@ -7644,7 +7644,7 @@ CODE_04F5CF:
     LDA.w OWPromptArrowDir_1B8A             ;$04F5DB |
     ASL                                     ;$04F5DE |
     TAY                                     ;$04F5DF |
-    REP #$20                                ;$04F5E0 |
+    REP #$20                                ;$04F5E0 | A->16
     LDA.w DATA_04F503,Y                     ;$04F5E2 |
     STA.l $7F83B1,X                         ;$04F5E5 |
     LDA.w DATA_04F507,Y                     ;$04F5E9 |
@@ -7823,7 +7823,7 @@ CODE_04F770:
     TYA                                     ;$04F786 |
     ASL                                     ;$04F787 |
     TAY                                     ;$04F788 |
-    REP #$20                                ;$04F789 |
+    REP #$20                                ;$04F789 | A->16
     LDA.b Layer1XPos_1A                     ;$04F78B |
     CLC                                     ;$04F78D |
     ADC.w DATA_04F6D8,Y                     ;$04F78E |
@@ -7831,7 +7831,7 @@ CODE_04F770:
     STA.w OWSpriteXPosLow_0E35,X            ;$04F793 |
     XBA                                     ;$04F796 |
     STA.w OWSpriteXPosHigh_0E65,X           ;$04F797 |
-    REP #$20                                ;$04F79A |
+    REP #$20                                ;$04F79A | A->16
     LDA.b Layer1YPos_1C                     ;$04F79C |
     CLC                                     ;$04F79E |
     ADC.w DATA_04F6E8,Y                     ;$04F79F |
@@ -7864,7 +7864,7 @@ CODE_04F7BB:
     LDA.w OWSpriteYPosHigh_0E75,Y           ;$04F7D1 |
     XBA                                     ;$04F7D4 |
     LDA.w OWSpriteYPosLow_0E45,Y            ;$04F7D5 |
-    REP #$20                                ;$04F7D8 |
+    REP #$20                                ;$04F7D8 | A->16
     CMP $02                                 ;$04F7DA |
     SEP #$20                                ;$04F7DC |
     BPL CODE_04F7ED                         ;$04F7DE |
@@ -7992,7 +7992,7 @@ ADDR_04F8CC:
     CLC                                     ;$04F8CF |
     JSR ADDR_04FE00                         ;$04F8D0 |
     JSR CODE_04FE62                         ;$04F8D3 |
-    REP #$20                                ;$04F8D6 |
+    REP #$20                                ;$04F8D6 | A->16
     LDA $02                                 ;$04F8D8 |
     STA $04                                 ;$04F8DA |
     SEP #$20                                ;$04F8DC |
@@ -8274,7 +8274,7 @@ CODE_04FAC9:
     PLY                                     ;$04FAD8 |
     PHA                                     ;$04FAD9 |
     JSR CODE_04FAED                         ;$04FADA |
-    REP #$20                                ;$04FADD |
+    REP #$20                                ;$04FADD | A->16
     LDA $00                                 ;$04FADF |
     CLC                                     ;$04FAE1 |
     ADC.w #$0008                            ;$04FAE2 |
@@ -8340,7 +8340,7 @@ CODE_04FB37:
     STA.w OWSpriteYSpeed_0EA5,X             ;$04FB3E |
     JSR CODE_04FE90                         ;$04FB41 |
     JSR CODE_04FE62                         ;$04FB44 |
-    REP #$20                                ;$04FB47 |
+    REP #$20                                ;$04FB47 | A->16
     LDA $00                                 ;$04FB49 |
     CLC                                     ;$04FB4B |
     ADC.w #$0020                            ;$04FB4C |
@@ -8357,7 +8357,7 @@ CODE_04FB5D:
 CODE_04FB64:
     LDA.b #$32
     JSR CODE_04FB77                         ;$04FB66 |
-    REP #$20                                ;$04FB69 |
+    REP #$20                                ;$04FB69 | A->16
     LDA $00                                 ;$04FB6B |
     CLC                                     ;$04FB6D |
     ADC.w #$0010                            ;$04FB6E |
@@ -8657,7 +8657,7 @@ CODE_04FD8E:
     TXA
     ASL                                     ;$04FD8F |
     TAY                                     ;$04FD90 |
-    REP #$20                                ;$04FD91 |
+    REP #$20                                ;$04FD91 | A->16
     LDA $00                                 ;$04FD93 |
     CLC                                     ;$04FD95 |
     ADC.w DATA_04F64C,Y                     ;$04FD96 |
@@ -8790,7 +8790,7 @@ CODE_04FE7D:
     LDA.w OWSpriteXPosHigh_0E65,X
     XBA                                     ;$04FE80 |
     LDA.w OWSpriteXPosLow_0E35,X            ;$04FE81 |
-    REP #$20                                ;$04FE84 |
+    REP #$20                                ;$04FE84 | A->16
     SEC                                     ;$04FE86 |
     SBC.w Layer1XPos_1A,y                   ;$04FE87 |
     STA.w $0000,Y                           ;$04FE8A |
@@ -8860,7 +8860,7 @@ ADDR_04FEEF:
     LDA.w OWSpriteXPosHigh_0E65,X
     XBA                                     ;$04FEF2 |
     LDA.w OWSpriteXPosLow_0E35,X            ;$04FEF3 |
-    REP #$20                                ;$04FEF6 |
+    REP #$20                                ;$04FEF6 | A->16
     CLC                                     ;$04FEF8 |
     ADC.w #$0008                            ;$04FEF9 |
     LDY.w PlayerTurnOW_0DD6                 ;$04FEFC |
@@ -8876,7 +8876,7 @@ ADDR_04FF0B:
     LDA.w OWSpriteYPosHigh_0E75,X           ;$04FF0F |
     XBA                                     ;$04FF12 |
     LDA.w OWSpriteYPosLow_0E45,X            ;$04FF13 |
-    REP #$20                                ;$04FF16 |
+    REP #$20                                ;$04FF16 | A->16
     CLC                                     ;$04FF18 |
     ADC.w #$0008                            ;$04FF19 |
     LDY.w PlayerTurnOW_0DD6                 ;$04FF1C |
@@ -8941,7 +8941,7 @@ ADDR_04FF73:
     NOP                                     ;$04FF84 |
     NOP                                     ;$04FF85 |
     NOP                                     ;$04FF86 |
-    REP #$20                                ;$04FF87 |
+    REP #$20                                ;$04FF87 | A->16
     LDA.w $4214                             ;$04FF89 |
     LSR                                     ;$04FF8C |
     LSR                                     ;$04FF8D |

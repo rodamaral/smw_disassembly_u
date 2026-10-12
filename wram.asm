@@ -2541,3 +2541,12 @@ WigglerTable_7F9A7B: skip 512 ; unreferenced
 ; 7F9C7B - 7FC7FF unused
 skip 11141
 Map16TilesHigh_7FC800: skip 14336 ;done
+
+
+; Empty:
+; 10B-1CD (stack)
+; C100- CFFF
+; 10D00-13FFF
+; 18183-1837A
+; 184BF-1977A
+; 19C7B-1C7FF

@@ -709,7 +709,7 @@ CODE_0C9409:
     STA.b Layer2DataPtr_68+2                ;$0C9419 |
     LDX.w #$B900                            ;$0C941B |
     STX $0D                                 ;$0C941E |
-    REP #$20                                ;$0C9420 |
+    REP #$20                                ;$0C9420 | A->16
     JSR CODE_0C944C                         ;$0C9422 |
     JSR CODE_0C94C0                         ;$0C9425 |
     INC.w LevelLoadObject_1928              ;$0C9428 |
@@ -778,7 +778,7 @@ CODE_0C9492:
     LDA.b [Layer2DataPtr_68],Y              ;$0C949B |
     CMP.b #$FF                              ;$0C949D |
     BNE CODE_0C945B                         ;$0C949F |
-    REP #$20                                ;$0C94A1 |
+    REP #$20                                ;$0C94A1 | A->16
     LDA.w #$9100                            ;$0C94A3 |
     STA $00                                 ;$0C94A6 |
     LDX.w #$0000                            ;$0C94A8 |
@@ -823,7 +823,7 @@ CODE_0C94EB:
     STA $02                                 ;$0C94F1 |
     LDA.b [Map16HighPtr_6E],Y               ;$0C94F3 |
     STA $03                                 ;$0C94F5 |
-    REP #$20                                ;$0C94F7 |
+    REP #$20                                ;$0C94F7 | A->16
     LDA $02                                 ;$0C94F9 |
     ASL                                     ;$0C94FB |
     TAX                                     ;$0C94FC |
@@ -1243,7 +1243,7 @@ CODE_0C9ECB:
     INY                                     ;$0C9ED3 |
     CPY.w #$0005                            ;$0C9ED4 |
     BNE CODE_0C9ECB                         ;$0C9ED7 |
-    REP #$20                                ;$0C9ED9 |
+    REP #$20                                ;$0C9ED9 | A->16
     DEX                                     ;$0C9EDB |
     TXA                                     ;$0C9EDC |
     STA.l DynStripeImgSize_7F837B           ;$0C9EDD |
@@ -1279,7 +1279,7 @@ CODE_0C9ECB:
     STA.l DynamicStripeImage_7F837D+1,X     ;$0C9F1E |
     INX                                     ;$0C9F22 |
     INX                                     ;$0C9F23 |
-    REP #$20                                ;$0C9F24 |
+    REP #$20                                ;$0C9F24 | A->16
 CODE_0C9F26:
     LDA.w DATA_0C95C7,Y
     STA.l DynamicStripeImage_7F837D,X       ;$0C9F29 |
@@ -1548,7 +1548,7 @@ CODE_0CA159:
     STA $02                                 ;$0CA163 |
     SEP #$20                                ;$0CA165 |
     JSR CODE_0CA183                         ;$0CA167 |
-    REP #$20                                ;$0CA16A |
+    REP #$20                                ;$0CA16A | A->16
     LDA.w #$0080                            ;$0CA16C |
     SEC                                     ;$0CA16F |
     SBC $04                                 ;$0CA170 |
@@ -1728,7 +1728,7 @@ CODE_0CA2C3:
     STA $00                                 ;$0CA2C6 |
     LDA.w $0B75                             ;$0CA2C8 |
     STA $01                                 ;$0CA2CB |
-    REP #$20                                ;$0CA2CD |
+    REP #$20                                ;$0CA2CD | A->16
     LDA $00                                 ;$0CA2CF |
     CMP.w #$0030                            ;$0CA2D1 |
     BNE CODE_0CA2E0                         ;$0CA2D4 |
@@ -2449,7 +2449,7 @@ CODE_0CA855:
     ADC.b #$10                              ;$0CA878 |
     STA $02                                 ;$0CA87A |
     PHX                                     ;$0CA87C |
-    REP #$20                                ;$0CA87D |
+    REP #$20                                ;$0CA87D | A->16
     TXA                                     ;$0CA87F |
     LSR                                     ;$0CA880 |
     LSR                                     ;$0CA881 |
@@ -2460,7 +2460,7 @@ CODE_0CA855:
     LDA $0A                                 ;$0CA88A |
     STA.w OAMTileSize_0420,X                ;$0CA88C |
     PLX                                     ;$0CA88F |
-    REP #$20                                ;$0CA890 |
+    REP #$20                                ;$0CA890 | A->16
     TXA                                     ;$0CA892 |
     CLC                                     ;$0CA893 |
     ADC.w #$0008                            ;$0CA894 |
@@ -2973,7 +2973,7 @@ CODE_0CAD9D:
     LDA.b #$0C                              ;$0CAD9F |
     STA.b StaffRollCurLine_67               ;$0CADA1 |
     STX.b Layer2DataPtr_68+2                ;$0CADA3 |
-    REP #$20                                ;$0CADA5 |
+    REP #$20                                ;$0CADA5 | A->16
     LDA.w DATA_0CAD58,Y                     ;$0CADA7 |
     STA.b StaffRollLinePos_65               ;$0CADAA |
     LDA.w DATA_0CAD72,Y                     ;$0CADAC |
@@ -3057,7 +3057,7 @@ CODE_0CAE48:
     STA.w $04A6                             ;$0CAE5C |
     STA.w $04B0                             ;$0CAE5F |
     STA.w $04BA                             ;$0CAE62 |
-    REP #$20                                ;$0CAE65 |
+    REP #$20                                ;$0CAE65 | A->16
     LDA.w DATA_0CADC2,X                     ;$0CAE67 |
     STA.b Layer2YPos_20                     ;$0CAE6A |
     LDA.w CreditsScreenNumber_1DE9          ;$0CAE6C |
@@ -4646,7 +4646,7 @@ CODE_0CCC51:
     LDA.b Frame_13
     AND.b #$02                              ;$0CCC53 |
     TAX                                     ;$0CCC55 |
-    REP #$20                                ;$0CCC56 |
+    REP #$20                                ;$0CCC56 | A->16
     LDA.w DATA_0CCC4D,X                     ;$0CCC58 |
     STA.w $0701                             ;$0CCC5B |
     SEP #$20                                ;$0CCC5E |
@@ -4657,7 +4657,7 @@ CODE_0CCC51:
     LDA.l CutsceneBgColor-1,X               ;$0CCC6B |
     ASL                                     ;$0CCC6F |
     TAX                                     ;$0CCC70 |
-    REP #$20                                ;$0CCC71 |
+    REP #$20                                ;$0CCC71 | A->16
     LDA.l Palettes,X                        ;$0CCC73 |
     STA.w $0701                             ;$0CCC77 |
     SEP #$20                                ;$0CCC7A |
@@ -5344,7 +5344,7 @@ CODE_0CD16F:
     LDA.b Frame_13
     AND.b #$02                              ;$0CD171 |
     BEQ CODE_0CD183                         ;$0CD173 |
-    REP #$20                                ;$0CD175 |
+    REP #$20                                ;$0CD175 | A->16
     LDA.b Layer2YPos_20                     ;$0CD177 |
     SEC                                     ;$0CD179 |
     SBC.w #$0001                            ;$0CD17A |
@@ -5448,7 +5448,7 @@ CODE_0CD23C:
     ADC $00                                 ;$0CD262 |
     TAY                                     ;$0CD264 |
     LDX $01                                 ;$0CD265 |
-    REP #$20                                ;$0CD267 |
+    REP #$20                                ;$0CD267 | A->16
     LDA.w DATA_0CD1FD,Y                     ;$0CD269 |
     STA.l DynamicStripeImage_7F837D,X       ;$0CD26C |
     LDA.w DATA_0CD1FF,Y                     ;$0CD270 |

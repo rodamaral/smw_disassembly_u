@@ -41,7 +41,7 @@ CODE_05801E:
     STZ.w ObjectTileset_1931                ;$058067 |
     LDX.w #$B900                            ;$05806A |
     STX $0D                                 ;$05806D |
-    REP #$20                                ;$05806F |
+    REP #$20                                ;$05806F | A->16
     JSR CODE_058126                         ;$058071 |
 .CODE_058074:
     SEP #$20
@@ -119,7 +119,7 @@ CODE_0580EC:
     LDA.w ThroughSub_0D9E                   ;$05810E |
     STA.w $212D                             ;$058111 |
     STA.w $212F                             ;$058114 |
-    REP #$20                                ;$058117 |
+    REP #$20                                ;$058117 | A->16
     LDA.w #$FFFF                            ;$058119 |
     STA.b Layer1PrevTileUp_4D               ;$05811C |
     STA.b Layer1PrevTileDown_4F             ;$05811E |
@@ -144,7 +144,7 @@ CODE_058136:
     LDA.b [Layer2DataPtr_68],Y              ;$05813C |
     STA $07                                 ;$05813E |
     INY                                     ;$058140 |
-    REP #$20                                ;$058141 |
+    REP #$20                                ;$058141 | A->16
     STY $03                                 ;$058143 |
     SEP #$20                                ;$058145 |
     AND.b #$80                              ;$058147 |
@@ -154,7 +154,7 @@ CODE_058136:
     STA $07                                 ;$05814F |
     LDA.b [Layer2DataPtr_68],Y              ;$058151 |
     INY                                     ;$058153 |
-    REP #$20                                ;$058154 |
+    REP #$20                                ;$058154 | A->16
     STY $03                                 ;$058156 |
     LDY $05                                 ;$058158 |
 CODE_05815A:
@@ -163,7 +163,7 @@ CODE_05815A:
     INY                                     ;$05815E |
     DEC $07                                 ;$05815F |
     BPL CODE_05815A                         ;$058161 |
-    REP #$20                                ;$058163 |
+    REP #$20                                ;$058163 | A->16
     STY $05                                 ;$058165 |
     JMP CODE_058188                         ;$058167 |
 
@@ -173,12 +173,12 @@ CODE_05816A:
     SEP #$20                                ;$05816E |
     LDA.b [Layer2DataPtr_68],Y              ;$058170 |
     INY                                     ;$058172 |
-    REP #$20                                ;$058173 |
+    REP #$20                                ;$058173 | A->16
     STY $03                                 ;$058175 |
     LDY $05                                 ;$058177 |
     SEP #$20                                ;$058179 |
     STA [$0D],Y                             ;$05817B |
-    REP #$20                                ;$05817D |
+    REP #$20                                ;$05817D | A->16
     INY                                     ;$05817F |
     STY $05                                 ;$058180 |
     SEP #$20                                ;$058182 |
@@ -195,7 +195,7 @@ CODE_058188:
     LDA.b [Layer2DataPtr_68],Y              ;$058195 |
     CMP.b #$FF                              ;$058197 |
     BNE CODE_058136                         ;$058199 |
-    REP #$20                                ;$05819B |
+    REP #$20                                ;$05819B | A->16
     LDA.w #$9100                            ;$05819D |
     STA $00                                 ;$0581A0 |
     LDX.w #$0000                            ;$0581A2 |
@@ -236,7 +236,7 @@ CODE_0581FB:
     STA.w SolidTileStart_1430               ;$05820C |
     LDA.b #$CA                              ;$05820F |
     STA.w SolidTileEnd_1431                 ;$058211 |
-    REP #$20                                ;$058214 |
+    REP #$20                                ;$058214 | A->16
     LDA.w #$E55E                            ;$058216 |
     STA.b SlopesPtr_82                      ;$058219 |
     LDA.l TilesetMAP16Loc,X                 ;$05821B |
@@ -258,7 +258,7 @@ CODE_058237:
 CODE_05823D:
     ASL $0C
     BCC CODE_058253                         ;$05823F |
-    REP #$20                                ;$058241 |
+    REP #$20                                ;$058241 | A->16
     LDA $02                                 ;$058243 |
     STA.w Map16Pointers_0FBE,X              ;$058245 |
     LDA $02                                 ;$058248 |
@@ -698,7 +698,7 @@ CODE_05863E:
     AND.b #$0F                              ;$05864A |
     ORA.b LevelLoadPos_57                   ;$05864C |
     STA.b LevelLoadPos_57                   ;$05864E |
-    REP #$20                                ;$058650 |
+    REP #$20                                ;$058650 | A->16
     LDA.w LayerProcessing_1933              ;$058652 |
     AND.w #$00FF                            ;$058655 |
     ASL                                     ;$058658 |
@@ -828,7 +828,7 @@ process_level_mode_setting_0586F1:
     LDA.b ScreenMode_5B                     ;$058739 |
     AND.b #!Layer2Vert_02                   ;$05873B |
     BNE .CODE_058753                        ;$05873D |
-    REP #$20                                ;$05873F |
+    REP #$20                                ;$05873F | A->16
     LDA.b Layer2ScrollDir_56                ;$058741 |
     AND.w #$00FF                            ;$058743 |
     TAX                                     ;$058746 |
@@ -1154,7 +1154,7 @@ CODE_0589CE:
 CODE_058A10:
     TYA
     STA.w Layer1VramAddr_1BE4               ;$058A11 |
-    REP #$20                                ;$058A14 |
+    REP #$20                                ;$058A14 | A->16
     LDA.b Layer1TileUp_45,X                 ;$058A16 |
     AND.w #$01F0                            ;$058A18 |
     LSR                                     ;$058A1B |
@@ -1275,7 +1275,7 @@ CODE_058AD5:
     ASL                                     ;$058AEB |
     ASL                                     ;$058AEC |
     STA.w Layer1VramAddr_1BE4+1             ;$058AED |
-    REP #$20                                ;$058AF0 |
+    REP #$20                                ;$058AF0 | A->16
     LDA.b Layer1TileUp_45,X                 ;$058AF2 |
     AND.w #$01F0                            ;$058AF4 |
     LSR                                     ;$058AF7 |
@@ -1537,7 +1537,7 @@ CODE_058CBA:
     ASL                                     ;$058CD0 |
     ASL                                     ;$058CD1 |
     STA.w Layer2VramAddr_1CE6+1             ;$058CD2 |
-    REP #$20                                ;$058CD5 |
+    REP #$20                                ;$058CD5 | A->16
     LDA.b Layer2TileUp_49,X                 ;$058CD7 |
     AND.w #$01F0                            ;$058CD9 |
     LSR                                     ;$058CDC |
@@ -1646,7 +1646,7 @@ CODE_058D7A:
 CODE_058D91:
     TYA
     STA.w Layer2VramAddr_1CE6               ;$058D92 |
-    REP #$20                                ;$058D95 |
+    REP #$20                                ;$058D95 | A->16
     LDA.w #$B900                            ;$058D97 |
     STA.b Map16LowPtr_6B                    ;$058D9A |
     LDA.w #$BD00                            ;$058D9C |
@@ -3090,7 +3090,7 @@ message_partially_expanded_05B191:
     LDA.b #$80                              ;$05B261 |
     SEC                                     ;$05B263 |
     SBC.w MessageBoxTimer_1B89              ;$05B264 |
-    REP #$20                                ;$05B267 |
+    REP #$20                                ;$05B267 | A->16
     LDX.b #$00                              ;$05B269 |
     LDY.b #$50                              ;$05B26B |
 -   CPX.w MessageBoxTimer_1B89              ;$05B26D |\
@@ -3140,7 +3140,7 @@ palace_message_OAM_05B2EB:
     ASL                                     ;$05B2F0 |
     TAX                                     ;$05B2F1 |
     STZ $00                                 ;$05B2F2 |
-    REP #$20                                ;$05B2F4 |
+    REP #$20                                ;$05B2F4 | A->16
     LDY.b #$1C                              ;$05B2F6 |
 -   LDA.w DATA_05B29B,X                     ;$05B2F8 |\
     STA.w $0202,Y                           ;$05B2FB ||
@@ -3519,7 +3519,7 @@ update_animated_tile_gfx_05BB39:
     TAY                                     ;$05BB45 |
     ASL                                     ;$05BB46 |
     TAX                                     ;$05BB47 |
-    REP #$20                                ;$05BB48 |
+    REP #$20                                ;$05BB48 | A->16
     LDA.b Frame_14                          ;$05BB4A |
     AND.w #$0018                            ;$05BB4C |
     LSR                                     ;$05BB4F |
@@ -3769,14 +3769,14 @@ CODE_05BD36:
     LDA.w Layer1ScrollBits_1440             ;$05BD39 |
     ASL                                     ;$05BD3C |
     TAY                                     ;$05BD3D |
-    REP #$20                                ;$05BD3E |
+    REP #$20                                ;$05BD3E | A->16
     LDA.w DATA_05C9D1,Y                     ;$05BD40 |
     STA.w Layer1ScrollCmd_143E              ;$05BD43 |
     LDA.w DATA_05C9DB,Y                     ;$05BD46 |
     STA.w Layer1ScrollBits_1440             ;$05BD49 |
 CODE_05BD4C:
     LDX.w ScrollLayerIndex_1456
-    REP #$20                                ;$05BD4F |
+    REP #$20                                ;$05BD4F | A->16
     STZ.w Layer1ScrollXSpeed_1446,X         ;$05BD51 |
     STZ.w Layer1ScrollYSpeed_1448,X         ;$05BD54 |
     STZ.w Layer1ScrollXPosUpd_144E,X        ;$05BD57 |
@@ -3800,12 +3800,12 @@ CODE_05BD6E:
     LDA.w Layer1ScrollBits_1440             ;$05BD7B |
     ASL                                     ;$05BD7E |
     TAY                                     ;$05BD7F |
-    REP #$20                                ;$05BD80 |
+    REP #$20                                ;$05BD80 | A->16
     LDA.w DATA_05C9E5,Y                     ;$05BD82 |
     STA.w Layer1ScrollCmd_143E              ;$05BD85 |
     LDA.w DATA_05C9E7,Y                     ;$05BD88 |
     STA.w Layer1ScrollBits_1440             ;$05BD8B |
-    REP #$20                                ;$05BD8E |
+    REP #$20                                ;$05BD8E | A->16
     LDY.w Layer1ScrollBits_1440             ;$05BD90 |
     LDA.w ScrollLayerIndex_1456             ;$05BD93 |
     AND.w #$00FF                            ;$05BD96 |
@@ -3849,7 +3849,7 @@ ADDR_05BDDD:
     LDA.w Layer1ScrollBits_1440
     ASL                                     ;$05BDE0 |
     TAY                                     ;$05BDE1 |
-    REP #$20                                ;$05BDE2 |
+    REP #$20                                ;$05BDE2 | A->16
     LDA.w DATA_05CA08,Y                     ;$05BDE4 |
     STA.w Layer1ScrollCmd_143E              ;$05BDE7 |
     LDA.w DATA_05CA0C,Y                     ;$05BDEA |
@@ -3897,7 +3897,7 @@ ADDR_05BE3A:
     LDA.w Layer1ScrollBits_1440
     ASL                                     ;$05BE3D |
     TAY                                     ;$05BE3E |
-    REP #$20                                ;$05BE3F |
+    REP #$20                                ;$05BE3F | A->16
     LDA.w DATA_05CA16,Y                     ;$05BE41 |
     STA.w Layer1ScrollCmd_143E              ;$05BE44 |
     LDA.w DATA_05CA1E,Y                     ;$05BE47 |
@@ -3936,7 +3936,7 @@ reset_layer3_05BE8A:
     PHB
     PHK                                     ;$05BE8B |
     PLB                                     ;$05BE8C |
-    REP #$20                                ;$05BE8D |
+    REP #$20                                ;$05BE8D | A->16
     LDA.w DATA_05CA26                       ;$05BE8F |
     STA.w Layer3ScroolDir_1460              ;$05BE92 |
     STZ.w Layer3ScrollXSpeed_1458           ;$05BE95 |
@@ -3953,7 +3953,7 @@ CODE_05BEA6:
     LDA.w Layer1ScrollBits_1440             ;$05BEA9 |
     ASL                                     ;$05BEAC |
     TAY                                     ;$05BEAD |
-    REP #$20                                ;$05BEAE |
+    REP #$20                                ;$05BEAE | A->16
     LDA.w DATA_05CA3E,Y                     ;$05BEB0 |
     STA.w Layer1ScrollCmd_143E              ;$05BEB3 |
     LDA.w DATA_05CA42,Y                     ;$05BEB6 |
@@ -4001,7 +4001,7 @@ CODE_05BF0A:
     LDA.w Layer1ScrollBits_1440             ;$05BF0D |
     ASL                                     ;$05BF10 |
     TAY                                     ;$05BF11 |
-    REP #$20                                ;$05BF12 |
+    REP #$20                                ;$05BF12 | A->16
     LDA.w DATA_05CA48,Y                     ;$05BF14 |
     STA.w Layer1ScrollCmd_143E              ;$05BF17 |
     LDA.w DATA_05CA52,Y                     ;$05BF1A |
@@ -4048,7 +4048,7 @@ CODE_05BF6A:
     STA.w Layer1ScrollBits_1440             ;$05BF70 |
     LDA.w DATA_05C952,Y                     ;$05BF73 |
     STA.w Layer2ScrollBits_1441             ;$05BF76 |
-    REP #$20                                ;$05BF79 |
+    REP #$20                                ;$05BF79 | A->16
     LDA.w #$0200                            ;$05BF7B |
     JSR CODE_05BFD2                         ;$05BF7E |
     LDA.w Layer1ScrollBits_1440             ;$05BF81 |
@@ -4057,14 +4057,14 @@ CODE_05BF6A:
     TAX                                     ;$05BF87 |
     LDY.b #$01                              ;$05BF88 |
     JSR CODE_05C95B                         ;$05BF8A |
-    REP #$20                                ;$05BF8D |
+    REP #$20                                ;$05BF8D | A->16
     LDA.w NextLayer2YPos_1468               ;$05BF8F |
     STA.b Layer2YPos_20                     ;$05BF92 |
     JMP CODE_05C32B                         ;$05BF94 |
 
 ADDR_05BF97:
     STZ.w HorizLayer1Setting_1411
-    REP #$20                                ;$05BF9A |
+    REP #$20                                ;$05BF9A | A->16
     STZ.b Layer1XPos_1A                     ;$05BF9C |
     STZ.w NextLayer1XPos_1462               ;$05BF9E |
     STZ.b Layer2XPos_1E                     ;$05BFA1 |
@@ -4080,7 +4080,7 @@ ADDR_05BF97:
 
 ADDR_05BFBA:
     STZ.w HorizLayer1Setting_1411
-    REP #$20                                ;$05BFBD |
+    REP #$20                                ;$05BFBD | A->16
     STZ.b Layer2XPos_1E                     ;$05BFBF |
     STZ.w NextLayer2XPos_1466               ;$05BFC1 |
     LDA.w #$03C0                            ;$05BFC4 |
@@ -4121,7 +4121,7 @@ CODE_05C005:
     LDA.w Layer1ScrollBits_1440             ;$05C008 |
     ASL                                     ;$05C00B |
     TAY                                     ;$05C00C |
-    REP #$20                                ;$05C00D |
+    REP #$20                                ;$05C00D | A->16
     LDA.w DATA_05BFFD,Y                     ;$05C00F |
     STA.w Layer1ScrollBits_1440             ;$05C012 |
     LDA.w #$000C                            ;$05C015 |
@@ -4133,7 +4133,7 @@ CODE_05C01A:
     JSR CODE_05BFD2                         ;$05C01F |
 CODE_05C022:
     STZ.w HorizLayer2Setting_1413
-    REP #$20                                ;$05C025 |
+    REP #$20                                ;$05C025 | A->16
     STZ.w Layer2ScrollXSpeed_144A           ;$05C027 |
     STZ.w Layer2ScrollYSpeed_144C           ;$05C02A |
     STZ.w Layer2ScrollXPosUpd_1452          ;$05C02D |
@@ -4147,7 +4147,7 @@ CODE_05C036:
     STA.w Layer1ScrollTimer_1444            ;$05C03C |
     LDA.w DATA_05C80B,Y                     ;$05C03F |
     STA.w Layer2ScrollTimer_1445            ;$05C042 |
-    REP #$20                                ;$05C045 |
+    REP #$20                                ;$05C045 | A->16
     LDA.w #$0E00                            ;$05C047 |
     JMP CODE_05BFD5                         ;$05C04A |
 
@@ -4258,7 +4258,7 @@ CODE_05C0F5:
     NOP                                     ;$05C105 |
     NOP                                     ;$05C106 |
     NOP                                     ;$05C107 |
-    REP #$20                                ;$05C108 |
+    REP #$20                                ;$05C108 | A->16
     LDA.w $4214                             ;$05C10A |
     BNE CODE_05C123                         ;$05C10D |
     LDA.w ScrollLayerIndex_1456             ;$05C10F |
@@ -4349,7 +4349,7 @@ CODE_05C18D:
 
 CODE_05C198:
     JSR CODE_05C04D
-    REP #$20                                ;$05C19B |
+    REP #$20                                ;$05C19B | A->16
     LDA.w NextLayer2XPos_1466               ;$05C19D |
     STA.w NextLayer1XPos_1462               ;$05C1A0 |
     LDA.b Layer2YPos_20                     ;$05C1A3 |
@@ -4369,7 +4369,7 @@ CODE_05C198:
     LDA.w Layer1ScrollTimer_1444,X          ;$05C1BC |
     CMP.b #$20                              ;$05C1BF |
     BCC ADDR_05C1D1                         ;$05C1C1 |
-    REP #$20                                ;$05C1C3 |
+    REP #$20                                ;$05C1C3 | A->16
     LDX.w ScrollLayerIndex_1456             ;$05C1C5 |
     LDA.w NextLayer1YPos_1464,X             ;$05C1C8 |
     EOR.w #$0001                            ;$05C1CB |
@@ -4405,7 +4405,7 @@ ADDR_05C1EF:
     TAX                                     ;$05C200 |
     LDA.b #$30                              ;$05C201 |
     STA.w Layer1ScrollTimer_1444,X          ;$05C203 |
-    REP #$20                                ;$05C206 |
+    REP #$20                                ;$05C206 | A->16
     LDX.w ScrollLayerIndex_1456             ;$05C208 |
     STZ.w Layer1ScrollYSpeed_1448,X         ;$05C20B |
     STZ.w Layer1ScrollYPosUpd_1450,X        ;$05C20E |
@@ -4498,7 +4498,7 @@ ADDR_05C295:
     NOP                                     ;$05C2B9 |
     NOP                                     ;$05C2BA |
     NOP                                     ;$05C2BB |
-    REP #$20                                ;$05C2BC |
+    REP #$20                                ;$05C2BC | A->16
     LDA.w $4214                             ;$05C2BE |
     BNE ADDR_05C2E5                         ;$05C2C1 |
     LDA.w ScrollLayerIndex_1456             ;$05C2C3 |
@@ -4591,7 +4591,7 @@ ADDR_05C340:
     NOP                                     ;$05C364 |
     NOP                                     ;$05C365 |
     NOP                                     ;$05C366 |
-    REP #$20                                ;$05C367 |
+    REP #$20                                ;$05C367 | A->16
     LDA.w $4214                             ;$05C369 |
     BNE ADDR_05C39F                         ;$05C36C |
     LDA.w ScrollLayerIndex_1456             ;$05C36E |
@@ -4635,7 +4635,7 @@ ADDR_05C39F:
 ADDR_05C3BD:
     TXA
     STA.w Layer1ScrollDir_55,Y              ;$05C3BE |
-    REP #$20                                ;$05C3C1 |
+    REP #$20                                ;$05C3C1 | A->16
     PLA                                     ;$05C3C3 |
     TAY                                     ;$05C3C4 |
     LDX.w Layer1ScrollBits_1440             ;$05C3C5 |
@@ -5002,7 +5002,7 @@ ADDR_05C659:
 
 ADDR_05C674:
     STZ.b Layer2ScrollDir_56
-    REP #$20                                ;$05C676 |
+    REP #$20                                ;$05C676 | A->16
     LDA.w Layer2ScrollYSpeed_144C           ;$05C678 |
     CMP.w #$FFC0                            ;$05C67B |
     BEQ ADDR_05C684                         ;$05C67E |
@@ -5072,7 +5072,7 @@ ADDR_05C6EE:
     INC A                                   ;$05C6FE |
     XBA                                     ;$05C6FF |
     LDA.w NextLayer1XPos_1462               ;$05C700 |
-    REP #$20                                ;$05C703 |
+    REP #$20                                ;$05C703 | A->16
     LDY.b #$82                              ;$05C705 |
     CMP.w #$0000                            ;$05C707 |
     BPL ADDR_05C711                         ;$05C70A |
@@ -5114,7 +5114,7 @@ CODE_05C73B:
 CODE_05C74A:
     LDA.b #$10
     STA.w Layer2ScrollTimer_1445            ;$05C74C |
-    REP #$20                                ;$05C74F |
+    REP #$20                                ;$05C74F | A->16
     LDA.w NextLayer2YPos_1468               ;$05C751 |
     CMP.w DATA_05C71B,X                     ;$05C754 |
     BNE CODE_05C770                         ;$05C757 |
@@ -5152,7 +5152,7 @@ CODE_05C787:
     TAX                                     ;$05C792 |
     LDY.w Layer1ScrollBits_1440,X           ;$05C793 |
     LDX.w ScrollLayerIndex_1456             ;$05C796 |
-    REP #$20                                ;$05C799 |
+    REP #$20                                ;$05C799 | A->16
     LDA.w Layer1ScrollXSpeed_1446,X         ;$05C79B |
     CMP.w DATA_05C001,Y                     ;$05C79E |
     BEQ CODE_05C7A4                         ;$05C7A1 |
@@ -5176,7 +5176,7 @@ CODE_05C7BC:
 CODE_05C7C1:
     LDA.b #!ScrollRightDown_02
     STA.b Layer2ScrollDir_56                ;$05C7C3 |
-    REP #$20                                ;$05C7C5 |
+    REP #$20                                ;$05C7C5 | A->16
     LDA.w Layer2ScrollXSpeed_144A           ;$05C7C7 |
     CMP.w #$0400                            ;$05C7CA |
     BEQ CODE_05C7D0                         ;$05C7CD |
@@ -5254,7 +5254,7 @@ CODE_05C84C:
     ORA.w Layer2Touched_140E                ;$05C857 |
     STA.w Layer1ScrollType_1442             ;$05C85A |
     BEQ CODE_05C87D                         ;$05C85D |
-    REP #$20                                ;$05C85F |
+    REP #$20                                ;$05C85F | A->16
     LDA.w NextLayer2YPos_1468               ;$05C861 |
     CMP.w DATA_05C810,Y                     ;$05C864 |
     BEQ CODE_05C87D                         ;$05C867 |
@@ -5351,7 +5351,7 @@ CODE_05C98B:
     TAY                                     ;$05C992 |
     LSR                                     ;$05C993 |
     TAX                                     ;$05C994 |
-    REP #$20                                ;$05C995 |
+    REP #$20                                ;$05C995 | A->16
     LDA.w NextLayer2YPos_1468               ;$05C997 |
     SEC                                     ;$05C99A |
     SBC.w DATA_05C8C8,Y                     ;$05C99B |
@@ -5655,7 +5655,7 @@ CODE_05CCE4:
 CODE_05CCF9:
     SEP #$10
     JSR CODE_05CE4C                         ;$05CCFB |
-    REP #$20                                ;$05CCFE |
+    REP #$20                                ;$05CCFE | A->16
     STZ $00                                 ;$05CD00 |
     LDA $02                                 ;$05CD02 |
     STA.w ScoreIncrement_0F40               ;$05CD04 |
@@ -5869,7 +5869,7 @@ CODE_05CECA:
     PHB
     PHK                                     ;$05CECB |
     PLB                                     ;$05CECC |
-    REP #$20                                ;$05CECD |
+    REP #$20                                ;$05CECD | A->16
     LDX.b #$00                              ;$05CECF |
     LDA.w CurrentPlayer_0DB3                ;$05CED1 |
     AND.w #$00FF                            ;$05CED4 |
@@ -6463,7 +6463,7 @@ CODE_05D8B7:
     STA.b Layer2DataPtr_68+1                ;$05D8D9 |
     LDA.w Layer2Ptrs+2,Y                    ;$05D8DB |
     STA.b Layer2DataPtr_68+2                ;$05D8DE |
-    REP #$20                                ;$05D8E0 |
+    REP #$20                                ;$05D8E0 | A->16
     LDA $0E                                 ;$05D8E2 |
     ASL                                     ;$05D8E4 |
     TAY                                     ;$05D8E5 |

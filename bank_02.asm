@@ -291,7 +291,7 @@ CODE_0282AF:
     LDY.w #$00FC                            ;$0282D5 |
 CODE_0282D8:
     STX $00
-    REP #$20                                ;$0282DA |
+    REP #$20                                ;$0282DA | A->16
     TXA                                     ;$0282DC |
     CLC                                     ;$0282DD |
     ADC $0C                                 ;$0282DE |
@@ -346,7 +346,7 @@ CODE_028318:
     STA.w $020E,X                           ;$028346 |
     LDA.w $020F,Y                           ;$028349 |
     STA.w $020F,X                           ;$02834C |
-    REP #$20                                ;$02834F |
+    REP #$20                                ;$02834F | A->16
     TXA                                     ;$028351 |
     LSR                                     ;$028352 |
     LSR                                     ;$028353 |
@@ -6248,7 +6248,7 @@ CODE_02AE5B:
     ASL                                     ;$02AE5E |
     ASL                                     ;$02AE5F |
     TAY                                     ;$02AE60 |
-    REP #$20                                ;$02AE61 |
+    REP #$20                                ;$02AE61 | A->16
     LDA.w Layer1YPos_1C,y                   ;$02AE63 |
     STA $02                                 ;$02AE66 |
     LDA.w Layer1XPos_1A,y                   ;$02AE68 |
@@ -10313,7 +10313,7 @@ ADDR_02CC35:
     STA $02                                 ;$02CC4C |
     LDA.w SpriteYPosHigh_14D4,X             ;$02CC4E |
     STA $03                                 ;$02CC51 |
-    REP #$20                                ;$02CC53 |
+    REP #$20                                ;$02CC53 | A->16
     LDA $00                                 ;$02CC55 |
     LDY.b PlayerXSpeed_7B                   ;$02CC57 |
     DEY                                     ;$02CC59 |
@@ -11354,7 +11354,7 @@ CODE_02D38C:
     LDA.w SpriteXPosHigh_14E0,X
     XBA                                     ;$02D38F |
     LDA.b SpriteXPosLow_E4,X                ;$02D390 |
-    REP #$20                                ;$02D392 |
+    REP #$20                                ;$02D392 | A->16
     SEC                                     ;$02D394 |
     SBC.b Layer1XPos_1A                     ;$02D395 |
     CLC                                     ;$02D397 |
@@ -11528,7 +11528,7 @@ CODE_02D4A8:
     STA $00                                 ;$02D4B1 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02D4B3 |
     STA $01                                 ;$02D4B6 |
-    REP #$20                                ;$02D4B8 |
+    REP #$20                                ;$02D4B8 | A->16
     LDA.b PlayerXPosScrRel_7E               ;$02D4BA |
     CLC                                     ;$02D4BC |
     ADC $00                                 ;$02D4BD |
@@ -14449,7 +14449,7 @@ CODE_02EA25:
     STZ $01                                 ;$02EA2D |
     LDA.b #$06                              ;$02EA2F |
     STA.w $0302,Y                           ;$02EA31 |
-    REP #$20                                ;$02EA34 |
+    REP #$20                                ;$02EA34 | A->16
     LDA $00                                 ;$02EA36 |
     ASL                                     ;$02EA38 |
     ASL                                     ;$02EA39 |
@@ -15070,7 +15070,7 @@ ADDR_02EED5:
     STA $02                                 ;$02EEE6 |
     LDA.b #$01                              ;$02EEE8 |
     STA $03                                 ;$02EEEA |
-    REP #$20                                ;$02EEEC |
+    REP #$20                                ;$02EEEC | A->16
     LDA $00                                 ;$02EEEE |
     CMP $02                                 ;$02EEF0 |
     SEP #$20                                ;$02EEF2 |
@@ -15512,7 +15512,7 @@ CODE_02F1EF:
     STA $00                                 ;$02F204 |
     LDA.w SpriteXPosHigh_14E0,X             ;$02F206 |
     STA $01                                 ;$02F209 |
-    REP #$20                                ;$02F20B |
+    REP #$20                                ;$02F20B | A->16
     LDA $00                                 ;$02F20D |
     SEC                                     ;$02F20F |
     SBC.b PlayerXPos_94                     ;$02F210 |
@@ -16726,7 +16726,7 @@ CODE_02FAB3:
     STA $00                                 ;$02FAC7 |
     LDA.w BooRingXPosHigh_0FB4,Y            ;$02FAC9 |
     STA $01                                 ;$02FACC |
-    REP #$20                                ;$02FACE |
+    REP #$20                                ;$02FACE | A->16
     LDA $00                                 ;$02FAD0 |
     SEC                                     ;$02FAD2 |
     SBC.b Layer1XPos_1A                     ;$02FAD3 |
@@ -16958,7 +16958,7 @@ CODE_02FC8D:
     STA $00                                 ;$02FC90 |
     LDA.w ClusterSprXPosHigh_1E3E,X         ;$02FC92 |
     STA $01                                 ;$02FC95 |
-    REP #$20                                ;$02FC97 |
+    REP #$20                                ;$02FC97 | A->16
     LDA $00                                 ;$02FC99 |
     SEC                                     ;$02FC9B |
     SBC.b Layer1XPos_1A                     ;$02FC9C |
@@ -17220,7 +17220,7 @@ CODE_02FE77:
     STA $00                                 ;$02FE7E |
     LDA.w ClusterSprXPosHigh_1E3E,X         ;$02FE80 |
     STA $01                                 ;$02FE83 |
-    REP #$20                                ;$02FE85 |
+    REP #$20                                ;$02FE85 | A->16
     LDA.b PlayerXPos_94                     ;$02FE87 |
     SEC                                     ;$02FE89 |
     SBC $00                                 ;$02FE8A |
@@ -17235,7 +17235,7 @@ CODE_02FE77:
     LDA.w ClusterSprYPosHigh_1E2A,X         ;$02FE9D |
     ADC.b #$00                              ;$02FEA0 |
     STA $03                                 ;$02FEA2 |
-    REP #$20                                ;$02FEA4 |
+    REP #$20                                ;$02FEA4 | A->16
     LDA.w #$0014                            ;$02FEA6 |
     LDY.b Powerup_19                        ;$02FEA9 |
     BEQ CODE_02FEB0                         ;$02FEAB |
