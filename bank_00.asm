@@ -2627,17 +2627,15 @@ GM03_title_load_1_0096AE:
     JSR clear_non_stack_008A4E              ;$0096B1 |
     LDX.b #$07                              ;$0096B4 |
     LDA.b #$FF                              ;$0096B6 |
-CODE_0096B8:
-    STA.w SpriteGFXFile_0101,X
-    DEX                                     ;$0096BB |
-    BPL CODE_0096B8                         ;$0096BC |
+-   STA.w SpriteGFXFile_0101,X              ;$0096B8 |\
+    DEX                                     ;$0096BB ||
+    BPL -                                   ;$0096BC |/
     LDA.w OverworldOverride_0109            ;$0096BE |
-    BNE CODE_0096CB                         ;$0096C1 |
-    JSR upload_music_bank_1                 ;$0096C3 |
-    LDA.b #$01                              ;$0096C6 |
-    STA.w SPCIO2_1DFB                       ;$0096C8 |
-CODE_0096CB:
-    LDA.b #$EB
+    BNE +                                   ;$0096C1 |\
+    JSR upload_music_bank_1                 ;$0096C3 ||
+    LDA.b #$01                              ;$0096C6 ||
+    STA.w SPCIO2_1DFB                       ;$0096C8 |/
++   LDA.b #$EB                              ;$0096CB |
     LDY.b #$00                              ;$0096CD |
 CODE_0096CF:
     STA.w OverworldOverride_0109
@@ -2646,22 +2644,20 @@ GM11_level_load_1_0096D5:
     STZ.w $4200
     JSR disable_controls                    ;$0096D8 |
     LDA.w SublevelCount_141A                ;$0096DB |
-    BNE CODE_0096E9                         ;$0096DE |
-    LDA.w ShowMarioStart_141D               ;$0096E0 |
-    BEQ CODE_0096E9                         ;$0096E3 |
-    JSL CODE_04DC09                         ;$0096E5 |
-CODE_0096E9:
-    STZ.w Layer3ScrollType_13D5
+    BNE +                                   ;$0096DE |\
+    LDA.w ShowMarioStart_141D               ;$0096E0 ||
+    BEQ +                                   ;$0096E3 ||
+    JSL load_OW_layer1_tilemap_04DC09       ;$0096E5 |/
++   STZ.w Layer3ScrollType_13D5             ;$0096E9 |
     STZ.w EndMarchPhase_13D9                ;$0096EC |
     LDA.b #$50                              ;$0096EF |
     STA.w DrumrollTimer_13D6                ;$0096F1 |
     JSL CODE_05D796                         ;$0096F4 |
     LDX.b #$07                              ;$0096F8 |
-CODE_0096FA:
-    LDA.b Layer1XPos_1A,X
-    STA.w NextLayer1XPos_1462,X             ;$0096FC |
-    DEX                                     ;$0096FF |
-    BPL CODE_0096FA                         ;$009700 |
+-   LDA.b Layer1XPos_1A,X                   ;$0096FA |\
+    STA.w NextLayer1XPos_1462,X             ;$0096FC ||
+    DEX                                     ;$0096FF ||
+    BPL -                                   ;$009700 |/
     JSR upload_level_music                  ;$009702 |
     JSR CODE_00A635                         ;$009705 |
     LDA.b #$20                              ;$009708 |
@@ -2671,25 +2667,23 @@ CODE_0096FA:
     JSL update_screen_position_00F6DB       ;$009712 |
     JSL CODE_05801E                         ;$009716 |
     LDA.w OverworldOverride_0109            ;$00971A |
-    BEQ CODE_009728                         ;$00971D |
-    CMP.b #$E9                              ;$00971F |
-    BNE CODE_009740                         ;$009721 |
-    LDA.b #$13                              ;$009723 |
-    STA.w MusicBackup_0DDA                  ;$009725 |
-CODE_009728:
-    LDA.w MusicBackup_0DDA
+    BEQ +                                   ;$00971D |\
+    CMP.b #$E9                              ;$00971F ||
+    BNE .change_game_mod_009740             ;$009721 ||
+    LDA.b #$13                              ;$009723 ||
+    STA.w MusicBackup_0DDA                  ;$009725 |/
++   LDA.w MusicBackup_0DDA                  ;$009728 |
     CMP.b #$40                              ;$00972B |
-    BCS CODE_00973B                         ;$00972D |
+    BCS .music_backup_00973B                ;$00972D |
     LDY.w IRQNMICommand_0D9B                ;$00972F |
     CPY.b #!IRQNMIBowser_C1                 ;$009732 |
-    BNE CODE_009738                         ;$009734 |
+    BNE +                                   ;$009734 |
     LDA.b #$16                              ;$009736 |
-CODE_009738:
-    STA.w SPCIO2_1DFB
-CODE_00973B:
++   STA.w SPCIO2_1DFB                       ;$009738 |
+.music_backup_00973B:
     AND.b #$BF
     STA.w MusicBackup_0DDA                  ;$00973D |
-CODE_009740:
+.change_game_mod_009740:
     STZ.w Brightness_0DAE
     STZ.w MosaicDirection_0DAF              ;$009743 |
     INC.w GameMode_0100                     ;$009746 |
@@ -3923,19 +3917,17 @@ GM0C_overworld_load_00A087:
     STZ.w MusicBackup_0DDA                  ;$00A0B9 |
     LDX.w CurrentPlayer_0DB3                ;$00A0BC |
     LDA.w PlayerLives_0DBE                  ;$00A0BF |
-    BPL .CODE_00A0C7                        ;$00A0C2 |
-    INC.w OWPromptProcess_1B87              ;$00A0C4 |
-.CODE_00A0C7:
-    STA.w SavedPlayerLives_0DB4,X
+    BPL +                                   ;$00A0C2 |\
+    INC.w OWPromptProcess_1B87              ;$00A0C4 |/
++   STA.w SavedPlayerLives_0DB4,X           ;$00A0C7 |
     LDA.b Powerup_19                        ;$00A0CA |
     STA.w $0DB8,X                           ;$00A0CC |
     LDA.w PlayerCoins_0DBF                  ;$00A0CF |
     STA.w SavedPlayerCoins_0DB6,X           ;$00A0D2 |
     LDA.w CarryYoshiLevels_0DC1             ;$00A0D5 |
-    BEQ .CODE_00A0DD                        ;$00A0D8 |
-    LDA.w YoshiColor_13C7                   ;$00A0DA |
-.CODE_00A0DD:
-    STA.w SavedPlayerYoshi_0DBA,X
+    BEQ +                                   ;$00A0D8 |\
+    LDA.w YoshiColor_13C7                   ;$00A0DA |/
++   STA.w SavedPlayerYoshi_0DBA,X           ;$00A0DD |
     LDA.w PlayerItembox_0DC2                ;$00A0E0 |
     STA.w $0DBC,X                           ;$00A0E3 |
     LDA.b #$03                              ;$00A0E6 |
@@ -3943,14 +3935,14 @@ GM0C_overworld_load_00A087:
     LDA.b #$30                              ;$00A0EA |
     LDX.b #$15                              ;$00A0EC |
     LDY.w ShowContinueEnd_13C9              ;$00A0EE |
-    BEQ CODE_00A11B                         ;$00A0F1 |
+    BEQ .CODE_00A11B                        ;$00A0F1 |
     JSR CODE_00A195                         ;$00A0F3 |
     LDA.w ExitsCompleted_1F2E               ;$00A0F6 |
-    BNE CODE_00A101                         ;$00A0F9 |
+    BNE .CODE_00A101                        ;$00A0F9 |
     JSR fade_to_title_screen_009C89         ;$00A0FB |
     JMP increment_game_mode_0093F4          ;$00A0FE |
 
-CODE_00A101:
+.CODE_00A101:
     JSL CODE_04DAAD
     REP #$20                                ;$00A105 |
     LDA.w #$318C                            ;$00A107 |
@@ -3962,12 +3954,12 @@ CODE_00A101:
     STA.b ColorAddition_44                  ;$00A115 |
     LDA.b #$B3                              ;$00A117 |
     LDX.b #$17                              ;$00A119 |
-CODE_00A11B:
+.CODE_00A11B:
     LDY.b #$02
     JSR ScreenSettings                      ;$00A11D |
     STX.w $212E                             ;$00A120 |
     STY.w $212F                             ;$00A123 |
-    JSL CODE_04DC09                         ;$00A126 |
+    JSL load_OW_layer1_tilemap_04DC09       ;$00A126 |
     LDX.w CurrentPlayer_0DB3                ;$00A12A |
     LDA.w OWPlayerSubmap_1F11,X             ;$00A12D |
     ASL                                     ;$00A130 |

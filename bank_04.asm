@@ -5072,7 +5072,7 @@ CODE_04D76A:
     STA.w $420B                             ;$04D76C |
     RTL                                     ;$04D76F |
 
-CODE_04D770:
+clear_map16_high_04D770:
     STA.l Map16TilesHigh_7FC800,X
     STA.l Map16TilesHigh_7FC800+$1B0,X      ;$04D774 |
     STA.l Map16TilesHigh_7FC800+(2*$1B0),X  ;$04D778 |
@@ -5116,54 +5116,50 @@ CODE_04D7F2:
     STA $0D                                 ;$04D7FB |
     LDA.b #$D0                              ;$04D7FD |
     STA $0E                                 ;$04D7FF |
-    LDA.b #$7E                              ;$04D801 |
+    LDA.b #!Bank_7E                         ;$04D801 |
     STA $0F                                 ;$04D803 |
     LDA.b #$00                              ;$04D805 |
     STA $0A                                 ;$04D807 |
     LDA.b #$D8                              ;$04D809 |
     STA $0B                                 ;$04D80B |
-    LDA.b #$7E                              ;$04D80D |
+    LDA.b #!Bank_7E                         ;$04D80D |
     STA $0C                                 ;$04D80F |
     LDA.b #$00                              ;$04D811 |
     STA $04                                 ;$04D813 |
     LDA.b #$C8                              ;$04D815 |
     STA $05                                 ;$04D817 |
-    LDA.b #$7E                              ;$04D819 |
+    LDA.b #!Bank_7E                         ;$04D819 |
     STA $06                                 ;$04D81B |
     LDY.w #$0001                            ;$04D81D |
     STY $00                                 ;$04D820 |
     LDY.w #$07FF                            ;$04D822 |
     LDA.b #$00                              ;$04D825 |
-CODE_04D827:
-    STA [$0A],Y
-    STA [$0D],Y                             ;$04D829 |
-    DEY                                     ;$04D82B |
-    BPL CODE_04D827                         ;$04D82C |
+-   STA [$0A],Y                             ;$04D827 |\ clear $D800 - $D8FF
+    STA [$0D],Y                             ;$04D829 || clear $D000 - $D7FF
+    DEY                                     ;$04D82B ||
+    BPL -                                   ;$04D82C |/
     LDY.w #$0000                            ;$04D82E |
     TYX                                     ;$04D831 |
-CODE_04D832:
-    LDA [$04],Y
-    CMP.b #$56                              ;$04D834 |
-    BCC CODE_04D849                         ;$04D836 |
-    CMP.b #$81                              ;$04D838 |
-    BCS CODE_04D849                         ;$04D83A |
-    LDA $00                                 ;$04D83C |
-    STA [$0D],Y                             ;$04D83E |
-    TAX                                     ;$04D840 |
-    LDA.l DATA_04D678,X                     ;$04D841 |
-    STA [$0A],Y                             ;$04D845 |
-    INC $00                                 ;$04D847 |
-CODE_04D849:
-    INY
-    CPY.w #$0800                            ;$04D84A |
-    BNE CODE_04D832                         ;$04D84D |
+-   LDA [$04],Y                             ;$04D832 |\
+    CMP.b #$56                              ;$04D834 ||
+    BCC +                                   ;$04D836 ||
+    CMP.b #$81                              ;$04D838 ||
+    BCS +                                   ;$04D83A ||
+    LDA $00                                 ;$04D83C ||
+    STA [$0D],Y                             ;$04D83E ||
+    TAX                                     ;$04D840 ||
+    LDA.l DATA_04D678,X                     ;$04D841 ||
+    STA [$0A],Y                             ;$04D845 ||
+    INC $00                                 ;$04D847 ||
++   INY                                     ;$04D849 ||
+    CPY.w #$0800                            ;$04D84A ||
+    BNE -                                   ;$04D84D |/
     STZ $0F                                 ;$04D84F |
-CODE_04D851:
-    JSR CODE_04DA49
-    INC $0F                                 ;$04D854 |
-    LDA $0F                                 ;$04D856 |
-    CMP.b #$6F                              ;$04D858 |
-    BNE CODE_04D851                         ;$04D85A |
+-   JSR CODE_04DA49                         ;$04D851 |\
+    INC $0F                                 ;$04D854 ||
+    LDA $0F                                 ;$04D856 ||
+    CMP.b #$6F                              ;$04D858 ||
+    BNE -                                   ;$04D85A |/
     RTS                                     ;$04D85C |
 
 DATA_04D85D:
@@ -5248,9 +5244,9 @@ CODE_04DA49:
     SEP #$20                                ;$04DA5A |
     LDA.w OWEventsActivated_1F02,Y          ;$04DA5C |
     AND.l DATA_04E44B,X                     ;$04DA5F |
-    BEQ Return04DAAC                        ;$04DA63 |
+    BEQ .return_04DAAC                      ;$04DA63 |
     REP #$20                                ;$04DA65 |
-    LDA.w #$C800                            ;$04DA67 |
+    LDA.w #!Addr_C800                       ;$04DA67 |
     STA $04                                 ;$04DA6A |
     LDA $0F                                 ;$04DA6C |
     AND.w #$00FF                            ;$04DA6E |
@@ -5263,28 +5259,27 @@ CODE_04DA49:
     LDA.b #$7E                              ;$04DA7D |
     STA $06                                 ;$04DA7F |
     LDA [$04],Y                             ;$04DA81 |
-CODE_04DA83:
-    CMP.l DATA_04DA1D,X
-    BEQ CODE_04DA8F                         ;$04DA87 |
-    DEX                                     ;$04DA89 |
-    BPL CODE_04DA83                         ;$04DA8A |
-    JMP CODE_04DA9D                         ;$04DA8C |
+-   CMP.l DATA_04DA1D,X                     ;$04DA83 |\
+    BEQ .CODE_04DA8F                        ;$04DA87 ||
+    DEX                                     ;$04DA89 ||
+    BPL -                                   ;$04DA8A |/
+    JMP .CODE_04DA9D                        ;$04DA8C |
 
-CODE_04DA8F:
+.CODE_04DA8F:
     LDA.l DATA_04DA33,X
     STA [$04],Y                             ;$04DA93 |
     CPX.w #$0015                            ;$04DA95 |
-    BNE CODE_04DA9D                         ;$04DA98 |
+    BNE .CODE_04DA9D                        ;$04DA98 |
     INY                                     ;$04DA9A |
     STA [$04],Y                             ;$04DA9B |
-CODE_04DA9D:
+.CODE_04DA9D:
     LDA $0F
     JSR CODE_04E677                         ;$04DA9F |
     SEP #$10                                ;$04DAA2 |
     STZ.w OWEventProcess_1B86               ;$04DAA4 |
     LDA $0F                                 ;$04DAA7 |
     JSR CODE_04E9F1                         ;$04DAA9 |
-Return04DAAC:
+.return_04DAAC:
     RTS
 
 CODE_04DAAD:
@@ -5479,8 +5474,8 @@ Return04DC01:
 DATA_04DC02:
     db $11,$12,$13,$14,$15,$16,$17
 
-CODE_04DC09:
-    SEP #$30
+load_OW_layer1_tilemap_04DC09:
+    SEP #$30                                ;$04DC09 | AXY->8
     LDA.w PlayerTurnOW_0DD6                 ;$04DC0B |
     LSR                                     ;$04DC0E |
     LSR                                     ;$04DC0F |
@@ -5495,69 +5490,66 @@ CODE_04DC09:
     STA.w LevelModeSetting_1925             ;$04DC23 |
     LDA.b #!Layer12Vert_03                  ;$04DC26 |
     STA.b ScreenMode_5B                     ;$04DC28 |
-    REP #$10                                ;$04DC2A |
+    REP #$10                                ;$04DC2A | XY->16
     LDX.w #$0000                            ;$04DC2C |
     TXA                                     ;$04DC2F |
-CODE_04DC30:
-    JSR CODE_04D770
-    CPX.w #$01B0                            ;$04DC33 |
-    BNE CODE_04DC30                         ;$04DC36 |
-    REP #$30                                ;$04DC38 |
+-   JSR clear_map16_high_04D770             ;$04DC30 |\ zero $7F:C800 - $7F:7DFF
+    CPX.w #$01B0                            ;$04DC33 ||
+    BNE -                                   ;$04DC36 |/
+    REP #$30                                ;$04DC38 | AXY->16
     LDA.w #$D000                            ;$04DC3A |
     STA $00                                 ;$04DC3D |
     LDX.w #$0000                            ;$04DC3F |
-CODE_04DC42:
-    LDA $00
-    STA.w Map16Pointers_0FBE,X              ;$04DC44 |
-    LDA $00                                 ;$04DC47 |
-    CLC                                     ;$04DC49 |
-    ADC.w #$0008                            ;$04DC4A |
-    STA $00                                 ;$04DC4D |
-    INX                                     ;$04DC4F |
-    INX                                     ;$04DC50 |
-    CPX.w #$0400                            ;$04DC51 |
-    BNE CODE_04DC42                         ;$04DC54 |
+-   LDA $00                                 ;$04DC42 |\
+    STA.w Map16Pointers_0FBE,X              ;$04DC44 || sets VRAM data from $0FBE - $13BD
+    LDA $00                                 ;$04DC47 ||
+    CLC                                     ;$04DC49 ||
+    ADC.w #$0008                            ;$04DC4A ||
+    STA $00                                 ;$04DC4D ||
+    INX                                     ;$04DC4F ||
+    INX                                     ;$04DC50 ||
+    CPX.w #$0400                            ;$04DC51 ||
+    BNE -                                   ;$04DC54 |/
     PHB                                     ;$04DC56 |
-    LDA.w #$07FF                            ;$04DC57 |
-    LDX.w #!Addr_F7DF                       ;$04DC5A |
-    LDY.w #!Addr_C800                       ;$04DC5D |
-    MVN !Bank_7E,!Bank_0C                   ;$04DC60 |
+    LDA.w #$07FF                            ;$04DC57 |\
+    LDX.w #!Addr_F7DF                       ;$04DC5A || move data from $0C:F7DF
+    LDY.w #!Addr_C800                       ;$04DC5D || to $C800 - $CFFF
+    MVN !Bank_7E,!Bank_0C                   ;$04DC60 |/
     PLB                                     ;$04DC63 |
     JSR CODE_04D7F2                         ;$04DC64 |
-    SEP #$30                                ;$04DC67 |
+    SEP #$30                                ;$04DC67 | AXY->8
     RTL                                     ;$04DC69 |
 
 CODE_04DC6A:
-    SEP #$30
+    SEP #$30                                ;$04DC6A | AXY->8
     JSR CODE_04DD40                         ;$04DC6C |
-    REP #$20                                ;$04DC6F |
+    REP #$20                                ;$04DC6F | A->16
     LDA.w #$A533                            ;$04DC71 |
     STA $00                                 ;$04DC74 |
-    SEP #$30                                ;$04DC76 |
+    SEP #$30                                ;$04DC76 | AXY->8
     LDA.b #$04                              ;$04DC78 |
     STA $02                                 ;$04DC7A |
-    REP #$10                                ;$04DC7C |
+    REP #$10                                ;$04DC7C | XY->16
     LDY.w #$4000                            ;$04DC7E |
     STY $0E                                 ;$04DC81 |
     LDY.w #$0000                            ;$04DC83 |
     TYX                                     ;$04DC86 |
     JSR CODE_04DABA                         ;$04DC87 |
-    REP #$20                                ;$04DC8A |
+    REP #$20                                ;$04DC8A | A->16
     LDA.w #$C02B                            ;$04DC8C |
     STA $00                                 ;$04DC8F |
-    SEP #$20                                ;$04DC91 |
+    SEP #$20                                ;$04DC91 | A->8
     LDX.w #$0001                            ;$04DC93 |
     LDY.w #$0000                            ;$04DC96 |
     JSR CODE_04DABA                         ;$04DC99 |
-    SEP #$30                                ;$04DC9C |
+    SEP #$30                                ;$04DC9C | AXY->8
     LDA.b #$00                              ;$04DC9E |
-    STA $0F                                 ;$04DCA0 |
-CODE_04DCA2:
-    JSR CODE_04E453
-    INC $0F                                 ;$04DCA5 |
-    LDA $0F                                 ;$04DCA7 |
-    CMP.b #$6F                              ;$04DCA9 |
-    BNE CODE_04DCA2                         ;$04DCAB |
+    STA $0F                                 ;$04DCA0 | $0F: loop counter
+-   JSR CODE_04E453                         ;$04DCA2 |\
+    INC $0F                                 ;$04DCA5 ||
+    LDA $0F                                 ;$04DCA7 ||
+    CMP.b #$6F                              ;$04DCA9 ||
+    BNE -                                   ;$04DCAB |/
     RTS                                     ;$04DCAD |
 
 DATA_04DCAE:
@@ -5912,7 +5904,7 @@ DATA_04E44B:
     db $80,$40,$20,$10,$08,$04,$02,$01
 
 CODE_04E453:
-    SEP #$30
+    SEP #$30                                ;$04E453 | AXY->8
     LDA $0F                                 ;$04E455 |
     AND.b #$07                              ;$04E457 |
     TAX                                     ;$04E459 |
@@ -5923,29 +5915,27 @@ CODE_04E453:
     TAY                                     ;$04E45F |
     LDA.w OWEventsActivated_1F02,Y          ;$04E460 |
     AND.l DATA_04E44B,X                     ;$04E463 |
-    BNE CODE_04E46A                         ;$04E467 |
+    BNE .CODE_04E46A                        ;$04E467 |
     RTS                                     ;$04E469 |
 
-CODE_04E46A:
+.CODE_04E46A:
     LDA $0F
     ASL                                     ;$04E46C |
     TAX                                     ;$04E46D |
-    REP #$20                                ;$04E46E |
+    REP #$20                                ;$04E46E | A->16
     LDA.l DATA_04E359,X                     ;$04E470 |
     STA.w EventTileIndex_1DEB               ;$04E474 |
     LDA.l DATA_04E35B,X                     ;$04E477 |
     STA.w EventLength_1DED                  ;$04E47B |
     CMP.w EventTileIndex_1DEB               ;$04E47E |
-    BEQ CODE_04E493                         ;$04E481 |
-CODE_04E483:
-    JSR CODE_04E496
-    REP #$20                                ;$04E486 |
-    INC.w EventTileIndex_1DEB               ;$04E488 |
-    LDA.w EventTileIndex_1DEB               ;$04E48B |
-    CMP.w EventLength_1DED                  ;$04E48E |
-    BNE CODE_04E483                         ;$04E491 |
-CODE_04E493:
-    SEP #$30
+    BEQ +                                   ;$04E481 |
+-   JSR CODE_04E496                         ;$04E483 |\
+    REP #$20                                ;$04E486 || A->16
+    INC.w EventTileIndex_1DEB               ;$04E488 ||
+    LDA.w EventTileIndex_1DEB               ;$04E48B ||
+    CMP.w EventLength_1DED                  ;$04E48E ||
+    BNE -                                   ;$04E491 |/
++   SEP #$30                                ;$04E493 | AXY->8
     RTS                                     ;$04E495 |
 
 CODE_04E496:
