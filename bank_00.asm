@@ -13,7 +13,7 @@ reset_start:
     STA.w $2100                             ;$008018 |/
     CLC                                     ;$00801B |\ Disable emulation mode
     XCE                                     ;$00801C |/
-    REP #$38                                ;$00801D | Disable decimal mode, Enable 16 bit A/X/Y
+    REP #$38                                ;$00801D | Disable decimal mode, AXY->16
     LDA.w #$0000                            ;$00801F |\ Set up the direct page
     TCD                                     ;$008022 |/
     LDA.w #!StackStart_01FF                 ;$008023 |\ Set up the stack
@@ -916,7 +916,7 @@ DMA_stripe_image:
     STA.w $420B                             ;$008779 |/
     LDA.b #$19                              ;$00877C |\ Set DMA destination to $2119
     STA.w $4311                             ;$00877E |/
-    REP #$21                                ;$008781 | 16 bit A and clear carry
+    REP #$21                                ;$008781 | A->16 and clear carry
     LDA $03                                 ;$008783 |\ Reset the VRAM destination address
     STA.w $2116                             ;$008785 |/
     TYA                                     ;$008788 |\ Set the new DMA source address

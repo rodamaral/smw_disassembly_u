@@ -47,7 +47,7 @@ base $0500
     mov a, #$36                             ;$0540 |\ Initialize tempo
     mov $51, a                              ;$0542 |/
     mov a, #$01                             ;$0544 | Enable timer 0 ($FA)
-    mov $00F1, a                            ;$0546          /
+    mov $00F1, a                            ;$0546 /
 
 main_loop:                                  ;               \
     mov y, $00FD                            ;$0549 |\ Wait for counter 0 to increment
@@ -105,7 +105,7 @@ read_write_IO:                              ;               \
     mov y, a                                ;$05A6 |/ which is copied into A and Y for no reason
     mov a, $04+x                            ;$05A7 |\ Send output
     mov $00F4+x, a                          ;$05A9 |/
-.read                                       ;                |
+.read                                       ;        |
     mov a, $00F4+x                          ;$05AC |\ Read input
     cmp a, $00F4+x                          ;$05AF | | Keep reading, until it's stable
     bne .read                               ;$05B2 |/
@@ -115,12 +115,12 @@ read_write_IO:                              ;               \
     cbne $08+x, .new_input                  ;$05B9 |/
     mov y, #$00                             ;$05BC |\ Otherwise, there's no new input to process
     mov $00+x, y                            ;$05BE |/
-    ret                                     ;$05C0          /
+    ret                                     ;$05C0 /
     
 .new_input                                  ;               \
     mov $00+x, y                            ;$05C1 | Update the input to be processed for the port
     mov a, y                                ;$05C3 | And copy it to A
-    ret                                     ;$05C4          /
+    ret                                     ;$05C4 /
 
 CODE_05C5:
     cmp a, #$D0
@@ -240,11 +240,11 @@ write_DSP_safe:
     and a, $1D                              ;$0692 | | Don't write to the DSP
     pop a                                   ;$0694 | |
     bne write_DSP_return                    ;$0695 |/
-write_DSP:                                  ;                |
+write_DSP:                                  ;        |
     mov $00F2, y                            ;$0697 |\ Write A to DSP register Y
     mov $00F3, a                            ;$069A |/
-.return                                     ;                |
-    ret                                     ;               /
+.return                                     ;      |
+    ret                                     ;      /
 
 CODE_069E:
     mov a, #$0A

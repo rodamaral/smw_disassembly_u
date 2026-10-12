@@ -893,7 +893,7 @@ DMA_credits_BG:                             ;        \
     LDA.b #$30                              ;$0C9576 | |
     STA.w $2117                             ;$0C9578 |/
     LDY.b #$06                              ;$0C957B | Number of settings to copy
-.DMA_copy_1                                 ;                |
+.DMA_copy_1                                 ;        |
     LDA.w credits_BG_DMA_1,Y                ;$0C957D |\ Copy DMA settings to channel 2
     STA.w $4310,Y                           ;$0C9580 | |
     DEY                                     ;$0C9583 | |
@@ -913,7 +913,7 @@ DMA_credits_BG:                             ;        \
     LDA.b #$34                              ;$0C95A1 | |
     STA.w $2117                             ;$0C95A3 |/
     LDY.b #$06                              ;$0C95A6 | Number of settings to copy
-.DMA_copy_2                                 ;                |
+.DMA_copy_2                                 ;        |
     LDA.w credits_BG_DMA_2,Y                ;$0C95A8 |\ Copy DMA settings to channel 2
     STA.w $4310,Y                           ;$0C95AB | |
     DEY                                     ;$0C95AE | |
@@ -928,7 +928,7 @@ DMA_credits_BG:                             ;        \
     STA.w $420B                             ;$0C95BF |/
     STZ.w CreditsUpdateBG_1FFE              ;$0C95C2 | Clear BG update flag
     PLB                                     ;$0C95C5 | Restore databank
-    RTL                                     ;$0C95C6        / Done with BG DMA
+    RTL                                     ;$0C95C6 / Done with BG DMA
 
 DATA_0C95C7:
     db $07

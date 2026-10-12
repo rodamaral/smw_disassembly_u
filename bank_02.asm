@@ -781,8 +781,8 @@ spawn_throw_block:
     LDA.b #$08                              ;$02865A |\ Set the time to show the player picking something up.
     STA.w PickUpItemTimer_1498              ;$02865C |/
     STA.w CarryingFlagMirror_148F           ;$02865F | Mark the player as carrying an object.
-.return                                     ;                |
-    RTL                                     ;$028662        /
+.return                                     ;        |
+    RTL                                     ;$028662 /
 
 ShatterBlock:
     PHX                                     ;$028663 |
