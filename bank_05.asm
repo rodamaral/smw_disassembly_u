@@ -21,22 +21,20 @@ CODE_05801E:
     STZ.w LevelLoadObject_1928              ;$058036 |
     LDA.b Layer2DataPtr_68+2                ;$058039 |
     CMP.b #$FF                              ;$05803B |
-    BNE CODE_058074                         ;$05803D |
+    BNE .CODE_058074                        ;$05803D |
     REP #$10                                ;$05803F |
     LDY.w #$0000                            ;$058041 |
     LDX.b Layer2DataPtr_68                  ;$058044 |
     CPX.w #$E8FE                            ;$058046 |
-    BCC CODE_05804E                         ;$058049 |
-    LDY.w #$0001                            ;$05804B |
-CODE_05804E:
-    LDX.w #$0000
+    BCC +                                   ;$058049 |\
+    LDY.w #$0001                            ;$05804B |/
++   LDX.w #$0000                            ;$05804E |
     TYA                                     ;$058051 |
-CODE_058052:
-    STA.l Layer2TilemapHigh_BD00,X
-    STA.l Layer2TilemapHigh_BD00+$200,X     ;$058056 |
-    INX                                     ;$05805A |
-    CPX.w #$0200                            ;$05805B |
-    BNE CODE_058052                         ;$05805E |
+-   STA.l Layer2TilemapHigh_BD00,X          ;$058052 |\
+    STA.l Layer2TilemapHigh_BD00+$200,X     ;$058056 ||
+    INX                                     ;$05805A ||
+    CPX.w #$0200                            ;$05805B ||
+    BNE -                                   ;$05805E |/
     LDA.b #$0C                              ;$058060 |
     STA.b Layer2DataPtr_68+2                ;$058062 |
     STZ.w Empty_1932                        ;$058064 |
@@ -45,19 +43,18 @@ CODE_058052:
     STX $0D                                 ;$05806D |
     REP #$20                                ;$05806F |
     JSR CODE_058126                         ;$058071 |
-CODE_058074:
+.CODE_058074:
     SEP #$20
     LDX.w #$0000                            ;$058076 |
-CODE_058079:
-    LDA.b #$00
-    JSR CODE_05833A                         ;$05807B |
-    DEX                                     ;$05807E |
-    LDA.b #$25                              ;$05807F |
-    JSR CODE_0582C8                         ;$058081 |
-    CPX.w #$0200                            ;$058084 |
-    BNE CODE_058079                         ;$058087 |
+-   LDA.b #!Map16HighAir_00                 ;$058079 |\
+    JSR create_air_tiles_high_05833A        ;$05807B ||
+    DEX                                     ;$05807E ||
+    LDA.b #!Map16LowAir_25                  ;$05807F ||
+    JSR create_air_tiles_low_0582C8         ;$058081 ||
+    CPX.w #$0200                            ;$058084 ||
+    BNE -                                   ;$058087 |/
     STZ.w LevelLoadObject_1928              ;$058089 |
-    JSR LoadLevel                           ;$05808C |
+    JSR load_level_0583AC                   ;$05808C |
     SEP #$30                                ;$05808F |
     LDA.w GameMode_0100                     ;$058091 |
     CMP.b #!FadeInEnemyList_22              ;$058094 |
@@ -336,39 +333,39 @@ CODE_0582C5:
     SEP #$30
     RTS                                     ;$0582C7 |
 
-CODE_0582C8:
+create_air_tiles_low_0582C8:
     STA.l Map16TilesLow_C800,X
-    STA.l Map16TilesLow_C800+$200,X         ;$0582CC |
-    STA.l Map16TilesLow_C800+$400,X         ;$0582D0 |
-    STA.l Map16TilesLow_C800+$600,X         ;$0582D4 |
-    STA.l OWLayer1Translevel_D000,X         ;$0582D8 |
-    STA.l OWLayer1Translevel_D000+$200,X    ;$0582DC |
-    STA.l OWLayer1Translevel_D000+$400,X    ;$0582E0 |
-    STA.l OWLayer1Translevel_D000+$600,X    ;$0582E4 |
-    STA.l OWLayer2Directions_D800,X         ;$0582E8 |
-    STA.l OWLayer2Directions_D800+$200,X    ;$0582EC |
-    STA.l OWLayer2Directions_D800+$400,X    ;$0582F0 |
-    STA.l OWLayer2Directions_D800+$600,X    ;$0582F4 |
-    STA.l OWLayer2Directions_D800+$800,X    ;$0582F8 |
-    STA.l OWLayer2Directions_D800+$A00,X    ;$0582FC |
-    STA.l OWLayer1VramBuffer_E400,X         ;$058300 |
-    STA.l OWLayer1VramBuffer_E400+$200,X    ;$058304 |
-    STA.l OWLayer1VramBuffer_E400+$400,X    ;$058308 |
-    STA.l OWLayer1VramBuffer_E400+$600,X    ;$05830C |
-    STA.l OWLayer1VramBuffer_E400+$800,X    ;$058310 |
-    STA.l OWLayer1VramBuffer_E400+$A00,X    ;$058314 |
-    STA.l OWLayer1VramBuffer_E400+$C00,X    ;$058318 |
-    STA.l OWLayer1VramBuffer_E400+$E00,X    ;$05831C |
-    STA.l OWLayer1VramBuffer_E400+$1000,X   ;$058320 |
-    STA.l OWLayer1VramBuffer_E400+$1200,X   ;$058324 |
-    STA.l OWLayer1VramBuffer_E400+$1400,X   ;$058328 |
-    STA.l OWLayer1VramBuffer_E400+$1600,X   ;$05832C |
-    STA.l OWLayer1VramBuffer_E400+$1800,X   ;$058330 |
-    STA.l OWLayer1VramBuffer_E400+$1A00,X   ;$058334 |
+    STA.l Map16TilesLow_C800+$0200,X        ;$0582CC |
+    STA.l Map16TilesLow_C800+$0400,X        ;$0582D0 |
+    STA.l Map16TilesLow_C800+$0600,X        ;$0582D4 |
+    STA.l Map16TilesLow_C800+$0800,X        ;$0582D8 |
+    STA.l Map16TilesLow_C800+$0A00,X        ;$0582DC |
+    STA.l Map16TilesLow_C800+$0C00,X        ;$0582E0 |
+    STA.l Map16TilesLow_C800+$0E00,X        ;$0582E4 |
+    STA.l Map16TilesLow_C800+$1000,X        ;$0582E8 |
+    STA.l Map16TilesLow_C800+$1200,X        ;$0582EC |
+    STA.l Map16TilesLow_C800+$1400,X        ;$0582F0 |
+    STA.l Map16TilesLow_C800+$1600,X        ;$0582F4 |
+    STA.l Map16TilesLow_C800+$1800,X        ;$0582F8 |
+    STA.l Map16TilesLow_C800+$1A00,X        ;$0582FC |
+    STA.l Map16TilesLow_C800+$1C00,X        ;$058300 |
+    STA.l Map16TilesLow_C800+$1E00,X        ;$058304 |
+    STA.l Map16TilesLow_C800+$2000,X        ;$058308 |
+    STA.l Map16TilesLow_C800+$2200,X        ;$05830C |
+    STA.l Map16TilesLow_C800+$2400,X        ;$058310 |
+    STA.l Map16TilesLow_C800+$2600,X        ;$058314 |
+    STA.l Map16TilesLow_C800+$2800,X        ;$058318 |
+    STA.l Map16TilesLow_C800+$2A00,X        ;$05831C |
+    STA.l Map16TilesLow_C800+$2C00,X        ;$058320 |
+    STA.l Map16TilesLow_C800+$2E00,X        ;$058324 |
+    STA.l Map16TilesLow_C800+$3000,X        ;$058328 |
+    STA.l Map16TilesLow_C800+$3200,X        ;$05832C |
+    STA.l Map16TilesLow_C800+$3400,X        ;$058330 |
+    STA.l Map16TilesLow_C800+$3600,X        ;$058334 |
     INX                                     ;$058338 |
     RTS                                     ;$058339 |
 
-CODE_05833A:
+create_air_tiles_high_05833A:
     STA.l Map16TilesHigh_7FC800,X
     STA.l Map16TilesHigh_7FC800+$200,X      ;$05833E |
     STA.l Map16TilesHigh_7FC800+$400,X      ;$058342 |
@@ -400,45 +397,44 @@ CODE_05833A:
     INX                                     ;$0583AA |
     RTS                                     ;$0583AB |
 
-LoadLevel:
+load_level_0583AC:
     PHP
     SEP #$30                                ;$0583AD |
     STZ.w LayerProcessing_1933              ;$0583AF |
     JSR CODE_0584E3                         ;$0583B2 |
     JSR CODE_0581FB                         ;$0583B5 |
-LoadAgain:
+.load_again_0583B5:
     LDA.w LevelModeSetting_1925
     CMP.b #$09                              ;$0583BB |
-    BEQ LoadLevelDone                       ;$0583BD |
+    BEQ .done_058412                        ;$0583BD |
     CMP.b #$0B                              ;$0583BF |
-    BEQ LoadLevelDone                       ;$0583C1 |
+    BEQ .done_058412                        ;$0583C1 |
     CMP.b #$10                              ;$0583C3 |
-    BEQ LoadLevelDone                       ;$0583C5 |
+    BEQ .done_058412                        ;$0583C5 |
     LDY.b #$00                              ;$0583C7 |
     LDA.b [Layer1DataPtr_65],Y              ;$0583C9 |
     CMP.b #$FF                              ;$0583CB |
-    BEQ LevLoadNotEmpty                     ;$0583CD |
-    JSR LoadLevelData                       ;$0583CF |
-LevLoadNotEmpty:
-    SEP #$30
+    BEQ +                                   ;$0583CD |\
+    JSR LoadLevelData                       ;$0583CF |/
++   SEP #$30                                ;$0583D2 |
     LDA.w LevelModeSetting_1925             ;$0583D4 |
-    BEQ LoadLevelDone                       ;$0583D7 |
+    BEQ .done_058412                        ;$0583D7 |
     CMP.b #$0A                              ;$0583D9 |
-    BEQ LoadLevelDone                       ;$0583DB |
+    BEQ .done_058412                        ;$0583DB |
     CMP.b #$0C                              ;$0583DD |
-    BEQ LoadLevelDone                       ;$0583DF |
+    BEQ .done_058412                        ;$0583DF |
     CMP.b #$0D                              ;$0583E1 |
-    BEQ LoadLevelDone                       ;$0583E3 |
+    BEQ .done_058412                        ;$0583E3 |
     CMP.b #$0E                              ;$0583E5 |
-    BEQ LoadLevelDone                       ;$0583E7 |
+    BEQ .done_058412                        ;$0583E7 |
     CMP.b #$11                              ;$0583E9 |
-    BEQ LoadLevelDone                       ;$0583EB |
+    BEQ .done_058412                        ;$0583EB |
     CMP.b #$1E                              ;$0583ED |
-    BEQ LoadLevelDone                       ;$0583EF |
+    BEQ .done_058412                        ;$0583EF |
     INC.w LayerProcessing_1933              ;$0583F1 |
     LDA.w LayerProcessing_1933              ;$0583F4 |
     CMP.b #$02                              ;$0583F7 |
-    BEQ LoadLevelDone                       ;$0583F9 |
+    BEQ .done_058412                        ;$0583F9 |
     LDA.b Layer2DataPtr_68                  ;$0583FB |
     CLC                                     ;$0583FD |
     ADC.b #$05                              ;$0583FE |
@@ -449,9 +445,9 @@ LevLoadNotEmpty:
     LDA.b Layer2DataPtr_68+2                ;$058408 |
     STA.b Layer1DataPtr_65+2                ;$05840A |
     STZ.w LevelLoadObject_1928              ;$05840C |
-    JMP LoadAgain                           ;$05840F |
+    JMP .load_again_0583B5                  ;$05840F |
 
-LoadLevelDone:
+.done_058412:
     STZ.w LayerProcessing_1933
     PLP                                     ;$058415 |
     RTS                                     ;$058416 |

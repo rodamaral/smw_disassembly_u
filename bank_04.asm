@@ -5519,8 +5519,8 @@ CODE_04DC42:
     BNE CODE_04DC42                         ;$04DC54 |
     PHB                                     ;$04DC56 |
     LDA.w #$07FF                            ;$04DC57 |
-    LDX.w #$F7DF                            ;$04DC5A |
-    LDY.w #$C800                            ;$04DC5D |
+    LDX.w #!Addr_F7DF                       ;$04DC5A |
+    LDY.w #!Addr_C800                       ;$04DC5D |
     MVN !Bank_7E,!Bank_0C                   ;$04DC60 |
     PLB                                     ;$04DC63 |
     JSR CODE_04D7F2                         ;$04DC64 |
@@ -6574,33 +6574,31 @@ CODE_04E9EC:
     STA $0F                                 ;$04E9EF |
 CODE_04E9F1:
     LDX.b #$2B
-CODE_04E9F3:
-    CMP.l DATA_04E8E4,X
-    BEQ CODE_04EA25                         ;$04E9F7 |
-CODE_04E9F9:
-    DEX
-    BPL CODE_04E9F3                         ;$04E9FA |
+-   CMP.l DATA_04E8E4,X                     ;$04E9F3 |\
+    BEQ .CODE_04EA25                        ;$04E9F7 ||
+.CODE_04E9F9:                               ;        ||
+    DEX                                     ;$04E9F9 ||
+    BPL -                                   ;$04E9FA |/
     LDA.w OWEventProcess_1B86               ;$04E9FC |
-    BEQ Return04EA24                        ;$04E9FF |
-    STZ.w OWEventProcess_1B86               ;$04EA01 |
-    INC.w OWProcess_13D9                    ;$04EA04 |
-    LDA.w OverworldEvent_1DEA               ;$04EA07 |
-    AND.b #$07                              ;$04EA0A |
-    TAX                                     ;$04EA0C |
-    LDA.w OverworldEvent_1DEA               ;$04EA0D |
-    LSR                                     ;$04EA10 |
-    LSR                                     ;$04EA11 |
-    LSR                                     ;$04EA12 |
-    TAY                                     ;$04EA13 |
-    LDA.w OWEventsActivated_1F02,Y          ;$04EA14 |
-    ORA.l DATA_04E44B,X                     ;$04EA17 |
-    STA.w OWEventsActivated_1F02,Y          ;$04EA1B |
-    INC.w ExitsCompleted_1F2E               ;$04EA1E |
-    STZ.w OWLoadEventFlag_1DE9              ;$04EA21 |
-Return04EA24:
-    RTS
+    BEQ +                                   ;$04E9FF |\
+    STZ.w OWEventProcess_1B86               ;$04EA01 ||
+    INC.w OWProcess_13D9                    ;$04EA04 ||
+    LDA.w OverworldEvent_1DEA               ;$04EA07 ||
+    AND.b #$07                              ;$04EA0A ||
+    TAX                                     ;$04EA0C ||
+    LDA.w OverworldEvent_1DEA               ;$04EA0D ||
+    LSR                                     ;$04EA10 ||
+    LSR                                     ;$04EA11 ||
+    LSR                                     ;$04EA12 ||
+    TAY                                     ;$04EA13 ||
+    LDA.w OWEventsActivated_1F02,Y          ;$04EA14 ||
+    ORA.l DATA_04E44B,X                     ;$04EA17 ||
+    STA.w OWEventsActivated_1F02,Y          ;$04EA1B ||
+    INC.w ExitsCompleted_1F2E               ;$04EA1E ||
+    STZ.w OWLoadEventFlag_1DE9              ;$04EA21 |/
++   RTS                                     ;$04EA24 |
 
-CODE_04EA25:
+.CODE_04EA25:
     PHX
     LDA.l DATA_04E910,X                     ;$04EA26 |
     STA $02                                 ;$04EA2A |
@@ -6614,23 +6612,23 @@ CODE_04EA25:
     STA $04                                 ;$04EA3B |
     LDA $02                                 ;$04EA3D |
     AND.w #$0001                            ;$04EA3F |
-    BEQ CODE_04EA4E                         ;$04EA42 |
+    BEQ .CODE_04EA4E                        ;$04EA42 |
     REP #$10                                ;$04EA44 |
     LDY $00                                 ;$04EA46 |
     JSR CODE_04E4A9                         ;$04EA48 |
-    JMP CODE_04EA5A                         ;$04EA4B |
+    JMP .CODE_04EA5A                        ;$04EA4B |
 
-CODE_04EA4E:
+.CODE_04EA4E:
     SEP #$20
     REP #$10                                ;$04EA50 |
     LDX $04                                 ;$04EA52 |
     LDA $00                                 ;$04EA54 |
     STA.l Map16TilesLow_C800,X              ;$04EA56 |
-CODE_04EA5A:
+.CODE_04EA5A:
     SEP #$30
     PLX                                     ;$04EA5C |
     LDA $0F                                 ;$04EA5D |
-    JMP CODE_04E9F9                         ;$04EA5F |
+    JMP .CODE_04E9F9                        ;$04EA5F |
 
 CODE_04EA62:
     STZ.w ColorFadeTimer_1495
@@ -6956,13 +6954,11 @@ CODE_04ED83:
     LDX.w #$0015                            ;$04ED9B |
     SEP #$20                                ;$04ED9E |
     LDA [$0D],Y                             ;$04EDA0 |
-CODE_04EDA2:
-    CMP.l DATA_04DA1D,X
-    BEQ CODE_04EDAB                         ;$04EDA6 |
-    DEX                                     ;$04EDA8 |
-    BNE CODE_04EDA2                         ;$04EDA9 |
-CODE_04EDAB:
-    REP #$30
+-   CMP.l DATA_04DA1D,X                     ;$04EDA2 |\
+    BEQ +                                   ;$04EDA6 ||
+    DEX                                     ;$04EDA8 ||
+    BNE -                                   ;$04EDA9 |/
++   REP #$30                                ;$04EDAB |
     STX $0E                                 ;$04EDAD |
     LDA.w OverworldEvent_1DEA               ;$04EDAF |
     AND.w #$00FF                            ;$04EDB2 |
@@ -7045,13 +7041,13 @@ CODE_04EE30:
     STA $0A                                 ;$04EE57 |
     LDA.l DATA_04DD8D,X                     ;$04EE59 |
     CMP.w #$0900                            ;$04EE5D |
-    BCC CODE_04EE68                         ;$04EE60 |
+    BCC .CODE_04EE68                        ;$04EE60 |
     JSR CODE_04E76C                         ;$04EE62 |
-    JMP CODE_04EE6B                         ;$04EE65 |
+    JMP .CODE_04EE6B                        ;$04EE65 |
 
-CODE_04EE68:
+.CODE_04EE68:
     JSR CODE_04E824
-CODE_04EE6B:
+.CODE_04EE6B:
     LDA.w #$00FF
     STA.l DynamicStripeImage_7F837D,X       ;$04EE6E |
     TXA                                     ;$04EE72 |

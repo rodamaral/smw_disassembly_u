@@ -8372,7 +8372,7 @@ MagikoopasMagic:
     STA.b SpriteYPosLow_D8,X                ;$01BCAF ||
     LDA.b #$02                              ;$01BCB1 ||
     STA.b TileGenerate_9C                   ;$01BCB3 ||
-    JSL generate_tile                       ;$01BCB5 |/
+    JSL generate_tile_00BEB0                ;$01BCB5 |/
 ..skip_spawn_sprite_01BCB9:
     JSR CODE_01BD98
     RTS                                     ;$01BCBC |
@@ -9090,7 +9090,7 @@ CODE_01C1CB:
     STA.b InteractionPtYPos_98+1            ;$01C1E3 |
     LDA.b #$03                              ;$01C1E5 |
     STA.b TileGenerate_9C                   ;$01C1E7 |
-    JSL generate_tile                       ;$01C1E9 |
+    JSL generate_tile_00BEB0                ;$01C1E9 |
 Return01C1ED:
     RTS
 
@@ -13603,7 +13603,7 @@ CODE_01E320:
     STA.b InteractionPtYPos_98+1            ;$01E339 |
     LDA.b #$08                              ;$01E33B |
     STA.b TileGenerate_9C                   ;$01E33D |
-    JSL generate_tile                       ;$01E33F |
+    JSL generate_tile_00BEB0                ;$01E33F |
 CODE_01E343:
     LDA.b SpriteNumber_9E,X
     CMP.b #!MontyMoleGround_4D              ;$01E345 |

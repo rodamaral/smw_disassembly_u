@@ -2937,11 +2937,11 @@ CODE_009925:
     LSR                                     ;$00994E |
     LDX.b #$C0                              ;$00994F |
     LDA.b #$A0                              ;$009951 |
-    BCC CODE_00995B                         ;$009953 |
+    BCC .CODE_00995B                        ;$009953 |
     STZ.w HorizLayer1Setting_1411           ;$009955 |
-    JMP CODE_009A17                         ;$009958 |
+    JMP .CODE_009A17                        ;$009958 |
 
-CODE_00995B:
+.CODE_00995B:
     REP #$30
     LDA.w ActiveBoss_13FC                   ;$00995D |
     AND.w #$00FF                            ;$009960 |
@@ -2949,17 +2949,15 @@ CODE_00995B:
     TAX                                     ;$009964 |
     LDY.w #$02C0                            ;$009965 |
     LDA.w boss_ceiling_height,X             ;$009968 |
-    BPL CODE_009970                         ;$00996B |
-    LDY.w #$FB80                            ;$00996D |
-CODE_009970:
-    CMP.w #$0012
-    BNE CODE_009978                         ;$009973 |
-    LDY.w #$0320                            ;$009975 |
-CODE_009978:
-    STY $00
+    BPL +                                   ;$00996B |\
+    LDY.w #$FB80                            ;$00996D |/
++   CMP.w #$0012                            ;$009970 |
+    BNE +                                   ;$009973 |\
+    LDY.w #$0320                            ;$009975 |/
++   STY $00                                 ;$009978 |
     LDX.w #$0000                            ;$00997A |
     LDA.w #$C05A                            ;$00997D |
-CODE_009980:
+.CODE_009980:
     STA.l DynamicStripeImage_7F837D,X
     XBA                                     ;$009984 |
     CLC                                     ;$009985 |
@@ -2976,54 +2974,54 @@ CODE_009980:
     STA.l DynamicStripeImage_7F837D+$086,X  ;$00999E |
     STA.l DynamicStripeImage_7F837D+$10A,X  ;$0099A2 |
     LDY.w #$0010                            ;$0099A6 |
-CODE_0099A9:
-    LDA.w #$38A2
-    STA.l DynamicStripeImage_7F837D+$004,X  ;$0099AC |
-    INC A                                   ;$0099B0 |
-    STA.l DynamicStripeImage_7F837D+$006,X  ;$0099B1 |
-    LDA.w #$38B2                            ;$0099B5 |
-    STA.l DynamicStripeImage_7F837D+$044,X  ;$0099B8 |
-    INC A                                   ;$0099BC |
-    STA.l DynamicStripeImage_7F837D+$046,X  ;$0099BD |
-    LDA.w #$2C80                            ;$0099C1 |
-    STA.l DynamicStripeImage_7F837D+$088,X  ;$0099C4 |
-    INC A                                   ;$0099C8 |
-    STA.l DynamicStripeImage_7F837D+$08A,X  ;$0099C9 |
-    INC A                                   ;$0099CD |
-    STA.l DynamicStripeImage_7F837D+$0C8,X  ;$0099CE |
-    INC A                                   ;$0099D2 |
-    STA.l DynamicStripeImage_7F837D+$0CA,X  ;$0099D3 |
-    LDA.w #$28A0                            ;$0099D7 |
-    STA.l DynamicStripeImage_7F837D+$10C,X  ;$0099DA |
-    INC A                                   ;$0099DE |
-    STA.l DynamicStripeImage_7F837D+$10E,X  ;$0099DF |
-    LDA.w #$28B0                            ;$0099E3 |
-    STA.l DynamicStripeImage_7F837D+$14C,X  ;$0099E6 |
-    INC A                                   ;$0099EA |
-    STA.l DynamicStripeImage_7F837D+$14E,X  ;$0099EB |
-    INX                                     ;$0099EF |
-    INX                                     ;$0099F0 |
-    INX                                     ;$0099F1 |
-    INX                                     ;$0099F2 |
-    DEY                                     ;$0099F3 |
-    BNE CODE_0099A9                         ;$0099F4 |
+.loop_0099A9:
+    LDA.w #$38A2                            ;$0099A9 |\
+    STA.l DynamicStripeImage_7F837D+$004,X  ;$0099AC ||
+    INC A                                   ;$0099B0 ||
+    STA.l DynamicStripeImage_7F837D+$006,X  ;$0099B1 ||
+    LDA.w #$38B2                            ;$0099B5 ||
+    STA.l DynamicStripeImage_7F837D+$044,X  ;$0099B8 ||
+    INC A                                   ;$0099BC ||
+    STA.l DynamicStripeImage_7F837D+$046,X  ;$0099BD ||
+    LDA.w #$2C80                            ;$0099C1 ||
+    STA.l DynamicStripeImage_7F837D+$088,X  ;$0099C4 ||
+    INC A                                   ;$0099C8 ||
+    STA.l DynamicStripeImage_7F837D+$08A,X  ;$0099C9 ||
+    INC A                                   ;$0099CD ||
+    STA.l DynamicStripeImage_7F837D+$0C8,X  ;$0099CE ||
+    INC A                                   ;$0099D2 ||
+    STA.l DynamicStripeImage_7F837D+$0CA,X  ;$0099D3 ||
+    LDA.w #$28A0                            ;$0099D7 ||
+    STA.l DynamicStripeImage_7F837D+$10C,X  ;$0099DA ||
+    INC A                                   ;$0099DE ||
+    STA.l DynamicStripeImage_7F837D+$10E,X  ;$0099DF ||
+    LDA.w #$28B0                            ;$0099E3 ||
+    STA.l DynamicStripeImage_7F837D+$14C,X  ;$0099E6 ||
+    INC A                                   ;$0099EA ||
+    STA.l DynamicStripeImage_7F837D+$14E,X  ;$0099EB ||
+    INX                                     ;$0099EF ||
+    INX                                     ;$0099F0 ||
+    INX                                     ;$0099F1 ||
+    INX                                     ;$0099F2 ||
+    DEY                                     ;$0099F3 ||
+    BNE .loop_0099A9                        ;$0099F4 |/
     TXA                                     ;$0099F6 |
     CLC                                     ;$0099F7 |
     ADC.w #$014C                            ;$0099F8 |
     TAX                                     ;$0099FB |
     LDA.w #$C05E                            ;$0099FC |
     CPX.w #$0318                            ;$0099FF |
-    BCS CODE_009A07                         ;$009A02 |
-    JMP CODE_009980                         ;$009A04 |
+    BCS .CODE_009A07                        ;$009A02 |
+    JMP .CODE_009980                        ;$009A04 |
 
-CODE_009A07:
+.CODE_009A07:
     LDA.w #$00FF
     STA.l DynamicStripeImage_7F837D,X       ;$009A0A |
     SEP #$30                                ;$009A0E |
     JSR _load_stripe_image_                 ;$009A10 |
     LDX.b #$B0                              ;$009A13 |
     LDA.b #$90                              ;$009A15 |
-CODE_009A17:
+.CODE_009A17:
     STA.b PlayerYPos_96
     JSR CODE_009A1F                         ;$009A19 |
     JMP CODE_009283                         ;$009A1C |
@@ -3031,27 +3029,26 @@ CODE_009A17:
 CODE_009A1F:
     LDY.b #$10
     LDA.b #$32                              ;$009A21 |
-CODE_009A23:
-    STA.l Map16TilesLow_C800,X
-    STA.l Map16TilesLow_C800+$1B0,X         ;$009A27 |
-    STA.l Map16TilesHigh_7FC800,X           ;$009A2B |
-    STA.l Map16TilesHigh_7FC800+$1B0,X      ;$009A2F |
-    INX                                     ;$009A33 |
-    DEY                                     ;$009A34 |
-    BNE CODE_009A23                         ;$009A35 |
+-   STA.l Map16TilesLow_C800,X              ;$009A23 |\
+    STA.l Map16TilesLow_C800+$1B0,X         ;$009A27 ||
+    STA.l Map16TilesHigh_7FC800,X           ;$009A2B ||
+    STA.l Map16TilesHigh_7FC800+$1B0,X      ;$009A2F ||
+    INX                                     ;$009A33 ||
+    DEY                                     ;$009A34 ||
+    BNE -                                   ;$009A35 |/
     CPX.b #$C0                              ;$009A37 |
-    BNE Return009A4D                        ;$009A39 |
+    BNE return_009A4D                       ;$009A39 |
     LDX.b #$D0                              ;$009A3B |
 CODE_009A3D:
     LDY.b #$10
     LDA.b #$05                              ;$009A3F |
-CODE_009A41:
+.CODE_009A41:
     STA.l Map16TilesLow_C800,X
     STA.l Map16TilesLow_C800+$1B0,X         ;$009A45 |
     INX                                     ;$009A49 |
     DEY                                     ;$009A4A |
-    BNE CODE_009A41                         ;$009A4B |
-Return009A4D:
+    BNE .CODE_009A41                        ;$009A4B |
+return_009A4D:
     RTS
 
 DATA_009A4E:
@@ -6580,7 +6577,7 @@ LoadBlkTable2:
     dw Ptrs00BE28
     dw Ptrs00BE68
 
-generate_tile:
+generate_tile_00BEB0:
     PHP
     REP #$30                                ;$00BEB1 |
     PHX                                     ;$00BEB3 |
@@ -12128,7 +12125,7 @@ CODE_00F1F9:
     STA.b TileGenerate_9C                   ;$00F254 |
     LDA.l DATA_00F0F8,X                     ;$00F256 |
     STA.b InteractionPtXPos_9A              ;$00F25A |
-    JSL generate_tile                       ;$00F25C |
+    JSL generate_tile_00BEB0                ;$00F25C |
     PLA                                     ;$00F260 |
 .CODE_00F261:
     DEX
@@ -12150,7 +12147,7 @@ process_throw_block:
     BMI .no_sprite_slots                    ;$00F27F |/ If there were no sprite slots, return.
     LDA.b #$02                              ;$00F281 |\
     STA.b TileGenerate_9C                   ;$00F283 | | Clear the tile.
-    JSL generate_tile                       ;$00F285 |/
+    JSL generate_tile_00BEB0                ;$00F285 |/
 .no_sprite_slots                            ;        |
     PHK                                     ;$00F289 |
     PLB                                     ;$00F28A |
@@ -12199,7 +12196,7 @@ process_page_0_tiles_no_swim:
     BNE .not_midway_point                   ;$00F2CB |
     LDA.b #$02                              ;$00F2CD |
     STA.b TileGenerate_9C                   ;$00F2CF |
-    JSL generate_tile                       ;$00F2D1 | remove the midway point,
+    JSL generate_tile_00BEB0                ;$00F2D1 | remove the midway point,
     JSR smoke_sparkle                       ;$00F2D5 | create the sparkle effect,
     LDA.w DisableMidway_13CD                ;$00F2D8 |
     BEQ .no_trigger                         ;$00F2DB |
@@ -12287,7 +12284,7 @@ process_page_0_tiles_no_climb:
     LDY.b #$01                              ;$00F36B |
 .remove_yoshi_coin                          ;        |
     STY.b TileGenerate_9C                   ;$00F36D |
-    JSL generate_tile                       ;$00F36F | Remove the tile with item memory,
+    JSL generate_tile_00BEB0                ;$00F36F | Remove the tile with item memory,
     JSR smoke_sparkle                       ;$00F373 | and create the sparkle effect.
 return_00F376:                              ;        |
     RTS                                     ;$00F376 /

@@ -1,11 +1,18 @@
 ; incsrc "hardware_registers.asm"
 
 ; Constants:
+
+; Bank references
 !Bank_07 = $07
 !Bank_0C = $0C
 !Bank_7E = $7E
 !Bank_7F = $7F
 
+; Address references
+!Addr_C800 = $C800
+!Addr_F7DF = $F7DF
+
+; Opcode references
 !OpcodeRTL_6B = $6B
 !LDA_F0_F0A9 = $F0A9
 !STA_00_008D = $008D
@@ -2506,7 +2513,12 @@ skip 1408
 Mode7BossTilemap_C680: skip 96 ;done
 ; 7EC6E0 - 7EC7FF unused
 skip 288
+
 Map16TilesLow_C800: skip 2048 ;done
+; Valid values:
+!Map16HighAir_00 = $00
+!Map16LowAir_25 = $25
+
 OWLayer1Translevel_D000: skip 2048 ;done
 OWLayer2Directions_D800: skip 3072 ;done
 OWLayer1VramBuffer_E400: skip 7168 ;done

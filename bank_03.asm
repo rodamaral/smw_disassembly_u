@@ -2597,7 +2597,7 @@ GenTileFromSpr1:
     STA.b InteractionPtYPos_98              ;$039398 |
     LDA.w SpriteYPosHigh_14D4,X             ;$03939A |
     STA.b InteractionPtYPos_98+1            ;$03939D |
-    JSL generate_tile                       ;$03939F |
+    JSL generate_tile_00BEB0                ;$03939F |
     RTS                                     ;$0393A3 |
 
 CrtEatBlkData1:
@@ -7761,7 +7761,7 @@ GenTileFromSpr2:
     LDA.w SpriteYPosHigh_14D4,X             ;$03C017 |
     ADC.b #$00                              ;$03C01A |
     STA.b InteractionPtYPos_98+1            ;$03C01C |
-    JSL generate_tile                       ;$03C01E |
+    JSL generate_tile_00BEB0                ;$03C01E |
     RTL                                     ;$03C022 |
 
 CODE_03C023:
@@ -10004,9 +10004,9 @@ BreakBridge:
     BEQ CODE_03D74A                         ;$03D736 |
     CMP.b #$3C                              ;$03D738 |
     BNE CODE_03D757                         ;$03D73A |
-    JSR CODE_03D77F                         ;$03D73C |
+    JSR break_bridge_tile_03D77F            ;$03D73C |
     JSR CODE_03D759                         ;$03D73F |
-    JSR CODE_03D77F                         ;$03D742 |
+    JSR break_bridge_tile_03D77F            ;$03D742 |
     INC.w ReznorBridgeCount_1B9F            ;$03D745 |
     BRA CODE_03D757                         ;$03D748 |
 
@@ -10044,7 +10044,7 @@ CODE_03D76C:
 Return03D77E:
     RTS
 
-CODE_03D77F:
+break_bridge_tile_03D77F:
     LDA.b InteractionPtXPos_9A
     LSR                                     ;$03D781 |
     LSR                                     ;$03D782 |
@@ -10055,18 +10055,17 @@ CODE_03D77F:
     REP #$20                                ;$03D789 |
     AND.w #$00FF                            ;$03D78B |
     LDX.b InteractionPtXPos_9A+1            ;$03D78E |
-    BEQ CODE_03D798                         ;$03D790 |
-    CLC                                     ;$03D792 |
-    ADC.w #$01B0                            ;$03D793 |
-    LDX.b #$04                              ;$03D796 |
-CODE_03D798:
-    STX $00
+    BEQ +                                   ;$03D790 |\
+    CLC                                     ;$03D792 ||
+    ADC.w #$01B0                            ;$03D793 ||
+    LDX.b #$04                              ;$03D796 |/
++   STX $00                                 ;$03D798 |
     REP #$10                                ;$03D79A |
     TAX                                     ;$03D79C |
     SEP #$20                                ;$03D79D |
-    LDA.b #$25                              ;$03D79F |
+    LDA.b #!Map16LowAir_25                  ;$03D79F |
     STA.l Map16TilesLow_C800,X              ;$03D7A1 |
-    LDA.b #$00                              ;$03D7A5 |
+    LDA.b #!Map16HighAir_00                 ;$03D7A5 |
     STA.l Map16TilesHigh_7FC800,X           ;$03D7A7 |
     REP #$20                                ;$03D7AB |
     LDA.l DynStripeImgSize_7F837B           ;$03D7AD |
@@ -10076,15 +10075,15 @@ CODE_03D798:
     ADC $00                                 ;$03D7B6 |
     STA.l DynamicStripeImage_7F837D,X       ;$03D7B8 |
     ORA.w #$2000                            ;$03D7BC |
-    STA.l $7F8383,X                         ;$03D7BF |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$03D7BF |
     LDA.w #$0240                            ;$03D7C3 |
     STA.l DynamicStripeImage_7F837D+2,X     ;$03D7C6 |
-    STA.l $7F8385,X                         ;$03D7CA |
+    STA.l DynamicStripeImage_7F837D+8,X     ;$03D7CA |
     LDA.w #$38FC                            ;$03D7CE |
-    STA.l $7F8381,X                         ;$03D7D1 |
-    STA.l $7F8387,X                         ;$03D7D5 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$03D7D1 |
+    STA.l DynamicStripeImage_7F837D+10,X    ;$03D7D5 |
     LDA.w #$00FF                            ;$03D7D9 |
-    STA.l $7F8389,X                         ;$03D7DC |
+    STA.l DynamicStripeImage_7F837D+12,X    ;$03D7DC |
     TXA                                     ;$03D7E0 |
     CLC                                     ;$03D7E1 |
     ADC.w #$000C                            ;$03D7E2 |

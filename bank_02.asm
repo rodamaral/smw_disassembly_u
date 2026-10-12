@@ -940,7 +940,7 @@ CODE_028773:
 CODE_028780:
     LDA.b #$02
     STA.b TileGenerate_9C                   ;$028782 |
-    JSL generate_tile                       ;$028784 |
+    JSL generate_tile_00BEB0                ;$028784 |
     RTL                                     ;$028788 |
 
 BlockBounce:
@@ -993,7 +993,7 @@ CODE_0287A6:
     PHA                                     ;$0287E4 |
     LDA $07                                 ;$0287E5 |
     PHA                                     ;$0287E7 |
-    JSL generate_tile                       ;$0287E8 |
+    JSL generate_tile_00BEB0                ;$0287E8 |
     PLA                                     ;$0287EC |
     STA $07                                 ;$0287ED |
     PLA                                     ;$0287EF |
@@ -2408,7 +2408,7 @@ TileFromBounceSpr1:
     ROL                                     ;$0291E2 |
     AND.b #$01                              ;$0291E3 |
     STA.w LayerProcessing_1933              ;$0291E5 |
-    JSL generate_tile                       ;$0291E8 |
+    JSL generate_tile_00BEB0                ;$0291E8 |
 Return0291EC:
     RTS
 
@@ -7415,7 +7415,7 @@ CODE_02B6CF:
     LDY.w SpriteDir_157C,X
     LDA.w PokeySpeed,Y                      ;$02B6D2 |
     STA.b SpriteXSpeed_B6,X                 ;$02B6D5 |
-    JSR update_x_no_gravity_018021B1                 ;$02B6D7 |
+    JSR update_x_no_gravity_018021B1        ;$02B6D7 |
     JSR UpdateYPosNoGrvtyB1                 ;$02B6DA |
     LDA.b SpriteYSpeed_AA,X                 ;$02B6DD |
     CMP.b #$40                              ;$02B6DF |
@@ -7836,7 +7836,7 @@ GenTileFromSpr0:
     STA.b InteractionPtYPos_98              ;$02B9B1 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02B9B3 |
     STA.b InteractionPtYPos_98+1            ;$02B9B6 |
-    JSL generate_tile                       ;$02B9B8 |
+    JSL generate_tile_00BEB0                ;$02B9B8 |
     RTL                                     ;$02B9BC |
 
 sprites_into_coins_02B9BD:
@@ -8011,7 +8011,7 @@ CODE_02BAC0:
     PLX                                     ;$02BB01 |
     LDA.b #$04                              ;$02BB02 |
     STA.b TileGenerate_9C                   ;$02BB04 |
-    JSL generate_tile                       ;$02BB06 |
+    JSL generate_tile_00BEB0                ;$02BB06 |
     RTL                                     ;$02BB0A |
 
 DATA_02BB0B:
@@ -8095,7 +8095,7 @@ DolphinMain:
     BNE Return02BBFF                        ;$02BB99 |
     JSR SubOffscreen1Bnk2                   ;$02BB9B |
     JSR UpdateYPosNoGrvtyB1                 ;$02BB9E |
-    JSR update_x_no_gravity_018021B1                 ;$02BBA1 |
+    JSR update_x_no_gravity_018021B1        ;$02BBA1 |
     STA.w Sprite_1528,X                     ;$02BBA4 |
     LDA.b Frame_14                          ;$02BBA7 |
     AND.b #$00                              ;$02BBA9 |
@@ -8345,7 +8345,7 @@ urchin_moving_02BD75:
     BEQ +                                   ;$02BD79 |
     LDA.w SpriteStun_1540,X                 ;$02BD7B |
     BEQ .CODE_02BD91                        ;$02BD7E |
-+   JSR update_x_no_gravity_018021B1                 ;$02BD80 |
++   JSR update_x_no_gravity_018021B1        ;$02BD80 |
     JSR UpdateYPosNoGrvtyB1                 ;$02BD83 |
     JSL sprite_layers_interaction_019138    ;$02BD86 |
     LDA.w SpriteBlocked_1588,X              ;$02BD8A |
@@ -8448,7 +8448,7 @@ wall_following_sprites_02BDB3:
     BNE +                                   ;$02BE3F |
     ASL.b SpriteXSpeed_B6,X                 ;$02BE41 |
     ASL.b SpriteYSpeed_AA,X                 ;$02BE43 |
-+   JSR update_x_no_gravity_018021B1                 ;$02BE45 |
++   JSR update_x_no_gravity_018021B1        ;$02BE45 |
     JSR UpdateYPosNoGrvtyB1                 ;$02BE48 |
     RTL                                     ;$02BE4B |
 
@@ -8685,7 +8685,7 @@ RipVanFishMain:
     STA.b SpriteXSpeed_B6,X                 ;$02BFF1 |
 CODE_02BFF3:
     JSR CODE_02C126
-    JSR update_x_no_gravity_018021B1                 ;$02BFF6 |
+    JSR update_x_no_gravity_018021B1        ;$02BFF6 |
     JSR UpdateYPosNoGrvtyB1                 ;$02BFF9 |
     JSL sprite_layers_interaction_019138    ;$02BFFC |
     PLA                                     ;$02C000 |
@@ -9083,7 +9083,7 @@ chucks_02C22C:
     JSL ShatterBlock                        ;$02C2B9 |
     LDA.b #$02                              ;$02C2BD |
     STA.b TileGenerate_9C                   ;$02C2BF |
-    JSL generate_tile                       ;$02C2C1 |
+    JSL generate_tile_00BEB0                ;$02C2C1 |
     PLA                                     ;$02C2C5 |
     SEC                                     ;$02C2C6 |
     SBC.b #$10                              ;$02C2C7 |
@@ -9098,7 +9098,7 @@ chucks_02C22C:
     JSL ShatterBlock                        ;$02C2D6 |
     LDA.b #$02                              ;$02C2DA |
     STA.b TileGenerate_9C                   ;$02C2DC |
-    JSL generate_tile                       ;$02C2DE |
+    JSL generate_tile_00BEB0                ;$02C2DE |
     BRA .CODE_02C2F4                        ;$02C2E2 |
 
 .CODE_02C2E4:
@@ -10471,7 +10471,7 @@ CODE_02CD59:
     LDA.w SpriteYPosHigh_14D4,X             ;$02CD74 |
     SBC.b #$00                              ;$02CD77 |
     STA.b InteractionPtYPos_98+1            ;$02CD79 |
-    JSL generate_tile                       ;$02CD7B |
+    JSL generate_tile_00BEB0                ;$02CD7B |
 CODE_02CD7F:
     JSL InvisBlkMainRt
     JSR GetDrawInfo2                        ;$02CD83 |
@@ -11095,7 +11095,7 @@ generate_tree_tile_02D1F3:
     STA.b InteractionPtYPos_98+1            ;$02D205 |
     LDA.b #$04                              ;$02D207 |
     STA.b TileGenerate_9C                   ;$02D209 |
-    JSL generate_tile                       ;$02D20B |
+    JSL generate_tile_00BEB0                ;$02D20B |
 Return02D20F:
     RTL
 
@@ -11623,7 +11623,7 @@ banzai_main_02D587:
     JSR SubOffscreen0Bnk2                   ;$02D595 |
     LDA.b #$E8                              ;$02D598 |
     STA.b SpriteXSpeed_B6,X                 ;$02D59A |
-    JSR update_x_no_gravity_018021B1                 ;$02D59C |
+    JSR update_x_no_gravity_018021B1        ;$02D59C |
     JSL MarioSprInteract                    ;$02D59F |
 Return02D5A3:
     RTS
@@ -12113,7 +12113,7 @@ CODE_02D91D:
     CMP.b #$07                              ;$02D923 |
     BCC Return02D977                        ;$02D925 |
     JSR SubOffscreen0Bnk2                   ;$02D927 |
-    JSR update_x_no_gravity_018021B1                 ;$02D92A |
+    JSR update_x_no_gravity_018021B1        ;$02D92A |
     JSR UpdateYPosNoGrvtyB1                 ;$02D92D |
     JSL sprite_layers_interaction_019138    ;$02D930 |
     LDY.w SpriteDir_157C,X                  ;$02D934 |
@@ -12494,7 +12494,7 @@ CODE_02DBC1:
     INC.w Sprite_151C,X                     ;$02DBD4 |
 CODE_02DBD7:
     JSR UpdateYPosNoGrvtyB1
-    JSR update_x_no_gravity_018021B1                 ;$02DBDA |
+    JSR update_x_no_gravity_018021B1        ;$02DBDA |
     STA.w Sprite_1528,X                     ;$02DBDD |
     JSL InvisBlkMainRt                      ;$02DBE0 |
     LDA.w SpriteLava_1558,X                 ;$02DBE4 |
@@ -13390,7 +13390,7 @@ CODE_02E288:
     LDA.w DATA_02E1FD,Y                     ;$02E28F |
     STA.b SpriteYSpeed_AA,X                 ;$02E292 |
     JSR UpdateYPosNoGrvtyB1                 ;$02E294 |
-    JSR update_x_no_gravity_018021B1                 ;$02E297 |
+    JSR update_x_no_gravity_018021B1        ;$02E297 |
     LDA.b byetudlrHold_15                   ;$02E29A |
     AND.b #$0F                              ;$02E29C |
     BEQ CODE_02E2B0                         ;$02E29E |
@@ -13422,7 +13422,7 @@ CODE_02E2B0:
     STA.b InteractionPtYPos_98+1            ;$02E2D3 |
     LDA.b #$06                              ;$02E2D5 |
     STA.b TileGenerate_9C                   ;$02E2D7 |
-    JSL generate_tile                       ;$02E2D9 |
+    JSL generate_tile_00BEB0                ;$02E2D9 |
     RTS                                     ;$02E2DD |
 
 CODE_02E2DE:
@@ -13474,7 +13474,7 @@ CODE_02E311:
     LDY.w SpriteDir_157C,X                  ;$02E31F |
     LDA.w DATA_02E30B,Y                     ;$02E322 |
     STA.b SpriteXSpeed_B6,X                 ;$02E325 |
-    JSR update_x_no_gravity_018021B1                 ;$02E327 |
+    JSR update_x_no_gravity_018021B1        ;$02E327 |
     LDA.b Frame_13                          ;$02E32A |
     AND.b #$03                              ;$02E32C |
     BNE CODE_02E344                         ;$02E32E |
@@ -13612,7 +13612,7 @@ CODE_02E42D:
     LDY.b #$FC                              ;$02E442 |
 CODE_02E444:
     STY.b SpriteXSpeed_B6,X
-    JSR update_x_no_gravity_018021B1                 ;$02E446 |
+    JSR update_x_no_gravity_018021B1        ;$02E446 |
     JSL sprite_vs_sprite_or_mario_01803A    ;$02E449 |
     JSR CODE_02D4FA                         ;$02E44D |
     LDA $0F                                 ;$02E450 |
@@ -13743,7 +13743,7 @@ ScalePlatformMain:
     STA.b InteractionPtYPos_98              ;$02E543 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E545 |
     STA.b InteractionPtYPos_98+1            ;$02E548 |
-    JSL generate_tile                       ;$02E54A |
+    JSL generate_tile_00BEB0                ;$02E54A |
 .CODE_02E54E:
     JSR MushroomScaleGfx
     STZ.w Sprite_1528,X                     ;$02E551 |
@@ -13818,7 +13818,7 @@ CODE_02E5BC:
 CODE_02E5D1:
     TYA
     STA.b SpriteXSpeed_B6,X                 ;$02E5D2 |
-    JSR update_x_no_gravity_018021B1                 ;$02E5D4 |
+    JSR update_x_no_gravity_018021B1        ;$02E5D4 |
 CODE_02E5D7:
     JSR CODE_02E637
     JSR CODE_02E5F7                         ;$02E5DA |
@@ -14031,7 +14031,7 @@ CODE_02E74E:
     LDY.w SpriteDir_157C,X
     LDA.w DATA_02E74C,Y                     ;$02E751 |
     STA.b SpriteXSpeed_B6,X                 ;$02E754 |
-    JSR update_x_no_gravity_018021B1                 ;$02E756 |
+    JSR update_x_no_gravity_018021B1        ;$02E756 |
     LDA.w SpriteStun_1540,X                 ;$02E759 |
     BNE Return02E77B                        ;$02E75C |
     INC.w SpriteAnimationTimer_1570,X       ;$02E75E |
@@ -14250,7 +14250,7 @@ GrowingPipeGfx:
     STA.b InteractionPtYPos_98              ;$02E8D6 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E8D8 |
     STA.b InteractionPtYPos_98+1            ;$02E8DB |
-    JSL generate_tile                       ;$02E8DD |
+    JSL generate_tile_00BEB0                ;$02E8DD |
     LDA.w TileGenerateTrackB_18B6           ;$02E8E1 |
     STA.b TileGenerate_9C                   ;$02E8E4 |
     LDA.b SpriteXPosLow_E4,X                ;$02E8E6 |
@@ -14264,7 +14264,7 @@ GrowingPipeGfx:
     STA.b InteractionPtYPos_98              ;$02E8F6 |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E8F8 |
     STA.b InteractionPtYPos_98+1            ;$02E8FB |
-    JSL generate_tile                       ;$02E8FD |
+    JSL generate_tile_00BEB0                ;$02E8FD |
     RTS                                     ;$02E901 |
 
 CODE_02E902:
@@ -14611,7 +14611,7 @@ CODE_02EB49:
     BNE Return02EB7C                        ;$02EB4B |
     JSR SubOffscreen0Bnk2                   ;$02EB4D |
     JSL sprite_vs_sprite_or_mario_01803A    ;$02EB50 |
-    JSR update_x_no_gravity_018021B1                 ;$02EB54 |
+    JSR update_x_no_gravity_018021B1        ;$02EB54 |
     JSR UpdateYPosNoGrvtyB1                 ;$02EB57 |
     LDA.b SpriteNumber_9E,X                 ;$02EB5A |
     CMP.b #!SuperKoopaGRound_73             ;$02EB5C |
@@ -15094,7 +15094,7 @@ ADDR_02EF12:
     JSR UpdateYPosNoGrvtyB1
     LDA.b #$08                              ;$02EF15 |
     STA.b SpriteXSpeed_B6,X                 ;$02EF17 |
-    JSR update_x_no_gravity_018021B1                 ;$02EF19 |
+    JSR update_x_no_gravity_018021B1        ;$02EF19 |
 ADDR_02EF1C:
     LDA.w SpriteOAMIndex_15EA,X
     PHA                                     ;$02EF1F |
@@ -15669,7 +15669,7 @@ CODE_02F317:
     STA.w SpriteAnimation_1602,X            ;$02F31E |
 CODE_02F321:
     JSR CODE_02F3EA
-    JSR update_x_no_gravity_018021B1                 ;$02F324 |
+    JSR update_x_no_gravity_018021B1        ;$02F324 |
     JSR UpdateYPosNoGrvtyB1                 ;$02F327 |
     LDA.b SpriteYSpeed_AA,X                 ;$02F32A |
     CLC                                     ;$02F32C |
@@ -15845,7 +15845,7 @@ CODE_02F442:
     JSR UpdateYPosNoGrvtyB1                 ;$02F448 |
     LDA.w SpriteStun_1540,X                 ;$02F44B |
     BNE CODE_02F453                         ;$02F44E |
-    JSR update_x_no_gravity_018021B1                 ;$02F450 |
+    JSR update_x_no_gravity_018021B1        ;$02F450 |
 CODE_02F453:
     JSR CODE_02F47C
     LDA.b SpriteYPosLow_D8,X                ;$02F456 |
