@@ -5452,7 +5452,7 @@ CODE_0CD23C:
     LDA.w DATA_0CD1FD,Y                     ;$0CD269 |
     STA.l DynamicStripeImage_7F837D,X       ;$0CD26C |
     LDA.w DATA_0CD1FF,Y                     ;$0CD270 |
-    STA.l $7F8383,X                         ;$0CD273 |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$0CD273 |
     SEP #$20                                ;$0CD277 | A->8
     CPY.b #$1C                              ;$0CD279 |
     BNE Return0CD282                        ;$0CD27B |

@@ -3495,7 +3495,7 @@ CODE_009D76:
     TXY                                     ;$009D79 |
 CODE_009D7A:
     LDX $00
-    STA.l $7F8381,X                         ;$009D7C |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$009D7C |
     TYA                                     ;$009D80 |
     BNE CODE_009D85                         ;$009D81 |
     LDY.b #$FC                              ;$009D83 |
@@ -3503,13 +3503,13 @@ CODE_009D85:
     TYA
     STA.l DynamicStripeImage_7F837D+2,X     ;$009D86 |
     LDA.b #$38                              ;$009D8A |
-    STA.l $7F8380,X                         ;$009D8C |
-    STA.l $7F8382,X                         ;$009D90 |
+    STA.l DynamicStripeImage_7F837D+3,X     ;$009D8C |
+    STA.l DynamicStripeImage_7F837D+5,X     ;$009D90 |
     REP #$20                                ;$009D94 | A->16
     LDY.b #$03                              ;$009D96 |
 CODE_009D98:
     LDA.w #$38FC
-    STA.l $7F8383,X                         ;$009D9B |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$009D9B |
     INX                                     ;$009D9F |
     INX                                     ;$009DA0 |
     DEY                                     ;$009DA1 |
@@ -3662,7 +3662,7 @@ CODE_009EA7:
     BCC CODE_009EC3                         ;$009EBE |
     LDA.w #$3D2E                            ;$009EC0 |
 CODE_009EC3:
-    STA.l $7F8381,X
+    STA.l DynamicStripeImage_7F837D+4,X
     PLA                                     ;$009EC7 |
     INX                                     ;$009EC8 |
     INX                                     ;$009EC9 |
@@ -6936,20 +6936,20 @@ CODE_00C13E:
     SEP #$20                                ;$00C143 | A->8
     LDA $06                                 ;$00C145 |
     STA.l DynamicStripeImage_7F837D,X       ;$00C147 |
-    STA.l $7F8385,X                         ;$00C14B |
+    STA.l DynamicStripeImage_7F837D+8,X     ;$00C14B |
     LDA $07                                 ;$00C14F |
     STA.l DynamicStripeImage_7F837D+1,X     ;$00C151 |
     CLC                                     ;$00C155 |
     ADC.b #$20                              ;$00C156 |
-    STA.l $7F8386,X                         ;$00C158 |
+    STA.l DynamicStripeImage_7F837D+9,X     ;$00C158 |
     LDA.b #$00                              ;$00C15C |
     STA.l DynamicStripeImage_7F837D+2,X     ;$00C15E |
-    STA.l $7F8387,X                         ;$00C162 |
+    STA.l DynamicStripeImage_7F837D+10,X    ;$00C162 |
     LDA.b #$03                              ;$00C166 |
-    STA.l $7F8380,X                         ;$00C168 |
-    STA.l $7F8388,X                         ;$00C16C |
+    STA.l DynamicStripeImage_7F837D+3,X     ;$00C168 |
+    STA.l DynamicStripeImage_7F837D+11,X    ;$00C16C |
     LDA.b #$FF                              ;$00C170 |
-    STA.l $7F838D,X                         ;$00C172 |
+    STA.l DynamicStripeImage_7F837D+16,X    ;$00C172 |
     LDA.b #$0D                              ;$00C176 |
     STA $06                                 ;$00C178 |
     REP #$20                                ;$00C17A | A->16
@@ -6957,19 +6957,19 @@ CODE_00C13E:
     STA $04                                 ;$00C17F |
     LDY.w #$0000                            ;$00C181 |
     LDA [$04],Y                             ;$00C184 |
-    STA.l $7F8381,X                         ;$00C186 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$00C186 |
     INY                                     ;$00C18A |
     INY                                     ;$00C18B |
     LDA [$04],Y                             ;$00C18C |
-    STA.l $7F8389,X                         ;$00C18E |
+    STA.l DynamicStripeImage_7F837D+12,X    ;$00C18E |
     INY                                     ;$00C192 |
     INY                                     ;$00C193 |
     LDA [$04],Y                             ;$00C194 |
-    STA.l $7F8383,X                         ;$00C196 |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$00C196 |
     INY                                     ;$00C19A |
     INY                                     ;$00C19B |
     LDA [$04],Y                             ;$00C19C |
-    STA.l $7F838B,X                         ;$00C19E |
+    STA.l DynamicStripeImage_7F837D+14,X    ;$00C19E |
     TXA                                     ;$00C1A2 |
     CLC                                     ;$00C1A3 |
     ADC.w #$0010                            ;$00C1A4 |
@@ -7048,19 +7048,19 @@ CODE_00C222:
     SEP #$20                                ;$00C227 | A->8
     LDA $06                                 ;$00C229 |
     STA.l DynamicStripeImage_7F837D,X       ;$00C22B |
-    STA.l $7F8389,X                         ;$00C22F |
+    STA.l DynamicStripeImage_7F837D+12,X    ;$00C22F |
     LDA $07                                 ;$00C233 |
     STA.l DynamicStripeImage_7F837D+1,X     ;$00C235 |
     INC A                                   ;$00C239 |
-    STA.l $7F838A,X                         ;$00C23A |
+    STA.l DynamicStripeImage_7F837D+13,X    ;$00C23A |
     LDA.b #$80                              ;$00C23E |
     STA.l DynamicStripeImage_7F837D+2,X     ;$00C240 |
-    STA.l $7F838B,X                         ;$00C244 |
+    STA.l DynamicStripeImage_7F837D+14,X    ;$00C244 |
     LDA.b #$07                              ;$00C248 |
-    STA.l $7F8380,X                         ;$00C24A |
-    STA.l $7F838C,X                         ;$00C24E |
+    STA.l DynamicStripeImage_7F837D+3,X     ;$00C24A |
+    STA.l DynamicStripeImage_7F837D+15,X    ;$00C24E |
     LDA.b #$FF                              ;$00C252 |
-    STA.l $7F8395,X                         ;$00C254 |
+    STA.l DynamicStripeImage_7F837D+24,X    ;$00C254 |
     LDA.b #$0D                              ;$00C258 |
     STA $06                                 ;$00C25A |
     REP #$20                                ;$00C25C | A->16
@@ -7068,23 +7068,23 @@ CODE_00C222:
     STA $04                                 ;$00C261 |
     LDY.w #$0000                            ;$00C263 |
     LDA [$04],Y                             ;$00C266 |
-    STA.l $7F8381,X                         ;$00C268 |
-    STA.l $7F8385,X                         ;$00C26C |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$00C268 |
+    STA.l DynamicStripeImage_7F837D+8,X     ;$00C26C |
     INY                                     ;$00C270 |
     INY                                     ;$00C271 |
     LDA [$04],Y                             ;$00C272 |
-    STA.l $7F838D,X                         ;$00C274 |
-    STA.l $7F8391,X                         ;$00C278 |
+    STA.l DynamicStripeImage_7F837D+16,X    ;$00C274 |
+    STA.l DynamicStripeImage_7F837D+20,X    ;$00C278 |
     INY                                     ;$00C27C |
     INY                                     ;$00C27D |
     LDA [$04],Y                             ;$00C27E |
-    STA.l $7F8383,X                         ;$00C280 |
-    STA.l $7F8387,X                         ;$00C284 |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$00C280 |
+    STA.l DynamicStripeImage_7F837D+10,X    ;$00C284 |
     INY                                     ;$00C288 |
     INY                                     ;$00C289 |
     LDA [$04],Y                             ;$00C28A |
-    STA.l $7F838F,X                         ;$00C28C |
-    STA.l $7F8393,X                         ;$00C290 |
+    STA.l DynamicStripeImage_7F837D+18,X    ;$00C28C |
+    STA.l DynamicStripeImage_7F837D+22,X    ;$00C290 |
     TXA                                     ;$00C294 |
     CLC                                     ;$00C295 |
     ADC.w #$0018                            ;$00C296 |
@@ -7150,7 +7150,7 @@ CODE_00C365:
     LDA.b #$00                              ;$00C373 |
     STA.l DynamicStripeImage_7F837D+2,X     ;$00C375 |
     LDA.b #$0B                              ;$00C379 |
-    STA.l $7F8380,X                         ;$00C37B |
+    STA.l DynamicStripeImage_7F837D+3,X     ;$00C37B |
     LDA $07                                 ;$00C37F |
     CLC                                     ;$00C381 |
     ADC.b #$20                              ;$00C382 |
@@ -7173,7 +7173,7 @@ CODE_00C39F:
     STA $00                                 ;$00C3A2 |
 CODE_00C3A4:
     LDA [$02],Y
-    STA.l $7F8381,X                         ;$00C3A6 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$00C3A6 |
     INY                                     ;$00C3AA |
     INY                                     ;$00C3AB |
     INX                                     ;$00C3AC |
@@ -7235,10 +7235,10 @@ CODE_00C40C:
     LDA.b #$40                              ;$00C418 |
     STA.l DynamicStripeImage_7F837D+2,X     ;$00C41A |
     LDA.b #$06                              ;$00C41E |
-    STA.l $7F8380,X                         ;$00C420 |
+    STA.l DynamicStripeImage_7F837D+3,X     ;$00C420 |
     REP #$20                                ;$00C424 | A->16
     LDA.w #$18F8                            ;$00C426 |
-    STA.l $7F8381,X                         ;$00C429 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$00C429 |
     TXA                                     ;$00C42D |
     CLC                                     ;$00C42E |
     ADC.w #$0006                            ;$00C42F |

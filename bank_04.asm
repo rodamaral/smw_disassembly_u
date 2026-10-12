@@ -3028,7 +3028,7 @@ CODE_049D6A:
 
 CODE_049D76:
     LDA.b #$FF
-    STA.l $7F8381,X                         ;$049D78 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$049D78 |
     REP #$20                                ;$049D7C | A->16
     RTS                                     ;$049D7E |
 
@@ -3038,9 +3038,9 @@ CODE_049D7F:
     CPX $02                                 ;$049D83 |
     BCS CODE_049D95                         ;$049D85 |
     AND.b #$7F                              ;$049D87 |
-    STA.l $7F8381,X                         ;$049D89 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$049D89 |
     LDA.b #$39                              ;$049D8D |
-    STA.l $7F8382,X                         ;$049D8F |
+    STA.l DynamicStripeImage_7F837D+5,X     ;$049D8F |
     INX                                     ;$049D93 |
     INX                                     ;$049D94 |
 CODE_049D95:
@@ -6981,26 +6981,26 @@ CODE_04EDE6:
     STA.l DynamicStripeImage_7F837D,X       ;$04EDE8 |
     CLC                                     ;$04EDEC |
     ADC.w #$2000                            ;$04EDED |
-    STA.l $7F8385,X                         ;$04EDF0 |
+    STA.l DynamicStripeImage_7F837D+8,X     ;$04EDF0 |
     LDA.w #$0300                            ;$04EDF4 |
     STA.l DynamicStripeImage_7F837D+2,X     ;$04EDF7 |
-    STA.l $7F8387,X                         ;$04EDFB |
+    STA.l DynamicStripeImage_7F837D+10,X    ;$04EDFB |
     LDA [$0A],Y                             ;$04EDFF |
-    STA.l $7F8381,X                         ;$04EE01 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$04EE01 |
     INY                                     ;$04EE05 |
     INY                                     ;$04EE06 |
     LDA [$0A],Y                             ;$04EE07 |
-    STA.l $7F8389,X                         ;$04EE09 |
+    STA.l DynamicStripeImage_7F837D+12,X    ;$04EE09 |
     INY                                     ;$04EE0D |
     INY                                     ;$04EE0E |
     LDA [$0A],Y                             ;$04EE0F |
-    STA.l $7F8383,X                         ;$04EE11 |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$04EE11 |
     INY                                     ;$04EE15 |
     INY                                     ;$04EE16 |
     LDA [$0A],Y                             ;$04EE17 |
-    STA.l $7F838B,X                         ;$04EE19 |
+    STA.l DynamicStripeImage_7F837D+14,X    ;$04EE19 |
     LDA.w #$00FF                            ;$04EE1D |
-    STA.l $7F838D,X                         ;$04EE20 |
+    STA.l DynamicStripeImage_7F837D+16,X    ;$04EE20 |
     TXA                                     ;$04EE24 |
     CLC                                     ;$04EE25 |
     ADC.w #$0010                            ;$04EE26 |
@@ -7045,7 +7045,7 @@ CODE_04EE30:
     SEP #$30                                ;$04EE77 | AXY->8
     RTS                                     ;$04EE79 |
 
-DATA_04EE7A:
+.data_04EE7A:
     db $22,$01,$82,$1C,$22,$01,$83,$1C
     db $22,$01,$82,$14,$22,$01,$83,$14
     db $EA,$01,$EA,$01,$EA,$C1,$EA,$C1
@@ -7084,7 +7084,7 @@ CODE_04EEAA:
     STA.l DynamicStripeImage_7F837D,X       ;$04EEE4 |
     CLC                                     ;$04EEE8 |
     ADC.w #$2000                            ;$04EEE9 |
-    STA.l $7F8385,X                         ;$04EEEC |
+    STA.l DynamicStripeImage_7F837D+8,X     ;$04EEEC |
     XBA                                     ;$04EEF0 |
     CLC                                     ;$04EEF1 |
     ADC.w #$0020                            ;$04EEF2 |
@@ -7092,21 +7092,21 @@ CODE_04EEAA:
     STA $00                                 ;$04EEF6 |
     LDA.w #$0300                            ;$04EEF8 |
     STA.l DynamicStripeImage_7F837D+2,X     ;$04EEFB |
-    STA.l $7F8387,X                         ;$04EEFF |
+    STA.l DynamicStripeImage_7F837D+10,X    ;$04EEFF |
     LDA [$0A],Y                             ;$04EF03 |
-    STA.l $7F8381,X                         ;$04EF05 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$04EF05 |
     INY                                     ;$04EF09 |
     INY                                     ;$04EF0A |
     LDA [$0A],Y                             ;$04EF0B |
-    STA.l $7F8389,X                         ;$04EF0D |
+    STA.l DynamicStripeImage_7F837D+12,X    ;$04EF0D |
     INY                                     ;$04EF11 |
     INY                                     ;$04EF12 |
     LDA [$0A],Y                             ;$04EF13 |
-    STA.l $7F8383,X                         ;$04EF15 |
+    STA.l DynamicStripeImage_7F837D+6,X     ;$04EF15 |
     INY                                     ;$04EF19 |
     INY                                     ;$04EF1A |
     LDA [$0A],Y                             ;$04EF1B |
-    STA.l $7F838B,X                         ;$04EF1D |
+    STA.l DynamicStripeImage_7F837D+14,X    ;$04EF1D |
     TXA                                     ;$04EF21 |
     CLC                                     ;$04EF22 |
     ADC.w #$0010                            ;$04EF23 |
@@ -7627,14 +7627,14 @@ CODE_04F5A1:
     LDY.w SavedPlayerLives_0DB4             ;$04F5AF |
     BMI CODE_04F5BF                         ;$04F5B2 |
     LDA.w #$38FC                            ;$04F5B4 |
-    STA.l $7F83C1,X                         ;$04F5B7 |
-    STA.l $7F83C3,X                         ;$04F5BB |
+    STA.l DynamicStripeImage_7F837D+$44,X   ;$04F5B7 |
+    STA.l DynamicStripeImage_7F837D+$46,X   ;$04F5BB |
 CODE_04F5BF:
     LDY.w $0DB5
     BMI CODE_04F5CF                         ;$04F5C2 |
     LDA.w #$38FC                            ;$04F5C4 |
-    STA.l $7F83C9,X                         ;$04F5C7 |
-    STA.l $7F83CB,X                         ;$04F5CB |
+    STA.l DynamicStripeImage_7F837D+$4C,X   ;$04F5C7 |
+    STA.l DynamicStripeImage_7F837D+$4E,X   ;$04F5CB |
 CODE_04F5CF:
     SEP #$20
     INC.w OWPromptArrowTimer_1B8B           ;$04F5D1 |
@@ -7646,13 +7646,13 @@ CODE_04F5CF:
     TAY                                     ;$04F5DF |
     REP #$20                                ;$04F5E0 | A->16
     LDA.w DATA_04F503,Y                     ;$04F5E2 |
-    STA.l $7F83B1,X                         ;$04F5E5 |
+    STA.l DynamicStripeImage_7F837D+$34,X   ;$04F5E5 |
     LDA.w DATA_04F507,Y                     ;$04F5E9 |
-    STA.l $7F83B3,X                         ;$04F5EC |
+    STA.l DynamicStripeImage_7F837D+$36,X   ;$04F5EC |
     LDA.w DATA_04F50B,Y                     ;$04F5F0 |
-    STA.l $7F83B9,X                         ;$04F5F3 |
+    STA.l DynamicStripeImage_7F837D+$3C,X   ;$04F5F3 |
     LDA.w DATA_04F50F,Y                     ;$04F5F7 |
-    STA.l $7F83BB,X                         ;$04F5FA |
+    STA.l DynamicStripeImage_7F837D+$3E,X   ;$04F5FA |
     SEP #$20                                ;$04F5FE | A->8
 CODE_04F600:
     LDA.w SavedPlayerLives_0DB4
@@ -7673,9 +7673,9 @@ CODE_04F619:
     TXY
 CODE_04F61A:
     PLX
-    STA.l $7F83A1,X                         ;$04F61B |
+    STA.l DynamicStripeImage_7F837D+36,X    ;$04F61B |
     TYA                                     ;$04F61F |
-    STA.l $7F839F,X                         ;$04F620 |
+    STA.l DynamicStripeImage_7F837D+34,X    ;$04F620 |
     RTS                                     ;$04F624 |
 
 DATA_04F625:

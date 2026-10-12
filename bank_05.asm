@@ -5621,7 +5621,7 @@ CODE_05CC9D:
     LDY.w #$0000                            ;$05CCB6 |
 CODE_05CCB9:
     LDA.w DATA_05CC61,Y
-    STA.l $7F8381,X                         ;$05CCBC |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$05CCBC |
     INX                                     ;$05CCC0 |
     INX                                     ;$05CCC1 |
     INY                                     ;$05CCC2 |
@@ -5635,7 +5635,7 @@ CODE_05CCC8:
     TAX                                     ;$05CCD2 |
 CODE_05CCD3:
     LDA.w InGameTimerHundreds_0F31,Y
-    STA.l $7F83AF,X                         ;$05CCD6 |
+    STA.l DynamicStripeImage_7F837D+50,X    ;$05CCD6 |
     DEY                                     ;$05CCDA |
     DEX                                     ;$05CCDB |
     DEX                                     ;$05CCDC |
@@ -5643,11 +5643,11 @@ CODE_05CCD3:
     LDA.l DynStripeImgSize_7F837B           ;$05CCDF |
     TAX                                     ;$05CCE3 |
 CODE_05CCE4:
-    LDA.l $7F83AF,X
+    LDA.l DynamicStripeImage_7F837D+50,X
     AND.b #$0F                              ;$05CCE8 |
     BNE CODE_05CCF9                         ;$05CCEA |
     LDA.b #$FC                              ;$05CCEC |
-    STA.l $7F83AF,X                         ;$05CCEE |
+    STA.l DynamicStripeImage_7F837D+50,X    ;$05CCEE |
     INX                                     ;$05CCF2 |
     INX                                     ;$05CCF3 |
     CPX.w #$0004                            ;$05CCF4 |
@@ -5664,11 +5664,11 @@ CODE_05CCF9:
     JSR CODE_05CDFD                         ;$05CD0B |
     LDX.b #$00                              ;$05CD0E |
 CODE_05CD10:
-    LDA.l $7F83BD,X
+    LDA.l DynamicStripeImage_7F837D+$40,X
     AND.w #$000F                            ;$05CD14 |
     BNE CODE_05CD26                         ;$05CD17 |
     LDA.w #$38FC                            ;$05CD19 |
-    STA.l $7F83BD,X                         ;$05CD1C |
+    STA.l DynamicStripeImage_7F837D+$40,X   ;$05CD1C |
     INX                                     ;$05CD20 |
     INX                                     ;$05CD21 |
     CPX.b #$08                              ;$05CD22 |
@@ -5724,9 +5724,9 @@ CODE_05CD89:
     ASL                                     ;$05CD9E |
     TAY                                     ;$05CD9F |
     LDA.w DATA_05CD63,Y                     ;$05CDA0 |
-    STA.l $7F8395,X                         ;$05CDA3 |
+    STA.l DynamicStripeImage_7F837D+24,X    ;$05CDA3 |
     LDA.w DATA_05CD62,Y                     ;$05CDA7 |
-    STA.l $7F839D,X                         ;$05CDAA |
+    STA.l DynamicStripeImage_7F837D+32,X    ;$05CDAA |
     LDA.w BonusStarsGained_1900             ;$05CDAE |
     AND.b #$F0                              ;$05CDB1 |
     LSR                                     ;$05CDB3 |
@@ -5737,9 +5737,9 @@ CODE_05CD89:
     ASL                                     ;$05CDB9 |
     TAY                                     ;$05CDBA |
     LDA.w DATA_05CD63,Y                     ;$05CDBB |
-    STA.l $7F8393,X                         ;$05CDBE |
+    STA.l DynamicStripeImage_7F837D+22,X    ;$05CDBE |
     LDA.w DATA_05CD62,Y                     ;$05CDC2 |
-    STA.l $7F839B,X                         ;$05CDC5 |
+    STA.l DynamicStripeImage_7F837D+30,X    ;$05CDC5 |
 CODE_05CDC9:
     LDA.b #$22
     CLC                                     ;$05CDCB |
@@ -5960,11 +5960,11 @@ CODE_05CF59:
     LDA.l DynStripeImgSize_7F837B           ;$05CF85 |
     TAX                                     ;$05CF89 |
 CODE_05CF8A:
-    LDA.l $7F8381,X
+    LDA.l DynamicStripeImage_7F837D+4,X
     AND.w #$000F                            ;$05CF8E |
     BNE CODE_05CFA0                         ;$05CF91 |
     LDA.w #$38FC                            ;$05CF93 |
-    STA.l $7F8381,X                         ;$05CF96 |
+    STA.l DynamicStripeImage_7F837D+4,X     ;$05CF96 |
     INX                                     ;$05CF9A |
     INX                                     ;$05CF9B |
     CPX $00                                 ;$05CF9C |
@@ -5981,9 +5981,9 @@ CODE_05CFA0:
     ASL                                     ;$05CFB3 |
     TAY                                     ;$05CFB4 |
     LDA.w DATA_05CD62,Y                     ;$05CFB5 |
-    STA.l $7F8391,X                         ;$05CFB8 |
+    STA.l DynamicStripeImage_7F837D+20,X    ;$05CFB8 |
     LDA.w DATA_05CD63,Y                     ;$05CFBC |
-    STA.l $7F8399,X                         ;$05CFBF |
+    STA.l DynamicStripeImage_7F837D+28,X    ;$05CFBF |
     LDA.w BonusStarsGained_1900             ;$05CFC3 |
     AND.b #$F0                              ;$05CFC6 |
     LSR                                     ;$05CFC8 |
@@ -5992,9 +5992,9 @@ CODE_05CFA0:
     BEQ CODE_05CFDC                         ;$05CFCB |
     TAY                                     ;$05CFCD |
     LDA.w DATA_05CD62,Y                     ;$05CFCE |
-    STA.l $7F838F,X                         ;$05CFD1 |
+    STA.l DynamicStripeImage_7F837D+18,X    ;$05CFD1 |
     LDA.w DATA_05CD63,Y                     ;$05CFD5 |
-    STA.l $7F8397,X                         ;$05CFD8 |
+    STA.l DynamicStripeImage_7F837D+26,X    ;$05CFD8 |
 CODE_05CFDC:
     REP #$20
     SEP #$10                                ;$05CFDE | XY->8
@@ -6880,16 +6880,16 @@ CODE_05DC0A:
     BEQ CODE_05DC23                         ;$05DC13 |
     CLC                                     ;$05DC15 |
     ADC.b #$22                              ;$05DC16 |
-    STA.l $7F8383                           ;$05DC18 |
+    STA.l DynamicStripeImage_7F837D+6       ;$05DC18 |
     LDA.b #$39                              ;$05DC1C |
-    STA.l $7F8384                           ;$05DC1E |
+    STA.l DynamicStripeImage_7F837D+7       ;$05DC1E |
     TXA                                     ;$05DC22 |
 CODE_05DC23:
     CLC
     ADC.b #$22                              ;$05DC24 |
-    STA.l $7F8381                           ;$05DC26 |
+    STA.l DynamicStripeImage_7F837D+4       ;$05DC26 |
     LDA.b #$39                              ;$05DC2A |
-    STA.l $7F8382                           ;$05DC2C |
+    STA.l DynamicStripeImage_7F837D+5       ;$05DC2C |
     LDA.b #$08                              ;$05DC30 |
     STA.l DynStripeImgSize_7F837B           ;$05DC32 |
     SEP #$20                                ;$05DC36 | A->8
