@@ -9,7 +9,7 @@ TilesetMAP16Loc:
 CODE_05801E:
     PHP
     SEP #$20                                ;$05801F |
-    REP #$10                                ;$058021 |
+    REP #$10                                ;$058021 | XY->16
     LDX.w #$0000                            ;$058023 |
 .CODE_058026:
     LDA.b #$25
@@ -22,7 +22,7 @@ CODE_05801E:
     LDA.b Layer2DataPtr_68+2                ;$058039 |
     CMP.b #$FF                              ;$05803B |
     BNE .CODE_058074                        ;$05803D |
-    REP #$10                                ;$05803F |
+    REP #$10                                ;$05803F | XY->16
     LDY.w #$0000                            ;$058041 |
     LDX.b Layer2DataPtr_68                  ;$058044 |
     CPX.w #$E8FE                            ;$058046 |
@@ -139,7 +139,7 @@ CODE_058126:
     STA $0F                                 ;$058134 |
 CODE_058136:
     SEP #$20
-    REP #$10                                ;$058138 |
+    REP #$10                                ;$058138 | XY->16
     LDY $03                                 ;$05813A |
     LDA.b [Layer2DataPtr_68],Y              ;$05813C |
     STA $07                                 ;$05813E |
@@ -248,7 +248,7 @@ CODE_0581FB:
     STZ $04                                 ;$05822B |
     STZ $09                                 ;$05822D |
     STZ $0B                                 ;$05822F |
-    REP #$10                                ;$058231 |
+    REP #$10                                ;$058231 | XY->16
     LDY.w #$0000                            ;$058233 |
     TYX                                     ;$058236 |
 CODE_058237:
@@ -766,7 +766,7 @@ LevLoadJsrNrm:
     JSR LevLoadNrmObj
 LevLoadContinue:
     SEP #$20
-    REP #$10                                ;$0586D4 |
+    REP #$10                                ;$0586D4 | XY->16
     LDY.w #$0000                            ;$0586D6 |
     LDA.b [Layer1DataPtr_65],Y              ;$0586D9 |
     CMP.b #$FF                              ;$0586DB |
@@ -5971,7 +5971,7 @@ CODE_05CF8A:
     BNE CODE_05CF8A                         ;$05CF9E |
 CODE_05CFA0:
     SEP #$20
-    REP #$10                                ;$05CFA2 |
+    REP #$10                                ;$05CFA2 | XY->16
     LDA.w DisplayBonusStars_1424            ;$05CFA4 |
     BEQ CODE_05CFDC                         ;$05CFA7 |
     LDA.l DynStripeImgSize_7F837B           ;$05CFA9 |
@@ -6481,7 +6481,7 @@ CODE_05D8B7:
     LDA.b [SpriteDataPtr_CE]                ;$05D900 |
     AND.b #$C0                              ;$05D902 |
     STA.w SpriteBuoyancy_190E               ;$05D904 |
-    REP #$10                                ;$05D907 |
+    REP #$10                                ;$05D907 | XY->16
     SEP #$20                                ;$05D909 |
     LDY $0E                                 ;$05D90B |
     LDA.w DATA_05F000,Y                     ;$05D90D |

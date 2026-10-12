@@ -797,7 +797,7 @@ CODE_0C94AB:
 
 CODE_0C94C0:
     SEP #$20
-    REP #$10                                ;$0C94C2 |
+    REP #$10                                ;$0C94C2 | XY->16
     LDX.w #$B900                            ;$0C94C4 |
     STX.b Map16LowPtr_6B                    ;$0C94C7 |
     LDA.b #$7E                              ;$0C94C9 |
@@ -3377,7 +3377,7 @@ CODE_0CB5BC:
 CODE_0CB5CA:
     STY $00
     ASL                                     ;$0CB5CC |
-    REP #$10                                ;$0CB5CD |
+    REP #$10                                ;$0CB5CD | XY->16
     TAY                                     ;$0CB5CF |
     LDX.w DATA_0CB5A2,Y                     ;$0CB5D0 |
     LDY.w #$007F                            ;$0CB5D3 |

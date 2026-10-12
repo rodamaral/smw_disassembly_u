@@ -2086,7 +2086,7 @@ setup_window_HDMA_009250:
 DisableHDMA:                                ;        |
     STZ.w HDMAEnable_0D9F                   ;$009260 | Disable HDMA
 clear_window_HDMA:                          ;        |
-    REP #$10                                ;$009263 | 16 bit x/y
+    REP #$10                                ;$009263 | XY->16
     LDX.w #$01BE                            ;$009265 |\
     LDA.b #$FF                              ;$009268 | | Initialize the HDMA table to FF00
 -   STA.w $04A0,X                           ;$00926A | |
@@ -2113,7 +2113,7 @@ CODE_009283:
     LDA.w IRQNMICommand_0D9B                ;$009286 |
     LSR                                     ;$009289 |
     BCS CODE_0092A0                         ;$00928A |
-    REP #$10                                ;$00928C |
+    REP #$10                                ;$00928C | XY->16
     LDX.w #$01BE                            ;$00928E |
 WindowHDMAenable:
     STZ.w $04A0,X
@@ -2131,7 +2131,7 @@ CODE_0092A0:
 
 CODE_0092A8:
     JSR clear_window_HDMA
-    REP #$10                                ;$0092AB |
+    REP #$10                                ;$0092AB | XY->16
     LDX.w #$0198                            ;$0092AD |
     BRA WindowHDMAenable                    ;$0092B0 |
 
@@ -3191,7 +3191,7 @@ CODE_009B43:
     LDA.w DATA_009CCB,Y                     ;$009B49 |
     XBA                                     ;$009B4C |
     LDA.w DATA_009CCE,Y                     ;$009B4D |
-    REP #$10                                ;$009B50 |
+    REP #$10                                ;$009B50 | XY->16
     TAX                                     ;$009B52 |
     LDY.w #$008F                            ;$009B53 |
     LDA.b #$00                              ;$009B56 |
@@ -3279,7 +3279,7 @@ CODE_009BC9:
     LDA.w DATA_009CCB,X                     ;$009BCF |
     XBA                                     ;$009BD2 |
     LDA.w DATA_009CCE,X                     ;$009BD3 |
-    REP #$10                                ;$009BD6 |
+    REP #$10                                ;$009BD6 | XY->16
     TAX                                     ;$009BD8 |
 CODE_009BD9:
     LDY.w #$0000
@@ -3992,7 +3992,7 @@ GM0C_overworld_load_00A087:
     JSR KeepModeActive                      ;$00A176 |
     LDA.b #!IRQNMIOverworld_02              ;$00A179 |
     STA.w IRQNMICommand_0D9B                ;$00A17B |
-    REP #$10                                ;$00A17E |
+    REP #$10                                ;$00A17E | XY->16
     LDX.w #$01BE                            ;$00A180 |
     LDA.b #$FF                              ;$00A183 |
 CODE_00A185:
@@ -4016,7 +4016,7 @@ CODE_00A19A:
     RTS                                     ;$00A1A5 |
 
 Clear_1A_13D3:
-    REP #$10                                ;$00A1A6 |
+    REP #$10                                ;$00A1A6 | XY->16
     SEP #$20                                ;$00A1A8 |
     LDX.w #$00BD                            ;$00A1AA |
 -   STZ.b Layer1XPos_1A,X                   ;$00A1AD |
@@ -4367,7 +4367,7 @@ upload_palette:
     LDA.w RAM_color_pointers+1,Y            ;$00A496 |\ Load the low and high byte into A
     XBA                                     ;$00A499 | |
     LDA.w RAM_color_pointers,Y              ;$00A49A | |
-    REP #$10                                ;$00A49D | | 16 bit X/Y
+    REP #$10                                ;$00A49D | | XY->16
     TAY                                     ;$00A49F |/ Use Y as the pointer index
 .continue_upload                            ;        |
     LDA [$00],Y                             ;$00A4A0 |\ If number of bytes to transfer is zero
@@ -4405,7 +4405,7 @@ palette_upload_return:                      ;        |
     RTS                                     ;$00A4E2 / Finished uploading palettes
 
 DMA_animated_OW_tiles:                      ;        \ 
-    REP #$10                                ;$00A4E3 | 16 bit XY
+    REP #$10                                ;$00A4E3 | XY->16
     LDA.b #$80                              ;$00A4E5 |\ Set VRAM increment after writing to $2119
     STA.w $2115                             ;$00A4E7 |/
     LDY.w #$0750                            ;$00A4EA |\ Set VRAM destination to #$0750
@@ -5167,7 +5167,7 @@ AddressWrite2:
 CODE_00AB42:
     LDY.b #$27
     JSL CODE_00BA28                         ;$00AB44 |
-    REP #$10                                ;$00AB48 |
+    REP #$10                                ;$00AB48 | XY->16
     LDY.w #$0000                            ;$00AB4A |
     LDX.w #$03FF                            ;$00AB4D |
 CODE_00AB50:
@@ -11368,7 +11368,7 @@ normal_collision:
     ASL                                     ;$00ECE9 |
     SEP #$20                                ;$00ECEA |
     ORA.b PlayerXPosBlock_92                ;$00ECEC |
-    REP #$10                                ;$00ECEE |
+    REP #$10                                ;$00ECEE | XY->16
     TAY                                     ;$00ECF0 |
     LDA.w DATA_00E632,Y                     ;$00ECF1 |
     SEP #$10                                ;$00ECF4 |
@@ -11481,7 +11481,7 @@ normal_collision:
     SEP #$20                                ;$00EDA6 |
     ORA.b PlayerXPosBlock_92                ;$00EDA8 |
     PHX                                     ;$00EDAA |
-    REP #$10                                ;$00EDAB |
+    REP #$10                                ;$00EDAB | XY->16
     TAX                                     ;$00EDAD |
     LDA.b PlayerYPosBlock_90                ;$00EDAE |
     SEC                                     ;$00EDB0 |

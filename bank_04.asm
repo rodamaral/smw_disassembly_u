@@ -31,7 +31,7 @@ CODE_04808C:
     SEP #$10                                ;$048093 |
     LDY.b #$7E                              ;$048095 |
     STY $02                                 ;$048097 |
-    REP #$10                                ;$048099 |
+    REP #$10                                ;$048099 | XY->16
     LDX $05                                 ;$04809B |
     JSR CODE_0480B9                         ;$04809D |
     LDA $05                                 ;$0480A0 |
@@ -141,7 +141,7 @@ CODE_048144:
     SEP #$10                                ;$04814D |
     LDY.b #$7E                              ;$04814F |
     STY $02                                 ;$048151 |
-    REP #$10                                ;$048153 |
+    REP #$10                                ;$048153 | XY->16
     LDX $0D                                 ;$048155 |
     JSR CODE_0480B9                         ;$048157 |
     LDA $0D                                 ;$04815A |
@@ -599,7 +599,7 @@ CODE_04853B:
     XBA                                     ;$048566 |
     AND.w #$000F                            ;$048567 |
     STA.w CurrentSubmap_13C3                ;$04856A |
-    REP #$10                                ;$04856D |
+    REP #$10                                ;$04856D | XY->16
     JSR CODE_049A93                         ;$04856F |
     SEP #$30                                ;$048572 |
     PLB                                     ;$048574 |
@@ -1306,7 +1306,7 @@ CODE_048D91:
     LSR                                     ;$048E09 |
     TAX                                     ;$048E0A |
     JSR OW_TilePos_Calc                     ;$048E0B |
-    REP #$10                                ;$048E0E |
+    REP #$10                                ;$048E0E | XY->16
     LDX $04                                 ;$048E10 |
     LDA.l OWLayer1Translevel_D000,X         ;$048E12 |
     AND.w #$00FF                            ;$048E16 |
@@ -1454,7 +1454,7 @@ CODE_048F13:
     LSR                                     ;$048F2C |
     TAX                                     ;$048F2D |
     JSR OW_TilePos_Calc                     ;$048F2E |
-    REP #$10                                ;$048F31 |
+    REP #$10                                ;$048F31 | XY->16
     SEP #$20                                ;$048F33 |
     LDA.w MidwayFlag_13CE                   ;$048F35 |
     BEQ CODE_048F56                         ;$048F38 |
@@ -1578,7 +1578,7 @@ CODE_049003:
     LSR                                     ;$04901E |
     TAX                                     ;$04901F |
     JSR OW_TilePos_Calc                     ;$049020 |
-    REP #$10                                ;$049023 |
+    REP #$10                                ;$049023 | XY->16
     LDX $04                                 ;$049025 |
     LDA.l Map16TilesLow_C800,X              ;$049027 |
     AND.w #$00FF                            ;$04902B |
@@ -2733,7 +2733,7 @@ CODE_049903:
     LSR                                     ;$049931 |
     TAX                                     ;$049932 |
     JSR OW_TilePos_Calc                     ;$049933 |
-    REP #$10                                ;$049936 |
+    REP #$10                                ;$049936 | XY->16
     LDX $04                                 ;$049938 |
     LDA.l OWLayer2Directions_D800,X         ;$04993A |
     AND.w #$00FF                            ;$04993E |
@@ -5293,7 +5293,7 @@ DATA_04DAB3:
 
 CODE_04DABA:
     SEP #$20
-    REP #$10                                ;$04DABC |
+    REP #$10                                ;$04DABC | XY->16
     LDA [$00],Y                             ;$04DABE |
     STA $03                                 ;$04DAC0 |
     AND.b #$80                              ;$04DAC2 |
@@ -5557,7 +5557,7 @@ DATA_04DCAE:
 
 CODE_04DCB6:
     PHP
-    REP #$10                                ;$04DCB7 |
+    REP #$10                                ;$04DCB7 | XY->16
     SEP #$20                                ;$04DCB9 |
     LDX.w #$D000                            ;$04DCBB |
     STX.b Layer1DataPtr_65                  ;$04DCBE |
@@ -6603,14 +6603,14 @@ CODE_04E9F1:
     LDA $02                                 ;$04EA3D |
     AND.w #$0001                            ;$04EA3F |
     BEQ .CODE_04EA4E                        ;$04EA42 |
-    REP #$10                                ;$04EA44 |
+    REP #$10                                ;$04EA44 | XY->16
     LDY $00                                 ;$04EA46 |
     JSR CODE_04E4A9                         ;$04EA48 |
     JMP .CODE_04EA5A                        ;$04EA4B |
 
 .CODE_04EA4E:
     SEP #$20
-    REP #$10                                ;$04EA50 |
+    REP #$10                                ;$04EA50 | XY->16
     LDX $04                                 ;$04EA52 |
     LDA $00                                 ;$04EA54 |
     STA.l Map16TilesLow_C800,X              ;$04EA56 |
@@ -7483,7 +7483,7 @@ CODE_04F44B:
     CLC                                     ;$04F453 |
     ADC.b #$80                              ;$04F454 |
     XBA                                     ;$04F456 |
-    REP #$10                                ;$04F457 |
+    REP #$10                                ;$04F457 | XY->16
     LDX.w #$016E                            ;$04F459 |
     LDA.b #$FF                              ;$04F45C |
 CODE_04F45E:

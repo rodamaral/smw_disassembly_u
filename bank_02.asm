@@ -265,7 +265,7 @@ CODE_02827D:
     EOR.b #$FF                              ;$02829E |
     INC A                                   ;$0282A0 |
     STA.w BossBGSpriteXCalc_188D            ;$0282A1 |
-    REP #$10                                ;$0282A4 |
+    REP #$10                                ;$0282A4 | XY->16
     LDY.w #$0164                            ;$0282A6 |
     LDA.b #$66                              ;$0282A9 |
     STY $03                                 ;$0282AB |

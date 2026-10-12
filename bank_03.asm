@@ -8510,7 +8510,7 @@ CODE_03C5A5:
     LDA.b SpritePhase_C2,X                  ;$03C5AE |
     STA $0F                                 ;$03C5B0 |
     PHX                                     ;$03C5B2 |
-    REP #$10                                ;$03C5B3 |
+    REP #$10                                ;$03C5B3 | XY->16
     LDX.w #$0000                            ;$03C5B5 |
 CODE_03C5B8:
     CPX.w #$005F
@@ -10060,7 +10060,7 @@ break_bridge_tile_03D77F:
     ADC.w #$01B0                            ;$03D793 ||
     LDX.b #$04                              ;$03D796 |/
 +   STX $00                                 ;$03D798 |
-    REP #$10                                ;$03D79A |
+    REP #$10                                ;$03D79A | XY->16
     TAX                                     ;$03D79C |
     SEP #$20                                ;$03D79D |
     LDA.b #!Map16LowAir_25                  ;$03D79F |
