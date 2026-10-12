@@ -67,7 +67,7 @@ CODE_05809E:
     PHP
     SEP #$20                                ;$05809F |
     STZ.w LevelLoadObject_1928              ;$0580A1 |
-    REP #$30                                ;$0580A4 |
+    REP #$30                                ;$0580A4 | AXY->16
     LDA.w #$FFFF                            ;$0580A6 |
     STA.b Layer1PrevTileUp_4D               ;$0580A9 |
     STA.b Layer1PrevTileDown_4F             ;$0580AB |
@@ -83,7 +83,7 @@ CODE_0580BD:
     JSL CODE_0588EC                         ;$0580BF |
     JSL CODE_058955                         ;$0580C3 |
     JSL generic_layer_1_and_2_upload        ;$0580C7 |
-    REP #$30                                ;$0580CB |
+    REP #$30                                ;$0580CB | AXY->16
     INC.b Layer1TileDown_47                 ;$0580CD |
     INC.b Layer2TileDown_4B                 ;$0580CF |
     SEP #$30                                ;$0580D1 |
@@ -91,7 +91,7 @@ CODE_0580BD:
     LSR                                     ;$0580D5 |
     LSR                                     ;$0580D6 |
     LSR                                     ;$0580D7 |
-    REP #$30                                ;$0580D8 |
+    REP #$30                                ;$0580D8 | AXY->16
     AND.w #$0006                            ;$0580DA |
     TAX                                     ;$0580DD |
     LDA.w #$0133                            ;$0580DE |
@@ -130,7 +130,7 @@ CODE_0580EC:
 
 CODE_058126:
     PHP
-    REP #$30                                ;$058127 |
+    REP #$30                                ;$058127 | AXY->16
     LDY.w #$0000                            ;$058129 |
     STY $03                                 ;$05812C |
     STY $05                                 ;$05812E |
@@ -296,7 +296,7 @@ CODE_058281:
     LDA.b #$FF
     STA.w SolidTileStart_1430               ;$058283 |
     STA.w SolidTileEnd_1431                 ;$058286 |
-    REP #$30                                ;$058289 |
+    REP #$30                                ;$058289 | AXY->16
     LDA.w #$E5C8                            ;$05828B |
     STA.b SlopesPtr_82                      ;$05828E |
     LDA.w #$01C4                            ;$058290 |
@@ -788,7 +788,7 @@ LevLoadNrmObj:
 
 process_level_mode_setting_0586F1:
     PHP
-    REP #$30                                ;$0586F2 |
+    REP #$30                                ;$0586F2 | AXY->16
     JSR set_map16_for_VRAM_upload_05877E    ;$0586F4 |
     SEP #$20                                ;$0586F7 |
     LDA.b ScreenMode_5B                     ;$0586F9 |
@@ -888,7 +888,7 @@ set_map16_for_VRAM_upload_05877E:
     LSR                                     ;$0587A4 |
     LSR                                     ;$0587A5 |
     LSR                                     ;$0587A6 |
-    REP #$30                                ;$0587A7 |
+    REP #$30                                ;$0587A7 | AXY->16
     AND.w #$0006                            ;$0587A9 |
     TAX                                     ;$0587AC |
     LDA.w #$0133                            ;$0587AD |
@@ -1123,7 +1123,7 @@ DATA_0589BE:
 
 CODE_0589CE:
     PHP
-    REP #$30                                ;$0589CF |
+    REP #$30                                ;$0589CF | AXY->16
     LDA.w LevelModeSetting_1925             ;$0589D1 |
     AND.w #$00FF                            ;$0589D4 |
     ASL                                     ;$0589D7 |
@@ -1185,7 +1185,7 @@ CODE_058A10:
     LDY.b #$05                              ;$058A45 |
 CODE_058A47:
     STY $0C
-    REP #$30                                ;$058A49 |
+    REP #$30                                ;$058A49 | AXY->16
     LDA.b Layer1TileUp_45,X                 ;$058A4B |
     AND.w #$000F                            ;$058A4D |
     STA $08                                 ;$058A50 |
@@ -1233,7 +1233,7 @@ Return058A9A:
 
 CODE_058A9B:
     PHP
-    REP #$30                                ;$058A9C |
+    REP #$30                                ;$058A9C | AXY->16
     LDA.w LevelModeSetting_1925             ;$058A9E |
     AND.w #$00FF                            ;$058AA1 |
     ASL                                     ;$058AA4 |
@@ -1306,7 +1306,7 @@ CODE_058AD5:
     LDY.b #$05                              ;$058B21 |
 CODE_058B23:
     STY $0C
-    REP #$30                                ;$058B25 |
+    REP #$30                                ;$058B25 | AXY->16
     LDA.b Layer1TileUp_45,X                 ;$058B27 |
     AND.w #$000F                            ;$058B29 |
     ASL                                     ;$058B2C |
@@ -1367,7 +1367,7 @@ CODE_058B84:
 
 CODE_058B8D:
     PHP
-    REP #$30                                ;$058B8E |
+    REP #$30                                ;$058B8E | AXY->16
     LDA.w LevelModeSetting_1925             ;$058B90 |
     AND.w #$00FF                            ;$058B93 |
     ASL                                     ;$058B96 |
@@ -1405,7 +1405,7 @@ CODE_058BA7:
 CODE_058BDE:
     TYA
     STA.w Layer2VramAddr_1CE6               ;$058BDF |
-    REP #$30                                ;$058BE2 |
+    REP #$30                                ;$058BE2 | AXY->16
     LDA.b Layer2TileUp_49,X                 ;$058BE4 |
     AND.w #$01F0                            ;$058BE6 |
     LSR                                     ;$058BE9 |
@@ -1436,7 +1436,7 @@ CODE_058BDE:
     LDY.b #$05                              ;$058C13 |
 CODE_058C15:
     STY $0C
-    REP #$30                                ;$058C17 |
+    REP #$30                                ;$058C17 | AXY->16
     LDA.b Layer2TileUp_49,X                 ;$058C19 |
     AND.w #$000F                            ;$058C1B |
     STA $08                                 ;$058C1E |
@@ -1488,7 +1488,7 @@ Return058C70:
 
 CODE_058C71:
     PHP
-    REP #$30                                ;$058C72 |
+    REP #$30                                ;$058C72 | AXY->16
     LDA.w LevelModeSetting_1925             ;$058C74 |
     AND.w #$00FF                            ;$058C77 |
     ASL                                     ;$058C7A |
@@ -1568,7 +1568,7 @@ CODE_058CBA:
     LDY.b #$05                              ;$058D06 |
 CODE_058D08:
     STY $0C
-    REP #$30                                ;$058D0A |
+    REP #$30                                ;$058D0A | AXY->16
     LDA.b Layer2TileUp_49,X                 ;$058D0C |
     AND.w #$000F                            ;$058D0E |
     ASL                                     ;$058D11 |
@@ -1672,7 +1672,7 @@ CODE_058DBE:
     STA.b Map16HighPtr_6E+2                 ;$058DC6 |
     LDY.b #$0D                              ;$058DC8 |
     STY $0C                                 ;$058DCA |
-    REP #$30                                ;$058DCC |
+    REP #$30                                ;$058DCC | AXY->16
     LDA.w LevelLoadObject_1928              ;$058DCE |
     AND.w #$000F                            ;$058DD1 |
     STA $08                                 ;$058DD4 |
@@ -4826,7 +4826,7 @@ CODE_05C50E:
 CODE_05C51F:
     REP #$30
     LDY.w ScrollLayerIndex_1456             ;$05C521 |
-    REP #$30                                ;$05C524 |
+    REP #$30                                ;$05C524 | AXY->16
     LDA.w Layer1ScrollYPosUpd_1450,Y        ;$05C526 |
     TAX                                     ;$05C529 |
     LDA.w NextLayer1XPos_1462,Y             ;$05C52A |
@@ -4907,7 +4907,7 @@ CODE_05C5B8:
 CODE_05C5BB:
     REP #$30
     LDY.w ScrollLayerIndex_1456             ;$05C5BD |
-    REP #$30                                ;$05C5C0 |
+    REP #$30                                ;$05C5C0 | AXY->16
     LDA.w Layer1ScrollXPosUpd_144E,Y        ;$05C5C2 |
     TAX                                     ;$05C5C5 |
     LDA.w NextLayer1YPos_1464,Y             ;$05C5C6 |
@@ -5597,7 +5597,7 @@ CODE_05CC84:
     STA.w Layer3ScrollType_13D5             ;$05CC86 |
     LDA.b #$08                              ;$05CC89 |
     TSB.b MainBGMode_3E                     ;$05CC8B |
-    REP #$30                                ;$05CC8D |
+    REP #$30                                ;$05CC8D | AXY->16
     STZ.b Layer3XPos_22                     ;$05CC8F |
     STZ.b Layer3YPos_24                     ;$05CC91 |
     LDY.w #$004A                            ;$05CC93 |
@@ -6325,7 +6325,7 @@ CODE_05D7D2:
     STA $0F
     LDA.w UseSecondaryExit_1B93             ;$05D7D4 |
     BEQ CODE_05D83B                         ;$05D7D7 |
-    REP #$30                                ;$05D7D9 |
+    REP #$30                                ;$05D7D9 | AXY->16
     LDA.w #$0000                            ;$05D7DB |
     SEP #$20                                ;$05D7DE |
     LDY $0E                                 ;$05D7E0 |
@@ -6382,7 +6382,7 @@ CODE_05D83E:
     LDY.b #$00                              ;$05D840 |
     LDA.w OverworldOverride_0109            ;$05D842 |
     BNE CODE_05D8A2                         ;$05D845 |
-    REP #$30                                ;$05D847 |
+    REP #$30                                ;$05D847 | AXY->16
     STZ.b Layer1XPos_1A                     ;$05D849 |
     STZ.b Layer2XPos_1E                     ;$05D84B |
     LDX.w PlayerTurnOW_0DD6                 ;$05D84D |

@@ -11711,7 +11711,7 @@ ball_chain_and_gray_plat_02D62A:
     STA $01                                 ;$02D656 |
     LDA.w SpriteAnimation_1602,X            ;$02D658 |
     STA $00                                 ;$02D65B |
-    REP #$30                                ;$02D65D |
+    REP #$30                                ;$02D65D | AXY->16
     LDA $00                                 ;$02D65F |
     CLC                                     ;$02D661 |
     ADC.w #$0080                            ;$02D662 |
@@ -15340,7 +15340,7 @@ CODE_02F0D8:
 CODE_02F0DB:
     PHX
     PHB                                     ;$02F0DC |
-    REP #$30                                ;$02F0DD |
+    REP #$30                                ;$02F0DD | AXY->16
     LDA.b WigglerSegmentPtr_D5              ;$02F0DF |
     CLC                                     ;$02F0E1 |
     ADC.w #$007D                            ;$02F0E2 |
@@ -16756,7 +16756,7 @@ CODE_02FAF0:
     AND.b #$01                              ;$02FB05 |
     STA $01                                 ;$02FB07 |
     PLX                                     ;$02FB09 |
-    REP #$30                                ;$02FB0A |
+    REP #$30                                ;$02FB0A | AXY->16
     LDA $00                                 ;$02FB0C |
     CLC                                     ;$02FB0E |
     ADC.w #$0080                            ;$02FB0F |

@@ -10350,7 +10350,7 @@ set_rotation_trigonometry_01CB20:
     LDA.b Mode7Angle_36+1
     STA.w BrPlatAngleParity_1866            ;$01CB22 |
     PHX                                     ;$01CB25 |
-    REP #$30                                ;$01CB26 |
+    REP #$30                                ;$01CB26 | AXY->16
     LDA.b Mode7Angle_36                     ;$01CB28 |
     ASL                                     ;$01CB2A |
     AND.w #$01FF                            ;$01CB2B |

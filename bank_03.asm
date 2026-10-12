@@ -3364,7 +3364,7 @@ Reznor:
     ADC.w ReznorStartPosHi,Y                ;$039928 |
     AND.b #$01                              ;$03992B |
     STA $01                                 ;$03992D |
-    REP #$30                                ;$03992F |
+    REP #$30                                ;$03992F | AXY->16
     LDA $00                                 ;$039931 |
     EOR.w #$01FF                            ;$039933 |
     INC A                                   ;$039936 |
@@ -9927,7 +9927,7 @@ DATA_03D526:
 
 CODE_03D674:
     PHX
-    REP #$30                                ;$03D675 |
+    REP #$30                                ;$03D675 | AXY->16
     LDX.w FinalMessageTimer_1921            ;$03D677 |
     BEQ CODE_03D6A8                         ;$03D67A |
     DEX                                     ;$03D67C |
@@ -10532,7 +10532,7 @@ CODE_03DEDF:
     LDY.b #$02                              ;$03DEF3 |
     JSR CODE_03DFAE                         ;$03DEF5 |
     PHX                                     ;$03DEF8 |
-    REP #$30                                ;$03DEF9 |
+    REP #$30                                ;$03DEF9 | AXY->16
     STZ $06                                 ;$03DEFB |
     LDY.w #$0003                            ;$03DEFD |
     LDA.w IRQNMICommand_0D9B                ;$03DF00 |

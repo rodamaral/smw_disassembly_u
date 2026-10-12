@@ -974,7 +974,7 @@ CODE_04894F:
 
 CODE_048962:
     PLY
-    REP #$30                                ;$048963 |
+    REP #$30                                ;$048963 | AXY->16
     LDA.w OWPlayerAnimation_1F13,Y          ;$048965 |
     ASL                                     ;$048968 |
     ASL                                     ;$048969 |
@@ -1152,7 +1152,7 @@ DATA_048CDE:
 CODE_048CE6:
     LDA.b #$07
     STA.b OWTileCount_8C                    ;$048CE8 |
-    REP #$30                                ;$048CEA |
+    REP #$30                                ;$048CEA | AXY->16
     LDA.w OWPlayerAnimation_1F13,Y          ;$048CEC |
     ASL                                     ;$048CEF |
     ASL                                     ;$048CF0 |
@@ -1271,7 +1271,7 @@ CODE_048D91:
     STX.w OWPlayerAnimation_1F13+2
     SEP #$10                                ;$048DC0 |
     JSR CODE_048E55                         ;$048DC2 |
-    REP #$30                                ;$048DC5 |
+    REP #$30                                ;$048DC5 | AXY->16
     LDA.w LevelExitMode_0DD5-1              ;$048DC7 |
     AND.w #$FF00                            ;$048DCA |
     BEQ +                                   ;$048DCD |\
@@ -1506,7 +1506,7 @@ CODE_048F96:
     STA.w SaveDataBufferEvents_1FA9,X       ;$048F99 |
     DEX                                     ;$048F9C |
     BPL CODE_048F96                         ;$048F9D |
-    REP #$30                                ;$048F9F |
+    REP #$30                                ;$048F9F | AXY->16
     LDX.w PlayerTurnOW_0DD6                 ;$048FA1 |
     TXA                                     ;$048FA4 |
     EOR.w #$0004                            ;$048FA5 |
@@ -1787,7 +1787,7 @@ CODE_0491E9:
     LDA.w DATA_049060,X                     ;$049215 |
     STA $08                                 ;$049218 |
     STZ $09                                 ;$04921A |
-    REP #$30                                ;$04921C |
+    REP #$30                                ;$04921C | AXY->16
     LDX $04                                 ;$04921E |
     LDA.l OWLayer1Translevel_D000,X         ;$049220 |
     AND.w #$00FF                            ;$049224 |
@@ -3063,7 +3063,7 @@ CODE_049DAF:
     LDA.b #$03
     STA.w OWProcess_13D9                    ;$049DB1 |
     STZ.w LevelExitMode_0DD5                ;$049DB4 |
-    REP #$30                                ;$049DB7 |
+    REP #$30                                ;$049DB7 | AXY->16
     JMP CODE_049831                         ;$049DB9 |
 
 CODE_049DBC:
@@ -5031,7 +5031,7 @@ CODE_04D6E9:
 .CODE_04D714:
     JSL execute_level_mode_setting_05881A   ;$04D714 |
     JSL generic_layer_1_and_2_upload        ;$04D718 |
-    REP #$30                                ;$04D71C |
+    REP #$30                                ;$04D71C | AXY->16
     INC.b Layer1TileDown_47                 ;$04D71E |
     LDA.b Layer1YPos_1C                     ;$04D720 |
     CLC                                     ;$04D722 |
@@ -6195,7 +6195,7 @@ CODE_04E68A:
     TAX                                     ;$04E68F |
     LDA.b #$7E                              ;$04E690 |
     STA $0C                                 ;$04E692 |
-    REP #$30                                ;$04E694 |
+    REP #$30                                ;$04E694 | AXY->16
     LDA.w #$C800                            ;$04E696 |
     STA $0A                                 ;$04E699 |
     LDA.l DATA_04E5B6,X                     ;$04E69B |
@@ -6250,7 +6250,7 @@ CODE_04E6F9:
     JSR CODE_04EA62
     LDA.b #$7F                              ;$04E6FC |
     STA $0E                                 ;$04E6FE |
-    REP #$30                                ;$04E700 |
+    REP #$30                                ;$04E700 | AXY->16
     LDA.w EventTileIndex_1DEB               ;$04E702 |
     ASL                                     ;$04E705 |
     ASL                                     ;$04E706 |
@@ -6676,7 +6676,7 @@ Return04EAC8:
 
 CODE_04EAC9:
     JSR CODE_04EC67
-    REP #$30                                ;$04EACC |
+    REP #$30                                ;$04EACC | AXY->16
     LDY.w #$008C                            ;$04EACE |
     LDX.w #$0006                            ;$04EAD1 |
     LDA.w OWEventSize_1B84                  ;$04EAD4 |
@@ -6861,7 +6861,7 @@ CODE_04EC67:
 CODE_04EC78:
     LDA.b #$7E
     STA $0F                                 ;$04EC7A |
-    REP #$30                                ;$04EC7C |
+    REP #$30                                ;$04EC7C | AXY->16
     LDA.w #$C800                            ;$04EC7E |
     STA $0D                                 ;$04EC81 |
     LDA.w OverworldEvent_1DEA               ;$04EC83 |
@@ -6932,7 +6932,7 @@ DATA_04ECD3:
 CODE_04ED83:
     LDA.b #$7E
     STA $0F                                 ;$04ED85 |
-    REP #$30                                ;$04ED87 |
+    REP #$30                                ;$04ED87 | AXY->16
     LDA.w #$C800                            ;$04ED89 |
     STA $0D                                 ;$04ED8C |
     LDA.w OverworldEvent_1DEA               ;$04ED8E |
@@ -7012,7 +7012,7 @@ CODE_04EE30:
     SEP #$20
     LDA.b #$7F                              ;$04EE32 |
     STA $0E                                 ;$04EE34 |
-    REP #$30                                ;$04EE36 |
+    REP #$30                                ;$04EE36 | AXY->16
     LDA.w EventTileIndex_1DEB               ;$04EE38 |
     ASL                                     ;$04EE3B |
     ASL                                     ;$04EE3C |
@@ -7059,7 +7059,7 @@ CODE_04EEAA:
     STA $0F                                 ;$04EEAE |
     LDA.b #$04                              ;$04EEB0 |
     STA $0C                                 ;$04EEB2 |
-    REP #$30                                ;$04EEB4 |
+    REP #$30                                ;$04EEB4 | AXY->16
     LDA.w #$C800                            ;$04EEB6 |
     STA $0D                                 ;$04EEB9 |
     LDA.w #$EE7A                            ;$04EEBB |

@@ -56,7 +56,7 @@ reset_start:
 
 SPC_upload_loop_008079:
     PHP                                     ;$008079 \ Preserve processor flags
-    REP #$30                                ;$00807A |  16 bit A/X/Y
+    REP #$30                                ;$00807A | AXY->16
     LDY.w #$0000                            ;$00807C |
     LDA.w #$BBAA                            ;$00807F |\ Value to check if the SPC is ready
 -   CMP.w $2140                             ;$008082 | | Wait for the SPC to be ready
@@ -191,7 +191,7 @@ upload_music_bank_3:
 NMI_start:                                  ;        \
     SEI                                     ;$00816A | Disable interrupts to stop interrupting an interrupt
     PHP                                     ;$00816B |\
-    REP #$30                                ;$00816C | | Push pretty much everything(except direct page)
+    REP #$30                                ;$00816C | | AXY->16, push pretty much everything(except direct page)
     PHA                                     ;$00816E | | Make sure you push 16 bit values to the stack
     PHX                                     ;$00816F | |
     PHY                                     ;$008170 | |
@@ -434,7 +434,7 @@ NMI_start:                                  ;        \
 IRQ_start:                                  ;        \
     SEI                                     ;$008374 | Disable interrupts to stop interrupting an interrupt
     PHP                                     ;$008375 |\
-    REP #$30                                ;$008376 | | Push pretty much everything(except direct page)
+    REP #$30                                ;$008376 | | AXY->16, push pretty much everything(except direct page)
     PHA                                     ;$008378 | | Make sure you push 16 bit values to the stack
     PHX                                     ;$008379 | |
     PHY                                     ;$00837A | |
@@ -826,7 +826,7 @@ execute_pointer_0086DF:                     ;        \
     STY $03                                 ;$0086DF | Preserve Y
     PLY                                     ;$0086E1 |\ Pull the high byte and bank byte and store it in $00
     STY $00                                 ;$0086E2 |/ to create a pointer to the pointer table 
-    REP #$30                                ;$0086E4 | 16 bit AXY
+    REP #$30                                ;$0086E4 | AXY->16
     AND.w #$00FF                            ;$0086E6 | Allow for a maximum of 256 pointers
     ASL                                     ;$0086E9 |\ Get the pointer table index and store it in Y
     TAY                                     ;$0086EA |/
@@ -843,7 +843,7 @@ execute_pointer_long_0086FA:                ;        \
     STY $05                                 ;$0086FA | Preserve Y
     PLY                                     ;$0086FC |\ Pull the high byte and bank byte and store it in $02
     STY $02                                 ;$0086FD |/ to create a pointer to the pointer table 
-    REP #$30                                ;$0086FF | 16 bit AXY
+    REP #$30                                ;$0086FF | AXY->16
     AND.w #$00FF                            ;$008701 | Allow for a maximum of 256 pointers
     STA $03                                 ;$008704 |\ Multiply the pointer by three
     ASL                                     ;$008706 | |
@@ -1310,11 +1310,11 @@ DATA_008ABC:
 CODE_008ACD:
     LDA.b Mode7YScale_39
     STA $00                                 ;$008ACF |
-    REP #$30                                ;$008AD1 |
+    REP #$30                                ;$008AD1 | AXY->16
     JSR CODE_008AE8                         ;$008AD3 |
     LDA.b Mode7XScale_38                    ;$008AD6 |
     STA $00                                 ;$008AD8 |
-    REP #$30                                ;$008ADA |
+    REP #$30                                ;$008ADA | AXY->16
     LDA.b Mode7ParamA_2E                    ;$008ADC |
     STA.b Mode7ParamD_34                    ;$008ADE |
     LDA.b Mode7ParamB_30                    ;$008AE0 |
@@ -2475,7 +2475,7 @@ CODE_00955E:
     JSL CODE_00BA28                         ;$009560 |
     LDA.b #$80                              ;$009564 |
     STA.w $2115                             ;$009566 |
-    REP #$30                                ;$009569 |
+    REP #$30                                ;$009569 | AXY->16
     LDA.w #$4600                            ;$00956B |
     STA.w $2116                             ;$00956E |
     LDX.w #$0200                            ;$009571 |
@@ -3530,7 +3530,7 @@ CODE_009DB5:
     LDA.w DATA_009CCB,X
     XBA                                     ;$009DB8 |
     LDA.w DATA_009CCE,X                     ;$009DB9 |
-    REP #$30                                ;$009DBC |
+    REP #$30                                ;$009DBC | AXY->16
     TAX                                     ;$009DBE |
     CLC                                     ;$009DBF |
     ADC.w #$01AD                            ;$009DC0 |
@@ -4520,7 +4520,7 @@ GM12_level_load_2_00A59C:
     JSR CODE_00922F
     JSR KeepModeActive                      ;$00A5D2 |
     JSR update_status_tileset_008E1A        ;$00A5D5 |
-    REP #$30                                ;$00A5D8 |
+    REP #$30                                ;$00A5D8 | AXY->16
     PHB                                     ;$00A5DA |
     LDX.w #$0703                            ;$00A5DB |
     LDY.w #$0905                            ;$00A5DE |
@@ -4816,7 +4816,7 @@ CODE_00A82D:
     LDY.b #$0F
     JSL CODE_00BA28                         ;$00A82F |
     LDA.w BonusGameFlag_1425                ;$00A833 |
-    REP #$30                                ;$00A836 |
+    REP #$30                                ;$00A836 | AXY->16
     BEQ CODE_00A842                         ;$00A838 |
     LDA $00                                 ;$00A83A |
     CLC                                     ;$00A83C |
@@ -4850,7 +4850,7 @@ CODE_00A85A:
     SEP #$30                                ;$00A86F |
     LDY.b #$00                              ;$00A871 |
     JSL CODE_00BA28                         ;$00A873 |
-    REP #$30                                ;$00A877 |
+    REP #$30                                ;$00A877 | AXY->16
     LDA.w #$B3F0                            ;$00A879 |
     STA $00                                 ;$00A87C |
     LDA.w #$7EB3                            ;$00A87E |
@@ -4931,7 +4931,7 @@ CODE_00A9A3:
     LDA $0E
     TAY                                     ;$00A9A5 |
     JSL CODE_00BA28                         ;$00A9A6 |
-    REP #$30                                ;$00A9AA |
+    REP #$30                                ;$00A9AA | AXY->16
     LDX.w #$03FF                            ;$00A9AC |
     LDY.w #$0000                            ;$00A9AF |
 CODE_00A9B2:
@@ -5468,7 +5468,7 @@ CODE_00ADA6:
 
 CODE_00ADD9:
     JSR LoadPalette
-    REP #$30                                ;$00ADDC |
+    REP #$30                                ;$00ADDC | AXY->16
     LDA.w #$0017                            ;$00ADDE |
     STA.w $0701                             ;$00ADE1 |
     LDA.w #$B170                            ;$00ADE4 |
@@ -5498,7 +5498,7 @@ CODE_00AE15:
     LDA.b #$07                              ;$00AE1A |
     STA.w ForegroundPalette_192D            ;$00AE1C |
     JSR LoadPalette                         ;$00AE1F |
-    REP #$30                                ;$00AE22 |
+    REP #$30                                ;$00AE22 | AXY->16
     LDA.w #$0017                            ;$00AE24 |
     STA.w $0701                             ;$00AE27 |
     LDA.w #$B5F4                            ;$00AE2A |
@@ -5647,7 +5647,7 @@ CODE_00AFA3:
     LSR                                     ;$00AFAB |
     LSR                                     ;$00AFAC |
     LSR                                     ;$00AFAD |
-    REP #$30                                ;$00AFAE |
+    REP #$30                                ;$00AFAE | AXY->16
     AND.w #$0002                            ;$00AFB0 |
     STA $0C                                 ;$00AFB3 |
     TYA                                     ;$00AFB5 |
@@ -5738,7 +5738,7 @@ CODE_00B03E:
     BNE Return00B090                        ;$00B046 |
     LDA.b #$00                              ;$00B048 |
     STA $02                                 ;$00B04A |
-    REP #$30                                ;$00B04C |
+    REP #$30                                ;$00B04C | AXY->16
     LDA.w PlayerPalPtr_0D82                 ;$00B04E |
     STA $00                                 ;$00B051 |
     LDY.w #$0014                            ;$00B053 |
@@ -6068,7 +6068,7 @@ CODE_00B888:
     JSR CODE_00B8DE                         ;$00B89C |
     LDA.b #$7E                              ;$00B89F |
     STA $8F                                 ;$00B8A1 |
-    REP #$30                                ;$00B8A3 |
+    REP #$30                                ;$00B8A3 | AXY->16
     LDA.w #$ACFE                            ;$00B8A5 |
     STA $8D                                 ;$00B8A8 |
     LDX.w #$23FF                            ;$00B8AA |
@@ -6571,7 +6571,7 @@ LoadBlkTable2:
 
 generate_tile_00BEB0:
     PHP
-    REP #$30                                ;$00BEB1 |
+    REP #$30                                ;$00BEB1 | AXY->16
     PHX                                     ;$00BEB3 |
     LDA.b TileGenerate_9C                   ;$00BEB4 |
     AND.w #$00FF                            ;$00BEB6 |
@@ -6979,7 +6979,7 @@ Return00C1AB:
 
 CODE_00C1AC:
     JSR CODE_00C00D
-    REP #$30                                ;$00C1AF |
+    REP #$30                                ;$00C1AF | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C1B1 |
     AND.w #$01F0                            ;$00C1B3 |
     STA $04                                 ;$00C1B6 |
@@ -7135,7 +7135,7 @@ CODE_00C334:
     TAX                                     ;$00C34E |
     LDA.l DATA_00C330,X                     ;$00C34F |
     STA $04                                 ;$00C353 |
-    REP #$30                                ;$00C355 |
+    REP #$30                                ;$00C355 | AXY->16
     LDA.l DATA_00C32E,X                     ;$00C357 |
     STA $02                                 ;$00C35B |
     LDA.l DynStripeImgSize_7F837B           ;$00C35D |

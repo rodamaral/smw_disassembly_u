@@ -2857,7 +2857,7 @@ CODE_0CABB2:
     STA.w $0683                             ;$0CABBE |
     LDA.b #$12                              ;$0CABC1 |
     STA.w $0691                             ;$0CABC3 |
-    REP #$30                                ;$0CABC6 |
+    REP #$30                                ;$0CABC6 | AXY->16
     LDA.w LevelLoadObject_1928              ;$0CABC8 |
     AND.w #$00FF                            ;$0CABCB |
     TAY                                     ;$0CABCE |
