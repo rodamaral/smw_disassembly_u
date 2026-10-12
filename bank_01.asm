@@ -4975,7 +4975,8 @@ subsprite_sprite_interact_01A40D:
     LDX.w CurrentSprite_15E9
     RTS                                     ;$01A4B9 |
 
-sprites_are_colliding_01A4BA: ; Sprites are touching; the below blocks use a series of branches to determine code to run
+; Sprites are touching; the below blocks use a series of branches to determine code to run
+sprites_are_colliding_01A4BA:
     LDA.w SpriteStatus_14C8,Y
     CMP.b #!StatusNormal_08                 ;$01A4BD |
     BEQ .normal_01A4CE                      ;$01A4BF |
