@@ -8,7 +8,7 @@ TilesetMAP16Loc:
 
 CODE_05801E:
     PHP
-    SEP #$20                                ;$05801F |
+    SEP #$20                                ;$05801F | A->8
     REP #$10                                ;$058021 | XY->16
     LDX.w #$0000                            ;$058023 |
 .CODE_058026:
@@ -65,7 +65,7 @@ CODE_05801E:
 
 CODE_05809E:
     PHP
-    SEP #$20                                ;$05809F |
+    SEP #$20                                ;$05809F | A->8
     STZ.w LevelLoadObject_1928              ;$0580A1 |
     REP #$30                                ;$0580A4 | AXY->16
     LDA.w #$FFFF                            ;$0580A6 |
@@ -108,7 +108,7 @@ CODE_0580EC:
     ADC.w #$0008                            ;$0580F2 |
     DEC $00                                 ;$0580F5 |
     BPL CODE_0580EC                         ;$0580F7 |
-    SEP #$20                                ;$0580F9 |
+    SEP #$20                                ;$0580F9 | A->8
     INC.w LevelLoadObject_1928              ;$0580FB |
     LDA.w LevelLoadObject_1928              ;$0580FE |
     CMP.b #$20                              ;$058101 |
@@ -146,7 +146,7 @@ CODE_058136:
     INY                                     ;$058140 |
     REP #$20                                ;$058141 | A->16
     STY $03                                 ;$058143 |
-    SEP #$20                                ;$058145 |
+    SEP #$20                                ;$058145 | A->8
     AND.b #$80                              ;$058147 |
     BEQ CODE_05816A                         ;$058149 |
     LDA $07                                 ;$05814B |
@@ -170,24 +170,24 @@ CODE_05815A:
 CODE_05816A:
     REP #$20
     LDY $03                                 ;$05816C |
-    SEP #$20                                ;$05816E |
+    SEP #$20                                ;$05816E | A->8
     LDA.b [Layer2DataPtr_68],Y              ;$058170 |
     INY                                     ;$058172 |
     REP #$20                                ;$058173 | A->16
     STY $03                                 ;$058175 |
     LDY $05                                 ;$058177 |
-    SEP #$20                                ;$058179 |
+    SEP #$20                                ;$058179 | A->8
     STA [$0D],Y                             ;$05817B |
     REP #$20                                ;$05817D | A->16
     INY                                     ;$05817F |
     STY $05                                 ;$058180 |
-    SEP #$20                                ;$058182 |
+    SEP #$20                                ;$058182 | A->8
     DEC $07                                 ;$058184 |
     BPL CODE_05816A                         ;$058186 |
 CODE_058188:
     REP #$20
     LDY $03                                 ;$05818A |
-    SEP #$20                                ;$05818C |
+    SEP #$20                                ;$05818C | A->8
     LDA.b [Layer2DataPtr_68],Y              ;$05818E |
     CMP.b #$FF                              ;$058190 |
     BNE CODE_058136                         ;$058192 |
@@ -711,7 +711,7 @@ CODE_05863E:
     AND.w #$001F                            ;$058669 |
     ASL                                     ;$05866C |
     TAY                                     ;$05866D |
-    SEP #$20                                ;$05866E |
+    SEP #$20                                ;$05866E | A->8
     LDA.b #$00                              ;$058670 |
     STA $05                                 ;$058672 |
     STA $08                                 ;$058674 |
@@ -790,7 +790,7 @@ process_level_mode_setting_0586F1:
     PHP
     REP #$30                                ;$0586F2 | AXY->16
     JSR set_map16_for_VRAM_upload_05877E    ;$0586F4 |
-    SEP #$20                                ;$0586F7 |
+    SEP #$20                                ;$0586F7 | A->8
     LDA.b ScreenMode_5B                     ;$0586F9 |
     AND.b #!Layer1Vert_01                   ;$0586FB |
     BNE .vertical_layer_1_058713            ;$0586FD |
@@ -863,7 +863,7 @@ MAP16AppTable:
 
 set_map16_for_VRAM_upload_05877E:
     PHP
-    SEP #$20                                ;$05877F |
+    SEP #$20                                ;$05877F | A->8
     LDA.b ScreenMode_5B                     ;$058781 |
     AND.b #!Layer1Vert_01                   ;$058783 |
     BNE .horizontal_layer_1_0587CB          ;$058785 |
@@ -1128,7 +1128,7 @@ CODE_0589CE:
     AND.w #$00FF                            ;$0589D4 |
     ASL                                     ;$0589D7 |
     TAX                                     ;$0589D8 |
-    SEP #$20                                ;$0589D9 |
+    SEP #$20                                ;$0589D9 | A->8
     LDA.l Ptrs00BDA8,X                      ;$0589DB |
     STA $0A                                 ;$0589DF |
     LDA.l Ptrs00BDA8+1,X                    ;$0589E1 |
@@ -1170,7 +1170,7 @@ CODE_058A10:
     STA.b Map16LowPtr_6B                    ;$058A28 |
     LDA [$0D],Y                             ;$058A2A |
     STA.b Map16HighPtr_6E                   ;$058A2C |
-    SEP #$20                                ;$058A2E |
+    SEP #$20                                ;$058A2E | A->8
     INY                                     ;$058A30 |
     INY                                     ;$058A31 |
     LDA [$0A],Y                             ;$058A32 |
@@ -1238,7 +1238,7 @@ CODE_058A9B:
     AND.w #$00FF                            ;$058AA1 |
     ASL                                     ;$058AA4 |
     TAX                                     ;$058AA5 |
-    SEP #$20                                ;$058AA6 |
+    SEP #$20                                ;$058AA6 | A->8
     LDA.l Ptrs00BDA8,X                      ;$058AA8 |
     STA $0A                                 ;$058AAC |
     LDA.l Ptrs00BDA8+1,X                    ;$058AAE |
@@ -1291,7 +1291,7 @@ CODE_058AD5:
     STA.b Map16LowPtr_6B                    ;$058B04 |
     LDA [$0D],Y                             ;$058B06 |
     STA.b Map16HighPtr_6E                   ;$058B08 |
-    SEP #$20                                ;$058B0A |
+    SEP #$20                                ;$058B0A | A->8
     INY                                     ;$058B0C |
     INY                                     ;$058B0D |
     LDA [$0A],Y                             ;$058B0E |
@@ -1372,7 +1372,7 @@ CODE_058B8D:
     AND.w #$00FF                            ;$058B93 |
     ASL                                     ;$058B96 |
     TAX                                     ;$058B97 |
-    SEP #$20                                ;$058B98 |
+    SEP #$20                                ;$058B98 | A->8
     LDY.w #$0000                            ;$058B9A |
     LDA.w ObjectTileset_1931                ;$058B9D |
     CMP.b #$03                              ;$058BA0 |
@@ -1421,7 +1421,7 @@ CODE_058BDE:
     STA.b Map16LowPtr_6B                    ;$058BF6 |
     LDA [$0D],Y                             ;$058BF8 |
     STA.b Map16HighPtr_6E                   ;$058BFA |
-    SEP #$20                                ;$058BFC |
+    SEP #$20                                ;$058BFC | A->8
     INY                                     ;$058BFE |
     INY                                     ;$058BFF |
     LDA [$0A],Y                             ;$058C00 |
@@ -1493,7 +1493,7 @@ CODE_058C71:
     AND.w #$00FF                            ;$058C77 |
     ASL                                     ;$058C7A |
     TAX                                     ;$058C7B |
-    SEP #$20                                ;$058C7C |
+    SEP #$20                                ;$058C7C | A->8
     LDY.w #$0000                            ;$058C7E |
     LDA.w ObjectTileset_1931                ;$058C81 |
     CMP.b #$03                              ;$058C84 |
@@ -1553,7 +1553,7 @@ CODE_058CBA:
     STA.b Map16LowPtr_6B                    ;$058CE9 |
     LDA [$0D],Y                             ;$058CEB |
     STA.b Map16HighPtr_6E                   ;$058CED |
-    SEP #$20                                ;$058CEF |
+    SEP #$20                                ;$058CEF | A->8
     INY                                     ;$058CF1 |
     INY                                     ;$058CF2 |
     LDA [$0A],Y                             ;$058CF3 |
@@ -3103,7 +3103,7 @@ message_partially_expanded_05B191:
     DEY                                     ;$05B27D ||
     DEY                                     ;$05B27E ||
     BNE -                                   ;$05B27F |/
-    SEP #$20                                ;$05B281 |
+    SEP #$20                                ;$05B281 | A->8
     LDA.b #$22                              ;$05B283 |
     STA.b Layer12Window_41                  ;$05B285 |
     LDY.w SwitchPalaceColor_13D2            ;$05B287 |
@@ -3159,7 +3159,7 @@ palace_message_OAM_05B2EB:
     DEY                                     ;$05B311 ||
     BPL -                                   ;$05B312 |/
     STZ.w OAMTileBitSize_0400               ;$05B314 |
-    SEP #$20                                ;$05B317 |
+    SEP #$20                                ;$05B317 | A->8
     PLX                                     ;$05B319 |
     RTS                                     ;$05B31A |
 
@@ -3648,7 +3648,7 @@ set_current_tide_offsets_05BC4A:
     SEC
     SBC.w NextLayer1YPos_1464               ;$05BC6A |
     STA.b LayerYDiff_28                     ;$05BC6D |
-    SEP #$20                                ;$05BC6F |
+    SEP #$20                                ;$05BC6F | A->8
     RTS                                     ;$05BC71 |
 
 CODE_05BC72:
@@ -3781,7 +3781,7 @@ CODE_05BD4C:
     STZ.w Layer1ScrollYSpeed_1448,X         ;$05BD54 |
     STZ.w Layer1ScrollXPosUpd_144E,X        ;$05BD57 |
     STZ.w Layer1ScrollYPosUpd_1450,X        ;$05BD5A |
-    SEP #$20                                ;$05BD5D |
+    SEP #$20                                ;$05BD5D | A->8
     TXA                                     ;$05BD5F |
     LSR                                     ;$05BD60 |
     LSR                                     ;$05BD61 |
@@ -3890,7 +3890,7 @@ ADDR_05BE27:
     STZ.w Layer1ScrollXSpeed_1446,X         ;$05BE2E |
     STZ.w Layer1ScrollYSpeed_1448,X         ;$05BE31 |
     STZ.w Layer1ScrollYPosUpd_1450,X        ;$05BE34 |
-    SEP #$20                                ;$05BE37 |
+    SEP #$20                                ;$05BE37 | A->8
     RTS                                     ;$05BE39 |
 
 ADDR_05BE3A:
@@ -3929,7 +3929,7 @@ ADDR_05BE7B:
     STZ.w Layer1ScrollXSpeed_1446,X         ;$05BE7E |
     STZ.w Layer1ScrollYSpeed_1448,X         ;$05BE81 |
     STZ.w Layer1ScrollXPosUpd_144E,X        ;$05BE84 |
-    SEP #$20                                ;$05BE87 |
+    SEP #$20                                ;$05BE87 | A->8
     RTS                                     ;$05BE89 |
 
 reset_layer3_05BE8A:
@@ -3944,7 +3944,7 @@ reset_layer3_05BE8A:
     STZ.w Layer3ScrollXPosUpd_145C          ;$05BE9B |
     LDA.b Layer1YPos_1C                     ;$05BE9E |
     STA.b Layer3YPos_24                     ;$05BEA0 |
-    SEP #$20                                ;$05BEA2 |
+    SEP #$20                                ;$05BEA2 | A->8
     PLB                                     ;$05BEA4 |
     RTL                                     ;$05BEA5 |
 
@@ -4073,7 +4073,7 @@ ADDR_05BF97:
     STA.w Layer1ScrollCmd_143E              ;$05BFA9 |
     STZ.w Layer2ScrollYSpeed_144C           ;$05BFAC |
     STZ.w Layer2ScrollYPosUpd_1454          ;$05BFAF |
-    SEP #$20                                ;$05BFB2 |
+    SEP #$20                                ;$05BFB2 | A->8
     LDA.b #$60                              ;$05BFB4 |
     STA.w Layer2ScrollBits_1441             ;$05BFB6 |
     RTS                                     ;$05BFB9 |
@@ -4101,7 +4101,7 @@ CODE_05BFD5:
     STZ.w Layer2ScrollYSpeed_144C           ;$05BFEA |
     STZ.w Layer2ScrollXPosUpd_1452          ;$05BFED |
     STZ.w Layer2ScrollYPosUpd_1454          ;$05BFF0 |
-    SEP #$20                                ;$05BFF3 |
+    SEP #$20                                ;$05BFF3 | A->8
 Return05BFF5:
     RTS
 
@@ -4138,7 +4138,7 @@ CODE_05C022:
     STZ.w Layer2ScrollYSpeed_144C           ;$05C02A |
     STZ.w Layer2ScrollXPosUpd_1452          ;$05C02D |
     STZ.w Layer2ScrollYPosUpd_1454          ;$05C030 |
-    SEP #$20                                ;$05C033 |
+    SEP #$20                                ;$05C033 | A->8
     RTS                                     ;$05C035 |
 
 CODE_05C036:
@@ -4249,7 +4249,7 @@ CODE_05C0D7:
 CODE_05C0F5:
     LDA $0A
     STA.w $4204                             ;$05C0F7 |
-    SEP #$20                                ;$05C0FA |
+    SEP #$20                                ;$05C0FA | A->8
     LDA.w DATA_05CB0F,Y                     ;$05C0FC |
     STA.w $4206                             ;$05C0FF |
     NOP                                     ;$05C102 |
@@ -4267,7 +4267,7 @@ CODE_05C0F5:
     LSR                                     ;$05C116 |
     TAX                                     ;$05C117 |
     INC.w Layer1ScrollType_1442,X           ;$05C118 |
-    SEP #$20                                ;$05C11B |
+    SEP #$20                                ;$05C11B | A->8
     DEC.w Layer1ScrollTimer_1444,X          ;$05C11D |
     JMP CODE_05C04D                         ;$05C120 |
 
@@ -4344,7 +4344,7 @@ CODE_05C18D:
     DEX                                     ;$05C191 |
     DEX                                     ;$05C192 |
     BPL CODE_05C15D                         ;$05C193 |
-    SEP #$20                                ;$05C195 |
+    SEP #$20                                ;$05C195 | A->8
     RTS                                     ;$05C197 |
 
 CODE_05C198:
@@ -4356,7 +4356,7 @@ CODE_05C198:
     CLC                                     ;$05C1A5 |
     ADC.w ScreenShakeYOffset_1888           ;$05C1A6 |
     STA.b Layer2YPos_20                     ;$05C1A9 |
-    SEP #$20                                ;$05C1AB |
+    SEP #$20                                ;$05C1AB | A->8
     RTS                                     ;$05C1AD |
 
     LDA.w ScrollLayerIndex_1456             ;$05C1AE |
@@ -4397,7 +4397,7 @@ ADDR_05C1EF:
     LDA $02                                 ;$05C1F1 |
     CMP $04                                 ;$05C1F3 |
     BCC ADDR_05C24D                         ;$05C1F5 |
-    SEP #$20                                ;$05C1F7 |
+    SEP #$20                                ;$05C1F7 | A->8
     LDA.w ScrollLayerIndex_1456             ;$05C1F9 |
     AND.b #$FF                              ;$05C1FC |
     LSR                                     ;$05C1FE |
@@ -4489,7 +4489,7 @@ ADDR_05C295:
     TAX                                     ;$05C2A8 |
     LDA $02                                 ;$05C2A9 |
     STA.w $4204                             ;$05C2AB |
-    SEP #$20                                ;$05C2AE |
+    SEP #$20                                ;$05C2AE | A->8
     LDA.w DATA_05CBE3,X                     ;$05C2B0 |
     STA.w $4206                             ;$05C2B3 |
     NOP                                     ;$05C2B6 |
@@ -4582,7 +4582,7 @@ ADDR_05C340:
     TAX                                     ;$05C353 |
     LDA $02                                 ;$05C354 |
     STA.w $4204                             ;$05C356 |
-    SEP #$20                                ;$05C359 |
+    SEP #$20                                ;$05C359 | A->8
     LDA.w DATA_05CBE5,X                     ;$05C35B |
     STA.w $4206                             ;$05C35E |
     NOP                                     ;$05C361 |
@@ -4625,7 +4625,7 @@ ADDR_05C39F:
     LDA.w Layer1ScrollType_1442,X           ;$05C3A8 |
     AND.w #$00FF                            ;$05C3AB |
     PHA                                     ;$05C3AE |
-    SEP #$20                                ;$05C3AF |
+    SEP #$20                                ;$05C3AF | A->8
     LDX.b #$02                              ;$05C3B1 |
     LDY.b #$00                              ;$05C3B3 |
     CMP.b #$01                              ;$05C3B5 |
@@ -4669,7 +4669,7 @@ ADDR_05C3F3:
 ADDR_05C3FD:
     LDX.w ScrollLayerIndex_1456
     JSR CODE_05C4F9                         ;$05C400 |
-    SEP #$20                                ;$05C403 |
+    SEP #$20                                ;$05C403 | A->8
     RTS                                     ;$05C405 |
 
 DATA_05C406:
@@ -4745,7 +4745,7 @@ process_layer_3_05C40C:
     LDA.b Layer1YPos_1C                     ;$05C48D |
     STA.b Layer3YPos_24                     ;$05C48F |
 .CODE_05C491:
-    SEP #$20                                ;$05C491 |
+    SEP #$20                                ;$05C491 | A->8
     RTS                                     ;$05C493 |
 
 .not_a_tide_05C494:
@@ -5064,7 +5064,7 @@ ADDR_05C6EE:
     DEX                                     ;$05C6F1 |
     DEX                                     ;$05C6F2 |
     BPL ADDR_05C6EE                         ;$05C6F3 |
-    SEP #$20                                ;$05C6F5 |
+    SEP #$20                                ;$05C6F5 | A->8
     LDA.w NextLayer1XPos_1462+1             ;$05C6F7 |
     SEC                                     ;$05C6FA |
     SBC.b LastScreenHoriz_5E                ;$05C6FB |
@@ -5249,7 +5249,7 @@ CODE_05C84C:
     INX                                     ;$05C84D |
     DEC $00                                 ;$05C84E |
     BNE CODE_05C830                         ;$05C850 |
-    SEP #$20                                ;$05C852 |
+    SEP #$20                                ;$05C852 | A->8
     LDA.w Layer1ScrollType_1442             ;$05C854 |
     ORA.w Layer2Touched_140E                ;$05C857 |
     STA.w Layer1ScrollType_1442             ;$05C85A |
@@ -5338,7 +5338,7 @@ CODE_05C97B:
     INX                                     ;$05C97C |
     DEY                                     ;$05C97D |
     BNE CODE_05C95D                         ;$05C97E |
-    SEP #$20                                ;$05C980 |
+    SEP #$20                                ;$05C980 | A->8
     LDA.w Layer1ScrollTimer_1444            ;$05C982 |
     BEQ CODE_05C98B                         ;$05C985 |
     DEC.w Layer1ScrollTimer_1444            ;$05C987 |
@@ -5363,7 +5363,7 @@ CODE_05C98B:
 CODE_05C9A9:
     LDA.w DATA_05C8C8,Y
     STA.w NextLayer2YPos_1468               ;$05C9AC |
-    SEP #$20                                ;$05C9AF |
+    SEP #$20                                ;$05C9AF | A->8
     LDA.w DATA_05C934,X                     ;$05C9B1 |
     STA.w Layer1ScrollTimer_1444            ;$05C9B4 |
     LDA.w Layer2ScrollType_1443             ;$05C9B7 |
@@ -5615,7 +5615,7 @@ CODE_05CC9D:
     BPL CODE_05CC9D                         ;$05CCA8 |
     LDA.l DynStripeImgSize_7F837B           ;$05CCAA |
     TAX                                     ;$05CCAE |
-    SEP #$20                                ;$05CCAF |
+    SEP #$20                                ;$05CCAF | A->8
     LDA.w CurrentPlayer_0DB3                ;$05CCB1 |
     BEQ CODE_05CCC8                         ;$05CCB4 |
     LDY.w #$0000                            ;$05CCB6 |
@@ -5826,7 +5826,7 @@ CODE_05CE4C:
     CLC                                     ;$05CE6D |
     ADC $00                                 ;$05CE6E |
     STA $00                                 ;$05CE70 |
-    SEP #$20                                ;$05CE72 |
+    SEP #$20                                ;$05CE72 | A->8
     LDA $00                                 ;$05CE74 |
     STA.w $4202                             ;$05CE76 |
     LDA.b #$32                              ;$05CE79 |
@@ -5897,7 +5897,7 @@ CODE_05CEE9:
 CODE_05CF05:
     LDX.w BonusStarsGained_1900
     BEQ CODE_05CF36                         ;$05CF08 |
-    SEP #$20                                ;$05CF0A |
+    SEP #$20                                ;$05CF0A | A->8
     LDA.b Frame_13                          ;$05CF0C |
     AND.b #$03                              ;$05CF0E |
     BNE CODE_05CF34                         ;$05CF10 |
@@ -6327,7 +6327,7 @@ CODE_05D7D2:
     BEQ CODE_05D83B                         ;$05D7D7 |
     REP #$30                                ;$05D7D9 | AXY->16
     LDA.w #$0000                            ;$05D7DB |
-    SEP #$20                                ;$05D7DE |
+    SEP #$20                                ;$05D7DE | A->8
     LDY $0E                                 ;$05D7E0 |
     LDA.w DATA_05F800,Y                     ;$05D7E2 |
     STA $0E                                 ;$05D7E5 |
@@ -6450,7 +6450,7 @@ CODE_05D8B7:
     CLC                                     ;$05D8BC |
     ADC $0E                                 ;$05D8BD |
     TAY                                     ;$05D8BF |
-    SEP #$20                                ;$05D8C0 |
+    SEP #$20                                ;$05D8C0 | A->8
     LDA.w Layer1Ptrs,Y                      ;$05D8C2 |
     STA.b Layer1DataPtr_65                  ;$05D8C5 |
     LDA.w Layer1Ptrs+1,Y                    ;$05D8C7 |
@@ -6468,7 +6468,7 @@ CODE_05D8B7:
     ASL                                     ;$05D8E4 |
     TAY                                     ;$05D8E5 |
     LDA.w #$0000                            ;$05D8E6 |
-    SEP #$20                                ;$05D8E9 |
+    SEP #$20                                ;$05D8E9 | A->8
     LDA.w Ptrs05EC00,Y                      ;$05D8EB |
     STA.b SpriteDataPtr_CE                  ;$05D8EE |
     LDA.w $EC01,Y                           ;$05D8F0 |
@@ -6482,7 +6482,7 @@ CODE_05D8B7:
     AND.b #$C0                              ;$05D902 |
     STA.w SpriteBuoyancy_190E               ;$05D904 |
     REP #$10                                ;$05D907 | XY->16
-    SEP #$20                                ;$05D909 |
+    SEP #$20                                ;$05D909 | A->8
     LDY $0E                                 ;$05D90B |
     LDA.w DATA_05F000,Y                     ;$05D90D |
     LSR                                     ;$05D910 |
@@ -6788,7 +6788,7 @@ CODE_05DB49:
     STA.b SpriteDataPtr_CE                  ;$05DB55 |
     LDA.l ChocIsld2Layer2,X                 ;$05DB57 |
     STA.b Layer2DataPtr_68                  ;$05DB5B |
-    SEP #$20                                ;$05DB5D |
+    SEP #$20                                ;$05DB5D | A->8
     LDA.b [SpriteDataPtr_CE]                ;$05DB5F |
     AND.b #$7F                              ;$05DB61 |
     STA.w SpriteMemorySetting_1692          ;$05DB63 |
@@ -6892,7 +6892,7 @@ CODE_05DC23:
     STA.l $7F8382                           ;$05DC2C |
     LDA.b #$08                              ;$05DC30 |
     STA.l DynStripeImgSize_7F837B           ;$05DC32 |
-    SEP #$20                                ;$05DC36 |
+    SEP #$20                                ;$05DC36 | A->8
     PLB                                     ;$05DC38 |
     RTL                                     ;$05DC39 |
 

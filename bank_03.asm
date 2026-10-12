@@ -3315,7 +3315,7 @@ Reznor:
     ADC.w #$0001                            ;$0398C8 |
     AND.w #$01FF                            ;$0398CB |
     STA.b Mode7Angle_36                     ;$0398CE |
-    SEP #$20                                ;$0398D0 |
+    SEP #$20                                ;$0398D0 | A->8
     CPX.b #$07                              ;$0398D2 |
     BNE .CODE_039910                        ;$0398D4 |
     LDA.w Sprite_163E,X                     ;$0398D6 |
@@ -6225,7 +6225,7 @@ CODE_03AEE8:
     ASL                                     ;$03AF03 |
     ORA $00                                 ;$03AF04 |
     STA $00                                 ;$03AF06 |
-    SEP #$20                                ;$03AF08 |
+    SEP #$20                                ;$03AF08 | A->8
     PHX                                     ;$03AF0A |
     TAX                                     ;$03AF0B |
     LDY.w $0681                             ;$03AF0C |
@@ -7300,7 +7300,7 @@ CODE_03B774:
     CLC                                     ;$03B77F |
     ADC.w #$0040                            ;$03B780 |
     CMP.w #$0180                            ;$03B783 |
-    SEP #$20                                ;$03B786 |
+    SEP #$20                                ;$03B786 | A->8
     ROL                                     ;$03B788 |
     AND.b #$01                              ;$03B789 |
     STA.w SpriteWayOffscreenX_15C4,X        ;$03B78B |
@@ -9947,7 +9947,7 @@ CODE_03D680:
     LSR                                     ;$03D693 |
     LSR                                     ;$03D694 |
     TAY                                     ;$03D695 |
-    SEP #$20                                ;$03D696 |
+    SEP #$20                                ;$03D696 | A->8
     LDA.b #$00                              ;$03D698 |
     STA.w OAMTileSize_0420,Y                ;$03D69A |
     REP #$20                                ;$03D69D | A->16
@@ -10026,7 +10026,7 @@ CODE_03D759:
     SEC                                     ;$03D75E |
     SBC.b InteractionPtXPos_9A              ;$03D75F |
     STA.b InteractionPtXPos_9A              ;$03D761 |
-    SEP #$20                                ;$03D763 |
+    SEP #$20                                ;$03D763 | A->8
     RTS                                     ;$03D765 |
 
 CODE_03D766:
@@ -10038,7 +10038,7 @@ CODE_03D76C:
     SEC                                     ;$03D770 |
     SBC.b Layer1XPos_1A                     ;$03D771 |
     CMP.w #$0100                            ;$03D773 |
-    SEP #$20                                ;$03D776 |
+    SEP #$20                                ;$03D776 | A->8
     BCS Return03D77E                        ;$03D778 |
     JSL CODE_028A44                         ;$03D77A |
 Return03D77E:
@@ -10062,7 +10062,7 @@ break_bridge_tile_03D77F:
 +   STX $00                                 ;$03D798 |
     REP #$10                                ;$03D79A | XY->16
     TAX                                     ;$03D79C |
-    SEP #$20                                ;$03D79D |
+    SEP #$20                                ;$03D79D | A->8
     LDA.b #!Map16LowAir_25                  ;$03D79F |
     STA.l Map16TilesLow_C800,X              ;$03D7A1 |
     LDA.b #!Map16HighAir_00                 ;$03D7A5 |
@@ -10449,7 +10449,7 @@ CODE_03DE1A:
     CLC                                     ;$03DE30 |
     ADC.w #$0018                            ;$03DE31 |
     STA $00                                 ;$03DE34 |
-    SEP #$20                                ;$03DE36 |
+    SEP #$20                                ;$03DE36 | A->8
     RTS                                     ;$03DE38 |
 
 CODE_03DE39:
@@ -10493,7 +10493,7 @@ CODE_03DE9A:
     ADC.w #$0080                            ;$03DE9F |
     STA $00                                 ;$03DEA2 |
     STA.w $2116                             ;$03DEA4 |
-    SEP #$20                                ;$03DEA7 |
+    SEP #$20                                ;$03DEA7 | A->8
     LDY.b #$08                              ;$03DEA9 |
 CODE_03DEAB:
     LDA.l DATA_03DE4E,X
@@ -10581,7 +10581,7 @@ CODE_03DF55:
     ADC $00                                 ;$03DF5E |
 CODE_03DF60:
     TAY
-    SEP #$20                                ;$03DF61 |
+    SEP #$20                                ;$03DF61 | A->8
     LDX $06                                 ;$03DF63 |
     LDA $00                                 ;$03DF65 |
     STA $04                                 ;$03DF67 |
@@ -10636,7 +10636,7 @@ CODE_03DFAE:
     CLC                                     ;$03DFBB |
     ADC.b Layer1XPos_1A,X                   ;$03DFBC |
     STA.b Mode7XPos_3A,X                    ;$03DFBE |
-    SEP #$20                                ;$03DFC0 |
+    SEP #$20                                ;$03DFC0 | A->8
     PLX                                     ;$03DFC2 |
     RTS                                     ;$03DFC3 |
 
@@ -10693,7 +10693,7 @@ CODE_03E028:
     LDA.l DATA_00B5DE,X                     ;$03E02D |
 CODE_03E031:
     STA.w $0684,Y
-    SEP #$20                                ;$03E034 |
+    SEP #$20                                ;$03E034 | A->8
 CODE_03E036:
     LDX.w BowserPalette_1429
     LDA.l DATA_03DFC4,X                     ;$03E039 |

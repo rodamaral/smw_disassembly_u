@@ -690,7 +690,7 @@ CODE_0C93E2:
     STA.b Layer2DataPtr_68                  ;$0C93EE |
     LDA.l DATA_0C93CF,X                     ;$0C93F0 |
     STA.b StaffRollLinePos_65               ;$0C93F4 |
-    SEP #$20                                ;$0C93F6 |
+    SEP #$20                                ;$0C93F6 | A->8
     LDY.w #$0000                            ;$0C93F8 |
     LDX.b Layer2DataPtr_68                  ;$0C93FB |
     CPX.w #$E8FE                            ;$0C93FD |
@@ -732,7 +732,7 @@ CODE_0C944C:
     LDY.w #$0000                            ;$0C944E |
     STY $03                                 ;$0C9451 |
     STY $05                                 ;$0C9453 |
-    SEP #$20                                ;$0C9455 |
+    SEP #$20                                ;$0C9455 | A->8
     LDA.b #$7E                              ;$0C9457 |
     STA $0F                                 ;$0C9459 |
 CODE_0C945B:
@@ -1229,7 +1229,7 @@ CODE_0C9EB1:
     LDA.l DynStripeImgSize_7F837B           ;$0C9EB3 |
     TAX                                     ;$0C9EB7 |
     LDY.w #$0000                            ;$0C9EB8 |
-    SEP #$20                                ;$0C9EBB |
+    SEP #$20                                ;$0C9EBB | A->8
     LDA.b StaffRollLinePos_65+1             ;$0C9EBD |
     STA.l DynamicStripeImage_7F837D,X       ;$0C9EBF |
     LDA.b StaffRollLinePos_65               ;$0C9EC3 |
@@ -1253,7 +1253,7 @@ CODE_0C9ECB:
     TAY                                     ;$0C9EE7 |
     LDA.w DATA_0C9D18,Y                     ;$0C9EE8 |
     TAY                                     ;$0C9EEB |
-    SEP #$20                                ;$0C9EEC |
+    SEP #$20                                ;$0C9EEC | A->8
     INC.b StaffRollCurLine_67               ;$0C9EEE |
     LDA.w DATA_0C95C7,Y                     ;$0C9EF0 |
     CMP.b #$FF                              ;$0C9EF3 |
@@ -1383,7 +1383,7 @@ CODE_0C9FEA:
     STA.b PlayerXPos_94                     ;$0C9FEF |
     LDA.w #$008F                            ;$0C9FF1 |
     STA.b PlayerYPos_96                     ;$0C9FF4 |
-    SEP #$20                                ;$0C9FF6 |
+    SEP #$20                                ;$0C9FF6 | A->8
     LDA.b #$01                              ;$0C9FF8 |
     STA.b Powerup_19                        ;$0C9FFA |
     LDA.b #$08                              ;$0C9FFC |
@@ -1546,7 +1546,7 @@ CODE_0CA159:
     ADC.w #$0080                            ;$0CA15E |
     STA $00                                 ;$0CA161 |
     STA $02                                 ;$0CA163 |
-    SEP #$20                                ;$0CA165 |
+    SEP #$20                                ;$0CA165 | A->8
     JSR CODE_0CA183                         ;$0CA167 |
     REP #$20                                ;$0CA16A | A->16
     LDA.w #$0080                            ;$0CA16C |
@@ -1559,7 +1559,7 @@ CODE_0CA159:
     LDA.w #$003F                            ;$0CA17A |
     STA $08                                 ;$0CA17D |
     STA $0A                                 ;$0CA17F |
-    SEP #$20                                ;$0CA181 |
+    SEP #$20                                ;$0CA181 | A->8
 CODE_0CA183:
     LDA $01
     BNE CODE_0CA1AB                         ;$0CA185 |
@@ -1589,7 +1589,7 @@ CODE_0CA1AB:
     CLC                                     ;$0CA1AF |
     ADC.w #$0010                            ;$0CA1B0 |
     STA $00                                 ;$0CA1B3 |
-    SEP #$20                                ;$0CA1B5 |
+    SEP #$20                                ;$0CA1B5 | A->8
     TYA                                     ;$0CA1B7 |
     AND.b #$07                              ;$0CA1B8 |
     CMP.b #$03                              ;$0CA1BA |
@@ -2454,7 +2454,7 @@ CODE_0CA855:
     LSR                                     ;$0CA880 |
     LSR                                     ;$0CA881 |
     TAX                                     ;$0CA882 |
-    SEP #$20                                ;$0CA883 |
+    SEP #$20                                ;$0CA883 | A->8
     LDA.b #$02                              ;$0CA885 |
     STA.w $0421,X                           ;$0CA887 |
     LDA $0A                                 ;$0CA88A |
@@ -2465,7 +2465,7 @@ CODE_0CA855:
     CLC                                     ;$0CA893 |
     ADC.w #$0008                            ;$0CA894 |
     TAX                                     ;$0CA897 |
-    SEP #$20                                ;$0CA898 |
+    SEP #$20                                ;$0CA898 | A->8
     INY                                     ;$0CA89A |
     INY                                     ;$0CA89B |
     DEC $04                                 ;$0CA89C |
@@ -2830,7 +2830,7 @@ CODE_0CAB7C:
     DEY                                     ;$0CAB84 |
     DEY                                     ;$0CAB85 |
     BNE CODE_0CAB74                         ;$0CAB86 |
-    SEP #$20                                ;$0CAB88 |
+    SEP #$20                                ;$0CAB88 | A->8
     LDA.b #$13                              ;$0CAB8A |
     STA.w $212E                             ;$0CAB8C |
     STA.w $212F                             ;$0CAB8F |
@@ -2978,7 +2978,7 @@ CODE_0CAD9D:
     STA.b StaffRollLinePos_65               ;$0CADAA |
     LDA.w DATA_0CAD72,Y                     ;$0CADAC |
     STA.b Layer2DataPtr_68                  ;$0CADAF |
-    SEP #$20                                ;$0CADB1 |
+    SEP #$20                                ;$0CADB1 | A->8
     PLB                                     ;$0CADB3 |
     RTL                                     ;$0CADB4 |
 
@@ -3043,7 +3043,7 @@ CODE_0CAE30:
     BNE CODE_0CAE30                         ;$0CAE3F |
     TXA                                     ;$0CAE41 |
     STA.l DynStripeImgSize_7F837B           ;$0CAE42 |
-    SEP #$20                                ;$0CAE46 |
+    SEP #$20                                ;$0CAE46 | A->8
 CODE_0CAE48:
     PLX
     PLY                                     ;$0CAE49 |
@@ -3086,7 +3086,7 @@ CODE_0CAE88:
 CODE_0CAEA3:
     LDA.w #$00FF
     STA.w Layer3ScrollYSpeed_145A+1         ;$0CAEA6 |
-    SEP #$20                                ;$0CAEA9 |
+    SEP #$20                                ;$0CAEA9 | A->8
     PLB                                     ;$0CAEAB |
     RTL                                     ;$0CAEAC |
 
@@ -3124,7 +3124,7 @@ CODE_0CAED0:
     LDA.b Layer1XPos_1A                     ;$0CAEEC |
     AND.w NextLayer1XPos_1462               ;$0CAEEE |
     AND.w #$00FF                            ;$0CAEF1 |
-    SEP #$20                                ;$0CAEF4 |
+    SEP #$20                                ;$0CAEF4 | A->8
     BNE CODE_0CAF0C                         ;$0CAEF6 |
 CODE_0CAEF8:
     LDA.w Layer3ScrollYSpeed_145A+1
@@ -4649,7 +4649,7 @@ CODE_0CCC51:
     REP #$20                                ;$0CCC56 | A->16
     LDA.w DATA_0CCC4D,X                     ;$0CCC58 |
     STA.w $0701                             ;$0CCC5B |
-    SEP #$20                                ;$0CCC5E |
+    SEP #$20                                ;$0CCC5E | A->8
     DEC.w Layer2ScrollBits_1441             ;$0CCC60 |
     BPL CODE_0CCC82                         ;$0CCC63 |
     JSR CODE_0CD373                         ;$0CCC65 |
@@ -4660,7 +4660,7 @@ CODE_0CCC51:
     REP #$20                                ;$0CCC71 | A->16
     LDA.l Palettes,X                        ;$0CCC73 |
     STA.w $0701                             ;$0CCC77 |
-    SEP #$20                                ;$0CCC7A |
+    SEP #$20                                ;$0CCC7A | A->8
     INC.w Layer1ScrollType_1442             ;$0CCC7C |
     BRL CODE_0CCC9A                         ;$0CCC7F |
 CODE_0CCC82:
@@ -4769,7 +4769,7 @@ CODE_0CCD31:
     STA.w $0B05,X                           ;$0CCD3B |
     JSR CODE_0CD33A                         ;$0CCD3E |
     JSR CODE_0CD283                         ;$0CCD41 |
-    SEP #$20                                ;$0CCD44 |
+    SEP #$20                                ;$0CCD44 | A->8
     LDA.w $0B5F,X                           ;$0CCD46 |
     STA.b Layer1YPos_1C+1                   ;$0CCD49 |
     LDA.w $0B41,X                           ;$0CCD4B |
@@ -5349,7 +5349,7 @@ CODE_0CD16F:
     SEC                                     ;$0CD179 |
     SBC.w #$0001                            ;$0CD17A |
     STA.b Layer2YPos_20                     ;$0CD17D |
-    SEP #$20                                ;$0CD17F |
+    SEP #$20                                ;$0CD17F | A->8
     BRA CODE_0CD18F                         ;$0CD181 |
 
 CODE_0CD183:
@@ -5358,7 +5358,7 @@ CODE_0CD183:
     CLC                                     ;$0CD187 |
     ADC.w #$0001                            ;$0CD188 |
     STA.b Layer2YPos_20                     ;$0CD18B |
-    SEP #$20                                ;$0CD18D |
+    SEP #$20                                ;$0CD18D | A->8
 CODE_0CD18F:
     DEC.w Layer2ScrollCmd_143F
     BPL Return0CD19B                        ;$0CD192 |
@@ -5453,7 +5453,7 @@ CODE_0CD23C:
     STA.l DynamicStripeImage_7F837D,X       ;$0CD26C |
     LDA.w DATA_0CD1FF,Y                     ;$0CD270 |
     STA.l $7F8383,X                         ;$0CD273 |
-    SEP #$20                                ;$0CD277 |
+    SEP #$20                                ;$0CD277 | A->8
     CPY.b #$1C                              ;$0CD279 |
     BNE Return0CD282                        ;$0CD27B |
     LDA.b #$01                              ;$0CD27D |

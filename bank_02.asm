@@ -296,7 +296,7 @@ CODE_0282D8:
     CLC                                     ;$0282DD |
     ADC $0C                                 ;$0282DE |
     STA $0A                                 ;$0282E0 |
-    SEP #$20                                ;$0282E2 |
+    SEP #$20                                ;$0282E2 | A->8
     LDA $06                                 ;$0282E4 |
     CLC                                     ;$0282E6 |
     LDX $0A                                 ;$0282E7 |
@@ -326,7 +326,7 @@ CODE_028318:
     LSR                                     ;$02831C |
     LSR                                     ;$02831D |
     TAY                                     ;$02831E |
-    SEP #$20                                ;$02831F |
+    SEP #$20                                ;$02831F | A->8
     LDA.b #$02                              ;$028321 |
     STA.w $0423,Y                           ;$028323 |
     LDA $02                                 ;$028326 |
@@ -351,7 +351,7 @@ CODE_028318:
     LSR                                     ;$028352 |
     LSR                                     ;$028353 |
     TAY                                     ;$028354 |
-    SEP #$20                                ;$028355 |
+    SEP #$20                                ;$028355 | A->8
     LDA.b #$03                              ;$028357 |
     STA.w $0423,Y                           ;$028359 |
     LDA $03                                 ;$02835C |
@@ -6253,7 +6253,7 @@ CODE_02AE5B:
     STA $02                                 ;$02AE66 |
     LDA.w Layer1XPos_1A,y                   ;$02AE68 |
     STA $04                                 ;$02AE6B |
-    SEP #$20                                ;$02AE6D |
+    SEP #$20                                ;$02AE6D | A->8
     LDA.w ScoreSprXPosLow_16ED,X            ;$02AE6F |
     CLC                                     ;$02AE72 |
     ADC.b #$0C                              ;$02AE73 |
@@ -11360,7 +11360,7 @@ CODE_02D38C:
     CLC                                     ;$02D397 |
     ADC.w #$0040                            ;$02D398 |
     CMP.w #$0180                            ;$02D39B |
-    SEP #$20                                ;$02D39E |
+    SEP #$20                                ;$02D39E | A->8
     ROL                                     ;$02D3A0 |
     AND.b #$01                              ;$02D3A1 |
     STA.w SpriteWayOffscreenX_15C4,X        ;$02D3A3 |
@@ -11539,7 +11539,7 @@ CODE_02D4A8:
     SEC                                     ;$02D4C8 |
     SBC.w #$0008                            ;$02D4C9 |
     CMP.w #$0080                            ;$02D4CC |
-    SEP #$20                                ;$02D4CF |
+    SEP #$20                                ;$02D4CF | A->8
     BCS CODE_02D4E5                         ;$02D4D1 |
     LDA.b PlayerInAir_72                    ;$02D4D3 |
     BNE CODE_02D4DC                         ;$02D4D5 |
@@ -14462,7 +14462,7 @@ CODE_02EA25:
     CLC                                     ;$02EA44 |
     ADC.w #$0200                            ;$02EA45 |
     STA.w $0D95                             ;$02EA48 |
-    SEP #$20                                ;$02EA4B |
+    SEP #$20                                ;$02EA4B | A->8
     RTL                                     ;$02EA4D |
 
 baby_yoshi_try_eat_sprites_02EA4E:
@@ -15073,7 +15073,7 @@ ADDR_02EED5:
     REP #$20                                ;$02EEEC | A->16
     LDA $00                                 ;$02EEEE |
     CMP $02                                 ;$02EEF0 |
-    SEP #$20                                ;$02EEF2 |
+    SEP #$20                                ;$02EEF2 | A->8
     LDY.b #$00                              ;$02EEF4 |
     BCC ADDR_02EEF9                         ;$02EEF6 |
     INY                                     ;$02EEF8 |
@@ -15519,7 +15519,7 @@ CODE_02F1EF:
     CLC                                     ;$02F212 |
     ADC.w #$0050                            ;$02F213 |
     CMP.w #$00A0                            ;$02F216 |
-    SEP #$20                                ;$02F219 |
+    SEP #$20                                ;$02F219 | A->8
     BCS Return02F295                        ;$02F21B |
     LDA.w SpriteStatus_14C8,X               ;$02F21D |
     CMP.b #!StatusNormal_08                 ;$02F220 |
@@ -16733,7 +16733,7 @@ CODE_02FAB3:
     CLC                                     ;$02FAD5 |
     ADC.w #$0080                            ;$02FAD6 |
     CMP.w #$0200                            ;$02FAD9 |
-    SEP #$20                                ;$02FADC |
+    SEP #$20                                ;$02FADC | A->8
     BCC CODE_02FAF0                         ;$02FADE |
     LDA.b #$01                              ;$02FAE0 |
     STA.w BooRingOffscreen_0FBA,Y           ;$02FAE2 |
@@ -16965,7 +16965,7 @@ CODE_02FC8D:
     CLC                                     ;$02FC9E |
     ADC.w #$0040                            ;$02FC9F |
     CMP.w #$0180                            ;$02FCA2 |
-    SEP #$20                                ;$02FCA5 |
+    SEP #$20                                ;$02FCA5 | A->8
     BCS Return02FCD8                        ;$02FCA7 |
     LDA.b #$02                              ;$02FCA9 |
     JSR CODE_02FD48                         ;$02FCAB |
@@ -17227,7 +17227,7 @@ CODE_02FE77:
     CLC                                     ;$02FE8C |
     ADC.w #$000A                            ;$02FE8D |
     CMP $02                                 ;$02FE90 |
-    SEP #$20                                ;$02FE92 |
+    SEP #$20                                ;$02FE92 | A->8
     BCS Return02FEC4                        ;$02FE94 |
     LDA.w ClusterSprYPosLow_1E02,X          ;$02FE96 |
     ADC.b #$03                              ;$02FE99 |
@@ -17248,7 +17248,7 @@ CODE_02FEB0:
     CLC                                     ;$02FEB7 |
     ADC.w #$001C                            ;$02FEB8 |
     CMP $04                                 ;$02FEBB |
-    SEP #$20                                ;$02FEBD |
+    SEP #$20                                ;$02FEBD | A->8
     BCS Return02FEC4                        ;$02FEBF |
     JSR hurt_mario_or_yoshi_02F9F5          ;$02FEC1 |
 Return02FEC4:

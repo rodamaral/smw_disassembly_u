@@ -2928,7 +2928,7 @@ CODE_0194BF:
     REP #$20                                ;$0194D2 | A->16
     LDA $0C                                 ;$0194D4 |
     CMP.w #$01B0                            ;$0194D6 |
-    SEP #$20                                ;$0194D9 |
+    SEP #$20                                ;$0194D9 | A->8
     BCS CODE_0194B4                         ;$0194DB |
     LDA.b SpriteXPosLow_E4,X                ;$0194DD |
     CLC                                     ;$0194DF |
@@ -4807,7 +4807,7 @@ get_draw_info_bnk1_01A365:
     CLC                                     ;$01A384 |
     ADC.w #$0040                            ;$01A385 |
     CMP.w #$0180                            ;$01A388 |
-    SEP #$20                                ;$01A38B |
+    SEP #$20                                ;$01A38B | A->8
     ROL                                     ;$01A38D |
     AND.b #$01                              ;$01A38E |
     STA.w SpriteWayOffscreenX_15C4,X        ;$01A390 |
@@ -4928,7 +4928,7 @@ subsprite_sprite_interact_01A40D:
     CLC                                     ;$01A457 |
     ADC.w #$0010                            ;$01A458 |
     CMP.w #$0020                            ;$01A45B |
-    SEP #$20                                ;$01A45E |
+    SEP #$20                                ;$01A45E | A->8
     BCS .continue_01A4B0                    ;$01A460 |
     LDY.b #$00                              ;$01A462 |
     LDA.w dscccccc_1662,X                   ;$01A464 |
@@ -4963,7 +4963,7 @@ subsprite_sprite_interact_01A40D:
     CLC                                     ;$01A4A2 |
     ADC.w #$000C                            ;$01A4A3 |
     CMP.w #$0018                            ;$01A4A6 |
-    SEP #$20                                ;$01A4A9 |
+    SEP #$20                                ;$01A4A9 | A->8
     BCS .continue_01A4B0                    ;$01A4AB |
     JSR sprites_are_colliding_01A4BA        ;$01A4AD |
 .continue_01A4B0:
@@ -5885,7 +5885,7 @@ touch_side_key_pow_spring_01AB31:
     CLC                                     ;$01AB3D |
     ADC.w DATA_01AB2D,Y                     ;$01AB3E |
     STA.b PlayerXPos_94                     ;$01AB41 |
-    SEP #$20                                ;$01AB43 |
+    SEP #$20                                ;$01AB43 | A->8
     RTS                                     ;$01AB45 |
 
 CODE_01AB46:
@@ -7764,7 +7764,7 @@ is_tile_offscreen_x_01B844:                 ;        | Returns carry set if the 
     SEC                                     ;$01B848 |
     SBC.b Layer1XPos_1A                     ;$01B849 |
     CMP.w #$0100                            ;$01B84B |
-    SEP #$20                                ;$01B84E |
+    SEP #$20                                ;$01B84E | A->8
     RTS                                     ;$01B850 |
 
     RTS                                     ;$01B851 | unreachable code
@@ -8952,7 +8952,7 @@ GoalTape:
     SEC                                     ;$01C0CF |
     SBC $00                                 ;$01C0D0 |
     CMP.w #$0010                            ;$01C0D2 |
-    SEP #$20                                ;$01C0D5 |
+    SEP #$20                                ;$01C0D5 | A->8
     BCS Return01C12C                        ;$01C0D7 |
     LDA.w Sprite_1528,X                     ;$01C0D9 |
     CMP.b PlayerYPos_96                     ;$01C0DC |
@@ -10178,7 +10178,7 @@ is_tile_below_screen_01C9BF:                ;        | Returns carry set if the 
     CMP.w #$0100                            ;$01C9CD |
     PLA                                     ;$01C9D0 |
     STA $09                                 ;$01C9D1 |
-    SEP #$20                                ;$01C9D3 |
+    SEP #$20                                ;$01C9D3 | A->8
 return_01C9D5:
     RTS
 
@@ -10210,7 +10210,7 @@ interaction_brown_plat_01C9EC:
     CLC                                     ;$01C9F8 |
     ADC.w #$0010                            ;$01C9F9 |
     CMP.w #$0120                            ;$01C9FC |
-    SEP #$20                                ;$01C9FF |
+    SEP #$20                                ;$01C9FF | A->8
     ROL                                     ;$01CA01 |
     AND.b #$01                              ;$01CA02 |
     ORA.b SpriteLock_9D                     ;$01CA04 |
@@ -10378,7 +10378,7 @@ get_circle_coords_01CB53:
     STA $02                                 ;$01CB58 |
     LDA.w RotationRadiusX_14BC              ;$01CB5A |
     STA $00                                 ;$01CB5D |
-    SEP #$20                                ;$01CB5F |
+    SEP #$20                                ;$01CB5F | A->8
     JSR .multiply_radius_with_value_01CC28  ;$01CB61 |
     LDA.w BrPlatAngleParity_1866+1          ;$01CB64 |
     LSR                                     ;$01CB67 |
@@ -10397,7 +10397,7 @@ get_circle_coords_01CB53:
     STA $02                                 ;$01CB81 |
     LDA.w RotationRadiusY_14BF              ;$01CB83 |
     STA $00                                 ;$01CB86 |
-    SEP #$20                                ;$01CB88 |
+    SEP #$20                                ;$01CB88 | A->8
     JSR .multiply_radius_with_value_01CC28  ;$01CB8A |
     LDA.w BrPlatAngleParity_1866            ;$01CB8D |
     LSR                                     ;$01CB90 |
@@ -10427,7 +10427,7 @@ get_circle_coords_01CB53:
     STA $02                                 ;$01CBC0 |
     LDA.w RotationRadiusY_14BF              ;$01CBC2 |
     STA $00                                 ;$01CBC5 |
-    SEP #$20                                ;$01CBC7 |
+    SEP #$20                                ;$01CBC7 | A->8
     JSR .multiply_radius_with_value_01CC28  ;$01CBC9 |
     LDA.w BrPlatAngleParity_1866+1          ;$01CBCC |
     LSR                                     ;$01CBCF |
@@ -10446,7 +10446,7 @@ get_circle_coords_01CB53:
     STA $02                                 ;$01CBE9 |
     LDA.w RotationRadiusX_14BC              ;$01CBEB |
     STA $00                                 ;$01CBEE |
-    SEP #$20                                ;$01CBF0 |
+    SEP #$20                                ;$01CBF0 | A->8
     JSR .multiply_radius_with_value_01CC28  ;$01CBF2 |
     LDA.w BrPlatAngleParity_1866            ;$01CBF5 |
     LSR                                     ;$01CBF8 |
@@ -10472,7 +10472,7 @@ get_circle_coords_01CB53:
     SEC                                     ;$01CC1F |
     SBC $05                                 ;$01CC20 |
     STA.w RotationYPos_14BA                 ;$01CC22 |
-    SEP #$20                                ;$01CC25 |
+    SEP #$20                                ;$01CC25 | A->8
     RTS                                     ;$01CC27 |
 
 .multiply_radius_with_value_01CC28:         ;        | Subroutine to do 16-bit cos/sin multiplication. Stores a radius in $00 and cos/sin value in $02
@@ -10573,7 +10573,7 @@ sprite_iggy_plat_interact_01CC9D:
     SEC                                     ;$01CCE0 |
     SBC.w RotationCenterY_14B2              ;$01CCE1 |
     STA.w RotationRadiusY_14BF              ;$01CCE4 | Store vertical radius of interaction point from center
-    SEP #$20                                ;$01CCE7 |
+    SEP #$20                                ;$01CCE7 | A->8
     RTS                                     ;$01CCE9 |
 
     RTS                                     ;$01CCEA |
@@ -11657,7 +11657,7 @@ CODE_01D468:
     REP #$20                                ;$01D479 | A->16
     LDA $00                                 ;$01D47B |
     CMP.w #$0230                            ;$01D47D |
-    SEP #$20                                ;$01D480 |
+    SEP #$20                                ;$01D480 | A->8
     BCC CODE_01D487                         ;$01D482 |
     STZ.w SpriteStatus_14C8,X               ;$01D484 |
 CODE_01D487:
@@ -13409,7 +13409,7 @@ CODE_01E198:
     CLC                                     ;$01E1AE |
     ADC.w #$0200                            ;$01E1AF |
     STA.w $0D95                             ;$01E1B2 |
-    SEP #$20                                ;$01E1B5 |
+    SEP #$20                                ;$01E1B5 | A->8
     RTS                                     ;$01E1B7 |
 
 InitKeyHole:
@@ -15131,7 +15131,7 @@ handle_off_yoshi_01EE61:
     CLC                                     ;$01EECF |
     ADC.w #$0200                            ;$01EED0 |
     STA.w $0D97                             ;$01EED3 | set Yoshi tiles
-    SEP #$20                                ;$01EED6 |
+    SEP #$20                                ;$01EED6 | A->8
     PLA                                     ;$01EED8 |
     STA.w SpriteAnimation_1602,X            ;$01EED9 |
     JSR process_yoshi_tongue_01F0A2         ;$01EEDC |
@@ -17130,7 +17130,7 @@ koopa_kid_plat_interact_01FD50:
     INC A                                   ;$01FD77 |
     AND.w #$01FF                            ;$01FD78 |
     STA.b Mode7Angle_36                     ;$01FD7B |
-    SEP #$20                                ;$01FD7D |
+    SEP #$20                                ;$01FD7D | A->8
     PHX                                     ;$01FD7F |
     JSL sprite_iggy_plat_interact_01CC9D    ;$01FD80 |
     PLX                                     ;$01FD84 |
@@ -17140,7 +17140,7 @@ koopa_kid_plat_interact_01FD50:
     INC A                                   ;$01FD8C |
     AND.w #$01FF                            ;$01FD8D |
     STA.b Mode7Angle_36                     ;$01FD90 |
-    SEP #$20                                ;$01FD92 |
+    SEP #$20                                ;$01FD92 | A->8
     RTS                                     ;$01FD94 |
 
 DATA_01FD95:
