@@ -1296,7 +1296,7 @@ CODE_0C9F26:
     STA.l DynStripeImgSize_7F837B           ;$0C9F3F |
 CODE_0C9F43:
     REP #$20
-    SEP #$10                                ;$0C9F45 |
+    SEP #$10                                ;$0C9F45 | XY->8
     LDA.b Layer1DataPtr_65                  ;$0C9F47 |
     CLC                                     ;$0C9F49 |
     ADC.w #$0020                            ;$0C9F4A |

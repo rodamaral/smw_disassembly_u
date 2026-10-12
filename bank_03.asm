@@ -8565,7 +8565,7 @@ CODE_03C618:
     INX                                     ;$03C61C |
     CPX.w #$01C0                            ;$03C61D |
     BNE CODE_03C5B8                         ;$03C620 |
-    SEP #$10                                ;$03C622 |
+    SEP #$10                                ;$03C622 | XY->8
     PLX                                     ;$03C624 |
     RTS                                     ;$03C625 |
 
@@ -10154,7 +10154,7 @@ CODE_03D968:
     STA.w $2118
     DEX                                     ;$03D96B |
     BNE CODE_03D968                         ;$03D96C |
-    SEP #$10                                ;$03D96E |
+    SEP #$10                                ;$03D96E | XY->8
     BIT.w IRQNMICommand_0D9B                ;$03D970 |
     BVS Return03D990                        ;$03D973 |
     PHB                                     ;$03D975 |

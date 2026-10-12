@@ -5978,7 +5978,7 @@ handle_old_sprites_sprites_02ABF2:
 -   STZ.w Map16_1693,X                      ;$02AC4D |\ level initialization
     DEX                                     ;$02AC50 ||
     BPL -                                   ;$02AC51 |/
-    SEP #$10                                ;$02AC53 |
+    SEP #$10                                ;$02AC53 | XY->8
     STZ.w Layer1ScrollCmd_143E              ;$02AC55 |
     STZ.w Layer2ScrollCmd_143F              ;$02AC58 |
     RTS                                     ;$02AC5B |

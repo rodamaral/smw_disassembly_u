@@ -1177,7 +1177,7 @@ CODE_058A10:
     STA.b Map16LowPtr_6B+2                  ;$058A34 |
     LDA [$0D],Y                             ;$058A36 |
     STA.b Map16HighPtr_6E+2                 ;$058A38 |
-    SEP #$10                                ;$058A3A |
+    SEP #$10                                ;$058A3A | XY->8
     LDY.b #$0D                              ;$058A3C |
     LDA.w ObjectTileset_1931                ;$058A3E |
     CMP.b #$10                              ;$058A41 |
@@ -1298,7 +1298,7 @@ CODE_058AD5:
     STA.b Map16LowPtr_6B+2                  ;$058B10 |
     LDA [$0D],Y                             ;$058B12 |
     STA.b Map16HighPtr_6E+2                 ;$058B14 |
-    SEP #$10                                ;$058B16 |
+    SEP #$10                                ;$058B16 | XY->8
     LDY.b #$0D                              ;$058B18 |
     LDA.w ObjectTileset_1931                ;$058B1A |
     CMP.b #$10                              ;$058B1D |
@@ -1428,7 +1428,7 @@ CODE_058BDE:
     STA.b Map16LowPtr_6B+2                  ;$058C02 |
     LDA [$0D],Y                             ;$058C04 |
     STA.b Map16HighPtr_6E+2                 ;$058C06 |
-    SEP #$10                                ;$058C08 |
+    SEP #$10                                ;$058C08 | XY->8
     LDY.b #$0D                              ;$058C0A |
     LDA.w ObjectTileset_1931                ;$058C0C |
     CMP.b #$10                              ;$058C0F |
@@ -1560,7 +1560,7 @@ CODE_058CBA:
     STA.b Map16LowPtr_6B+2                  ;$058CF5 |
     LDA [$0D],Y                             ;$058CF7 |
     STA.b Map16HighPtr_6E+2                 ;$058CF9 |
-    SEP #$10                                ;$058CFB |
+    SEP #$10                                ;$058CFB | XY->8
     LDY.b #$0D                              ;$058CFD |
     LDA.w ObjectTileset_1931                ;$058CFF |
     CMP.b #$10                              ;$058D02 |
@@ -3561,7 +3561,7 @@ update_animated_tile_gfx_05BB39:
     ORA $00                                 ;$05BB90 |
     TAY                                     ;$05BB92 |
     LDA.w AnimatedTileData,Y                ;$05BB93 |
-    SEP #$10                                ;$05BB96 |
+    SEP #$10                                ;$05BB96 | XY->8
     PLX                                     ;$05BB98 |
     STA.w $0D76,X                           ;$05BB99 |
     PLY                                     ;$05BB9C |
@@ -5997,7 +5997,7 @@ CODE_05CFA0:
     STA.l $7F8397,X                         ;$05CFD8 |
 CODE_05CFDC:
     REP #$20
-    SEP #$10                                ;$05CFDE |
+    SEP #$10                                ;$05CFDE | XY->8
     LDA $0A                                 ;$05CFE0 |
     STA.l DynStripeImgSize_7F837B           ;$05CFE2 |
     SEP #$30                                ;$05CFE6 |
@@ -6579,7 +6579,7 @@ CODE_05D9B8:
     LDY.w Translevel_13BF                   ;$05D9C9 |
     LDA.w DATA_05D608,Y                     ;$05D9CC |
     STA.w OverworldEvent_1DEA               ;$05D9CF |
-    SEP #$10                                ;$05D9D2 |
+    SEP #$10                                ;$05D9D2 | XY->8
     LDX.w Translevel_13BF                   ;$05D9D4 |
     LDA.w OWLevelSettings_1EA2,X            ;$05D9D7 |
     AND.b #$40                              ;$05D9DA |
@@ -6609,7 +6609,7 @@ CODE_05DA01:
     LDA $01
     STA.b PlayerYPos_96+1                   ;$05DA03 |
     STA.b Layer1YPos_1C+1                   ;$05DA05 |
-    SEP #$10                                ;$05DA07 |
+    SEP #$10                                ;$05DA07 | XY->8
     LDY.w VertLayer2Setting_1414            ;$05DA09 |
     CPY.b #$03                              ;$05DA0C |
     BEQ CODE_05DA12                         ;$05DA0E |

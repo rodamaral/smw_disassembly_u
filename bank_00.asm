@@ -2094,7 +2094,7 @@ clear_window_HDMA:                          ;        |
     DEX                                     ;$009270 | |
     DEX                                     ;$009271 | |
     BPL -                                   ;$009272 |/
-    SEP #$10                                ;$009274 | 8 bit x/y
+    SEP #$10                                ;$009274 | XY->8
     RTS                                     ;$009276 /
 
 window_HDMA_settings_009277:
@@ -2126,7 +2126,7 @@ WindowHDMAenable:
 CODE_0092A0:
     LDA.b #$80
     STA.w HDMAEnable_0D9F                   ;$0092A2 |
-    SEP #$10                                ;$0092A5 |
+    SEP #$10                                ;$0092A5 | XY->8
     RTS                                     ;$0092A7 |
 
 CODE_0092A8:
@@ -3201,7 +3201,7 @@ CODE_009B58:
     INX                                     ;$009B60 |
     DEY                                     ;$009B61 |
     BNE CODE_009B58                         ;$009B62 |
-    SEP #$10                                ;$009B64 |
+    SEP #$10                                ;$009B64 | XY->8
     PLY                                     ;$009B66 |
 CODE_009B67:
     DEY
@@ -3472,7 +3472,7 @@ CODE_009D41:
     INY                                     ;$009D4D |
     CPY.w #$00CC                            ;$009D4E |
     BNE CODE_009D41                         ;$009D51 |
-    SEP #$10                                ;$009D53 |
+    SEP #$10                                ;$009D53 | XY->8
     LDA.b #$84                              ;$009D55 |
     STA $00                                 ;$009D57 |
     LDX.b #$02                              ;$009D59 |
@@ -3483,7 +3483,7 @@ CODE_009D5B:
     JSR CODE_009DB5                         ;$009D61 |
     BNE CODE_009DA6                         ;$009D64 |
     LDA.l $70008C,X                         ;$009D66 |
-    SEP #$10                                ;$009D6A |
+    SEP #$10                                ;$009D6A | XY->8
     CMP.b #$60                              ;$009D6C |
     BCC CODE_009D76                         ;$009D6E |
     LDY.b #$87                              ;$009D70 |
@@ -4012,7 +4012,7 @@ CODE_00A19A:
     STA.w OWLevelSettings_1EA2,X            ;$00A19D |
     DEX                                     ;$00A1A0 |
     BPL CODE_00A19A                         ;$00A1A1 |
-    SEP #$10                                ;$00A1A3 |
+    SEP #$10                                ;$00A1A3 | XY->8
     RTS                                     ;$00A1A5 |
 
 Clear_1A_13D3:
@@ -4026,7 +4026,7 @@ Clear_1A_13D3:
 -   STZ.w RamLevelReset_13D3,X              ;$00A1B5 |
     DEX                                     ;$00A1B8 |
     BPL -                                   ;$00A1B9 |
-    SEP #$10                                ;$00A1BB |
+    SEP #$10                                ;$00A1BB | XY->8
     RTS                                     ;$00A1BD |
 
 GM0E_overworld_main_00A1BE:
@@ -4393,7 +4393,7 @@ upload_palette:
     STA.w $420B                             ;$00A4CA |/
     BRA .continue_upload                    ;$00A4CD | continue the transfer until there is no more data
 .finished_upload:                           ;        |
-    SEP #$10                                ;$00A4CF | 
+    SEP #$10                                ;$00A4CF | XY->8
     JSR set_BG_color                        ;$00A4D1 | Upload the BG color
     LDA.w $0680                             ;$00A4D4 |\ if not special upload, don't clear the special
     BNE .skip_special_clear                 ;$00A4D7 |/ upload index or number of bytes to transfer
@@ -4419,7 +4419,7 @@ DMA_animated_OW_tiles:                      ;        \
     STY.w $4325                             ;$00A502 |/
     LDA.b #$04                              ;$00A505 |\ Run DMA channel 2
     STA.w $420B                             ;$00A507 |/
-    SEP #$10                                ;$00A50A | 8 bit XY
+    SEP #$10                                ;$00A50A | XY->8
     LDA.w OWProcess_13D9                    ;$00A50C |\ If the submap is switching don't bother
     CMP.b #$0A                              ;$00A50F | | updating the level tile palette animation
     BEQ palette_upload_return               ;$00A511 |/
@@ -5223,7 +5223,7 @@ CODE_00ABBB:
     STZ.w $2119
     DEX                                     ;$00ABBE |
     BNE CODE_00ABBB                         ;$00ABBF |
-    SEP #$10                                ;$00ABC1 |
+    SEP #$10                                ;$00ABC1 | XY->8
     RTS                                     ;$00ABC3 |
 
 CODE_00ABC4:
@@ -6107,7 +6107,7 @@ CODE_00B8E3:
     JSR ReadByte
     CMP.b #$FF                              ;$00B8E6 |
     BNE CODE_00B8ED                         ;$00B8E8 |
-    SEP #$10                                ;$00B8EA |
+    SEP #$10                                ;$00B8EA | XY->8
     RTS                                     ;$00B8EC |
 
 CODE_00B8ED:
@@ -8075,7 +8075,7 @@ CODE_00CAFE:
 CODE_00CB0A:
     LDA.b #$80
     STA.w HDMAEnable_0D9F                   ;$00CB0C |
-    SEP #$10                                ;$00CB0F |
+    SEP #$10                                ;$00CB0F | XY->8
     RTS                                     ;$00CB11 |
 
 DATA_00CB12:
@@ -11371,7 +11371,7 @@ normal_collision:
     REP #$10                                ;$00ECEE | XY->16
     TAY                                     ;$00ECF0 |
     LDA.w DATA_00E632,Y                     ;$00ECF1 |
-    SEP #$10                                ;$00ECF4 |
+    SEP #$10                                ;$00ECF4 | XY->8
     BMI .CODE_00ED0F                        ;$00ECF6 |
 .CODE_00ECF8:
     BRA .CODE_00ED4A

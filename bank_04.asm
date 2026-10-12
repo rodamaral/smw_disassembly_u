@@ -28,7 +28,7 @@ CODE_04808C:
     LDX $03
     LDA.w DATA_048000,X                     ;$04808E |
     STA $00                                 ;$048091 |
-    SEP #$10                                ;$048093 |
+    SEP #$10                                ;$048093 | XY->8
     LDY.b #$7E                              ;$048095 |
     STY $02                                 ;$048097 |
     REP #$10                                ;$048099 | XY->16
@@ -138,7 +138,7 @@ CODE_048144:
     TAX                                     ;$048147 |
     LDA.w DATA_048006,X                     ;$048148 |
     STA $00                                 ;$04814B |
-    SEP #$10                                ;$04814D |
+    SEP #$10                                ;$04814D | XY->8
     LDY.b #$7E                              ;$04814F |
     STY $02                                 ;$048151 |
     REP #$10                                ;$048153 | XY->16
@@ -1269,7 +1269,7 @@ CODE_048D91:
     LDX.b #$0A
 .CODE_048DBD:
     STX.w OWPlayerAnimation_1F13+2
-    SEP #$10                                ;$048DC0 |
+    SEP #$10                                ;$048DC0 | XY->8
     JSR CODE_048E55                         ;$048DC2 |
     REP #$30                                ;$048DC5 | AXY->16
     LDA.w LevelExitMode_0DD5-1              ;$048DC7 |
@@ -1287,7 +1287,7 @@ CODE_048D91:
     LDA.w CutsceneID_13C6                   ;$048DE7 |
     AND.w #$FF00                            ;$048DEA |
     STA.w CutsceneID_13C6                   ;$048DED |
-    SEP #$10                                ;$048DF0 |
+    SEP #$10                                ;$048DF0 | XY->8
     LDX.w PlayerTurnOW_0DD6                 ;$048DF2 |
     LDA.w OWPlayerXPos_1F17,X               ;$048DF5 |
     LSR                                     ;$048DF8 |
@@ -5275,7 +5275,7 @@ CODE_04DA49:
 .CODE_04DA9D:
     LDA $0F
     JSR CODE_04E677                         ;$04DA9F |
-    SEP #$10                                ;$04DAA2 |
+    SEP #$10                                ;$04DAA2 | XY->8
     STZ.w OWEventProcess_1B86               ;$04DAA4 |
     LDA $0F                                 ;$04DAA7 |
     JSR CODE_04E9F1                         ;$04DAA9 |
@@ -6724,7 +6724,7 @@ CODE_04EAED:
     STA $01                                 ;$04EB27 |
     CPY.w #$FFFC                            ;$04EB29 |
     BNE CODE_04EAE7                         ;$04EB2C |
-    SEP #$10                                ;$04EB2E |
+    SEP #$10                                ;$04EB2E | XY->8
     LDX.b #$23                              ;$04EB30 |
 CODE_04EB32:
     STZ.w $0474,X
@@ -6878,7 +6878,7 @@ CODE_04EC97:
     BEQ CODE_04ECA8                         ;$04EC9B |
     DEX                                     ;$04EC9D |
     BPL CODE_04EC97                         ;$04EC9E |
-    SEP #$10                                ;$04ECA0 |
+    SEP #$10                                ;$04ECA0 | XY->8
     LDA.b #$07                              ;$04ECA2 |
     STA.w OWEventProcess_1B86               ;$04ECA4 |
     RTS                                     ;$04ECA7 |
@@ -7492,7 +7492,7 @@ CODE_04F45E:
     DEX                                     ;$04F464 |
     DEX                                     ;$04F465 |
     BPL CODE_04F45E                         ;$04F466 |
-    SEP #$10                                ;$04F468 |
+    SEP #$10                                ;$04F468 | XY->8
     LDA.w MessageBoxTimer_1B89              ;$04F46A |
     LSR                                     ;$04F46D |
     ADC.w MessageBoxTimer_1B89              ;$04F46E |
