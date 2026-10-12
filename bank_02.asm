@@ -11729,7 +11729,7 @@ ball_chain_and_gray_plat_02D62A:
     TAX                                     ;$02D67D |
     LDA.l CircleCoords,X                    ;$02D67E |
     STA $06                                 ;$02D682 |
-    SEP #$30                                ;$02D684 |
+    SEP #$30                                ;$02D684 | AXY->8
     LDX.w CurrentSprite_15E9                ;$02D686 |
     LDA $04                                 ;$02D689 |
     STA.w $4202                             ;$02D68B |
@@ -15351,7 +15351,7 @@ CODE_02F0DB:
     TAY                                     ;$02F0EC |
     LDA.w #$007D                            ;$02F0ED |
     db $44,$7F,$7F                          ;$02F0F0 |
-    SEP #$30                                ;$02F0F3 |
+    SEP #$30                                ;$02F0F3 | AXY->8
     PLB                                     ;$02F0F5 |
     PLX                                     ;$02F0F6 |
     LDY.b #$00                              ;$02F0F7 |
@@ -16774,7 +16774,7 @@ CODE_02FAF0:
     TAX                                     ;$02FB2A |
     LDA.l CircleCoords,X                    ;$02FB2B |
     STA $06                                 ;$02FB2F |
-    SEP #$30                                ;$02FB31 |
+    SEP #$30                                ;$02FB31 | AXY->8
     LDA $04                                 ;$02FB33 |
     STA.w $4202                             ;$02FB35 |
     LDA.b #$50                              ;$02FB38 |

@@ -55,7 +55,7 @@ CODE_05801E:
     BNE -                                   ;$058087 |/
     STZ.w LevelLoadObject_1928              ;$058089 |
     JSR load_level_0583AC                   ;$05808C |
-    SEP #$30                                ;$05808F |
+    SEP #$30                                ;$05808F | AXY->8
     LDA.w GameMode_0100                     ;$058091 |
     CMP.b #!FadeInEnemyList_22              ;$058094 |
     BPL +                                   ;$058096 |
@@ -86,7 +86,7 @@ CODE_0580BD:
     REP #$30                                ;$0580CB | AXY->16
     INC.b Layer1TileDown_47                 ;$0580CD |
     INC.b Layer2TileDown_4B                 ;$0580CF |
-    SEP #$30                                ;$0580D1 |
+    SEP #$30                                ;$0580D1 | AXY->8
     LDA.b Layer1TileDown_47                 ;$0580D3 |
     LSR                                     ;$0580D5 |
     LSR                                     ;$0580D6 |
@@ -134,7 +134,7 @@ CODE_058126:
     LDY.w #$0000                            ;$058129 |
     STY $03                                 ;$05812C |
     STY $05                                 ;$05812E |
-    SEP #$30                                ;$058130 |
+    SEP #$30                                ;$058130 | AXY->8
     LDA.b #$7E                              ;$058132 |
     STA $0F                                 ;$058134 |
 CODE_058136:
@@ -399,7 +399,7 @@ create_air_tiles_high_05833A:
 
 load_level_0583AC:
     PHP
-    SEP #$30                                ;$0583AD |
+    SEP #$30                                ;$0583AD | AXY->8
     STZ.w LayerProcessing_1933              ;$0583AF |
     JSR CODE_0584E3                         ;$0583B2 |
     JSR CODE_0581FB                         ;$0583B5 |
@@ -881,7 +881,7 @@ set_map16_for_VRAM_upload_05877E:
     CLC                                     ;$058797 |
     ADC.w #$0017                            ;$058798 |
     STA.b Layer1TileDown_47                 ;$05879B |
-    SEP #$30                                ;$05879D |
+    SEP #$30                                ;$05879D | AXY->8
     LDA.b Layer1ScrollDir_55                ;$05879F |
     TAX                                     ;$0587A1 |
     LDA.b Layer1TileUp_45,X                 ;$0587A2 |
@@ -1633,7 +1633,7 @@ CODE_058D71:
 
 CODE_058D7A:
     PHP
-    SEP #$30                                ;$058D7B |
+    SEP #$30                                ;$058D7B | AXY->8
     LDA.w LevelLoadObject_1928              ;$058D7D |
     AND.b #$0F                              ;$058D80 |
     ASL                                     ;$058D82 |
@@ -5683,7 +5683,7 @@ CODE_05CD26:
     ADC.l DynStripeImgSize_7F837B           ;$05CD33 |
     INC A                                   ;$05CD37 |
     STA.l DynStripeImgSize_7F837B           ;$05CD38 |
-    SEP #$30                                ;$05CD3C |
+    SEP #$30                                ;$05CD3C | AXY->8
     RTS                                     ;$05CD3E |
 
 DATA_05CD3F:
@@ -6000,7 +6000,7 @@ CODE_05CFDC:
     SEP #$10                                ;$05CFDE | XY->8
     LDA $0A                                 ;$05CFE0 |
     STA.l DynStripeImgSize_7F837B           ;$05CFE2 |
-    SEP #$30                                ;$05CFE6 |
+    SEP #$30                                ;$05CFE6 | AXY->8
     PLB                                     ;$05CFE8 |
 Return05CFE9:
     RTS
@@ -6291,7 +6291,7 @@ CODE_05D796:
     PHB
     PHK                                     ;$05D797 |
     PLB                                     ;$05D798 |
-    SEP #$30                                ;$05D799 |
+    SEP #$30                                ;$05D799 | AXY->8
     STZ.w SkipMidwayCastleIntro_13CF        ;$05D79B |
     LDA.w YoshiHeavenFlag_1B95              ;$05D79E |
     BNE CODE_05D7A8                         ;$05D7A1 |
@@ -6722,7 +6722,7 @@ CODE_05DAD7:
     JSR CODE_05DAEF                         ;$05DAE8 |
 CODE_05DAEB:
     PLB
-    SEP #$30                                ;$05DAEC |
+    SEP #$30                                ;$05DAEC | AXY->8
     RTL                                     ;$05DAEE |
 
 CODE_05DAEF:

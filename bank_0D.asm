@@ -7483,7 +7483,7 @@ CODE_0DE016:
     LDY $06                                 ;$0DE04C |
     MVN !Bank_7F,!Bank_7F                   ;$0DE04E |
     PLB                                     ;$0DE051 |
-    SEP #$30                                ;$0DE052 |
+    SEP #$30                                ;$0DE052 | AXY->8
     DEC.b LvlLoadObjSize_59                 ;$0DE054 |
     BEQ Return0DE05D                        ;$0DE056 |
     INC $08                                 ;$0DE058 |

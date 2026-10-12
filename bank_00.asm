@@ -33,7 +33,7 @@ reset_start:
     DEX                                     ;$008046 |||
     DEX                                     ;$008047 |||
     BPL -                                   ;$008048 ||/
-    SEP #$30                                ;$00804A || 8 bit A/X/Y
+    SEP #$30                                ;$00804A || AXY->8
     LDA.b #!OpcodeRTL_6B                    ;$00804C || RTL
     STA.l OAM_reset_7F8000+$182             ;$00804E |/
     JSR upload_SPC_engine_0080E8            ;$008052 | Upload the SPC engine
@@ -198,7 +198,7 @@ NMI_start:                                  ;        \
     PHB                                     ;$008171 | |
     PHK                                     ;$008172 | | Also set the bank to 00
     PLB                                     ;$008173 |/
-    SEP #$30                                ;$008174 | 8 bit A/X/Y
+    SEP #$30                                ;$008174 | AXY->8
     LDA.w $4210                             ;$008176 | Read to clear the n flag
     LDA.w SPCIO2_1DFB                       ;$008179 |\ If playing a sound in $1DFB branch to keep playing
     BNE .keep_playing                       ;$00817C |/
@@ -441,7 +441,7 @@ IRQ_start:                                  ;        \
     PHB                                     ;$00837B | |
     PHK                                     ;$00837C | | Also set the bank to 00
     PLB                                     ;$00837D |/
-    SEP #$30                                ;$00837E | 8 bit A/X/Y
+    SEP #$30                                ;$00837E | AXY->8
     LDA.w $4211                             ;$008380 |\ Read the IRQ status flag
     BPL IRQ_return                          ;$008383 |/ If the IRQ status flag is not triggered skip IRQ
     LDA.b #$81                              ;$008385 | Load NMI enabled, autojoy enabled
@@ -817,7 +817,7 @@ CODE_0086CF:
     DEX                                     ;$0086D2 |
     DEX                                     ;$0086D3 |
     BPL CODE_0086CF                         ;$0086D4 |
-    SEP #$30                                ;$0086D6 |
+    SEP #$30                                ;$0086D6 | AXY->8
     LDA.b #$F0                              ;$0086D8 |
     JSL $7F812E                             ;$0086DA |
     RTS                                     ;$0086DE |
@@ -835,7 +835,7 @@ execute_pointer_0086DF:                     ;        \
     INY                                     ;$0086EE | Increment to the first byte of the pointer table
     LDA [$00],Y                             ;$0086EF | Load the pointer
     STA $00                                 ;$0086F1 | And store the pointer
-    SEP #$30                                ;$0086F3 | 8 bit AXY
+    SEP #$30                                ;$0086F3 | AXY->8
     LDY $03                                 ;$0086F5 | Restore Y
     JML [$0000]                             ;$0086F7 / Jump to the pointer
 
@@ -857,7 +857,7 @@ execute_pointer_long_0086FA:                ;        \
     INY                                     ;$008712 | Move to the next byte in the pointer table
     LDA [$02],Y                             ;$008713 |\ Load and store the last byte of the pointer
     STA $01                                 ;$008715 |/ (Also rereads the high byte)
-    SEP #$30                                ;$008717 | 8 bit AXY
+    SEP #$30                                ;$008717 | AXY->8
     LDY $05                                 ;$008719 | Restore Y
     JML [$0000]                             ;$00871B / Jump to the pointer
 
@@ -868,7 +868,7 @@ DMA_stripe_image:
 .next_block                                 ;        |
     LDA [$00],Y                             ;$008726 |\ Continue while end of data bit not set
     BPL .upload_stripe_block                ;$008728 |/
-    SEP #$30                                ;$00872A | 8 bit AXY
+    SEP #$30                                ;$00872A | AXY->8
     RTS                                     ;$00872C / Done with stripe image DMA
 
 .upload_stripe_block                        ;        \ 
@@ -940,7 +940,7 @@ DMA_stripe_image:
     JMP .next_block                         ;$0087AA / Continue and read the next block
 
 generic_layer_1_and_2_upload:               ;        \ 
-    SEP #$30                                ;$0087AD | 8 bit AXY
+    SEP #$30                                ;$0087AD | AXY->8
     LDA.w Layer1VramAddr_1BE4               ;$0087AF |\ if a kayer 1 VRAM destination is set, 
     BNE .layer_1_direction_check            ;$0087B2 |/ Handle layer 1 tilemap DMA
     JMP .layer_2_upload_check               ;$0087B4 / If not, jump to the layer 2 DMA check
@@ -1269,7 +1269,7 @@ clear_non_stack_008A4E:
     LDA.w #$0000                            ;$008A66 |
     STA.l DynStripeImgSize_7F837B           ;$008A69 |
     STZ.w DynPaletteIndex_0681              ;$008A6D |
-    SEP #$30                                ;$008A70 |
+    SEP #$30                                ;$008A70 | AXY->8
     LDA.b #$FF                              ;$008A72 |
     STA.l DynamicStripeImage_7F837D         ;$008A74 |
     RTS                                     ;$008A78 |
@@ -1357,7 +1357,7 @@ CODE_008B0A:
     INC A                                   ;$008B25 |
 CODE_008B26:
     STA.b Mode7ParamA_2E
-    SEP #$30                                ;$008B28 |
+    SEP #$30                                ;$008B28 | AXY->8
     RTS                                     ;$008B2A |
 
 CODE_008B2B:
@@ -2178,7 +2178,7 @@ CODE_0092F5:
     DEY                                     ;$00930C |
     DEY                                     ;$00930D |
     BPL CODE_0092F5                         ;$00930E |
-    SEP #$30                                ;$009310 |
+    SEP #$30                                ;$009310 | AXY->8
     RTS                                     ;$009312 |
 
 DATA_009313:
@@ -2486,7 +2486,7 @@ CODE_009574:
     INC $00                                 ;$00957B |
     DEX                                     ;$00957D |
     BNE CODE_009574                         ;$00957E |
-    SEP #$30                                ;$009580 |
+    SEP #$30                                ;$009580 | AXY->8
     RTS                                     ;$009582 |
 
 GM1D_ending_yoshi_load_009583:
@@ -3011,7 +3011,7 @@ CODE_009925:
 .CODE_009A07:
     LDA.w #$00FF
     STA.l DynamicStripeImage_7F837D,X       ;$009A0A |
-    SEP #$30                                ;$009A0E |
+    SEP #$30                                ;$009A0E | AXY->8
     JSR _load_stripe_image_                 ;$009A10 |
     LDX.b #$B0                              ;$009A13 |
     LDA.b #$90                              ;$009A15 |
@@ -3880,7 +3880,7 @@ CODE_00A050:
     TAX                                     ;$00A05E |
     CPX.w #$1B00                            ;$00A05F |
     BCC CODE_00A04A                         ;$00A062 |
-    SEP #$30                                ;$00A064 |
+    SEP #$30                                ;$00A064 | AXY->8
     LDA.b #!EnableL2Int_80                  ;$00A066 |
     TSB.b ScreenMode_5B                     ;$00A068 |
     RTS                                     ;$00A06A |
@@ -4529,7 +4529,7 @@ GM12_level_load_2_00A59C:
     PLB                                     ;$00A5E7 |
     LDX.w $0701                             ;$00A5E8 |
     STX.w $0903                             ;$00A5EB |
-    SEP #$30                                ;$00A5EE |
+    SEP #$30                                ;$00A5EE | AXY->8
     JSR try_castle_entrance_00919B          ;$00A5F0 |
     JSR consolidate_OAM_008494              ;$00A5F3 |
     JMP increment_game_mode_0093F4          ;$00A5F6 |
@@ -4847,7 +4847,7 @@ CODE_00A85A:
     BNE CODE_00A85A                         ;$00A868 |
     CPX.w #$0300                            ;$00A86A |
     BCC CODE_00A845                         ;$00A86D |
-    SEP #$30                                ;$00A86F |
+    SEP #$30                                ;$00A86F | AXY->8
     LDY.b #$00                              ;$00A871 |
     JSL CODE_00BA28                         ;$00A873 |
     REP #$30                                ;$00A877 | AXY->16
@@ -4884,7 +4884,7 @@ CODE_00A89A:
 CODE_00A8B3:
     CPX.w #$0180
     BCC CODE_00A886                         ;$00A8B6 |
-    SEP #$30                                ;$00A8B8 |
+    SEP #$30                                ;$00A8B8 | AXY->8
     LDA.b #$01                              ;$00A8BA |
     STA.w UploadMarioStart_143A             ;$00A8BC |
     STA.w MarioStartFlag_1935               ;$00A8BF |
@@ -4941,7 +4941,7 @@ CODE_00A9B2:
     INY                                     ;$00A9B8 |
     DEX                                     ;$00A9B9 |
     BPL CODE_00A9B2                         ;$00A9BA |
-    SEP #$30                                ;$00A9BC |
+    SEP #$30                                ;$00A9BC | AXY->8
     INC $0E                                 ;$00A9BE |
     DEC $0F                                 ;$00A9C0 |
     BPL CODE_00A9A3                         ;$00A9C2 |
@@ -5347,7 +5347,7 @@ LoadPalette:
     LDA.w #$0002                            ;$00ACE2 |
     STA $08                                 ;$00ACE5 |
     JSR LoadColors                          ;$00ACE7 |
-    SEP #$30                                ;$00ACEA |
+    SEP #$30                                ;$00ACEA | AXY->8
     RTS                                     ;$00ACEC |
 
 LoadCol8Pal:
@@ -5440,7 +5440,7 @@ CODE_00AD32:
     LDA.w #$0001                            ;$00AD9B |
     STA $08                                 ;$00AD9E |
     JSR LoadColors                          ;$00ADA0 |
-    SEP #$30                                ;$00ADA3 |
+    SEP #$30                                ;$00ADA3 | AXY->8
     RTS                                     ;$00ADA5 |
 
 CODE_00ADA6:
@@ -5463,7 +5463,7 @@ CODE_00ADA6:
     LDA.w #$0000                            ;$00ADCE |
     STA $08                                 ;$00ADD1 |
     JSR LoadColors                          ;$00ADD3 |
-    SEP #$30                                ;$00ADD6 |
+    SEP #$30                                ;$00ADD6 | AXY->8
     RTS                                     ;$00ADD8 |
 
 CODE_00ADD9:
@@ -5489,7 +5489,7 @@ CODE_00ADD9:
     LDA.w #$0000                            ;$00AE0A |
     STA $08                                 ;$00AE0D |
     JSR LoadColors                          ;$00AE0F |
-    SEP #$30                                ;$00AE12 |
+    SEP #$30                                ;$00AE12 | AXY->8
     RTS                                     ;$00AE14 |
 
 CODE_00AE15:
@@ -5509,7 +5509,7 @@ CODE_00AE15:
     STA $06                                 ;$00AE37 |
     STZ $08                                 ;$00AE39 |
     JSR LoadColors                          ;$00AE3B |
-    SEP #$30                                ;$00AE3E |
+    SEP #$30                                ;$00AE3E | AXY->8
     RTS                                     ;$00AE40 |
 
 RGB_offsets:
@@ -5630,7 +5630,7 @@ CODE_00AF35:
     JSR CODE_00AFC0                         ;$00AF90 |
     LDA $04                                 ;$00AF93 |
     STA.w $0701                             ;$00AF95 |
-    SEP #$30                                ;$00AF98 |
+    SEP #$30                                ;$00AF98 | AXY->8
     STZ.w $0A05                             ;$00AF9A |
     LDA.b #$03                              ;$00AF9D |
     STA.w $0680                             ;$00AF9F |
@@ -5727,7 +5727,7 @@ CODE_00B012:
     SBC.w #$0010                            ;$00B034 |
     TAX                                     ;$00B037 |
     BPL CODE_00B00F                         ;$00B038 |
-    SEP #$30                                ;$00B03A |
+    SEP #$30                                ;$00B03A | AXY->8
     PLB                                     ;$00B03C |
     RTL                                     ;$00B03D |
 
@@ -5770,7 +5770,7 @@ CODE_00B06D:
     SBC.w #$0012                            ;$00B085 |
     TAX                                     ;$00B088 |
     BPL CODE_00B068                         ;$00B089 |
-    SEP #$30                                ;$00B08B |
+    SEP #$30                                ;$00B08B | AXY->8
     STZ.w $0AF5                             ;$00B08D |
 Return00B090:
     RTS

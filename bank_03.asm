@@ -3385,7 +3385,7 @@ Reznor:
     TAX                                     ;$039955 |
     LDA.l CircleCoords,X                    ;$039956 |
     STA $06                                 ;$03995A |
-    SEP #$30                                ;$03995C |
+    SEP #$30                                ;$03995C | AXY->8
     LDA $04                                 ;$03995E |
     STA.w $4202                             ;$039960 |
     LDA.b #$38                              ;$039963 |
@@ -10088,7 +10088,7 @@ break_bridge_tile_03D77F:
     CLC                                     ;$03D7E1 |
     ADC.w #$000C                            ;$03D7E2 |
     STA.l DynStripeImgSize_7F837B           ;$03D7E5 |
-    SEP #$30                                ;$03D7E9 |
+    SEP #$30                                ;$03D7E9 | AXY->8
     RTS                                     ;$03D7EB |
 
 IggyPlatform:
@@ -10620,7 +10620,7 @@ CODE_03DF96:
 CODE_03DFA6:
     DEX
     BPL CODE_03DF55                         ;$03DFA7 |
-    SEP #$30                                ;$03DFA9 |
+    SEP #$30                                ;$03DFA9 | AXY->8
     PLX                                     ;$03DFAB |
     PLB                                     ;$03DFAC |
     RTL                                     ;$03DFAD |

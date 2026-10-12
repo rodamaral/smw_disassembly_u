@@ -633,7 +633,7 @@ run_credits_0C938D:
     PHB
     PHK                                     ;$0C938E |
     PLB                                     ;$0C938F |
-    SEP #$30                                ;$0C9390 |
+    SEP #$30                                ;$0C9390 | AXY->8
     JSR CODE_0C9F6A                         ;$0C9392 |
     JSR CODE_0CAB1F                         ;$0C9395 |
     PLB                                     ;$0C9398 |
@@ -718,7 +718,7 @@ CODE_0C9409:
     BNE CODE_0C93E2                         ;$0C9431 |
     LDA.w #$5840                            ;$0C9433 |
     STA.b StaffRollLinePos_65               ;$0C9436 |
-    SEP #$30                                ;$0C9438 |
+    SEP #$30                                ;$0C9438 | AXY->8
     STZ.b StaffRollCurLine_67               ;$0C943A |
     STZ.w LevelLoadObject_1928              ;$0C943C |
     JSL DMA_credits_BG                      ;$0C943F |
@@ -881,8 +881,8 @@ credits_BG_DMA_1:
 credits_BG_DMA_2:
     db $01,$18,$00,$44,$7F,$00,$04
 
-DMA_credits_BG:                             ;               \
-    SEP #$30                                ;$0C9569 |\ 8 bit AXY
+DMA_credits_BG:                             ;        \
+    SEP #$30                                ;$0C9569 |\ AXY->8
     PHB                                     ;$0C9569 | | and switch the data bank to $0C
     PHK                                     ;$0C956A | |
     PLB                                     ;$0C956B |/
@@ -2902,7 +2902,7 @@ CODE_0CAC06:
     BPL CODE_0CAC01                         ;$0CAC1E |
     LDA.w #$0000                            ;$0CAC20 |
     STA.w $0684,X                           ;$0CAC23 |
-    SEP #$30                                ;$0CAC26 |
+    SEP #$30                                ;$0CAC26 | AXY->8
     RTS                                     ;$0CAC28 |
 
 DATA_0CAC29:

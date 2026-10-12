@@ -10366,7 +10366,7 @@ set_rotation_trigonometry_01CB20:
     TAX                                     ;$01CB42 |
     LDA.l CircleCoords,X                    ;$01CB43 |
     STA.w RotationCosine_14C5               ;$01CB47 |
-    SEP #$30                                ;$01CB4A |
+    SEP #$30                                ;$01CB4A | AXY->8
     LDA $01                                 ;$01CB4C |
     STA.w BrPlatAngleParity_1866+1          ;$01CB4E |
     PLX                                     ;$01CB51 |
