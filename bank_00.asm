@@ -9745,118 +9745,118 @@ water_physics:
     STZ.w SpinJumpFlag_140D                 ;$00D990 |
     LDY.b PlayerYSpeed_7D                   ;$00D993 |
     LDA.w CarryingFlagMirror_148F           ;$00D995 |
-    BEQ CODE_00D9EB                         ;$00D998 |
+    BEQ .CODE_00D9EB                        ;$00D998 |
     LDA.b PlayerInAir_72                    ;$00D99A |
-    BNE CODE_00D9AF                         ;$00D99C |
+    BNE .CODE_00D9AF                        ;$00D99C |
     LDA.b byetudlrPress_16                  ;$00D99E |
     ORA.b axlr0000Press_18                  ;$00D9A0 |
-    BPL CODE_00D9AF                         ;$00D9A2 |
+    BPL .CODE_00D9AF                        ;$00D9A2 |
     LDA.b #$0B                              ;$00D9A4 |
     STA.b PlayerInAir_72                    ;$00D9A6 |
     STZ.w PlayerSlopePose_13ED              ;$00D9A8 |
     LDY.b #$F0                              ;$00D9AB |
-    BRA CODE_00D9B5                         ;$00D9AD |
+    BRA .CODE_00D9B5                        ;$00D9AD |
 
-CODE_00D9AF:
+.CODE_00D9AF:
     LDA.b byetudlrHold_15
     AND.b #$04                              ;$00D9B1 |
-    BEQ CODE_00D9BD                         ;$00D9B3 |
-CODE_00D9B5:
+    BEQ .CODE_00D9BD                        ;$00D9B3 |
+.CODE_00D9B5:
     JSR CODE_00DAA9
     TYA                                     ;$00D9B8 |
     CLC                                     ;$00D9B9 |
     ADC.b #$08                              ;$00D9BA |
     TAY                                     ;$00D9BC |
-CODE_00D9BD:
+.CODE_00D9BD:
     INY
     LDA.w PlayerCanJumpWater_13FA           ;$00D9BE |
-    BNE CODE_00D9CC                         ;$00D9C1 |
+    BNE .CODE_00D9CC                        ;$00D9C1 |
     DEY                                     ;$00D9C3 |
     LDA.b Frame_14                          ;$00D9C4 |
     AND.b #$03                              ;$00D9C6 |
-    BNE CODE_00D9CC                         ;$00D9C8 |
+    BNE .CODE_00D9CC                        ;$00D9C8 |
     DEY                                     ;$00D9CA |
     DEY                                     ;$00D9CB |
-CODE_00D9CC:
+.CODE_00D9CC:
     TYA
-    BMI CODE_00D9D7                         ;$00D9CD |
+    BMI .CODE_00D9D7                        ;$00D9CD |
     CMP.b #$10                              ;$00D9CF |
-    BCC CODE_00D9DD                         ;$00D9D1 |
+    BCC .CODE_00D9DD                        ;$00D9D1 |
     LDA.b #$10                              ;$00D9D3 |
-    BRA CODE_00D9DD                         ;$00D9D5 |
+    BRA .CODE_00D9DD                        ;$00D9D5 |
 
-CODE_00D9D7:
+.CODE_00D9D7:
     CMP.b #$F0
-    BCS CODE_00D9DD                         ;$00D9D9 |
+    BCS .CODE_00D9DD                        ;$00D9D9 |
     LDA.b #$F0                              ;$00D9DB |
-CODE_00D9DD:
+.CODE_00D9DD:
     STA.b PlayerYSpeed_7D
     LDY.b #$80                              ;$00D9DF |
     LDA.b byetudlrHold_15                   ;$00D9E1 |
     AND.b #$03                              ;$00D9E3 |
-    BNE CODE_00DA48                         ;$00D9E5 |
+    BNE .CODE_00DA48                        ;$00D9E5 |
     LDA.b PlayerDir_76                      ;$00D9E7 |
-    BRA CODE_00DA46                         ;$00D9E9 |
+    BRA .CODE_00DA46                        ;$00D9E9 |
 
-CODE_00D9EB:
+.CODE_00D9EB:
     LDA.b byetudlrPress_16
     ORA.b axlr0000Press_18                  ;$00D9ED |
-    BPL CODE_00DA0B                         ;$00D9EF |
+    BPL .CODE_00DA0B                        ;$00D9EF |
     LDA.w PlayerCanJumpWater_13FA           ;$00D9F1 |
-    BNE CODE_00DA0B                         ;$00D9F4 |
+    BNE .CODE_00DA0B                        ;$00D9F4 |
     JSR CODE_00DAA9                         ;$00D9F6 |
     LDA.b PlayerInAir_72                    ;$00D9F9 |
-    BNE CODE_00DA06                         ;$00D9FB |
+    BNE .CODE_00DA06                        ;$00D9FB |
     LDA.b #$0B                              ;$00D9FD |
     STA.b PlayerInAir_72                    ;$00D9FF |
     STZ.w PlayerSlopePose_13ED              ;$00DA01 |
     LDY.b #$F0                              ;$00DA04 |
-CODE_00DA06:
+.CODE_00DA06:
     TYA
     SEC                                     ;$00DA07 |
     SBC.b #$20                              ;$00DA08 |
     TAY                                     ;$00DA0A |
-CODE_00DA0B:
+.CODE_00DA0B:
     LDA.b Frame_14
     AND.b #$03                              ;$00DA0D |
-    BNE CODE_00DA13                         ;$00DA0F |
+    BNE .CODE_00DA13                        ;$00DA0F |
     INY                                     ;$00DA11 |
     INY                                     ;$00DA12 |
-CODE_00DA13:
+.CODE_00DA13:
     LDA.b byetudlrHold_15
     AND.b #$0C                              ;$00DA15 |
     LSR                                     ;$00DA17 |
     LSR                                     ;$00DA18 |
     TAX                                     ;$00DA19 |
     TYA                                     ;$00DA1A |
-    BMI CODE_00DA25                         ;$00DA1B |
+    BMI .CODE_00DA25                        ;$00DA1B |
     CMP.b #$40                              ;$00DA1D |
-    BCC CODE_00DA2D                         ;$00DA1F |
+    BCC .CODE_00DA2D                        ;$00DA1F |
     LDA.b #$40                              ;$00DA21 |
-    BRA CODE_00DA2D                         ;$00DA23 |
+    BRA .CODE_00DA2D                        ;$00DA23 |
 
-CODE_00DA25:
+.CODE_00DA25:
     CMP.w DATA_00D984,X
-    BCS CODE_00DA2D                         ;$00DA28 |
+    BCS .CODE_00DA2D                        ;$00DA28 |
     LDA.w DATA_00D984,X                     ;$00DA2A |
-CODE_00DA2D:
+.CODE_00DA2D:
     STA.b PlayerYSpeed_7D
     LDA.b PlayerInAir_72                    ;$00DA2F |
-    BNE CODE_00DA40                         ;$00DA31 |
+    BNE .CODE_00DA40                        ;$00DA31 |
     LDA.b byetudlrHold_15                   ;$00DA33 |
     AND.b #$04                              ;$00DA35 |
-    BEQ CODE_00DA40                         ;$00DA37 |
+    BEQ .CODE_00DA40                        ;$00DA37 |
     STZ.w CapeInteracts_13E8                ;$00DA39 |
     INC.b PlayerIsDucking_73                ;$00DA3C |
-    BRA CODE_00DA69                         ;$00DA3E |
+    BRA .CODE_00DA69                        ;$00DA3E |
 
-CODE_00DA40:
+.CODE_00DA40:
     LDA.b byetudlrHold_15
     AND.b #$03                              ;$00DA42 |
-    BEQ CODE_00DA69                         ;$00DA44 |
-CODE_00DA46:
+    BEQ .CODE_00DA69                        ;$00DA44 |
+.CODE_00DA46:
     LDY.b #$78
-CODE_00DA48:
+.CODE_00DA48:
     STY $00
     AND.b #$01                              ;$00DA4A |
     STA.b PlayerDir_76                      ;$00DA4C |
@@ -9867,56 +9867,56 @@ CODE_00DA48:
     PLA                                     ;$00DA52 |
     ORA $00                                 ;$00DA53 |
     LDY.w Layer3TideSetting_1403            ;$00DA55 |
-    BEQ CODE_00DA5D                         ;$00DA58 |
+    BEQ .CODE_00DA5D                        ;$00DA58 |
     CLC                                     ;$00DA5A |
     ADC.b #$04                              ;$00DA5B |
-CODE_00DA5D:
+.CODE_00DA5D:
     TAY
     LDA.b PlayerInAir_72                    ;$00DA5E |
-    BEQ CODE_00DA64                         ;$00DA60 |
+    BEQ .CODE_00DA64                        ;$00DA60 |
     INY                                     ;$00DA62 |
     INY                                     ;$00DA63 |
-CODE_00DA64:
+.CODE_00DA64:
     JSR CODE_00D742
-    BRA CODE_00DA7C                         ;$00DA67 |
+    BRA .CODE_00DA7C                        ;$00DA67 |
 
-CODE_00DA69:
+.CODE_00DA69:
     LDY.b #$00
     TYX                                     ;$00DA6B |
     LDA.w Layer3TideSetting_1403            ;$00DA6C |
-    BEQ CODE_00DA79                         ;$00DA6F |
+    BEQ .CODE_00DA79                        ;$00DA6F |
     LDX.b #$1E                              ;$00DA71 |
     LDA.b PlayerInAir_72                    ;$00DA73 |
-    BNE CODE_00DA79                         ;$00DA75 |
+    BNE .CODE_00DA79                        ;$00DA75 |
     INX                                     ;$00DA77 |
     INX                                     ;$00DA78 |
-CODE_00DA79:
+.CODE_00DA79:
     JSR CODE_00D772
-CODE_00DA7C:
+.CODE_00DA7C:
     JSR powerup_physics
     JSL set_player_pose                     ;$00DA7F |
     LDA.w CapeSpinTimer_14A6                ;$00DA83 |
-    BNE Return00DA8C                        ;$00DA86 |
+    BNE .Return00DA8C                       ;$00DA86 |
     LDA.b PlayerInAir_72                    ;$00DA88 |
-    BNE CODE_00DA8D                         ;$00DA8A |
-Return00DA8C:
+    BNE .CODE_00DA8D                        ;$00DA8A |
+.Return00DA8C:
     RTS
 
-CODE_00DA8D:
+.CODE_00DA8D:
     LDA.b #$18
     LDY.w ShootFireTimer_149C               ;$00DA8F |
-    BNE CODE_00DA9F                         ;$00DA92 |
+    BNE .CODE_00DA9F                        ;$00DA92 |
     LDA.w PlayerAniTimer_1496               ;$00DA94 |
     LSR                                     ;$00DA97 |
     LSR                                     ;$00DA98 |
     AND.b #$03                              ;$00DA99 |
     TAY                                     ;$00DA9B |
     LDA.w DATA_00D980,Y                     ;$00DA9C |
-CODE_00DA9F:
+.CODE_00DA9F:
     LDY.w CarryingFlagMirror_148F
-    BEQ CODE_00DAA5                         ;$00DAA2 |
+    BEQ .CODE_00DAA5                        ;$00DAA2 |
     INC A                                   ;$00DAA4 |
-CODE_00DAA5:
+.CODE_00DAA5:
     STA.w PlayerPose_13E0
     RTS                                     ;$00DAA8 |
 
@@ -9965,41 +9965,37 @@ CODE_00DB17:
     STZ.w PlayerCapePose_13DF               ;$00DB1B |
     STZ.w SpinJumpFlag_140D                 ;$00DB1E |
     LDY.w NetDoorTimer_149D                 ;$00DB21 |
-    BEQ CODE_00DB7D                         ;$00DB24 |
+    BEQ .CODE_00DB7D                        ;$00DB24 |
     LDA.w NetDoorPlayerXOffset_1878         ;$00DB26 |
-    BPL CODE_00DB2E                         ;$00DB29 |
-    EOR.b #$FF                              ;$00DB2B |
-    INC A                                   ;$00DB2D |
-CODE_00DB2E:
-    TAX
+    BPL +                                   ;$00DB29 |\
+    EOR.b #$FF                              ;$00DB2B ||
+    INC A                                   ;$00DB2D |/
++   TAX                                     ;$00DB2E |
     CPY.b #$1E                              ;$00DB2F |
-    BCC CODE_00DB45                         ;$00DB31 |
+    BCC .CODE_00DB45                        ;$00DB31 |
     LDA.w DATA_00DADF,X                     ;$00DB33 |
     BIT.w NetDoorPlayerXOffset_1878         ;$00DB36 |
-    BPL CODE_00DB3E                         ;$00DB39 |
-    EOR.b #$FF                              ;$00DB3B |
+    BPL +                                   ;$00DB39 |\
+    EOR.b #$FF                              ;$00DB3B |/
     INC A                                   ;$00DB3D |
-CODE_00DB3E:
-    STA.b PlayerXSpeed_7B
++   STA.b PlayerXSpeed_7B                   ;$00DB3E |
     STZ.b PlayerXSubpeed_7A                 ;$00DB40 |
     STZ.w PlayerXPosSpx_13DA                ;$00DB42 |
-CODE_00DB45:
+.CODE_00DB45:
     TXA
     ASL                                     ;$00DB46 |
     TAX                                     ;$00DB47 |
     LDA.w NetDoorPlayerXOffset_1878         ;$00DB48 |
     CPY.b #$08                              ;$00DB4B |
-    BCS CODE_00DB51                         ;$00DB4D |
-    EOR.b #$80                              ;$00DB4F |
-CODE_00DB51:
-    ASL
+    BCS +                                   ;$00DB4D |\
+    EOR.b #$80                              ;$00DB4F |/
++   ASL                                     ;$00DB51 |
     REP #$20                                ;$00DB52 | A->16
     LDA.w DATA_00DAF1,X                     ;$00DB54 |
-    BCS CODE_00DB5D                         ;$00DB57 |
-    EOR.w #$FFFF                            ;$00DB59 |
-    INC A                                   ;$00DB5C |
-CODE_00DB5D:
-    CLC
+    BCS +                                   ;$00DB57 |\
+    EOR.w #$FFFF                            ;$00DB59 ||
+    INC A                                   ;$00DB5C |/
++   CLC                                     ;$00DB5D |
     ADC.b PlayerXSpeed_7A                   ;$00DB5E |
     STA.b PlayerXSpeed_7A                   ;$00DB60 |
     SEP #$20                                ;$00DB62 | A->8
@@ -10010,44 +10006,43 @@ CODE_00DB5D:
     TAY                                     ;$00DB6B |
     LDA.w DATA_00DABD,Y                     ;$00DB6C |
     BIT.w NetDoorPlayerXOffset_1878         ;$00DB6F |
-    BMI CODE_00DB76                         ;$00DB72 |
-    EOR.b #$01                              ;$00DB74 |
-CODE_00DB76:
-    STA.b PlayerDir_76
+    BMI +                                   ;$00DB72 |\
+    EOR.b #$01                              ;$00DB74 |/
++   STA.b PlayerDir_76                      ;$00DB76 |
     LDA.w DATA_00DACD,Y                     ;$00DB78 |
-    BRA CODE_00DB92                         ;$00DB7B |
+    BRA .CODE_00DB92                        ;$00DB7B |
 
-CODE_00DB7D:
+.CODE_00DB7D:
     STZ.b PlayerXSpeed_7B
     STZ.b PlayerXSubpeed_7A                 ;$00DB7F |
     LDX.w PlayerBehindNet_13F9              ;$00DB81 |
     LDA.w PunchNetTimer_149E                ;$00DB84 |
-    BEQ CODE_00DB96                         ;$00DB87 |
+    BEQ .CODE_00DB96                        ;$00DB87 |
     TXA                                     ;$00DB89 |
     INC A                                   ;$00DB8A |
     INC A                                   ;$00DB8B |
     JSR CODE_00D044                         ;$00DB8C |
     LDA.w ClimbPunchingImgs,X               ;$00DB8F |
-CODE_00DB92:
+.CODE_00DB92:
     STA.w PlayerPose_13E0
     RTS                                     ;$00DB95 |
 
-CODE_00DB96:
+.CODE_00DB96:
     LDY.b PlayerInWater_75
     BIT.b byetudlrPress_16                  ;$00DB98 |
-    BPL CODE_00DBAC                         ;$00DB9A |
+    BPL .CODE_00DBAC                        ;$00DB9A |
     LDA.b #$0B                              ;$00DB9C |
     STA.b PlayerInAir_72                    ;$00DB9E |
     LDA.w DATA_00DABB,Y                     ;$00DBA0 |
     STA.b PlayerYSpeed_7D                   ;$00DBA3 |
     LDA.b #$01                              ;$00DBA5 |
     STA.w SPCIO1_1DFA                       ;$00DBA7 |
-    BRA CODE_00DC00                         ;$00DBAA |
+    BRA .CODE_00DC00                        ;$00DBAA |
 
-CODE_00DBAC:
-    BVC CODE_00DBCA
+.CODE_00DBAC:
+    BVC .CODE_00DBCA
     LDA.b PlayerClimb_74                    ;$00DBAE |
-    BPL CODE_00DBCA                         ;$00DBB0 |
+    BPL .CODE_00DBCA                        ;$00DBB0 |
     LDA.b #$01                              ;$00DBB2 |
     STA.w SPCIO0_1DF9                       ;$00DBB4 |
     STX.w NetDoorDirIndex_13F0              ;$00DBB7 |
@@ -10060,67 +10055,65 @@ CODE_00DBAC:
     STA.b PlayerDir_76                      ;$00DBC3 |
     LDA.b #$08                              ;$00DBC5 |
     STA.w PunchNetTimer_149E                ;$00DBC7 |
-CODE_00DBCA:
+.CODE_00DBCA:
     LDA.w ClimbingImgs,X
     STA.w PlayerPose_13E0                   ;$00DBCD |
     LDA.b byetudlrHold_15                   ;$00DBD0 |
     AND.b #$03                              ;$00DBD2 |
-    BEQ CODE_00DBF2                         ;$00DBD4 |
+    BEQ .CODE_00DBF2                        ;$00DBD4 |
     LSR                                     ;$00DBD6 |
     TAX                                     ;$00DBD7 |
     LDA.b InteractionPtsClimbable_8B        ;$00DBD8 |
     AND.b #$18                              ;$00DBDA |
     CMP.b #$18                              ;$00DBDC |
-    BEQ CODE_00DBE8                         ;$00DBDE |
+    BEQ .CODE_00DBE8                        ;$00DBDE |
     LDA.b PlayerClimb_74                    ;$00DBE0 |
-    BPL CODE_00DC00                         ;$00DBE2 |
+    BPL .CODE_00DC00                        ;$00DBE2 |
     CPX.b PlayerBlockXSide_8C               ;$00DBE4 |
-    BEQ CODE_00DBF2                         ;$00DBE6 |
-CODE_00DBE8:
+    BEQ .CODE_00DBF2                        ;$00DBE6 |
+.CODE_00DBE8:
     TXA
     ASL                                     ;$00DBE9 |
     ORA.b PlayerInWater_75                  ;$00DBEA |
     TAX                                     ;$00DBEC |
     LDA.w DATA_00DAB7,X                     ;$00DBED |
     STA.b PlayerXSpeed_7B                   ;$00DBF0 |
-CODE_00DBF2:
+.CODE_00DBF2:
     LDA.b byetudlrHold_15
     AND.b #$0C                              ;$00DBF4 |
-    BEQ CODE_00DC16                         ;$00DBF6 |
+    BEQ .CODE_00DC16                        ;$00DBF6 |
     AND.b #$08                              ;$00DBF8 |
-    BNE CODE_00DC03                         ;$00DBFA |
+    BNE .CODE_00DC03                        ;$00DBFA |
     LSR.b InteractionPtsClimbable_8B        ;$00DBFC |
-    BCS CODE_00DC0B                         ;$00DBFE |
-CODE_00DC00:
+    BCS .CODE_00DC0B                        ;$00DBFE |
+.CODE_00DC00:
     STZ.b PlayerClimb_74
     RTS                                     ;$00DC02 |
 
-CODE_00DC03:
+.CODE_00DC03:
     INY
     INY                                     ;$00DC04 |
     LDA.b InteractionPtsClimbable_8B        ;$00DC05 |
     AND.b #$02                              ;$00DC07 |
-    BEQ CODE_00DC16                         ;$00DC09 |
-CODE_00DC0B:
+    BEQ .CODE_00DC16                        ;$00DC09 |
+.CODE_00DC0B:
     LDA.b PlayerClimb_74
-    BMI CODE_00DC11                         ;$00DC0D |
-    STZ.b PlayerXSpeed_7B                   ;$00DC0F |
-CODE_00DC11:
-    LDA.w DATA_00DAB7,Y
+    BMI +                                   ;$00DC0D |\
+    STZ.b PlayerXSpeed_7B                   ;$00DC0F |/
++   LDA.w DATA_00DAB7,Y                     ;$00DC11 |
     STA.b PlayerYSpeed_7D                   ;$00DC14 |
-CODE_00DC16:
+.CODE_00DC16:
     ORA.b PlayerXSpeed_7B
-    BEQ Return00DC2C                        ;$00DC18 |
-    LDA.w PlayerAniTimer_1496               ;$00DC1A |
-    ORA.b #$08                              ;$00DC1D |
-    STA.w PlayerAniTimer_1496               ;$00DC1F |
-    AND.b #$07                              ;$00DC22 |
-    BNE Return00DC2C                        ;$00DC24 |
-    LDA.b PlayerDir_76                      ;$00DC26 |
-    EOR.b #$01                              ;$00DC28 |
-    STA.b PlayerDir_76                      ;$00DC2A |
-Return00DC2C:
-    RTS
+    BEQ +                                   ;$00DC18 |\
+    LDA.w PlayerAniTimer_1496               ;$00DC1A ||
+    ORA.b #$08                              ;$00DC1D ||
+    STA.w PlayerAniTimer_1496               ;$00DC1F ||
+    AND.b #$07                              ;$00DC22 ||
+    BNE +                                   ;$00DC24 ||
+    LDA.b PlayerDir_76                      ;$00DC26 ||
+    EOR.b #$01                              ;$00DC28 ||
+    STA.b PlayerDir_76                      ;$00DC2A |/
++   RTS                                     ;$00DC2C |
 
 apply_player_speeds:                        ;        \
     LDA.b PlayerYSpeed_7D                   ;$00DC2D |\ Backup the Y speed.
@@ -10640,10 +10633,10 @@ draw_mario_and_yoshi_00E2BD:
 
 CODE_00E45D:
     LSR.b PlayerHiddenTiles_78
-    BCS CODE_00E49F                         ;$00E45F |
+    BCS .CODE_00E49F                        ;$00E45F |
     LDX $06                                 ;$00E461 |
     LDA.w Mario8x8Tiles,X                   ;$00E463 |
-    BMI CODE_00E49F                         ;$00E466 |
+    BMI .CODE_00E49F                        ;$00E466 |
     STA.w $0302,Y                           ;$00E468 |
     LDX $05                                 ;$00E46B |
     REP #$20                                ;$00E46D |
@@ -10656,7 +10649,7 @@ CODE_00E45D:
     CMP.w #$0100                            ;$00E47A |
     PLA                                     ;$00E47D |
     SEP #$20                                ;$00E47E |
-    BCS CODE_00E49F                         ;$00E480 |
+    BCS .CODE_00E49F                        ;$00E480 |
     STA.w $0301,Y                           ;$00E482 |
     REP #$20                                ;$00E485 |
     LDA.b PlayerXPosScrRel_7E               ;$00E487 |
@@ -10668,11 +10661,11 @@ CODE_00E45D:
     CMP.w #$0200                            ;$00E492 |
     PLA                                     ;$00E495 |
     SEP #$20                                ;$00E496 |
-    BCS CODE_00E49F                         ;$00E498 |
+    BCS .CODE_00E49F                        ;$00E498 |
     STA.w $0300,Y                           ;$00E49A |
     XBA                                     ;$00E49D |
     LSR                                     ;$00E49E |
-CODE_00E49F:
+.CODE_00E49F:
     PHP
     TYA                                     ;$00E4A0 |
     LSR                                     ;$00E4A1 |
@@ -10865,11 +10858,11 @@ DATA_00E91F:
 level_collision:
     JSR reset_collision_flags               ;$00E92B \ Reset the collision flags.
     LDA.w PlayerDisableObjInt_185C          ;$00E92E |\ If the fall through layers flag isn't set,
-    BEQ .collision                          ;$00E931 |/ process collision.
+    BEQ .collision_00E938                   ;$00E931 |/ process collision.
     JSR routine_00EE1D                      ;$00E933 |
     BRA no_layer_collision                  ;$00E936 /
 
-.collision                                  ;        \
+.collision_00E938                           ;        \
     LDA.w PlayerGroundType_13EF             ;$00E938 |\
     STA $8D                                 ;$00E93B | | Backup the on ground flag,
     STZ.w PlayerGroundType_13EF             ;$00E93D | |
@@ -10948,27 +10941,26 @@ CODE_00E9C8:
     BEQ CODE_00E9FB                         ;$00E9CA |
     BPL CODE_00E9FB                         ;$00E9CC |
     LDA.w HorizLayer1Setting_1411           ;$00E9CE |
-    BNE CODE_00E9F6                         ;$00E9D1 |
-    LDA.b #!Block_Screen_80                 ;$00E9D3 |
-    TSB.b PlayerBlocked_77                  ;$00E9D5 |
-    REP #$20                                ;$00E9D7 |
-    LDA.w Layer1ScrollXSpeed_1446           ;$00E9D9 |
-    LSR                                     ;$00E9DC |
-    LSR                                     ;$00E9DD |
-    LSR                                     ;$00E9DE |
-    LSR                                     ;$00E9DF |
-    SEP #$20                                ;$00E9E0 |
-    STA $00                                 ;$00E9E2 |
-    SEC                                     ;$00E9E4 |
-    SBC.b PlayerXSpeed_7B                   ;$00E9E5 |
-    EOR.w DATA_00E90E,Y                     ;$00E9E7 |
-    BMI CODE_00E9F6                         ;$00E9EA |
-    LDA $00                                 ;$00E9EC |
-    STA.b PlayerXSpeed_7B                   ;$00E9EE |
-    LDA.w Layer1ScrollXPosUpd_144E          ;$00E9F0 |
-    STA.w PlayerXPosSpx_13DA                ;$00E9F3 |
-CODE_00E9F6:
-    LDA.w DATA_00E90A,Y
+    BNE +                                   ;$00E9D1 |\
+    LDA.b #!Block_Screen_80                 ;$00E9D3 ||
+    TSB.b PlayerBlocked_77                  ;$00E9D5 ||
+    REP #$20                                ;$00E9D7 ||
+    LDA.w Layer1ScrollXSpeed_1446           ;$00E9D9 ||
+    LSR                                     ;$00E9DC ||
+    LSR                                     ;$00E9DD ||
+    LSR                                     ;$00E9DE ||
+    LSR                                     ;$00E9DF ||
+    SEP #$20                                ;$00E9E0 ||
+    STA $00                                 ;$00E9E2 ||
+    SEC                                     ;$00E9E4 ||
+    SBC.b PlayerXSpeed_7B                   ;$00E9E5 ||
+    EOR.w DATA_00E90E,Y                     ;$00E9E7 ||
+    BMI +                                   ;$00E9EA ||
+    LDA $00                                 ;$00E9EC ||
+    STA.b PlayerXSpeed_7B                   ;$00E9EE ||
+    LDA.w Layer1ScrollXPosUpd_144E          ;$00E9F0 ||
+    STA.w PlayerXPosSpx_13DA                ;$00E9F3 |/
++   LDA.w DATA_00E90A,Y                     ;$00E9F6 |
     TSB.b PlayerBlocked_77                  ;$00E9F9 |
 CODE_00E9FB:
     LDA.b PlayerBlocked_77
@@ -11005,63 +10997,60 @@ CODE_00EA32:
 CODE_00EA34:
     LDA.w PlayerBehindNet_13F9
     CMP.b #$01                              ;$00EA37 |
-    BNE CODE_00EA42                         ;$00EA39 |
-    LDA.b InteractionPtsClimbable_8B        ;$00EA3B |
-    BNE CODE_00EA42                         ;$00EA3D |
-    STZ.w PlayerBehindNet_13F9              ;$00EA3F |
-CODE_00EA42:
-    STZ.w PlayerCanJumpWater_13FA
+    BNE +                                   ;$00EA39 |\
+    LDA.b InteractionPtsClimbable_8B        ;$00EA3B ||
+    BNE +                                   ;$00EA3D ||
+    STZ.w PlayerBehindNet_13F9              ;$00EA3F |/
++   STZ.w PlayerCanJumpWater_13FA           ;$00EA42 |
     LDA.b LevelIsWater_85                   ;$00EA45 |
-    BNE CODE_00EA5E                         ;$00EA47 |
+    BNE .CODE_00EA5E                        ;$00EA47 |
     LSR $8A                                 ;$00EA49 |
-    BCC CODE_00EAA3                         ;$00EA4B |
+    BCC .CODE_00EAA3                        ;$00EA4B |
     LDA.b PlayerInWater_75                  ;$00EA4D |
-    BNE CODE_00EA65                         ;$00EA4F |
+    BNE .CODE_00EA65                        ;$00EA4F |
     LDA.b PlayerYSpeed_7D                   ;$00EA51 |
-    BMI CODE_00EA65                         ;$00EA53 |
+    BMI .CODE_00EA65                        ;$00EA53 |
     LSR $8A                                 ;$00EA55 |
     BCC Return00EAA5                        ;$00EA57 |
     JSR CODE_00FDA5                         ;$00EA59 |
     STZ.b PlayerYSpeed_7D                   ;$00EA5C |
-CODE_00EA5E:
+.CODE_00EA5E:
     LDA.b #$01
     STA.b PlayerInWater_75                  ;$00EA60 |
-CODE_00EA62:
+.CODE_00EA62:
     JMP CODE_00FD08
 
-CODE_00EA65:
+.CODE_00EA65:
     LSR $8A
-    BCS CODE_00EA5E                         ;$00EA67 |
+    BCS .CODE_00EA5E                        ;$00EA67 |
     LDA.b PlayerInWater_75                  ;$00EA69 |
     BEQ Return00EAA5                        ;$00EA6B |
     LDA.b #$FC                              ;$00EA6D |
     CMP.b PlayerYSpeed_7D                   ;$00EA6F |
-    BMI CODE_00EA75                         ;$00EA71 |
-    STA.b PlayerYSpeed_7D                   ;$00EA73 |
-CODE_00EA75:
-    INC.w PlayerCanJumpWater_13FA
+    BMI +                                   ;$00EA71 |\
+    STA.b PlayerYSpeed_7D                   ;$00EA73 |/
++   INC.w PlayerCanJumpWater_13FA           ;$00EA75 |
     LDA.b byetudlrHold_15                   ;$00EA78 |
     AND.b #$88                              ;$00EA7A |
     CMP.b #$88                              ;$00EA7C |
-    BNE CODE_00EA62                         ;$00EA7E |
+    BNE .CODE_00EA62                        ;$00EA7E |
     LDA.b axlr0000Hold_17                   ;$00EA80 |
-    BPL CODE_00EA92                         ;$00EA82 |
-    LDA.w CarryingFlagMirror_148F           ;$00EA84 |
-    BNE CODE_00EA92                         ;$00EA87 |
-    INC A                                   ;$00EA89 |
-    STA.w SpinJumpFlag_140D                 ;$00EA8A |
-    LDA.b #$04                              ;$00EA8D |
-    STA.w SPCIO3_1DFC                       ;$00EA8F |
-CODE_00EA92:
-    LDA.b PlayerBlocked_77
+    BPL +                                   ;$00EA82 |\
+    LDA.w CarryingFlagMirror_148F           ;$00EA84 ||
+    BNE +                                   ;$00EA87 ||
+    INC A                                   ;$00EA89 ||
+    STA.w SpinJumpFlag_140D                 ;$00EA8A ||
+    LDA.b #$04                              ;$00EA8D ||
+    STA.w SPCIO3_1DFC                       ;$00EA8F |/
++   LDA.b PlayerBlocked_77                  ;$00EA92 |
     AND.b #!Block_Top_08                    ;$00EA94 |
-    BNE CODE_00EA62                         ;$00EA96 |
+    BNE .CODE_00EA62                        ;$00EA96 |
     JSR CODE_00FDA5                         ;$00EA98 |
     LDA.b #$0B                              ;$00EA9B |
     STA.b PlayerInAir_72                    ;$00EA9D |
     LDA.b #$AA                              ;$00EA9F |
     STA.b PlayerYSpeed_7D                   ;$00EAA1 |
-CODE_00EAA3:
+.CODE_00EAA3:
     STZ.b PlayerInWater_75
 Return00EAA5:
     RTS
@@ -12004,7 +11993,7 @@ CODE_00F160:
     LDA.l DATA_00A625,X                     ;$00F16C |
     PLX                                     ;$00F170 |
     AND.b #$03                              ;$00F171 |
-    BEQ .CODE_00F176                         ;$00F173 |
+    BEQ .CODE_00F176                        ;$00F173 |
     RTL                                     ;$00F175 |
 
 .CODE_00F176:
@@ -12720,10 +12709,10 @@ kill_player_no_speed_00F60A:                ;        |
     STA.b PlayerAnimation_71                ;$00F616 |/
     STZ.w SpinJumpFlag_140D                 ;$00F618 | Disable spin jumping.
     LDA.b #$30                              ;$00F61B |\
-set_invencibility_00F61D:                                ;        | | Set the player animation timer
+set_invencibility_00F61D:                   ;        | | Set the player animation timer
     STA.w PlayerAniTimer_1496               ;$00F61D | | and the sprite lock timer.
     STA.b SpriteLock_9D                     ;$00F620 |/
-cancel_flight_00F622:                                ;        |
+cancel_flight_00F622:                       ;        |
     STZ.w FlightPhase_1407                  ;$00F622 | Stop flying.
     STZ.w Unused_188A                       ;$00F625 |
 return_00F628:                              ;        |
@@ -13556,7 +13545,7 @@ LvlEndSprCoinsRt:
 
 .ADDR_00FC73:
     DEY
-    BPL .ADDR_00FC25                         ;$00FC74 |
+    BPL .ADDR_00FC25                        ;$00FC74 |
     STZ.w CarryYoshiLevels_0DC1             ;$00FC76 |
     RTL                                     ;$00FC79 |
 
