@@ -250,37 +250,36 @@ CODE_048261:
 
 .CODE_048275:
     LDA.w ShowContinueEnd_13C9
-    BEQ .CODE_048281                        ;$048278 |
+    BEQ .dont_show_menu_048281              ;$048278 | 0 Don't show menu
     JSL handle_continue_end_menu_009B80     ;$04827A |
     JMP .CODE_048410                        ;$04827E |
 
-.CODE_048281:
+.dont_show_menu_048281:
     LDA.w OWPromptProcess_1B87
-    BEQ .CODE_048295                        ;$048284 |
+    BEQ ..CODE_048295                       ;$048284 |
     CMP.b #$05                              ;$048286 |
     BCS +                                   ;$048288 |
     LDY.w IsTwoPlayerGame_0DB2              ;$04828A |
-    BEQ .CODE_048295                        ;$04828D |
+    BEQ ..CODE_048295                       ;$04828D |
 +   JSR CODE_04F3E5                         ;$04828F |
     JMP .return_048413                      ;$048292 |
 
-.CODE_048295:
+..CODE_048295:
     LDA.w PauseFlag_13D4
     LSR                                     ;$048298 |
-    BNE .CODE_04829E                        ;$048299 |
-    JMP .CODE_048356                        ;$04829B |
+    BNE ..CODE_04829E                       ;$048299 |
+    JMP ..CODE_048356                       ;$04829B |
 
-.CODE_04829E:
+..CODE_04829E:
     REP #$20                                ;$04829E | A->16
     LDA.w OWFreeCamYPos_1DF2                ;$0482A0 |
     SEC                                     ;$0482A3 |
     SBC.b Layer1YPos_1C                     ;$0482A4 |
     STA $01                                 ;$0482A6 |
-    BPL .CODE_0482AE                        ;$0482A8 |
-    EOR.w #$FFFF                            ;$0482AA |
-    INC A                                   ;$0482AD |
-.CODE_0482AE:
-    LSR
+    BPL +                                   ;$0482A8 |\
+    EOR.w #$FFFF                            ;$0482AA ||
+    INC A                                   ;$0482AD |/
++   LSR                                     ;$0482AE |
     SEP #$20                                ;$0482AF | A->8
     STA $05                                 ;$0482B1 |
     REP #$20                                ;$0482B3 | A->16
@@ -288,21 +287,19 @@ CODE_048261:
     SEC                                     ;$0482B8 |
     SBC.b Layer1XPos_1A                     ;$0482B9 |
     STA $00                                 ;$0482BB |
-    BPL .CODE_0482C3                        ;$0482BD |
-    EOR.w #$FFFF                            ;$0482BF |
-    INC A                                   ;$0482C2 |
-.CODE_0482C3:
-    LSR
+    BPL +                                   ;$0482BD |\
+    EOR.w #$FFFF                            ;$0482BF ||
+    INC A                                   ;$0482C2 |/
++   LSR                                     ;$0482C3 |
     SEP #$20                                ;$0482C4 | A->8
     STA $04                                 ;$0482C6 |
     LDX.b #$01                              ;$0482C8 |
     CMP $05                                 ;$0482CA |
-    BCS .CODE_0482D1                        ;$0482CC |
-    DEX                                     ;$0482CE |
-    LDA $05                                 ;$0482CF |
-.CODE_0482D1:
-    CMP.b #$02
-    BCS .CODE_0482ED                        ;$0482D3 |
+    BCS +                                   ;$0482CC |\
+    DEX                                     ;$0482CE ||
+    LDA $05                                 ;$0482CF |/
++   CMP.b #$02                              ;$0482D1 |
+    BCS ..CODE_0482ED                       ;$0482D3 |
     REP #$20                                ;$0482D5 | A->16
     LDA.w OWFreeCamXPos_1DF0                ;$0482D7 |
     STA.b Layer1XPos_1A                     ;$0482DA |
@@ -312,9 +309,9 @@ CODE_048261:
     STA.b Layer2YPos_20                     ;$0482E3 |
     SEP #$20                                ;$0482E5 | A->8
     STZ.w PauseFlag_13D4                    ;$0482E7 |
-    JMP .CODE_0483BD                        ;$0482EA |
+    JMP ..CODE_0483BD                       ;$0482EA |
 
-.CODE_0482ED:
+..CODE_0482ED:
     STZ.w $4204
     LDY $04,X                               ;$0482F0 |
     STY.w $4205                             ;$0482F2 |
@@ -331,22 +328,20 @@ CODE_048261:
     LSR                                     ;$048304 |
     SEP #$20                                ;$048305 | A->8
     LDY $01,X                               ;$048307 |
-    BPL .CODE_04830E                        ;$048309 |
-    EOR.b #$FF                              ;$04830B |
-    INC A                                   ;$04830D |
-.CODE_04830E:
-    STA $01,X
+    BPL +                                   ;$048309 |\
+    EOR.b #$FF                              ;$04830B ||
+    INC A                                   ;$04830D |/
++   STA $01,X                               ;$04830E |
     TXA                                     ;$048310 |
     EOR.b #$01                              ;$048311 |
     TAX                                     ;$048313 |
     LDA.b #$40                              ;$048314 |
     LDY $01,X                               ;$048316 |
-    BPL .CODE_04831C                        ;$048318 |
-    LDA.b #$C0                              ;$04831A |
-.CODE_04831C:
-    STA $01,X
+    BPL +                                   ;$048318 |\
+    LDA.b #$C0                              ;$04831A |/
++   STA $01,X                               ;$04831C |
     LDY.b #$01                              ;$04831E |
-.CODE_048320:
+..loop_048320:
     TYA
     ASL                                     ;$048321 |
     TAX                                     ;$048322 |
@@ -367,11 +362,10 @@ CODE_048261:
     LSR                                     ;$048339 |
     LDY.b #$00                              ;$04833A |
     PLP                                     ;$04833C |
-    BPL .CODE_048342                        ;$04833D |
-    ORA.b #$F0                              ;$04833F |
-    DEY                                     ;$048341 |
-.CODE_048342:
-    ADC.b Layer1XPos_1A,X
+    BPL +                                   ;$04833D |\
+    ORA.b #$F0                              ;$04833F ||
+    DEY                                     ;$048341 |/
++   ADC.b Layer1XPos_1A,X                   ;$048342 |
     STA.b Layer1XPos_1A,X                   ;$048344 |
     STA.b Layer2XPos_1E,X                   ;$048346 |
     TYA                                     ;$048348 |
@@ -380,44 +374,42 @@ CODE_048261:
     STA.b Layer2XPos_1E+1,X                 ;$04834D |
     PLY                                     ;$04834F |
     DEY                                     ;$048350 |
-    BPL .CODE_048320                        ;$048351 |
+    BPL ..loop_048320                       ;$048351 |
     JMP .CODE_04840D                        ;$048353 |
 
-.CODE_048356:
+..CODE_048356:
     LDA.w OWProcess_13D9
     CMP.b #!OwStanding_03                   ;$048359 |
-    BEQ .CODE_048366                        ;$04835B |
+    BEQ +                                   ;$04835B |
     CMP.b #!OwWalking_04                    ;$04835D |
-    BNE .CODE_04839A                        ;$04835F |
+    BNE ..CODE_04839A                       ;$04835F |
     LDA.w PlayerSwitching_0DD8              ;$048361 |
-    BNE .CODE_04839A                        ;$048364 |
-.CODE_048366:
-    LDA.w axlr0000P1Frame_0DA8
+    BNE ..CODE_04839A                       ;$048364 |
++   LDA.w axlr0000P1Frame_0DA8              ;$048366 |
     ORA.w axlr0000P2Frame_0DA9              ;$048369 |
     AND.b #$30                              ;$04836C |
-    BEQ .CODE_048375                        ;$04836E |
-    LDA.b #$01                              ;$048370 |
-    STA.w OWPromptProcess_1B87              ;$048372 |
-.CODE_048375:
-    LDX.w CurrentPlayer_0DB3
+    BEQ +                                   ;$04836E |\
+    LDA.b #$01                              ;$048370 ||
+    STA.w OWPromptProcess_1B87              ;$048372 |/
++   LDX.w CurrentPlayer_0DB3                ;$048375 |
     LDA.w OWPlayerSubmap_1F11,X             ;$048378 |
-    BNE .CODE_04839A                        ;$04837B |
+    BNE ..CODE_04839A                       ;$04837B |
     LDA.b byetudlrPress_16                  ;$04837D |
     AND.b #$10                              ;$04837F |
-    BEQ .CODE_04839A                        ;$048381 |
+    BEQ ..CODE_04839A                       ;$048381 |
     INC.w PauseFlag_13D4                    ;$048383 |
     LDA.w PauseFlag_13D4                    ;$048386 |
     LSR                                     ;$048389 |
-    BNE .CODE_04839A                        ;$04838A |
+    BNE ..CODE_04839A                       ;$04838A |
     REP #$20                                ;$04838C | A->16
     LDA.b Layer1XPos_1A                     ;$04838E |
     STA.w OWFreeCamXPos_1DF0                ;$048390 |
     LDA.b Layer1YPos_1C                     ;$048393 |
     STA.w OWFreeCamYPos_1DF2                ;$048395 |
     SEP #$20                                ;$048398 | A->8
-.CODE_04839A:
+..CODE_04839A:
     LDA.w PauseFlag_13D4
-    BEQ .CODE_0483C3                        ;$04839D |
+    BEQ ..CODE_0483C3                       ;$04839D |
     LDX.b #$00                              ;$04839F |
     LDA.b byetudlrHold_15                   ;$0483A1 |
     AND.b #$03                              ;$0483A3 |
@@ -432,24 +424,22 @@ CODE_048261:
     LDY.b #$15                              ;$0483B5 |
     LDA.b Frame_13                          ;$0483B7 |
     AND.b #$18                              ;$0483B9 |
-    BNE .CODE_0483BF                        ;$0483BB |
-.CODE_0483BD:
-    LDY.b #$18
-.CODE_0483BF:
-    STY.b StripeImage_12
+    BNE +                                   ;$0483BB |\
+..CODE_0483BD:                              ;        ||
+    LDY.b #$18                              ;$0483BD |/
++   STY.b StripeImage_12                    ;$0483BF |
     BRA .CODE_04840D                        ;$0483C1 |
 
-.CODE_0483C3:
+..CODE_0483C3:
     LDX.w OWEarthquake_1BA0
-    BEQ .CODE_04840A                        ;$0483C6 |
+    BEQ ..CODE_04840A                       ;$0483C6 |
     CPX.b #$FE                              ;$0483C8 |
-    BNE .CODE_0483D6                        ;$0483CA |
+    BNE +                                   ;$0483CA |
     LDA.b #$21                              ;$0483CC |
     STA.w SPCIO0_1DF9                       ;$0483CE |
     LDA.b #$08                              ;$0483D1 |
     STA.w SPCIO2_1DFB                       ;$0483D3 |
-.CODE_0483D6:
-    TXA
++   TXA                                     ;$0483D6 |
     LSR                                     ;$0483D7 |
     LSR                                     ;$0483D8 |
     LSR                                     ;$0483D9 |
@@ -457,29 +447,27 @@ CODE_048261:
     TAY                                     ;$0483DB |
     LDA.b Frame_13                          ;$0483DC |
     AND.w DATA_048231,Y                     ;$0483DE |
-    BNE .CODE_0483F3                        ;$0483E1 |
-    LDA.b Layer1XPos_1A                     ;$0483E3 |
-    EOR.b #$01                              ;$0483E5 |
-    STA.b Layer1XPos_1A                     ;$0483E7 |
-    STA.b Layer2XPos_1E                     ;$0483E9 |
-    LDA.b Layer1YPos_1C                     ;$0483EB |
-    EOR.b #$01                              ;$0483ED |
-    STA.b Layer1YPos_1C                     ;$0483EF |
-    STA.b Layer2YPos_20                     ;$0483F1 |
-.CODE_0483F3:
-    CPX.b #$80
-    BCS .CODE_0483FE                        ;$0483F5 |
-    LDA.w OWProcess_13D9                    ;$0483F7 |
-    CMP.b #!OwPostEvent_02                  ;$0483FA |
-    BNE .CODE_04840A                        ;$0483FC |
-.CODE_0483FE:
-    DEC.w OWEarthquake_1BA0
+    BNE +                                   ;$0483E1 |\
+    LDA.b Layer1XPos_1A                     ;$0483E3 ||
+    EOR.b #$01                              ;$0483E5 ||
+    STA.b Layer1XPos_1A                     ;$0483E7 ||
+    STA.b Layer2XPos_1E                     ;$0483E9 ||
+    LDA.b Layer1YPos_1C                     ;$0483EB ||
+    EOR.b #$01                              ;$0483ED ||
+    STA.b Layer1YPos_1C                     ;$0483EF ||
+    STA.b Layer2YPos_20                     ;$0483F1 |/
++   CPX.b #$80                              ;$0483F3 |
+    BCS +                                   ;$0483F5 |\
+    LDA.w OWProcess_13D9                    ;$0483F7 ||
+    CMP.b #!OwPostEvent_02                  ;$0483FA ||
+    BNE ..CODE_04840A                       ;$0483FC |/
++   DEC.w OWEarthquake_1BA0                 ;$0483FE |
     BNE .CODE_04840D                        ;$048401 |
     LDA.b #$22                              ;$048403 |
     STA.w SPCIO0_1DF9                       ;$048405 |
     BRA .CODE_04840D                        ;$048408 |
 
-.CODE_04840A:
+..CODE_04840A:
     JSR run_overworld_process_048576
 .CODE_04840D:
     JSR CODE_04F708
