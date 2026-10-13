@@ -1539,19 +1539,19 @@ DATA_028B8C:
 CODE_028B94:
     JSL execute_pointer_0086DF
 
-Ptrs028B98:
-    dw Return028B77
-    dw CODE_028F8B
-    dw CODE_028ED2
-    dw CODE_028E7E
-    dw CODE_028F2F
-    dw CODE_028ED2
-    dw CODE_028DDB
-    dw CODE_028D4F
-    dw CODE_028DDB
-    dw CODE_028DDB
-    dw CODE_028CC4
-    dw ADDR_028C0F
+.Ptrs028B98:
+    dw Return028B77                         ;$028B98 | 00 Empty
+    dw CODE_028F8B                          ;$028B9A | 01 Piece of brick block
+    dw CODE_028ED2                          ;$028B9C | 02 Small star
+    dw CODE_028E7E                          ;$028B9E | 03 Cracked shell (from Yoshi egg)
+    dw CODE_028F2F                          ;$028BA0 | 04 Flame from Podoboo
+    dw CODE_028ED2                          ;$028BA2 | 05 Small blue star sparkle (glitter)
+    dw CODE_028DDB                          ;$028BA4 | 06 Rip van Fish Z sprite
+    dw CODE_028D4F                          ;$028BA6 | 07 Water splash
+    dw CODE_028DDB                          ;$028BA8 | 08 Unused rightwards-moving music note. Behaves like the Rip Van Fish Z
+    dw CODE_028DDB                          ;$028BAA | 09 Unused leftwards-moving music note. Behaves like the Rip Van Fish Z
+    dw CODE_028CC4                          ;$028BAC | 0A Boo Stream tile
+    dw ADDR_028C0F                          ;$028BAE | 0B Unused Yoshi smoke
 
 DisabledAddSmokeRt:
     PHB
@@ -2204,14 +2204,14 @@ CODE_02905E:
     JSL execute_pointer_0086DF
 
 BounceSpritePtrs:
-    dw Return02904C
-    dw BounceBlockSpr
-    dw BounceBlockSpr
-    dw BounceBlockSpr
-    dw BounceBlockSpr
-    dw BounceBlockSpr
-    dw BounceBlockSpr
-    dw TurnBlockSpr
+    dw Return02904C                         ;$029062 | 00 Free slot
+    dw BounceBlockSpr                       ;$029064 | 01 Turn block (not turning)
+    dw BounceBlockSpr                       ;$029066 | 02 Note block
+    dw BounceBlockSpr                       ;$029068 | 03 Question mark block
+    dw BounceBlockSpr                       ;$02906A | 04 Sideways bouncing block
+    dw BounceBlockSpr                       ;$02906C | 05 Translucent block
+    dw BounceBlockSpr                       ;$02906E | 06 On/Off block
+    dw TurnBlockSpr                         ;$029070 | 07 Turn block (turning)
 
 DATA_029072:
     db $13,$00,$00,$ED
@@ -3060,12 +3060,12 @@ handle_smoke_sprite_0296C0:
     JSL execute_pointer_0086DF              ;$0296C7 |
 
 .Ptrs0296CB:
-    dw .return_0296D7
-    dw CODE_0296E3
-    dw CODE_029797
-    dw CODE_029927
-    dw .return_0296D7
-    dw CODE_0298CA
+    dw .return_0296D7                       ;$0296CB | 0 Free slot
+    dw CODE_0296E3                          ;$0296CD | 1 Puff of smoke
+    dw CODE_029797                          ;$0296CF | 2 Contact graphic
+    dw CODE_029927                          ;$0296D1 | 3 Smoke when the player turns around abruptly
+    dw .return_0296D7                       ;$0296D3 | 4 Unused / None
+    dw CODE_0298CA                          ;$0296D5 | 5 Glitter sprite
 
 .return_0296D7:
     RTS
@@ -6474,21 +6474,21 @@ handle_sprite_generator_02AFFD:
     JSL execute_pointer_0086DF              ;$02B008 |
 
 .GeneratorPtrs:
-    dw GenerateEerie
-    dw GenParaEnemy
-    dw GenParaEnemy
-    dw GenParaEnemy
-    dw GenerateDolphin
-    dw GenerateDolphin
-    dw GenerateFish
-    dw TurnOffGen2
-    dw GenSuperKoopa
-    dw GenerateBubble
-    dw GenerateBullet
-    dw GenMultiBullets
-    dw GenMultiBullets
-    dw GenerateFire
-    dw TurnOffGenerators
+    dw GenerateEerie                        ;$02B00C | 0: CB Eerie generator
+    dw GenParaEnemy                         ;$02B00E | 1: CC Para-Goomba generator
+    dw GenParaEnemy                         ;$02B010 | 2: CD Para-Bomb generator
+    dw GenParaEnemy                         ;$02B012 | 3: CE Para-Goomba and Para-Bomb generator
+    dw GenerateDolphin                      ;$02B014 | 4: CF Dolphin generator (left)
+    dw GenerateDolphin                      ;$02B016 | 5: D0 Dolphin generator (right)
+    dw GenerateFish                         ;$02B018 | 6: D1 Flying fish generator
+    dw TurnOffGen2                          ;$02B01A | 7: D2 Turn Off Generator 2
+    dw GenSuperKoopa                        ;$02B01C | 8: D3 Super Koopa generator
+    dw GenerateBubble                       ;$02B01E | 9: D4 Bubbled sprite generator
+    dw GenerateBullet                       ;$02B020 | A: D5 Bullet Bill generator (GFX01)
+    dw GenMultiBullets                      ;$02B022 | B: D6 Multidirectional Bullet Bill generator
+    dw GenMultiBullets                      ;$02B024 | C: D7 Multidirectional diagonal Bullet Bill generator
+    dw GenerateFire                         ;$02B026 | D: D8 Bowser statue fire generator
+    dw TurnOffGenerators                    ;$02B028 | E: D9 Turn Off Generators
 
 .return_02B02A:
     RTS
@@ -6989,10 +6989,10 @@ CODE_02B3AB:
     DEC A
     JSL execute_pointer_0086DF              ;$02B3AC |
 
-ShooterPtrs:
-    dw ShootBullet
-    dw LaunchTorpedo
-    dw Return02B3AA
+.ShooterPtrs:
+    dw ShootBullet                          ;$02B3B0 | 1 Bullet Bill shooter
+    dw LaunchTorpedo                        ;$02B3B2 | 2 Torpedo Launcher
+    dw Return02B3AA                         ;$02B3B4 | 3 (not possible)
 
 LaunchTorpedo:
     LDA.w ShooterTimer_17AB,X
@@ -8711,9 +8711,9 @@ CODE_02C024:
     LDA.b SpritePhase_C2,X
     JSL execute_pointer_0086DF              ;$02C026 |
 
-RipVanFishPtrs:
-    dw CODE_02C02E
-    dw CODE_02C08A
+.RipVanFishPtrs:
+    dw CODE_02C02E                          ;$02C02A | 0 sleeping
+    dw CODE_02C08A                          ;$02C02C | 1 swimming
 
 CODE_02C02E:
     LDA.b #$02
@@ -9148,19 +9148,19 @@ chucks_02C22C:
     JSL execute_pointer_0086DF              ;$02C338 |
 
 .ChuckPtrs:
-    dw CODE_02C63B
-    dw CODE_02C6A7
-    dw CODE_02C726
-    dw CODE_02C74A
-    dw CODE_02C13A
-    dw preparing_split_02C582
-    dw CODE_02C53C
-    dw CODE_02C564
-    dw CODE_02C4E3
-    dw CODE_02C4BD
-    dw CODE_02C3CB
-    dw CODE_02C356
-    dw CODE_02C37B
+    dw CODE_02C63B                          ;$02C33C | 0 looking side to side
+    dw CODE_02C6A7                          ;$02C33E | 1 charging
+    dw CODE_02C726                          ;$02C340 | 2 preparing to charge
+    dw CODE_02C74A                          ;$02C342 | 3 hurt
+    dw CODE_02C13A                          ;$02C344 | 4 digging
+    dw preparing_split_02C582               ;$02C346 | 5 preparing to jump/split
+    dw CODE_02C53C                          ;$02C348 | 6 jumping
+    dw CODE_02C564                          ;$02C34A | 7 landing from a jump
+    dw CODE_02C4E3                          ;$02C34C | 8 clappin'
+    dw CODE_02C4BD                          ;$02C34E | 9 puntin'
+    dw CODE_02C3CB                          ;$02C350 | A pitchin'
+    dw CODE_02C356                          ;$02C352 | B waiting to whistle
+    dw CODE_02C37B                          ;$02C354 | C whistling
 
 CODE_02C356:
     LDA.b #$03
