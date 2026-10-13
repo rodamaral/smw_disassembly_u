@@ -3226,11 +3226,11 @@ handle_continue_end_menu_009B80:
 
 .execute_009B88:
     DEC A
-    JSL execute_pointer_0086DF              ;$009B89 |
+    JSL execute_pointer_0086DF              ;$009B89 | uses $13C9 - 1
 
-.Ptrs009B8D:
-    dw no_load_009B91
-    dw CODE_009B9A
+..Ptrs009B8D:
+    dw no_load_009B91                       ;$009B8D | 1 freeze player, but don't load the text yet
+    dw CODE_009B9A                          ;$009B8D | 2 freeze player, load "Continue/End" menu
 
 no_load_009B91:
     LDY.b #$0C
@@ -6571,11 +6571,11 @@ generate_tile_00BEB0:
     PHX                                     ;$00BEB3 |
     LDA.b TileGenerate_9C                   ;$00BEB4 |
     AND.w #$00FF                            ;$00BEB6 |
-    BNE CODE_00BEBE                         ;$00BEB9 |
-ADDR_00BEBB:
-    JMP CODE_00BFB9
+    BNE .tile_present_00BEBE                ;$00BEB9 |
+.return_00BEBB:
+    JMP .return_00BFB9
 
-CODE_00BEBE:
+.tile_present_00BEBE:
     LDA.b InteractionPtXPos_9A
     STA $0C                                 ;$00BEC0 |
     LDA.b InteractionPtYPos_98              ;$00BEC2 |
@@ -6585,23 +6585,21 @@ CODE_00BEBE:
     LDA.b ScreenMode_5B                     ;$00BECB |
     STA $09                                 ;$00BECD |
     LDA.w LayerProcessing_1933              ;$00BECF |
-    BEQ CODE_00BED6                         ;$00BED2 |
-    LSR $09                                 ;$00BED4 |
-CODE_00BED6:
-    LDY $0E
+    BEQ +                                   ;$00BED2 |\
+    LSR $09                                 ;$00BED4 |/
++   LDY $0E                                 ;$00BED6 |
     LDA $09                                 ;$00BED8 |
     AND.b #$01                              ;$00BEDA |
-    BEQ CODE_00BEEC                         ;$00BEDC |
-    LDA.b InteractionPtXPos_9A+1            ;$00BEDE |
-    STA $00                                 ;$00BEE0 |
-    LDA.b InteractionPtYPos_98+1            ;$00BEE2 |
-    STA.b InteractionPtXPos_9A+1            ;$00BEE4 |
-    LDA $00                                 ;$00BEE6 |
-    STA.b InteractionPtYPos_98+1            ;$00BEE8 |
-    LDY $0C                                 ;$00BEEA |
-CODE_00BEEC:
-    CPY.w #$0200
-    BCS ADDR_00BEBB                         ;$00BEEF |
+    BEQ +                                   ;$00BEDC |\
+    LDA.b InteractionPtXPos_9A+1            ;$00BEDE ||
+    STA $00                                 ;$00BEE0 ||
+    LDA.b InteractionPtYPos_98+1            ;$00BEE2 ||
+    STA.b InteractionPtXPos_9A+1            ;$00BEE4 ||
+    LDA $00                                 ;$00BEE6 ||
+    STA.b InteractionPtYPos_98+1            ;$00BEE8 ||
+    LDY $0C                                 ;$00BEEA |/
++   CPY.w #$0200                            ;$00BEEC |
+    BCS .return_00BEBB                      ;$00BEEF | return if tile is outside screen
     LDA.w LayerProcessing_1933              ;$00BEF1 |
     ASL                                     ;$00BEF4 |
     TAX                                     ;$00BEF5 |
@@ -6638,30 +6636,29 @@ CODE_00BEEC:
     STA.b Map16HighPtr_6E+2                 ;$00BF2F |
     LDA $09                                 ;$00BF31 |
     AND.b #$01                              ;$00BF33 |
-    BEQ CODE_00BF41                         ;$00BF35 |
+    BEQ .CODE_00BF41                        ;$00BF35 |
     LDA.b InteractionPtYPos_98+1            ;$00BF37 |
     LSR                                     ;$00BF39 |
     LDA.b InteractionPtXPos_9A+1            ;$00BF3A |
     AND.b #$01                              ;$00BF3C |
-    JMP CODE_00BF46                         ;$00BF3E |
+    JMP .CODE_00BF46                        ;$00BF3E |
 
-CODE_00BF41:
+.CODE_00BF41:
     LDA.b InteractionPtXPos_9A+1
     LSR                                     ;$00BF43 |
     LDA.b InteractionPtYPos_98+1            ;$00BF44 |
-CODE_00BF46:
+.CODE_00BF46:
     ROL
     ASL                                     ;$00BF47 |
     ASL                                     ;$00BF48 |
     ORA.b #$20                              ;$00BF49 |
     STA $04                                 ;$00BF4B |
     CPX.w #$0000                            ;$00BF4D |
-    BEQ CODE_00BF57                         ;$00BF50 |
-    CLC                                     ;$00BF52 |
-    ADC.b #$10                              ;$00BF53 |
-    STA $04                                 ;$00BF55 |
-CODE_00BF57:
-    LDA.b InteractionPtYPos_98
+    BEQ +                                   ;$00BF50 |\
+    CLC                                     ;$00BF52 ||
+    ADC.b #$10                              ;$00BF53 ||
+    STA $04                                 ;$00BF55 |/
++   LDA.b InteractionPtYPos_98              ;$00BF57 |
     AND.b #$F0                              ;$00BF59 |
     CLC                                     ;$00BF5B |
     ASL                                     ;$00BF5C |
@@ -6684,44 +6681,44 @@ CODE_00BF57:
     REP #$20                                ;$00BF78 | A->16
     LDA $09                                 ;$00BF7A |
     AND.w #$0001                            ;$00BF7C |
-    BNE CODE_00BF9B                         ;$00BF7F |
+    BNE .CODE_00BF9B                        ;$00BF7F |
     LDA.b Layer1XPos_1A                     ;$00BF81 |
     SEC                                     ;$00BF83 |
     SBC.w #$0080                            ;$00BF84 |
     TAX                                     ;$00BF87 |
     LDY.b Layer1YPos_1C                     ;$00BF88 |
     LDA.w LayerProcessing_1933              ;$00BF8A |
-    BEQ CODE_00BFB2                         ;$00BF8D |
+    BEQ .CODE_00BFB2                        ;$00BF8D |
     LDX.b Layer2XPos_1E                     ;$00BF8F |
     LDA.b Layer2YPos_20                     ;$00BF91 |
     SEC                                     ;$00BF93 |
     SBC.w #$0080                            ;$00BF94 |
     TAY                                     ;$00BF97 |
-    JMP CODE_00BFB2                         ;$00BF98 |
+    JMP .CODE_00BFB2                        ;$00BF98 |
 
-CODE_00BF9B:
+.CODE_00BF9B:
     LDX.b Layer1XPos_1A
     LDA.b Layer1YPos_1C                     ;$00BF9D |
     SEC                                     ;$00BF9F |
     SBC.w #$0080                            ;$00BFA0 |
     TAY                                     ;$00BFA3 |
     LDA.w LayerProcessing_1933              ;$00BFA4 |
-    BEQ CODE_00BFB2                         ;$00BFA7 |
+    BEQ .CODE_00BFB2                        ;$00BFA7 |
     LDA.b Layer2XPos_1E                     ;$00BFA9 |
     SEC                                     ;$00BFAB |
     SBC.w #$0080                            ;$00BFAC |
     TAX                                     ;$00BFAF |
     LDY.b Layer2YPos_20                     ;$00BFB0 |
-CODE_00BFB2:
-    STX $08
+.CODE_00BFB2:
+    STX $08                                 ;$00BFB2 |
     STY $0A                                 ;$00BFB4 |
-    JSR CODE_00BFBC                         ;$00BFB6 |
-CODE_00BFB9:
+    JSR .execute_tile_number_00BFBC         ;$00BFB6 |
+.return_00BFB9:
     PLX
     PLP                                     ;$00BFBA |
     RTL                                     ;$00BFBB |
 
-CODE_00BFBC:
+.execute_tile_number_00BFBC:
     SEP #$30                                ;$00BFBC | AXY->8
     LDA.b TileGenerate_9C                   ;$00BFBE |
     DEC A                                   ;$00BFC0 |
@@ -6729,34 +6726,34 @@ CODE_00BFBC:
     PER $0003                               ;$00BFC2 |
     JML execute_pointer_0086DF              ;$00BFC5 |
 
-TileGenerationPtr:
-    dw CODE_00C074
-    dw CODE_00C077
-    dw CODE_00C077
-    dw CODE_00C077
-    dw CODE_00C077
-    dw CODE_00C077
-    dw CODE_00C077
-    dw CODE_00C077
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C4
-    dw CODE_00C0C1
-    dw CODE_00C0C1
-    dw CODE_00C1AC
-    dw CODE_00C334
-    dw CODE_00C334
-    dw CODE_00C3D1
+.TileGenerationPtr:
+    dw generate_empty_tile_bits_00C074      ;$008FC9 | 01 Empty (025), sets item memory setting bit
+    dw generate_empty_to_hole_00C077        ;$008FCB | 02 Empty (025)
+    dw generate_empty_to_hole_00C077        ;$008FCD | 03 Vine (006)
+    dw generate_empty_to_hole_00C077        ;$008FCF | 04 Solid bush tile, used by berries (049)
+    dw generate_empty_to_hole_00C077        ;$008FD1 | 05 Always turning turn block (048)
+    dw generate_empty_to_hole_00C077        ;$008FD3 | 06 Coin (02B)
+    dw generate_empty_to_hole_00C077        ;$008FD5 | 07 Tree background, used by the mushroom scales (sprite 8F) (0A2)
+    dw generate_empty_to_hole_00C077        ;$008FD7 | 08 Mole hole (0C6)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FD9 | 09 Invisible solid block (152)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FDB | 0A Multiple coin turnblock (11B)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FDD | 0B Multiple coin question block (123)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FDF | 0C Turn block (11E)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FE1 | 0D Used block (132)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FE3 | 0E Note block (113)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FE5 | 0F Note block (115)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FE7 | 10 4-way note block (116)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FE9 | 11 Turn block you can bounce off from the side (12B)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FEB | 12 Translucent block (12C)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FED | 13 On/off switch (112)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FEF | 14 Side of pipe, left (168)
+    dw generate_tile_152_to_pipe_00C0C4     ;$008FF1 | 15 Side of pipe, right (169)
+    dw generate_tile_used_1up_00C0C1        ;$008FF3 | 16 Used block (132), sets item memory setting bit
+    dw generate_tile_used_1up_00C0C1        ;$008FF5 | 17 O block from 1up game (15E), sets item memory setting bit
+    dw generate_tile_dragon_00C1AC          ;$008FF7 | 18 Sets low byte of current and below tile to 25 (making both invisible, even if it's wrong), sets item memory setting bit. Used by Yoshi coin
+    dw generate_tile_net_00C334             ;$008FF9 | 19 Creates an empty net frame. The frame is 48x48, but due to alignment, it edits a total of 16 tiles. For some strange reason, it doesn't generate any tiles; it just edits the VRAM
+    dw generate_tile_net_00C334             ;$008FFB | 1A Creates a net door (48x48). This one is similar to 19, but it's not empty
+    dw generate_tile_32x32_00C3D1           ;$008FFD | 1B Creates an invisible 32x32 block and sets the low bytes to 25. Probably used by switch palaces
 
 DATA_00BFFF:
     db $00,$00,$80,$00,$00,$01
@@ -6821,9 +6818,9 @@ TileToGeneratePg0:
     db $25,$25,$25,$06,$49,$48,$2B,$A2
     db $C6
 
-CODE_00C074:
+generate_empty_tile_bits_00C074:
     JSR CODE_00C00D
-CODE_00C077:
+generate_empty_to_hole_00C077:
     REP #$30                                ;$00C077 | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C079 |
     AND.w #$01F0                            ;$00C07B |
@@ -6857,9 +6854,9 @@ TileToGeneratePg1:
     db $52,$1B,$23,$1E,$32,$13,$15,$16
     db $2B,$2C,$12,$68,$69,$32,$5E
 
-CODE_00C0C1:
+generate_tile_used_1up_00C0C1:
     JSR CODE_00C00D
-CODE_00C0C4:
+generate_tile_152_to_pipe_00C0C4:
     REP #$30                                ;$00C0C4 | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C0C6 |
     AND.w #$01F0                            ;$00C0C8 |
@@ -6892,41 +6889,38 @@ CODE_00C0FB:
     LDA.b ScreenMode_5B
     STA $00                                 ;$00C0FD |
     LDA.w LayerProcessing_1933              ;$00C0FF |
-    BEQ CODE_00C106                         ;$00C102 |
-    LSR $00                                 ;$00C104 |
-CODE_00C106:
-    LDA $00
+    BEQ +                                   ;$00C102 |\
+    LSR $00                                 ;$00C104 |/
++   LDA $00                                 ;$00C106 |
     AND.w #$0001                            ;$00C108 |
-    BNE CODE_00C127                         ;$00C10B |
+    BNE .CODE_00C127                        ;$00C10B |
     LDA $08                                 ;$00C10D |
     AND.w #$FFF0                            ;$00C10F |
-    BMI CODE_00C11A                         ;$00C112 |
-    CMP $0C                                 ;$00C114 |
-    BEQ CODE_00C13E                         ;$00C116 |
-    BCS CODE_00C124                         ;$00C118 |
-CODE_00C11A:
-    CLC
+    BMI +                                   ;$00C112 |\
+    CMP $0C                                 ;$00C114 ||
+    BEQ .CODE_00C13E                        ;$00C116 ||
+    BCS .CODE_00C124                        ;$00C118 |/
++   CLC                                     ;$00C11A |
     ADC.w #$0200                            ;$00C11B |
     CMP $0C                                 ;$00C11E |
-    BEQ CODE_00C124                         ;$00C120 |
-    BCS CODE_00C13E                         ;$00C122 |
-CODE_00C124:
+    BEQ .CODE_00C124                        ;$00C120 |
+    BCS .CODE_00C13E                        ;$00C122 |
+.CODE_00C124:
     JMP Return00C1AB
 
-CODE_00C127:
+.CODE_00C127:
     LDA $0A
     AND.w #$FFF0                            ;$00C129 |
-    BMI CODE_00C134                         ;$00C12C |
-    CMP $0E                                 ;$00C12E |
-    BEQ CODE_00C13E                         ;$00C130 |
-    BCS Return00C1AB                        ;$00C132 |
-CODE_00C134:
-    CLC
+    BMI +                                   ;$00C12C |\
+    CMP $0E                                 ;$00C12E ||
+    BEQ .CODE_00C13E                        ;$00C130 ||
+    BCS Return00C1AB                        ;$00C132 |/
++   CLC                                     ;$00C134 |
     ADC.w #$0200                            ;$00C135 |
     CMP $0E                                 ;$00C138 |
     BEQ Return00C1AB                        ;$00C13A |
     BCC Return00C1AB                        ;$00C13C |
-CODE_00C13E:
+.CODE_00C13E:
     LDA.l DynStripeImgSize_7F837B
     TAX                                     ;$00C142 |
     SEP #$20                                ;$00C143 | A->8
@@ -6973,7 +6967,7 @@ CODE_00C13E:
 Return00C1AB:
     RTS
 
-CODE_00C1AC:
+generate_tile_dragon_00C1AC:
     JSR CODE_00C00D
     REP #$30                                ;$00C1AF | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C1B1 |
@@ -7005,40 +6999,37 @@ CODE_00C1AC:
     LDA.b ScreenMode_5B                     ;$00C1DF |
     STA $00                                 ;$00C1E1 |
     LDA.w LayerProcessing_1933              ;$00C1E3 |
-    BEQ CODE_00C1EA                         ;$00C1E6 |
-    LSR $00                                 ;$00C1E8 |
-CODE_00C1EA:
-    LDA $00
+    BEQ +                                   ;$00C1E6 |\
+    LSR $00                                 ;$00C1E8 |/
++   LDA $00                                 ;$00C1EA |
     AND.w #$0001                            ;$00C1EC |
-    BNE CODE_00C20B                         ;$00C1EF |
+    BNE .CODE_00C20B                        ;$00C1EF |
     LDA $08                                 ;$00C1F1 |
     AND.w #$FFF0                            ;$00C1F3 |
-    BMI CODE_00C1FE                         ;$00C1F6 |
-    CMP $0C                                 ;$00C1F8 |
-    BEQ CODE_00C222                         ;$00C1FA |
-    BCS Return00C1AB                        ;$00C1FC |
-CODE_00C1FE:
-    CLC
+    BMI +                                   ;$00C1F6 |\
+    CMP $0C                                 ;$00C1F8 ||
+    BEQ .CODE_00C222                        ;$00C1FA ||
+    BCS Return00C1AB                        ;$00C1FC |/
++   CLC                                     ;$00C1FE |
     ADC.w #$0200                            ;$00C1FF |
     CMP $0C                                 ;$00C202 |
     BCC Return00C1AB                        ;$00C204 |
     BEQ Return00C1AB                        ;$00C206 |
-    JMP CODE_00C222                         ;$00C208 |
+    JMP .CODE_00C222                        ;$00C208 |
 
-CODE_00C20B:
+.CODE_00C20B:
     LDA $0A
     AND.w #$FFF0                            ;$00C20D |
-    BMI CODE_00C218                         ;$00C210 |
-    CMP $0E                                 ;$00C212 |
-    BEQ CODE_00C222                         ;$00C214 |
-    BCS Return00C1AB                        ;$00C216 |
-CODE_00C218:
-    CLC
+    BMI +                                   ;$00C210 |\
+    CMP $0E                                 ;$00C212 ||
+    BEQ .CODE_00C222                        ;$00C214 ||
+    BCS Return00C1AB                        ;$00C216 |/
++   CLC                                     ;$00C218 |
     ADC.w #$0200                            ;$00C219 |
     CMP $0E                                 ;$00C21C |
     BEQ Return00C1AB                        ;$00C21E |
     BCC Return00C1AB                        ;$00C220 |
-CODE_00C222:
+.CODE_00C222:
     LDA.l DynStripeImgSize_7F837B
     TAX                                     ;$00C226 |
     SEP #$20                                ;$00C227 | A->8
@@ -7112,7 +7103,7 @@ DATA_00C32E:
 DATA_00C330:
     db $00,$E6,$C2,$00
 
-CODE_00C334:
+generate_tile_net_00C334:
     INC $07
     LDA $07                                 ;$00C336 |
     CLC                                     ;$00C338 |
@@ -7137,51 +7128,49 @@ CODE_00C334:
     LDA.l DynStripeImgSize_7F837B           ;$00C35D |
     TAX                                     ;$00C361 |
     LDY.w #$0005                            ;$00C362 |
-CODE_00C365:
-    SEP #$20                                ;$00C365 | A->8
-    LDA $06                                 ;$00C367 |
-    STA.l DynamicStripeImage_7F837D,X       ;$00C369 |
-    LDA $07                                 ;$00C36D |
-    STA.l DynamicStripeImage_7F837D+1,X     ;$00C36F |
-    LDA.b #$00                              ;$00C373 |
-    STA.l DynamicStripeImage_7F837D+2,X     ;$00C375 |
-    LDA.b #$0B                              ;$00C379 |
-    STA.l DynamicStripeImage_7F837D+3,X     ;$00C37B |
-    LDA $07                                 ;$00C37F |
-    CLC                                     ;$00C381 |
-    ADC.b #$20                              ;$00C382 |
-    STA $07                                 ;$00C384 |
-    LDA $06                                 ;$00C386 |
-    ADC.b #$00                              ;$00C388 |
-    STA $06                                 ;$00C38A |
-    REP #$20                                ;$00C38C | A->16
-    TXA                                     ;$00C38E |
-    CLC                                     ;$00C38F |
-    ADC.w #$0010                            ;$00C390 |
-    TAX                                     ;$00C393 |
-    DEY                                     ;$00C394 |
-    BPL CODE_00C365                         ;$00C395 |
+-   SEP #$20                                ;$00C365 |\ A->8
+    LDA $06                                 ;$00C367 ||
+    STA.l DynamicStripeImage_7F837D,X       ;$00C369 ||
+    LDA $07                                 ;$00C36D ||
+    STA.l DynamicStripeImage_7F837D+1,X     ;$00C36F ||
+    LDA.b #$00                              ;$00C373 ||
+    STA.l DynamicStripeImage_7F837D+2,X     ;$00C375 ||
+    LDA.b #$0B                              ;$00C379 ||
+    STA.l DynamicStripeImage_7F837D+3,X     ;$00C37B ||
+    LDA $07                                 ;$00C37F ||
+    CLC                                     ;$00C381 ||
+    ADC.b #$20                              ;$00C382 ||
+    STA $07                                 ;$00C384 ||
+    LDA $06                                 ;$00C386 ||
+    ADC.b #$00                              ;$00C388 ||
+    STA $06                                 ;$00C38A ||
+    REP #$20                                ;$00C38C || A->16
+    TXA                                     ;$00C38E ||
+    CLC                                     ;$00C38F ||
+    ADC.w #$0010                            ;$00C390 ||
+    TAX                                     ;$00C393 ||
+    DEY                                     ;$00C394 ||
+    BPL -                                   ;$00C395 |/
     LDA.l DynStripeImgSize_7F837B           ;$00C397 |
     TAX                                     ;$00C39B |
     LDY.w #$0000                            ;$00C39C |
-CODE_00C39F:
+.loop_00C39F:
     LDA.w #$0005
     STA $00                                 ;$00C3A2 |
-CODE_00C3A4:
-    LDA [$02],Y
-    STA.l DynamicStripeImage_7F837D+4,X     ;$00C3A6 |
-    INY                                     ;$00C3AA |
-    INY                                     ;$00C3AB |
-    INX                                     ;$00C3AC |
-    INX                                     ;$00C3AD |
-    DEC $00                                 ;$00C3AE |
-    BPL CODE_00C3A4                         ;$00C3B0 |
+-   LDA [$02],Y                             ;$00C3A4 |\
+    STA.l DynamicStripeImage_7F837D+4,X     ;$00C3A6 ||
+    INY                                     ;$00C3AA ||
+    INY                                     ;$00C3AB ||
+    INX                                     ;$00C3AC ||
+    INX                                     ;$00C3AD ||
+    DEC $00                                 ;$00C3AE ||
+    BPL -                                   ;$00C3B0 |/
     TXA                                     ;$00C3B2 |
     CLC                                     ;$00C3B3 |
     ADC.w #$0004                            ;$00C3B4 |
     TAX                                     ;$00C3B7 |
     CPY.w #$0048                            ;$00C3B8 |
-    BNE CODE_00C39F                         ;$00C3BB |
+    BNE .loop_00C39F                        ;$00C3BB |
     LDA.w #$00FF                            ;$00C3BD |
     STA.l DynamicStripeImage_7F837D,X       ;$00C3C0 |
     LDA.l DynStripeImgSize_7F837B           ;$00C3C4 |
@@ -7190,7 +7179,7 @@ CODE_00C3A4:
     STA.l DynStripeImgSize_7F837B           ;$00C3CC |
     RTS                                     ;$00C3D0 |
 
-CODE_00C3D1:
+generate_tile_32x32_00C3D1:
     REP #$30                                ;$00C3D1 | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C3D3 |
     AND.w #$01F0                            ;$00C3D5 |
@@ -7223,32 +7212,31 @@ CODE_00C3D1:
     LDA.b #$25                              ;$00C405 |
     STA.b [Map16LowPtr_6B],Y                ;$00C407 |
     LDY.w #$0003                            ;$00C409 |
-CODE_00C40C:
-    LDA $06
-    STA.l DynamicStripeImage_7F837D,X       ;$00C40E |
-    LDA $07                                 ;$00C412 |
-    STA.l DynamicStripeImage_7F837D+1,X     ;$00C414 |
-    LDA.b #$40                              ;$00C418 |
-    STA.l DynamicStripeImage_7F837D+2,X     ;$00C41A |
-    LDA.b #$06                              ;$00C41E |
-    STA.l DynamicStripeImage_7F837D+3,X     ;$00C420 |
-    REP #$20                                ;$00C424 | A->16
-    LDA.w #$18F8                            ;$00C426 |
-    STA.l DynamicStripeImage_7F837D+4,X     ;$00C429 |
-    TXA                                     ;$00C42D |
-    CLC                                     ;$00C42E |
-    ADC.w #$0006                            ;$00C42F |
-    TAX                                     ;$00C432 |
-    SEP #$20                                ;$00C433 | A->8
-    LDA $07                                 ;$00C435 |
-    CLC                                     ;$00C437 |
-    ADC.b #$20                              ;$00C438 |
-    STA $07                                 ;$00C43A |
-    LDA $06                                 ;$00C43C |
-    ADC.b #$00                              ;$00C43E |
-    STA $06                                 ;$00C440 |
-    DEY                                     ;$00C442 |
-    BPL CODE_00C40C                         ;$00C443 |
+-   LDA $06                                 ;$00C40C |\
+    STA.l DynamicStripeImage_7F837D,X       ;$00C40E ||
+    LDA $07                                 ;$00C412 ||
+    STA.l DynamicStripeImage_7F837D+1,X     ;$00C414 ||
+    LDA.b #$40                              ;$00C418 ||
+    STA.l DynamicStripeImage_7F837D+2,X     ;$00C41A ||
+    LDA.b #$06                              ;$00C41E ||
+    STA.l DynamicStripeImage_7F837D+3,X     ;$00C420 ||
+    REP #$20                                ;$00C424 || A->16
+    LDA.w #$18F8                            ;$00C426 ||
+    STA.l DynamicStripeImage_7F837D+4,X     ;$00C429 ||
+    TXA                                     ;$00C42D ||
+    CLC                                     ;$00C42E ||
+    ADC.w #$0006                            ;$00C42F ||
+    TAX                                     ;$00C432 ||
+    SEP #$20                                ;$00C433 || A->8
+    LDA $07                                 ;$00C435 ||
+    CLC                                     ;$00C437 ||
+    ADC.b #$20                              ;$00C438 ||
+    STA $07                                 ;$00C43A ||
+    LDA $06                                 ;$00C43C ||
+    ADC.b #$00                              ;$00C43E ||
+    STA $06                                 ;$00C440 ||
+    DEY                                     ;$00C442 ||
+    BPL -                                   ;$00C443 |/
     LDA.b #$FF                              ;$00C445 |
     STA.l DynamicStripeImage_7F837D,X       ;$00C447 |
     REP #$20                                ;$00C44B | A->16
