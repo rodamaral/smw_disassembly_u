@@ -7263,7 +7263,7 @@ timers_and_animation_00C47E:
     STZ.b PlayerHiddenTiles_78
     LDA.w UnusedStarCounter_13CB            ;$00C480 |
     BPL +                                   ;$00C483 |
-    JSL CODE_01C580                         ;$00C485 | as $13CB was left off, this is normally unreachable
+    JSL apply_star_timer_and_music_01C580   ;$00C485 | as $13CB was left off, this is normally unreachable
     STZ.w UnusedStarCounter_13CB            ;$00C489 |
 +   LDY.w KeyholeTimer_1434                 ;$00C48C |
     BEQ .no_keyhole_timer_00C4BA            ;$00C48F |\ if keyhole timer is set:

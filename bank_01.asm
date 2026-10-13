@@ -6398,9 +6398,9 @@ Thwomp:
     JSL execute_pointer_0086DF              ;$01AEB9 |
 
 .ThwompStatePtrs:
-    dw thwomp_waiting_01AEC3
-    dw thwomp_falling_01AEFA
-    dw thwomp_rising_01AF24
+    dw thwomp_waiting_01AEC3                ;$01AEBD | 0 waiting for Mario
+    dw thwomp_falling_01AEFA                ;$01AEBF | 1 falling
+    dw thwomp_rising_01AF24                 ;$01AEC1 | 2 on ground/rising
 
 thwomp_waiting_01AEC3:
     LDA.w SpriteOffscreenVert_186C,X
@@ -8535,27 +8535,27 @@ CODE_01BDE2:
     JSL execute_pointer_0086DF              ;$01BDE6 |
 
 MagiKoopaPtrs:
-    dw CODE_01BDF2
-    dw CODE_01BE5F
-    dw CODE_01BE6E
-    dw CODE_01BF16
+    dw magikoopa_find_spot_01BDF2           ;$01BDEA | 0 find spot
+    dw magikoopa_fade_in_01BE5F             ;$01BDEC | 1 fade in
+    dw magikoopa_shoot_magic_01BE6E         ;$01BDEE | 2 shooting magic
+    dw magikoopa_fade_out_01BF16            ;$01BDF0 | 3 fade out
 
-CODE_01BDF2:
+magikoopa_find_spot_01BDF2:
     LDA.w SpriteWillAppear_18BF
-    BEQ CODE_01BDFB                         ;$01BDF5 |
+    BEQ .CODE_01BDFB                        ;$01BDF5 |
     STZ.w SpriteStatus_14C8,X               ;$01BDF7 |
     RTS                                     ;$01BDFA |
 
-CODE_01BDFB:
+.CODE_01BDFB:
     LDA.b SpriteLock_9D
-    BNE Return01BE5E                        ;$01BDFD |
+    BNE ..return_01BE5E                     ;$01BDFD |
     LDY.b #$24                              ;$01BDFF |
     STY.b ColorSettings_40                  ;$01BE01 |
     LDA.w SpriteStun_1540,X                 ;$01BE03 |
-    BNE Return01BE5E                        ;$01BE06 |
+    BNE ..return_01BE5E                     ;$01BE06 |
     JSL GetRand                             ;$01BE08 |
     CMP.b #$D1                              ;$01BE0C |
-    BCS Return01BE5E                        ;$01BE0E |
+    BCS ..return_01BE5E                     ;$01BE0E |
     CLC                                     ;$01BE10 |
     ADC.b Layer1YPos_1C                     ;$01BE11 |
     AND.b #$F0                              ;$01BE13 |
@@ -8576,25 +8576,25 @@ CODE_01BDFB:
     CLC                                     ;$01BE35 |
     ADC.b #$20                              ;$01BE36 |
     CMP.b #$40                              ;$01BE38 |
-    BCC Return01BE5E                        ;$01BE3A |
+    BCC ..return_01BE5E                     ;$01BE3A |
     STZ.b SpriteYSpeed_AA,X                 ;$01BE3C |
     LDA.b #$01                              ;$01BE3E |
     STA.b SpriteXSpeed_B6,X                 ;$01BE40 |
     JSR sprite_layers_interaction_019140    ;$01BE42 |
     JSR is_on_ground_01800E                 ;$01BE45 |
-    BEQ Return01BE5E                        ;$01BE48 |
+    BEQ ..return_01BE5E                     ;$01BE48 |
     LDA.w SprMap16TouchHorizHigh_1862       ;$01BE4A |
-    BNE Return01BE5E                        ;$01BE4D |
+    BNE ..return_01BE5E                     ;$01BE4D |
     INC.b SpritePhase_C2,X                  ;$01BE4F |
     STZ.w SpriteAnimationTimer_1570,X       ;$01BE51 |
     JSR CODE_01BE82                         ;$01BE54 |
     JSR SubHorizPos                         ;$01BE57 |
     TYA                                     ;$01BE5A |
     STA.w SpriteDir_157C,X                  ;$01BE5B |
-Return01BE5E:
+..return_01BE5E:
     RTS
 
-CODE_01BE5F:
+magikoopa_fade_in_01BE5F:
     JSR CODE_01C004
     STZ.w SpriteAnimation_1602,X            ;$01BE62 |
     JSR SubSprGfx1                          ;$01BE65 |
@@ -8606,30 +8606,27 @@ DATA_01BE69:
 DATA_01BE6C:
     db $10,$F8
 
-CODE_01BE6E:
+magikoopa_shoot_magic_01BE6E:
     STZ.w SpriteOnTongue_15D0,X
     JSR sprite_vs_sprite_or_mario_018FC1    ;$01BE71 |
     JSR SubHorizPos                         ;$01BE74 |
     TYA                                     ;$01BE77 |
     STA.w SpriteDir_157C,X                  ;$01BE78 |
     LDA.w SpriteStun_1540,X                 ;$01BE7B |
-    BNE CODE_01BE86                         ;$01BE7E |
-    INC.b SpritePhase_C2,X                  ;$01BE80 |
-CODE_01BE82:
-    LDY.b #$34
-    STY.b ColorSettings_40                  ;$01BE84 |
-CODE_01BE86:
-    CMP.b #$40
-    BNE CODE_01BE96                         ;$01BE88 |
+    BNE +                                   ;$01BE7E |\
+    INC.b SpritePhase_C2,X                  ;$01BE80 ||
+CODE_01BE82:                                ;        ||
+    LDY.b #$34                              ;$01BE82 ||
+    STY.b ColorSettings_40                  ;$01BE84 |/
++   CMP.b #$40                              ;$01BE86 |
+    BNE ++                                  ;$01BE88 |
     PHA                                     ;$01BE8A |
     LDA.b SpriteLock_9D                     ;$01BE8B |
     ORA.w SpriteOffscreenX_15A0,X           ;$01BE8D |
-    BNE CODE_01BE95                         ;$01BE90 |
-    JSR CODE_01BF1D                         ;$01BE92 |
-CODE_01BE95:
-    PLA
-CODE_01BE96:
-    LSR
+    BNE +                                   ;$01BE90 |\
+    JSR CODE_01BF1D                         ;$01BE92 |/
++   PLA                                     ;$01BE95 |
+++  LSR                                     ;$01BE96 |
     LSR                                     ;$01BE97 |
     LSR                                     ;$01BE98 |
     LSR                                     ;$01BE99 |
@@ -8649,22 +8646,20 @@ CODE_01BE96:
     SEC                                     ;$01BEB2 |
     SBC.b #$02                              ;$01BEB3 |
     CMP.b #$02                              ;$01BEB5 |
-    BCC CODE_01BEC6                         ;$01BEB7 |
-    LSR                                     ;$01BEB9 |
-    BCC CODE_01BEC6                         ;$01BEBA |
-    LDA.w SpriteOAMIndex_15EA,X             ;$01BEBC |
-    TAX                                     ;$01BEBF |
-    INC.w $0301,X                           ;$01BEC0 |
-    LDX.w CurrentSprite_15E9                ;$01BEC3 |
-CODE_01BEC6:
-    PLY
+    BCC +                                   ;$01BEB7 |\
+    LSR                                     ;$01BEB9 ||
+    BCC +                                   ;$01BEBA ||
+    LDA.w SpriteOAMIndex_15EA,X             ;$01BEBC ||
+    TAX                                     ;$01BEBF ||
+    INC.w $0301,X                           ;$01BEC0 ||
+    LDX.w CurrentSprite_15E9                ;$01BEC3 |/
++   PLY                                     ;$01BEC6 |
     CPY.b #$01                              ;$01BEC7 |
-    BNE CODE_01BECE                         ;$01BEC9 |
-    JSR try_create_sparkle_01B14E           ;$01BECB |
-CODE_01BECE:
-    LDA.w SpriteAnimation_1602,X
+    BNE +                                   ;$01BEC9 |\
+    JSR try_create_sparkle_01B14E           ;$01BECB |/
++   LDA.w SpriteAnimation_1602,X            ;$01BECE |
     CMP.b #$04                              ;$01BED1 |
-    BCC Return01BF15                        ;$01BED3 |
+    BCC .return_01BF15                      ;$01BED3 |
     LDY.w SpriteDir_157C,X                  ;$01BED5 |
     LDA.b SpriteXPosLow_E4,X                ;$01BED8 |
     CLC                                     ;$01BEDA |
@@ -8682,10 +8677,9 @@ CODE_01BECE:
     LDA.w SpriteDir_157C,X                  ;$01BEF2 |
     LSR                                     ;$01BEF5 |
     LDA.b #$00                              ;$01BEF6 |
-    BCS CODE_01BEFC                         ;$01BEF8 |
-    ORA.b #$40                              ;$01BEFA |
-CODE_01BEFC:
-    ORA.b SpriteYXPPCCCT_64
+    BCS +                                   ;$01BEF8 |\
+    ORA.b #$40                              ;$01BEFA |/
++   ORA.b SpriteYXPPCCCT_64                 ;$01BEFC |
     ORA.w SpriteYXPPCCCT_15F6,X             ;$01BEFE |
     STA.w $030B,Y                           ;$01BF01 |
     LDA.b #$99                              ;$01BF04 |
@@ -8697,10 +8691,10 @@ CODE_01BEFC:
     LDA.b #$00                              ;$01BF0D |
     ORA.w SpriteOffscreenX_15A0,X           ;$01BF0F |
     STA.w $0462,Y                           ;$01BF12 |
-Return01BF15:
+.return_01BF15:
     RTS
 
-CODE_01BF16:
+magikoopa_fade_out_01BF16:
     JSR CODE_01BFE3
     JSR SubSprGfx1                          ;$01BF19 |
     RTS                                     ;$01BF1C |
@@ -9555,42 +9549,41 @@ touched_powerup_01C537:
     ORA.b Powerup_19                        ;$01C53D |
     TAY                                     ;$01C53F |
     LDA.w ItemBoxSprite,Y                   ;$01C540 |
-    BEQ +                                   ;$01C543 |
-    STA.w PlayerItembox_0DC2                ;$01C545 |
-    LDA.b #$0B                              ;$01C548 |
-    STA.w SPCIO3_1DFC                       ;$01C54A |
+    BEQ +                                   ;$01C543 |\
+    STA.w PlayerItembox_0DC2                ;$01C545 ||
+    LDA.b #$0B                              ;$01C548 ||
+    STA.w SPCIO3_1DFC                       ;$01C54A |/
 +   LDA.w GivePowerPtrIndex,Y               ;$01C54D |
     JSL execute_pointer_0086DF              ;$01C550 |
 
 .HandlePowerUpPtrs:
-    dw GiveMarioMushroom
-    dw CODE_01C56F
-    dw GiveMarioStar
-    dw GiveMarioCape
-    dw GiveMarioFire
-    dw GiveMario1Up
+    dw GiveMarioMushroom                    ;$01C554 | 0
+    dw powerup_sfx_and_points_01C56F        ;$01C556 | 1
+    dw GiveMarioStar                        ;$01C558 | 2
+    dw GiveMarioCape                        ;$01C55A | 3
+    dw GiveMarioFire                        ;$01C55C | 4
+    dw GiveMario1Up                         ;$01C55E | 5
 
     RTS                                     ;$01C560 |
 
 GiveMarioMushroom:
-    LDA.b #!AniGrowing_02
+    LDA.b #!AniGrowing_02                   ;$01C561 |
     STA.b PlayerAnimation_71                ;$01C563 |
     LDA.b #$2F                              ;$01C565 |
     STA.w PlayerAniTimer_1496,Y             ;$01C567 | NOTE: the Y index seems to be a typo
     STA.b SpriteLock_9D                     ;$01C56A | Luckly, it's normally zero
-    JMP CODE_01C56F                         ;$01C56C |
+    JMP powerup_sfx_and_points_01C56F       ;$01C56C |
 
-CODE_01C56F:
+powerup_sfx_and_points_01C56F:
     LDA.b #$04
     LDY.w Sprite_1534,X                     ;$01C571 |
-    BNE CODE_01C57A                         ;$01C574 |
-    JSL GivePoints                          ;$01C576 |
-CODE_01C57A:
-    LDA.b #$0A
+    BNE +                                   ;$01C574 |\ skip if Mushroom dropped from the item box
+    JSL GivePoints                          ;$01C576 |/
++   LDA.b #$0A                              ;$01C57A |
     STA.w SPCIO0_1DF9                       ;$01C57C |
     RTS                                     ;$01C57F |
 
-CODE_01C580:
+apply_star_timer_and_music_01C580:
     LDA.b #$FF
     STA.w StarTimer_1490                    ;$01C582 |
     LDA.b #$0D                              ;$01C585 |
@@ -9601,8 +9594,8 @@ CODE_01C580:
     RTL                                     ;$01C591 |
 
 GiveMarioStar:
-    JSL CODE_01C580
-    BRA CODE_01C56F                         ;$01C596 |
+    JSL apply_star_timer_and_music_01C580
+    BRA powerup_sfx_and_points_01C56F       ;$01C596 |
 
 GiveMarioCape:
     LDA.b #$02
@@ -9611,31 +9604,29 @@ GiveMarioCape:
     STA.w SPCIO0_1DF9                       ;$01C59E |
     LDA.b #$04                              ;$01C5A1 |
     JSL GivePoints                          ;$01C5A3 |
-    JSL CODE_01C5AE                         ;$01C5A7 |
+    JSL create_feather_smoke_01C5AE         ;$01C5A7 |
     INC.b SpriteLock_9D                     ;$01C5AB |
     RTS                                     ;$01C5AD |
 
-CODE_01C5AE:
+create_feather_smoke_01C5AE:
     LDA.b PlayerYPosScrRel_80+1
     ORA.b PlayerXPosScrRel_7E+1             ;$01C5B0 |
-    BNE Return01C5EB                        ;$01C5B2 |
+    BNE .return_01C5EB                      ;$01C5B2 |
     LDA.b #!AniGetCape_03                   ;$01C5B4 |
     STA.b PlayerAnimation_71                ;$01C5B6 |
     LDA.b #$18                              ;$01C5B8 |
     STA.w PlayerAniTimer_1496               ;$01C5BA |
     LDY.b #$03                              ;$01C5BD |
-CODE_01C5BF:
-    LDA.w SmokeSprNumber_17C0,Y
-    BEQ CODE_01C5D4                         ;$01C5C2 |
-    DEY                                     ;$01C5C4 |
-    BPL CODE_01C5BF                         ;$01C5C5 |
+-   LDA.w SmokeSprNumber_17C0,Y             ;$01C5BF |\
+    BEQ .found_smoke_slot_01C5D4            ;$01C5C2 ||
+    DEY                                     ;$01C5C4 ||
+    BPL -                                   ;$01C5C5 |/
     DEC.w SmokeSprSlotIdx_1863              ;$01C5C7 |
-    BPL CODE_01C5D1                         ;$01C5CA |
-    LDA.b #$03                              ;$01C5CC |
-    STA.w SmokeSprSlotIdx_1863              ;$01C5CE |
-CODE_01C5D1:
-    LDY.w SmokeSprSlotIdx_1863
-CODE_01C5D4:
+    BPL +                                   ;$01C5CA |\
+    LDA.b #$03                              ;$01C5CC ||
+    STA.w SmokeSprSlotIdx_1863              ;$01C5CE |/
++   LDY.w SmokeSprSlotIdx_1863              ;$01C5D1 |
+.found_smoke_slot_01C5D4:
     LDA.b #$81
     STA.w SmokeSprNumber_17C0,Y             ;$01C5D6 |
     LDA.b #$1B                              ;$01C5D9 |
@@ -9646,7 +9637,7 @@ CODE_01C5D4:
     STA.w SmokeSprYPos_17C4,Y               ;$01C5E3 |
     LDA.b PlayerXPos_94                     ;$01C5E6 |
     STA.w SmokeSprXPos_17C8,Y               ;$01C5E8 |
-Return01C5EB:
+.return_01C5EB:
     RTL
 
 GiveMarioFire:
@@ -9657,7 +9648,7 @@ GiveMarioFire:
     STA.b PlayerAnimation_71                ;$01C5F5 |
     LDA.b #$03                              ;$01C5F7 |
     STA.b Powerup_19                        ;$01C5F9 |
-    JMP CODE_01C56F                         ;$01C5FB |
+    JMP powerup_sfx_and_points_01C56F       ;$01C5FB |
 
 GiveMario1Up:
     LDA.b #$08
@@ -10791,19 +10782,19 @@ CODE_01CE5F:
     LDA.b SpritePhase_C2,X
     JSL execute_pointer_0086DF              ;$01CE61 |
 
-MortonPtrs2:
-    dw CODE_01D116
-    dw CODE_01D116
-    dw CODE_01CE6B
+.MortonPtrs2:
+    dw CODE_01D116                          ;$01CE65 | 0 Morton
+    dw CODE_01D116                          ;$01CE67 | 1 Roy
+    dw CODE_01CE6B                          ;$01CE69 | 2 Ludwig
 
 CODE_01CE6B:
     LDA.w Sprite_1528,X
     JSL execute_pointer_0086DF              ;$01CE6E |
 
-Ptrs01CE72:
-    dw CODE_01CE78
-    dw CODE_01CEB6
-    dw CODE_01CEFD
+.Ptrs01CE72:
+    dw CODE_01CE78                          ;$01CE72 | 0 Ludwig firing
+    dw CODE_01CEB6                          ;$01CE74 | 1 Ludwig shell
+    dw CODE_01CEFD                          ;$01CE76 | 2 Ludwig jumping
 
 CODE_01CE78:
     STZ.b Mode7Angle_36
@@ -11176,9 +11167,9 @@ CODE_01D116:
     LDA.w Sprite_1528,X
     JSL execute_pointer_0086DF              ;$01D119 |
 
-MortonPtrs3:
-    dw CODE_01D146
-    dw CODE_01D23F
+.MortonPtrs3:
+    dw CODE_01D146                          ;$01D11D | 0 Morton/Roy walking
+    dw CODE_01D23F                          ;$01D11F | 1 Morton/Roy dropping
 
     RTS                                     ;$01D121 |
 
@@ -12029,18 +12020,17 @@ LineFuzzyPPlats:
 CODE_01D74D:
     JSR SubOffscreen1Bnk1
     LDA.w SpriteStun_1540,X                 ;$01D750 |
-    BNE CODE_01D75C                         ;$01D753 |
-    LDA.b SpriteLock_9D                     ;$01D755 |
-    ORA.w SpriteKill_1626,X                 ;$01D757 |
-    BNE Return01D6EC                        ;$01D75A |
-CODE_01D75C:
-    LDA.b SpritePhase_C2,X
+    BNE +                                   ;$01D753 |\
+    LDA.b SpriteLock_9D                     ;$01D755 ||
+    ORA.w SpriteKill_1626,X                 ;$01D757 ||
+    BNE Return01D6EC                        ;$01D75A |/
++   LDA.b SpritePhase_C2,X                  ;$01D75C |
     JSL execute_pointer_0086DF              ;$01D75E |
 
-Ptrs01D762:
-    dw CODE_01D7F4
-    dw CODE_01D768
-    dw CODE_01DB44
+.Ptrs01D762:
+    dw CODE_01D7F4                          ;$01D762 | 0 at end of tile
+    dw CODE_01D768                          ;$01D764 | 1 on rope
+    dw CODE_01DB44                          ;$01D766 | 2 falling
 
 CODE_01D768:
     LDA.b SpriteLock_9D
@@ -13548,11 +13538,11 @@ MontyMole:
     LDA.b SpritePhase_C2,X                  ;$01E2D2 |
     JSL execute_pointer_0086DF              ;$01E2D4 |
 
-Ptrs01E2D8:
-    dw CODE_01E2E0
-    dw CODE_01E309
-    dw CODE_01E37F
-    dw CODE_01E393
+.Ptrs01E2D8:
+    dw CODE_01E2E0                          ;$01E2D8 | 0 invisible
+    dw CODE_01E309                          ;$01E2DA | 1 dirt animation
+    dw CODE_01E37F                          ;$01E2DC | 2 jumping out
+    dw CODE_01E393                          ;$01E2DE | 3 walking
 
 CODE_01E2E0:
     JSR SubHorizPos
@@ -16765,13 +16755,13 @@ KoopaKid:
     JSL execute_pointer_0086DF              ;$01FAC3 |
 
 .KoopaKidPtrs:
-    dw WallKoopaKids
-    dw WallKoopaKids
-    dw WallKoopaKids
-    dw PlatformKoopaKids
-    dw PlatformKoopaKids
-    dw PipeKoopaKids
-    dw PipeKoopaKids
+    dw WallKoopaKids                        ;$01FAC7 | 0 Morton
+    dw WallKoopaKids                        ;$01FAC9 | 1 Roy
+    dw WallKoopaKids                        ;$01FACB | 2 Ludwig
+    dw PlatformKoopaKids                    ;$01FACD | 3 Iggy
+    dw PlatformKoopaKids                    ;$01FACF | 4 Larry
+    dw PipeKoopaKids                        ;$01FAD1 | 5 Lemmy
+    dw PipeKoopaKids                        ;$01FAD3 | 6 Wendy
 
 DATA_01FAD5:
     db $00,$FC,$F8,$F8,$F8,$F8,$F8,$F8
