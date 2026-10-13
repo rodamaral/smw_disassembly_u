@@ -10373,7 +10373,7 @@ set_rotation_trigonometry_01CB20:
     RTS                                     ;$01CB52 |
 
 get_circle_coords_01CB53:
-    REP #$20
+    REP #$20                                ;$01CB53 | A->16
     LDA.w RotationCosine_14C5               ;$01CB55 |
     STA $02                                 ;$01CB58 |
     LDA.w RotationRadiusX_14BC              ;$01CB5A |
@@ -12479,7 +12479,7 @@ rope_mechanism_01D9D3:
     BPL .CODE_01DA68                        ;$01DA64 |
     INC.b PlayerYPos_96                     ;$01DA66 |
 .CODE_01DA68:
-    SEP #$20
+    SEP #$20                                ;$01DA68 | A->8
     LDA.w TileGenerateTrackB_18B6           ;$01DA6A |
     JSR CODE_01DA90                         ;$01DA6D |
     LDA.b SpriteXPosLow_E4,X                ;$01DA70 |

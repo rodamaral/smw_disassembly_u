@@ -280,7 +280,7 @@ NMI_start:                                  ;        \
     LDY.w OWSubmapSwapProcess_1DE8          ;$008229 |
     DEY                                     ;$00822C |\ If submap loading is finished, skip layer data DMA
     DEY                                     ;$00822D | | and handle the regular OW routines
-    CPY.b #$04                              ;$00822E | |
+    CPY.b #!SubmapUpdate_04                 ;$00822E | |
     BCS .regular_OW_handle                  ;$008230 |/
     JSR DMA_OW_tilemap                      ;$008232 | OW layer 1 and 2 DMA
     BRA .regular_OW_bypass                  ;$008235 | Skip over various unneeded OW DMAs
@@ -720,7 +720,7 @@ _load_stripe_image_:                        ;        \
 +   STZ.b StripeImage_12                    ;$0085F7 | Clear the stripe index
     RTS                                     ;$0085F9 / Done loading stripe image data
 
-CODE_0085FA:
+clear_out_layer3_0085FA:
     JSR TurnOffIO
     LDA.b #$FC                              ;$0085FD |
     STA $00                                 ;$0085FF |
@@ -729,11 +729,10 @@ CODE_0085FA:
     LDA.b #$50                              ;$008607 |
     STA.w $2117                             ;$008609 |
     LDX.b #$06                              ;$00860C |
-CODE_00860E:
-    LDA.w DATA_008649,X
-    STA.w $4310,X                           ;$008611 |
-    DEX                                     ;$008614 |
-    BPL CODE_00860E                         ;$008615 |
+-   LDA.w .DATA_008649,X                    ;$00860E |\
+    STA.w $4310,X                           ;$008611 ||
+    DEX                                     ;$008614 ||
+    BPL -                                   ;$008615 |/
     LDY.b #$02                              ;$008617 |
     STY.w $420B                             ;$008619 |
     LDA.b #$38                              ;$00861C |
@@ -744,11 +743,10 @@ CODE_00860E:
     LDA.b #$50                              ;$008628 |
     STA.w $2117                             ;$00862A |
     LDX.b #$06                              ;$00862D |
-CODE_00862F:
-    LDA.w DATA_008649,X
-    STA.w $4310,X                           ;$008632 |
-    DEX                                     ;$008635 |
-    BPL CODE_00862F                         ;$008636 |
+-   LDA.w .DATA_008649,X                    ;$00862F |\
+    STA.w $4310,X                           ;$008632 ||
+    DEX                                     ;$008635 ||
+    BPL -                                   ;$008636 |/
     LDA.b #$19                              ;$008638 |
     STA.w $4311                             ;$00863A |
     STY.w $420B                             ;$00863D |
@@ -756,7 +754,7 @@ CODE_00862F:
     JSL OAM_reset_7F8000                    ;$008642 |
     JMP DMA_OAM                             ;$008646 |
 
-DATA_008649:
+.DATA_008649:
     db $08,$18,$00,$00,$00,$00,$10
 
 update_controllers:                         ;        \ 
@@ -809,7 +807,7 @@ update_controllers:                         ;        \
     RTS                                     ;$0086C6 /
 
 CODE_0086C7:
-    REP #$30
+    REP #$30                                ;$0086C7 | AXY->16
     LDX.w #$0062                            ;$0086C9 |
     LDA.w #$0202                            ;$0086CC |
 CODE_0086CF:
@@ -1255,7 +1253,7 @@ generic_layer_1_and_2_upload:               ;        \
 ; - $7F837B and 7F837C
 ; Also sets $7F837D = #$FF
 clear_non_stack_008A4E:
-    REP #$30
+    REP #$30                                ;$008A4E | AXY->16
     LDX.w #$1FFE                            ;$008A50 |
 --  STZ $00,X                               ;$008A53 |\
 -   DEX                                     ;$008A55 || clear words $1FFE to $0200
@@ -1361,7 +1359,7 @@ CODE_008B26:
     RTS                                     ;$008B2A |
 
 CODE_008B2B:
-    SEP #$20
+    SEP #$20                                ;$008B2B | A->8
     LDA.w DATA_008B58,X                     ;$008B2D |
     BEQ CODE_008B34                         ;$008B30 |
     LDA $00                                 ;$008B32 |
@@ -1663,7 +1661,7 @@ update_status_tileset_008E1A:
     LDA.b #$3F                              ;$008EBA ||
     STA.w PlayerScore_0F34,X                ;$008EBC |/
 +   SEP #$20                                ;$008EBF | A->8
-    DEX                                     ;$008EC1 | 
+    DEX                                     ;$008EC1 |
     DEX                                     ;$008EC2 |
     DEX                                     ;$008EC3 |
     BPL -                                   ;$008EC4 | repeat for Luigi
@@ -2160,7 +2158,7 @@ CODE_0092C8:
     LDA.b #$E0                              ;$0092E8 |
     STA.w HDMAEnable_0D9F                   ;$0092EA |
 CODE_0092ED:
-    REP #$30
+    REP #$30                                ;$0092ED | AXY->16
     LDY.w #$0008                            ;$0092EF |
     LDX.w #$0014                            ;$0092F2 |
 CODE_0092F5:
@@ -2252,7 +2250,7 @@ nintendo_tiles:
     db $02,$04,$06,$08
 
 GM00_nintendo_load_009391:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR SetUpScreen                         ;$009394 |
     JSR CODE_00A993                         ;$009397 |
     LDY.b #$0C                              ;$00939A |
@@ -2357,7 +2355,7 @@ DATA_009460:
     db $03,$FF,$FF,$C9,$0F,$FF,$CC,$C9
 
 GM19_credits_castle_load_009468:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR Clear_1A_13D3                       ;$00946B |
     JSR SetUpScreen                         ;$00946E |
     LDX.w CutsceneID_13C6                   ;$009471 |
@@ -2500,7 +2498,7 @@ GM1D_ending_yoshi_load_009583:
     JSR GM12_level_load_2_00A59C            ;$009595 |
     DEC.w GameMode_0100                     ;$009598 |
     JSR TurnOffIO                           ;$00959B |
-    JSR CODE_0085FA                         ;$00959E |
+    JSR clear_out_layer3_0085FA             ;$00959E |
     JSR CODE_00A993                         ;$0095A1 |
     JSL CODE_0CA3C9                         ;$0095A4 |
     JSR CODE_00961E                         ;$0095A8 |
@@ -2516,7 +2514,7 @@ GM21_ending_enemy_load_0095BC:
     RTS                                     ;$0095C0 |
 
 GM23_ending_enemy_scene_0095C1:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR Clear_1A_13D3                       ;$0095C4 |
     JSR SetUpScreen                         ;$0095C7 |
     JSL CODE_0CAD8C                         ;$0095CA |
@@ -2572,7 +2570,7 @@ GM25_ending_enemy_main_00962C:
     JMP consolidate_OAM_008494              ;$00963A |
 
 GM27_the_end_load_00963D:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR Clear_1A_13D3                       ;$009640 |
     JSR SetUpScreen                         ;$009643 |
     JSR CODE_00955E                         ;$009646 |
@@ -2607,7 +2605,7 @@ GM29_the_end_main_00968D:
     RTS
 
 GM10_level_start_00968E:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     LDA.w BonusGameFlag_1425                ;$009691 |
     BNE CODE_0096A8                         ;$009694 |
     LDA.w SublevelCount_141A                ;$009696 |
@@ -2694,7 +2692,7 @@ CODE_00974C:
     RTL                                     ;$00974F |
 
 GM16_game_over_load_009750:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR CODE_00A82D                         ;$009753 |
     JMP CODE_0093CA                         ;$009756 |
 
@@ -2761,7 +2759,7 @@ load_boss_room_0097BC:
     STA.b Mode7XScale_38                    ;$0097C9 |
     STA.b Mode7YScale_39                    ;$0097CB |
     STZ.w ScreenShakeYOffset_1888           ;$0097CD |
-    JSR CODE_0085FA                         ;$0097D0 |
+    JSR clear_out_layer3_0085FA             ;$0097D0 |
     LDA.b #$FF                              ;$0097D3 |
     STA.w ObjectTileset_1931                ;$0097D5 |
     JSL CODE_03D958                         ;$0097D8 |
@@ -2936,7 +2934,7 @@ CODE_009925:
     JMP .CODE_009A17                        ;$009958 |
 
 .CODE_00995B:
-    REP #$30
+    REP #$30                                ;$00995B | AXY->16
     LDA.w ActiveBoss_13FC                   ;$00995D |
     AND.w #$00FF                            ;$009960 |
     ASL                                     ;$009963 |
@@ -3085,7 +3083,7 @@ GM04_title_load_2_009A8B:
     JSR SetUp0DA0GM4
     JSR GM12_level_load_2_00A59C            ;$009A8E |
     STZ.w InGameTimerHundreds_0F31          ;$009A91 |
-    JSR CODE_0085FA                         ;$009A94 |
+    JSR clear_out_layer3_0085FA             ;$009A94 |
     LDA.b #$03                              ;$009A97 |
     STA.b StripeImage_12                    ;$009A99 |
     JSR _load_stripe_image_                 ;$009A9B |
@@ -3164,7 +3162,7 @@ DATA_009B17:
     db $04,$02,$01
 
 GM09_title_file_erase_009B1A:
-    REP #$20
+    REP #$20                                ;$009B1A | A->16
     LDA.w #$39C9                            ;$009B1C |
     LDY.b #$60                              ;$009B1F |
     JSR CODE_009D30                         ;$009B21 |
@@ -3311,7 +3309,7 @@ CODE_009BEE:
     BRA CODE_009BD9                         ;$009C0D |
 
 CODE_009C0F:
-    SEP #$30
+    SEP #$30                                ;$009C0F | AXY->8
     PLB                                     ;$009C11 |
     RTL                                     ;$009C12 |
 
@@ -3400,7 +3398,7 @@ DATA_009CCE:
     db $00,$8F,$1E
 
 GM08_title_file_select_009CD1:
-    REP #$20
+    REP #$20                                ;$009CD1 | A->16
     LDA.w #$7393                            ;$009CD3 |
     LDY.b #$20                              ;$009CD6 |
     JSR CODE_009D30                         ;$009CD8 |
@@ -3441,7 +3439,7 @@ CODE_009D14:
     CPY.w #$008D                            ;$009D1D |
     BCC CODE_009D14                         ;$009D20 |
 CODE_009D22:
-    SEP #$10
+    SEP #$10                                ;$009D22 | XY->8
     LDY.b #$12                              ;$009D24 |
     INC.w GameMode_0100                     ;$009D26 |
 CODE_009D29:
@@ -3460,7 +3458,7 @@ CODE_009D38:
 CODE_009D3A:
     STZ $05
 CODE_009D3C:
-    REP #$10
+    REP #$10                                ;$009D3C | XY->16
     LDY.w #$0000                            ;$009D3E |
 CODE_009D41:
     LDA.l DATA_05B6FE,X
@@ -3516,7 +3514,7 @@ CODE_009D98:
     BNE CODE_009D98                         ;$009DA2 |
     SEP #$20                                ;$009DA4 | A->8
 CODE_009DA6:
-    SEP #$10
+    SEP #$10                                ;$009DA6 | XY->8
     LDA $00                                 ;$009DA8 |
     SEC                                     ;$009DAA |
     SBC.b #$24                              ;$009DAB |
@@ -3567,7 +3565,7 @@ CODE_009DDE:
     BRA CODE_009DC4                         ;$009DF5 |
 
 CODE_009DF7:
-    SEP #$20
+    SEP #$20                                ;$009DF7 | A->8
     RTS                                     ;$009DF9 |
 
 GM0A_title_player_select_009DFA:
@@ -3582,8 +3580,8 @@ GM0A_title_player_select_009DFA:
     LDY.b #$04
     JSR CODE_009ACB                         ;$009E0A |
     STX.w IsTwoPlayerGame_0DB2              ;$009E0D |
-    JSR CODE_00A195                         ;$009E10 |
-    JSL CODE_04DAAD                         ;$009E13 |
+    JSR copy_from_save_buffer_00A195        ;$009E10 |
+    JSL decompress_OW_layer2_04DAAD         ;$009E13 |
 CODE_009E17:
     LDA.b #$80
     STA.w SPCIO2_1DFB                       ;$009E19 |
@@ -3603,7 +3601,7 @@ CODE_009E17:
     STZ.w ShowContinueEnd_13C9              ;$009E3A |
     REP #$20                                ;$009E3D | A->16
     STZ.w SavedPlayerCoins_0DB6             ;$009E3F |
-    STZ.w $0DB8                             ;$009E42 |
+    STZ.w SavedPlayerPowerup_0DB8           ;$009E42 |
     STZ.w SavedPlayerYoshi_0DBA             ;$009E45 |
     STZ.w PlayerItembox_0DC2                ;$009E48 |
     STZ.w PlayerBonusStars_0F48             ;$009E4B |
@@ -3817,7 +3815,7 @@ CODE_009FEA:
     CMP.b #$03                              ;$009FF6 |
     BNE CODE_00A01F                         ;$009FF8 |
 CODE_009FFA:
-    REP #$20
+    REP #$20                                ;$009FFA | A->16
     LDA.b Layer1XPos_1A                     ;$009FFC |
     LSR                                     ;$009FFE |
     STA.b Layer3XPos_22                     ;$009FFF |
@@ -3863,7 +3861,7 @@ Return00A044:
     RTS
 
 CODE_00A045:
-    REP #$30
+    REP #$30                                ;$00A045 | AXY->16
     LDX.w #$0100                            ;$00A047 |
 CODE_00A04A:
     LDY.w #$0058
@@ -3897,11 +3895,11 @@ GM0C_overworld_load_00A087:
     JSR TurnOffIO
     LDA.w EnteringStarWarp_1B9C             ;$00A08A |
     BEQ +                                   ;$00A08D |
-    JSL CODE_04853B                         ;$00A08F |
+    JSL star_warp_to_submap_04853B          ;$00A08F |
 +   JSR Clear_1A_13D3                       ;$00A093 |
     LDA.w OverworldOverride_0109            ;$00A096 |
     BEQ .not_intro_level_00A0B0             ;$00A099 |
-    LDA.b #$B0                              ;$00A09B |
+    LDA.b #$B0                              ;$00A09B | Entering Intro Level:
     STA.w SwitchPalaceTimer_1DF5            ;$00A09D |
     STZ.w OWPlayerSubmap_1F11               ;$00A0A0 |
     LDA.b #$F0                              ;$00A0A3 |
@@ -3911,7 +3909,7 @@ GM0C_overworld_load_00A087:
     JMP Mode04Finish                        ;$00A0AD |
 
 .not_intro_level_00A0B0:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR upload_music_bank_1                 ;$00A0B3 |
     JSR SetUpScreen                         ;$00A0B6 |
     STZ.w MusicBackup_0DDA                  ;$00A0B9 |
@@ -3921,7 +3919,7 @@ GM0C_overworld_load_00A087:
     INC.w OWPromptProcess_1B87              ;$00A0C4 |/
 +   STA.w SavedPlayerLives_0DB4,X           ;$00A0C7 |
     LDA.b Powerup_19                        ;$00A0CA |
-    STA.w $0DB8,X                           ;$00A0CC |
+    STA.w SavedPlayerPowerup_0DB8,X         ;$00A0CC |
     LDA.w PlayerCoins_0DBF                  ;$00A0CF |
     STA.w SavedPlayerCoins_0DB6,X           ;$00A0D2 |
     LDA.w CarryYoshiLevels_0DC1             ;$00A0D5 |
@@ -3929,21 +3927,21 @@ GM0C_overworld_load_00A087:
     LDA.w YoshiColor_13C7                   ;$00A0DA |/
 +   STA.w SavedPlayerYoshi_0DBA,X           ;$00A0DD |
     LDA.w PlayerItembox_0DC2                ;$00A0E0 |
-    STA.w $0DBC,X                           ;$00A0E3 |
+    STA.w SavedPlayerItembox_0DBC,X         ;$00A0E3 |
     LDA.b #$03                              ;$00A0E6 |
     STA.b ColorAddition_44                  ;$00A0E8 |
     LDA.b #$30                              ;$00A0EA |
     LDX.b #$15                              ;$00A0EC |
     LDY.w ShowContinueEnd_13C9              ;$00A0EE |
-    BEQ .CODE_00A11B                        ;$00A0F1 |
-    JSR CODE_00A195                         ;$00A0F3 |
-    LDA.w ExitsCompleted_1F2E               ;$00A0F6 |
-    BNE .CODE_00A101                        ;$00A0F9 |
-    JSR fade_to_title_screen_009C89         ;$00A0FB |
-    JMP increment_game_mode_0093F4          ;$00A0FE |
+    BEQ .CODE_00A11B                        ;$00A0F1 |\
+    JSR copy_from_save_buffer_00A195        ;$00A0F3 ||
+    LDA.w ExitsCompleted_1F2E               ;$00A0F6 ||
+    BNE .show_continue_menu_00A101          ;$00A0F9 ||
+    JSR fade_to_title_screen_009C89         ;$00A0FB ||
+    JMP increment_game_mode_0093F4          ;$00A0FE |/
 
-.CODE_00A101:
-    JSL CODE_04DAAD
+.show_continue_menu_00A101:
+    JSL decompress_OW_layer2_04DAAD
     REP #$20                                ;$00A105 | A->16
     LDA.w #$318C                            ;$00A107 |
     STA.w $0701                             ;$00A10A |
@@ -3995,23 +3993,21 @@ GM0C_overworld_load_00A087:
     REP #$10                                ;$00A17E | XY->16
     LDX.w #$01BE                            ;$00A180 |
     LDA.b #$FF                              ;$00A183 |
-CODE_00A185:
-    STZ.w $04A0,X
-    STA.w $04A1,X                           ;$00A188 |
-    DEX                                     ;$00A18B |
-    DEX                                     ;$00A18C |
-    BPL CODE_00A185                         ;$00A18D |
+-   STZ.w $04A0,X                           ;$00A185 |\
+    STA.w $04A1,X                           ;$00A188 ||
+    DEX                                     ;$00A18B ||
+    DEX                                     ;$00A18C ||
+    BPL -                                   ;$00A18D |/
     JSR CODE_0092A0                         ;$00A18F |
     JMP increment_game_mode_0093F4          ;$00A192 |
 
-CODE_00A195:
-    REP #$10
+copy_from_save_buffer_00A195:
+    REP #$10                                ;$00A195 | XY->16
     LDX.w #$008C                            ;$00A197 |
-CODE_00A19A:
-    LDA.w SaveDataBuffer_1F49,X
-    STA.w OWLevelSettings_1EA2,X            ;$00A19D |
-    DEX                                     ;$00A1A0 |
-    BPL CODE_00A19A                         ;$00A1A1 |
+-   LDA.w SaveDataBuffer_1F49,X             ;$00A19A |\ copy save data buffer to:
+    STA.w OWLevelSettings_1EA2,X            ;$00A19D || $1EA2 - $1F2E
+    DEX                                     ;$00A1A0 ||
+    BPL -                                   ;$00A1A1 |/
     SEP #$10                                ;$00A1A3 | XY->8
     RTS                                     ;$00A1A5 |
 
@@ -4183,7 +4179,7 @@ GM14_main_level_00A1DA:
     JMP consolidate_OAM_008494              ;$00A2F0 |
 
 mirror_player_position_00A2F3:
-    REP #$20
+    REP #$20                                ;$00A2F3 | A->16
     LDA.b PlayerXPos_94                     ;$00A2F5 |
     STA.b PlayerXPosMirror_D1               ;$00A2F7 |
     LDA.b PlayerYPos_96                     ;$00A2F9 |
@@ -4421,7 +4417,7 @@ DMA_animated_OW_tiles:                      ;        \
     STA.w $420B                             ;$00A507 |/
     SEP #$10                                ;$00A50A | XY->8
     LDA.w OWProcess_13D9                    ;$00A50C |\ If the submap is switching don't bother
-    CMP.b #$0A                              ;$00A50F | | updating the level tile palette animation
+    CMP.b #!OwSubmap_0A                     ;$00A50F | | updating the level tile palette animation
     BEQ palette_upload_return               ;$00A511 |/
     LDA.b #$6D                              ;$00A513 | Load CGRAM color address
     JSR animate_yellow_level_tile           ;$00A515 | Set the yellow level tile palette animation
@@ -4497,7 +4493,7 @@ CODE_00A594:
     RTL                                     ;$00A59B |
 
 GM12_level_load_2_00A59C:
-    JSR CODE_0085FA
+    JSR clear_out_layer3_0085FA
     JSR disable_controls                    ;$00A59F |
     STZ.w UploadMarioStart_143A             ;$00A5A2 |
     JSR SetUpScreen                         ;$00A5A5 |
@@ -4742,7 +4738,7 @@ Return00A795:
     RTS
 
 CODE_00A796:
-    REP #$20
+    REP #$20                                ;$00A796 | A->16
     LDY.w VertLayer2Setting_1414            ;$00A798 |
     BEQ CODE_00A7B9                         ;$00A79B |
     DEY                                     ;$00A79D |
@@ -5052,7 +5048,7 @@ UploadGFXFile:
     JSL CODE_00BA28                         ;$00AA7A |
     LDY.b #$01                              ;$00AA7E |
 SkipSpecial:
-    REP #$20
+    REP #$20                                ;$pecial | A->16
     LDA.w #$0000                            ;$00AA82 |
     LDX.w ObjectTileset_1931                ;$00AA85 |
     CPX.b #$11                              ;$00AA88 |
@@ -5245,7 +5241,7 @@ DATA_00ABDF:
     db $E0,$00,$18,$01,$50,$01
 
 LoadPalette:
-    REP #$30
+    REP #$30                                ;$alette | AXY->16
     LDA.w #$7FDD                            ;$00ABEF |
     STA $04                                 ;$00ABF2 |
     LDX.w #$0002                            ;$00ABF4 |
@@ -5387,7 +5383,7 @@ DATA_00AD1E:
     db $01,$00,$03,$04,$03,$05,$02
 
 CODE_00AD25:
-    REP #$30
+    REP #$30                                ;$00AD25 | AXY->16
     LDY.w #$B3D8                            ;$00AD27 |
     LDA.w OWLevelSettings_1EA2+$48          ;$00AD2A |
     BPL CODE_00AD32                         ;$00AD2D |
@@ -5444,7 +5440,7 @@ CODE_00AD32:
     RTS                                     ;$00ADA5 |
 
 CODE_00ADA6:
-    REP #$30
+    REP #$30                                ;$00ADA6 | AXY->16
     LDA.w #$B63C                            ;$00ADA8 |
     STA $00                                 ;$00ADAB |
     LDA.w #$0010                            ;$00ADAD |
@@ -6056,7 +6052,7 @@ DATA_00B726:
     db $80,$08
 
 CODE_00B888:
-    REP #$10
+    REP #$10                                ;$00B888 | XY->16
     LDY.w #$BFC0                            ;$00B88A |
     STY.b GFXFilePtr_8A                     ;$00B88D |
     LDA.b #$08                              ;$00B88F |
@@ -6101,7 +6097,7 @@ CODE_00B8D7:
     STA $8A                                 ;$00B8DA |
     SEP #$20                                ;$00B8DC | A->8
 CODE_00B8DE:
-    REP #$10
+    REP #$10                                ;$00B8DE | XY->16
     LDY.w #$0000                            ;$00B8E0 |
 CODE_00B8E3:
     JSR ReadByte
@@ -6726,7 +6722,7 @@ CODE_00BFB9:
     RTL                                     ;$00BFBB |
 
 CODE_00BFBC:
-    SEP #$30
+    SEP #$30                                ;$00BFBC | AXY->8
     LDA.b TileGenerate_9C                   ;$00BFBE |
     DEC A                                   ;$00BFC0 |
     PHK                                     ;$00BFC1 |
@@ -6769,7 +6765,7 @@ DATA_00C005:
     db $80,$40,$20,$10,$08,$04,$02,$01
 
 CODE_00C00D:
-    REP #$30
+    REP #$30                                ;$00C00D | AXY->16
     LDA.b InteractionPtXPos_9A              ;$00C00F |
     AND.w #$FF00                            ;$00C011 |
     LSR                                     ;$00C014 |
@@ -6828,7 +6824,7 @@ TileToGeneratePg0:
 CODE_00C074:
     JSR CODE_00C00D
 CODE_00C077:
-    REP #$30
+    REP #$30                                ;$00C077 | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C079 |
     AND.w #$01F0                            ;$00C07B |
     STA $04                                 ;$00C07E |
@@ -6864,7 +6860,7 @@ TileToGeneratePg1:
 CODE_00C0C1:
     JSR CODE_00C00D
 CODE_00C0C4:
-    REP #$30
+    REP #$30                                ;$00C0C4 | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C0C6 |
     AND.w #$01F0                            ;$00C0C8 |
     STA $04                                 ;$00C0CB |
@@ -7142,7 +7138,7 @@ CODE_00C334:
     TAX                                     ;$00C361 |
     LDY.w #$0005                            ;$00C362 |
 CODE_00C365:
-    SEP #$20
+    SEP #$20                                ;$00C365 | A->8
     LDA $06                                 ;$00C367 |
     STA.l DynamicStripeImage_7F837D,X       ;$00C369 |
     LDA $07                                 ;$00C36D |
@@ -7195,7 +7191,7 @@ CODE_00C3A4:
     RTS                                     ;$00C3D0 |
 
 CODE_00C3D1:
-    REP #$30
+    REP #$30                                ;$00C3D1 | AXY->16
     LDA.b InteractionPtYPos_98              ;$00C3D3 |
     AND.w #$01F0                            ;$00C3D5 |
     STA $04                                 ;$00C3D8 |
@@ -7971,7 +7967,7 @@ CODE_00CA4A:
     RTS                                     ;$00CA60 |
 
 CODE_00CA61:
-    REP #$20
+    REP #$20                                ;$00CA61 | A->16
     LDA.w #DATA_00CB12                      ;$00CA63 |
     STA $04                                 ;$00CA66 |
     STA $06                                 ;$00CA68 |
@@ -7995,7 +7991,7 @@ CODE_00CA83:
     ADC.b PlayerYPosScrRel_80               ;$00CA84 |
     STA $01                                 ;$00CA86 |
 CODE_00CA88:
-    REP #$30
+    REP #$30                                ;$00CA88 | AXY->16
     AND.w #$00FF                            ;$00CA8A |
     ASL                                     ;$00CA8D |
     DEC A                                   ;$00CA8E |
@@ -8409,7 +8405,7 @@ ScrollScreen:
     LDA.b LastScreenHoriz_5E                ;$00CE30 |
     DEC A                                   ;$00CE32 |
 CODE_00CE33:
-    REP #$20
+    REP #$20                                ;$00CE33 | A->16
     XBA                                     ;$00CE35 |
     AND.w #$FF00                            ;$00CE36 |
     CMP.b Layer1XPos_1A                     ;$00CE39 |
@@ -8915,7 +8911,7 @@ horizontal_pipe_animation:
     LDA.b #$29                              ;$00D1AD |
     STA.w PlayerPose_13E0                   ;$00D1AF |
 CODE_00D1B2:
-    REP #$20
+    REP #$20                                ;$00D1B2 | A->16
     LDA.b PlayerYPos_96                     ;$00D1B4 |
     SEC                                     ;$00D1B6 |
     SBC.w #$0008                            ;$00D1B7 |
@@ -9450,7 +9446,7 @@ CODE_00D78F:
 CODE_00D7A0:
     STA.b PlayerXSpeed_7A
 CODE_00D7A2:
-    SEP #$20
+    SEP #$20                                ;$00D7A2 | A->8
 Return00D7A4:
     RTS
 
@@ -10473,7 +10469,7 @@ draw_mario_and_yoshi_00E2BD:
 .CODE_00E33D:
     LSR
 .CODE_00E33E:
-    REP #$20
+    REP #$20                                ;$00E33E | A->16
     LDA.b PlayerXPos_94                     ;$00E340 |
     SBC.b Layer1XPos_1A                     ;$00E342 |
     STA.b PlayerXPosScrRel_7E               ;$00E344 |
@@ -10917,7 +10913,7 @@ no_layer_collision:                         ;        |
     SBC.w #$0008                            ;$00E9C2 |
     CMP.w NextLayer1XPos_1462               ;$00E9C5 |
 CODE_00E9C8:
-    SEP #$20
+    SEP #$20                                ;$00E9C8 | A->8
     BEQ CODE_00E9FB                         ;$00E9CA |
     BPL CODE_00E9FB                         ;$00E9CC |
     LDA.w HorizLayer1Setting_1411           ;$00E9CE |
@@ -11442,7 +11438,7 @@ normal_collision:
     JMP kill_player_disable_controls_00F629 ;$00ED66 |
 
 .CODE_00ED69:
-    REP #$20
+    REP #$20                                ;$00ED69 | A->16
     LDA.b InteractionPtYPos_98              ;$00ED6B |
     SEC                                     ;$00ED6D |
     SBC.w #$0010                            ;$00ED6E |
@@ -11489,7 +11485,7 @@ normal_collision:
     BPL .CODE_00EDB9                        ;$00EDB4 |
     INC.w PlayerGroundType_13EF             ;$00EDB6 |
 .CODE_00EDB9:
-    SEP #$10
+    SEP #$10                                ;$00EDB9 | XY->8
     PLX                                     ;$00EDBB |
     PLY                                     ;$00EDBC |
     CMP.w DATA_00E51C,Y                     ;$00EDBD |
@@ -12708,7 +12704,7 @@ disable_controls:
     RTS                                     ;$00F635 |
 
 CODE_00F636:
-    REP #$20
+    REP #$20                                ;$00F636 | A->16
     LDX.b #$00                              ;$00F638 |
     LDA $09                                 ;$00F63A | possibly uninit
     ORA.w #$0800                            ;$00F63C |
@@ -12909,7 +12905,7 @@ update_screen_position_00F6DB:
     ADC.w BackgroundVertOffset_1417         ;$00F7BD |
     STA.b Layer2YPos_20                     ;$00F7C0 |
 .CODE_00F7C2:
-    SEP #$20
+    SEP #$20                                ;$00F7C2 | A->8
     LDA.b Layer1XPos_1A                     ;$00F7C4 |
     SEC                                     ;$00F7C6 |
     SBC.w NextLayer1XPos_1462               ;$00F7C7 |
@@ -12962,7 +12958,7 @@ ProcessVerticalScroll00F7F4:
     STX.w ScreenScrollAtWill_1404           ;$00F825 |
     BRA .CODE_00F883                        ;$00F828 |
 .CODE_00F82A:
-    SEP #$20
+    SEP #$20                                ;$00F82A | A->8
     LDA.w WallRunFlag_13E3                  ;$00F82C |
     CMP.b #$06                              ;$00F82F |
     BCS .CODE_00F845                        ;$00F831 |
@@ -13086,7 +13082,7 @@ boss_room_collision:
     LDA.b #$01                              ;$00F919 |
     STA.w SPCIO0_1DF9                       ;$00F91B |
 .CODE_00F91E:
-    SEP #$20
+    SEP #$20                                ;$00F91E | A->8
     PLX                                     ;$00F920 |
     LDA.w boss_ceiling_height,X             ;$00F921 |
     CMP.b #$2A                              ;$00F924 |
@@ -13151,7 +13147,7 @@ boss_room_collision:
     STA $8E                                 ;$00F992 |
     JSR CODE_00EEE1                         ;$00F994 |
 .CODE_00F997:
-    REP #$20
+    REP #$20                                ;$00F997 | A->16
     LDA.b PlayerYPosScrRel_80               ;$00F999 |
     CMP.w #$00AE                            ;$00F99B |
     SEP #$20                                ;$00F99E | A->8
@@ -13161,7 +13157,7 @@ boss_room_collision:
     JMP no_layer_collision
 
 CODE_00F9A8:
-    REP #$20
+    REP #$20                                ;$00F9A8 | A->16
     LDA.b PlayerXPos_94                     ;$00F9AA |
     CLC                                     ;$00F9AC |
     ADC.w #$0008                            ;$00F9AD |
@@ -13171,7 +13167,7 @@ CODE_00F9A8:
     ADC.w #$0020                            ;$00F9B6 |
     STA.w IggyLarryPlatIntYPos_14B6         ;$00F9B9 |
 CODE_00F9BC:
-    SEP #$20
+    SEP #$20                                ;$00F9BC | A->8
     PHB                                     ;$00F9BE |
     LDA.b #$01                              ;$00F9BF |
     PHA                                     ;$00F9C1 |
@@ -13900,7 +13896,7 @@ shoot_fireball:
     RTS                                     ;$00FF06 /
 
 ADDR_00FF07:
-    REP #$20
+    REP #$20                                ;$00FF07 | A->16
     LDA.w Layer1DYPos_17BC                  ;$00FF09 |
     AND.w #$FF00                            ;$00FF0C |
     BPL .ADDR_00FF14                        ;$00FF0F |

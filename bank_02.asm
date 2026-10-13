@@ -320,7 +320,7 @@ CODE_0282D8:
     LDA.b #$0D                              ;$028313 |
     STA.w $020F,Y                           ;$028315 |
 CODE_028318:
-    REP #$20
+    REP #$20                                ;$028318 | A->16
     PHY                                     ;$02831A |
     TYA                                     ;$02831B |
     LSR                                     ;$02831C |
@@ -372,7 +372,7 @@ CODE_028367:
     JMP CODE_0282D8                         ;$028371 |
 
 CODE_028374:
-    SEP #$10
+    SEP #$10                                ;$028374 | XY->8
     LDA.b #$01                              ;$028376 |
     STA.w BossBGSpriteUpdate_188C           ;$028378 |
     LDA.w SpriteMisc_187B+9                 ;$02837B | NOTE: hardcoded slot 9
@@ -5973,7 +5973,7 @@ handle_old_sprites_sprites_02ABF2:
     PLA                                     ;$02AC44 ||
     STA.w SpriteYXPPCCCT_15F6               ;$02AC45 |/ NOTE: hardcoded slot 0
 .no_carried_02AC48:
-    REP #$10
+    REP #$10                                ;$02AC48 | XY->16
     LDX.w #$027A                            ;$02AC4A |
 -   STZ.w Map16_1693,X                      ;$02AC4D |\ level initialization
     DEX                                     ;$02AC50 ||
@@ -10363,7 +10363,7 @@ ADDR_02CC93:
     STY.w OnSolidSprite_1471                ;$02CCA8 |
     STY.w StandingOnCage_18B5               ;$02CCAB |
 ADDR_02CCAE:
-    SEP #$20
+    SEP #$20                                ;$02CCAE | A->8
     RTL                                     ;$02CCB0 |
 
 CageWingTileDispX:
@@ -11563,7 +11563,7 @@ CODE_02D4E5:
 CODE_02D4ED:
     STA.b PlayerXSpeed_7B
 CODE_02D4EF:
-    SEP #$20
+    SEP #$20                                ;$02D4EF | A->8
     RTS                                     ;$02D4F1 |
 
 DATA_02D4F2:

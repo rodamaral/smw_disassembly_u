@@ -9960,7 +9960,7 @@ CODE_03D680:
     DEX                                     ;$03D6A5 |
     BPL CODE_03D680                         ;$03D6A6 |
 CODE_03D6A8:
-    SEP #$30
+    SEP #$30                                ;$03D6A8 | AXY->8
     PLX                                     ;$03D6AA |
     RTS                                     ;$03D6AB |
 
@@ -10021,7 +10021,7 @@ CODE_03D757:
     RTL                                     ;$03D758 |
 
 CODE_03D759:
-    REP #$20
+    REP #$20                                ;$03D759 | A->16
     LDA.w #$0170                            ;$03D75B |
     SEC                                     ;$03D75E |
     SBC.b InteractionPtXPos_9A              ;$03D75F |
@@ -10033,7 +10033,7 @@ CODE_03D766:
     JSR CODE_03D76C
     JSR CODE_03D759                         ;$03D769 |
 CODE_03D76C:
-    REP #$20
+    REP #$20                                ;$03D76C | A->16
     LDA.b InteractionPtXPos_9A              ;$03D76E |
     SEC                                     ;$03D770 |
     SBC.b Layer1XPos_1A                     ;$03D771 |
@@ -10144,7 +10144,7 @@ DATA_03D8EE:
     db $0F,$1F
 
 CODE_03D958:
-    REP #$10
+    REP #$10                                ;$03D958 | XY->16
     STZ.w $2115                             ;$03D95A |
     STZ.w $2116                             ;$03D95D |
     STZ.w $2117                             ;$03D960 |
@@ -10487,7 +10487,7 @@ CODE_03DE8E:
     STA $00                                 ;$03DE96 |
     LDX.b #$00                              ;$03DE98 |
 CODE_03DE9A:
-    REP #$20
+    REP #$20                                ;$03DE9A | A->16
     LDA $00                                 ;$03DE9C |
     CLC                                     ;$03DE9E |
     ADC.w #$0080                            ;$03DE9F |

@@ -1328,12 +1328,12 @@ PtrsLong0DA10F:                             ; pointers to extended objects
     dl CODE_0DA6D1                          ; $0DA |  -
 
 CODE_0DA40F:                                ; normal object processing code
-    SEP #$30
+    SEP #$30                                ;$0DA40F | AXY->8
     JSR CODE_0DA415                         ;$0DA411 |
     RTL                                     ;$0DA414 |
 
 CODE_0DA415:
-    SEP #$30
+    SEP #$30                                ;$0DA415 | AXY->8
     LDA.w ObjectTileset_1931                ;$0DA417 |
     JSL execute_pointer_long_0086FA         ;$0DA41A |
 
@@ -1355,7 +1355,7 @@ PtrsLong0DA41E:
     dl CODE_0DD990
 
 CODE_0DA44B:
-    SEP #$30
+    SEP #$30                                ;$0DA44B | AXY->8
     LDX.b LvlLoadObjNo_5A                   ;$0DA44D |
     DEX                                     ;$0DA44F |
     TXA                                     ;$0DA450 |
@@ -4795,7 +4795,7 @@ DATA_0DBB68:
     db $27,$1C,$37,$1C,$27,$5C,$37,$5C
 
 CODE_0DC190:
-    SEP #$30
+    SEP #$30                                ;$0DC190 | AXY->8
     LDX.b LvlLoadObjNo_5A                   ;$0DC192 |
     DEX                                     ;$0DC194 |
     TXA                                     ;$0DC195 |
@@ -5593,7 +5593,7 @@ DATA_0DC620:
     db $27,$1C,$37,$1C,$27,$5C,$37,$5C
 
 CODE_0DCD90:
-    SEP #$30
+    SEP #$30                                ;$0DCD90 | AXY->8
     LDX.b LvlLoadObjNo_5A                   ;$0DCD92 |
     DEX                                     ;$0DCD94 |
     TXA                                     ;$0DCD95 |
@@ -6546,7 +6546,7 @@ DATA_0DD282:
     db $37,$1C,$27,$5C,$37,$5C
 
 CODE_0DD990:
-    SEP #$30
+    SEP #$30                                ;$0DD990 | AXY->8
     LDX.b LvlLoadObjNo_5A                   ;$0DD992 |
     DEX                                     ;$0DD994 |
     TXA                                     ;$0DD995 |
@@ -7455,7 +7455,7 @@ CODE_0DE00E:
     LDA.b #$00                              ;$0DE012 |
     STA $09                                 ;$0DE014 |
 CODE_0DE016:
-    REP #$30
+    REP #$30                                ;$0DE016 | AXY->16
     LDA $08                                 ;$0DE018 |
     ASL                                     ;$0DE01A |
     TAX                                     ;$0DE01B |
@@ -7850,7 +7850,7 @@ DATA_0DE186:
     db $B5,$09
 
 CODE_0DE890:
-    SEP #$30
+    SEP #$30                                ;$0DE890 | AXY->8
     LDX.b LvlLoadObjNo_5A                   ;$0DE892 |
     DEX                                     ;$0DE894 |
     TXA                                     ;$0DE895 |

@@ -1582,9 +1582,9 @@ IsTwoPlayerGame_0DB2: skip 1 ;done
 CurrentPlayer_0DB3: skip 1 ;done
 SavedPlayerLives_0DB4: skip 2 ;done
 SavedPlayerCoins_0DB6: skip 2 ;done
-SavedPlayerPowerup_0DB7: skip 2
+SavedPlayerPowerup_0DB8: skip 2 ;done
 SavedPlayerYoshi_0DBA: skip 2 ;done
-SavedPlayerItembox_0DBC: skip 2
+SavedPlayerItembox_0DBC: skip 2 ;done
 PlayerLives_0DBE: skip 1 ;done
 PlayerCoins_0DBF: skip 1 ;done
 GreenStarBlockCoins_0DC0: skip 1 ;done
@@ -1670,7 +1670,16 @@ Map16Pointers_0FBE: skip 1024 ;done
 ItemMemorySetting_13BE: skip 1 ;done
 Translevel_13BF: skip 2 ;done
 OverworldLayer1Tile_13C1: skip 2 ;done
+
 CurrentSubmap_13C3: skip 2 ;done
+!SubmapMain_00 = $00
+!SubmapYoshi_01 = $01
+!SubmapVanilla_02 = $02
+!SubmapForest_03 = $03
+!SubmapValley_04 = $04
+!SubmapSpecial_05 = $05
+!SubmapStar_06 = $06
+
 MoonCounter_13C5: skip 1 ;UNUSED ;done
 
 CutsceneID_13C6: skip 1 ;done
@@ -1698,14 +1707,13 @@ Layer3ScrollType_13D5: skip 1 ;done
 DrumrollTimer_13D6: skip 1 ;done
 IntroMarchYPosSpx_13D7: skip 2 ;done
 
-
 EndMarchPhase_13D9:
-OWProcess_13D9: skip 1 ;done
 !MarchCourseClear_00 = $00 ; Show up the course clear text.
 !MarchStore_01 = $01 ; Store bonus star text (if applicable), bonus stars not decrementing yet.
 !MarchCount_02 = $02 ; Count down timer/convert to score, add up bonus stars to total.
 !MarchNOP_03 = $03 ; Do nothing.
-;;;
+
+OWProcess_13D9: skip 1 ;done
 !OwNOP_00 = $00 ; Nothing.
 !OwActivate_01 = $01 ; Activate overworld events.
 !OwPostEvent_02 = $02 ; Runs as soon as a level is beaten and the events have run.
@@ -2404,7 +2412,18 @@ Layer1VramAddr_1BE4: skip 2;done
 Layer1VramBuffer_1BE6: skip 256 ;done
 Layer2VramAddr_1CE6: skip 2 ;done
 Layer2VramBuffer_1CE8: skip 256 ;done
+
 OWSubmapSwapProcess_1DE8: skip 1 ;done
+; Valid values
+!SubmapInitHDMA_00 = $00 ;Commence with handling windowing HDMA
+!SubmapUpdate_01 = $01
+!SubmapUpdate_02 = $02
+!SubmapUpdate_03 = $03
+!SubmapUpdate_04 = $04
+!SubmapPalette_05 = $05 ;Handle palette loading
+!SubmapEndHDMA_06 = $06 ;End windowing HDMA
+!SubmapTerminate_07 = $07 ;Terminate submap switching
+
 OWLoadEventFlag_1DE9: ;done
 CreditsScreenNumber_1DE9: skip 1 ;done
 OverworldEvent_1DEA: skip 1 ;done

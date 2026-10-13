@@ -679,10 +679,10 @@ DATA_0C93CF:
     db $FF,$FF,$FF,$FE,$FF,$FE
 
 CODE_0C93DD:
-    REP #$30
+    REP #$30                                ;$0C93DD | AXY->16
     STZ.w LevelLoadObject_1928              ;$0C93DF |
 CODE_0C93E2:
-    LDA.w LevelLoadObject_1928
+    LDA.w LevelLoadObject_1928              ;$0C93E2 | AXY->16
     AND.w #$00FF                            ;$0C93E5 |
     ASL                                     ;$0C93E8 |
     TAX                                     ;$0C93E9 |
@@ -728,7 +728,7 @@ CODE_0C9409:
     RTL                                     ;$0C944B |
 
 CODE_0C944C:
-    REP #$30
+    REP #$30                                ;$0C944C | AXY->16
     LDY.w #$0000                            ;$0C944E |
     STY $03                                 ;$0C9451 |
     STY $05                                 ;$0C9453 |
@@ -796,7 +796,7 @@ CODE_0C94AB:
     RTS                                     ;$0C94BF |
 
 CODE_0C94C0:
-    SEP #$20
+    SEP #$20                                ;$0C94C0 | A->8
     REP #$10                                ;$0C94C2 | XY->16
     LDX.w #$B900                            ;$0C94C4 |
     STX.b Map16LowPtr_6B                    ;$0C94C7 |
@@ -817,7 +817,7 @@ CODE_0C94C0:
     LDX.w #$007F                            ;$0C94E6 |
     STX $08                                 ;$0C94E9 |
 CODE_0C94EB:
-    SEP #$20
+    SEP #$20                                ;$0C94EB | A->8
     LDY $04                                 ;$0C94ED |
     LDA.b [Map16LowPtr_6B],Y                ;$0C94EF |
     STA $02                                 ;$0C94F1 |
@@ -1225,7 +1225,7 @@ DATA_0C9EAC:
     db $40,$3E,$FC,$00,$FF
 
 CODE_0C9EB1:
-    REP #$30
+    REP #$30                                ;$0C9EB1 | AXY->16
     LDA.l DynStripeImgSize_7F837B           ;$0C9EB3 |
     TAX                                     ;$0C9EB7 |
     LDY.w #$0000                            ;$0C9EB8 |
@@ -1295,7 +1295,7 @@ CODE_0C9F26:
     TXA                                     ;$0C9F3E |
     STA.l DynStripeImgSize_7F837B           ;$0C9F3F |
 CODE_0C9F43:
-    REP #$20
+    REP #$20                                ;$0C9F43 | A->16
     SEP #$10                                ;$0C9F45 | XY->8
     LDA.b Layer1DataPtr_65                  ;$0C9F47 |
     CLC                                     ;$0C9F49 |
@@ -1314,7 +1314,7 @@ DATA_0C9F5C:
     db $C0,$03,$80,$04,$59,$05
 
 CODE_0C9F6A:
-    REP #$20
+    REP #$20                                ;$0C9F6A | A->16
     LDX.b #$00                              ;$0C9F6C |
     LDA.w #$FF80                            ;$0C9F6E |
     STA.w Layer1ScrollXSpeed_1446,X         ;$0C9F71 |
@@ -1357,7 +1357,7 @@ CODE_0C9F6A:
     BNE .CODE_0C9FC6                        ;$0C9FC1 |
     INC.w MessageBoxExpand_1B88             ;$0C9FC3 |
 .CODE_0C9FC6:
-    SEP #$20
+    SEP #$20                                ;$0C9FC6 | A->8
     BRL CODE_0C9FEA                         ;$0C9FC8 |
 CODE_0C9FCB:
     LDA.w Layer1ScrollXPosUpd_144E,X
@@ -1378,7 +1378,7 @@ DATA_0C9FE7:
     db $00,$FF,$00
 
 CODE_0C9FEA:
-    REP #$20
+    REP #$20                                ;$0C9FEA | A->16
     LDA.w #$0038                            ;$0C9FEC |
     STA.b PlayerXPos_94                     ;$0C9FEF |
     LDA.w #$008F                            ;$0C9FF1 |
@@ -1530,7 +1530,7 @@ DATA_0CA136:
     db $60,$62,$64,$66,$6A,$6C,$6E,$0A
 
 CODE_0CA146:
-    REP #$20
+    REP #$20                                ;$0CA146 | A->16
     LDA.w #$003F                            ;$0CA148 |
     STA $08                                 ;$0CA14B |
     STA $0A                                 ;$0CA14D |
@@ -1540,7 +1540,7 @@ CODE_0CA146:
     LDY.b #$00                              ;$0CA155 |
     LDX.b #$50                              ;$0CA157 |
 CODE_0CA159:
-    REP #$20
+    REP #$20                                ;$0CA159 | A->16
     LDA $00                                 ;$0CA15B |
     CLC                                     ;$0CA15D |
     ADC.w #$0080                            ;$0CA15E |
@@ -1584,7 +1584,7 @@ CODE_0CA183:
     INX                                     ;$0CA1A9 |
     INX                                     ;$0CA1AA |
 CODE_0CA1AB:
-    REP #$20
+    REP #$20                                ;$0CA1AB | A->16
     LDA $00                                 ;$0CA1AD |
     CLC                                     ;$0CA1AF |
     ADC.w #$0010                            ;$0CA1B0 |
@@ -1738,7 +1738,7 @@ CODE_0CA2C3:
     BRA CODE_0CA2FC                         ;$0CA2DE |
 
 CODE_0CA2E0:
-    SEP #$20
+    SEP #$20                                ;$0CA2E0 | A->8
     LDX.b #$0D                              ;$0CA2E2 |
 CODE_0CA2E4:
     CPX.b #$0B
@@ -1755,7 +1755,7 @@ CODE_0CA2F7:
     CPX.b #$06                              ;$0CA2F8 |
     BNE CODE_0CA2E4                         ;$0CA2FA |
 CODE_0CA2FC:
-    SEP #$20
+    SEP #$20                                ;$0CA2FC | A->8
     LDA.b #$AF                              ;$0CA2FE |
     STA $0E                                 ;$0CA300 |
     JSR CODE_0CA8A3                         ;$0CA302 |
@@ -2404,7 +2404,7 @@ DATA_0CA7EE:
     db $34,$34,$34
 
 CODE_0CA821:
-    REP #$30
+    REP #$30                                ;$0CA821 | AXY->16
     TXA                                     ;$0CA823 |
     AND.w #$00FF                            ;$0CA824 |
     TAX                                     ;$0CA827 |
@@ -2416,7 +2416,7 @@ CODE_0CA821:
     ORA.w #$0100                            ;$0CA832 |
     TAX                                     ;$0CA835 |
 CODE_0CA836:
-    SEP #$20
+    SEP #$20                                ;$0CA836 | A->8
     LDA.b #$01                              ;$0CA838 |
     STA $04                                 ;$0CA83A |
 CODE_0CA83C:
@@ -2471,7 +2471,7 @@ CODE_0CA855:
     DEC $04                                 ;$0CA89C |
     BPL CODE_0CA83C                         ;$0CA89E |
 CODE_0CA8A0:
-    SEP #$30
+    SEP #$30                                ;$0CA8A0 | AXY->8
     RTS                                     ;$0CA8A2 |
 
 CODE_0CA8A3:
@@ -2814,7 +2814,7 @@ CODE_0CAB64:
     ADC.w DATA_0CAB1B,X                     ;$0CAB65 |
     STA.w MessageBoxTimer_1B89              ;$0CAB68 |
 CODE_0CAB6B:
-    REP #$20
+    REP #$20                                ;$0CAB6B | A->16
     LDX.b #$00                              ;$0CAB6D |
     LDY.b #$E0                              ;$0CAB6F |
     LDA.w #$00FF                            ;$0CAB71 |
@@ -2849,7 +2849,7 @@ DATA_0CABAB:
     db $03,$03,$07,$00,$01,$02,$00
 
 CODE_0CABB2:
-    SEP #$30
+    SEP #$30                                ;$0CABB2 | AXY->8
     LDA.b #$0C                              ;$0CABB4 |
     STA.w $0682                             ;$0CABB6 |
     STA.w $0690                             ;$0CABB9 |
@@ -3032,7 +3032,7 @@ CODE_0CADF6:
     LDA.l DynStripeImgSize_7F837B           ;$0CAE2B |
     TAX                                     ;$0CAE2F |
 CODE_0CAE30:
-    REP #$20
+    REP #$20                                ;$0CAE30 | A->16
     LDA [$00],Y                             ;$0CAE32 |
     STA.l DynamicStripeImage_7F837D,X       ;$0CAE34 |
     INY                                     ;$0CAE38 |
@@ -3091,7 +3091,7 @@ CODE_0CAEA3:
     RTL                                     ;$0CAEAC |
 
 CODE_0CAEAD:
-    SEP #$20
+    SEP #$20                                ;$0CAEAD | A->8
     LDA.w CreditsScreenNumber_1DE9          ;$0CAEAF |
     CMP.b #$0C                              ;$0CAEB2 |
     BNE CODE_0CAEBC                         ;$0CAEB4 |
@@ -3099,7 +3099,7 @@ CODE_0CAEAD:
     JMP CODE_0CAEF8                         ;$0CAEB9 |
 
 CODE_0CAEBC:
-    REP #$20
+    REP #$20                                ;$0CAEBC | A->16
     LDA.b Layer1XPos_1A                     ;$0CAEBE |
     CMP.w NextLayer1XPos_1462               ;$0CAEC0 |
     BNE CODE_0CAED0                         ;$0CAEC3 |
@@ -3136,7 +3136,7 @@ CODE_0CAEF8:
     LDA.b #!FadeInEnemyList_22              ;$0CAF07 |
     STA.w GameMode_0100                     ;$0CAF09 |
 CODE_0CAF0C:
-    SEP #$20
+    SEP #$20                                ;$0CAF0C | A->8
     JMP CODE_0CB5BC                         ;$0CAF0E |
 
 DATA_0CAF11:
@@ -3433,7 +3433,7 @@ CODE_0CB5E8:
     BRA CODE_0CB5DB                         ;$0CB631 |
 
 CODE_0CB633:
-    SEP #$10
+    SEP #$10                                ;$0CB633 | XY->8
     RTS                                     ;$0CB635 |
 
 DATA_0CB636:
@@ -4865,7 +4865,7 @@ CODE_0CCDEF:
     BRA CODE_0CCE1E                         ;$0CCE00 |
 
 CODE_0CCE02:
-    SEP #$20
+    SEP #$20                                ;$0CCE02 | A->8
     LDX.b #$01                              ;$0CCE04 |
     LDA.w $0B05,X                           ;$0CCE06 |
     BPL CODE_0CCE14                         ;$0CCE09 |
@@ -5353,7 +5353,7 @@ CODE_0CD16F:
     BRA CODE_0CD18F                         ;$0CD181 |
 
 CODE_0CD183:
-    REP #$20
+    REP #$20                                ;$0CD183 | A->16
     LDA.b Layer2YPos_20                     ;$0CD185 |
     CLC                                     ;$0CD187 |
     ADC.w #$0001                            ;$0CD188 |
@@ -5462,7 +5462,7 @@ Return0CD282:
     RTS
 
 CODE_0CD283:
-    REP #$20
+    REP #$20                                ;$0CD283 | A->16
     LDA.b Frame_13                          ;$0CD285 |
     AND.w #$0001                            ;$0CD287 |
     BEQ CODE_0CD290                         ;$0CD28A |
@@ -5472,7 +5472,7 @@ CODE_0CD283:
 CODE_0CD290:
     DEC.b Layer1XPos_1A
 CODE_0CD292:
-    SEP #$20
+    SEP #$20                                ;$0CD292 | A->8
     RTS                                     ;$0CD294 |
 
 CODE_0CD295:
