@@ -5007,8 +5007,8 @@ CODE_04D6E9:
     LDA.w #$0200                            ;$04D70F |
     STA.b Layer1YPos_1C                     ;$04D712 |
 .CODE_04D714:
-    JSL execute_level_mode_setting_05881A   ;$04D714 |
-    JSL generic_layer_1_and_2_upload        ;$04D718 |
+    JSL execute_layer1_mode_setting_05881A  ;$04D714 |
+    JSL upload_map16_strip_VRAM_0087AD      ;$04D718 |
     REP #$30                                ;$04D71C | AXY->16
     INC.b Layer1TileDown_47                 ;$04D71E |
     LDA.b Layer1YPos_1C                     ;$04D720 |
@@ -5234,7 +5234,7 @@ CODE_04DA49:
     TAY                                     ;$04DA77 |
     LDX.w #$0015                            ;$04DA78 |
     SEP #$20                                ;$04DA7B | A->8
-    LDA.b #$7E                              ;$04DA7D |
+    LDA.b #!Bank_7E                         ;$04DA7D |
     STA $06                                 ;$04DA7F |
     LDA [$04],Y                             ;$04DA81 |
 -   CMP.l DATA_04DA1D,X                     ;$04DA83 |\
@@ -6171,10 +6171,10 @@ CODE_04E68A:
     TXA                                     ;$04E68D |
     ASL                                     ;$04E68E |
     TAX                                     ;$04E68F |
-    LDA.b #$7E                              ;$04E690 |
+    LDA.b #!Bank_7E                         ;$04E690 |
     STA $0C                                 ;$04E692 |
     REP #$30                                ;$04E694 | AXY->16
-    LDA.w #$C800                            ;$04E696 |
+    LDA.w #!Addr_C800                       ;$04E696 |
     STA $0A                                 ;$04E699 |
     LDA.l DATA_04E5B6,X                     ;$04E69B |
     TAY                                     ;$04E69F |
@@ -6837,10 +6837,10 @@ CODE_04EC67:
     RTS                                     ;$04EC77 |
 
 CODE_04EC78:
-    LDA.b #$7E
+    LDA.b #!Bank_7E
     STA $0F                                 ;$04EC7A |
     REP #$30                                ;$04EC7C | AXY->16
-    LDA.w #$C800                            ;$04EC7E |
+    LDA.w #!Addr_C800                       ;$04EC7E |
     STA $0D                                 ;$04EC81 |
     LDA.w OverworldEvent_1DEA               ;$04EC83 |
     AND.w #$00FF                            ;$04EC86 |
@@ -6908,10 +6908,10 @@ DATA_04ECD3:
     db $A8,$11,$B8,$11,$A9,$11,$B9,$11
 
 CODE_04ED83:
-    LDA.b #$7E
+    LDA.b #!Bank_7E
     STA $0F                                 ;$04ED85 |
     REP #$30                                ;$04ED87 | AXY->16
-    LDA.w #$C800                            ;$04ED89 |
+    LDA.w #!Addr_C800                       ;$04ED89 |
     STA $0D                                 ;$04ED8C |
     LDA.w OverworldEvent_1DEA               ;$04ED8E |
     AND.w #$00FF                            ;$04ED91 |
@@ -7033,12 +7033,12 @@ CODE_04EE30:
 
 CODE_04EEAA:
     SEP #$30                                ;$04EEAA | AXY->8
-    LDA.b #$7E                              ;$04EEAC |
+    LDA.b #!Bank_7E                         ;$04EEAC |
     STA $0F                                 ;$04EEAE |
     LDA.b #$04                              ;$04EEB0 |
     STA $0C                                 ;$04EEB2 |
     REP #$30                                ;$04EEB4 | AXY->16
-    LDA.w #$C800                            ;$04EEB6 |
+    LDA.w #!Addr_C800                       ;$04EEB6 |
     STA $0D                                 ;$04EEB9 |
     LDA.w #$EE7A                            ;$04EEBB |
     STA $0A                                 ;$04EEBE |

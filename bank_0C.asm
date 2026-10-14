@@ -681,41 +681,39 @@ DATA_0C93CF:
 CODE_0C93DD:
     REP #$30                                ;$0C93DD | AXY->16
     STZ.w LevelLoadObject_1928              ;$0C93DF |
-CODE_0C93E2:
-    LDA.w LevelLoadObject_1928              ;$0C93E2 | AXY->16
-    AND.w #$00FF                            ;$0C93E5 |
-    ASL                                     ;$0C93E8 |
-    TAX                                     ;$0C93E9 |
-    LDA.l DATA_0C93C1,X                     ;$0C93EA |
-    STA.b Layer2DataPtr_68                  ;$0C93EE |
-    LDA.l DATA_0C93CF,X                     ;$0C93F0 |
-    STA.b StaffRollLinePos_65               ;$0C93F4 |
-    SEP #$20                                ;$0C93F6 | A->8
-    LDY.w #$0000                            ;$0C93F8 |
-    LDX.b Layer2DataPtr_68                  ;$0C93FB |
-    CPX.w #$E8FE                            ;$0C93FD |
-    BCC CODE_0C9405                         ;$0C9400 |
-    LDY.w #$0001                            ;$0C9402 |
-CODE_0C9405:
-    LDX.w #$0000
-    TYA                                     ;$0C9408 |
-CODE_0C9409:
-    STA.l Layer2TilemapHigh_BD00,X
-    STA.l Layer2TilemapHigh_BD00+$200,X     ;$0C940D |
-    INX                                     ;$0C9411 |
-    CPX.w #$0200                            ;$0C9412 |
-    BNE CODE_0C9409                         ;$0C9415 |
-    LDA.b #$0C                              ;$0C9417 |
-    STA.b Layer2DataPtr_68+2                ;$0C9419 |
-    LDX.w #$B900                            ;$0C941B |
-    STX $0D                                 ;$0C941E |
-    REP #$20                                ;$0C9420 | A->16
-    JSR CODE_0C944C                         ;$0C9422 |
-    JSR CODE_0C94C0                         ;$0C9425 |
-    INC.w LevelLoadObject_1928              ;$0C9428 |
-    LDA.w LevelLoadObject_1928              ;$0C942B |
-    CMP.w #$0007                            ;$0C942E |
-    BNE CODE_0C93E2                         ;$0C9431 |
+.loop_0C93E2:
+    LDA.w LevelLoadObject_1928              ;$0C93E2 |\ AXY->16
+    AND.w #$00FF                            ;$0C93E5 ||
+    ASL                                     ;$0C93E8 ||
+    TAX                                     ;$0C93E9 ||
+    LDA.l DATA_0C93C1,X                     ;$0C93EA ||
+    STA.b Layer2DataPtr_68                  ;$0C93EE ||
+    LDA.l DATA_0C93CF,X                     ;$0C93F0 ||
+    STA.b StaffRollLinePos_65               ;$0C93F4 ||
+    SEP #$20                                ;$0C93F6 || A->8
+    LDY.w #$0000                            ;$0C93F8 ||
+    LDX.b Layer2DataPtr_68                  ;$0C93FB ||
+    CPX.w #$E8FE                            ;$0C93FD ||
+    BCC +                                   ;$0C9400 ||\
+    LDY.w #$0001                            ;$0C9402 ||/
++   LDX.w #$0000                            ;$0C9405 ||
+    TYA                                     ;$0C9408 ||
+-   STA.l Layer2TilemapHigh_BD00,X          ;$0C9409 ||\
+    STA.l Layer2TilemapHigh_BD00+$200,X     ;$0C940D |||
+    INX                                     ;$0C9411 |||
+    CPX.w #$0200                            ;$0C9412 |||
+    BNE -                                   ;$0C9415 ||/
+    LDA.b #$0C                              ;$0C9417 ||
+    STA.b Layer2DataPtr_68+2                ;$0C9419 ||
+    LDX.w #$B900                            ;$0C941B ||
+    STX $0D                                 ;$0C941E ||
+    REP #$20                                ;$0C9420 || A->16
+    JSR CODE_0C944C                         ;$0C9422 ||
+    JSR load_ending_screen_0C94C0           ;$0C9425 ||
+    INC.w LevelLoadObject_1928              ;$0C9428 ||
+    LDA.w LevelLoadObject_1928              ;$0C942B ||
+    CMP.w #$0007                            ;$0C942E ||
+    BNE .loop_0C93E2                        ;$0C9431 |/
     LDA.w #$5840                            ;$0C9433 |
     STA.b StaffRollLinePos_65               ;$0C9436 |
     SEP #$30                                ;$0C9438 | AXY->8
@@ -733,16 +731,16 @@ CODE_0C944C:
     STY $03                                 ;$0C9451 |
     STY $05                                 ;$0C9453 |
     SEP #$20                                ;$0C9455 | A->8
-    LDA.b #$7E                              ;$0C9457 |
+    LDA.b #!Bank_7E                         ;$0C9457 |
     STA $0F                                 ;$0C9459 |
-CODE_0C945B:
+.loop_0C945B:
     LDY $03
     LDA.b [Layer2DataPtr_68],Y              ;$0C945D |
     STA $07                                 ;$0C945F |
     INY                                     ;$0C9461 |
     STY $03                                 ;$0C9462 |
     AND.b #$80                              ;$0C9464 |
-    BEQ CODE_0C9480                         ;$0C9466 |
+    BEQ .CODE_0C9480                        ;$0C9466 |
     LDA $07                                 ;$0C9468 |
     AND.b #$7F                              ;$0C946A |
     STA $07                                 ;$0C946C |
@@ -750,15 +748,14 @@ CODE_0C945B:
     INY                                     ;$0C9470 |
     STY $03                                 ;$0C9471 |
     LDY $05                                 ;$0C9473 |
-CODE_0C9475:
-    STA [$0D],Y
-    INY                                     ;$0C9477 |
-    DEC $07                                 ;$0C9478 |
-    BPL CODE_0C9475                         ;$0C947A |
+-   STA [$0D],Y                             ;$0C9475 |\
+    INY                                     ;$0C9477 ||
+    DEC $07                                 ;$0C9478 ||
+    BPL -                                   ;$0C947A |/
     STY $05                                 ;$0C947C |
-    BRA CODE_0C9492                         ;$0C947E |
+    BRA .CODE_0C9492                        ;$0C947E |
 
-CODE_0C9480:
+.CODE_0C9480:
     LDY $03
     LDA.b [Layer2DataPtr_68],Y              ;$0C9482 |
     INY                                     ;$0C9484 |
@@ -768,39 +765,38 @@ CODE_0C9480:
     INY                                     ;$0C948B |
     STY $05                                 ;$0C948C |
     DEC $07                                 ;$0C948E |
-    BPL CODE_0C9480                         ;$0C9490 |
-CODE_0C9492:
+    BPL .CODE_0C9480                        ;$0C9490 |
+.CODE_0C9492:
     LDY $03
     LDA.b [Layer2DataPtr_68],Y              ;$0C9494 |
     CMP.b #$FF                              ;$0C9496 |
-    BNE CODE_0C945B                         ;$0C9498 |
+    BNE .loop_0C945B                        ;$0C9498 |
     INY                                     ;$0C949A |
     LDA.b [Layer2DataPtr_68],Y              ;$0C949B |
     CMP.b #$FF                              ;$0C949D |
-    BNE CODE_0C945B                         ;$0C949F |
+    BNE .loop_0C945B                        ;$0C949F |
     REP #$20                                ;$0C94A1 | A->16
     LDA.w #$9100                            ;$0C94A3 |
     STA $00                                 ;$0C94A6 |
     LDX.w #$0000                            ;$0C94A8 |
-CODE_0C94AB:
-    LDA $00
-    STA.w Map16Pointers_0FBE,X              ;$0C94AD |
-    LDA $00                                 ;$0C94B0 |
-    CLC                                     ;$0C94B2 |
-    ADC.w #$0008                            ;$0C94B3 |
-    STA $00                                 ;$0C94B6 |
-    INX                                     ;$0C94B8 |
-    INX                                     ;$0C94B9 |
-    CPX.w #$0400                            ;$0C94BA |
-    BNE CODE_0C94AB                         ;$0C94BD |
+-   LDA $00                                 ;$0C94AB |\
+    STA.w Map16Pointers_0FBE,X              ;$0C94AD ||
+    LDA $00                                 ;$0C94B0 ||
+    CLC                                     ;$0C94B2 ||
+    ADC.w #$0008                            ;$0C94B3 ||
+    STA $00                                 ;$0C94B6 ||
+    INX                                     ;$0C94B8 ||
+    INX                                     ;$0C94B9 ||
+    CPX.w #$0400                            ;$0C94BA ||
+    BNE -                                   ;$0C94BD |/
     RTS                                     ;$0C94BF |
 
-CODE_0C94C0:
+load_ending_screen_0C94C0:
     SEP #$20                                ;$0C94C0 | A->8
     REP #$10                                ;$0C94C2 | XY->16
     LDX.w #$B900                            ;$0C94C4 |
     STX.b Map16LowPtr_6B                    ;$0C94C7 |
-    LDA.b #$7E                              ;$0C94C9 |
+    LDA.b #!Bank_7E                         ;$0C94C9 |
     STA.b Map16LowPtr_6B+2                  ;$0C94CB |
     STA.b Map16HighPtr_6E+2                 ;$0C94CD |
     LDX.w #$BD00                            ;$0C94CF |
@@ -816,64 +812,62 @@ CODE_0C94C0:
     STX $00                                 ;$0C94E4 |
     LDX.w #$007F                            ;$0C94E6 |
     STX $08                                 ;$0C94E9 |
-CODE_0C94EB:
-    SEP #$20                                ;$0C94EB | A->8
-    LDY $04                                 ;$0C94ED |
-    LDA.b [Map16LowPtr_6B],Y                ;$0C94EF |
-    STA $02                                 ;$0C94F1 |
-    LDA.b [Map16HighPtr_6E],Y               ;$0C94F3 |
-    STA $03                                 ;$0C94F5 |
-    REP #$20                                ;$0C94F7 | A->16
-    LDA $02                                 ;$0C94F9 |
-    ASL                                     ;$0C94FB |
-    TAX                                     ;$0C94FC |
-    LDA.w Map16Pointers_0FBE,X              ;$0C94FD |
-    STA.b Layer2DataPtr_68                  ;$0C9500 |
-    LDY.w #$0000                            ;$0C9502 |
-    LDA $00                                 ;$0C9505 |
-    ASL                                     ;$0C9507 |
-    ASL                                     ;$0C9508 |
-    PHA                                     ;$0C9509 |
-    AND.w #$003F                            ;$0C950A |
-    STA $06                                 ;$0C950D |
-    PLA                                     ;$0C950F |
-    AND.w #$FFC0                            ;$0C9510 |
-    ASL                                     ;$0C9513 |
-    ORA $06                                 ;$0C9514 |
-    TAX                                     ;$0C9516 |
-    LDA.b [Layer2DataPtr_68],Y              ;$0C9517 |
-    AND.b Layer1DataPtr_65                  ;$0C9519 |
-    STA.l OWLayer2Tilemap_7F4000,X          ;$0C951B |
-    INY                                     ;$0C951F |
-    INY                                     ;$0C9520 |
-    LDA.b [Layer2DataPtr_68],Y              ;$0C9521 |
-    AND.b Layer1DataPtr_65                  ;$0C9523 |
-    STA.l OWLayer2Tilemap_7F4000+$40,X      ;$0C9525 |
-    INY                                     ;$0C9529 |
-    INY                                     ;$0C952A |
-    LDA.b [Layer2DataPtr_68],Y              ;$0C952B |
-    AND.b Layer1DataPtr_65                  ;$0C952D |
-    STA.l OWLayer2Tilemap_7F4000+2,X        ;$0C952F |
-    INY                                     ;$0C9533 |
-    INY                                     ;$0C9534 |
-    LDA.b [Layer2DataPtr_68],Y              ;$0C9535 |
-    AND.b Layer1DataPtr_65                  ;$0C9537 |
-    STA.l OWLayer2Tilemap_7F4000+$42,X      ;$0C9539 |
-    INC $00                                 ;$0C953D |
-    INC $04                                 ;$0C953F |
-    DEC $08                                 ;$0C9541 |
-    BPL CODE_0C94EB                         ;$0C9543 |
+-   SEP #$20                                ;$0C94EB |\ A->8
+    LDY $04                                 ;$0C94ED ||
+    LDA.b [Map16LowPtr_6B],Y                ;$0C94EF ||
+    STA $02                                 ;$0C94F1 ||
+    LDA.b [Map16HighPtr_6E],Y               ;$0C94F3 ||
+    STA $03                                 ;$0C94F5 ||
+    REP #$20                                ;$0C94F7 || A->16
+    LDA $02                                 ;$0C94F9 ||
+    ASL                                     ;$0C94FB ||
+    TAX                                     ;$0C94FC ||
+    LDA.w Map16Pointers_0FBE,X              ;$0C94FD ||
+    STA.b Layer2DataPtr_68                  ;$0C9500 ||
+    LDY.w #$0000                            ;$0C9502 ||
+    LDA $00                                 ;$0C9505 ||
+    ASL                                     ;$0C9507 ||
+    ASL                                     ;$0C9508 ||
+    PHA                                     ;$0C9509 ||
+    AND.w #$003F                            ;$0C950A ||
+    STA $06                                 ;$0C950D ||
+    PLA                                     ;$0C950F ||
+    AND.w #$FFC0                            ;$0C9510 ||
+    ASL                                     ;$0C9513 ||
+    ORA $06                                 ;$0C9514 ||
+    TAX                                     ;$0C9516 ||
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9517 ||
+    AND.b Layer1DataPtr_65                  ;$0C9519 ||
+    STA.l OWLayer2Tilemap_7F4000,X          ;$0C951B ||
+    INY                                     ;$0C951F ||
+    INY                                     ;$0C9520 ||
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9521 ||
+    AND.b Layer1DataPtr_65                  ;$0C9523 ||
+    STA.l OWLayer2Tilemap_7F4000+$40,X      ;$0C9525 ||
+    INY                                     ;$0C9529 ||
+    INY                                     ;$0C952A ||
+    LDA.b [Layer2DataPtr_68],Y              ;$0C952B ||
+    AND.b Layer1DataPtr_65                  ;$0C952D ||
+    STA.l OWLayer2Tilemap_7F4000+2,X        ;$0C952F ||
+    INY                                     ;$0C9533 ||
+    INY                                     ;$0C9534 ||
+    LDA.b [Layer2DataPtr_68],Y              ;$0C9535 ||
+    AND.b Layer1DataPtr_65                  ;$0C9537 ||
+    STA.l OWLayer2Tilemap_7F4000+$42,X      ;$0C9539 ||
+    INC $00                                 ;$0C953D ||
+    INC $04                                 ;$0C953F ||
+    DEC $08                                 ;$0C9541 ||
+    BPL -                                   ;$0C9543 |/
     LDA.w #$007F                            ;$0C9545 |
     STA $08                                 ;$0C9548 |
     LDA $04                                 ;$0C954A |
     CMP.w #$0170                            ;$0C954C |
-    BNE Return0C9558                        ;$0C954F |
+    BNE +                                   ;$0C954F |
     LDA.w #$02A0                            ;$0C9551 |
     STA $04                                 ;$0C9554 |
-    BRA CODE_0C94EB                         ;$0C9556 |
+    BRA -                                   ;$0C9556 |
 
-Return0C9558:
-    RTS
++   RTS                                     ;$0C9558 |
 
 credits_BG_DMA_1:
     db $01,$18,$00,$40,$7F,$00,$04
@@ -898,7 +892,7 @@ DMA_credits_BG:                             ;        \
     STA.w $4310,Y                           ;$0C9580 | |
     DEY                                     ;$0C9583 | |
     BPL .DMA_copy_1                         ;$0C9584 |/
-    LDA.w LevelLoadObject_1928              ;$0C9586 |\  Set the DMA source high byte
+    LDA.w CreditsBgPointer_1928             ;$0C9586 |\  Set the DMA source high byte
     ASL                                     ;$0C9589 | | ($1928 << 3) | #$40
     ASL                                     ;$0C958A | | $1928 may be 00 to 07
     ASL                                     ;$0C958B | |
@@ -918,7 +912,7 @@ DMA_credits_BG:                             ;        \
     STA.w $4310,Y                           ;$0C95AB | |
     DEY                                     ;$0C95AE | |
     BPL .DMA_copy_2                         ;$0C95AF |/
-    LDA.w LevelLoadObject_1928              ;$0C95B1 |\  Set the DMA source high byte
+    LDA.w CreditsBgPointer_1928             ;$0C95B1 |\  Set the DMA source high byte
     ASL                                     ;$0C95B4 | | ($1928 << 3) | #$44
     ASL                                     ;$0C95B5 | | $1928 may be 00 to 07
     ASL                                     ;$0C95B6 | |
@@ -1431,28 +1425,26 @@ CODE_0CA051:
     PHK                                     ;$0CA052 |
     PLB                                     ;$0CA053 |
     LDX.b #$0E                              ;$0CA054 |
-CODE_0CA056:
-    STZ.w $0B23,X
-    STZ.w $0B32,X                           ;$0CA059 |
-    DEX                                     ;$0CA05C |
-    BPL CODE_0CA056                         ;$0CA05D |
+-   STZ.w $0B23,X                           ;$0CA056 |\
+    STZ.w $0B32,X                           ;$0CA059 ||
+    DEX                                     ;$0CA05C ||
+    BPL -                                   ;$0CA05D |/
     LDX.b #$0D                              ;$0CA05F |
     LDY.b #$06                              ;$0CA061 |
-CODE_0CA063:
-    LDA.w DATA_0CA04A,Y
-    STA.w $0B41,X                           ;$0CA066 |
-    STZ.w $0B5F,X                           ;$0CA069 |
-    LDA.w DATA_0CA043,Y                     ;$0CA06C |
-    STA.w $0B50,X                           ;$0CA06F |
-    STZ.w $0B6E,X                           ;$0CA072 |
-    LDA.w DATA_0CA3C2,Y                     ;$0CA075 |
-    STA.w $0B05,X                           ;$0CA078 |
-    LDA.b #$01                              ;$0CA07B |
-    STA.w $0AF6,X                           ;$0CA07D |
-    DEY                                     ;$0CA080 |
-    DEX                                     ;$0CA081 |
-    CPX.b #$06                              ;$0CA082 |
-    BNE CODE_0CA063                         ;$0CA084 |
+-   LDA.w DATA_0CA04A,Y                     ;$0CA063 |\
+    STA.w $0B41,X                           ;$0CA066 ||
+    STZ.w $0B5F,X                           ;$0CA069 ||
+    LDA.w DATA_0CA043,Y                     ;$0CA06C ||
+    STA.w $0B50,X                           ;$0CA06F ||
+    STZ.w $0B6E,X                           ;$0CA072 ||
+    LDA.w DATA_0CA3C2,Y                     ;$0CA075 ||
+    STA.w $0B05,X                           ;$0CA078 ||
+    LDA.b #$01                              ;$0CA07B ||
+    STA.w $0AF6,X                           ;$0CA07D ||
+    DEY                                     ;$0CA080 ||
+    DEX                                     ;$0CA081 ||
+    CPX.b #$06                              ;$0CA082 ||
+    BNE -                                   ;$0CA084 |/
     STZ.b PlayerDir_76                      ;$0CA086 |
     LDA.b #$E2                              ;$0CA088 |
     STA.w MessageBoxTimer_1B89              ;$0CA08A |
@@ -2805,7 +2797,7 @@ CODE_0CAB57:
     PHA
     PHX                                     ;$0CAB58 |
     INC.w CreditsUpdateBG_1FFE              ;$0CAB59 |
-    INC.w LevelLoadObject_1928              ;$0CAB5C |
+    INC.w CreditsBgPointer_1928             ;$0CAB5C |
     JSR CODE_0CABB2                         ;$0CAB5F |
     PLX                                     ;$0CAB62 |
     PLA                                     ;$0CAB63 |
@@ -2858,7 +2850,7 @@ CODE_0CABB2:
     LDA.b #$12                              ;$0CABC1 |
     STA.w $0691                             ;$0CABC3 |
     REP #$30                                ;$0CABC6 | AXY->16
-    LDA.w LevelLoadObject_1928              ;$0CABC8 |
+    LDA.w CreditsBgPointer_1928             ;$0CABC8 |
     AND.w #$00FF                            ;$0CABCB |
     TAY                                     ;$0CABCE |
     LDA.w DATA_0CABA4,Y                     ;$0CABCF |

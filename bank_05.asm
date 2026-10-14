@@ -11,13 +11,12 @@ CODE_05801E:
     SEP #$20                                ;$05801F | A->8
     REP #$10                                ;$058021 | XY->16
     LDX.w #$0000                            ;$058023 |
-.CODE_058026:
-    LDA.b #$25
-    STA.l SwitchAniXPosHigh_B900,X          ;$058028 |
-    STA.l SwitchAniZSpx_BAB8+$48,X          ;$05802C |
-    INX                                     ;$058030 |
-    CPX.w #$0200                            ;$058031 |
-    BNE .CODE_058026                        ;$058034 |
+-   LDA.b #$25                              ;$058026 |\
+    STA.l SwitchAniXPosHigh_B900,X          ;$058028 ||
+    STA.l SwitchAniZSpx_BAB8+$48,X          ;$05802C ||
+    INX                                     ;$058030 ||
+    CPX.w #$0200                            ;$058031 ||
+    BNE -                                   ;$058034 |/
     STZ.w LevelLoadObject_1928              ;$058036 |
     LDA.b Layer2DataPtr_68+2                ;$058039 |
     CMP.b #$FF                              ;$05803B |
@@ -63,10 +62,10 @@ CODE_05801E:
 +   PLP                                     ;$05809C |
     RTL                                     ;$05809D |
 
-CODE_05809E:
+load_level_layers_05809E:
     PHP
     SEP #$20                                ;$05809F | A->8
-    STZ.w LevelLoadObject_1928              ;$0580A1 |
+    STZ.w LevelLoadObject_1928              ;$0580A1 | $1928: current screen being loaded
     REP #$30                                ;$0580A4 | AXY->16
     LDA.w #$FFFF                            ;$0580A6 |
     STA.b Layer1PrevTileUp_4D               ;$0580A9 |
@@ -78,41 +77,40 @@ CODE_05809E:
     STA.b Layer2TileDown_4B                 ;$0580B6 |
     LDA.w #!ScrollRightDown_0202            ;$0580B8 |
     STA.b Layer1ScrollDir_55                ;$0580BB |
-CODE_0580BD:
-    REP #$30                                ;$0580BD | AXY->16
-    JSL CODE_0588EC                         ;$0580BF |
-    JSL CODE_058955                         ;$0580C3 |
-    JSL generic_layer_1_and_2_upload        ;$0580C7 |
-    REP #$30                                ;$0580CB | AXY->16
-    INC.b Layer1TileDown_47                 ;$0580CD |
-    INC.b Layer2TileDown_4B                 ;$0580CF |
-    SEP #$30                                ;$0580D1 | AXY->8
-    LDA.b Layer1TileDown_47                 ;$0580D3 |
-    LSR                                     ;$0580D5 |
-    LSR                                     ;$0580D6 |
-    LSR                                     ;$0580D7 |
-    REP #$30                                ;$0580D8 | AXY->16
-    AND.w #$0006                            ;$0580DA |
-    TAX                                     ;$0580DD |
-    LDA.w #$0133                            ;$0580DE |
-    ASL                                     ;$0580E1 |
-    TAY                                     ;$0580E2 |
-    LDA.w #$0007                            ;$0580E3 |
-    STA $00                                 ;$0580E6 |
-    LDA.l MAP16AppTable,X                   ;$0580E8 |
-CODE_0580EC:
-    STA.w Map16Pointers_0FBE,Y
-    INY                                     ;$0580EF |
-    INY                                     ;$0580F0 |
-    CLC                                     ;$0580F1 |
-    ADC.w #$0008                            ;$0580F2 |
-    DEC $00                                 ;$0580F5 |
-    BPL CODE_0580EC                         ;$0580F7 |
-    SEP #$20                                ;$0580F9 | A->8
-    INC.w LevelLoadObject_1928              ;$0580FB |
-    LDA.w LevelLoadObject_1928              ;$0580FE |
-    CMP.b #$20                              ;$058101 |
-    BNE CODE_0580BD                         ;$058103 |
+.loop_0580BD:
+    REP #$30                                ;$0580BD |\ AXY->16
+    JSL load_level_layer1_0588EC            ;$0580BF ||
+    JSL load_level_layer2_058955            ;$0580C3 ||
+    JSL upload_map16_strip_VRAM_0087AD      ;$0580C7 ||
+    REP #$30                                ;$0580CB || AXY->16
+    INC.b Layer1TileDown_47                 ;$0580CD ||
+    INC.b Layer2TileDown_4B                 ;$0580CF ||
+    SEP #$30                                ;$0580D1 || AXY->8
+    LDA.b Layer1TileDown_47                 ;$0580D3 ||
+    LSR                                     ;$0580D5 ||
+    LSR                                     ;$0580D6 ||
+    LSR                                     ;$0580D7 ||
+    REP #$30                                ;$0580D8 || AXY->16
+    AND.w #$0006                            ;$0580DA ||
+    TAX                                     ;$0580DD ||
+    LDA.w #$0133                            ;$0580DE ||
+    ASL                                     ;$0580E1 ||
+    TAY                                     ;$0580E2 ||
+    LDA.w #$0007                            ;$0580E3 ||
+    STA $00                                 ;$0580E6 ||
+    LDA.l map16_app_table,X                 ;$0580E8 ||
+-   STA.w Map16Pointers_0FBE,Y              ;$0580EC ||\
+    INY                                     ;$0580EF |||
+    INY                                     ;$0580F0 |||
+    CLC                                     ;$0580F1 |||
+    ADC.w #$0008                            ;$0580F2 |||
+    DEC $00                                 ;$0580F5 |||
+    BPL -                                   ;$0580F7 ||/
+    SEP #$20                                ;$0580F9 || A->8
+    INC.w LevelLoadObject_1928              ;$0580FB ||
+    LDA.w LevelLoadObject_1928              ;$0580FE ||
+    CMP.b #$20                              ;$058101 ||
+    BNE .loop_0580BD                        ;$058103 |/
     LDA.w ThroughMain_0D9D                  ;$058105 |
     STA.w $212C                             ;$058108 |
     STA.w $212E                             ;$05810B |
@@ -135,7 +133,7 @@ CODE_058126:
     STY $03                                 ;$05812C |
     STY $05                                 ;$05812E |
     SEP #$30                                ;$058130 | AXY->8
-    LDA.b #$7E                              ;$058132 |
+    LDA.b #!Bank_7E                         ;$058132 |
     STA $0F                                 ;$058134 |
 CODE_058136:
     SEP #$20                                ;$058136 | A->8
@@ -793,16 +791,16 @@ process_level_mode_setting_0586F1:
     SEP #$20                                ;$0586F7 | A->8
     LDA.b ScreenMode_5B                     ;$0586F9 |
     AND.b #!Layer1Vert_01                   ;$0586FB |
-    BNE .vertical_layer_1_058713            ;$0586FD |
-    REP #$20                                ;$0586FF | Horizontal Layer 1
-    LDA.b Layer1ScrollDir_55                ;$058701 |
-    AND.w #$00FF                            ;$058703 |
-    TAX                                     ;$058706 |
-    LDA.b Layer1XPos_1A                     ;$058707 |
-    AND.w #$FFF0                            ;$058709 |
-    CMP.b Layer1PrevTileUp_4D,X             ;$05870C |
-    BEQ .CODE_058737                        ;$05870E |
-    JMP .common_058724                      ;$058710 |
+    BNE .vertical_layer_1_058713            ;$0586FD |\
+    REP #$20                                ;$0586FF || Horizontal Layer 1:
+    LDA.b Layer1ScrollDir_55                ;$058701 ||
+    AND.w #$00FF                            ;$058703 ||
+    TAX                                     ;$058706 ||
+    LDA.b Layer1XPos_1A                     ;$058707 ||
+    AND.w #$FFF0                            ;$058709 ||
+    CMP.b Layer1PrevTileUp_4D,X             ;$05870C ||
+    BEQ .CODE_058737                        ;$05870E ||
+    JMP .common_058724                      ;$058710 ||
 
 .vertical_layer_1_058713:
     REP #$20                                ;$058713 | A->16
@@ -820,25 +818,25 @@ process_level_mode_setting_0586F1:
     TAX                                     ;$05872A |
     LDA.w #$FFFF                            ;$05872B |
     STA.b Layer1PrevTileUp_4D,X             ;$05872E |
-    JSL execute_level_mode_setting_05881A   ;$058730 |
+    JSL execute_layer1_mode_setting_05881A  ;$058730 | Horizontal e VErtical
     JMP .return_058774                      ;$058734 |
 
 .CODE_058737:
     SEP #$20                                ;$058737 | A->8
     LDA.b ScreenMode_5B                     ;$058739 |
     AND.b #!Layer2Vert_02                   ;$05873B |
-    BNE .CODE_058753                        ;$05873D |
-    REP #$20                                ;$05873F | A->16
-    LDA.b Layer2ScrollDir_56                ;$058741 |
-    AND.w #$00FF                            ;$058743 |
-    TAX                                     ;$058746 |
-    LDA.b Layer2XPos_1E                     ;$058747 |
-    AND.w #$FFF0                            ;$058749 |
-    CMP.b Layer2PrevTileUp_51,X             ;$05874C |
-    BEQ .return_058774                      ;$05874E |
-    JMP .CODE_058764                        ;$058750 |
-.CODE_058753:
-    REP #$20                                ;$058753 | A->16
+    BNE +                                   ;$05873D |\
+    REP #$20                                ;$05873F || A->16
+    LDA.b Layer2ScrollDir_56                ;$058741 ||
+    AND.w #$00FF                            ;$058743 ||
+    TAX                                     ;$058746 ||
+    LDA.b Layer2XPos_1E                     ;$058747 ||
+    AND.w #$FFF0                            ;$058749 ||
+    CMP.b Layer2PrevTileUp_51,X             ;$05874C ||
+    BEQ .return_058774                      ;$05874E ||
+    JMP .CODE_058764                        ;$058750 |/
+
++   REP #$20                                ;$058753 | A->16
     LDA.b Layer2ScrollDir_56                ;$058755 |
     AND.w #$00FF                            ;$058757 |
     TAX                                     ;$05875A |
@@ -853,12 +851,12 @@ process_level_mode_setting_0586F1:
     TAX                                     ;$05876A |
     LDA.w #$FFFF                            ;$05876B |
     STA.b Layer2PrevTileUp_51,X             ;$05876E |
-    JSL execute_level_mode_setting_058883   ;$058770 |
+    JSL execute_layer2_mode_setting_058883  ;$058770 |
 .return_058774:
     PLP
     RTL                                     ;$058775 |
 
-MAP16AppTable:
+map16_app_table:
     db $B0,$8A,$E0,$84,$F0,$8A,$30,$8B
 
 set_map16_for_VRAM_upload_05877E:
@@ -896,7 +894,7 @@ set_map16_for_VRAM_upload_05877E:
     TAY                                     ;$0587B1 |
     LDA.w #$0007                            ;$0587B2 |
     STA $00                                 ;$0587B5 |
-    LDA.l MAP16AppTable,X                   ;$0587B7 |
+    LDA.l map16_app_table,X                 ;$0587B7 |
 -   STA.w Map16Pointers_0FBE,Y              ;$0587BB |
     INY                                     ;$0587BE |
     INY                                     ;$0587BF |
@@ -961,30 +959,30 @@ set_map16_for_VRAM_upload_05877E:
     PLP
     RTS                                     ;$058819 |
 
-execute_level_mode_setting_05881A:
+execute_layer1_mode_setting_05881A:
     SEP #$30                                ;$05881A | AXY->8
     LDA.w LevelModeSetting_1925             ;$05881C |
     JSL execute_pointer_long_0086FA         ;$05881F |
 
 .PtrsLong058823:
-    dl CODE_0589CE                          ;$058823 | 00
-    dl CODE_0589CE                          ;$058826 | 01
-    dl CODE_0589CE                          ;$058829 | 02
-    dl CODE_058A9B                          ;$05882C | 03
-    dl CODE_058A9B                          ;$05882F | 04
-    dl CODE_0589CE                          ;$058832 | 05
-    dl CODE_0589CE                          ;$058835 | 06
-    dl CODE_058A9B                          ;$058838 | 07
-    dl CODE_058A9B                          ;$05883B | 08
-    dl Return058A9A                         ;$05883E | 09
-    dl CODE_058A9B                          ;$058841 | 0A
-    dl Return058A9A                         ;$058844 | 0B
-    dl CODE_0589CE                          ;$058847 | 0C
-    dl CODE_058A9B                          ;$05884A | 0D
-    dl CODE_0589CE                          ;$05884D | 0E
-    dl CODE_0589CE                          ;$058850 | 0F
-    dl Return058A9A                         ;$058853 | 10
-    dl CODE_0589CE                          ;$058856 | 11
+    dl horizontal_layer1_0589CE             ;$058823 | 00
+    dl horizontal_layer1_0589CE             ;$058826 | 01
+    dl horizontal_layer1_0589CE             ;$058829 | 02
+    dl vertical_layer1_058A9B               ;$05882C | 03
+    dl vertical_layer1_058A9B               ;$05882F | 04
+    dl horizontal_layer1_0589CE             ;$058832 | 05
+    dl horizontal_layer1_0589CE             ;$058835 | 06
+    dl vertical_layer1_058A9B               ;$058838 | 07
+    dl vertical_layer1_058A9B               ;$05883B | 08
+    dl Return058A9A                         ;$05883E | 09 boss room
+    dl vertical_layer1_058A9B               ;$058841 | 0A
+    dl Return058A9A                         ;$058844 | 0B boss room
+    dl horizontal_layer1_0589CE             ;$058847 | 0C
+    dl vertical_layer1_058A9B               ;$05884A | 0D
+    dl horizontal_layer1_0589CE             ;$05884D | 0E
+    dl horizontal_layer1_0589CE             ;$058850 | 0F
+    dl Return058A9A                         ;$058853 | 10 boss room
+    dl horizontal_layer1_0589CE             ;$058856 | 11
     dl Return058A9A                         ;$058859 | 12
     dl Return058A9A                         ;$05885C | 13
     dl Return058A9A                         ;$05885F | 14
@@ -997,32 +995,32 @@ execute_level_mode_setting_05881A:
     dl Return058A9A                         ;$058874 | 1B
     dl Return058A9A                         ;$058877 | 1C
     dl Return058A9A                         ;$05887A | 1D
-    dl CODE_0589CE                          ;$05887D | 1E
-    dl CODE_0589CE                          ;$058880 | 1F
+    dl horizontal_layer1_0589CE             ;$05887D | 1E
+    dl horizontal_layer1_0589CE             ;$058880 | 1F
 
-execute_level_mode_setting_058883:
+execute_layer2_mode_setting_058883:
     SEP #$30                                ;$058883 | AXY->8
     LDA.w LevelModeSetting_1925             ;$058885 |
     JSL execute_pointer_long_0086FA         ;$058888 |
 
 .PtrsLong05888C:
     dl Return058C70                         ;$05888C | 00
-    dl CODE_058B8D                          ;$05888F | 01
-    dl CODE_058B8D                          ;$058892 | 02
-    dl CODE_058B8D                          ;$058895 | 03
-    dl CODE_058B8D                          ;$058898 | 04
-    dl CODE_058C71                          ;$05889B | 05
-    dl CODE_058C71                          ;$05889E | 06
-    dl CODE_058C71                          ;$0588A1 | 07
-    dl CODE_058C71                          ;$0588A4 | 08
-    dl Return058C70                         ;$0588A7 | 09
+    dl horizontal_layer2_058B8D             ;$05888F | 01
+    dl horizontal_layer2_058B8D             ;$058892 | 02
+    dl horizontal_layer2_058B8D             ;$058895 | 03
+    dl horizontal_layer2_058B8D             ;$058898 | 04
+    dl vertical_layer2_058C71               ;$05889B | 05
+    dl vertical_layer2_058C71               ;$05889E | 06
+    dl vertical_layer2_058C71               ;$0588A1 | 07
+    dl vertical_layer2_058C71               ;$0588A4 | 08
+    dl Return058C70                         ;$0588A7 | 09 boss room
     dl Return058C70                         ;$0588AA | 0A
-    dl Return058C70                         ;$0588AD | 0B
+    dl Return058C70                         ;$0588AD | 0B boss room
     dl Return058C70                         ;$0588B0 | 0C
     dl Return058C70                         ;$0588B3 | 0D
     dl Return058C70                         ;$0588B6 | 0E
-    dl CODE_058B8D                          ;$0588B9 | 0F
-    dl Return058C70                         ;$0588BC | 10
+    dl horizontal_layer2_058B8D             ;$0588B9 | 0F
+    dl Return058C70                         ;$0588BC | 10 boss room
     dl Return058C70                         ;$0588BF | 11
     dl Return058C70                         ;$0588C2 | 12
     dl Return058C70                         ;$0588C5 | 13
@@ -1037,32 +1035,32 @@ execute_level_mode_setting_058883:
     dl Return058C70                         ;$0588E0 | 1C
     dl Return058C70                         ;$0588E3 | 1D
     dl Return058C70                         ;$0588E6 | 1E
-    dl CODE_058B8D                          ;$0588E9 | 1F
+    dl horizontal_layer2_058B8D             ;$0588E9 | 1F
 
-CODE_0588EC:
+load_level_layer1_0588EC:
     SEP #$30                                ;$0588EC | AXY->8
     LDA.w LevelModeSetting_1925             ;$0588EE |
     JSL execute_pointer_long_0086FA         ;$0588F1 |
 
 .PtrsLong0588F5:
-    dl CODE_0589CE                          ;$0588F5 | 00
-    dl CODE_0589CE                          ;$0588F8 | 01
-    dl CODE_0589CE                          ;$0588FB | 02
-    dl CODE_058A9B                          ;$0588FE | 03
-    dl CODE_058A9B                          ;$058901 | 04
-    dl CODE_0589CE                          ;$058904 | 05
-    dl CODE_0589CE                          ;$058907 | 06
-    dl CODE_058A9B                          ;$05890A | 07
-    dl CODE_058A9B                          ;$05890D | 08
-    dl Return058A9A                         ;$058910 | 09
-    dl CODE_058A9B                          ;$058913 | 0A
-    dl Return058A9A                         ;$058916 | 0B
-    dl CODE_0589CE                          ;$058919 | 0C
-    dl CODE_058A9B                          ;$05891C | 0D
-    dl CODE_0589CE                          ;$05891F | 0E
-    dl CODE_0589CE                          ;$058922 | 0F
-    dl Return058A9A                         ;$058925 | 10
-    dl CODE_0589CE                          ;$058928 | 11
+    dl horizontal_layer1_0589CE             ;$0588F5 | 00
+    dl horizontal_layer1_0589CE             ;$0588F8 | 01
+    dl horizontal_layer1_0589CE             ;$0588FB | 02
+    dl vertical_layer1_058A9B               ;$0588FE | 03
+    dl vertical_layer1_058A9B               ;$058901 | 04
+    dl horizontal_layer1_0589CE             ;$058904 | 05
+    dl horizontal_layer1_0589CE             ;$058907 | 06
+    dl vertical_layer1_058A9B               ;$05890A | 07
+    dl vertical_layer1_058A9B               ;$05890D | 08
+    dl Return058A9A                         ;$058910 | 09 boss room
+    dl vertical_layer1_058A9B               ;$058913 | 0A
+    dl Return058A9A                         ;$058916 | 0B boss room
+    dl horizontal_layer1_0589CE             ;$058919 | 0C
+    dl vertical_layer1_058A9B               ;$05891C | 0D
+    dl horizontal_layer1_0589CE             ;$05891F | 0E
+    dl horizontal_layer1_0589CE             ;$058922 | 0F
+    dl Return058A9A                         ;$058925 | 10 boss room
+    dl horizontal_layer1_0589CE             ;$058928 | 11
     dl Return058A9A                         ;$05892B | 12
     dl Return058A9A                         ;$05892E | 13
     dl Return058A9A                         ;$058931 | 14
@@ -1075,33 +1073,33 @@ CODE_0588EC:
     dl Return058A9A                         ;$058946 | 1B
     dl Return058A9A                         ;$058949 | 1C
     dl Return058A9A                         ;$05894C | 1D
-    dl CODE_0589CE                          ;$05894F | 1E
-    dl CODE_0589CE                          ;$058952 | 1F
+    dl horizontal_layer1_0589CE             ;$05894F | 1E
+    dl horizontal_layer1_0589CE             ;$058952 | 1F
 
-CODE_058955:
+load_level_layer2_058955:
     SEP #$30                                ;$058955 | AXY->8
     LDA.w LevelModeSetting_1925             ;$058957 |
     JSL execute_pointer_long_0086FA         ;$05895A |
 
 PtrsLong05895E:
-    dl CODE_058D7A                          ;$05895E | 00
-    dl CODE_058B8D                          ;$058961 | 01
-    dl CODE_058B8D                          ;$058964 | 02
-    dl CODE_058B8D                          ;$058967 | 03
-    dl CODE_058B8D                          ;$05896A | 04
-    dl CODE_058C71                          ;$05896D | 05
-    dl CODE_058C71                          ;$058970 | 06
-    dl CODE_058C71                          ;$058973 | 07
-    dl CODE_058C71                          ;$058976 | 08
-    dl Return058C70                         ;$058979 | 09
-    dl CODE_058D7A                          ;$05897C | 0A
-    dl Return058C70                         ;$05897F | 0B
-    dl CODE_058D7A                          ;$058982 | 0C
-    dl CODE_058D7A                          ;$058985 | 0D
-    dl CODE_058D7A                          ;$058988 | 0E
-    dl CODE_058B8D                          ;$05898B | 0F
-    dl Return058C70                         ;$05898E | 10
-    dl CODE_058D7A                          ;$058991 | 11
+    dl horizontal_without_layer2_058D7A     ;$05895E | 00
+    dl horizontal_layer2_058B8D             ;$058961 | 01
+    dl horizontal_layer2_058B8D             ;$058964 | 02
+    dl horizontal_layer2_058B8D             ;$058967 | 03
+    dl horizontal_layer2_058B8D             ;$05896A | 04
+    dl vertical_layer2_058C71               ;$05896D | 05
+    dl vertical_layer2_058C71               ;$058970 | 06
+    dl vertical_layer2_058C71               ;$058973 | 07
+    dl vertical_layer2_058C71               ;$058976 | 08
+    dl Return058C70                         ;$058979 | 09 boss room
+    dl horizontal_without_layer2_058D7A     ;$05897C | 0A
+    dl Return058C70                         ;$05897F | 0B boss room
+    dl horizontal_without_layer2_058D7A     ;$058982 | 0C
+    dl horizontal_without_layer2_058D7A     ;$058985 | 0D
+    dl horizontal_without_layer2_058D7A     ;$058988 | 0E
+    dl horizontal_layer2_058B8D             ;$05898B | 0F
+    dl Return058C70                         ;$05898E | 10 boss room
+    dl horizontal_without_layer2_058D7A     ;$058991 | 11
     dl Return058C70                         ;$058994 | 12
     dl Return058C70                         ;$058997 | 13
     dl Return058C70                         ;$05899A | 14
@@ -1114,14 +1112,14 @@ PtrsLong05895E:
     dl Return058C70                         ;$0589AF | 1B
     dl Return058C70                         ;$0589B2 | 1C
     dl Return058C70                         ;$0589B5 | 1D
-    dl CODE_058D7A                          ;$0589B8 | 1E
-    dl CODE_058B8D                          ;$0589BB | 1F
+    dl horizontal_without_layer2_058D7A     ;$0589B8 | 1E
+    dl horizontal_layer2_058B8D             ;$0589BB | 1F
 
 DATA_0589BE:
     db $80,$00,$40,$00,$20,$00,$10,$00
     db $08,$00,$04,$00,$02,$00,$01,$00
 
-CODE_0589CE:
+horizontal_layer1_0589CE:
     PHP
     REP #$30                                ;$0589CF | AXY->16
     LDA.w LevelModeSetting_1925             ;$0589D1 |
@@ -1231,7 +1229,7 @@ CODE_058A55:
 Return058A9A:
     RTL
 
-CODE_058A9B:
+vertical_layer1_058A9B:
     PHP
     REP #$30                                ;$058A9C | AXY->16
     LDA.w LevelModeSetting_1925             ;$058A9E |
@@ -1365,7 +1363,7 @@ CODE_058B84:
     PLP                                     ;$058B8B |
     RTL                                     ;$058B8C |
 
-CODE_058B8D:
+horizontal_layer2_058B8D: ; TODO name
     PHP
     REP #$30                                ;$058B8E | AXY->16
     LDA.w LevelModeSetting_1925             ;$058B90 |
@@ -1376,10 +1374,9 @@ CODE_058B8D:
     LDY.w #$0000                            ;$058B9A |
     LDA.w ObjectTileset_1931                ;$058B9D |
     CMP.b #$03                              ;$058BA0 |
-    BNE CODE_058BA7                         ;$058BA2 |
-    LDY.w #$1000                            ;$058BA4 |
-CODE_058BA7:
-    STY $03
+    BNE +                                   ;$058BA2 |\
+    LDY.w #$1000                            ;$058BA4 |/
++   STY $03                                 ;$058BA7 |
     LDA.l Ptrs00BDE8,X                      ;$058BA9 |
     STA $0A                                 ;$058BAD |
     LDA.l Ptrs00BDE8+1,X                    ;$058BAF |
@@ -1400,10 +1397,9 @@ CODE_058BA7:
     LDY.w #$0030                            ;$058BD2 |
     LDA.b Layer2TileUp_49,X                 ;$058BD5 |
     AND.b #$10                              ;$058BD7 |
-    BEQ CODE_058BDE                         ;$058BD9 |
-    LDY.w #$0034                            ;$058BDB |
-CODE_058BDE:
-    TYA
+    BEQ +                                   ;$058BD9 |\
+    LDY.w #$0034                            ;$058BDB |/
++   TYA                                     ;$058BDE |
     STA.w Layer2VramAddr_1CE6               ;$058BDF |
     REP #$30                                ;$058BE2 | AXY->16
     LDA.b Layer2TileUp_49,X                 ;$058BE4 |
@@ -1432,61 +1428,59 @@ CODE_058BDE:
     LDY.b #$0D                              ;$058C0A |
     LDA.w ObjectTileset_1931                ;$058C0C |
     CMP.b #$10                              ;$058C0F |
-    BMI CODE_058C15                         ;$058C11 |
-    LDY.b #$05                              ;$058C13 |
-CODE_058C15:
-    STY $0C
+    BMI +                                   ;$058C11 |\
+    LDY.b #$05                              ;$058C13 |/
++   STY $0C                                 ;$058C15 |
     REP #$30                                ;$058C17 | AXY->16
     LDA.b Layer2TileUp_49,X                 ;$058C19 |
     AND.w #$000F                            ;$058C1B |
     STA $08                                 ;$058C1E |
     LDX.w #$0000                            ;$058C20 |
-CODE_058C23:
-    LDY $08
-    LDA.b [Map16LowPtr_6B],Y                ;$058C25 |
-    AND.w #$00FF                            ;$058C27 |
-    STA $00                                 ;$058C2A |
-    LDA.b [Map16HighPtr_6E],Y               ;$058C2C |
-    STA $01                                 ;$058C2E |
-    LDA $00                                 ;$058C30 |
-    ASL                                     ;$058C32 |
-    TAY                                     ;$058C33 |
-    LDA.w Map16Pointers_0FBE,Y              ;$058C34 |
-    STA $0A                                 ;$058C37 |
-    LDY.w #$0000                            ;$058C39 |
-    LDA [$0A],Y                             ;$058C3C |
-    ORA $03                                 ;$058C3E |
-    STA.w Layer2VramBuffer_1CE8,X           ;$058C40 |
-    INY                                     ;$058C43 |
-    INY                                     ;$058C44 |
-    LDA [$0A],Y                             ;$058C45 |
-    ORA $03                                 ;$058C47 |
-    STA.w Layer2VramBuffer_1CE8+2,X         ;$058C49 |
-    INY                                     ;$058C4C |
-    INY                                     ;$058C4D |
-    LDA [$0A],Y                             ;$058C4E |
-    ORA $03                                 ;$058C50 |
-    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058C52 |
-    INY                                     ;$058C55 |
-    INY                                     ;$058C56 |
-    LDA [$0A],Y                             ;$058C57 |
-    ORA $03                                 ;$058C59 |
-    STA.w Layer2VramBuffer_1CE8+$82,X       ;$058C5B |
-    INX                                     ;$058C5E |
-    INX                                     ;$058C5F |
-    INX                                     ;$058C60 |
-    INX                                     ;$058C61 |
-    LDA $08                                 ;$058C62 |
-    CLC                                     ;$058C64 |
-    ADC.w #$0010                            ;$058C65 |
-    STA $08                                 ;$058C68 |
-    CMP.w #$01B0                            ;$058C6A |
-    BCC CODE_058C23                         ;$058C6D |
+-   LDY $08                                 ;$058C23 |\
+    LDA.b [Map16LowPtr_6B],Y                ;$058C25 ||
+    AND.w #$00FF                            ;$058C27 ||
+    STA $00                                 ;$058C2A ||
+    LDA.b [Map16HighPtr_6E],Y               ;$058C2C ||
+    STA $01                                 ;$058C2E ||
+    LDA $00                                 ;$058C30 ||
+    ASL                                     ;$058C32 ||
+    TAY                                     ;$058C33 ||
+    LDA.w Map16Pointers_0FBE,Y              ;$058C34 ||
+    STA $0A                                 ;$058C37 ||
+    LDY.w #$0000                            ;$058C39 ||
+    LDA [$0A],Y                             ;$058C3C ||
+    ORA $03                                 ;$058C3E ||
+    STA.w Layer2VramBuffer_1CE8,X           ;$058C40 ||
+    INY                                     ;$058C43 ||
+    INY                                     ;$058C44 ||
+    LDA [$0A],Y                             ;$058C45 ||
+    ORA $03                                 ;$058C47 ||
+    STA.w Layer2VramBuffer_1CE8+2,X         ;$058C49 ||
+    INY                                     ;$058C4C ||
+    INY                                     ;$058C4D ||
+    LDA [$0A],Y                             ;$058C4E ||
+    ORA $03                                 ;$058C50 ||
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058C52 ||
+    INY                                     ;$058C55 ||
+    INY                                     ;$058C56 ||
+    LDA [$0A],Y                             ;$058C57 ||
+    ORA $03                                 ;$058C59 ||
+    STA.w Layer2VramBuffer_1CE8+$82,X       ;$058C5B ||
+    INX                                     ;$058C5E ||
+    INX                                     ;$058C5F ||
+    INX                                     ;$058C60 ||
+    INX                                     ;$058C61 ||
+    LDA $08                                 ;$058C62 ||
+    CLC                                     ;$058C64 ||
+    ADC.w #$0010                            ;$058C65 ||
+    STA $08                                 ;$058C68 ||
+    CMP.w #$01B0                            ;$058C6A ||
+    BCC -                                   ;$058C6D |/
     PLP                                     ;$058C6F |
 Return058C70:
     RTL
 
-CODE_058C71:
+vertical_layer2_058C71: ; TODO name
     PHP
     REP #$30                                ;$058C72 | AXY->16
     LDA.w LevelModeSetting_1925             ;$058C74 |
@@ -1497,10 +1491,9 @@ CODE_058C71:
     LDY.w #$0000                            ;$058C7E |
     LDA.w ObjectTileset_1931                ;$058C81 |
     CMP.b #$03                              ;$058C84 |
-    BNE CODE_058C8B                         ;$058C86 |
-    LDY.w #$1000                            ;$058C88 |
-CODE_058C8B:
-    STY $03
+    BNE +                                   ;$058C86 |\
+    LDY.w #$1000                            ;$058C88 |/
++   STY $03                                 ;$058C8B |
     LDA.l Ptrs00BDE8,X                      ;$058C8D |
     STA $0A                                 ;$058C91 |
     LDA.l Ptrs00BDE8+1,X                    ;$058C93 |
@@ -1517,10 +1510,9 @@ CODE_058C8B:
     LDY.w #$0030                            ;$058CAE |
     LDA.b Layer2TileUp_49,X                 ;$058CB1 |
     AND.b #$10                              ;$058CB3 |
-    BEQ CODE_058CBA                         ;$058CB5 |
-    LDY.w #$0038                            ;$058CB7 |
-CODE_058CBA:
-    TYA
+    BEQ +                                   ;$058CB5 |\
+    LDY.w #$0038                            ;$058CB7 |/
++   TYA                                     ;$058CBA |
     STA $00                                 ;$058CBB |
     LDA.b Layer2TileUp_49,X                 ;$058CBD |
     LSR                                     ;$058CBF |
@@ -1564,10 +1556,9 @@ CODE_058CBA:
     LDY.b #$0D                              ;$058CFD |
     LDA.w ObjectTileset_1931                ;$058CFF |
     CMP.b #$10                              ;$058D02 |
-    BMI CODE_058D08                         ;$058D04 |
-    LDY.b #$05                              ;$058D06 |
-CODE_058D08:
-    STY $0C
+    BMI +                                   ;$058D04 |\
+    LDY.b #$05                              ;$058D06 |/
++   STY $0C                                 ;$058D08 |
     REP #$30                                ;$058D0A | AXY->16
     LDA.b Layer2TileUp_49,X                 ;$058D0C |
     AND.w #$000F                            ;$058D0E |
@@ -1577,61 +1568,59 @@ CODE_058D08:
     ASL                                     ;$058D14 |
     STA $08                                 ;$058D15 |
     LDX.w #$0000                            ;$058D17 |
-CODE_058D1A:
-    LDY $08
-    LDA.b [Map16LowPtr_6B],Y                ;$058D1C |
-    AND.w #$00FF                            ;$058D1E |
-    STA $00                                 ;$058D21 |
-    LDA.b [Map16HighPtr_6E],Y               ;$058D23 |
-    STA $01                                 ;$058D25 |
-    LDA $00                                 ;$058D27 |
-    ASL                                     ;$058D29 |
-    TAY                                     ;$058D2A |
-    LDA.w Map16Pointers_0FBE,Y              ;$058D2B |
-    STA $0A                                 ;$058D2E |
-    LDY.w #$0000                            ;$058D30 |
-    LDA [$0A],Y                             ;$058D33 |
-    ORA $03                                 ;$058D35 |
-    STA.w Layer2VramBuffer_1CE8,X           ;$058D37 |
-    INY                                     ;$058D3A |
-    INY                                     ;$058D3B |
-    LDA [$0A],Y                             ;$058D3C |
-    ORA $03                                 ;$058D3E |
-    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058D40 |
-    INX                                     ;$058D43 |
-    INX                                     ;$058D44 |
-    INY                                     ;$058D45 |
-    INY                                     ;$058D46 |
-    LDA [$0A],Y                             ;$058D47 |
-    ORA $03                                 ;$058D49 |
-    STA.w Layer2VramBuffer_1CE8,X           ;$058D4B |
-    INY                                     ;$058D4E |
-    INY                                     ;$058D4F |
-    LDA [$0A],Y                             ;$058D50 |
-    ORA $03                                 ;$058D52 |
-    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058D54 |
-    INX                                     ;$058D57 |
-    INX                                     ;$058D58 |
-    LDA $08                                 ;$058D59 |
-    TAY                                     ;$058D5B |
-    CLC                                     ;$058D5C |
-    ADC.w #$0001                            ;$058D5D |
-    STA $08                                 ;$058D60 |
-    AND.w #$000F                            ;$058D62 |
-    BNE CODE_058D71                         ;$058D65 |
-    TYA                                     ;$058D67 |
-    AND.w #$FFF0                            ;$058D68 |
-    CLC                                     ;$058D6B |
-    ADC.w #$0100                            ;$058D6C |
-    STA $08                                 ;$058D6F |
-CODE_058D71:
-    LDA $08
-    AND.w #$010F                            ;$058D73 |
-    BNE CODE_058D1A                         ;$058D76 |
+-   LDY $08                                 ;$058D1A |\
+    LDA.b [Map16LowPtr_6B],Y                ;$058D1C ||
+    AND.w #$00FF                            ;$058D1E ||
+    STA $00                                 ;$058D21 ||
+    LDA.b [Map16HighPtr_6E],Y               ;$058D23 ||
+    STA $01                                 ;$058D25 ||
+    LDA $00                                 ;$058D27 ||
+    ASL                                     ;$058D29 ||
+    TAY                                     ;$058D2A ||
+    LDA.w Map16Pointers_0FBE,Y              ;$058D2B ||
+    STA $0A                                 ;$058D2E ||
+    LDY.w #$0000                            ;$058D30 ||
+    LDA [$0A],Y                             ;$058D33 ||
+    ORA $03                                 ;$058D35 ||
+    STA.w Layer2VramBuffer_1CE8,X           ;$058D37 ||
+    INY                                     ;$058D3A ||
+    INY                                     ;$058D3B ||
+    LDA [$0A],Y                             ;$058D3C ||
+    ORA $03                                 ;$058D3E ||
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058D40 ||
+    INX                                     ;$058D43 ||
+    INX                                     ;$058D44 ||
+    INY                                     ;$058D45 ||
+    INY                                     ;$058D46 ||
+    LDA [$0A],Y                             ;$058D47 ||
+    ORA $03                                 ;$058D49 ||
+    STA.w Layer2VramBuffer_1CE8,X           ;$058D4B ||
+    INY                                     ;$058D4E ||
+    INY                                     ;$058D4F ||
+    LDA [$0A],Y                             ;$058D50 ||
+    ORA $03                                 ;$058D52 ||
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058D54 ||
+    INX                                     ;$058D57 ||
+    INX                                     ;$058D58 ||
+    LDA $08                                 ;$058D59 ||
+    TAY                                     ;$058D5B ||
+    CLC                                     ;$058D5C ||
+    ADC.w #$0001                            ;$058D5D ||
+    STA $08                                 ;$058D60 ||
+    AND.w #$000F                            ;$058D62 ||
+    BNE +                                   ;$058D65 ||
+    TYA                                     ;$058D67 ||
+    AND.w #$FFF0                            ;$058D68 ||
+    CLC                                     ;$058D6B ||
+    ADC.w #$0100                            ;$058D6C ||
+    STA $08                                 ;$058D6F ||
++   LDA $08                                 ;$058D71 ||
+    AND.w #$010F                            ;$058D73 ||
+    BNE -                                   ;$058D76 |/
     PLP                                     ;$058D78 |
     RTL                                     ;$058D79 |
 
-CODE_058D7A:
+horizontal_without_layer2_058D7A: ; TODO name
     PHP
     SEP #$30                                ;$058D7B | AXY->8
     LDA.w LevelLoadObject_1928              ;$058D7D |
@@ -1641,78 +1630,75 @@ CODE_058D7A:
     LDY.b #$30                              ;$058D86 |
     LDA.w LevelLoadObject_1928              ;$058D88 |
     AND.b #$10                              ;$058D8B |
-    BEQ CODE_058D91                         ;$058D8D |
-    LDY.b #$34                              ;$058D8F |
-CODE_058D91:
-    TYA
+    BEQ +                                   ;$058D8D |\
+    LDY.b #$34                              ;$058D8F |/
++   TYA                                     ;$058D91 |
     STA.w Layer2VramAddr_1CE6               ;$058D92 |
     REP #$20                                ;$058D95 | A->16
-    LDA.w #$B900                            ;$058D97 |
+    LDA.w #!Addr_B900                       ;$058D97 |
     STA.b Map16LowPtr_6B                    ;$058D9A |
-    LDA.w #$BD00                            ;$058D9C |
+    LDA.w #!Addr_BD00                       ;$058D9C |
     STA.b Map16HighPtr_6E                   ;$058D9F |
-    LDA.w #$9100                            ;$058DA1 |
+    LDA.w #!Addr_9100                       ;$058DA1 |
     STA $0A                                 ;$058DA4 |
     LDA.w LevelLoadObject_1928              ;$058DA6 |
     AND.w #$00F0                            ;$058DA9 |
-    BEQ CODE_058DBE                         ;$058DAC |
-    LDA.b Map16LowPtr_6B                    ;$058DAE |
-    CLC                                     ;$058DB0 |
-    ADC.w #$01B0                            ;$058DB1 |
-    STA.b Map16LowPtr_6B                    ;$058DB4 |
-    LDA.b Map16HighPtr_6E                   ;$058DB6 |
-    CLC                                     ;$058DB8 |
-    ADC.w #$01B0                            ;$058DB9 |
-    STA.b Map16HighPtr_6E                   ;$058DBC |
-CODE_058DBE:
-    SEP #$20                                ;$058DBE | A->8
-    LDA.b #$7E                              ;$058DC0 |
+    BEQ +                                   ;$058DAC |/
+    LDA.b Map16LowPtr_6B                    ;$058DAE ||
+    CLC                                     ;$058DB0 ||
+    ADC.w #$01B0                            ;$058DB1 ||
+    STA.b Map16LowPtr_6B                    ;$058DB4 ||
+    LDA.b Map16HighPtr_6E                   ;$058DB6 ||
+    CLC                                     ;$058DB8 ||
+    ADC.w #$01B0                            ;$058DB9 ||
+    STA.b Map16HighPtr_6E                   ;$058DBC |/
++   SEP #$20                                ;$058DBE | A->8
+    LDA.b #!Bank_7E                         ;$058DC0 |
     STA.b Map16LowPtr_6B+2                  ;$058DC2 |
-    LDA.b #$7E                              ;$058DC4 |
+    LDA.b #!Bank_7E                         ;$058DC4 |
     STA.b Map16HighPtr_6E+2                 ;$058DC6 |
-    LDY.b #$0D                              ;$058DC8 |
+    LDY.b #!Bank_0D                         ;$058DC8 |
     STY $0C                                 ;$058DCA |
     REP #$30                                ;$058DCC | AXY->16
     LDA.w LevelLoadObject_1928              ;$058DCE |
     AND.w #$000F                            ;$058DD1 |
     STA $08                                 ;$058DD4 |
     LDX.w #$0000                            ;$058DD6 |
-CODE_058DD9:
-    LDY $08
-    LDA.b [Map16LowPtr_6B],Y                ;$058DDB |
-    AND.w #$00FF                            ;$058DDD |
-    STA $00                                 ;$058DE0 |
-    LDA.b [Map16HighPtr_6E],Y               ;$058DE2 |
-    STA $01                                 ;$058DE4 |
-    LDA $00                                 ;$058DE6 |
-    ASL                                     ;$058DE8 |
-    ASL                                     ;$058DE9 |
-    ASL                                     ;$058DEA |
-    TAY                                     ;$058DEB |
-    LDA [$0A],Y                             ;$058DEC |
-    STA.w Layer2VramBuffer_1CE8,X           ;$058DEE |
-    INY                                     ;$058DF1 |
-    INY                                     ;$058DF2 |
-    LDA [$0A],Y                             ;$058DF3 |
-    STA.w Layer2VramBuffer_1CE8+2,X         ;$058DF5 |
-    INY                                     ;$058DF8 |
-    INY                                     ;$058DF9 |
-    LDA [$0A],Y                             ;$058DFA |
-    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058DFC |
-    INY                                     ;$058DFF |
-    INY                                     ;$058E00 |
-    LDA [$0A],Y                             ;$058E01 |
-    STA.w Layer2VramBuffer_1CE8+$82,X       ;$058E03 |
-    INX                                     ;$058E06 |
-    INX                                     ;$058E07 |
-    INX                                     ;$058E08 |
-    INX                                     ;$058E09 |
-    LDA $08                                 ;$058E0A |
-    CLC                                     ;$058E0C |
-    ADC.w #$0010                            ;$058E0D |
-    STA $08                                 ;$058E10 |
-    CMP.w #$01B0                            ;$058E12 |
-    BCC CODE_058DD9                         ;$058E15 |
+-   LDY $08                                 ;$058DD9 |\
+    LDA.b [Map16LowPtr_6B],Y                ;$058DDB ||
+    AND.w #$00FF                            ;$058DDD ||
+    STA $00                                 ;$058DE0 ||
+    LDA.b [Map16HighPtr_6E],Y               ;$058DE2 ||
+    STA $01                                 ;$058DE4 ||
+    LDA $00                                 ;$058DE6 ||
+    ASL                                     ;$058DE8 ||
+    ASL                                     ;$058DE9 ||
+    ASL                                     ;$058DEA ||
+    TAY                                     ;$058DEB ||
+    LDA [$0A],Y                             ;$058DEC ||
+    STA.w Layer2VramBuffer_1CE8,X           ;$058DEE ||
+    INY                                     ;$058DF1 ||
+    INY                                     ;$058DF2 ||
+    LDA [$0A],Y                             ;$058DF3 ||
+    STA.w Layer2VramBuffer_1CE8+2,X         ;$058DF5 ||
+    INY                                     ;$058DF8 ||
+    INY                                     ;$058DF9 ||
+    LDA [$0A],Y                             ;$058DFA ||
+    STA.w Layer2VramBuffer_1CE8+$80,X       ;$058DFC ||
+    INY                                     ;$058DFF ||
+    INY                                     ;$058E00 ||
+    LDA [$0A],Y                             ;$058E01 ||
+    STA.w Layer2VramBuffer_1CE8+$82,X       ;$058E03 ||
+    INX                                     ;$058E06 ||
+    INX                                     ;$058E07 ||
+    INX                                     ;$058E08 ||
+    INX                                     ;$058E09 ||
+    LDA $08                                 ;$058E0A ||
+    CLC                                     ;$058E0C ||
+    ADC.w #$0010                            ;$058E0D ||
+    STA $08                                 ;$058E10 ||
+    CMP.w #$01B0                            ;$058E12 ||
+    BCC -                                   ;$058E15 |/
     PLP                                     ;$058E17 |
     RTL                                     ;$058E18 |
 

@@ -190,81 +190,82 @@ upload_music_bank_3:
 
 NMI_start_00816A:                           ;        \
     SEI                                     ;$00816A | Disable interrupts to stop interrupting an interrupt
-    PHP                                     ;$00816B |\
-    REP #$30                                ;$00816C | | AXY->16, push pretty much everything(except direct page)
-    PHA                                     ;$00816E | | Make sure you push 16 bit values to the stack
-    PHX                                     ;$00816F | |
-    PHY                                     ;$008170 | |
-    PHB                                     ;$008171 | |
-    PHK                                     ;$008172 | | Also set the bank to 00
-    PLB                                     ;$008173 |/
+    PHP                                     ;$00816B |
+    REP #$30                                ;$00816C | AXY->16, push pretty much everything(except direct page)
+    PHA                                     ;$00816E | Make sure you push 16 bit values to the stack
+    PHX                                     ;$00816F |
+    PHY                                     ;$008170 |
+    PHB                                     ;$008171 |
+    PHK                                     ;$008172 | Also set the bank to 00
+    PLB                                     ;$008173 |
     SEP #$30                                ;$008174 | AXY->8
     LDA.w $4210                             ;$008176 | Read to clear the n flag
-    LDA.w SPCIO2_1DFB                       ;$008179 |\ If playing a sound in $1DFB branch to keep playing
-    BNE +                                   ;$00817C |/
-    LDY.w $2142                             ;$00817E |\ Check if $1DFF matches the current playing sound
-    CPY.w LastUsedMusic_1DFF                ;$008181 | |
+    LDA.w SPCIO2_1DFB                       ;$008179 | If playing a sound in $1DFB branch to keep playing
+    BNE +                                   ;$00817C |\
+    LDY.w $2142                             ;$00817E || Check if $1DFF matches the current playing sound
+    CPY.w LastUsedMusic_1DFF                ;$008181 ||
     BNE .sound_update                       ;$008184 |/
-+   STA.w $2142                             ;$008186 |\ Keep the current sound playing
-    STA.w LastUsedMusic_1DFF                ;$008189 | | Then mirror and clear $1DFB
-    STZ.w SPCIO2_1DFB                       ;$00818C |/
++   STA.w $2142                             ;$008186 | Keep the current sound playing
+    STA.w LastUsedMusic_1DFF                ;$008189 | Then mirror and clear $1DFB
+    STZ.w SPCIO2_1DFB                       ;$00818C |
 .sound_update                               ;        |
-    LDA.w SPCIO0_1DF9                       ;$00818F |\ Update the remaining sound ports and clear mirrors
-    STA.w $2140                             ;$008192 | |
-    LDA.w SPCIO1_1DFA                       ;$008195 | |
-    STA.w $2141                             ;$008198 | |
-    LDA.w SPCIO3_1DFC                       ;$00819B | |
-    STA.w $2143                             ;$00819E | |
-    STZ.w SPCIO0_1DF9                       ;$0081A1 | |
-    STZ.w SPCIO1_1DFA                       ;$0081A4 | |
-    STZ.w SPCIO3_1DFC                       ;$0081A7 |/
-    LDA.b #$80                              ;$0081AA |\ Force blank
-    STA.w $2100                             ;$0081AC |/
+    LDA.w SPCIO0_1DF9                       ;$00818F | Update the remaining sound ports and clear mirrors
+    STA.w $2140                             ;$008192 |
+    LDA.w SPCIO1_1DFA                       ;$008195 |
+    STA.w $2141                             ;$008198 |
+    LDA.w SPCIO3_1DFC                       ;$00819B |
+    STA.w $2143                             ;$00819E |
+    STZ.w SPCIO0_1DF9                       ;$0081A1 |
+    STZ.w SPCIO1_1DFA                       ;$0081A4 |
+    STZ.w SPCIO3_1DFC                       ;$0081A7 |
+    LDA.b #$80                              ;$0081AA | Force blank
+    STA.w $2100                             ;$0081AC |
     STZ.w $420C                             ;$0081AF | Disable HDMA
-    LDA.b Layer12Window_41                  ;$0081B2 |\ Update layer 1 and 2 window mask settings
-    STA.w $2123                             ;$0081B4 |/
-    LDA.b Layer34Window_42                  ;$0081B7 |\ Update layer 3 and 4 window mask settings
-    STA.w $2124                             ;$0081B9 |/
-    LDA.b OBJCWWindow_43                    ;$0081BC |\ Update sprite and color window settings
-    STA.w $2125                             ;$0081BE |/
-    LDA.b ColorAddition_44                  ;$0081C1 |\ Initial color addition settings
-    STA.w $2130                             ;$0081C3 |/
-    LDA.w IRQNMICommand_0D9B                ;$0081C6 |\ Check for a regular level
-    BPL +                                   ;$0081C9 | |
+    LDA.b Layer12Window_41                  ;$0081B2 | Update layer 1 and 2 window mask settings
+    STA.w $2123                             ;$0081B4 |
+    LDA.b Layer34Window_42                  ;$0081B7 | Update layer 3 and 4 window mask settings
+    STA.w $2124                             ;$0081B9 |
+    LDA.b OBJCWWindow_43                    ;$0081BC | Update sprite and color window settings
+    STA.w $2125                             ;$0081BE |
+    LDA.b ColorAddition_44                  ;$0081C1 | Initial color addition settings
+    STA.w $2130                             ;$0081C3 |
+    LDA.w IRQNMICommand_0D9B                ;$0081C6 |
+    BPL +                                   ;$0081C9 |\ branch if it is a regular level
     JMP .mode_7_NMI_0082C4                  ;$0081CB |/ Otherwise go to mode 7 routines
 
-+   LDA.b ColorSettings_40                  ;$0081CE |\ Set up color math on all layers in $40 but three
-    AND.b #$FB                              ;$0081D0 | |
-    STA.w $2131                             ;$0081D2 |/
-    LDA.b #$09                              ;$0081D5 |\ Mode 1 with layer 3 priority
-    STA.w $2105                             ;$0081D7 |/
-    LDA.b LagFlag_10                        ;$0081DA |\ If the game is not lagging skip to regular NMI
-    BEQ +                                   ;$0081DC |/
-    LDA.w IRQNMICommand_0D9B                ;$0081DE |\ Check if we are in a regular level
-    LSR                                     ;$0081E1 | |
-    BEQ .lagging_level_NMI                  ;$0081E2 | |
++   LDA.b ColorSettings_40                  ;$0081CE | Set up color math on all layers in $40 but three
+    AND.b #$FB                              ;$0081D0 |
+    STA.w $2131                             ;$0081D2 |
+    LDA.b #$09                              ;$0081D5 | Mode 1 with layer 3 priority
+    STA.w $2105                             ;$0081D7 |
+    LDA.b LagFlag_10                        ;$0081DA |
+    BEQ +                                   ;$0081DC |\ branch if game is not lagging
+    LDA.w IRQNMICommand_0D9B                ;$0081DE || Check if we are in a regular level
+    LSR                                     ;$0081E1 ||
+    BEQ .lagging_level_NMI                  ;$0081E2 ||
     JMP .lagging_OW_NMI                     ;$0081E4 |/ Otherwise process as the OW
 
+;game not lagging:
 +   INC.b LagFlag_10                        ;$0081E7 | Allow the game loop to run after NMI
-    JSR upload_palette                      ;$0081E9 | Upload special and normal palettes
+    JSR upload_palette_CGRAM_00A488         ;$0081E9 | Upload special and normal palettes
     LDA.w IRQNMICommand_0D9B                ;$0081EC |\ Separate the current level mode
     LSR                                     ;$0081EF |/
-    BNE .OW_NMI                             ;$0081F0 | $0D9B was 02, run OW code
-    BCS +                                   ;$0081F2 | $0D9B was 01(transition), Skip the status bar draw
-    JSR draw_status_bar                     ;$0081F4 | Draw the status bar
-+   LDA.w CutsceneID_13C6                   ;$0081F7 |\ Skip the end credits code 
-    CMP.b #!SceneCastle_08                  ;$0081FA | | if the current cutscene is not $08 (end credits)
-    BNE +                                   ;$0081FC |/
-    LDA.w CreditsUpdateBG_1FFE              ;$0081FE |\ Skip updating the credits BG
-    BEQ .draw_mario                         ;$008201 |/ If a new BG is not yet needed
-    JSL DMA_credits_BG                      ;$008203 | Update the Credits BG
-    BRA .draw_mario                         ;$008207 | Continue with NMI by drawing mario
+    BNE .OW_NMI                             ;$0081F0 | branch if $0D9B was 02, run OW code
+    BCS +                                   ;$0081F2 |\ branch if $0D9B was 01(transition), Skip the status bar draw
+    JSR draw_status_bar_008DAC              ;$0081F4 |/
++   LDA.w CutsceneID_13C6                   ;$0081F7 |
+    CMP.b #!SceneCastle_08                  ;$0081FA |
+    BNE +                                   ;$0081FC |\ branch if the current cutscene is not $08 (end credits)
+    LDA.w CreditsUpdateBG_1FFE              ;$0081FE ||
+    BEQ .draw_mario                         ;$008201 || branch if a new BG is not yet needed
+    JSL DMA_credits_BG                      ;$008203 || Update the Credits BG
+    BRA .draw_mario                         ;$008207 |/ Continue with NMI by drawing mario
 
-+   JSL generic_layer_1_and_2_upload        ;$008209 | Primary level data DMA
-    LDA.w UploadMarioStart_143A             ;$00820D |\ Check if the transition screens need DMAed
-    BEQ +                                   ;$008210 |/
-    JSR DMA_transition_screen               ;$008212 | DMA start/bonus/game over/time up transition screens
-    BRA .skip_OW_NMI                        ;$008215 | Skip past regular and OW NMI
++   JSL upload_map16_strip_VRAM_0087AD      ;$008209 | Primary level data DMA
+    LDA.w UploadMarioStart_143A             ;$00820D | Check if the transition screens need DMAed
+    BEQ +                                   ;$008210 |\
+    JSR DMA_transition_screen               ;$008212 || DMA start/bonus/game over/time up transition screens
+    BRA .skip_OW_NMI                        ;$008215 |/ Skip past regular and OW NMI
 
 +   JSR DMA_animated_level_tiles            ;$008217 | DMA animated level tiles (plus animated palettes)
 .draw_mario                                 ;        |
@@ -273,56 +274,56 @@ NMI_start_00816A:                           ;        \
     BRA .skip_OW_NMI                        ;$008220 | Skip over a majority of the OW NMI
 
 .OW_NMI                                     ;        |
-    LDA.w OWProcess_13D9                    ;$008222 |\ If not switching submaps, skip OW layer DMA
-    CMP.b #!OwSubmap_0A                     ;$008225 | | and handle the regular OW routines
-    BNE +                                   ;$008227 |/
-    LDY.w OWSubmapSwapProcess_1DE8          ;$008229 |
-    DEY                                     ;$00822C |\ If submap loading is finished, skip layer data DMA
-    DEY                                     ;$00822D | | and handle the regular OW routines
-    CPY.b #!SubmapUpdate_04                 ;$00822E | |
-    BCS +                                   ;$008230 |/
-    JSR DMA_OW_tilemap                      ;$008232 | OW layer 1 and 2 DMA
-    BRA .regular_OW_bypass                  ;$008235 | Skip over various unneeded OW DMAs
+    LDA.w OWProcess_13D9                    ;$008222 | If not switching submaps, skip OW layer DMA
+    CMP.b #!OwSubmap_0A                     ;$008225 |  and handle the regular OW routines
+    BNE +                                   ;$008227 |\
+    LDY.w OWSubmapSwapProcess_1DE8          ;$008229 ||
+    DEY                                     ;$00822C || If submap loading is finished, skip layer data DMA
+    DEY                                     ;$00822D ||  and handle the regular OW routines
+    CPY.b #!SubmapUpdate_04                 ;$00822E ||
+    BCS +                                   ;$008230 ||\
+    JSR DMA_OW_tilemap                      ;$008232 ||/ OW layer 1 and 2 DMA
+    BRA .regular_OW_bypass                  ;$008235 |/ Skip over various unneeded OW DMAs
 
 +   JSR DMA_animated_OW_tiles               ;$008237 | DMA animated OW tiles (plus animated palettes)
     JSR dynamic_sprite_DMA                  ;$00823A | DMA Mario/Yoshi/Vertical fireball
 .skip_OW_NMI:                               ;        |
     JSR _load_stripe_image_                 ;$00823D | Upload Stripe image data
-    JSR DMA_OAM                             ;$008240 | DMA Sprite tiles to the screen
+    JSR DMA_spr_tiles_to_OAM_008449         ;$008240 | DMA Sprite tiles to the screen
 .regular_OW_bypass                          ;        |
     JSR update_controllers                  ;$008243 | Run the controller update routine
 .lagging_level_NMI                          ;        |
-    LDA.b Layer1XPos_1A                     ;$008246 |\ Set layer 1 X position from mirrors
-    STA.w $210D                             ;$008248 | | $210D is a write twice register 
-    LDA.b Layer1XPos_1A+1                   ;$00824B | |
-    STA.w $210D                             ;$00824D |/
-    LDA.b Layer1YPos_1C                     ;$008250 |\ Set layer 1 Y position from mirrors
-    CLC                                     ;$008252 | | 
-    ADC.w ScreenShakeYOffset_1888           ;$008253 | | $1888/9 are used as relative Y offsets
-    STA.w $210E                             ;$008256 | | $210E is a write twice register
-    LDA.b Layer1YPos_1C+1                   ;$008259 | |
-    ADC.w ScreenShakeYOffset_1888+1         ;$00825B | |
-    STA.w $210E                             ;$00825E |/
-    LDA.b Layer2XPos_1E                     ;$008261 |\ Set layer 2 X position from mirrors
-    STA.w $210F                             ;$008263 | | $210F is a write twice register 
-    LDA.b Layer2XPos_1E+1                   ;$008266 | |
-    STA.w $210F                             ;$008268 |/
-    LDA.b Layer2YPos_20                     ;$00826B |\ Set layer 2 Y position from mirrors
-    STA.w $2110                             ;$00826D | | $2110 is a write twice register 
-    LDA.b Layer2YPos_20+1                   ;$008270 | |
-    STA.w $2110                             ;$008272 |/
-    LDA.w IRQNMICommand_0D9B                ;$008275 |\ If we are in a level, skip to level NMI return
-    BEQ .level_NMI_return                   ;$008278 |/
+    LDA.b Layer1XPos_1A                     ;$008246 | Set layer 1 X position from mirrors
+    STA.w $210D                             ;$008248 | $210D is a write twice register 
+    LDA.b Layer1XPos_1A+1                   ;$00824B |
+    STA.w $210D                             ;$00824D |
+    LDA.b Layer1YPos_1C                     ;$008250 | Set layer 1 Y position from mirrors
+    CLC                                     ;$008252 | 
+    ADC.w ScreenShakeYOffset_1888           ;$008253 | $1888/9 are used as relative Y offsets
+    STA.w $210E                             ;$008256 | $210E is a write twice register
+    LDA.b Layer1YPos_1C+1                   ;$008259 |
+    ADC.w ScreenShakeYOffset_1888+1         ;$00825B |
+    STA.w $210E                             ;$00825E |
+    LDA.b Layer2XPos_1E                     ;$008261 | Set layer 2 X position from mirrors
+    STA.w $210F                             ;$008263 | $210F is a write twice register 
+    LDA.b Layer2XPos_1E+1                   ;$008266 |
+    STA.w $210F                             ;$008268 |
+    LDA.b Layer2YPos_20                     ;$00826B | Set layer 2 Y position from mirrors
+    STA.w $2110                             ;$00826D | $2110 is a write twice register 
+    LDA.b Layer2YPos_20+1                   ;$008270 |
+    STA.w $2110                             ;$008272 |
+    LDA.w IRQNMICommand_0D9B                ;$008275 |
+    BEQ .level_NMI_return                   ;$008278 | branch if we are in a level
 .lagging_OW_NMI                             ;        |
     LDA.b #$81                              ;$00827A | Load Enable NMI and autojoy enabled
-    LDY.w CutsceneID_13C6                   ;$00827C |\ Skip to NMI return if the credits are not playing
-    CPY.b #!SceneCastle_08                  ;$00827F | |
-    BNE .NMI_return_0082A1                  ;$008281 |/
-    LDY.w Brightness_0DAE                   ;$008283 |\ Set screen brightness from mirror
-    STY.w $2100                             ;$008286 |/
-    LDY.w HDMAEnable_0D9F                   ;$008289 |\ Enable HDMA channels
-    STY.w $420C                             ;$00828C |/
-    JMP IRQ_NMI_return                      ;$00828F | Finish off NMI
+    LDY.w CutsceneID_13C6                   ;$00827C |
+    CPY.b #!SceneCastle_08                  ;$00827F |
+    BNE .NMI_return_0082A1                  ;$008281 |\ branch if the credits are not playing
+    LDY.w Brightness_0DAE                   ;$008283 || Set screen brightness from mirror
+    STY.w $2100                             ;$008286 ||
+    LDY.w HDMAEnable_0D9F                   ;$008289 || Enable HDMA channels
+    STY.w $420C                             ;$00828C ||
+    JMP IRQ_NMI_finish_00838C               ;$00828F |/ Finish off NMI
 
 .level_NMI_return                           ;        |
     LDY.b #$24                              ;$008292 | Load the V timer scanline
@@ -334,152 +335,152 @@ NMI_start_00816A:                           ;        \
     LDA.b #$A1                              ;$00829F | Load Enable NMI, vertical IRQ, and autojoy enabled
 .NMI_return_0082A1                          ;        |
     STA.w $4200                             ;$0082A1 | Store NMI/IRQ/autojoy enabled status
-    STZ.w $2111                             ;$0082A4 |\ Reset layer X three scroll position
-    STZ.w $2111                             ;$0082A7 |/
-    STZ.w $2112                             ;$0082AA |\ Reset layer Y three scroll position
-    STZ.w $2112                             ;$0082AD |/
-    LDA.w Brightness_0DAE                   ;$0082B0 |\ Mirror brightness and force blank settings
-    STA.w $2100                             ;$0082B3 |/ to the display register
-    LDA.w HDMAEnable_0D9F                   ;$0082B6 |\ Enable HDMA channels based off the HDMA mirror
-    STA.w $420C                             ;$0082B9 |/
-    REP #$30                                ;$0082BC |\ Restore everything saved at the beginning of NMI
-    PLB                                     ;$0082BE | |
-    PLY                                     ;$0082BF | |
-    PLX                                     ;$0082C0 | |
-    PLA                                     ;$0082C1 | |
-    PLP                                     ;$0082C2 |/
-    RTI                                     ;$0082C3 / Return from NMI
+    STZ.w $2111                             ;$0082A4 | Reset layer X three scroll position
+    STZ.w $2111                             ;$0082A7 |
+    STZ.w $2112                             ;$0082AA | Reset layer Y three scroll position
+    STZ.w $2112                             ;$0082AD |
+    LDA.w Brightness_0DAE                   ;$0082B0 | Mirror brightness and force blank settings
+    STA.w $2100                             ;$0082B3 | to the display register
+    LDA.w HDMAEnable_0D9F                   ;$0082B6 | Enable HDMA channels based off the HDMA mirror
+    STA.w $420C                             ;$0082B9 |
+    REP #$30                                ;$0082BC | Restore everything saved at the beginning of NMI
+    PLB                                     ;$0082BE |
+    PLY                                     ;$0082BF |
+    PLX                                     ;$0082C0 |
+    PLA                                     ;$0082C1 |
+    PLP                                     ;$0082C2 |
+    RTI                                     ;$0082C3 /
 
 .mode_7_NMI_0082C4                          ;        \ 
-    LDA.b LagFlag_10                        ;$0082C4 |\ if mode 7 is lagging branch
-    BNE ..lagging_mode_7_NMI                ;$0082C6 | |
-    INC.b LagFlag_10                        ;$0082C8 |/ Otherwise increment the lag counter
-    LDA.w UploadMarioStart_143A             ;$0082CA |\ Check if the transition screens need DMAed
-    BEQ +                                   ;$0082CD |/
-    JSR DMA_transition_screen               ;$0082CF | DMA start/bonus/game over/time up transition screens
-    BRA ..draw_status_bar                   ;$0082D2 | Skip dynamic graphics DMA
+    LDA.b LagFlag_10                        ;$0082C4 |
+    BNE ..lagging_mode_7_NMI                ;$0082C6 | branch if mode 7 is lagging
+    INC.b LagFlag_10                        ;$0082C8 | Otherwise increment the lag counter
+    LDA.w UploadMarioStart_143A             ;$0082CA | Check if the transition screens need DMAed
+    BEQ +                                   ;$0082CD |\
+    JSR DMA_transition_screen               ;$0082CF || DMA start/bonus/game over/time up transition screens
+    BRA ..draw_status_bar                   ;$0082D2 |/ Skip dynamic graphics DMA
 
 +   JSR restore_SP1_tiles                   ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
     JSR dynamic_sprite_DMA                  ;$0082D7 | DMA Mario/Yoshi/Vertical fireball graphics
-    BIT.w IRQNMICommand_0D9B                ;$0082DA |\ branch if we are in a platform boss fight
-    BVC ..draw_status_bar                   ;$0082DD |/
-    JSR DMA_mode_7_animations               ;$0082DF | <--some animation stuff, investigate more
+    BIT.w IRQNMICommand_0D9B                ;$0082DA |
+    BVC ..draw_status_bar                   ;$0082DD | branch if we are in a platform boss fight
+    JSR DMA_mode_7_animations               ;$0082DF | TODO: some animation stuff, investigate more
     LDA.w IRQNMICommand_0D9B                ;$0082E2 |
-    LSR                                     ;$0082E5 | If we are fighting bowser, don't draw the status bar
+    LSR                                     ;$0082E5 | branch if we are fighting bowser, don't draw the status bar
     BCS +                                   ;$0082E6 |\
 ..draw_status_bar                           ;        ||
-    JSR draw_status_bar                     ;$0082E8 |/
-+   JSR upload_palette                      ;$0082ED | Upload any pending palette changes
+    JSR draw_status_bar_008DAC              ;$0082E8 |/
++   JSR upload_palette_CGRAM_00A488         ;$0082ED | Upload any pending palette changes
     JSR _load_stripe_image_                 ;$0082EE | Load stripe images from $12
-    JSR DMA_OAM                             ;$0082F1 | DMA sprite tiles to OAM
+    JSR DMA_spr_tiles_to_OAM_008449         ;$0082F1 | DMA sprite tiles to OAM
     JSR update_controllers                  ;$0082F4 | Update the controller input
 ..lagging_mode_7_NMI                        ;        |
     LDA.b #$09                              ;$0082F7 |
     STA.w $2105                             ;$0082F9 |
-    LDA.b Mode7CenterX_2A                   ;$0082FC |\ Set the mode 7 center X position
-    CLC                                     ;$0082FE | |
-    ADC.b #$80                              ;$0082FF | | Offset the center by #$80
-    STA.w $211F                             ;$008301 | |
-    LDA.b Mode7CenterX_2A+1                 ;$008304 | |
-    ADC.b #$00                              ;$008306 | | Handle carry if needed
-    STA.w $211F                             ;$008308 |/
-    LDA.b Mode7CenterY_2C                   ;$00830B |\ Set the mode 7 center Y position
-    CLC                                     ;$00830D | |
-    ADC.b #$80                              ;$00830E | | Offset the center by #$80
-    STA.w $2120                             ;$008310 | |
-    LDA.b Mode7CenterY_2C+1                 ;$008313 | |
-    ADC.b #$00                              ;$008315 | | Handle carry if needed
-    STA.w $2120                             ;$008317 |/
-    LDA.b Mode7ParamA_2E                    ;$00831A |\ Update mode 7 matrix value A
-    STA.w $211B                             ;$00831C | |
-    LDA.b Mode7ParamA_2E+1                  ;$00831F | |
-    STA.w $211B                             ;$008321 |/
-    LDA.b Mode7ParamB_30                    ;$008324 |\ Update mode 7 matrix value B
-    STA.w $211C                             ;$008326 | |
-    LDA.b Mode7ParamB_30+1                  ;$008329 | |
-    STA.w $211C                             ;$00832B |/
-    LDA.b Mode7ParamC_32                    ;$00832E |\ Update mode 7 matrix value C
-    STA.w $211D                             ;$008330 | |
-    LDA.b Mode7ParamC_32+1                  ;$008333 | |
-    STA.w $211D                             ;$008335 |/
-    LDA.b Mode7ParamD_34                    ;$008338 |\ Update mode 7 matrix value D
-    STA.w $211E                             ;$00833A | |
-    LDA.b Mode7ParamD_34+1                  ;$00833D | |
-    STA.w $211E                             ;$00833F |/
-    JSR mode_7_static_BG_scroll             ;$008342 |
-    LDA.w IRQNMICommand_0D9B                ;$008345 | If we are not at bowser there are a few extra
+    LDA.b Mode7CenterX_2A                   ;$0082FC | Set the mode 7 center X position
+    CLC                                     ;$0082FE |
+    ADC.b #$80                              ;$0082FF | Offset the center by #$80
+    STA.w $211F                             ;$008301 |
+    LDA.b Mode7CenterX_2A+1                 ;$008304 |
+    ADC.b #$00                              ;$008306 | Handle carry if needed
+    STA.w $211F                             ;$008308 |
+    LDA.b Mode7CenterY_2C                   ;$00830B | Set the mode 7 center Y position
+    CLC                                     ;$00830D |
+    ADC.b #$80                              ;$00830E | Offset the center by #$80
+    STA.w $2120                             ;$008310 |
+    LDA.b Mode7CenterY_2C+1                 ;$008313 |
+    ADC.b #$00                              ;$008315 | Handle carry if needed
+    STA.w $2120                             ;$008317 |
+    LDA.b Mode7ParamA_2E                    ;$00831A | Update mode 7 matrix value A
+    STA.w $211B                             ;$00831C |
+    LDA.b Mode7ParamA_2E+1                  ;$00831F |
+    STA.w $211B                             ;$008321 |
+    LDA.b Mode7ParamB_30                    ;$008324 | Update mode 7 matrix value B
+    STA.w $211C                             ;$008326 |
+    LDA.b Mode7ParamB_30+1                  ;$008329 |
+    STA.w $211C                             ;$00832B |
+    LDA.b Mode7ParamC_32                    ;$00832E | Update mode 7 matrix value C
+    STA.w $211D                             ;$008330 |
+    LDA.b Mode7ParamC_32+1                  ;$008333 |
+    STA.w $211D                             ;$008335 |
+    LDA.b Mode7ParamD_34                    ;$008338 | Update mode 7 matrix value D
+    STA.w $211E                             ;$00833A |
+    LDA.b Mode7ParamD_34+1                  ;$00833D |
+    STA.w $211E                             ;$00833F |
+    JSR mode_7_static_BG_scroll_008416      ;$008342 |
+    LDA.w IRQNMICommand_0D9B                ;$008345 | If we are not at Bowser there are a few extra
     LSR                                     ;$008348 | Items we still need to process otherwise
     BCC +                                   ;$008349 |\ We can finish off NMI
-    LDA.w Brightness_0DAE                   ;$00834B ||\ Set the screen brightness from $0DAE
-    STA.w $2100                             ;$00834E ||/
-    LDA.w HDMAEnable_0D9F                   ;$008351 ||\ Enable HDMA channels
-    STA.w $420C                             ;$008354 ||/
+    LDA.w Brightness_0DAE                   ;$00834B || Set the screen brightness from $0DAE
+    STA.w $2100                             ;$00834E ||
+    LDA.w HDMAEnable_0D9F                   ;$008351 || Enable HDMA channels
+    STA.w $420C                             ;$008354 ||
     LDA.b #$81                              ;$008357 || Enable NMI and autojoy
-    JMP mode_7_scroll                       ;$008359 |/ Set the mode 7 scroll values -- statusbar unused
+    JMP mode_7_scroll_0083F3                ;$008359 |/ Set the mode 7 scroll values -- statusbar unused
 
 +   LDY.b #$24                              ;$00835C | Load the VTimer trigger
-    BIT.w IRQNMICommand_0D9B                ;$00835E |\ If we are running in the platform boss mode
-    BVC +                                   ;$008361 |/ skip to the end of NMI
-    LDA.w ActiveBoss_13FC                   ;$008363 |\ If we are fighting Morton or Roy
-    ASL                                     ;$008366 | |
-    TAX                                     ;$008367 | |
-    LDA.w boss_ceiling_height,X             ;$008368 | | Check against the boss ceiling height
-    CMP.b #$2A                              ;$00836B | | Instead of something simple like CMP #$02 : BCC
-    BNE +                                   ;$00836D |/ Skip the VTimer change
-    LDY.b #$2D                              ;$00836F | Load alternative VTimer trigger position
+    BIT.w IRQNMICommand_0D9B                ;$00835E |
+    BVC +                                   ;$008361 |\ branch if we are running in the platform boss mode
+    LDA.w ActiveBoss_13FC                   ;$008363 || If we are fighting Morton or Roy
+    ASL                                     ;$008366 ||
+    TAX                                     ;$008367 ||
+    LDA.w boss_ceiling_height,X             ;$008368 || Check against the boss ceiling height
+    CMP.b #$2A                              ;$00836B || Instead of something simple like CMP #$02 : BCC
+    BNE +                                   ;$00836D || Skip the VTimer change
+    LDY.b #$2D                              ;$00836F |/ Load alternative VTimer trigger position
 +   JMP .mode_7_NMI_return                  ;$008371 / Finish off mode 7 NMI
 
 IRQ_start_008374:                           ;        \
     SEI                                     ;$008374 | Disable interrupts to stop interrupting an interrupt
-    PHP                                     ;$008375 |\
-    REP #$30                                ;$008376 | | AXY->16, push pretty much everything(except direct page)
-    PHA                                     ;$008378 | | Make sure you push 16 bit values to the stack
-    PHX                                     ;$008379 | |
-    PHY                                     ;$00837A | |
-    PHB                                     ;$00837B | |
-    PHK                                     ;$00837C | | Also set the bank to 00
-    PLB                                     ;$00837D |/
+    PHP                                     ;$008375 |
+    REP #$30                                ;$008376 | AXY->16, push pretty much everything(except direct page)
+    PHA                                     ;$008378 | Make sure you push 16 bit values to the stack
+    PHX                                     ;$008379 |
+    PHY                                     ;$00837A |
+    PHB                                     ;$00837B |
+    PHK                                     ;$00837C | Also set the bank to 00
+    PLB                                     ;$00837D |
     SEP #$30                                ;$00837E | AXY->8
-    LDA.w $4211                             ;$008380 |\ Read the IRQ status flag
-    BPL IRQ_return                          ;$008383 |/ If the IRQ status flag is not triggered skip IRQ
+    LDA.w $4211                             ;$008380 |
+    BPL IRQ_return                          ;$008383 | return if the IRQ status flag is not triggered
     LDA.b #$81                              ;$008385 | Load NMI enabled, autojoy enabled
-    LDY.w IRQNMICommand_0D9B                ;$008387 |\ If we are in a mode 7 level branch
-    BMI mode_7_IRQ                          ;$00838A |/
-IRQ_NMI_return:                             ;        |
+    LDY.w IRQNMICommand_0D9B                ;$008387 |
+    BMI mode_7_IRQ_0083DA                   ;$00838A | branch if we are in a mode 7 level
+IRQ_NMI_finish_00838C:                      ;        |
     STA.w $4200                             ;$00838C | Store interrupt enabled flags
-    LDY.b #$1F                              ;$00838F |\ wait for H-Blank to occur 
-    JSR wait_for_hblank                     ;$008391 |/
-    LDA.b Layer3XPos_22                     ;$008394 |\ Set layer 3 X position
-    STA.w $2111                             ;$008396 | |
-    LDA.b Layer3XPos_22+1                   ;$008399 | |
-    STA.w $2111                             ;$00839B |/
-    LDA.b Layer3YPos_24                     ;$00839E |\ Set layer 3 Y position
-    STA.w $2112                             ;$0083A0 | |
-    LDA.b Layer3YPos_24+1                   ;$0083A3 | |
-    STA.w $2112                             ;$0083A5 |/
+    LDY.b #$1F                              ;$00838F | wait for H-Blank to occur 
+    JSR wait_for_hblank_00843B              ;$008391 |
+    LDA.b Layer3XPos_22                     ;$008394 | Set layer 3 X position
+    STA.w $2111                             ;$008396 |
+    LDA.b Layer3XPos_22+1                   ;$008399 |
+    STA.w $2111                             ;$00839B |
+    LDA.b Layer3YPos_24                     ;$00839E | Set layer 3 Y position
+    STA.w $2112                             ;$0083A0 |
+    LDA.b Layer3YPos_24+1                   ;$0083A3 |
+    STA.w $2112                             ;$0083A5 |
 mode_7_IRQ_return:                          ;        |
-    LDA.b MainBGMode_3E                     ;$0083A8 |\ Set the BG mode
-    STA.w $2105                             ;$0083AA |/
-    LDA.b ColorSettings_40                  ;$0083AD |\ Set any color math settings
-    STA.w $2131                             ;$0083AF |/
+    LDA.b MainBGMode_3E                     ;$0083A8 | Set the BG mode
+    STA.w $2105                             ;$0083AA |
+    LDA.b ColorSettings_40                  ;$0083AD | Set any color math settings
+    STA.w $2131                             ;$0083AF |
 IRQ_return:                                 ;        |
-    REP #$30                                ;$0083B2 |\ Restore everything saved at the beginning of NMI
-    PLB                                     ;$0083B4 | |
-    PLY                                     ;$0083B5 | |
-    PLX                                     ;$0083B6 | |
-    PLA                                     ;$0083B7 | |
-    PLP                                     ;$0083B8 |/
-    RTI                                     ;$0083B9 / Return from NMI
+    REP #$30                                ;$0083B2 | Restore everything saved at the beginning of NMI
+    PLB                                     ;$0083B4 |
+    PLY                                     ;$0083B5 |
+    PLX                                     ;$0083B6 |
+    PLA                                     ;$0083B7 |
+    PLP                                     ;$0083B8 |
+    RTI                                     ;$0083B9 /
 
-mode_7_IRQ:                                 ;        \ 
+mode_7_IRQ_0083DA:                          ;        \ 
     BIT.w IRQNMICommand_0D9B                ;$0083DA |\ Platform bosses have only one IRQ
     BVC .platform_bosses                    ;$0083BD |/ So skip the differentiation code
     LDY.b IRQType_11                        ;$0083BF |\ If we are in the First IRQ branch
     BEQ .first_IRQ                          ;$0083C1 |/
     STA.w $4200                             ;$0083C3 | Store Interrupt flags
     LDY.b #$14                              ;$0083C6 |\ short wait for HBlank, use a short wait to
-    JSR wait_for_hblank                     ;$0083C8 |/ account for the JSR of the scroll routine
-    JSR mode_7_static_BG_scroll             ;$0083CB | Set the status bar scroll
+    JSR wait_for_hblank_00843B              ;$0083C8 |/ account for the JSR of the scroll routine
+    JSR mode_7_static_BG_scroll_008416      ;$0083CB | Set the status bar scroll
     BRA mode_7_IRQ_return                   ;$0083CE /
 
 .first_IRQ                                  ;        \ 
@@ -493,52 +494,52 @@ mode_7_IRQ:                                 ;        \
     LDA.b #$A1                              ;$0083E1 | Load NMI, IRQ, and autojoy enabled
 .platform_bosses                            ;        |
     LDY.w EndLevelTimer_1493                ;$0083E3 |\ if the level isn't ending, run mode 7 scrolling
-    BEQ mode_7_scroll                       ;$0083E6 |/
+    BEQ mode_7_scroll_0083F3                ;$0083E6 |/
     LDY.w ColorFadeTimer_1495               ;$0083E8 |\ Also, if the fade timer is less than #$40
     CPY.b #$40                              ;$0083EB | | keep on setting the mode 7 scroll
-    BCC mode_7_scroll                       ;$0083ED |/
+    BCC mode_7_scroll_0083F3                ;$0083ED |/
     LDA.b #$81                              ;$0083EF | Load NMI and autojoy enabled
-    BRA IRQ_NMI_return                      ;$0083F1 / Finish off mode 7 IRQ
+    BRA IRQ_NMI_finish_00838C               ;$0083F1 /
 
-mode_7_scroll:                              ;        \ 
+mode_7_scroll_0083F3:                       ;        \ 
     STA.w $4200                             ;$0083F3 | Store the interrupt flags
-    JSR full_wait_for_hblank                ;$0083F6 |\ Wait for the next H-Blank
-    NOP                                     ;$0083F9 | |
-    NOP                                     ;$0083FA |/
-    LDA.b #$07                              ;$0083FB |\ Enable mode 7
-    STA.w $2105                             ;$0083FD |/
-    LDA.b Mode7XPos_3A                      ;$008400 |\ Set layer 1 X position
-    STA.w $210D                             ;$008402 | |
-    LDA.b Mode7XPos_3A+1                    ;$008405 | |
-    STA.w $210D                             ;$008407 |/
-    LDA.b Mode7YPos_3C                      ;$00840A |\ Set layer 1 X position
-    STA.w $210E                             ;$00840C | |
-    LDA.b Mode7YPos_3C+1                    ;$00840F | |
-    STA.w $210E                             ;$008411 |/
-    BRA IRQ_return                          ;$008414 / Finish off IRQ
+    JSR full_wait_for_hblank_00843E         ;$0083F6 | Wait for the next H-Blank
+    NOP                                     ;$0083F9 |
+    NOP                                     ;$0083FA |
+    LDA.b #$07                              ;$0083FB | Enable mode 7
+    STA.w $2105                             ;$0083FD |
+    LDA.b Mode7XPos_3A                      ;$008400 | Set layer 1 X position
+    STA.w $210D                             ;$008402 |
+    LDA.b Mode7XPos_3A+1                    ;$008405 |
+    STA.w $210D                             ;$008407 |
+    LDA.b Mode7YPos_3C                      ;$00840A | Set layer 1 X position
+    STA.w $210E                             ;$00840C |
+    LDA.b Mode7YPos_3C+1                    ;$00840F |
+    STA.w $210E                             ;$008411 |
+    BRA IRQ_return                          ;$008414 /
 
-mode_7_static_BG_scroll:                    ;        \ 
-    LDA.b #$59                              ;$008416 |\ set layer 1 tilemap address to $5800, mirror X
-    STA.w $2107                             ;$008418 |/
-    LDA.b #$07                              ;$00841B |\ set layer 1 base character address to $7000
-    STA.w $210B                             ;$00841D |/
-    LDA.b Layer1XPos_1A                     ;$008420 |\ Set layer 1 X position.
-    STA.w $210D                             ;$008422 | |
-    LDA.b Layer1XPos_1A+1                   ;$008425 | |
-    STA.w $210D                             ;$008427 |/
-    LDA.b Layer1YPos_1C                     ;$00842A |\ Set relative layer 1 Y position.
-    CLC                                     ;$00842C | |
-    ADC.w ScreenShakeYOffset_1888           ;$00842D | | Add in the relative amount.
-    STA.w $210E                             ;$008430 | |
-    LDA.b Layer1YPos_1C+1                   ;$008433 | |
-    STA.w $210E                             ;$008435 |/
+mode_7_static_BG_scroll_008416:             ;        \ 
+    LDA.b #$59                              ;$008416 | set layer 1 tilemap address to $5800, mirror X
+    STA.w $2107                             ;$008418 |
+    LDA.b #$07                              ;$00841B | set layer 1 base character address to $7000
+    STA.w $210B                             ;$00841D |
+    LDA.b Layer1XPos_1A                     ;$008420 | Set layer 1 X position.
+    STA.w $210D                             ;$008422 |
+    LDA.b Layer1XPos_1A+1                   ;$008425 |
+    STA.w $210D                             ;$008427 |
+    LDA.b Layer1YPos_1C                     ;$00842A | Set relative layer 1 Y position.
+    CLC                                     ;$00842C |
+    ADC.w ScreenShakeYOffset_1888           ;$00842D | Add in the relative amount.
+    STA.w $210E                             ;$008430 |
+    LDA.b Layer1YPos_1C+1                   ;$008433 |
+    STA.w $210E                             ;$008435 |
     RTS                                     ;$008438 /
 
-full_wait_for_hblank:                       ;        \ 
+full_wait_for_hblank_00843E:                ;        \ 
     LDY.b #$20                              ;$008439 | Use 166 cycle delay
-wait_for_hblank:                            ;        |
+wait_for_hblank_00843B:                     ;        |
     BIT.w $4212                             ;$00843B |\ Wait for HBlank to occur
-    BVS full_wait_for_hblank                ;$00843E |/ Only use the full delay if HBlank already passed
+    BVS full_wait_for_hblank_00843E         ;$00843E |/ Only use the full delay if HBlank already passed
 .wait_for_hblank_end                        ;        |
     BIT.w $4212                             ;$008440 |\ Wait for HBlank to end so we can wait for the next
     BVC .wait_for_hblank_end                ;$008443 |/
@@ -547,24 +548,24 @@ wait_for_hblank:                            ;        |
     BNE .waste_scanline                     ;$008446 |/ Remember taken branches cost 3 cycles.
     RTS                                     ;$008448 /
 
-DMA_OAM:                                    ;        \ 
+DMA_spr_tiles_to_OAM_008449:                ;        \ 
     STZ.w $4300                             ;$008449 | DMA mode 0 (p)
     REP #$20                                ;$00844C | A->16
     STZ.w $2102                             ;$00844E | Set OAM address to 00
-    LDA.w #$0004                            ;$008451 |\ Set DMA destination to $2104
-    STA.w $4301                             ;$008454 |/ Set DMA source low byte to #$00
-    LDA.w #$0002                            ;$008457 |\ Set DMA source to $000200
-    STA.w $4303                             ;$00845A |/
-    LDA.w #$0220                            ;$00845D |\ Transfer #$0220 bytes
-    STA.w $4305                             ;$008460 |/
-    LDY.b #$01                              ;$008463 |\ Run DMA channel 0
-    STY.w $420B                             ;$008465 |/
+    LDA.w #$0004                            ;$008451 | Set DMA destination to $2104
+    STA.w $4301                             ;$008454 | Set DMA source low byte to #$00
+    LDA.w #$0002                            ;$008457 | Set DMA source to $000200
+    STA.w $4303                             ;$00845A |
+    LDA.w #$0220                            ;$00845D | Transfer #$0220 bytes
+    STA.w $4305                             ;$008460 |
+    LDY.b #$01                              ;$008463 | Run DMA channel 0
+    STY.w $420B                             ;$008465 |
     SEP #$20                                ;$008468 | A->8
-    LDA.b #$80                              ;$00846A |\ Enable sprite rotation priority
-    STA.w $2103                             ;$00846C |/
-    LDA.b OAMAddress_3F                     ;$00846F |\ Set OAM rotation address
-    STA.w $2102                             ;$008471 |/
-    RTS                                     ;$008474 / Finished with OAM DMA
+    LDA.b #$80                              ;$00846A | Enable sprite rotation priority
+    STA.w $2103                             ;$00846C |
+    LDA.b OAMAddress_3F                     ;$00846F | Set OAM rotation address
+    STA.w $2102                             ;$008471 |
+    RTS                                     ;$008474 /
 
 DATA_008475:
     db $00,$00,$08,$00,$10,$00,$18,$00
@@ -749,7 +750,7 @@ clear_out_layer3_0085FA:
     STY.w $420B                             ;$00863D |
     STZ.b OAMAddress_3F                     ;$008640 |
     JSL OAM_reset_7F8000                    ;$008642 |
-    JMP DMA_OAM                             ;$008646 |
+    JMP DMA_spr_tiles_to_OAM_008449         ;$008646 |
 
 .DATA_008649:
     db $08,$18,$00,$00,$00,$00,$10
@@ -934,291 +935,275 @@ DMA_stripe_image:
     STA.w $420B                             ;$0087A7 |/
     JMP .next_block                         ;$0087AA / Continue and read the next block
 
-generic_layer_1_and_2_upload:               ;        \ 
+upload_map16_strip_VRAM_0087AD:             ;        \ 
     SEP #$30                                ;$0087AD | AXY->8
-    LDA.w Layer1VramAddr_1BE4               ;$0087AF |\ if a kayer 1 VRAM destination is set, 
-    BNE .layer_1_direction_check            ;$0087B2 |/ Handle layer 1 tilemap DMA
+    LDA.w Layer1VramAddr_1BE4               ;$0087AF | if a layer 1 VRAM destination is set, 
+    BNE .layer_1_direction_check            ;$0087B2 | Handle layer 1 tilemap DMA
     JMP .layer_2_upload_check               ;$0087B4 / If not, jump to the layer 2 DMA check
 
 .layer_1_direction_check                    ;        \ 
-    LDA.b ScreenMode_5B                     ;$0087B7 |\ If the layer 1 data is not vertical
-    AND.b #!Layer1Vert_01                   ;$0087B9 | | Branch and handle horizontal uploads
-    BEQ .horizontal_layer_1_DMA             ;$0087BB |/
+    LDA.b ScreenMode_5B                     ;$0087B7 | If the layer 1 data is not vertical
+    AND.b #!Layer1Vert_01                   ;$0087B9 | Branch and handle horizontal uploads
+    BEQ .horizontal_layer_1_DMA             ;$0087BB |
     JMP .vertical_layer_1                   ;$0087BD / Handle vertical layer 1 data (includes OW)
 
 .horizontal_layer_1_DMA                     ;        \ 
-    LDY.b #$81                              ;$0087C0 |\ Set VRAM increment after $2119 writes and
-    STY.w $2115                             ;$0087C2 |/ Set address increment by 32 for "vertical" writes
-    LDA.w Layer1VramAddr_1BE4+1             ;$0087C5 |\ Set the VRAM destination for layer 1 tilemap 
-    STA.w $2116                             ;$0087C8 | | Left, upper screen 8x8 strip
-    LDA.w Layer1VramAddr_1BE4               ;$0087CB | |
-    STA.w $2117                             ;$0087CE |/
+    LDY.b #$81                              ;$0087C0 | Set VRAM increment after $2119 writes and
+    STY.w $2115                             ;$0087C2 | Set address increment by 32 for "vertical" writes
+    LDA.w Layer1VramAddr_1BE4+1             ;$0087C5 | Set the VRAM destination for layer 1 tilemap 
+    STA.w $2116                             ;$0087C8 | Left, upper screen 8x8 strip
+    LDA.w Layer1VramAddr_1BE4               ;$0087CB |
+    STA.w $2117                             ;$0087CE |
     LDX.b #$06                              ;$0087D1 | Number of DMA settings to copy
-.left_upper_layer_1_DMA_setup               ;        |
-    LDA.w .layer_1_DMA_settings_1,X         ;$0087D3 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$0087D6 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$0087D9 | | source: $001BE6, size: #$0040
-    BPL .left_upper_layer_1_DMA_setup       ;$0087DA |/
-    LDA.b #$02                              ;$0087DC |\ Run DMA on channel 1
-    STA.w $420B                             ;$0087DE |/
+-   LDA.w .layer_1_DMA_settings_1,X         ;$0087D3 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$0087D6 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$0087D9 ||  source: $001BE6, size: #$0040
+    BPL -                                   ;$0087DA |/
+    LDA.b #$02                              ;$0087DC | Run DMA on channel 1
+    STA.w $420B                             ;$0087DE |
     STY.w $2115                             ;$0087E1 | Rewrite VRAM increment and remap setting
-    LDA.w Layer1VramAddr_1BE4+1             ;$0087E4 |\ Write the next VRAM address
-    STA.w $2116                             ;$0087E7 | | Which is #$0800 bytes higher
-    LDA.w Layer1VramAddr_1BE4               ;$0087EA | | Left, lower screen 8x8 strip
-    CLC                                     ;$0087ED | |
-    ADC.b #$08                              ;$0087EE | |
-    STA.w $2117                             ;$0087F0 |/
+    LDA.w Layer1VramAddr_1BE4+1             ;$0087E4 | Write the next VRAM address
+    STA.w $2116                             ;$0087E7 |  Which is #$0800 bytes higher
+    LDA.w Layer1VramAddr_1BE4               ;$0087EA |  Left, lower screen 8x8 strip
+    CLC                                     ;$0087ED |
+    ADC.b #$08                              ;$0087EE |
+    STA.w $2117                             ;$0087F0 |
     LDX.b #$06                              ;$0087F3 | Number of DMA settings to copy
-.left_lower_layer_1_DMA_setup               ;        |
-    LDA.w .layer_1_DMA_settings_2,X         ;$0087F5 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$0087F8 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$0087FB | | source: $001C26, size: #$002C
-    BPL .left_lower_layer_1_DMA_setup       ;$0087FC |/
-    LDA.b #$02                              ;$0087FE |\ Run DMA on channel 1
-    STA.w $420B                             ;$008800 |/
+-   LDA.w .layer_1_DMA_settings_2,X         ;$0087F5 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$0087F8 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$0087FB ||  source: $001C26, size: #$002C
+    BPL -                                   ;$0087FC |/
+    LDA.b #$02                              ;$0087FE | Run DMA on channel 1
+    STA.w $420B                             ;$008800 |
     STY.w $2115                             ;$008803 | Rewrite VRAM increment and remap setting
-    LDA.w Layer1VramAddr_1BE4+1             ;$008806 |\ Write the next VRAM address
-    INC A                                   ;$008809 | | Which is a single byte higher
-    STA.w $2116                             ;$00880A | | Right, upper screen 8x8 strip
-    LDA.w Layer1VramAddr_1BE4               ;$00880D | |
-    STA.w $2117                             ;$008810 |/
+    LDA.w Layer1VramAddr_1BE4+1             ;$008806 | Write the next VRAM address
+    INC A                                   ;$008809 |  Which is a single byte higher
+    STA.w $2116                             ;$00880A |  Right, upper screen 8x8 strip
+    LDA.w Layer1VramAddr_1BE4               ;$00880D |
+    STA.w $2117                             ;$008810 |
     LDX.b #$06                              ;$008813 | Number of DMA settings to copy
-.right_upper_layer_1_DMA_setup              ;        |
-    LDA.w .layer_1_DMA_settings_3,X         ;$008815 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$008818 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$00881B | | source: $001C66, size: #$0040
-    BPL .right_upper_layer_1_DMA_setup      ;$00881C |/
-    LDA.b #$02                              ;$00881E |\ Run DMA on channel 1
-    STA.w $420B                             ;$008820 |/
+-   LDA.w .layer_1_DMA_settings_3,X         ;$008815 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$008818 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$00881B ||  source: $001C66, size: #$0040
+    BPL -                                   ;$00881C |/
+    LDA.b #$02                              ;$00881E | Run DMA on channel 1
+    STA.w $420B                             ;$008820 |
     STY.w $2115                             ;$008823 | Rewrite VRAM increment and remap setting
-    LDA.w Layer1VramAddr_1BE4+1             ;$008826 |\ Write the next VRAM address
-    INC A                                   ;$008829 | | Which is #$0801 bytes higher
-    STA.w $2116                             ;$00882A | | Right, lower screen 8x8 strip
-    LDA.w Layer1VramAddr_1BE4               ;$00882D | |
-    CLC                                     ;$008830 | |
-    ADC.b #$08                              ;$008831 | |
-    STA.w $2117                             ;$008833 |/
+    LDA.w Layer1VramAddr_1BE4+1             ;$008826 | Write the next VRAM address
+    INC A                                   ;$008829 |  Which is #$0801 bytes higher
+    STA.w $2116                             ;$00882A |  Right, lower screen 8x8 strip
+    LDA.w Layer1VramAddr_1BE4               ;$00882D |
+    CLC                                     ;$008830 |
+    ADC.b #$08                              ;$008831 |
+    STA.w $2117                             ;$008833 |
     LDX.b #$06                              ;$008836 | Number of DMA settings to copy
-.right_lower_layer_1_DMA_setup              ;        |
-    LDA.w .layer_1_DMA_settings_4,X         ;$008838 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$00883B | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$00883E | | source: $001CA6, size: #$002C
-    BPL .right_lower_layer_1_DMA_setup      ;$00883F |/
-    LDA.b #$02                              ;$008841 |\ Run DMA on channel 1
-    STA.w $420B                             ;$008843 |/
+-   LDA.w .layer_1_DMA_settings_4,X         ;$008838 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$00883B ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$00883E ||  source: $001CA6, size: #$002C
+    BPL -                                   ;$00883F |/
+    LDA.b #$02                              ;$008841 | Run DMA on channel 1
+    STA.w $420B                             ;$008843 |
     JMP .layer_2_upload_check               ;$008846 /
 
 .vertical_layer_1                           ;        \ 
-    LDY.b #$80                              ;$008849 |\ Set VRAM increment after $2119 writes and
-    STY.w $2115                             ;$00884B |/ Set address increment by 1 for "horizontal" writes
-    LDA.w Layer1VramAddr_1BE4+1             ;$00884E |\ Set the VRAM destination for layer 1 tilemap
-    STA.w $2116                             ;$008851 | | Lower, left screen 8x8 strip
-    LDA.w Layer1VramAddr_1BE4               ;$008854 | |
-    STA.w $2117                             ;$008857 |/
+    LDY.b #$80                              ;$008849 | Set VRAM increment after $2119 writes and
+    STY.w $2115                             ;$00884B | Set address increment by 1 for "horizontal" writes
+    LDA.w Layer1VramAddr_1BE4+1             ;$00884E | Set the VRAM destination for layer 1 tilemap
+    STA.w $2116                             ;$008851 |  Lower, left screen 8x8 strip
+    LDA.w Layer1VramAddr_1BE4               ;$008854 | 
+    STA.w $2117                             ;$008857 |
     LDX.b #$06                              ;$00885A | Number of DMA settings to copy
-.lower_left_layer_1_DMA_setup               ;        |
-    LDA.w .layer_1_DMA_settings_1,X         ;$00885C |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$00885F | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$008862 | | source: $001BE6, size: #$0040
-    BPL .lower_left_layer_1_DMA_setup       ;$008863 |/
-    LDA.b #$02                              ;$008865 |\ Run DMA on channel 1
-    STA.w $420B                             ;$008867 |/
+-   LDA.w .layer_1_DMA_settings_1,X         ;$00885C |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$00885F ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$008862 ||  source: $001BE6, size: #$0040
+    BPL -                                   ;$008863 |/
+    LDA.b #$02                              ;$008865 | Run DMA on channel 1
+    STA.w $420B                             ;$008867 |
     STY.w $2115                             ;$00886A | Rewrite VRAM increment and remap setting
-    LDA.w Layer1VramAddr_1BE4+1             ;$00886D |\ Write the next VRAM address
-    STA.w $2116                             ;$008870 | | Which is #$0400 bytes higher
-    LDA.w Layer1VramAddr_1BE4               ;$008873 | | Lower, right screen 8x8 strip
-    CLC                                     ;$008876 | |
-    ADC.b #$04                              ;$008877 | |
-    STA.w $2117                             ;$008879 |/
+    LDA.w Layer1VramAddr_1BE4+1             ;$00886D | Write the next VRAM address
+    STA.w $2116                             ;$008870 |  Which is #$0400 bytes higher
+    LDA.w Layer1VramAddr_1BE4               ;$008873 |  Lower, right screen 8x8 strip
+    CLC                                     ;$008876 |
+    ADC.b #$04                              ;$008877 |
+    STA.w $2117                             ;$008879 |
     LDX.b #$06                              ;$00887C | Number of DMA settings to copy
-.lower_right_layer_1_DMA_setup              ;        |
-    LDA.w .layer_1_DMA_settings_2,X         ;$00887E |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$008881 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$008884 | | source: $001C26, size: #$002C
-    BPL .lower_right_layer_1_DMA_setup      ;$008885 |/
-    LDA.b #$40                              ;$008887 |\ Change the Transfer size to #$0040
-    STA.w $4315                             ;$008889 |/ For writing the full vertical data
-    LDA.b #$02                              ;$00888C |\ Run DMA on channel 1
-    STA.w $420B                             ;$00888E |/
+-   LDA.w .layer_1_DMA_settings_2,X         ;$00887E |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$008881 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$008884 ||  source: $001C26, size: #$002C
+    BPL -                                   ;$008885 |/
+    LDA.b #$40                              ;$008887 | Change the Transfer size to #$0040
+    STA.w $4315                             ;$008889 | For writing the full vertical data
+    LDA.b #$02                              ;$00888C | Run DMA on channel 1
+    STA.w $420B                             ;$00888E |
     STY.w $2115                             ;$008891 | Rewrite VRAM increment and remap setting
-    LDA.w Layer1VramAddr_1BE4+1             ;$008894 |\ Write the next VRAM address
-    CLC                                     ;$008897 | | Which is #$0020 bytes higher
-    ADC.b #$20                              ;$008898 | | Upper, left screen 8x8 strip
-    STA.w $2116                             ;$00889A | |
-    LDA.w Layer1VramAddr_1BE4               ;$00889D | |
-    STA.w $2117                             ;$0088A0 |/
+    LDA.w Layer1VramAddr_1BE4+1             ;$008894 | Write the next VRAM address
+    CLC                                     ;$008897 |  Which is #$0020 bytes higher
+    ADC.b #$20                              ;$008898 |  Upper, left screen 8x8 strip
+    STA.w $2116                             ;$00889A |
+    LDA.w Layer1VramAddr_1BE4               ;$00889D |
+    STA.w $2117                             ;$0088A0 |
     LDX.b #$06                              ;$0088A3 | Number of DMA settings to copy
-.upper_left_layer_1_DMA_setup               ;        |
-    LDA.w .layer_1_DMA_settings_3,X         ;$0088A5 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$0088A8 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$0088AB | | source: $001C66, size: #$0040
-    BPL .upper_left_layer_1_DMA_setup       ;$0088AC |/
-    LDA.b #$02                              ;$0088AE |\ Run DMA on channel 1
-    STA.w $420B                             ;$0088B0 |/
+-   LDA.w .layer_1_DMA_settings_3,X         ;$0088A5 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$0088A8 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$0088AB ||  source: $001C66, size: #$0040
+    BPL -                                   ;$0088AC |/
+    LDA.b #$02                              ;$0088AE | Run DMA on channel 1
+    STA.w $420B                             ;$0088B0 |
     STY.w $2115                             ;$0088B3 | Rewrite VRAM increment and remap setting
-    LDA.w Layer1VramAddr_1BE4+1             ;$0088B6 |\ Write the next VRAM address
-    CLC                                     ;$0088B9 | | Which is #$0420 bytes higher
-    ADC.b #$20                              ;$0088BA | | Upper, right screen 8x8 strip
-    STA.w $2116                             ;$0088BC | |
-    LDA.w Layer1VramAddr_1BE4               ;$0088BF | |
-    CLC                                     ;$0088C2 | |
-    ADC.b #$04                              ;$0088C3 |/
+    LDA.w Layer1VramAddr_1BE4+1             ;$0088B6 | Write the next VRAM address
+    CLC                                     ;$0088B9 |  Which is #$0420 bytes higher
+    ADC.b #$20                              ;$0088BA |  Upper, right screen 8x8 strip
+    STA.w $2116                             ;$0088BC |
+    LDA.w Layer1VramAddr_1BE4               ;$0088BF |
+    CLC                                     ;$0088C2 |
+    ADC.b #$04                              ;$0088C3 |
     STA.w $2117                             ;$0088C5 |
     LDX.b #$06                              ;$0088C8 | Number of DMA settings to copy
-.upper_right_layer_1_DMA_setup              ;        |
-    LDA.w .layer_1_DMA_settings_4,X         ;$0088CA |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$0088CD | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$0088D0 | | source: $001CA6, size: #$002C
-    BPL .upper_right_layer_1_DMA_setup      ;$0088D1 |/
-    LDA.b #$40                              ;$0088D3 |\ Change the Transfer size to #$0040
-    STA.w $4315                             ;$0088D5 |/ For writing the full vertical data
-    LDA.b #$02                              ;$0088D8 |\ Run DMA on channel 1
-    STA.w $420B                             ;$0088DA |/
+-   LDA.w .layer_1_DMA_settings_4,X         ;$0088CA |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$0088CD ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$0088D0 ||  source: $001CA6, size: #$002C
+    BPL -                                   ;$0088D1 |/
+    LDA.b #$40                              ;$0088D3 | Change the Transfer size to #$0040
+    STA.w $4315                             ;$0088D5 | For writing the full vertical data
+    LDA.b #$02                              ;$0088D8 | Run DMA on channel 1
+    STA.w $420B                             ;$0088DA |
 .layer_2_upload_check                       ;        |
-    LDA.b #$00                              ;$0088DD |\ Reset the VRAM upload address
-    STA.w Layer1VramAddr_1BE4               ;$0088DF |/
-    LDA.w Layer2VramAddr_1CE6               ;$0088E2 |\ if a kayer 1 VRAM destination is set, 
-    BNE .layer_2_direction_check            ;$0088E5 |/ Handle layer 1 tilemap DMA
-    JMP .return                             ;$0088E7 / No more data to upload, return
+    LDA.b #$00                              ;$0088DD | Reset the VRAM upload address
+    STA.w Layer1VramAddr_1BE4               ;$0088DF |
+    LDA.w Layer2VramAddr_1CE6               ;$0088E2 | if a layer 1 VRAM destination is set, 
+    BNE .layer_2_direction_check            ;$0088E5 | Handle layer 1 tilemap DMA
+    JMP .return_008A10                      ;$0088E7 /
 
 .layer_2_direction_check                    ;        \ 
-    LDA.b ScreenMode_5B                     ;$0088EA |\ If the layer 2 data is not vertical
-    AND.b #!Layer2Vert_02                   ;$0088EC | | Branch and handle horizontal uploads
-    BEQ .horizontal_layer_2_DMA             ;$0088EE |/
+    LDA.b ScreenMode_5B                     ;$0088EA | If the layer 2 data is not vertical
+    AND.b #!Layer2Vert_02                   ;$0088EC | Branch and handle horizontal uploads
+    BEQ .horizontal_layer_2_DMA             ;$0088EE |
     JMP .vertical_layer_2                   ;$0088F0 / Handle vertical layer 2 data
 
 .horizontal_layer_2_DMA                     ;        \ 
-    LDY.b #$81                              ;$0088F3 |\ Set VRAM increment after $2119 writes and
-    STY.w $2115                             ;$0088F5 |/ Set address increment by 32 for "vertical" writes
-    LDA.w Layer2VramAddr_1CE6+1             ;$0088F8 |\ Set the VRAM destination for layer 2 tilemap 
-    STA.w $2116                             ;$0088FB | | Left, upper screen 8x8 strip
-    LDA.w Layer2VramAddr_1CE6               ;$0088FE | |
-    STA.w $2117                             ;$008901 |/
+    LDY.b #$81                              ;$0088F3 | Set VRAM increment after $2119 writes and
+    STY.w $2115                             ;$0088F5 | Set address increment by 32 for "vertical" writes
+    LDA.w Layer2VramAddr_1CE6+1             ;$0088F8 | Set the VRAM destination for layer 2 tilemap 
+    STA.w $2116                             ;$0088FB |  Left, upper screen 8x8 strip
+    LDA.w Layer2VramAddr_1CE6               ;$0088FE |
+    STA.w $2117                             ;$008901 |
     LDX.b #$06                              ;$008904 | Number of DMA settings to copy Number of DMA settings to copy
-.left_upper_layer_2_DMA_setup               ;        |
-    LDA.w .layer_2_DMA_settings_1,X         ;$008906 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$008909 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$00890C | | source: $001CE8, size: #$0040
-    BPL .left_upper_layer_2_DMA_setup       ;$00890D |/
-    LDA.b #$02                              ;$00890F |\ Run DMA on channel 1
-    STA.w $420B                             ;$008911 |/
+-   LDA.w .layer_2_DMA_settings_1,X         ;$008906 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$008909 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$00890C ||  source: $001CE8, size: #$0040
+    BPL -                                   ;$00890D |/
+    LDA.b #$02                              ;$00890F | Run DMA on channel 1
+    STA.w $420B                             ;$008911 |
     STY.w $2115                             ;$008914 | Rewrite VRAM increment and remap setting
-    LDA.w Layer2VramAddr_1CE6+1             ;$008917 |\ Write the next VRAM address
-    STA.w $2116                             ;$00891A | | Which is #$0800 bytes higher
-    LDA.w Layer2VramAddr_1CE6               ;$00891D | | Left, lower screen 8x8 strip
-    CLC                                     ;$008920 | |
-    ADC.b #$08                              ;$008921 | |
-    STA.w $2117                             ;$008923 |/
+    LDA.w Layer2VramAddr_1CE6+1             ;$008917 | Write the next VRAM address
+    STA.w $2116                             ;$00891A |  Which is #$0800 bytes higher
+    LDA.w Layer2VramAddr_1CE6               ;$00891D |  Left, lower screen 8x8 strip
+    CLC                                     ;$008920 |
+    ADC.b #$08                              ;$008921 |
+    STA.w $2117                             ;$008923 |
     LDX.b #$06                              ;$008926 | Number of DMA settings to copy
-.left_lower_layer_2_DMA_setup               ;        |
-    LDA.w .layer_2_DMA_settings_2,X         ;$008928 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$00892B | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$00892E | | source: $001D28, size: #$002C
-    BPL .left_lower_layer_2_DMA_setup       ;$00892F |/
-    LDA.b #$02                              ;$008931 |\ Run DMA on channel 1
-    STA.w $420B                             ;$008933 |/
+-   LDA.w .layer_2_DMA_settings_2,X         ;$008928 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$00892B ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$00892E ||  source: $001D28, size: #$002C
+    BPL -                                   ;$00892F |/
+    LDA.b #$02                              ;$008931 | Run DMA on channel 1
+    STA.w $420B                             ;$008933 |
     STY.w $2115                             ;$008936 | Rewrite VRAM increment and remap setting
-    LDA.w Layer2VramAddr_1CE6+1             ;$008939 |\ Write the next VRAM address
-    INC A                                   ;$00893C | | Which is a single byte higher
-    STA.w $2116                             ;$00893D | | Right, upper screen 8x8 strip
-    LDA.w Layer2VramAddr_1CE6               ;$008940 | |
-    STA.w $2117                             ;$008943 |/
+    LDA.w Layer2VramAddr_1CE6+1             ;$008939 | Write the next VRAM address
+    INC A                                   ;$00893C |  Which is a single byte higher
+    STA.w $2116                             ;$00893D |  Right, upper screen 8x8 strip
+    LDA.w Layer2VramAddr_1CE6               ;$008940 |
+    STA.w $2117                             ;$008943 |
     LDX.b #$06                              ;$008946 | Number of DMA settings to copy
-.right_upper_layer_2_DMA_setup              ;        |
-    LDA.w .layer_2_DMA_settings_3,X         ;$008848 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$00894B | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$00894E | | source: $001D68, size: #$0040
-    BPL .right_upper_layer_2_DMA_setup      ;$00894F |/
-    LDA.b #$02                              ;$008951 |\ Run DMA on channel 1
-    STA.w $420B                             ;$008953 |/
+-   LDA.w .layer_2_DMA_settings_3,X         ;$008848 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$00894B ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$00894E ||  source: $001D68, size: #$0040
+    BPL -                                   ;$00894F |/
+    LDA.b #$02                              ;$008951 | Run DMA on channel 1
+    STA.w $420B                             ;$008953 |
     STY.w $2115                             ;$008956 | Rewrite VRAM increment and remap setting
-    LDA.w Layer2VramAddr_1CE6+1             ;$008959 |\ Write the next VRAM address
-    INC A                                   ;$00895C | | Which is #$0801 bytes higher
-    STA.w $2116                             ;$00895D | | Right, lower screen 8x8 strip
-    LDA.w Layer2VramAddr_1CE6               ;$008960 | |
-    CLC                                     ;$008963 | |
-    ADC.b #$08                              ;$008964 | |
-    STA.w $2117                             ;$008966 |/
+    LDA.w Layer2VramAddr_1CE6+1             ;$008959 | Write the next VRAM address
+    INC A                                   ;$00895C |  Which is #$0801 bytes higher
+    STA.w $2116                             ;$00895D |  Right, lower screen 8x8 strip
+    LDA.w Layer2VramAddr_1CE6               ;$008960 |
+    CLC                                     ;$008963 |
+    ADC.b #$08                              ;$008964 |
+    STA.w $2117                             ;$008966 |
     LDX.b #$06                              ;$008969 | Number of DMA settings to copy
-.right_lower_layer_2_DMA_setup              ;        |
-    LDA.w .layer_2_DMA_settings_4,X         ;$00896B |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$00896E | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$008971 | | source: $001DA8, size: #$002C
-    BPL .right_lower_layer_2_DMA_setup      ;$008972 |/
-    LDA.b #$02                              ;$008974 |\ Run DMA on channel 1
-    STA.w $420B                             ;$008976 |/
-    JMP .return                             ;$008979 /
+-   LDA.w .layer_2_DMA_settings_4,X         ;$00896B |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$00896E ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$008971 ||  source: $001DA8, size: #$002C
+    BPL -                                   ;$008972 |/
+    LDA.b #$02                              ;$008974 | Run DMA on channel 1
+    STA.w $420B                             ;$008976 |
+    JMP .return_008A10                      ;$008979 /
 
 .vertical_layer_2                           ;        \ 
-    LDY.b #$80                              ;$00897C |\ Set VRAM increment after $2119 writes and
-    STY.w $2115                             ;$00897E |/ Set address increment by 1 for "horizontal" writes
-    LDA.w Layer2VramAddr_1CE6+1             ;$008981 |\ Set the VRAM destination for layer 2 tilemap
-    STA.w $2116                             ;$008984 | | Lower, left screen 8x8 strip
-    LDA.w Layer2VramAddr_1CE6               ;$008987 | |
-    STA.w $2117                             ;$00898A |/
+    LDY.b #$80                              ;$00897C | Set VRAM increment after $2119 writes and
+    STY.w $2115                             ;$00897E | Set address increment by 1 for "horizontal" writes
+    LDA.w Layer2VramAddr_1CE6+1             ;$008981 | Set the VRAM destination for layer 2 tilemap
+    STA.w $2116                             ;$008984 |  Lower, left screen 8x8 strip
+    LDA.w Layer2VramAddr_1CE6               ;$008987 |
+    STA.w $2117                             ;$00898A |
     LDX.b #$06                              ;$00898D | Number of DMA settings to copy
-.lower_left_layer_2_DMA_setup               ;        |
-    LDA.w .layer_2_DMA_settings_1,X         ;$00898F |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$008992 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$008995 | | source: $001CE8, size: #$0040
-    BPL .lower_left_layer_2_DMA_setup       ;$008996 |/
-    LDA.b #$02                              ;$008998 |\ Run DMA on channel 1
-    STA.w $420B                             ;$00899A |/
+-   LDA.w .layer_2_DMA_settings_1,X         ;$00898F |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$008992 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$008995 ||  source: $001CE8, size: #$0040
+    BPL -                                   ;$008996 |/
+    LDA.b #$02                              ;$008998 | Run DMA on channel 1
+    STA.w $420B                             ;$00899A |
     STY.w $2115                             ;$00899D | Rewrite VRAM increment and remap setting
-    LDA.w Layer2VramAddr_1CE6+1             ;$0089A0 |\ Write the next VRAM address
-    STA.w $2116                             ;$0089A3 | | Which is #$0400 bytes higher
-    LDA.w Layer2VramAddr_1CE6               ;$0089A6 | | Lower, right screen 8x8 strip
-    CLC                                     ;$0089A9 | |
-    ADC.b #$04                              ;$0089AA | |
-    STA.w $2117                             ;$0089AC |/
+    LDA.w Layer2VramAddr_1CE6+1             ;$0089A0 | Write the next VRAM address
+    STA.w $2116                             ;$0089A3 |  Which is #$0400 bytes higher
+    LDA.w Layer2VramAddr_1CE6               ;$0089A6 |  Lower, right screen 8x8 strip
+    CLC                                     ;$0089A9 |
+    ADC.b #$04                              ;$0089AA |
+    STA.w $2117                             ;$0089AC |
     LDX.b #$06                              ;$0089AF | Number of DMA settings to copy
-.lower_right_layer_2_DMA_setup              ;        |
-    LDA.w .layer_2_DMA_settings_2,X         ;$0089B1 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$0089B4 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$0089B7 | | source: $001D28, size: #$002C
-    BPL .lower_right_layer_2_DMA_setup      ;$0089B8 |/
-    LDA.b #$40                              ;$0089BA |\ Change the Transfer size to #$0040
-    STA.w $4315                             ;$0089BC |/ For writing the full vertical data
-    LDA.b #$02                              ;$0089BF |\ Run DMA on channel 1
-    STA.w $420B                             ;$0089C1 |/
+-   LDA.w .layer_2_DMA_settings_2,X         ;$0089B1 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$0089B4 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$0089B7 ||  source: $001D28, size: #$002C
+    BPL -                                   ;$0089B8 |/
+    LDA.b #$40                              ;$0089BA | Change the Transfer size to #$0040
+    STA.w $4315                             ;$0089BC | For writing the full vertical data
+    LDA.b #$02                              ;$0089BF | Run DMA on channel 1
+    STA.w $420B                             ;$0089C1 |
     STY.w $2115                             ;$0089C4 | Rewrite VRAM increment and remap setting
-    LDA.w Layer2VramAddr_1CE6+1             ;$0089C7 |\ Write the next VRAM address
-    CLC                                     ;$0089CA | | Which is #$0020 bytes higher
-    ADC.b #$20                              ;$0089CB | | Upper, left screen 8x8 strip
-    STA.w $2116                             ;$0089CD | |
-    LDA.w Layer2VramAddr_1CE6               ;$0089D0 | |
-    STA.w $2117                             ;$0089D3 |/
+    LDA.w Layer2VramAddr_1CE6+1             ;$0089C7 | Write the next VRAM address
+    CLC                                     ;$0089CA |  Which is #$0020 bytes higher
+    ADC.b #$20                              ;$0089CB |  Upper, left screen 8x8 strip
+    STA.w $2116                             ;$0089CD |
+    LDA.w Layer2VramAddr_1CE6               ;$0089D0 |
+    STA.w $2117                             ;$0089D3 |
     LDX.b #$06                              ;$0089D6 | Number of DMA settings to copy
-.upper_left_layer_2_DMA_setup               ;        |
-    LDA.w .layer_2_DMA_settings_3,X         ;$0089D8 |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$0089DB | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$0089DE | | source: $001D68, size: #$0040
-    BPL .upper_left_layer_2_DMA_setup       ;$0089DF |/
-    LDA.b #$02                              ;$0089E1 |\ Run DMA on channel 1
-    STA.w $420B                             ;$0089E3 |/
+-   LDA.w .layer_2_DMA_settings_3,X         ;$0089D8 |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$0089DB ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$0089DE ||  source: $001D68, size: #$0040
+    BPL -                                   ;$0089DF |/
+    LDA.b #$02                              ;$0089E1 | Run DMA on channel 1
+    STA.w $420B                             ;$0089E3 |
     STY.w $2115                             ;$0089E6 | Rewrite VRAM increment and remap setting
-    LDA.w Layer2VramAddr_1CE6+1             ;$0089E9 |\ Write the next VRAM address
-    CLC                                     ;$0089EC | | Which is #$0420 bytes higher
-    ADC.b #$20                              ;$0089ED | | Upper, right screen 8x8 strip
-    STA.w $2116                             ;$0089EF | |
-    LDA.w Layer2VramAddr_1CE6               ;$0089F2 | |
-    CLC                                     ;$0089F5 | |
-    ADC.b #$04                              ;$0089F6 |/
+    LDA.w Layer2VramAddr_1CE6+1             ;$0089E9 | Write the next VRAM address
+    CLC                                     ;$0089EC |  Which is #$0420 bytes higher
+    ADC.b #$20                              ;$0089ED |  Upper, right screen 8x8 strip
+    STA.w $2116                             ;$0089EF |
+    LDA.w Layer2VramAddr_1CE6               ;$0089F2 |
+    CLC                                     ;$0089F5 |
+    ADC.b #$04                              ;$0089F6 |
     STA.w $2117                             ;$0089F8 |
     LDX.b #$06                              ;$0089FB | Number of DMA settings to copy
-.upper_right_layer_2_DMA_setup              ;        |
-    LDA.w .layer_2_DMA_settings_4,X         ;$0089FD |\ Generic DMA copy loop
-    STA.w $4310,X                           ;$008A00 | | Transfer mode: 1, Destination: $2118
-    DEX                                     ;$008A03 | | source: $001DA8, size: #$002C
-    BPL .upper_right_layer_2_DMA_setup      ;$008A04 |/
-    LDA.b #$40                              ;$008A06 |\ Change the Transfer size to #$0040
-    STA.w $4315                             ;$008A08 |/ For writing the full vertical data
-    LDA.b #$02                              ;$008A0B |\ Run DMA on channel 1
-    STA.w $420B                             ;$008A0D |/
-.return                                     ;        |
-    LDA.b #$00                              ;$008A10 |\ Reset the VRAM upload address
-    STA.w Layer2VramAddr_1CE6               ;$008A12 |/
-    RTL                                     ;$008A15 / Return from generic layer uploader
+-   LDA.w .layer_2_DMA_settings_4,X         ;$0089FD |\ Generic DMA copy loop
+    STA.w $4310,X                           ;$008A00 ||  Transfer mode: 1, Destination: $2118
+    DEX                                     ;$008A03 ||  source: $001DA8, size: #$002C
+    BPL -                                   ;$008A04 |/
+    LDA.b #$40                              ;$008A06 | Change the Transfer size to #$0040
+    STA.w $4315                             ;$008A08 | For writing the full vertical data
+    LDA.b #$02                              ;$008A0B | Run DMA on channel 1
+    STA.w $420B                             ;$008A0D |
+.return_008A10                              ;        |
+    LDA.b #$00                              ;$008A10 | Reset the VRAM upload address
+    STA.w Layer2VramAddr_1CE6               ;$008A12 |
+    RTL                                     ;$008A15 /
 
 .layer_1_DMA_settings_1
     db $01,$18,$E6,$1B,$00,$40,$00
@@ -1526,7 +1511,7 @@ DATA_008D9E:
 DATA_008DA5:
     db $01,$18,$F7,$8C,$00,$08,$00
 
-draw_status_bar:
+draw_status_bar_008DAC:
     STZ.w $2115
     LDA.b #$42                              ;$008DAF |
     STA.w $2116                             ;$008DB1 |
@@ -2531,7 +2516,7 @@ CODE_0095E0:
 CODE_0095E9:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$0095EC |
-    JSL CODE_05809E                         ;$0095EF |
+    JSL load_level_layers_05809E            ;$0095EF |
     JSR CODE_00A5F9                         ;$0095F3 |
     JSL CODE_0CADF6                         ;$0095F6 |
     LDA.w CreditsScreenNumber_1DE9          ;$0095FA |
@@ -4350,7 +4335,7 @@ restore_SP1_tiles:                          ;        \ (This routine is pretty m
 RAM_color_pointers:
     db $82,$06,$00,$05,$09,$00,$03,$07,$00
 
-upload_palette:
+upload_palette_CGRAM_00A488:
     LDY.w $0680                             ;$00A488 \ Load the RAM palette pointer index
     LDX.w RAM_color_pointers+2,Y            ;$00A48B |\ Load and store the pointers bank
     STX $02                                 ;$00A48E |/
@@ -4495,7 +4480,7 @@ GM12_level_load_2_00A59C:
     STZ.w UploadMarioStart_143A             ;$00A5A2 |
     JSR SetUpScreen                         ;$00A5A5 |
     JSR GM04DoDMA                           ;$00A5A8 |
-    JSL CODE_05809E                         ;$00A5AB |
+    JSL load_level_layers_05809E            ;$00A5AB |
     LDA.w IRQNMICommand_0D9B                ;$00A5AF |
     BPL .load_regular_level_00A5B9          ;$00A5B2 |
     JSR load_boss_room_0097BC               ;$00A5B4 |
@@ -7435,7 +7420,7 @@ execute_player_animation_00C593:
     LDA.b #$01
     STA.w MessageBoxExpand_1B88             ;$00C5D3 |
     LDA.b #$07                              ;$00C5D6 |
-    STA.w LevelLoadObject_1928              ;$00C5D8 |
+    STA.w CreditsBgPointer_1928             ;$00C5D8 |
     JSR disable_controls                    ;$00C5DB |
     JMP no_special_collision                ;$00C5DE |
 

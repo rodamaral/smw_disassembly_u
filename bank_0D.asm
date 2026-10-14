@@ -7357,25 +7357,25 @@ CODE_0DDF3A:
     STA $00                                 ;$0DDF49 |
     LDA.b #$04                              ;$0DDF4B |
     STA $01                                 ;$0DDF4D |
-CODE_0DDF4F:
+.CODE_0DDF4F:
     LDX $00
-CODE_0DDF51:
+.CODE_0DDF51:
     JSR Sta1To6ePointer
     LDA.b #$61                              ;$0DDF54 |
     JSR CODE_0DA95B                         ;$0DDF56 |
     DEX                                     ;$0DDF59 |
-    BPL CODE_0DDF51                         ;$0DDF5A |
+    BPL .CODE_0DDF51                        ;$0DDF5A |
     JSR CODE_0DA6BA                         ;$0DDF5C |
     LDA.b LevelLoadPos_57                   ;$0DDF5F |
     CLC                                     ;$0DDF61 |
     ADC.b #$40                              ;$0DDF62 |
     STA.b LevelLoadPos_57                   ;$0DDF64 |
     TAY                                     ;$0DDF66 |
-    BCC CODE_0DDF6C                         ;$0DDF67 |
+    BCC .CODE_0DDF6C                        ;$0DDF67 |
     JSR CODE_0DA987                         ;$0DDF69 |
-CODE_0DDF6C:
+.CODE_0DDF6C:
     DEC $01
-    BPL CODE_0DDF4F                         ;$0DDF6E |
+    BPL .CODE_0DDF4F                        ;$0DDF6E |
     LDA.b #$00                              ;$0DDF70 |
     STA.b Map16LowPtr_6B                    ;$0DDF72 |
     STA $04                                 ;$0DDF74 |
@@ -7384,7 +7384,7 @@ CODE_0DDF6C:
     STA $00                                 ;$0DDF7A |
     LDA.b #$07                              ;$0DDF7C |
     STA $03                                 ;$0DDF7E |
-CODE_0DDF80:
+.CODE_0DDF80:
     LDA.b #$02
     STA $01                                 ;$0DDF82 |
     LDX $00                                 ;$0DDF84 |
@@ -7398,16 +7398,16 @@ CODE_0DDF80:
     LDA.b #$03                              ;$0DDF97 |
     STA $02                                 ;$0DDF99 |
     LDX.b #$00                              ;$0DDF9B |
-CODE_0DDF9D:
+.CODE_0DDF9D:
     JSR Sta1To6ePointer
     LDA.l DATA_0DDEDC,X                     ;$0DDFA0 |
     JSR CODE_0DA95B                         ;$0DDFA4 |
     INX                                     ;$0DDFA7 |
     DEC $02                                 ;$0DDFA8 |
-    BPL CODE_0DDF9D                         ;$0DDFAA |
+    BPL .CODE_0DDF9D                        ;$0DDFAA |
     JSR CODE_0DA6BA                         ;$0DDFAC |
     JSR CODE_0DA97D                         ;$0DDFAF |
-CODE_0DDFB2:
+.CODE_0DDFB2:
     JSR StzTo6ePointer0080E7
     LDA.l DATA_0DDEDC,X                     ;$0DDFB5 |
     JSR CODE_0DA95B                         ;$0DDFB9 |
@@ -7419,41 +7419,41 @@ CODE_0DDFB2:
     STA.b [Map16LowPtr_6B],Y                ;$0DDFCD |
     JSR CODE_0DA97D                         ;$0DDFCF |
     DEC $01                                 ;$0DDFD2 |
-    BPL CODE_0DDFB2                         ;$0DDFD4 |
+    BPL .CODE_0DDFB2                        ;$0DDFD4 |
     INX                                     ;$0DDFD6 |
     INX                                     ;$0DDFD7 |
     INX                                     ;$0DDFD8 |
     LDA.b #$03                              ;$0DDFD9 |
     STA $02                                 ;$0DDFDB |
-CODE_0DDFDD:
+.CODE_0DDFDD:
     JSR Sta1To6ePointer
     LDA.l DATA_0DDEDC,X                     ;$0DDFE0 |
     JSR CODE_0DA95B                         ;$0DDFE4 |
     INX                                     ;$0DDFE7 |
     DEC $02                                 ;$0DDFE8 |
-    BPL CODE_0DDFDD                         ;$0DDFEA |
+    BPL .CODE_0DDFDD                        ;$0DDFEA |
     JSR CODE_0DA6BA                         ;$0DDFEC |
     LDA.b #$02                              ;$0DDFEF |
     STA $02                                 ;$0DDFF1 |
     JSR CODE_0DA97D                         ;$0DDFF3 |
-CODE_0DDFF6:
+.CODE_0DDFF6:
     JSR StzTo6ePointer0080E7
     LDA.l DATA_0DDEDC,X                     ;$0DDFF9 |
     JSR CODE_0DA95B                         ;$0DDFFD |
     INX                                     ;$0DE000 |
     DEC $02                                 ;$0DE001 |
-    BPL CODE_0DDFF6                         ;$0DE003 |
+    BPL .CODE_0DDFF6                        ;$0DE003 |
     DEC $03                                 ;$0DE005 |
-    BMI CODE_0DE00E                         ;$0DE007 |
+    BMI .CODE_0DE00E                        ;$0DE007 |
     INC $00                                 ;$0DE009 |
-    JMP CODE_0DDF80                         ;$0DE00B |
+    JMP .CODE_0DDF80                        ;$0DE00B |
 
-CODE_0DE00E:
+.CODE_0DE00E:
     LDA.b #$01
     STA $08                                 ;$0DE010 |
     LDA.b #$00                              ;$0DE012 |
     STA $09                                 ;$0DE014 |
-CODE_0DE016:
+.loop_0DE016:
     REP #$30                                ;$0DE016 | AXY->16
     LDA $08                                 ;$0DE018 |
     ASL                                     ;$0DE01A |
@@ -7464,7 +7464,7 @@ CODE_0DE016:
     STA $06                                 ;$0DE026 |
     LDA.w #$01B0                            ;$0DE028 |
     STA $00                                 ;$0DE02B |
-    LDA.w #$C800                            ;$0DE02D |
+    LDA.w #!Addr_C800                       ;$0DE02D |
     STA $02                                 ;$0DE030 |
     PHB                                     ;$0DE032 |
     LDA $00                                 ;$0DE033 |
@@ -7474,7 +7474,7 @@ CODE_0DE016:
     PLB                                     ;$0DE03C |
     LDA.w #$01B0                            ;$0DE03D |
     STA $00                                 ;$0DE040 |
-    LDA.w #$C800                            ;$0DE042 |
+    LDA.w #!Addr_C800                       ;$0DE042 |
     STA $02                                 ;$0DE045 |
     PHB                                     ;$0DE047 |
     LDA $00                                 ;$0DE048 |
@@ -7484,11 +7484,11 @@ CODE_0DE016:
     PLB                                     ;$0DE051 |
     SEP #$30                                ;$0DE052 | AXY->8
     DEC.b LvlLoadObjSize_59                 ;$0DE054 |
-    BEQ Return0DE05D                        ;$0DE056 |
+    BEQ .Return0DE05D                       ;$0DE056 |
     INC $08                                 ;$0DE058 |
-    JMP CODE_0DE016                         ;$0DE05A |
+    JMP .loop_0DE016                        ;$0DE05A |
 
-Return0DE05D:
+.Return0DE05D:
     RTS
 
 DATA_0DE05E:

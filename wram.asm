@@ -5,10 +5,14 @@
 ; Bank references
 !Bank_07 = $07
 !Bank_0C = $0C
+!Bank_0D = $0D
 !Bank_7E = $7E
 !Bank_7F = $7F
 
 ; Address references
+!Addr_9100 = $9100
+!Addr_B900 = $B900
+!Addr_BD00 = $BD00
 !Addr_C800 = $C800
 !Addr_F7DF = $F7DF
 
@@ -2344,6 +2348,8 @@ skip 2 ;done
 LevelModeSetting_1925: skip 1 ;done
 ; 7E1926 - 7E1927 unused
 skip 2 ;done
+
+CreditsBgPointer_1928:
 LevelLoadObject_1928: skip 1 ;done
 ; 7E1929 unused
 skip 1 ;done
