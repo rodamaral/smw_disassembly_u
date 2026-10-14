@@ -1,6 +1,6 @@
 ORG $008000
 
-reset_start:
+reset_start_008000:
     SEI                                     ;$008000 \ Disable IRQ
     STZ.w $4200                             ;$008001 | Disable IRQ, NMI and joypad reading
     STZ.w $420C                             ;$008004 | Disable HDMA
@@ -188,7 +188,7 @@ upload_music_bank_3:
     STA.w $0002                             ;$008165 |
     BRA start_SPC_upload_00811D             ;$008168 /
 
-NMI_start:                                  ;        \
+NMI_start_00816A:                           ;        \
     SEI                                     ;$00816A | Disable interrupts to stop interrupting an interrupt
     PHP                                     ;$00816B |\
     REP #$30                                ;$00816C | | AXY->16, push pretty much everything(except direct page)
@@ -201,12 +201,11 @@ NMI_start:                                  ;        \
     SEP #$30                                ;$008174 | AXY->8
     LDA.w $4210                             ;$008176 | Read to clear the n flag
     LDA.w SPCIO2_1DFB                       ;$008179 |\ If playing a sound in $1DFB branch to keep playing
-    BNE .keep_playing                       ;$00817C |/
+    BNE +                                   ;$00817C |/
     LDY.w $2142                             ;$00817E |\ Check if $1DFF matches the current playing sound
     CPY.w LastUsedMusic_1DFF                ;$008181 | |
     BNE .sound_update                       ;$008184 |/
-.keep_playing                               ;        |
-    STA.w $2142                             ;$008186 |\ Keep the current sound playing
++   STA.w $2142                             ;$008186 |\ Keep the current sound playing
     STA.w LastUsedMusic_1DFF                ;$008189 | | Then mirror and clear $1DFB
     STZ.w SPCIO2_1DFB                       ;$00818C |/
 .sound_update                               ;        |
@@ -231,61 +230,61 @@ NMI_start:                                  ;        \
     LDA.b ColorAddition_44                  ;$0081C1 |\ Initial color addition settings
     STA.w $2130                             ;$0081C3 |/
     LDA.w IRQNMICommand_0D9B                ;$0081C6 |\ Check for a regular level
-    BPL .regular_level_NMI                  ;$0081C9 | |
-    JMP .mode_7_NMI                         ;$0081CB |/ Otherwise go to mode 7 routines
-.regular_level_NMI                          ;        |
-    LDA.b ColorSettings_40                  ;$0081CE |\ Set up color math on all layers in $40 but three
+    BPL +                                   ;$0081C9 | |
+    JMP .mode_7_NMI_0082C4                  ;$0081CB |/ Otherwise go to mode 7 routines
+
++   LDA.b ColorSettings_40                  ;$0081CE |\ Set up color math on all layers in $40 but three
     AND.b #$FB                              ;$0081D0 | |
     STA.w $2131                             ;$0081D2 |/
     LDA.b #$09                              ;$0081D5 |\ Mode 1 with layer 3 priority
     STA.w $2105                             ;$0081D7 |/
     LDA.b LagFlag_10                        ;$0081DA |\ If the game is not lagging skip to regular NMI
-    BEQ .no_lag                             ;$0081DC |/
+    BEQ +                                   ;$0081DC |/
     LDA.w IRQNMICommand_0D9B                ;$0081DE |\ Check if we are in a regular level
     LSR                                     ;$0081E1 | |
     BEQ .lagging_level_NMI                  ;$0081E2 | |
     JMP .lagging_OW_NMI                     ;$0081E4 |/ Otherwise process as the OW
-.no_lag                                     ;        |
-    INC.b LagFlag_10                        ;$0081E7 | Allow the game loop to run after NMI
+
++   INC.b LagFlag_10                        ;$0081E7 | Allow the game loop to run after NMI
     JSR upload_palette                      ;$0081E9 | Upload special and normal palettes
     LDA.w IRQNMICommand_0D9B                ;$0081EC |\ Separate the current level mode
     LSR                                     ;$0081EF |/
     BNE .OW_NMI                             ;$0081F0 | $0D9B was 02, run OW code
-    BCS .transition_NMI                     ;$0081F2 | $0D9B was 01(transition), Skip the status bar draw
+    BCS +                                   ;$0081F2 | $0D9B was 01(transition), Skip the status bar draw
     JSR draw_status_bar                     ;$0081F4 | Draw the status bar
-.transition_NMI                             ;        |
-    LDA.w CutsceneID_13C6                   ;$0081F7 |\ Skip the end credits code 
++   LDA.w CutsceneID_13C6                   ;$0081F7 |\ Skip the end credits code 
     CMP.b #!SceneCastle_08                  ;$0081FA | | if the current cutscene is not $08 (end credits)
-    BNE .not_end_credits                    ;$0081FC |/
+    BNE +                                   ;$0081FC |/
     LDA.w CreditsUpdateBG_1FFE              ;$0081FE |\ Skip updating the credits BG
     BEQ .draw_mario                         ;$008201 |/ If a new BG is not yet needed
     JSL DMA_credits_BG                      ;$008203 | Update the Credits BG
     BRA .draw_mario                         ;$008207 | Continue with NMI by drawing mario
-.not_end_credits                            ;        |
-    JSL generic_layer_1_and_2_upload        ;$008209 | Primary level data DMA
+
++   JSL generic_layer_1_and_2_upload        ;$008209 | Primary level data DMA
     LDA.w UploadMarioStart_143A             ;$00820D |\ Check if the transition screens need DMAed
-    BEQ .skip_transition_DMA                ;$008210 |/
+    BEQ +                                   ;$008210 |/
     JSR DMA_transition_screen               ;$008212 | DMA start/bonus/game over/time up transition screens
     BRA .skip_OW_NMI                        ;$008215 | Skip past regular and OW NMI
-.skip_transition_DMA                        ;        |
-    JSR DMA_animated_level_tiles            ;$008217 | DMA animated level tiles (plus animated palettes)
+
++   JSR DMA_animated_level_tiles            ;$008217 | DMA animated level tiles (plus animated palettes)
 .draw_mario                                 ;        |
     JSR restore_SP1_tiles                   ;$00821A | DMA $0BF6 to VRAM, redundant due to graphics upload
     JSR dynamic_sprite_DMA                  ;$00821D | DMA Mario/Yoshi/Vertical fireball
     BRA .skip_OW_NMI                        ;$008220 | Skip over a majority of the OW NMI
+
 .OW_NMI                                     ;        |
     LDA.w OWProcess_13D9                    ;$008222 |\ If not switching submaps, skip OW layer DMA
     CMP.b #!OwSubmap_0A                     ;$008225 | | and handle the regular OW routines
-    BNE .regular_OW_handle                  ;$008227 |/
+    BNE +                                   ;$008227 |/
     LDY.w OWSubmapSwapProcess_1DE8          ;$008229 |
     DEY                                     ;$00822C |\ If submap loading is finished, skip layer data DMA
     DEY                                     ;$00822D | | and handle the regular OW routines
     CPY.b #!SubmapUpdate_04                 ;$00822E | |
-    BCS .regular_OW_handle                  ;$008230 |/
+    BCS +                                   ;$008230 |/
     JSR DMA_OW_tilemap                      ;$008232 | OW layer 1 and 2 DMA
     BRA .regular_OW_bypass                  ;$008235 | Skip over various unneeded OW DMAs
-.regular_OW_handle                          ;        |
-    JSR DMA_animated_OW_tiles               ;$008237 | DMA animated OW tiles (plus animated palettes)
+
++   JSR DMA_animated_OW_tiles               ;$008237 | DMA animated OW tiles (plus animated palettes)
     JSR dynamic_sprite_DMA                  ;$00823A | DMA Mario/Yoshi/Vertical fireball
 .skip_OW_NMI:                               ;        |
     JSR _load_stripe_image_                 ;$00823D | Upload Stripe image data
@@ -318,12 +317,13 @@ NMI_start:                                  ;        \
     LDA.b #$81                              ;$00827A | Load Enable NMI and autojoy enabled
     LDY.w CutsceneID_13C6                   ;$00827C |\ Skip to NMI return if the credits are not playing
     CPY.b #!SceneCastle_08                  ;$00827F | |
-    BNE .NMI_return                         ;$008281 |/
+    BNE .NMI_return_0082A1                  ;$008281 |/
     LDY.w Brightness_0DAE                   ;$008283 |\ Set screen brightness from mirror
     STY.w $2100                             ;$008286 |/
     LDY.w HDMAEnable_0D9F                   ;$008289 |\ Enable HDMA channels
     STY.w $420C                             ;$00828C |/
     JMP IRQ_NMI_return                      ;$00828F | Finish off NMI
+
 .level_NMI_return                           ;        |
     LDY.b #$24                              ;$008292 | Load the V timer scanline
 .mode_7_NMI_return                          ;        |
@@ -332,7 +332,7 @@ NMI_start:                                  ;        \
     STZ.w $420A                             ;$00829A | Clear the V timer high byte
     STZ.b IRQType_11                        ;$00829D | Set IRQ id flag to 0 (IRQ #1)
     LDA.b #$A1                              ;$00829F | Load Enable NMI, vertical IRQ, and autojoy enabled
-.NMI_return                                 ;        |
+.NMI_return_0082A1                          ;        |
     STA.w $4200                             ;$0082A1 | Store NMI/IRQ/autojoy enabled status
     STZ.w $2111                             ;$0082A4 |\ Reset layer X three scroll position
     STZ.w $2111                             ;$0082A7 |/
@@ -350,31 +350,30 @@ NMI_start:                                  ;        \
     PLP                                     ;$0082C2 |/
     RTI                                     ;$0082C3 / Return from NMI
 
-.mode_7_NMI                                 ;        \ 
+.mode_7_NMI_0082C4                          ;        \ 
     LDA.b LagFlag_10                        ;$0082C4 |\ if mode 7 is lagging branch
-    BNE .lagging_mode_7_NMI                 ;$0082C6 | |
+    BNE ..lagging_mode_7_NMI                ;$0082C6 | |
     INC.b LagFlag_10                        ;$0082C8 |/ Otherwise increment the lag counter
     LDA.w UploadMarioStart_143A             ;$0082CA |\ Check if the transition screens need DMAed
-    BEQ .skip_mode_7_transition_DMA         ;$0082CD |/
+    BEQ +                                   ;$0082CD |/
     JSR DMA_transition_screen               ;$0082CF | DMA start/bonus/game over/time up transition screens
-    BRA .draw_status_bar                    ;$0082D2 | Skip dynamic graphics DMA
-.skip_mode_7_transition_DMA                 ;        |
-    JSR restore_SP1_tiles                   ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
+    BRA ..draw_status_bar                   ;$0082D2 | Skip dynamic graphics DMA
+
++   JSR restore_SP1_tiles                   ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
     JSR dynamic_sprite_DMA                  ;$0082D7 | DMA Mario/Yoshi/Vertical fireball graphics
-    BIT.w IRQNMICommand_0D9B                ;$0082DA |\ If we are in a platform boss fight
-    BVC .draw_status_bar                    ;$0082DD |/ Draw the status bar
+    BIT.w IRQNMICommand_0D9B                ;$0082DA |\ branch if we are in a platform boss fight
+    BVC ..draw_status_bar                   ;$0082DD |/
     JSR DMA_mode_7_animations               ;$0082DF | <--some animation stuff, investigate more
-    LDA.w IRQNMICommand_0D9B                ;$0082E2 |\ If we are fighting bowser, don't draw the status bar
-    LSR                                     ;$0082E5 | |
-    BCS .skip_status_bar                    ;$0082E6 |/
-.draw_status_bar                            ;        |
-    JSR draw_status_bar                     ;$0082E8 | Draw the status bar
-.skip_status_bar                            ;        |
-    JSR upload_palette                      ;$0082ED | Upload any pending palette changes
+    LDA.w IRQNMICommand_0D9B                ;$0082E2 |
+    LSR                                     ;$0082E5 | If we are fighting bowser, don't draw the status bar
+    BCS +                                   ;$0082E6 |\
+..draw_status_bar                           ;        ||
+    JSR draw_status_bar                     ;$0082E8 |/
++   JSR upload_palette                      ;$0082ED | Upload any pending palette changes
     JSR _load_stripe_image_                 ;$0082EE | Load stripe images from $12
     JSR DMA_OAM                             ;$0082F1 | DMA sprite tiles to OAM
     JSR update_controllers                  ;$0082F4 | Update the controller input
-.lagging_mode_7_NMI                         ;        |
+..lagging_mode_7_NMI                        ;        |
     LDA.b #$09                              ;$0082F7 |
     STA.w $2105                             ;$0082F9 |
     LDA.b Mode7CenterX_2A                   ;$0082FC |\ Set the mode 7 center X position
@@ -408,30 +407,29 @@ NMI_start:                                  ;        \
     LDA.b Mode7ParamD_34+1                  ;$00833D | |
     STA.w $211E                             ;$00833F |/
     JSR mode_7_static_BG_scroll             ;$008342 |
-    LDA.w IRQNMICommand_0D9B                ;$008345 |\ If we are not at bowser there are a few extra
-    LSR                                     ;$008348 | | Items we still need to process otherwise
-    BCC .skip_bowser                        ;$008349 |/ We can finish off NMI
-    LDA.w Brightness_0DAE                   ;$00834B |\ Set the screen brightness from $0DAE
-    STA.w $2100                             ;$00834E |/
-    LDA.w HDMAEnable_0D9F                   ;$008351 |\ Enable HDMA channels
-    STA.w $420C                             ;$008354 |/
-    LDA.b #$81                              ;$008357 | Enable NMI and autojoy
-    JMP mode_7_scroll                       ;$008359 | Set the mode 7 scroll values -- statusbar unused
-.skip_bowser                                ;        |
-    LDY.b #$24                              ;$00835C | Load the VTimer trigger
+    LDA.w IRQNMICommand_0D9B                ;$008345 | If we are not at bowser there are a few extra
+    LSR                                     ;$008348 | Items we still need to process otherwise
+    BCC +                                   ;$008349 |\ We can finish off NMI
+    LDA.w Brightness_0DAE                   ;$00834B ||\ Set the screen brightness from $0DAE
+    STA.w $2100                             ;$00834E ||/
+    LDA.w HDMAEnable_0D9F                   ;$008351 ||\ Enable HDMA channels
+    STA.w $420C                             ;$008354 ||/
+    LDA.b #$81                              ;$008357 || Enable NMI and autojoy
+    JMP mode_7_scroll                       ;$008359 |/ Set the mode 7 scroll values -- statusbar unused
+
++   LDY.b #$24                              ;$00835C | Load the VTimer trigger
     BIT.w IRQNMICommand_0D9B                ;$00835E |\ If we are running in the platform boss mode
-    BVC .skip_vtimer_change                 ;$008361 |/ skip to the end of NMI
+    BVC +                                   ;$008361 |/ skip to the end of NMI
     LDA.w ActiveBoss_13FC                   ;$008363 |\ If we are fighting Morton or Roy
     ASL                                     ;$008366 | |
     TAX                                     ;$008367 | |
     LDA.w boss_ceiling_height,X             ;$008368 | | Check against the boss ceiling height
     CMP.b #$2A                              ;$00836B | | Instead of something simple like CMP #$02 : BCC
-    BNE .skip_vtimer_change                 ;$00836D |/ Skip the VTimer change
+    BNE +                                   ;$00836D |/ Skip the VTimer change
     LDY.b #$2D                              ;$00836F | Load alternative VTimer trigger position
-.skip_vtimer_change                         ;        |
-    JMP .mode_7_NMI_return                  ;$008371 / Finish off mode 7 NMI
++   JMP .mode_7_NMI_return                  ;$008371 / Finish off mode 7 NMI
 
-IRQ_start:                                  ;        \
+IRQ_start_008374:                           ;        \
     SEI                                     ;$008374 | Disable interrupts to stop interrupting an interrupt
     PHP                                     ;$008375 |\
     REP #$30                                ;$008376 | | AXY->16, push pretty much everything(except direct page)
@@ -471,7 +469,6 @@ IRQ_return:                                 ;        |
     PLX                                     ;$0083B6 | |
     PLA                                     ;$0083B7 | |
     PLP                                     ;$0083B8 |/
-.empty_handler:                             ;        |
     RTI                                     ;$0083B9 / Return from NMI
 
 mode_7_IRQ:                                 ;        \ 
@@ -13986,13 +13983,13 @@ CODE_00FF61:
     dw $82C3                                ; | Native COP vector
     dw $FFFF                                ; | Native BRK vector
     dw $82C3                                ; | Native ABORT vector
-    dw NMI_start                            ; | Native NMI vector
+    dw NMI_start_00816A                     ; | Native NMI vector
     dw $8000                                ; | Native RESET vector(unused)
-    dw IRQ_start                            ; | Native IRQ vector
+    dw IRQ_start_008374                     ; | Native IRQ vector
     db $FF,$FF,$FF,$FF                      ; |
     dw $82C3                                ; | Emulation COP vector
     dw $82C3                                ; | Emulation BRK vector(unused)
     dw $82C3                                ; | Emulation ABORT vector
     dw $82C3                                ; | Emulation NMI vector
-    dw reset_start                          ; | Emulation RESET vector
+    dw reset_start_008000                   ; | Emulation RESET vector
     dw $82C3                                ;/ Emulation IRQ and BRK vector
