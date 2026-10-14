@@ -966,117 +966,117 @@ execute_level_mode_setting_05881A:
     LDA.w LevelModeSetting_1925             ;$05881C |
     JSL execute_pointer_long_0086FA         ;$05881F |
 
-PtrsLong058823:
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl CODE_058A9B
-    dl CODE_058A9B
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl CODE_058A9B
-    dl CODE_058A9B
-    dl Return058A9A
-    dl CODE_058A9B
-    dl Return058A9A
-    dl CODE_0589CE
-    dl CODE_058A9B
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl Return058A9A
-    dl CODE_0589CE
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl CODE_0589CE
-    dl CODE_0589CE
+.PtrsLong058823:
+    dl CODE_0589CE                          ;$058823 | 00
+    dl CODE_0589CE                          ;$058826 | 01
+    dl CODE_0589CE                          ;$058829 | 02
+    dl CODE_058A9B                          ;$05882C | 03
+    dl CODE_058A9B                          ;$05882F | 04
+    dl CODE_0589CE                          ;$058832 | 05
+    dl CODE_0589CE                          ;$058835 | 06
+    dl CODE_058A9B                          ;$058838 | 07
+    dl CODE_058A9B                          ;$05883B | 08
+    dl Return058A9A                         ;$05883E | 09
+    dl CODE_058A9B                          ;$058841 | 0A
+    dl Return058A9A                         ;$058844 | 0B
+    dl CODE_0589CE                          ;$058847 | 0C
+    dl CODE_058A9B                          ;$05884A | 0D
+    dl CODE_0589CE                          ;$05884D | 0E
+    dl CODE_0589CE                          ;$058850 | 0F
+    dl Return058A9A                         ;$058853 | 10
+    dl CODE_0589CE                          ;$058856 | 11
+    dl Return058A9A                         ;$058859 | 12
+    dl Return058A9A                         ;$05885C | 13
+    dl Return058A9A                         ;$05885F | 14
+    dl Return058A9A                         ;$058862 | 15
+    dl Return058A9A                         ;$058865 | 16
+    dl Return058A9A                         ;$058868 | 17
+    dl Return058A9A                         ;$05886B | 18
+    dl Return058A9A                         ;$05886E | 19
+    dl Return058A9A                         ;$058871 | 1A
+    dl Return058A9A                         ;$058874 | 1B
+    dl Return058A9A                         ;$058877 | 1C
+    dl Return058A9A                         ;$05887A | 1D
+    dl CODE_0589CE                          ;$05887D | 1E
+    dl CODE_0589CE                          ;$058880 | 1F
 
 execute_level_mode_setting_058883:
     SEP #$30                                ;$058883 | AXY->8
     LDA.w LevelModeSetting_1925             ;$058885 |
     JSL execute_pointer_long_0086FA         ;$058888 |
 
-PtrsLong05888C:
-    dl Return058C70
-    dl CODE_058B8D
-    dl CODE_058B8D
-    dl CODE_058B8D
-    dl CODE_058B8D
-    dl CODE_058C71
-    dl CODE_058C71
-    dl CODE_058C71
-    dl CODE_058C71
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl CODE_058B8D
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl CODE_058B8D
+.PtrsLong05888C:
+    dl Return058C70                         ;$05888C | 00
+    dl CODE_058B8D                          ;$05888F | 01
+    dl CODE_058B8D                          ;$058892 | 02
+    dl CODE_058B8D                          ;$058895 | 03
+    dl CODE_058B8D                          ;$058898 | 04
+    dl CODE_058C71                          ;$05889B | 05
+    dl CODE_058C71                          ;$05889E | 06
+    dl CODE_058C71                          ;$0588A1 | 07
+    dl CODE_058C71                          ;$0588A4 | 08
+    dl Return058C70                         ;$0588A7 | 09
+    dl Return058C70                         ;$0588AA | 0A
+    dl Return058C70                         ;$0588AD | 0B
+    dl Return058C70                         ;$0588B0 | 0C
+    dl Return058C70                         ;$0588B3 | 0D
+    dl Return058C70                         ;$0588B6 | 0E
+    dl CODE_058B8D                          ;$0588B9 | 0F
+    dl Return058C70                         ;$0588BC | 10
+    dl Return058C70                         ;$0588BF | 11
+    dl Return058C70                         ;$0588C2 | 12
+    dl Return058C70                         ;$0588C5 | 13
+    dl Return058C70                         ;$0588C8 | 14
+    dl Return058C70                         ;$0588CB | 15
+    dl Return058C70                         ;$0588CE | 16
+    dl Return058C70                         ;$0588D1 | 17
+    dl Return058C70                         ;$0588D4 | 18
+    dl Return058C70                         ;$0588D7 | 19
+    dl Return058C70                         ;$0588DA | 1A
+    dl Return058C70                         ;$0588DD | 1B
+    dl Return058C70                         ;$0588E0 | 1C
+    dl Return058C70                         ;$0588E3 | 1D
+    dl Return058C70                         ;$0588E6 | 1E
+    dl CODE_058B8D                          ;$0588E9 | 1F
 
 CODE_0588EC:
     SEP #$30                                ;$0588EC | AXY->8
     LDA.w LevelModeSetting_1925             ;$0588EE |
     JSL execute_pointer_long_0086FA         ;$0588F1 |
 
-PtrsLong0588F5:
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl CODE_058A9B
-    dl CODE_058A9B
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl CODE_058A9B
-    dl CODE_058A9B
-    dl Return058A9A
-    dl CODE_058A9B
-    dl Return058A9A
-    dl CODE_0589CE
-    dl CODE_058A9B
-    dl CODE_0589CE
-    dl CODE_0589CE
-    dl Return058A9A
-    dl CODE_0589CE
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl Return058A9A
-    dl CODE_0589CE
-    dl CODE_0589CE
+.PtrsLong0588F5:
+    dl CODE_0589CE                          ;$0588F5 | 00
+    dl CODE_0589CE                          ;$0588F8 | 01
+    dl CODE_0589CE                          ;$0588FB | 02
+    dl CODE_058A9B                          ;$0588FE | 03
+    dl CODE_058A9B                          ;$058901 | 04
+    dl CODE_0589CE                          ;$058904 | 05
+    dl CODE_0589CE                          ;$058907 | 06
+    dl CODE_058A9B                          ;$05890A | 07
+    dl CODE_058A9B                          ;$05890D | 08
+    dl Return058A9A                         ;$058910 | 09
+    dl CODE_058A9B                          ;$058913 | 0A
+    dl Return058A9A                         ;$058916 | 0B
+    dl CODE_0589CE                          ;$058919 | 0C
+    dl CODE_058A9B                          ;$05891C | 0D
+    dl CODE_0589CE                          ;$05891F | 0E
+    dl CODE_0589CE                          ;$058922 | 0F
+    dl Return058A9A                         ;$058925 | 10
+    dl CODE_0589CE                          ;$058928 | 11
+    dl Return058A9A                         ;$05892B | 12
+    dl Return058A9A                         ;$05892E | 13
+    dl Return058A9A                         ;$058931 | 14
+    dl Return058A9A                         ;$058934 | 15
+    dl Return058A9A                         ;$058937 | 16
+    dl Return058A9A                         ;$05893A | 17
+    dl Return058A9A                         ;$05893D | 18
+    dl Return058A9A                         ;$058940 | 19
+    dl Return058A9A                         ;$058943 | 1A
+    dl Return058A9A                         ;$058946 | 1B
+    dl Return058A9A                         ;$058949 | 1C
+    dl Return058A9A                         ;$05894C | 1D
+    dl CODE_0589CE                          ;$05894F | 1E
+    dl CODE_0589CE                          ;$058952 | 1F
 
 CODE_058955:
     SEP #$30                                ;$058955 | AXY->8
@@ -1084,38 +1084,38 @@ CODE_058955:
     JSL execute_pointer_long_0086FA         ;$05895A |
 
 PtrsLong05895E:
-    dl CODE_058D7A
-    dl CODE_058B8D
-    dl CODE_058B8D
-    dl CODE_058B8D
-    dl CODE_058B8D
-    dl CODE_058C71
-    dl CODE_058C71
-    dl CODE_058C71
-    dl CODE_058C71
-    dl Return058C70
-    dl CODE_058D7A
-    dl Return058C70
-    dl CODE_058D7A
-    dl CODE_058D7A
-    dl CODE_058D7A
-    dl CODE_058B8D
-    dl Return058C70
-    dl CODE_058D7A
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl Return058C70
-    dl CODE_058D7A
-    dl CODE_058B8D
+    dl CODE_058D7A                          ;$05895E | 00
+    dl CODE_058B8D                          ;$058961 | 01
+    dl CODE_058B8D                          ;$058964 | 02
+    dl CODE_058B8D                          ;$058967 | 03
+    dl CODE_058B8D                          ;$05896A | 04
+    dl CODE_058C71                          ;$05896D | 05
+    dl CODE_058C71                          ;$058970 | 06
+    dl CODE_058C71                          ;$058973 | 07
+    dl CODE_058C71                          ;$058976 | 08
+    dl Return058C70                         ;$058979 | 09
+    dl CODE_058D7A                          ;$05897C | 0A
+    dl Return058C70                         ;$05897F | 0B
+    dl CODE_058D7A                          ;$058982 | 0C
+    dl CODE_058D7A                          ;$058985 | 0D
+    dl CODE_058D7A                          ;$058988 | 0E
+    dl CODE_058B8D                          ;$05898B | 0F
+    dl Return058C70                         ;$05898E | 10
+    dl CODE_058D7A                          ;$058991 | 11
+    dl Return058C70                         ;$058994 | 12
+    dl Return058C70                         ;$058997 | 13
+    dl Return058C70                         ;$05899A | 14
+    dl Return058C70                         ;$05899D | 15
+    dl Return058C70                         ;$0589A0 | 16
+    dl Return058C70                         ;$0589A3 | 17
+    dl Return058C70                         ;$0589A6 | 18
+    dl Return058C70                         ;$0589A9 | 19
+    dl Return058C70                         ;$0589AC | 1A
+    dl Return058C70                         ;$0589AF | 1B
+    dl Return058C70                         ;$0589B2 | 1C
+    dl Return058C70                         ;$0589B5 | 1D
+    dl CODE_058D7A                          ;$0589B8 | 1E
+    dl CODE_058B8D                          ;$0589BB | 1F
 
 DATA_0589BE:
     db $80,$00,$40,$00,$20,$00,$10,$00
@@ -3663,22 +3663,22 @@ execute_scroll_layer_1_05BC76:
     BEQ Return05BC49                        ;$05BC81 |
     JSL execute_pointer_0086DF              ;$05BC83 |
 
-Ptrs05BC87:
-    dw CODE_05C04D
-    dw CODE_05C04D
-    dw Return05BC49
-    dw Return05BC49
-    dw ADDR_05C283
-    dw ADDR_05C69E
-    dw Return05BC49
-    dw Return05BFF5
-    dw CODE_05C51F
-    dw Return05BC49
-    dw ADDR_05C32E
-    dw CODE_05C727
-    dw CODE_05C787
-    dw Return05BC49
-    dw Return05BC49
+.Ptrs05BC87:
+    dw CODE_05C04D                          ;$05BC87 | 0 None
+    dw CODE_05C04D                          ;$05BC89 | 1 Auto-scroll 1, 2, 3, 4 (Sprite E8)
+    dw Return05BC49                         ;$05BC8B | 2 Layer 2 smash 1, 2, 3 (Sprite E9)
+    dw Return05BC49                         ;$05BC8D | 3 Layer 2 scroll 1, 2, 3, 4 (Sprite EA)
+    dw ADDR_05C283                          ;$05BC8F | 4 Unused scroll command (Sprite EB)
+    dw ADDR_05C69E                          ;$05BC91 | 5 Unused scroll command (Sprite EC)
+    dw Return05BC49                         ;$05BC93 | 6 Layer 2 falls (Sprite ED)
+    dw Return05BFF5                         ;$05BC95 | 7 Unused scroll command (Sprite EE)
+    dw CODE_05C51F                          ;$05BC97 | 8 Layer 2 scroll S/L (Sprite EF)
+    dw Return05BC49                         ;$05BC99 | 9 Unused scroll command (Sprite F0)
+    dw ADDR_05C32E                          ;$05BC9B | A Unused scroll command (Sprite F1)
+    dw CODE_05C727                          ;$05BC9D | B Layer 2 On/Off switch controlled (Sprite F2)
+    dw CODE_05C787                          ;$05BC9E | C Auto-scroll level (Sprite F3)
+    dw Return05BC49                         ;$05BCA1 | D Fast background scroll (Sprite F4)
+    dw Return05BC49                         ;$05BCA3 | E Layer 2 sink/rise when touched (Sprite F5)
 
 execute_scroll_layer_2_05BCA5:
     LDA.b #$04
@@ -3689,22 +3689,22 @@ execute_scroll_layer_2_05BCA5:
     BNE Return05BC49                        ;$05BCB2 |
     JSL execute_pointer_0086DF              ;$05BCB4 |
 
-Ptrs05BCB8:
-    dw CODE_05C04D
-    dw CODE_05C198
-    dw CODE_05C955
-    dw CODE_05C5BB
-    dw ADDR_05C283
-    dw Return05BC49
-    dw ADDR_05C659
-    dw Return05BFF5
-    dw CODE_05C51F
-    dw CODE_05C7C1
-    dw ADDR_05C32E
-    dw CODE_05C727
-    dw CODE_05C787
-    dw CODE_05C7BC
-    dw CODE_05C81C
+.Ptrs05BCB8:
+    dw CODE_05C04D                          ;$05BCB8 | 0 TODO: determine these actions
+    dw CODE_05C198                          ;$05BCBA | 1 
+    dw CODE_05C955                          ;$05BCBC | 2 
+    dw CODE_05C5BB                          ;$05BCBE | 3 
+    dw ADDR_05C283                          ;$05BCC0 | 4 
+    dw Return05BC49                         ;$05BCC2 | 5 
+    dw ADDR_05C659                          ;$05BCC4 | 6 
+    dw Return05BFF5                         ;$05BCC6 | 7 
+    dw CODE_05C51F                          ;$05BCC8 | 8 
+    dw CODE_05C7C1                          ;$05BCCA | 9 
+    dw ADDR_05C32E                          ;$05BCCC | A 
+    dw CODE_05C727                          ;$05BCCE | B 
+    dw CODE_05C787                          ;$05BCD0 | C 
+    dw CODE_05C7BC                          ;$05BCD2 | D 
+    dw CODE_05C81C                          ;$05BCD4 | E 
 
 CODE_05BCD6:
     PHB
@@ -3722,44 +3722,44 @@ CODE_05BCE9:
     LDA.w Layer1ScrollCmd_143E
     JSL execute_pointer_0086DF              ;$05BCEC |
 
-Ptrs05BCF0:
-    dw CODE_05BD36
-    dw CODE_05BD36
-    dw CODE_05BF6A
-    dw CODE_05BF0A
-    dw ADDR_05BDDD
-    dw ADDR_05BFBA
-    dw ADDR_05BF97
-    dw Return05BD35
-    dw CODE_05BEA6
-    dw Return05BC49
-    dw ADDR_05BE3A
-    dw CODE_05BFF6
-    dw CODE_05C005
-    dw CODE_05C01A
-    dw CODE_05C036
+.Ptrs05BCF0:
+    dw CODE_05BD36                          ;$05BCF0 | 0 None
+    dw CODE_05BD36                          ;$05BCF2 | 1 Auto-scroll 1, 2, 3, 4 (Sprite E8)
+    dw CODE_05BF6A                          ;$05BCF4 | 2 Layer 2 smash 1, 2, 3 (Sprite E9)
+    dw CODE_05BF0A                          ;$05BCF6 | 3 Layer 2 scroll 1, 2, 3, 4 (Sprite EA)
+    dw ADDR_05BDDD                          ;$05BCF8 | 4 Unused scroll command (Sprite EB)
+    dw ADDR_05BFBA                          ;$05BCFA | 5 Unused scroll command (Sprite EC)
+    dw ADDR_05BF97                          ;$05BCFC | 6 Layer 2 falls (Sprite ED)
+    dw Return05BD35                         ;$05BCFE | 7 Unused scroll command (Sprite EE)
+    dw CODE_05BEA6                          ;$05BD00 | 8 Layer 2 scroll S/L (Sprite EF)
+    dw Return05BC49                         ;$05BD02 | 9 Unused scroll command (Sprite F0)
+    dw ADDR_05BE3A                          ;$05BD04 | A Unused scroll command (Sprite F1)
+    dw CODE_05BFF6                          ;$05BD06 | B Layer 2 On/Off switch controlled (Sprite F2)
+    dw CODE_05C005                          ;$05BD08 | C Auto-scroll level (Sprite F3)
+    dw CODE_05C01A                          ;$05BD0A | D Fast background scroll (Sprite F4)
+    dw CODE_05C036                          ;$05BD0C | E Layer 2 sink/rise when touched (Sprite F5)
 
 CODE_05BD0E:
     LDA.w Layer2ScrollCmd_143F
     BEQ Return05BD35                        ;$05BD11 |
     JSL execute_pointer_0086DF              ;$05BD13 |
 
-Ptrs05BD17:
-    dw CODE_05BD4C
-    dw CODE_05BD4C
-    dw Return05BC49
-    dw CODE_05BF20
-    dw ADDR_05BDF0
-    dw Return05BC49
-    dw Return05BC49
-    dw Return05BD35
-    dw CODE_05BEC6
-    dw CODE_05C022
-    dw ADDR_05BE4D
-    dw Return05BC49
-    dw Return05BC49
-    dw Return05BC49
-    dw Return05BC49
+.Ptrs05BD17:
+    dw CODE_05BD4C                          ;$05BD17 | 0 TODO: determine these actions 
+    dw CODE_05BD4C                          ;$05BD19 | 1  
+    dw Return05BC49                         ;$05BD1B | 2  
+    dw CODE_05BF20                          ;$05BD1D | 3  
+    dw ADDR_05BDF0                          ;$05BD1F | 4  
+    dw Return05BC49                         ;$05BD21 | 5  
+    dw Return05BC49                         ;$05BD23 | 6  
+    dw Return05BD35                         ;$05BD25 | 7  
+    dw CODE_05BEC6                          ;$05BD27 | 8  
+    dw CODE_05C022                          ;$05BD29 | 9  
+    dw ADDR_05BE4D                          ;$05BD2B | A  
+    dw Return05BC49                         ;$05BD2D | B  
+    dw Return05BC49                         ;$05BD2F | C  
+    dw Return05BC49                         ;$05BD31 | D  
+    dw Return05BC49                         ;$05BD33 | E  
 
 Return05BD35:
     RTS
@@ -5551,14 +5551,14 @@ CODE_05CBFF:
     RTL                                     ;$05CC06 |
 
 CODE_05CC07:
-    LDA.w OWProcess_13D9
+    LDA.w EndMarchPhase_13D9
     JSL execute_pointer_0086DF              ;$05CC0A |
 
-Ptrs05CC0E:
-    dw CODE_05CC66
-    dw CODE_05CD76
-    dw CODE_05CECA
-    dw Return05CFE9
+.Ptrs05CC0E:
+    dw CODE_05CC66                          ;$05CC0E | 0 Show up the course clear text
+    dw CODE_05CD76                          ;$05CC10 | 1 Store bonus star text (if applicable), bonus stars not decrementing yet
+    dw CODE_05CECA                          ;$05CC12 | 2 Count down timer/convert to score, add up bonus stars to total
+    dw Return05CFE9                         ;$05CC14 | 3 Do nothing
 
 DATA_05CC16:
     db $51,$0D,$00,$09,$30,$28,$31,$28
@@ -6736,10 +6736,10 @@ CODE_05DAEF:
     ROL                                     ;$05DAFA |
     JSL execute_pointer_long_0086FA         ;$05DAFB |
 
-PtrsLong05DAFF:
-    dl CODE_05DB3E
-    dl CODE_05DB6E
-    dl CODE_05DB82
+.PtrsLong05DAFF:
+    dl CODE_05DB3E                          ;$05DAFF | 0
+    dl CODE_05DB6E                          ;$05DB02 | 1
+    dl CODE_05DB82                          ;$05DB05 | 2
 
 ChocIsld2Layer1:
     dw DATA_06EC24

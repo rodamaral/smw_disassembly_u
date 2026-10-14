@@ -1614,12 +1614,12 @@ CODE_0CA1D4:
     LDA.w Layer1ScrollType_1442             ;$0CA1D7 |
     JSL execute_pointer_long_0086FA         ;$0CA1DA |
 
-PtrsLong0CA1DE:
-    dl CODE_0CA1ED
-    dl CODE_0CA43C
-    dl CODE_0CA532
-    dl CODE_0CA65B
-    dl CODE_0CA6B0
+.PtrsLong0CA1DE:
+    dl CODE_0CA1ED                          ;$0CA1DE | 0 Player walks in and starts hitting the castle
+    dl CODE_0CA43C                          ;$0CA1E1 | 1 The frame the player lands on top of the castle
+    dl CODE_0CA532                          ;$0CA1E4 | 2 Castle starts falling
+    dl CODE_0CA65B                          ;$0CA1E7 | 3 The player moves the middle of the screen and sighs
+    dl CODE_0CA6B0                          ;$0CA1EA | 4 Rest of sequence
 
 CODE_0CA1ED:
     JSR CODE_0CA315
@@ -4247,129 +4247,125 @@ CODE_0CC98C:
     JSL execute_pointer_0086DF              ;$0CC9A1 |
 
 .cutscene_pointers_0CC9A5:
-    dw CODE_0CC9B3
-    dw CODE_0CC9CC
-    dw CODE_0CCA2F
-    dw CODE_0CCA04
-    dw CODE_0CC9E0
-    dw CODE_0CCA51
-    dw CODE_0CCA72
+    dw .castle1_0CC9B3                      ;$0CC9A5 | 0 Castle #1
+    dw .castle2_0CC9CC                      ;$0CC9A7 | 1 Castle #2
+    dw .castle3_0CCA2F                      ;$0CC9A9 | 2 Castle #3
+    dw .castle4_0CCA04                      ;$0CC9AB | 3 Castle #4
+    dw .castle5_0CC9E0                      ;$0CC9AD | 4 Castle #5
+    dw .castle6_0CCA51                      ;$0CC9AF | 5 Castle #6
+    dw .castle7_0CCA72                      ;$0CC9B1 | 6 Castle #7
 
-CODE_0CC9B3:
+.castle1_0CC9B3:
     JSR CODE_0CCB5B
     JSR CODE_0CCACE                         ;$0CC9B6 |
     LDA.w Layer1ScrollType_1442             ;$0CC9B9 |
     JSL execute_pointer_0086DF              ;$0CC9BC |
 
-Ptrs0CC9C0:
-    dw CODE_0CCB1C
-    dw CODE_0CD295
-    dw CODE_0CCC51
-    dw CODE_0CD2B2
-    dw CODE_0CCD23
-    dw CODE_0CCFDE
+..Ptrs0CC9C0:
+    dw CODE_0CCB1C                          ;$0CC9C0 | 0 Player walks in, hits the switch and the fuse goes down
+    dw CODE_0CD295                          ;$0CC9C2 | 1 The frame the fuse hits the castle
+    dw CODE_0CCC51                          ;$0CC9C4 | 2 "BOMB"
+    dw CODE_0CD2B2                          ;$0CC9C6 | 3 The frame "BOMB" stops
+    dw CODE_0CCD23                          ;$0CC9C8 | 4 Castle starts falling
+    dw CODE_0CCFDE                          ;$0CC9CA | 5 Rest of sequence
 
-CODE_0CC9CC:
+.castle2_0CC9CC:
     JSR CODE_0CCACE
     LDA.w Layer1ScrollType_1442             ;$0CC9CF |
     JSL execute_pointer_0086DF              ;$0CC9D2 |
 
-Ptrs0CC9D6:
-    dw CODE_0CD003
-    dw CODE_0CD2B2
-    dw CODE_0CCD23
-    dw CODE_0CD557
-    dw CODE_0CCFDE
+..Ptrs0CC9D6:
+    dw CODE_0CD003                          ;$0CC9D6 | 0 Player walks in and starts hitting the castle
+    dw CODE_0CD2B2                          ;$0CC9D8 | 1 The frame the player lands on top of the castle
+    dw CODE_0CCD23                          ;$0CC9DA | 2 Castle starts falling
+    dw CODE_0CD557                          ;$0CC9DC | 3 The player moves the middle of the screen and sighs
+    dw CODE_0CCFDE                          ;$0CC9DE | 4 Rest of sequence
 
-CODE_0CC9E0:
+.castle5_0CC9E0:
     JSR CODE_0CCB5B
     JSR CODE_0CCACE                         ;$0CC9E3 |
     JSR CODE_0CD4F8                         ;$0CC9E6 |
     LDA.w Layer1ScrollType_1442             ;$0CC9E9 |
     JSL execute_pointer_0086DF              ;$0CC9EC |
 
-Ptrs0CC9F0:
-    dw CODE_0CCB1C
-    dw CODE_0CD2D0
-    dw CODE_0CCF72
-    dw CODE_0CCFC5
-    dw CODE_0CD295
-    dw CODE_0CCC51
-    dw CODE_0CD2B2
-    dw CODE_0CCD23
-    dw CODE_0CCFF7
-    dw CODE_0CCFDE
+..Ptrs0CC9F0:
+    dw CODE_0CCB1C                          ;$0CC9F0 | 0 Player walks in, hits the switch and the fuse goes down
+    dw CODE_0CD2D0                          ;$0CC9F2 | 1 The frame the fuse hits the castle
+    dw CODE_0CCF72                          ;$0CC9F4 | 2 The 'pop' from the bomb doing nothing
+    dw CODE_0CCFC5                          ;$0CC9F6 | 3 The player moving forward confused to investigate
+    dw CODE_0CD295                          ;$0CC9F8 | 4 The frame before "BOMB" really starts
+    dw CODE_0CCC51                          ;$0CC9FA | 5 "BOMB"
+    dw CODE_0CD2B2                          ;$0CC9FC | 6 The frame "BOMB" stops
+    dw CODE_0CCD23                          ;$0CC9FE | 7 Castle starts falling
+    dw CODE_0CCFF7                          ;$0CCA00 | 8 The frame the castle finishes falling
+    dw CODE_0CCFDE                          ;$0CCA02 | 9 Rest of sequence
 
-CODE_0CCA04:
+.castle4_0CCA04:
     JSR CODE_0CCB5B
     LDA.w Layer1ScrollType_1442             ;$0CCA07 |
-    BNE CODE_0CCA11                         ;$0CCA0A |
-    LDY.b #$04                              ;$0CCA0C |
-    STY.w Layer2ScrollTimer_1445            ;$0CCA0E |
-CODE_0CCA11:
-    CMP.b #$07
-    BNE CODE_0CCA18                         ;$0CCA13 |
-    JSR CODE_0CCF49                         ;$0CCA15 |
-CODE_0CCA18:
-    LDA.w Layer1ScrollType_1442
+    BNE +                                   ;$0CCA0A |\
+    LDY.b #$04                              ;$0CCA0C ||
+    STY.w Layer2ScrollTimer_1445            ;$0CCA0E |/
++   CMP.b #$07                              ;$0CCA11 |
+    BNE +                                   ;$0CCA13 |\
+    JSR CODE_0CCF49                         ;$0CCA15 |/
++   LDA.w Layer1ScrollType_1442             ;$0CCA18 |
     JSL execute_pointer_0086DF              ;$0CCA1B |
 
-Ptrs0CCA1F:
-    dw CODE_0CCB1C
-    dw CODE_0CD295
-    dw CODE_0CCC51
-    dw CODE_0CD2BD
-    dw CODE_0CCDA1
-    dw CODE_0CD2E6
-    dw CODE_0CCEE2
-    dw CODE_0CCFDE
+..Ptrs0CCA1F:
+    dw CODE_0CCB1C                          ;$0CCA1F | 0 Player walks in, hits the switch and the fuse goes down
+    dw CODE_0CD295                          ;$0CCA21 | 1 The frame the fuse hits the castle
+    dw CODE_0CCC51                          ;$0CCA23 | 2 "BOMB"
+    dw CODE_0CD2BD                          ;$0CCA25 | 3 The Frame "BOMB" stops before the castle launches
+    dw CODE_0CCDA1                          ;$0CCA27 | 4 The castle takes off like a rocket
+    dw CODE_0CD2E6                          ;$0CCA29 | 5 The player looks back towards the hill
+    dw CODE_0CCEE2                          ;$0CCA2B | 6 The castle falls towards the hill
+    dw CODE_0CCFDE                          ;$0CCA2D | 7 Rest of sequence
 
-CODE_0CCA2F:
+.castle3_0CCA2F:
     JSR CODE_0CD65B
     JSR CODE_0CCACE                         ;$0CCA32 |
     LDA.w Layer1ScrollType_1442             ;$0CCA35 |
     CMP.b #$03                              ;$0CCA38 |
-    BEQ CODE_0CCA3F                         ;$0CCA3A |
-    JSR CODE_0CD3A6                         ;$0CCA3C |
-CODE_0CCA3F:
-    JSR CODE_0CD3F4
+    BEQ +                                   ;$0CCA3A |\
+    JSR CODE_0CD3A6                         ;$0CCA3C |/
++   JSR CODE_0CD3F4                         ;$0CCA3F |
     LDA.w Layer1ScrollType_1442             ;$0CCA42 |
     JSL execute_pointer_0086DF              ;$0CCA45 |
 
-Ptrs0CCA49:
-    dw CODE_0CD0BC
-    dw CODE_0CD2B2
-    dw CODE_0CCD23
-    dw CODE_0CCFDE
+..Ptrs0CCA49:
+    dw CODE_0CD0BC                          ;$0CCA49 | 0 Player walks in and starts hammering the castle
+    dw CODE_0CD2B2                          ;$0CCA4B | 1 The frame before the castle starts falling
+    dw CODE_0CCD23                          ;$0CCA4D | 2 The castle starts falling
+    dw CODE_0CCFDE                          ;$0CCA4F | 3 Rest of sequence
 
-CODE_0CCA51:
+.castle6_0CCA51:
     JSR CODE_0CD6EC
     LDA.w Layer1ScrollTimer_1444            ;$0CCA54 |
-    BEQ CODE_0CCA67                         ;$0CCA57 |
-    LDX.b #$30                              ;$0CCA59 |
-    LDA.b #$B0                              ;$0CCA5B |
-    STA $00                                 ;$0CCA5D |
-    LDA.b #$68                              ;$0CCA5F |
-    STA.w $0B51                             ;$0CCA61 |
-    JSR CODE_0CCAFD                         ;$0CCA64 |
-CODE_0CCA67:
-    LDA.w Layer1ScrollType_1442
+    BEQ +                                   ;$0CCA57 |\
+    LDX.b #$30                              ;$0CCA59 ||
+    LDA.b #$B0                              ;$0CCA5B ||
+    STA $00                                 ;$0CCA5D ||
+    LDA.b #$68                              ;$0CCA5F ||
+    STA.w $0B51                             ;$0CCA61 ||
+    JSR CODE_0CCAFD                         ;$0CCA64 |/
++   LDA.w Layer1ScrollType_1442             ;$0CCA67 |
     JSL execute_pointer_0086DF              ;$0CCA6A |
 
-Ptrs0CCA6E:
-    dw CODE_0CD0C9
-    dw CODE_0CCFDE
+..Ptrs0CCA6E:
+    dw CODE_0CD0C9                          ;$0CCA6E | 0 Player walks in and wipes the castle down
+    dw CODE_0CCFDE                          ;$0CCA70 | 1 Rest of sequence
 
-CODE_0CCA72:
+.castle7_0CCA72:
     LDA.w Layer1ScrollType_1442
     JSL execute_pointer_0086DF              ;$0CCA75 |
 
-Ptrs0CCA79:
-    dw CODE_0CD0D2
-    dw CODE_0CD108
-    dw CODE_0CD16F
-    dw CODE_0CD19C
-    dw CODE_0CCFDE
+..Ptrs0CCA79:
+    dw CODE_0CD0D2                          ;$0CCA79 | 0 Player walks in and picks up the castle
+    dw CODE_0CD108                          ;$0CCA7B | 1 Player throws the castle off the screen
+    dw CODE_0CD16F                          ;$0CCA7D | 2 The screen shakes as the castle hits the ground
+    dw CODE_0CD19C                          ;$0CCA7F | 3 Delay before the player poses with the peace sign
+    dw CODE_0CCFDE                          ;$0CCA81 | 4 Rest of sequence
 
 DATA_0CCA83:
     db $20

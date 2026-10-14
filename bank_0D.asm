@@ -1338,21 +1338,21 @@ CODE_0DA415:
     JSL execute_pointer_long_0086FA         ;$0DA41A |
 
 PtrsLong0DA41E:
-    dl CODE_0DA44B
-    dl CODE_0DC190
-    dl CODE_0DCD90
-    dl CODE_0DD990
-    dl CODE_0DE890
-    dl CODE_0DE890
-    dl CODE_0DCD90
-    dl CODE_0DA44B
-    dl CODE_0DCD90
-    dl CODE_0DD990
-    dl CODE_0DD990
-    dl CODE_0DD990
-    dl CODE_0DA44B
-    dl CODE_0DE890
-    dl CODE_0DD990
+    dl CODE_0DA44B                          ;$0DA41E | 00 Normal 1
+    dl CODE_0DC190                          ;$0DA421 | 01 Castle 1
+    dl CODE_0DCD90                          ;$0DA424 | 02 Rope 1
+    dl CODE_0DD990                          ;$0DA427 | 03 Underground 1
+    dl CODE_0DE890                          ;$0DA42A | 04 Switch Palace 1
+    dl CODE_0DE890                          ;$0DA42D | 05 Ghost House 1
+    dl CODE_0DCD90                          ;$0DA430 | 06 Rope 2
+    dl CODE_0DA44B                          ;$0DA433 | 07 Normal 2
+    dl CODE_0DCD90                          ;$0DA436 | 08 Rope 3
+    dl CODE_0DD990                          ;$0DA439 | 09 Underground 2
+    dl CODE_0DD990                          ;$0DA43C | 0A Switch Palace 2
+    dl CODE_0DD990                          ;$0DA43F | 0B Castle 2
+    dl CODE_0DA44B                          ;$0DA442 | 0C Cloud/Forest
+    dl CODE_0DE890                          ;$0DA445 | 0D Ghost House 2
+    dl CODE_0DD990                          ;$0DA448 | 0E Underground 2
 
 CODE_0DA44B:
     SEP #$30                                ;$0DA44B | AXY->8
@@ -1361,70 +1361,70 @@ CODE_0DA44B:
     TXA                                     ;$0DA450 |
     JSL execute_pointer_long_0086FA         ;$0DA451 |
 
-PtrsLong0DA455:
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DAA26
-    dl CODE_0DAAB4
-    dl CODE_0DAB0D
-    dl CODE_0DAB3E
-    dl CODE_0DB075
-    dl CODE_0DB1D4
-    dl CODE_0DB224
-    dl ADDR_0DB336
-    dl CODE_0DB3BD
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB42D
-    dl CODE_0DB461
-    dl CODE_0DB49E
-    dl CODE_0DB51F
-    dl CODE_0DB547
-    dl CODE_0DB1C8
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DBB2C
-    dl CODE_0DBB63
-    dl CODE_0DB916
-    dl CODE_0DBADC
-    dl CODE_0DBA4C
-    dl CODE_0DBA0A
-    dl CODE_0DB9C0
-    dl CODE_0DB966
-    dl CODE_0DB91E
-    dl CODE_0DB73F
-    dl CODE_0DB7AA
-    dl CODE_0DB863
-    dl CODE_0DB604
-    dl CODE_0DB6C3
-    dl ADDR_0DB705
-    dl CODE_0DB5B7
+.PtrsLong0DA455:
+    dl CODE_0DA8C3                          ;$0DA455 | 01
+    dl CODE_0DA8C3                          ;$0DA458 | 02
+    dl CODE_0DA8C3                          ;$0DA45B | 03
+    dl CODE_0DA8C3                          ;$0DA45E | 04
+    dl CODE_0DA8C3                          ;$0DA461 | 05
+    dl CODE_0DA8C3                          ;$0DA464 | 06
+    dl CODE_0DA8C3                          ;$0DA467 | 07
+    dl CODE_0DA8C3                          ;$0DA46A | 08
+    dl CODE_0DA8C3                          ;$0DA46D | 09
+    dl CODE_0DA8C3                          ;$0DA470 | 0A
+    dl CODE_0DA8C3                          ;$0DA473 | 0B
+    dl CODE_0DA8C3                          ;$0DA476 | 0C
+    dl CODE_0DA8C3                          ;$0DA479 | 0D
+    dl CODE_0DA8C3                          ;$0DA47C | 0E
+    dl CODE_0DAA26                          ;$0DA47F | 0F
+    dl CODE_0DAAB4                          ;$0DA482 | 10
+    dl CODE_0DAB0D                          ;$0DA485 | 11
+    dl CODE_0DAB3E                          ;$0DA488 | 12
+    dl CODE_0DB075                          ;$0DA48B | 13
+    dl CODE_0DB1D4                          ;$0DA48E | 14
+    dl CODE_0DB224                          ;$0DA491 | 15
+    dl ADDR_0DB336                          ;$0DA494 | 16
+    dl CODE_0DB3BD                          ;$0DA497 | 17
+    dl CODE_0DB3E3                          ;$0DA49A | 18
+    dl CODE_0DB3E3                          ;$0DA49D | 19
+    dl CODE_0DB3E3                          ;$0DA4A0 | 1A
+    dl CODE_0DB3E3                          ;$0DA4A3 | 1B
+    dl CODE_0DB42D                          ;$0DA4A6 | 1C
+    dl CODE_0DB461                          ;$0DA4A9 | 1D
+    dl CODE_0DB49E                          ;$0DA4AC | 1E
+    dl CODE_0DB51F                          ;$0DA4AF | 1F
+    dl CODE_0DB547                          ;$0DA4B2 | 20
+    dl CODE_0DB1C8                          ;$0DA4B5 | 21
+    dl CODE_0DB3E3                          ;$0DA4B8 | 22
+    dl CODE_0DB3E3                          ;$0DA4BB | 23
+    dl CODE_0DB3E3                          ;$0DA4BE | 24
+    dl CODE_0DB3E3                          ;$0DA4C1 | 25
+    dl CODE_0DB3E3                          ;$0DA4C4 | 26
+    dl CODE_0DB3E3                          ;$0DA4C7 | 27
+    dl CODE_0DB3E3                          ;$0DA4CA | 28
+    dl CODE_0DB3E3                          ;$0DA4CD | 29
+    dl CODE_0DB3E3                          ;$0DA4D0 | 2A
+    dl CODE_0DB3E3                          ;$0DA4D3 | 2B
+    dl CODE_0DB3E3                          ;$0DA4D6 | 2C
+    dl CODE_0DB3E3                          ;$0DA4D9 | 2D
+    dl CODE_0DB3E3                          ;$0DA4DC | 2E
+    dl CODE_0DB3E3                          ;$0DA4DF | 2F
+    dl CODE_0DBB2C                          ;$0DA4E2 | 30
+    dl CODE_0DBB63                          ;$0DA4E5 | 31
+    dl CODE_0DB916                          ;$0DA4E8 | 32
+    dl CODE_0DBADC                          ;$0DA4EB | 33
+    dl CODE_0DBA4C                          ;$0DA4EE | 34
+    dl CODE_0DBA0A                          ;$0DA4F1 | 35
+    dl CODE_0DB9C0                          ;$0DA4F4 | 36
+    dl CODE_0DB966                          ;$0DA4F7 | 37
+    dl CODE_0DB91E                          ;$0DA4FA | 38
+    dl CODE_0DB73F                          ;$0DA4FD | 39
+    dl CODE_0DB7AA                          ;$0DA500 | 3A
+    dl CODE_0DB863                          ;$0DA503 | 3B
+    dl CODE_0DB604                          ;$0DA506 | 3C
+    dl CODE_0DB6C3                          ;$0DA509 | 3D
+    dl ADDR_0DB705                          ;$0DA50C | 3E
+    dl CODE_0DB5B7                          ;$0DA50F | 3F
 
 CODE_0DA512:
     LDY.b #$00
@@ -2300,27 +2300,26 @@ Return0DAB3D:
 CODE_0DAB3E:
     LDA.b LvlLoadObjSize_59
     AND.b #$0F                              ;$0DAB40 |
-CODE_0DAB42:
-    CMP.b #$0A
-    BMI CODE_0DAB4C                         ;$0DAB44 |
+-   CMP.b #$0A                              ;$0DAB42 |
+    BMI .CODE_0DAB4C                        ;$0DAB44 |
     SEC                                     ;$0DAB46 |
     SBC.b #$0A                              ;$0DAB47 |
-    JMP CODE_0DAB42                         ;$0DAB49 |
+    JMP -                                   ;$0DAB49 |
 
-CODE_0DAB4C:
+.CODE_0DAB4C:
     JSL execute_pointer_long_0086FA
 
-PtrsLong0DAB50:
-    dl CODE_0DAB6E
-    dl CODE_0DAC21
-    dl CODE_0DAC92
-    dl CODE_0DAD44
-    dl CODE_0DADA3
-    dl CODE_0DADEB
-    dl CODE_0DAE6D
-    dl CODE_0DAEFC
-    dl CODE_0DAF61
-    dl CODE_0DAFEA
+.PtrsLong0DAB50:
+    dl CODE_0DAB6E                          ;$0DAB50 | 0
+    dl CODE_0DAC21                          ;$0DAB53 | 1
+    dl CODE_0DAC92                          ;$0DAB56 | 2
+    dl CODE_0DAD44                          ;$0DAB59 | 3
+    dl CODE_0DADA3                          ;$0DAB5C | 4
+    dl CODE_0DADEB                          ;$0DAB5F | 5
+    dl CODE_0DAE6D                          ;$0DAB62 | 6
+    dl CODE_0DAEFC                          ;$0DAB65 | 7
+    dl CODE_0DAF61                          ;$0DAB68 | 8
+    dl CODE_0DAFEA                          ;$0DAB6B | 9
 
 CODE_0DAB6E:
     LDY.b LevelLoadPos_57
@@ -4801,70 +4800,70 @@ CODE_0DC190:
     TXA                                     ;$0DC195 |
     JSL execute_pointer_long_0086FA         ;$0DC196 |
 
-PtrsLong0DC19A:
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DAA26
-    dl CODE_0DAAB4
-    dl CODE_0DAB0D
-    dl CODE_0DAB3E
-    dl CODE_0DB075
-    dl CODE_0DB1D4
-    dl CODE_0DB224
-    dl ADDR_0DB336
-    dl CODE_0DB3BD
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB42D
-    dl CODE_0DB461
-    dl CODE_0DB49E
-    dl CODE_0DB51F
-    dl CODE_0DB547
-    dl CODE_0DB1C8
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DC5D8
-    dl CODE_0DC58A
-    dl CODE_0DC4EF
-    dl CODE_0DCF12
-    dl CODE_0DCF33
-    dl CODE_0DB916
-    dl CODE_0DB91E
-    dl CODE_0DC4C9
-    dl CODE_0DC478
-    dl CODE_0DC341
-    dl CODE_0DC42E
-    dl CODE_0DC44F
+.ptrs_long_0DC19A:
+    dl CODE_0DA8C3                          ;$0DC19A | 01 
+    dl CODE_0DA8C3                          ;$0DC19D | 02
+    dl CODE_0DA8C3                          ;$0DC1A0 | 03
+    dl CODE_0DA8C3                          ;$0DC1A3 | 04
+    dl CODE_0DA8C3                          ;$0DC1A6 | 05
+    dl CODE_0DA8C3                          ;$0DC1A9 | 06
+    dl CODE_0DA8C3                          ;$0DC1AC | 07
+    dl CODE_0DA8C3                          ;$0DC1AF | 08
+    dl CODE_0DA8C3                          ;$0DC1B2 | 09
+    dl CODE_0DA8C3                          ;$0DC1B5 | 0A
+    dl CODE_0DA8C3                          ;$0DC1B8 | 0B
+    dl CODE_0DA8C3                          ;$0DC1BB | 0C
+    dl CODE_0DA8C3                          ;$0DC1BE | 0D
+    dl CODE_0DA8C3                          ;$0DC1C1 | 0E
+    dl CODE_0DAA26                          ;$0DC1C4 | 0F
+    dl CODE_0DAAB4                          ;$0DC1C7 | 10
+    dl CODE_0DAB0D                          ;$0DC1CA | 11
+    dl CODE_0DAB3E                          ;$0DC1CD | 12
+    dl CODE_0DB075                          ;$0DC1D0 | 13
+    dl CODE_0DB1D4                          ;$0DC1D3 | 14
+    dl CODE_0DB224                          ;$0DC1D6 | 15
+    dl ADDR_0DB336                          ;$0DC1D9 | 16
+    dl CODE_0DB3BD                          ;$0DC1DC | 17
+    dl CODE_0DB3E3                          ;$0DC1DF | 18
+    dl CODE_0DB3E3                          ;$0DC1E2 | 19
+    dl CODE_0DB3E3                          ;$0DC1E5 | 1A
+    dl CODE_0DB3E3                          ;$0DC1E8 | 1B
+    dl CODE_0DB42D                          ;$0DC1EB | 1C
+    dl CODE_0DB461                          ;$0DC1EE | 1D
+    dl CODE_0DB49E                          ;$0DC1F1 | 1E
+    dl CODE_0DB51F                          ;$0DC1F4 | 1F
+    dl CODE_0DB547                          ;$0DC1F7 | 20
+    dl CODE_0DB1C8                          ;$0DC1FA | 21
+    dl CODE_0DB3E3                          ;$0DC1FD | 22
+    dl CODE_0DB3E3                          ;$0DC200 | 23
+    dl CODE_0DB3E3                          ;$0DC203 | 24
+    dl CODE_0DB3E3                          ;$0DC206 | 25
+    dl CODE_0DB3E3                          ;$0DC209 | 26
+    dl CODE_0DB3E3                          ;$0DC20C | 27
+    dl CODE_0DB3E3                          ;$0DC20F | 28
+    dl CODE_0DB3E3                          ;$0DC212 | 29
+    dl CODE_0DB3E3                          ;$0DC215 | 2A
+    dl CODE_0DB3E3                          ;$0DC218 | 2B
+    dl CODE_0DB3E3                          ;$0DC21B | 2C
+    dl CODE_0DB3E3                          ;$0DC21E | 2D
+    dl CODE_0DB3E3                          ;$0DC221 | 2E
+    dl CODE_0DB3E3                          ;$0DC224 | 2F
+    dl CODE_0DB3E3                          ;$0DC227 | 30
+    dl CODE_0DB3E3                          ;$0DC22A | 31
+    dl CODE_0DB3E3                          ;$0DC22D | 32
+    dl CODE_0DB3E3                          ;$0DC230 | 33
+    dl CODE_0DC5D8                          ;$0DC233 | 34
+    dl CODE_0DC58A                          ;$0DC236 | 35
+    dl CODE_0DC4EF                          ;$0DC239 | 36
+    dl CODE_0DCF12                          ;$0DC23C | 37
+    dl CODE_0DCF33                          ;$0DC23F | 38
+    dl CODE_0DB916                          ;$0DC242 | 39
+    dl CODE_0DB91E                          ;$0DC245 | 3A
+    dl CODE_0DC4C9                          ;$0DC248 | 3B
+    dl CODE_0DC478                          ;$0DC24B | 3C
+    dl CODE_0DC341                          ;$0DC24E | 3D
+    dl CODE_0DC42E                          ;$0DC251 | 3E
+    dl CODE_0DC44F                          ;$0DC254 | 3F
 
 DATA_0DC257:
     db $07,$08
@@ -4954,8 +4953,8 @@ CODE_0DC341:
     JSL execute_pointer_long_0086FA         ;$0DC346 |
 
 PtrsLong0DC34A:
-    dl CODE_0DC358
-    dl CODE_0DC3D8
+    dl CODE_0DC358                          ;$0DC34A | 0
+    dl CODE_0DC3D8                          ;$0DC34D | 1
 
 DATA_0DC350:
     db $CE,$D1,$CF,$D0
@@ -5599,70 +5598,70 @@ CODE_0DCD90:
     TXA                                     ;$0DCD95 |
     JSL execute_pointer_long_0086FA         ;$0DCD96 |
 
-PtrsLong0DCD9A:
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DAA26
-    dl CODE_0DAAB4
-    dl CODE_0DAB0D
-    dl CODE_0DAB3E
-    dl CODE_0DB075
-    dl CODE_0DB1D4
-    dl CODE_0DB224
-    dl ADDR_0DB336
-    dl CODE_0DB3BD
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB42D
-    dl CODE_0DB461
-    dl CODE_0DB49E
-    dl CODE_0DB51F
-    dl CODE_0DB547
-    dl CODE_0DB1C8
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DD24E
-    dl CODE_0DB916
-    dl CODE_0DB91E
-    dl CODE_0DD1D9
-    dl ADDR_0DCEF2
-    dl CODE_0DC341
-    dl CODE_0DCF12
-    dl CODE_0DCF33
-    dl CODE_0DCF53
-    dl ADDR_0DD070
-    dl CODE_0DD103
-    dl CODE_0DD145
-    dl ADDR_0DD182
-    dl ADDR_0DD1A5
+.PtrsLong0DCD9A:
+    dl CODE_0DA8C3                          ;$0DCD9A | 01
+    dl CODE_0DA8C3                          ;$0DCD9D | 02
+    dl CODE_0DA8C3                          ;$0DCDA0 | 03
+    dl CODE_0DA8C3                          ;$0DCDA3 | 04
+    dl CODE_0DA8C3                          ;$0DCDA6 | 05
+    dl CODE_0DA8C3                          ;$0DCDA9 | 06
+    dl CODE_0DA8C3                          ;$0DCDAC | 07
+    dl CODE_0DA8C3                          ;$0DCDAF | 08
+    dl CODE_0DA8C3                          ;$0DCDB2 | 09
+    dl CODE_0DA8C3                          ;$0DCDB5 | 0A
+    dl CODE_0DA8C3                          ;$0DCDB8 | 0B
+    dl CODE_0DA8C3                          ;$0DCDBB | 0C
+    dl CODE_0DA8C3                          ;$0DCDBE | 0D
+    dl CODE_0DA8C3                          ;$0DCDC1 | 0E
+    dl CODE_0DAA26                          ;$0DCDC4 | 0F
+    dl CODE_0DAAB4                          ;$0DCDC7 | 10
+    dl CODE_0DAB0D                          ;$0DCDCA | 11
+    dl CODE_0DAB3E                          ;$0DCDCD | 12
+    dl CODE_0DB075                          ;$0DCDD0 | 13
+    dl CODE_0DB1D4                          ;$0DCDD3 | 14
+    dl CODE_0DB224                          ;$0DCDD6 | 15
+    dl ADDR_0DB336                          ;$0DCDD9 | 16
+    dl CODE_0DB3BD                          ;$0DCDDC | 17
+    dl CODE_0DB3E3                          ;$0DCDDF | 18
+    dl CODE_0DB3E3                          ;$0DCDE2 | 19
+    dl CODE_0DB3E3                          ;$0DCDE5 | 1A
+    dl CODE_0DB3E3                          ;$0DCDE8 | 1B
+    dl CODE_0DB42D                          ;$0DCDEB | 1C
+    dl CODE_0DB461                          ;$0DCDEE | 1D
+    dl CODE_0DB49E                          ;$0DCDF1 | 1E
+    dl CODE_0DB51F                          ;$0DCDF4 | 1F
+    dl CODE_0DB547                          ;$0DCDF7 | 20
+    dl CODE_0DB1C8                          ;$0DCDFA | 21
+    dl CODE_0DB3E3                          ;$0DCDFD | 22
+    dl CODE_0DB3E3                          ;$0DCE00 | 23
+    dl CODE_0DB3E3                          ;$0DCE03 | 24
+    dl CODE_0DB3E3                          ;$0DCE06 | 25
+    dl CODE_0DB3E3                          ;$0DCE09 | 26
+    dl CODE_0DB3E3                          ;$0DCE0C | 27
+    dl CODE_0DB3E3                          ;$0DCE0F | 28
+    dl CODE_0DB3E3                          ;$0DCE12 | 29
+    dl CODE_0DB3E3                          ;$0DCE15 | 2A
+    dl CODE_0DB3E3                          ;$0DCE18 | 2B
+    dl CODE_0DB3E3                          ;$0DCE1B | 2C
+    dl CODE_0DB3E3                          ;$0DCE1E | 2D
+    dl CODE_0DB3E3                          ;$0DCE21 | 2E
+    dl CODE_0DB3E3                          ;$0DCE24 | 2F
+    dl CODE_0DB3E3                          ;$0DCE27 | 30
+    dl CODE_0DB3E3                          ;$0DCE2A | 31
+    dl CODE_0DD24E                          ;$0DCE2D | 32
+    dl CODE_0DB916                          ;$0DCE30 | 33
+    dl CODE_0DB91E                          ;$0DCE33 | 34
+    dl CODE_0DD1D9                          ;$0DCE36 | 35
+    dl ADDR_0DCEF2                          ;$0DCE39 | 36
+    dl CODE_0DC341                          ;$0DCE3C | 37
+    dl CODE_0DCF12                          ;$0DCE3F | 38
+    dl CODE_0DCF33                          ;$0DCE42 | 39
+    dl CODE_0DCF53                          ;$0DCE45 | 3A
+    dl ADDR_0DD070                          ;$0DCE48 | 3B
+    dl CODE_0DD103                          ;$0DCE4B | 3C
+    dl CODE_0DD145                          ;$0DCE4E | 3D
+    dl ADDR_0DD182                          ;$0DCE51 | 3E
+    dl ADDR_0DD1A5                          ;$0DCE54 | 3F
 
 DATA_0DCE57:
     db $7A,$7B,$7C,$25,$7E,$7F,$25,$7D
@@ -5826,13 +5825,13 @@ CODE_0DCF53:
     TAX                                     ;$0DCF57 |
     JSL execute_pointer_long_0086FA         ;$0DCF58 |
 
-PtrsLong0DCF5C:
-    dl CODE_0DCF6E
-    dl CODE_0DCFB1
-    dl ADDR_0DCFF0
-    dl CODE_0DD034
-    dl CODE_0DCFB1
-    dl CODE_0DD034
+.PtrsLong0DCF5C:
+    dl CODE_0DCF6E                          ;$0DCF5C | 0
+    dl CODE_0DCFB1                          ;$0DCF5F | 1
+    dl ADDR_0DCFF0                          ;$0DCF62 | 2
+    dl CODE_0DD034                          ;$0DCF65 | 3
+    dl CODE_0DCFB1                          ;$0DCF68 | 4
+    dl CODE_0DD034                          ;$0DCF6B | 5
 
 CODE_0DCF6E:
     LDY.b LevelLoadPos_57
@@ -6012,9 +6011,9 @@ ADDR_0DD070:
     LSR                                     ;$0DD075 |
     JSL execute_pointer_long_0086FA         ;$0DD076 |
 
-PtrsLong0DD07A:
-    dl ADDR_0DD080
-    dl ADDR_0DD0C3
+.PtrsLong0DD07A:
+    dl ADDR_0DD080                          ;$0DD07A | 0
+    dl ADDR_0DD0C3                          ;$0DD07D | 1
 
 ADDR_0DD080:
     LDY.b LevelLoadPos_57
@@ -6552,70 +6551,70 @@ CODE_0DD990:
     TXA                                     ;$0DD995 |
     JSL execute_pointer_long_0086FA         ;$0DD996 |
 
-PtrsLong0DD99A:
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DAA26
-    dl CODE_0DAAB4
-    dl CODE_0DAB0D
-    dl CODE_0DAB3E
-    dl CODE_0DB075
-    dl CODE_0DB1D4
-    dl CODE_0DB224
-    dl ADDR_0DB336
-    dl CODE_0DB3BD
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB42D
-    dl CODE_0DB461
-    dl CODE_0DB49E
-    dl CODE_0DB51F
-    dl CODE_0DB547
-    dl CODE_0DB1C8 ; 20
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3 ;30
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB916
-    dl CODE_0DB91E
-    dl CODE_0DE135
-    dl CODE_0DDF3A
-    dl CODE_0DDAC8
-    dl CODE_0DDAF2
-    dl CODE_0DDCA9
-    dl CODE_0DDCA9
-    dl CODE_0DDD87
-    dl CODE_0DDCEA
-    dl CODE_0DDD2E
-    dl CODE_0DDD5C
+.PtrsLong0DD99A:
+    dl CODE_0DA8C3                          ;$0DD99A | 01
+    dl CODE_0DA8C3                          ;$0DD99D | 02
+    dl CODE_0DA8C3                          ;$0DD9A0 | 03
+    dl CODE_0DA8C3                          ;$0DD9A3 | 04
+    dl CODE_0DA8C3                          ;$0DD9A6 | 05
+    dl CODE_0DA8C3                          ;$0DD9A9 | 06
+    dl CODE_0DA8C3                          ;$0DD9AC | 07
+    dl CODE_0DA8C3                          ;$0DD9AF | 08
+    dl CODE_0DA8C3                          ;$0DD9B2 | 09
+    dl CODE_0DA8C3                          ;$0DD9B5 | 0A
+    dl CODE_0DA8C3                          ;$0DD9B8 | 0B
+    dl CODE_0DA8C3                          ;$0DD9BB | 0C
+    dl CODE_0DA8C3                          ;$0DD9BE | 0D
+    dl CODE_0DA8C3                          ;$0DD9C1 | 0E
+    dl CODE_0DAA26                          ;$0DD9C4 | 0F
+    dl CODE_0DAAB4                          ;$0DD9C7 | 10
+    dl CODE_0DAB0D                          ;$0DD9CA | 11
+    dl CODE_0DAB3E                          ;$0DD9CD | 12
+    dl CODE_0DB075                          ;$0DD9D0 | 13
+    dl CODE_0DB1D4                          ;$0DD9D3 | 14
+    dl CODE_0DB224                          ;$0DD9D6 | 15
+    dl ADDR_0DB336                          ;$0DD9D9 | 16
+    dl CODE_0DB3BD                          ;$0DD9DC | 17
+    dl CODE_0DB3E3                          ;$0DD9DF | 18
+    dl CODE_0DB3E3                          ;$0DD9E2 | 19
+    dl CODE_0DB3E3                          ;$0DD9E5 | 1A
+    dl CODE_0DB3E3                          ;$0DD9E8 | 1B
+    dl CODE_0DB42D                          ;$0DD9EB | 1C
+    dl CODE_0DB461                          ;$0DD9EE | 1D
+    dl CODE_0DB49E                          ;$0DD9F1 | 1E
+    dl CODE_0DB51F                          ;$0DD9F4 | 1F
+    dl CODE_0DB547                          ;$0DD9F7 | 20
+    dl CODE_0DB1C8                          ;$0DD9FA | 21
+    dl CODE_0DB3E3                          ;$0DD9FD | 22
+    dl CODE_0DB3E3                          ;$0DDA00 | 23
+    dl CODE_0DB3E3                          ;$0DDA03 | 24
+    dl CODE_0DB3E3                          ;$0DDA06 | 25
+    dl CODE_0DB3E3                          ;$0DDA09 | 26
+    dl CODE_0DB3E3                          ;$0DDA0C | 27
+    dl CODE_0DB3E3                          ;$0DDA0F | 28
+    dl CODE_0DB3E3                          ;$0DDA12 | 29
+    dl CODE_0DB3E3                          ;$0DDA15 | 2A
+    dl CODE_0DB3E3                          ;$0DDA18 | 2B
+    dl CODE_0DB3E3                          ;$0DDA1B | 2C
+    dl CODE_0DB3E3                          ;$0DDA1E | 2D
+    dl CODE_0DB3E3                          ;$0DDA21 | 2E
+    dl CODE_0DB3E3                          ;$0DDA24 | 2F
+    dl CODE_0DB3E3                          ;$0DDA27 | 30
+    dl CODE_0DB3E3                          ;$0DDA2A | 31
+    dl CODE_0DB3E3                          ;$0DDA2D | 32
+    dl CODE_0DB3E3                          ;$0DDA30 | 33
+    dl CODE_0DB916                          ;$0DDA33 | 34
+    dl CODE_0DB91E                          ;$0DDA36 | 35
+    dl CODE_0DE135                          ;$0DDA39 | 36
+    dl CODE_0DDF3A                          ;$0DDA3C | 37
+    dl CODE_0DDAC8                          ;$0DDA3F | 38
+    dl CODE_0DDAF2                          ;$0DDA42 | 39
+    dl CODE_0DDCA9                          ;$0DDA45 | 3A
+    dl CODE_0DDCA9                          ;$0DDA48 | 3B
+    dl CODE_0DDD87                          ;$0DDA4B | 3C
+    dl CODE_0DDCEA                          ;$0DDA4E | 3D
+    dl CODE_0DDD2E                          ;$0DDA51 | 3E
+    dl CODE_0DDD5C                          ;$0DDA54 | 3F
 
 CODE_0DDA57:
     LDY.b LevelLoadPos_57
@@ -6716,11 +6715,11 @@ CODE_0DDAF2:
     AND.b #$03                              ;$0DDAF4 |
     JSL execute_pointer_long_0086FA         ;$0DDAF6 |
 
-PtrsLong0DDAFA:
-    dl CODE_0DDB06
-    dl CODE_0DDB8F
-    dl ADDR_0DDC02
-    dl CODE_0DDC61
+.PtrsLong0DDAFA:
+    dl CODE_0DDB06                          ;$0DDAFA | 0
+    dl CODE_0DDB8F                          ;$0DDAFD | 1
+    dl ADDR_0DDC02                          ;$0DDB00 | 2
+    dl CODE_0DDC61                          ;$0DDB03 | 3
 
 CODE_0DDB06:
     LDY.b LevelLoadPos_57
@@ -7115,9 +7114,9 @@ CODE_0DDD87:
     AND.b #$01                              ;$0DDD8D |
     JSL execute_pointer_long_0086FA         ;$0DDD8F |
 
-PtrsLong0DDD93:
-    dl CODE_0DDD99
-    dl CODE_0DDE3C
+.PtrsLong0DDD93:
+    dl CODE_0DDD99                          ;$0DDD93 | 0
+    dl CODE_0DDE3C                          ;$0DDD96 | 1
 
 CODE_0DDD99:
     LDY.b LevelLoadPos_57
@@ -7856,70 +7855,70 @@ CODE_0DE890:
     TXA                                     ;$0DE895 |
     JSL execute_pointer_long_0086FA         ;$0DE896 |
 
-PtrsLong0DE89A:
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DA8C3
-    dl CODE_0DAA26
-    dl CODE_0DAAB4
-    dl CODE_0DAB0D
-    dl CODE_0DAB3E
-    dl CODE_0DB075
-    dl CODE_0DB1D4
-    dl CODE_0DB224
-    dl ADDR_0DB336
-    dl CODE_0DB3BD
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB42D
-    dl CODE_0DB461
-    dl CODE_0DB49E
-    dl CODE_0DB51F
-    dl CODE_0DB547
-    dl CODE_0DB1C8
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DB3E3
-    dl CODE_0DF06C
-    dl ADDR_0DF066
-    dl CODE_0DF02B
-    dl CODE_0DEFA8
-    dl CODE_0DEF67
-    dl CODE_0DEF45
-    dl CODE_0DEEC0
-    dl CODE_0DECC9
-    dl CODE_0DECC9
-    dl CODE_0DED12
-    dl CODE_0DED43
-    dl CODE_0DED6B
-    dl CODE_0DED99
-    dl CODE_0DEDB9
-    dl CODE_0DEDDB
-    dl CODE_0DEE17
-    dl CODE_0DEE52
-    dl CODE_0DEE89
+.PtrsLong0DE89A:
+    dl CODE_0DA8C3                          ;$0DE89A | 01
+    dl CODE_0DA8C3                          ;$0DE89D | 02
+    dl CODE_0DA8C3                          ;$0DE8A0 | 03
+    dl CODE_0DA8C3                          ;$0DE8A3 | 04
+    dl CODE_0DA8C3                          ;$0DE8A6 | 05
+    dl CODE_0DA8C3                          ;$0DE8A9 | 06
+    dl CODE_0DA8C3                          ;$0DE8AC | 07
+    dl CODE_0DA8C3                          ;$0DE8AF | 08
+    dl CODE_0DA8C3                          ;$0DE8B2 | 09
+    dl CODE_0DA8C3                          ;$0DE8B5 | 0A
+    dl CODE_0DA8C3                          ;$0DE8B8 | 0B
+    dl CODE_0DA8C3                          ;$0DE8BB | 0C
+    dl CODE_0DA8C3                          ;$0DE8BE | 0D
+    dl CODE_0DA8C3                          ;$0DE8C1 | 0E
+    dl CODE_0DAA26                          ;$0DE8C4 | 0F
+    dl CODE_0DAAB4                          ;$0DE8C7 | 10
+    dl CODE_0DAB0D                          ;$0DE8CA | 11
+    dl CODE_0DAB3E                          ;$0DE8CD | 12
+    dl CODE_0DB075                          ;$0DE8D0 | 13
+    dl CODE_0DB1D4                          ;$0DE8D3 | 14
+    dl CODE_0DB224                          ;$0DE8D6 | 15
+    dl ADDR_0DB336                          ;$0DE8D9 | 16
+    dl CODE_0DB3BD                          ;$0DE8DC | 17
+    dl CODE_0DB3E3                          ;$0DE8DF | 18
+    dl CODE_0DB3E3                          ;$0DE8E2 | 19
+    dl CODE_0DB3E3                          ;$0DE8E5 | 1A
+    dl CODE_0DB3E3                          ;$0DE8E8 | 1B
+    dl CODE_0DB42D                          ;$0DE8EB | 1C
+    dl CODE_0DB461                          ;$0DE8EE | 1D
+    dl CODE_0DB49E                          ;$0DE8F1 | 1E
+    dl CODE_0DB51F                          ;$0DE8F4 | 1F
+    dl CODE_0DB547                          ;$0DE8F7 | 20
+    dl CODE_0DB1C8                          ;$0DE8FA | 21
+    dl CODE_0DB3E3                          ;$0DE8FD | 22
+    dl CODE_0DB3E3                          ;$0DE900 | 23
+    dl CODE_0DB3E3                          ;$0DE903 | 24
+    dl CODE_0DB3E3                          ;$0DE906 | 25
+    dl CODE_0DB3E3                          ;$0DE909 | 26
+    dl CODE_0DB3E3                          ;$0DE90C | 27
+    dl CODE_0DB3E3                          ;$0DE90F | 28
+    dl CODE_0DB3E3                          ;$0DE912 | 29
+    dl CODE_0DB3E3                          ;$0DE915 | 2A
+    dl CODE_0DB3E3                          ;$0DE918 | 2B
+    dl CODE_0DB3E3                          ;$0DE91B | 2C
+    dl CODE_0DB3E3                          ;$0DE91E | 2D
+    dl CODE_0DF06C                          ;$0DE921 | 2E
+    dl ADDR_0DF066                          ;$0DE924 | 2F
+    dl CODE_0DF02B                          ;$0DE927 | 30
+    dl CODE_0DEFA8                          ;$0DE92A | 31
+    dl CODE_0DEF67                          ;$0DE92D | 32
+    dl CODE_0DEF45                          ;$0DE930 | 33
+    dl CODE_0DEEC0                          ;$0DE933 | 34
+    dl CODE_0DECC9                          ;$0DE936 | 35
+    dl CODE_0DECC9                          ;$0DE939 | 36
+    dl CODE_0DED12                          ;$0DE93C | 37
+    dl CODE_0DED43                          ;$0DE93F | 38
+    dl CODE_0DED6B                          ;$0DE942 | 39
+    dl CODE_0DED99                          ;$0DE945 | 3A
+    dl CODE_0DEDB9                          ;$0DE948 | 3B
+    dl CODE_0DEDDB                          ;$0DE94B | 3C
+    dl CODE_0DEE17                          ;$0DE94E | 3D
+    dl CODE_0DEE52                          ;$0DE951 | 3E
+    dl CODE_0DEE89                          ;$0DE954 | 3F
 
 DATA_0DE957:
     db $73,$74,$75,$76,$93,$94,$95,$96

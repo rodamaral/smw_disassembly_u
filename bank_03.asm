@@ -1125,15 +1125,15 @@ CODE_0388C0:
     BNE Return0388DF                        ;$0388C2 |
     JSR SubOffscreen0Bnk3                   ;$0388C4 |
     JSL sprite_vs_sprite_or_mario_01803A    ;$0388C7 |
-    JSL update_x_no_gravity_018022 ;$0388CB |
+    JSL update_x_no_gravity_018022          ;$0388CB |
     JSL update_y_no_gravity_01801A          ;$0388CF |
     LDA.b SpritePhase_C2,X                  ;$0388D3 |
     JSL execute_pointer_0086DF              ;$0388D5 |
 
-SwooperPtrs:
-    dw CODE_0388E4
-    dw CODE_038905
-    dw CODE_038936
+.SwooperPtrs:
+    dw CODE_0388E4                          ;$0388D9 | 0 waiting to swoop
+    dw CODE_038905                          ;$0388DB | 1 swooping
+    dw CODE_038936                          ;$0388DD | 2 flying straight
 
 Return0388DF:
     RTS
@@ -1350,11 +1350,11 @@ BowserStatue:
     LDA.b SpritePhase_C2,X                  ;$038A46 |
     JSL execute_pointer_0086DF              ;$038A48 |
 
-BowserStatuePtrs:
-    dw CODE_038A57
-    dw CODE_038A54
-    dw CODE_038A69
-    dw CODE_038A54
+.BowserStatuePtrs:
+    dw CODE_038A57                          ;$038A4C | 0 normal
+    dw CODE_038A54                          ;$038A4E | 1 fire
+    dw CODE_038A69                          ;$038A50 | 2 jumping
+    dw CODE_038A54                          ;$038A52 | 3 fire
 
 CODE_038A54:
     JSR CODE_038ACB
@@ -2420,9 +2420,9 @@ CODE_039237:
     LDA.b SpritePhase_C2,X                  ;$039242 |
     JSL execute_pointer_0086DF              ;$039244 |
 
-FallingSpikePtrs:
-    dw CODE_03924C
-    dw CODE_039262
+.FallingSpikePtrs:
+    dw CODE_03924C                          ;$039248 | 0 
+    dw CODE_039262                          ;$03924A | 1 
 
 CODE_03924C:
     STZ.b SpriteYSpeed_AA,X
@@ -2631,11 +2631,11 @@ WoodenSpike:
     AND.b #$03                              ;$039432 |
     JSL execute_pointer_0086DF              ;$039434 |
 
-WoodenSpikePtrs:
-    dw CODE_039458
-    dw CODE_03944E
-    dw CODE_039441
-    dw CODE_03946B
+.WoodenSpikePtrs:
+    dw CODE_039458                          ;$039438 | 0 retracting
+    dw CODE_03944E                          ;$03943A | 1 waiting to extend
+    dw CODE_039441                          ;$03943C | 2 extending
+    dw CODE_03946B                          ;$03943E | 3 waiting to retract
 
 Return039440:
     RTS
@@ -3052,8 +3052,8 @@ CODE_039720:
     JSL execute_pointer_0086DF              ;$039722 |
 
 FishbonePtrs:
-    dw CODE_03972F
-    dw CODE_03975E
+    dw CODE_03972F                          ;$039726 | 0 boosting
+    dw CODE_03975E                          ;$039728 | 1 decelerating
 
 Return03972A:
     RTS
@@ -3791,11 +3791,11 @@ DinoMainSubRt:
     LDA.b SpritePhase_C2,X                  ;$039C60 |
     JSL execute_pointer_0086DF              ;$039C62 |
 
-RhinoStatePtrs:
-    dw CODE_039CA8
-    dw CODE_039D41
-    dw CODE_039D41
-    dw CODE_039C74
+.RhinoStatePtrs:
+    dw CODE_039CA8                          ;$039C66 | 0 walking
+    dw CODE_039D41                          ;$039C68 | 1 fire horizontal
+    dw CODE_039D41                          ;$039C6A | 2 fire vertical
+    dw CODE_039C74                          ;$039C6C | 3 jumping
 
 DATA_039C6E:
     db $00,$FE,$02
@@ -4180,12 +4180,12 @@ Blargg:
     LDA.b SpritePhase_C2,X                  ;$039F46 |
     JSL execute_pointer_0086DF              ;$039F48 |
 
-BlarggPtrs:
-    dw CODE_039F57
-    dw CODE_039F8B
-    dw CODE_039FA4
-    dw CODE_039FC8
-    dw CODE_039FEF
+.BlarggPtrs:
+    dw CODE_039F57                          ;$039F4C | 0 hiding under the lava
+    dw CODE_039F8B                          ;$039F4E | 1 eye emerging
+    dw CODE_039FA4                          ;$039F50 | 2 eye looking around
+    dw CODE_039FC8                          ;$039F52 | 3 eye retracting
+    dw CODE_039FEF                          ;$039F54 | 4 attacking
 
 Return039F56:
     RTS
@@ -4784,17 +4784,17 @@ CODE_03A31A:
     LDA.w Sprite_151C,X                     ;$03A325 |
     JSL execute_pointer_0086DF              ;$03A328 |
 
-BowserFightPtrs:
-    dw CODE_03A441
-    dw CODE_03A6F8
-    dw CODE_03A84B
-    dw CODE_03A7AD
-    dw CODE_03AB9F
-    dw CODE_03ABBE
-    dw CODE_03AC03
-    dw CODE_03A49C
-    dw CODE_03AB21
-    dw CODE_03AB64
+.BowserFightPtrs:
+    dw CODE_03A441                          ;$03A32C | 0 descending at the start
+    dw CODE_03A6F8                          ;$03A32E | 1 swooping out
+    dw CODE_03A84B                          ;$03A340 | 2 swooping in
+    dw CODE_03A7AD                          ;$03A342 | 3 flames dropping
+    dw CODE_03AB9F                          ;$03A344 | 4 rising up being defeated
+    dw CODE_03ABBE                          ;$03A346 | 5 death smoke puffs / rotation
+    dw CODE_03AC03                          ;$03A348 | 6 dropping peach/flying away
+    dw CODE_03A49C                          ;$03A34A | 7 phase one
+    dw CODE_03AB21                          ;$03A34C | 8 phase two
+    dw CODE_03AB64                          ;$03A34E | 9 phase three
 
 Return03A340:
     RTS
@@ -8717,11 +8717,11 @@ Firework:
     LDA.b SpritePhase_C2,X
     JSL execute_pointer_0086DF              ;$03C818 |
 
-FireworkPtrs:
-    dw CODE_03C828
-    dw CODE_03C845
-    dw CODE_03C88D
-    dw CODE_03C941
+.FireworkPtrs:
+    dw CODE_03C828                          ;$03C81C | 0 initial fire
+    dw CODE_03C845                          ;$03C81E | 1 shooting up
+    dw CODE_03C88D                          ;$03C820 | 2 exploding
+    dw CODE_03C941                          ;$03C822 | 3 fading away
 
 FireworkSpeedY:
     db $E4,$E6,$E4,$E2
@@ -9269,7 +9269,7 @@ CODE_03CC14:
     LDA.w Sprite_151C,X                     ;$03CC22 |
     JSL execute_pointer_0086DF              ;$03CC25 |
 
-PipeKoopaPtrs:
+.PipeKoopaPtrs:
     dw CODE_03CC8A                          ;$03CC29 | 0 in pipe
     dw CODE_03CD21                          ;$03CC2B | 1 rising
     dw CODE_03CDC7                          ;$03CC2D | 2 out of pipe

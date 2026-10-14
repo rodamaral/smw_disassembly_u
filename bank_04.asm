@@ -7394,15 +7394,15 @@ CODE_04F3E5:
     DEC A
     JSL execute_pointer_0086DF              ;$04F3E6 |
 
-Ptrs04F3EA:
-    dw CODE_04F3FF
-    dw CODE_04F415
-    dw CODE_04F513
-    dw CODE_04F415
-    dw CODE_04F3FF
-    dw CODE_04F415
-    dw CODE_04F3FA
-    dw CODE_04F415
+.Ptrs04F3EA:
+    dw CODE_04F3FF                          ;$04F3EA | 1 Life Exchange	Init
+    dw CODE_04F415                          ;$04F3EC | 2 Life Exchange	Opening
+    dw CODE_04F513                          ;$04F3EE | 3 Life Exchange	Main
+    dw CODE_04F415                          ;$04F3F0 | 4 Life Exchange	Closing
+    dw CODE_04F3FF                          ;$04F3F2 | 5 Save	Init
+    dw CODE_04F415                          ;$04F3F4 | 6 Save	Opening
+    dw CODE_04F3FA                          ;$04F3F6 | 7 Save	Main
+    dw CODE_04F415                          ;$04F3F8 | 8 Save	Closing
 
 CODE_04F3FA:
     JSL CODE_009BA8
@@ -7893,18 +7893,18 @@ CODE_04F853:
     LDA.w OWSpriteNumber_0DE5,X             ;$04F858 |
     JSL execute_pointer_0086DF              ;$04F85B |
 
-OWSprites:
-    dw Return04F828
-    dw ADDR_04F8CC
-    dw ADDR_04F9B8
-    dw CODE_04FA3E
-    dw ADDR_04FAF1
-    dw CODE_04FB37
-    dw CODE_04FB98
-    dw CODE_04FC46
-    dw CODE_04FCE1
-    dw CODE_04FD24
-    dw CODE_04FD70
+.OWSprites:
+    dw Return04F828                         ;$04F85F | 0 Free slot
+    dw ADDR_04F8CC                          ;$04F861 | 1 Lakitu
+    dw ADDR_04F9B8                          ;$04F863 | 2 Blue Bird
+    dw CODE_04FA3E                          ;$04F865 | 3 Cheep-Cheep x3
+    dw ADDR_04FAF1                          ;$04F867 | 4 Piranha Plant
+    dw CODE_04FB37                          ;$04F869 | 5 Moving Cloud
+    dw CODE_04FB98                          ;$04F86B | 6 Koopa Kid x3
+    dw CODE_04FC46                          ;$04F86D | 7 Smoke x2
+    dw CODE_04FCE1                          ;$04F86F | 8 Bowser Sign
+    dw CODE_04FD24                          ;$04F871 | 9 Bowser
+    dw CODE_04FD70                          ;$04F873 | A Boo x2
 
 DATA_04F875:
     db $80,$40,$20,$10,$08,$04,$02
