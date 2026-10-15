@@ -3405,54 +3405,57 @@ DATA_05B91C:
     db $7B,$38,$73,$39,$52,$0D,$00,$05
     db $73,$39,$79,$38,$7C,$38,$FF
 
-DATA_05B93B:
-    db $00,$06
+animated_gfx_D80_05B93B:
+    dw $0600
 
-DATA_05B93D:
-    db $40,$06
+animated_gfx_D7E_05B93D:
+    dw $0640
 
-DATA_05B93F:
-    db $80,$06,$40,$07,$A0,$0E,$00,$08
-    db $00,$05,$40,$05,$80,$05,$C0,$05
-    db $80,$07,$C0,$07,$A0,$0D,$C0,$06
-    db $00,$07,$C0,$04,$40,$04,$80,$04
-    db $00,$04,$00,$00,$00,$00,$00,$00
-    db $00,$00,$00,$00
+animated_gfx_D7C_05B93F:
+    dw $0680,$0740,$0EA0,$0800
+    dw $0500,$0540,$0580,$05C0
+    dw $0780,$07C0,$0DA0,$06C0
+    dw $0700,$04C0,$0440,$0480
+    dw $0400,$0000,$0000,$0000
+    dw $0000,$0000
 
-DATA_05B96B:
+tile_switch_cases_05B96B:
     db $00,$00,$00,$00,$00,$00,$01,$01
     db $01,$01,$01,$01,$01,$01,$02,$02
     db $02,$02
 
-DATA_05B97D:
+; 00: Blue P-Switch timer
+; 00: Silver P-Switch timer
+; 00: On/Off Switch value
+tile_timer_types_05B97D:
     db $02,$00,$00,$00,$00,$00,$00,$00
     db $00,$01,$00,$02,$02,$00
 
-DATA_05B98B:
+tile_variants_05B98B:
     db $00,$05,$0A,$0F,$14,$14,$19,$14
     db $0A,$14,$00,$05,$00,$14
 
-AnimatedTileData:
-    db $00,$95,$00,$97,$00,$99,$00,$9B
-    db $80,$95,$80,$97,$80,$99,$80,$9B
-    db $00,$96,$00,$96,$00,$96,$00,$96
-    db $80,$9D,$80,$9F,$80,$A1,$80,$A3
-    db $00,$96,$00,$98,$00,$9A,$00,$9C
-    db $80,$6D,$80,$6F,$00,$7C,$80,$7C
-    db $20,$AC,$20,$AC,$20,$AC,$20,$AC
-    db $20,$AC,$20,$AC,$20,$AC,$20,$AC
-    db $80,$93,$80,$93,$80,$93,$80,$93
-    db $00,$A4,$80,$A4,$00,$A4,$80,$A4
-    db $20,$AC,$20,$AC,$20,$AC,$20,$AC
-    db $00,$AC,$00,$AC,$00,$AC,$00,$AC
-    db $00,$91,$00,$91,$00,$91,$00,$91
-    db $80,$96,$80,$98,$80,$9A,$80,$9C
-    db $00,$9D,$00,$9F,$00,$A1,$00,$A3
-    db $80,$8E,$80,$90,$80,$92,$80,$94
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $00,$9D,$00,$9F,$00,$A1,$00,$A3
+animated_tile_data_05B999:
+    dw $9500,$9700,$9900,$9B00
+    dw $9580,$9780,$9980,$9B80
+    dw $9600,$9600,$9600,$9600
+    dw $9D80,$9F80,$A180,$A380
+    dw $9600,$9800,$9A00,$9C00
+    dw $6D80,$6F80,$7C00,$7C80
+    dw $AC20,$AC20,$AC20,$AC20
+    dw $AC20,$AC20,$AC20,$AC20
+    dw $9380,$9380,$9380,$9380
+    dw $A400,$A480,$A400,$A480
+    dw $AC20,$AC20,$AC20,$AC20
+    dw $AC00,$AC00,$AC00,$AC00
+    dw $9100,$9100,$9100,$9100
+    dw $9680,$9880,$9A80,$9C80
+    dw $9D00,$9F00,$A100,$A300
+    dw $8E80,$9080,$9280,$9480
+    dw $9500,$9500,$9500,$9500
+    dw $9500,$9500,$9500,$9500
+    dw $9500,$9500,$9500,$9500
+    dw $9D00,$9F00,$A100,$A300
     
 mode_7_lava_tile_pointers:
     dw $8E80,$9080,$9280,$9480
@@ -3460,85 +3463,85 @@ mode_7_lava_tile_pointers:
     dw $8300,$8100,$7F00,$7D00 
 
 ;global TODO start adding labels names to constants where applicable
-    db $00,$9E,$00,$A0,$00,$A2,$00,$A0
-    db $00,$9D,$00,$9F,$00,$A1,$00,$A3
-    db $00,$A5,$00,$A7,$00,$A9,$00,$AB
-    db $80,$A5,$80,$A7,$80,$A9,$80,$AB
-    db $80,$AB,$80,$A9,$80,$A7,$80,$A5
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $80,$9E,$80,$A0,$80,$A2,$80,$A0
-    db $80,$7D,$80,$7F,$80,$81,$80,$83
-    db $00,$7E,$00,$80,$00,$82,$00,$84
-    db $80,$7E,$80,$80,$80,$82,$80,$84
-    db $80,$83,$80,$81,$80,$7F,$80,$7D
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $80,$A6,$80,$A8,$80,$AA,$80,$A8
-    db $00,$8E,$00,$90,$00,$92,$00,$94
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $80,$9E,$80,$A0,$80,$A2,$80,$A0
-    db $00,$A6,$00,$A8,$00,$AA,$00,$A8
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $00,$95,$00,$95,$00,$95,$00,$95
-    db $80,$91,$80,$91,$80,$91,$80,$91
-    db $80,$96,$80,$98,$80,$9A,$80,$9C
-    db $80,$96,$80,$98,$80,$9A,$80,$9C
-    db $80,$96,$80,$98,$80,$9A,$80,$9C
-    db $00,$95,$00,$97,$00,$99,$00,$9B
-    db $80,$AC,$80,$AC,$80,$AC,$80,$AC
-    db $00,$93,$00,$93,$00,$93,$00,$93
-    db $80,$93,$80,$93,$80,$93,$80,$93
+    dw $9E00,$A000,$A200,$A000
+    dw $9D00,$9F00,$A100,$A300
+    dw $A500,$A700,$A900,$AB00
+    dw $A580,$A780,$A980,$AB80
+    dw $AB80,$A980,$A780,$A580
+    dw $9500,$9500,$9500,$9500
+    dw $9E80,$A080,$A280,$A080
+    dw $7D80,$7F80,$8180,$8380
+    dw $7E00,$8000,$8200,$8400
+    dw $7E80,$8080,$8280,$8480
+    dw $8380,$8180,$7F80,$7D80
+    dw $9500,$9500,$9500,$9500
+    dw $A680,$A880,$AA80,$A880
+    dw $8E00,$9000,$9200,$9400
+    dw $9500,$9500,$9500,$9500
+    dw $9500,$9500,$9500,$9500
+    dw $9E80,$A080,$A280,$A080
+    dw $A600,$A800,$AA00,$A800
+    dw $9500,$9500,$9500,$9500
+    dw $9500,$9500,$9500,$9500
+    dw $9500,$9500,$9500,$9500
+    dw $9180,$9180,$9180,$9180
+    dw $9680,$9880,$9A80,$9C80
+    dw $9680,$9880,$9A80,$9C80
+    dw $9680,$9880,$9A80,$9C80
+    dw $9500,$9700,$9900,$9B00
+    dw $AC80,$AC80,$AC80,$AC80
+    dw $9300,$9300,$9300,$9300
+    dw $9380,$9380,$9380,$9380
 
 ; Update the VRAM graphics of animated tiles
 ; every 8 effective frames
 ; TODO: palettes upload elsewhere
-update_animated_tile_gfx_05BB39:
+buffer_animated_tile_gfx_05BB39:
     PHB                                     ;$05BB39 | AXY->8
     PHK                                     ;$05BB3A |
     PLB                                     ;$05BB3B |
-    LDA.b Frame_14                          ;$05BB3C |
+    LDA.b Frame_14                          ;$05BB3C | Calculate the index of the first one of four 8x8 tiles in a 16x16 tile:
     AND.b #$07                              ;$05BB3E |
     STA $00                                 ;$05BB40 |
     ASL                                     ;$05BB42 |
-    ADC $00                                 ;$05BB43 |
-    TAY                                     ;$05BB45 |
+    ADC $00                                 ;$05BB43 | graphics tile index = 3 * (Frame_14 % 8)
+    TAY                                     ;$05BB45 | Y: graphics tile index
     ASL                                     ;$05BB46 |
-    TAX                                     ;$05BB47 |
+    TAX                                     ;$05BB47 | X: 00, 06, 0C, 12, 18, 1E, 24, 2A
     REP #$20                                ;$05BB48 | A->16
     LDA.b Frame_14                          ;$05BB4A |
     AND.w #$0018                            ;$05BB4C |
     LSR                                     ;$05BB4F |
     LSR                                     ;$05BB50 |
-    STA $00                                 ;$05BB51 |
-    LDA.w DATA_05B93B,X                     ;$05BB53 |
-    STA.w $0D80                             ;$05BB56 |
-    LDA.w DATA_05B93D,X                     ;$05BB59 |
-    STA.w $0D7E                             ;$05BB5C |
-    LDA.w DATA_05B93F,X                     ;$05BB5F |
-    STA.w $0D7C                             ;$05BB62 |
-    LDX.b #$04                              ;$05BB65 | loop counter
+    STA $00                                 ;$05BB51 | $00: 
+    LDA.w animated_gfx_D80_05B93B,X         ;$05BB53 | Write the 3 VRAM addresses of animated tiles' GFX
+    STA.w Gfx33DestAddrC_0D80               ;$05BB56 |
+    LDA.w animated_gfx_D7E_05B93D,X         ;$05BB59 |
+    STA.w Gfx33DestAddrB_0D7E               ;$05BB5C |
+    LDA.w animated_gfx_D7C_05B93F,X         ;$05BB5F |
+    STA.w Gfx33DestAddrA_0D7C               ;$05BB62 |
+    LDX.b #$04                              ;$05BB65 | X: loop counter
 .loop:
-    PHY                                     ;$05BB67 |
-    PHX                                     ;$05BB68 | preserve the loop counter until the end
+    PHY                                     ;$05BB67 | backup X and Y
+    PHX                                     ;$05BB68 |
     SEP #$20                                ;$05BB69 | A->8
     TYA                                     ;$05BB6B |
-    LDX.w DATA_05B96B,Y                     ;$05BB6C |
-    BEQ .CODE_05BB88                        ;$05BB6F |
-    DEX                                     ;$05BB71 |
-    BNE .CODE_05BB81                        ;$05BB72 |
-    LDX.w DATA_05B97D,Y                     ;$05BB74 |
-    LDY.w TimersStart_14AD,X                ;$05BB77 |
-    BEQ .CODE_05BB88                        ;$05BB7A |
-    CLC                                     ;$05BB7C |
-    ADC.b #$26                              ;$05BB7D |
-    BRA .CODE_05BB88                        ;$05BB7F | Handle the look of the tile
+    LDX.w tile_switch_cases_05B96B,Y        ;$05BB6C |
+    BEQ .set_source_address_gfx_05BB88      ;$05BB6F |\ branch if case == 0
+    DEX                                     ;$05BB71 ||
+    BNE .tileset_variant_05BB81             ;$05BB72 || branch if case == 02
+    LDX.w tile_timer_types_05B97D,Y         ;$05BB74 ||
+    LDY.w TimersStart_14AD,X                ;$05BB77 ||
+    BEQ .set_source_address_gfx_05BB88      ;$05BB7A || branch if timer is not set
+    CLC                                     ;$05BB7C ||
+    ADC.b #$26                              ;$05BB7D ||
+    BRA .set_source_address_gfx_05BB88      ;$05BB7F |/
 
-.CODE_05BB81:
+.tileset_variant_05BB81:
     LDY.w ObjectTileset_1931
-    CLC                                     ;$05BB84 |
-    ADC.w DATA_05B98B,Y                     ;$05BB85 |
-.CODE_05BB88:
+    CLC                                     ;$05BB84 | Determine which group of animated tiles to use for current FG/BG tileset
+    ADC.w tile_variants_05B98B,Y            ;$05BB85 |
+.set_source_address_gfx_05BB88:
     REP #$30                                ;$05BB88 | AXY->16
     AND.w #$00FF                            ;$05BB8A |
     ASL                                     ;$05BB8D |
@@ -3546,11 +3549,11 @@ update_animated_tile_gfx_05BB39:
     ASL                                     ;$05BB8F |
     ORA $00                                 ;$05BB90 |
     TAY                                     ;$05BB92 |
-    LDA.w AnimatedTileData,Y                ;$05BB93 |
+    LDA.w animated_tile_data_05B999,Y       ;$05BB93 | Get VRAM address of the tile's current animation frame GFX
     SEP #$10                                ;$05BB96 | XY->8
-    PLX                                     ;$05BB98 |
-    STA.w $0D76,X                           ;$05BB99 |
-    PLY                                     ;$05BB9C |
+    PLX                                     ;$05BB98 | restore X: loop counter
+    STA.w Gfx33SrcAddrA_0D76,X              ;$05BB99 | sets $0D7A, $0D78 and $0D76
+    PLY                                     ;$05BB9C | restore Y: graphics tile index
     INY                                     ;$05BB9D |
     DEX                                     ;$05BB9E |
     DEX                                     ;$05BB9F |

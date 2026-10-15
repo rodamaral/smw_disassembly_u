@@ -637,7 +637,7 @@ CODE_0485A7:
     STA.w PlayerBehindNet_13F9              ;$0485CC |
     JSL draw_mario_and_yoshi_00E2BD         ;$0485CF |
     LDA.b #$06                              ;$0485D3 |
-    STA.w $0D84                             ;$0485D5 |
+    STA.w PlayerGfxTileCount_0D84           ;$0485D5 |
     LDA.w PlayerAniTimer_1496               ;$0485D8 |
     BEQ CODE_0485E0                         ;$0485DB |
     DEC.w PlayerAniTimer_1496               ;$0485DD |

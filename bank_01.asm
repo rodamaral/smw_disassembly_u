@@ -13395,10 +13395,10 @@ CODE_01E198:
     ASL                                     ;$01E1A6 |
     CLC                                     ;$01E1A7 |
     ADC.w #$8500                            ;$01E1A8 |
-    STA.w $0D8B                             ;$01E1AB |
+    STA.w DynGfxTilePtr_0D85+6              ;$01E1AB |
     CLC                                     ;$01E1AE |
     ADC.w #$0200                            ;$01E1AF |
-    STA.w $0D95                             ;$01E1B2 |
+    STA.w DynGfxTilePtr_0D85+16             ;$01E1B2 |
     SEP #$20                                ;$01E1B5 | A->8
     RTS                                     ;$01E1B7 |
 
@@ -15105,10 +15105,10 @@ handle_off_yoshi_01EE61:
     ASL                                     ;$01EEB2 |
     CLC                                     ;$01EEB3 |
     ADC.w #$8500                            ;$01EEB4 |
-    STA.w $0D8B                             ;$01EEB7 | set Yoshi tiles
+    STA.w DynGfxTilePtr_0D85+6              ;$01EEB7 | set Yoshi tiles
     CLC                                     ;$01EEBA |
     ADC.w #$0200                            ;$01EEBB |
-    STA.w $0D95                             ;$01EEBE | set Yoshi tiles
+    STA.w DynGfxTilePtr_0D85+16             ;$01EEBE | set Yoshi tiles
     LDA $02                                 ;$01EEC1 |
     ASL                                     ;$01EEC3 |
     ASL                                     ;$01EEC4 |
@@ -15117,10 +15117,10 @@ handle_off_yoshi_01EE61:
     ASL                                     ;$01EEC7 |
     CLC                                     ;$01EEC8 |
     ADC.w #$8500                            ;$01EEC9 |
-    STA.w $0D8D                             ;$01EECC | set Yoshi tiles
+    STA.w DynGfxTilePtr_0D85+8              ;$01EECC | set Yoshi tiles
     CLC                                     ;$01EECF |
     ADC.w #$0200                            ;$01EED0 |
-    STA.w $0D97                             ;$01EED3 | set Yoshi tiles
+    STA.w DynGfxTilePtr_0D85+18             ;$01EED3 | set Yoshi tiles
     SEP #$20                                ;$01EED6 | A->8
     PLA                                     ;$01EED8 |
     STA.w SpriteAnimation_1602,X            ;$01EED9 |

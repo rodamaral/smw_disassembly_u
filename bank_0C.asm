@@ -876,53 +876,51 @@ credits_BG_DMA_2:
     db $01,$18,$00,$44,$7F,$00,$04
 
 DMA_credits_BG:                             ;        \
-    SEP #$30                                ;$0C9569 |\ AXY->8
-    PHB                                     ;$0C9569 | | and switch the data bank to $0C
-    PHK                                     ;$0C956A | |
-    PLB                                     ;$0C956B |/
-    LDA.b #$80                              ;$0C956C |\ Set increment VRAM after writing $2119
-    STA.w $2115                             ;$0C956E |/
-    LDA.b #$C0                              ;$0C9571 |\ Set VRAM address to $30C0
-    STA.w $2116                             ;$0C9573 | |
-    LDA.b #$30                              ;$0C9576 | |
-    STA.w $2117                             ;$0C9578 |/
+    SEP #$30                                ;$0C9569 | AXY->8
+    PHB                                     ;$0C9569 | and switch the data bank to $0C
+    PHK                                     ;$0C956A |
+    PLB                                     ;$0C956B |
+    LDA.b #$80                              ;$0C956C | Set increment VRAM after writing $2119
+    STA.w $2115                             ;$0C956E |
+    LDA.b #$C0                              ;$0C9571 | Set VRAM address to $30C0
+    STA.w $2116                             ;$0C9573 |
+    LDA.b #$30                              ;$0C9576 |
+    STA.w $2117                             ;$0C9578 |
     LDY.b #$06                              ;$0C957B | Number of settings to copy
-.DMA_copy_1                                 ;        |
-    LDA.w credits_BG_DMA_1,Y                ;$0C957D |\ Copy DMA settings to channel 2
-    STA.w $4310,Y                           ;$0C9580 | |
-    DEY                                     ;$0C9583 | |
-    BPL .DMA_copy_1                         ;$0C9584 |/
-    LDA.w CreditsBgPointer_1928             ;$0C9586 |\  Set the DMA source high byte
-    ASL                                     ;$0C9589 | | ($1928 << 3) | #$40
-    ASL                                     ;$0C958A | | $1928 may be 00 to 07
-    ASL                                     ;$0C958B | |
-    ORA.w $4313                             ;$0C958C | |
-    STA.w $4313                             ;$0C958F |/
-    LDA.b #$02                              ;$0C9592 |\ Start DMA on channel 1
-    STA.w $420B                             ;$0C9594 |/
-    LDA.b #$80                              ;$0C9597 |\ Set increment after VRAM write
-    STA.w $2115                             ;$0C9599 |/
-    LDA.b #$C0                              ;$0C959C |\ Set VRAM address to $34C0 
-    STA.w $2116                             ;$0C959E | |
-    LDA.b #$34                              ;$0C95A1 | |
-    STA.w $2117                             ;$0C95A3 |/
+-   LDA.w credits_BG_DMA_1,Y                ;$0C957D |\ Copy DMA settings to channel 2
+    STA.w $4310,Y                           ;$0C9580 ||
+    DEY                                     ;$0C9583 ||
+    BPL -                                   ;$0C9584 |/
+    LDA.w CreditsBgPointer_1928             ;$0C9586 | Set the DMA source high byte
+    ASL                                     ;$0C9589 | ($1928 << 3) | #$40
+    ASL                                     ;$0C958A | $1928 may be 00 to 07
+    ASL                                     ;$0C958B |
+    ORA.w $4313                             ;$0C958C |
+    STA.w $4313                             ;$0C958F |
+    LDA.b #$02                              ;$0C9592 | Start DMA on channel 1
+    STA.w $420B                             ;$0C9594 |
+    LDA.b #$80                              ;$0C9597 | Set increment after VRAM write
+    STA.w $2115                             ;$0C9599 |
+    LDA.b #$C0                              ;$0C959C | Set VRAM address to $34C0 
+    STA.w $2116                             ;$0C959E |
+    LDA.b #$34                              ;$0C95A1 |
+    STA.w $2117                             ;$0C95A3 |
     LDY.b #$06                              ;$0C95A6 | Number of settings to copy
-.DMA_copy_2                                 ;        |
-    LDA.w credits_BG_DMA_2,Y                ;$0C95A8 |\ Copy DMA settings to channel 2
-    STA.w $4310,Y                           ;$0C95AB | |
-    DEY                                     ;$0C95AE | |
-    BPL .DMA_copy_2                         ;$0C95AF |/
-    LDA.w CreditsBgPointer_1928             ;$0C95B1 |\  Set the DMA source high byte
-    ASL                                     ;$0C95B4 | | ($1928 << 3) | #$44
-    ASL                                     ;$0C95B5 | | $1928 may be 00 to 07
-    ASL                                     ;$0C95B6 | |
-    ORA.w $4313                             ;$0C95B7 | |
-    STA.w $4313                             ;$0C95BA |/
-    LDA.b #$02                              ;$0C95BD |\ Start DMA on channel 1
-    STA.w $420B                             ;$0C95BF |/
+-   LDA.w credits_BG_DMA_2,Y                ;$0C95A8 |\ Copy DMA settings to channel 2
+    STA.w $4310,Y                           ;$0C95AB ||
+    DEY                                     ;$0C95AE ||
+    BPL -                                   ;$0C95AF |/
+    LDA.w CreditsBgPointer_1928             ;$0C95B1 | Set the DMA source high byte
+    ASL                                     ;$0C95B4 | ($1928 << 3) | #$44
+    ASL                                     ;$0C95B5 | $1928 may be 00 to 07
+    ASL                                     ;$0C95B6 |
+    ORA.w $4313                             ;$0C95B7 |
+    STA.w $4313                             ;$0C95BA |
+    LDA.b #$02                              ;$0C95BD | Start DMA on channel 1
+    STA.w $420B                             ;$0C95BF |
     STZ.w CreditsUpdateBG_1FFE              ;$0C95C2 | Clear BG update flag
     PLB                                     ;$0C95C5 | Restore databank
-    RTL                                     ;$0C95C6 / Done with BG DMA
+    RTL                                     ;$0C95C6 /
 
 DATA_0C95C7:
     db $07
@@ -3008,7 +3006,7 @@ CODE_0CADF6:
     STA.b StripeImage_12                    ;$0CAE06 |
     PHY                                     ;$0CAE08 |
     PHX                                     ;$0CAE09 |
-    JSL load_stripe_image                   ;$0CAE0A |
+    JSL load_stripe_image_0084C8            ;$0CAE0A |
     LDA.w OWLevelSettings_1EA2+$49          ;$0CAE0E |
     BPL CODE_0CAE48                         ;$0CAE11 |
     LDA.w CreditsScreenNumber_1DE9          ;$0CAE13 |

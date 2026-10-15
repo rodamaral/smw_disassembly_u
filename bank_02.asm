@@ -14431,10 +14431,10 @@ CODE_02EA25:
     ASL                                     ;$02EA3C |
     CLC                                     ;$02EA3D |
     ADC.w #$8500                            ;$02EA3E |
-    STA.w $0D8B                             ;$02EA41 |
+    STA.w DynGfxTilePtr_0D85+6              ;$02EA41 |
     CLC                                     ;$02EA44 |
     ADC.w #$0200                            ;$02EA45 |
-    STA.w $0D95                             ;$02EA48 |
+    STA.w DynGfxTilePtr_0D85+16             ;$02EA48 |
     SEP #$20                                ;$02EA4B | A->8
     RTL                                     ;$02EA4D |
 
