@@ -269,8 +269,8 @@ NMI_start_00816A:                           ;        \
 
 +   JSR DMA_animated_level_tiles_00A390     ;$008217 | DMA animated level tiles (plus animated palettes)
 .draw_mario                                 ;        |
-    JSR restore_SP1_tiles                   ;$00821A | DMA $0BF6 to VRAM, redundant due to graphics upload
-    JSR dynamic_sprite_DMA                  ;$00821D | DMA Mario/Yoshi/Vertical fireball
+    JSR restore_SP1_tiles_00A436            ;$00821A | DMA $0BF6 to VRAM, redundant due to graphics upload
+    JSR dynamic_sprite_DMA_00A300           ;$00821D | DMA Mario/Yoshi/Vertical fireball
     BRA .skip_OW_NMI                        ;$008220 | Skip over a majority of the OW NMI
 
 .OW_NMI                                     ;        |
@@ -286,7 +286,7 @@ NMI_start_00816A:                           ;        \
     BRA .regular_OW_bypass                  ;$008235 |/ Skip over various unneeded OW DMAs
 
 +   JSR DMA_animated_OW_tiles               ;$008237 | DMA animated OW tiles (plus animated palettes)
-    JSR dynamic_sprite_DMA                  ;$00823A | DMA Mario/Yoshi/Vertical fireball
+    JSR dynamic_sprite_DMA_00A300           ;$00823A | DMA Mario/Yoshi/Vertical fireball
 .skip_OW_NMI:                               ;        |
     JSR load_stripe_image_0085D2            ;$00823D | Upload Stripe image data
     JSR DMA_spr_tiles_to_OAM_008449         ;$008240 | DMA Sprite tiles to the screen
@@ -360,8 +360,8 @@ NMI_start_00816A:                           ;        \
     JSR DMA_transition_screen               ;$0082CF || DMA start/bonus/game over/time up transition screens
     BRA ..draw_status_bar                   ;$0082D2 |/ Skip dynamic graphics DMA
 
-+   JSR restore_SP1_tiles                   ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
-    JSR dynamic_sprite_DMA                  ;$0082D7 | DMA Mario/Yoshi/Vertical fireball graphics
++   JSR restore_SP1_tiles_00A436            ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
+    JSR dynamic_sprite_DMA_00A300           ;$0082D7 | DMA Mario/Yoshi/Vertical fireball graphics
     BIT.w IRQNMICommand_0D9B                ;$0082DA |
     BVC ..draw_status_bar                   ;$0082DD | branch if we are in a platform boss fight
     JSR DMA_mode_7_animations               ;$0082DF | TODO: some animation stuff, investigate more
@@ -2501,35 +2501,33 @@ GM23_ending_enemy_scene_0095C1:
     JSL CODE_05801E                         ;$0095CE |
     LDA.w CreditsScreenNumber_1DE9          ;$0095D2 |
     CMP.b #$0A                              ;$0095D5 |
-    BNE CODE_0095E0                         ;$0095D7 |
+    BNE .CODE_0095E0                        ;$0095D7 |
     LDA.b #$13                              ;$0095D9 |
     STA.w SpriteTileset_192B                ;$0095DB |
-    BRA CODE_0095E9                         ;$0095DE |
+    BRA .CODE_0095E9                        ;$0095DE |
 
-CODE_0095E0:
+.CODE_0095E0:
     CMP.b #$0C
-    BNE CODE_0095E9                         ;$0095E2 |
+    BNE .CODE_0095E9                        ;$0095E2 |
     LDA.b #$17                              ;$0095E4 |
     STA.w SpriteTileset_192B                ;$0095E6 |
-CODE_0095E9:
+.CODE_0095E9:
     JSR UploadSpriteGFX
     JSR LoadPalette                         ;$0095EC |
     JSL load_level_layers_05809E            ;$0095EF |
-    JSR CODE_00A5F9                         ;$0095F3 |
+    JSR set_animated_tiles_00A5F9           ;$0095F3 |
     JSL CODE_0CADF6                         ;$0095F6 |
     LDA.w CreditsScreenNumber_1DE9          ;$0095FA |
     CMP.b #$0C                              ;$0095FD |
-    BNE CODE_009612                         ;$0095FF |
+    BNE +                                   ;$0095FF |
     LDX.b #$0B                              ;$009601 |
-CODE_009603:
-    LDA.w BowserEndPalette,X
-    STA.w $0807,X                           ;$009606 |
-    LDA.w DATA_00B3CC,X                     ;$009609 |
-    STA.w $0827,X                           ;$00960C |
-    DEX                                     ;$00960F |
-    BPL CODE_009603                         ;$009610 |
-CODE_009612:
-    JSR CODE_00922F
+-   LDA.w BowserEndPalette,X                ;$009603 |\
+    STA.w $0807,X                           ;$009606 ||
+    LDA.w DATA_00B3CC,X                     ;$009609 ||
+    STA.w $0827,X                           ;$00960C ||
+    DEX                                     ;$00960F ||
+    BPL -                                   ;$009610 |/
++   JSR CODE_00922F                         ;$009612 |
     JSR CODE_0092B2                         ;$009615 |
     JSR load_stripe_image_0085D2            ;$009618 |
     JSR GM25_ending_enemy_main_00962C       ;$00961B |
@@ -4164,7 +4162,7 @@ mirror_player_position_00A2F3:
     SEP #$20                                ;$00A2FD | A->8
     RTS                                     ;$00A2FF |
 
-dynamic_sprite_DMA:                         ;        \ 
+dynamic_sprite_DMA_00A300:                  ;        \ 
     REP #$20                                ;$00A300 | A->16, 8 bit XY
     LDX.b #$04                              ;$00A302 | Load DMA channel 2
     LDY.w PlayerGfxTileCount_0D84           ;$00A304 | Get number of tiles to load (0 means 1 tile)
@@ -4225,59 +4223,59 @@ dynamic_sprite_DMA:                         ;        \
     SEP #$20                                ;$00A38D | A->8
     RTS                                     ;$00A38F /
 
-DMA_animated_level_tiles_00A390:                   ;        \ 
+DMA_animated_level_tiles_00A390:            ;        \ 
     REP #$20                                ;$00A390 | A->16
-    LDY.b #$80                              ;$00A392 |\ Set VRAM increment after writing to $2119
-    STY.w $2115                             ;$00A394 |/
-    LDA.w #$1801                            ;$00A397 |\ DMA transfer mode 1, DMA targe address $2118
-    STA.w $4320                             ;$00A39A |/
-    LDY.b #!Bank_7E                         ;$00A39D |\ DMA source bank $7E
-    STY.w $4324                             ;$00A39F |/
+    LDY.b #$80                              ;$00A392 | Set VRAM increment after writing to $2119
+    STY.w $2115                             ;$00A394 |
+    LDA.w #$1801                            ;$00A397 | DMA transfer mode 1, DMA targe address $2118
+    STA.w $4320                             ;$00A39A |
+    LDY.b #!Bank_7E                         ;$00A39D | DMA source bank $7E
+    STY.w $4324                             ;$00A39F |
     LDX.b #$04                              ;$00A3A2 | Load DMA channel 2
-    LDA.w Gfx33DestAddrC_0D80               ;$00A3A4 |\ Check for if tiles are ready for DMA in slot 0
-    BEQ .skip_slot_0                        ;$00A3A7 |/
+    LDA.w Gfx33DestAddrC_0D80               ;$00A3A4 | Check for if tiles are ready for DMA in slot 0
+    BEQ .skip_slot_0                        ;$00A3A7 |
     STA.w $2116                             ;$00A3A9 | Store the VRAM destination
-    LDA.w Gfx33SrcAddrC_0D7A                ;$00A3AC |\ Set the DMA source address from $0D7A
-    STA.w $4322                             ;$00A3AF |/
-    LDA.w #$0080                            ;$00A3B2 |\ Transfer #$80 bytes
-    STA.w $4325                             ;$00A3B5 |/
+    LDA.w Gfx33SrcAddrC_0D7A                ;$00A3AC | Set the DMA source address from $0D7A
+    STA.w $4322                             ;$00A3AF |
+    LDA.w #$0080                            ;$00A3B2 | Transfer #$80 bytes
+    STA.w $4325                             ;$00A3B5 |
     STX.w $420B                             ;$00A3B8 | Run channel 2 DMA
 .skip_slot_0                                ;        |
-    LDA.w Gfx33DestAddrB_0D7E               ;$00A3BB |\ Check for if tiles are ready for DMA in slot 1
-    BEQ .skip_slot_1                        ;$00A3BE |/
+    LDA.w Gfx33DestAddrB_0D7E               ;$00A3BB | Check for if tiles are ready for DMA in slot 1
+    BEQ .skip_slot_1                        ;$00A3BE |
     STA.w $2116                             ;$00A3C0 | Store the VRAM destination
-    LDA.w Gfx33SrcAddrB_0D78                ;$00A3C3 |\ Set the DMA source address from $0D78
-    STA.w $4322                             ;$00A3C6 |/
-    LDA.w #$0080                            ;$00A3C9 |\ Transfer #$80 bytes
-    STA.w $4325                             ;$00A3CC |/
+    LDA.w Gfx33SrcAddrB_0D78                ;$00A3C3 | Set the DMA source address from $0D78
+    STA.w $4322                             ;$00A3C6 |
+    LDA.w #$0080                            ;$00A3C9 | Transfer #$80 bytes
+    STA.w $4325                             ;$00A3CC |
     STX.w $420B                             ;$00A3CF | Run channel 2 DMA
 .skip_slot_1                                ;        |
-    LDA.w Gfx33DestAddrA_0D7C               ;$00A3D2 |\ Check for if tiles are ready for DMA in slot 1
-    BEQ .skip_slot_2                        ;$00A3D5 |/
+    LDA.w Gfx33DestAddrA_0D7C               ;$00A3D2 | Check for if tiles are ready for DMA in slot 1
+    BEQ .skip_slot_2                        ;$00A3D5 |
     STA.w $2116                             ;$00A3D7 | Store the VRAM destination
-    CMP.w #$0800                            ;$00A3DA |\ If the destination is $0800 branch to handle
-    BEQ .berry_upload                       ;$00A3DD |/ The berry uniquely
-    LDA.w Gfx33SrcAddrA_0D76                ;$00A3DF |\ Set the DMA source address from $0D76
-    STA.w $4322                             ;$00A3E2 |/
-    LDA.w #$0080                            ;$00A3E5 |\ Transfer #$80 bytes
-    STA.w $4325                             ;$00A3E8 |/
+    CMP.w #$0800                            ;$00A3DA | If the destination is $0800 branch to handle
+    BEQ .berry_upload                       ;$00A3DD | The berry uniquely
+    LDA.w Gfx33SrcAddrA_0D76                ;$00A3DF | Set the DMA source address from $0D76
+    STA.w $4322                             ;$00A3E2 |
+    LDA.w #$0080                            ;$00A3E5 | Transfer #$80 bytes
+    STA.w $4325                             ;$00A3E8 |
     STX.w $420B                             ;$00A3EB | Run channel 2 DMA
     BRA .skip_slot_2                        ;$00A3EE | Skip over the berry DMA
                                             ;        |
 .berry_upload                               ;        |
-    LDA.w Gfx33SrcAddrA_0D76                ;$00A3F0 |\ Set the DMA source address from $0D78
-    STA.w $4322                             ;$00A3F3 |/
-    LDA.w #$0040                            ;$00A3F6 |\ Transfer #$40 bytes
-    STA.w $4325                             ;$00A3F9 |/
+    LDA.w Gfx33SrcAddrA_0D76                ;$00A3F0 | Set the DMA source address from $0D78
+    STA.w $4322                             ;$00A3F3 |
+    LDA.w #$0040                            ;$00A3F6 | Transfer #$40 bytes
+    STA.w $4325                             ;$00A3F9 |
     STX.w $420B                             ;$00A3FC | Run channel 2 DMA
-    LDA.w #$0900                            ;$00A3FF |\ Move VRAM destination to the next row
-    STA.w $2116                             ;$00A402 |/
-    LDA.w Gfx33SrcAddrA_0D76                ;$00A405 |\ Set the DMA source address from $0D78
-    CLC                                     ;$00A408 | |
-    ADC.w #$0040                            ;$00A409 | | Add #$40 to offset to the next row
-    STA.w $4322                             ;$00A40C |/
-    LDA.w #$0040                            ;$00A40F |\ Transfer #$40 bytes
-    STA.w $4325                             ;$00A412 |/
+    LDA.w #$0900                            ;$00A3FF | Move VRAM destination to the next row
+    STA.w $2116                             ;$00A402 |
+    LDA.w Gfx33SrcAddrA_0D76                ;$00A405 | Set the DMA source address from $0D78
+    CLC                                     ;$00A408 |
+    ADC.w #$0040                            ;$00A409 |  Add #$40 to offset to the next row
+    STA.w $4322                             ;$00A40C |
+    LDA.w #$0040                            ;$00A40F | Transfer #$40 bytes
+    STA.w $4325                             ;$00A412 |
     STX.w $420B                             ;$00A415 | Run channel 2 DMA
 .skip_slot_2                                ;$00A418 |
     SEP #$20                                ;        | 8 bit AXY
@@ -4286,18 +4284,18 @@ animate_yellow_level_tile:                  ;        |
     STZ $00                                 ;$00A41C | Clear the palette offset
 animate_red_level_tile:                     ;        |
     STA.w $2121                             ;$00A41E | Store the color address
-    LDA.b Frame_14                          ;$00A421 |\ Use the frame counter to cycle the colors
-    AND.b #$1C                              ;$00A423 | | 
-    LSR                                     ;$00A425 | | (($14) & #$1C) >> 1  (0 to 14 decimal)
-    ADC $00                                 ;$00A426 | | Add the palette offset
-    TAY                                     ;$00A428 |/
-    LDA.w animated_palettes,Y               ;$00A429 |\ Store the animate color to CGRAM
-    STA.w $2122                             ;$00A42C | |
-    LDA.w animated_palettes+1,Y             ;$00A42F | |
-    STA.w $2122                             ;$00A432 |/
+    LDA.b Frame_14                          ;$00A421 | Use the frame counter to cycle the colors
+    AND.b #$1C                              ;$00A423 |
+    LSR                                     ;$00A425 | (($14) & #$1C) >> 1  (0 to 14 decimal)
+    ADC $00                                 ;$00A426 |  Add the palette offset
+    TAY                                     ;$00A428 |
+    LDA.w animated_palettes,Y               ;$00A429 | Store the animate color to CGRAM
+    STA.w $2122                             ;$00A42C |
+    LDA.w animated_palettes+1,Y             ;$00A42F |
+    STA.w $2122                             ;$00A432 |
     RTS                                     ;$00A435 /
 
-restore_SP1_tiles:                          ;        \ (This routine is pretty much useless in vanilla SMW) 
+restore_SP1_tiles_00A436:                   ;        \ (This routine is pretty much useless in vanilla SMW) 
     LDA.w MarioStartFlag_1935               ;$00A436 | Check for a request to DMA tiles 4A-4F and 5A-5F 
     BEQ .return                             ;$00A439 |
     STZ.w MarioStartFlag_1935               ;$00A43B | Prevent continuous tile uploading
@@ -4378,27 +4376,27 @@ palette_upload_return_00A4E2:               ;        |
 
 DMA_animated_OW_tiles:                      ;        \ 
     REP #$10                                ;$00A4E3 | XY->16
-    LDA.b #$80                              ;$00A4E5 |\ Set VRAM increment after writing to $2119
-    STA.w $2115                             ;$00A4E7 |/
-    LDY.w #$0750                            ;$00A4EA |\ Set VRAM destination to #$0750
-    STY.w $2116                             ;$00A4ED |/
-    LDY.w #$1801                            ;$00A4F0 |\ Set DMA transfer mode 1, DMA address $2118
-    STY.w $4320                             ;$00A4F3 |/
-    LDY.w #$0AF6                            ;$00A4F6 |\ Set DMA source as $0AF6 (OW animated tiles)
-    STY.w $4322                             ;$00A4F9 |/
+    LDA.b #$80                              ;$00A4E5 | Set VRAM increment after writing to $2119
+    STA.w $2115                             ;$00A4E7 |
+    LDY.w #$0750                            ;$00A4EA | Set VRAM destination to #$0750
+    STY.w $2116                             ;$00A4ED |
+    LDY.w #$1801                            ;$00A4F0 | Set DMA transfer mode 1, DMA address $2118
+    STY.w $4320                             ;$00A4F3 |
+    LDY.w #$0AF6                            ;$00A4F6 | Set DMA source as $0AF6 (OW animated tiles)
+    STY.w $4322                             ;$00A4F9 |
     STZ.w $4324                             ;$00A4FC | Set DMA source bank as #$00
-    LDY.w #$0160                            ;$00A4FF |\ Transfer #$160 bytes
-    STY.w $4325                             ;$00A502 |/
-    LDA.b #$04                              ;$00A505 |\ Run DMA channel 2
-    STA.w $420B                             ;$00A507 |/
+    LDY.w #$0160                            ;$00A4FF | Transfer #$160 bytes
+    STY.w $4325                             ;$00A502 |
+    LDA.b #$04                              ;$00A505 | Run DMA channel 2
+    STA.w $420B                             ;$00A507 |
     SEP #$10                                ;$00A50A | XY->8
-    LDA.w OWProcess_13D9                    ;$00A50C |\ If the submap is switching don't bother
-    CMP.b #!OwSubmap_0A                     ;$00A50F | | updating the level tile palette animation
-    BEQ palette_upload_return_00A4E2        ;$00A511 |/
+    LDA.w OWProcess_13D9                    ;$00A50C | If the submap is switching don't bother
+    CMP.b #!OwSubmap_0A                     ;$00A50F |  updating the level tile palette animation
+    BEQ palette_upload_return_00A4E2        ;$00A511 |
     LDA.b #$6D                              ;$00A513 | Load CGRAM color address
     JSR animate_yellow_level_tile           ;$00A515 | Set the yellow level tile palette animation
-    LDA.b #$10                              ;$00A518 |\ Set the palette table offset as #$10 (16 bytes)
-    STA $00                                 ;$00A51A |/
+    LDA.b #$10                              ;$00A518 | Set the palette table offset as #$10 (16 bytes)
+    STA $00                                 ;$00A51A |
     LDA.b #$7D                              ;$00A51C | Load CGRAM color address
     JMP animate_red_level_tile              ;$00A51E / Set the red level tile palette animation and return
 
@@ -4485,7 +4483,7 @@ GM12_level_load_2_00A59C:
     JSR LoadPalette                         ;$00A5BC |
     JSL reset_layer3_05BE8A                 ;$00A5BF |
     JSR load_layer3_009FB8                  ;$00A5C3 |
-    JSR CODE_00A5F9                         ;$00A5C6 |
+    JSR set_animated_tiles_00A5F9           ;$00A5C6 |
     JSR DisableHDMA                         ;$00A5C9 |
     JSR run_level_physics_009860            ;$00A5CC |
 .common_level_00A5CF:
@@ -4506,7 +4504,7 @@ GM12_level_load_2_00A59C:
     JSR consolidate_OAM_008494              ;$00A5F3 |
     JMP increment_game_mode_0093F4          ;$00A5F6 |
 
-CODE_00A5F9:
+set_animated_tiles_00A5F9:
     LDA.b #$E7                              ;        | %11100111
     TRB.b Frame_14                          ;$00A5FB | clear bits of $14, resulting in $00, $08, $10 or $18
 -   JSL buffer_animated_tile_gfx_05BB39     ;$00A5FD |\
