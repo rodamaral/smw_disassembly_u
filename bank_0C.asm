@@ -810,7 +810,7 @@ load_ending_screen_0C94C0:
     AND.b #$00                              ;$0C94E1 |
     TAX                                     ;$0C94E3 |
     STX $00                                 ;$0C94E4 |
-    LDX.w #$007F                            ;$0C94E6 |
+    LDX.w #!Bank_007F                       ;$0C94E6 |
     STX $08                                 ;$0C94E9 |
 -   SEP #$20                                ;$0C94EB |\ A->8
     LDY $04                                 ;$0C94ED ||

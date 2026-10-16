@@ -5047,7 +5047,7 @@ CODE_04D750:
     STA.w $4313                             ;$04D767 |
 CODE_04D76A:
     LDA.b #$02
-    STA.w $420B                             ;$04D76C |
+    STA.w DMAEnable_420B                    ;$04D76C |
     RTL                                     ;$04D76F |
 
 clear_map16_high_04D770:
@@ -5928,14 +5928,14 @@ CODE_04E496:
     STA $04                                 ;$04E4A7 |
 CODE_04E4A9:
     SEP #$20                                ;$04E4A9 | A->8
-    LDA.b #$7F                              ;$04E4AB |
+    LDA.b #!Bank_7F                         ;$04E4AB |
     STA $08                                 ;$04E4AD |
     LDA.b #$0C                              ;$04E4AF |
     STA $0B                                 ;$04E4B1 |
     REP #$20                                ;$04E4B3 | A->16
     LDA.w #$0000                            ;$04E4B5 |
     STA $06                                 ;$04E4B8 |
-    LDA.w #$8000                            ;$04E4BA |
+    LDA.w #!Addr_8000                       ;$04E4BA |
     STA $09                                 ;$04E4BD |
     CPY.w #$0900                            ;$04E4BF |
     BCC CODE_04E4CA                         ;$04E4C2 |
@@ -6226,7 +6226,7 @@ Return04E6F8:
 
 CODE_04E6F9:
     JSR CODE_04EA62
-    LDA.b #$7F                              ;$04E6FC |
+    LDA.b #!Bank_7F                         ;$04E6FC |
     STA $0E                                 ;$04E6FE |
     REP #$30                                ;$04E700 | AXY->16
     LDA.w EventTileIndex_1DEB               ;$04E702 |
@@ -6988,7 +6988,7 @@ CODE_04EDE6:
 
 CODE_04EE30:
     SEP #$20                                ;$04EE30 | A->8
-    LDA.b #$7F                              ;$04EE32 |
+    LDA.b #!Bank_007F                       ;$04EE32 |
     STA $0E                                 ;$04EE34 |
     REP #$30                                ;$04EE36 | AXY->16
     LDA.w EventTileIndex_1DEB               ;$04EE38 |

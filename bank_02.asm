@@ -15181,16 +15181,15 @@ WigglerInit:
     PLB                                     ;$02EFF4 |
     JSR CODE_02F011                         ;$02EFF5 |
     LDY.b #$7E                              ;$02EFF8 |
-CODE_02EFFA:
-    LDA.b SpriteXPosLow_E4,X
-    STA.b [WigglerSegmentPtr_D5],Y          ;$02EFFC |
-    LDA.b SpriteYPosLow_D8,X                ;$02EFFE |
-    INY                                     ;$02F000 |
-    STA.b [WigglerSegmentPtr_D5],Y          ;$02F001 |
-    DEY                                     ;$02F003 |
-    DEY                                     ;$02F004 |
-    DEY                                     ;$02F005 |
-    BPL CODE_02EFFA                         ;$02F006 |
+-   LDA.b SpriteXPosLow_E4,X                ;$02EFFA |\
+    STA.b [WigglerSegmentPtr_D5],Y          ;$02EFFC ||
+    LDA.b SpriteYPosLow_D8,X                ;$02EFFE ||
+    INY                                     ;$02F000 ||
+    STA.b [WigglerSegmentPtr_D5],Y          ;$02F001 ||
+    DEY                                     ;$02F003 ||
+    DEY                                     ;$02F004 ||
+    DEY                                     ;$02F005 ||
+    BPL -                                   ;$02F006 |/
     JSR CODE_02D4FA                         ;$02F008 |
     TYA                                     ;$02F00B |
     STA.w SpriteDir_157C,X                  ;$02F00C |
@@ -15201,14 +15200,14 @@ CODE_02F011:
     TXA
     AND.b #$03                              ;$02F012 |
     TAY                                     ;$02F014 |
-    LDA.b #$7B                              ;$02F015 |
+    LDA.b #!Addr_9A7B_Low                   ;$02F015 |
     CLC                                     ;$02F017 |
     ADC.w DATA_02EFEA,Y                     ;$02F018 |
     STA.b WigglerSegmentPtr_D5              ;$02F01B |
-    LDA.b #$9A                              ;$02F01D |
+    LDA.b #!Addr_9A7B_High                  ;$02F01D |
     ADC.w DATA_02EFEE,Y                     ;$02F01F |
     STA.b WigglerSegmentPtr_D5+1            ;$02F022 |
-    LDA.b #$7F                              ;$02F024 |
+    LDA.b #!Bank_007F                       ;$02F024 |
     STA.b WigglerSegmentPtr_D5+2            ;$02F026 |
     RTS                                     ;$02F028 |
 
@@ -15318,7 +15317,7 @@ CODE_02F0DB:
     ADC.w #$007F                            ;$02F0E9 |
     TAY                                     ;$02F0EC |
     LDA.w #$007D                            ;$02F0ED |
-    db $44,$7F,$7F                          ;$02F0F0 |
+    db $44,$7F,$7F                          ;$02F0F0 | FIXME
     SEP #$30                                ;$02F0F3 | AXY->8
     PLB                                     ;$02F0F5 |
     PLX                                     ;$02F0F6 |

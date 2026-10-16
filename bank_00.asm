@@ -4,7 +4,7 @@ reset_start_008000:
     SEI                                     ;$008000 \ Disable IRQ
     STZ.w $4200                             ;$008001 | Disable IRQ, NMI and joypad reading
     STZ.w $420C                             ;$008004 | Disable HDMA
-    STZ.w $420B                             ;$008007 | Disable DMA
+    STZ.w DMAEnable_420B                    ;$008007 | Disable DMA
     STZ.w $2140                             ;$00800A |\ Clear SPC I/O ports
     STZ.w $2141                             ;$00800D | |
     STZ.w $2142                             ;$008010 | |
@@ -559,7 +559,7 @@ DMA_spr_tiles_to_OAM_008449:                ;        \
     LDA.w #$0220                            ;$00845D | Transfer #$0220 bytes
     STA.w $4305                             ;$008460 |
     LDY.b #$01                              ;$008463 | Run DMA channel 0
-    STY.w $420B                             ;$008465 |
+    STY.w DMAEnable_420B                    ;$008465 |
     SEP #$20                                ;$008468 | A->8
     LDA.b #$80                              ;$00846A | Enable sprite rotation priority
     STA.w $2103                             ;$00846C |
@@ -732,7 +732,7 @@ clear_out_layer3_0085FA:
     DEX                                     ;$008614 ||
     BPL -                                   ;$008615 |/
     LDY.b #$02                              ;$008617 |
-    STY.w $420B                             ;$008619 |
+    STY.w DMAEnable_420B                    ;$008619 |
     LDA.b #$38                              ;$00861C |
     STA $00                                 ;$00861E |
     LDA.b #$80                              ;$008620 |
@@ -747,7 +747,7 @@ clear_out_layer3_0085FA:
     BPL -                                   ;$008636 |/
     LDA.b #$19                              ;$008638 |
     STA.w $4311                             ;$00863A |
-    STY.w $420B                             ;$00863D |
+    STY.w DMAEnable_420B                    ;$00863D |
     STZ.b OAMAddress_3F                     ;$008640 |
     JSL OAM_reset_7F8000                    ;$008642 |
     JMP DMA_spr_tiles_to_OAM_008449         ;$008646 |
@@ -909,7 +909,7 @@ DMA_stripe_image_00871E:
     LDA $07                                 ;$008772 || Set VRAM increment depending on stripe direction
     STA.w $2115                             ;$008774 ||
     LDA.b #$02                              ;$008777 || Start DMA on channel 1 to DMA the first RLE byte
-    STA.w $420B                             ;$008779 ||
+    STA.w DMAEnable_420B                    ;$008779 ||
     LDA.b #$19                              ;$00877C || Set DMA destination to $2119
     STA.w $4311                             ;$00877E ||
     REP #$21                                ;$008781 || A->16 and clear carry
@@ -932,7 +932,7 @@ DMA_stripe_image_00871E:
     ORA.b #$80                              ;$0087A0 |  Set VRAM increment after $2119
     STA.w $2115                             ;$0087A2 |
     LDA.b #$02                              ;$0087A5 | Run DMA on channel 1, second RLE byte or non-RLE
-    STA.w $420B                             ;$0087A7 |
+    STA.w DMAEnable_420B                    ;$0087A7 |
     JMP .next_block                         ;$0087AA / Continue and read the next block
 
 upload_map16_strip_VRAM_0087AD:             ;        \ 
@@ -960,7 +960,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$0087D9 ||  source: $001BE6, size: #$0040
     BPL -                                   ;$0087DA |/
     LDA.b #$02                              ;$0087DC | Run DMA on channel 1
-    STA.w $420B                             ;$0087DE |
+    STA.w DMAEnable_420B                    ;$0087DE |
     STY.w $2115                             ;$0087E1 | Rewrite VRAM increment and remap setting
     LDA.w Layer1VramAddr_1BE4+1             ;$0087E4 | Write the next VRAM address
     STA.w $2116                             ;$0087E7 |  Which is #$0800 bytes higher
@@ -974,7 +974,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$0087FB ||  source: $001C26, size: #$002C
     BPL -                                   ;$0087FC |/
     LDA.b #$02                              ;$0087FE | Run DMA on channel 1
-    STA.w $420B                             ;$008800 |
+    STA.w DMAEnable_420B                    ;$008800 |
     STY.w $2115                             ;$008803 | Rewrite VRAM increment and remap setting
     LDA.w Layer1VramAddr_1BE4+1             ;$008806 | Write the next VRAM address
     INC A                                   ;$008809 |  Which is a single byte higher
@@ -987,7 +987,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$00881B ||  source: $001C66, size: #$0040
     BPL -                                   ;$00881C |/
     LDA.b #$02                              ;$00881E | Run DMA on channel 1
-    STA.w $420B                             ;$008820 |
+    STA.w DMAEnable_420B                    ;$008820 |
     STY.w $2115                             ;$008823 | Rewrite VRAM increment and remap setting
     LDA.w Layer1VramAddr_1BE4+1             ;$008826 | Write the next VRAM address
     INC A                                   ;$008829 |  Which is #$0801 bytes higher
@@ -1002,7 +1002,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$00883E ||  source: $001CA6, size: #$002C
     BPL -                                   ;$00883F |/
     LDA.b #$02                              ;$008841 | Run DMA on channel 1
-    STA.w $420B                             ;$008843 |
+    STA.w DMAEnable_420B                    ;$008843 |
     JMP .layer_2_upload_check               ;$008846 /
 
 .vertical_layer_1                           ;        \ 
@@ -1018,7 +1018,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$008862 ||  source: $001BE6, size: #$0040
     BPL -                                   ;$008863 |/
     LDA.b #$02                              ;$008865 | Run DMA on channel 1
-    STA.w $420B                             ;$008867 |
+    STA.w DMAEnable_420B                    ;$008867 |
     STY.w $2115                             ;$00886A | Rewrite VRAM increment and remap setting
     LDA.w Layer1VramAddr_1BE4+1             ;$00886D | Write the next VRAM address
     STA.w $2116                             ;$008870 |  Which is #$0400 bytes higher
@@ -1034,7 +1034,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     LDA.b #$40                              ;$008887 | Change the Transfer size to #$0040
     STA.w $4315                             ;$008889 | For writing the full vertical data
     LDA.b #$02                              ;$00888C | Run DMA on channel 1
-    STA.w $420B                             ;$00888E |
+    STA.w DMAEnable_420B                    ;$00888E |
     STY.w $2115                             ;$008891 | Rewrite VRAM increment and remap setting
     LDA.w Layer1VramAddr_1BE4+1             ;$008894 | Write the next VRAM address
     CLC                                     ;$008897 |  Which is #$0020 bytes higher
@@ -1048,7 +1048,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$0088AB ||  source: $001C66, size: #$0040
     BPL -                                   ;$0088AC |/
     LDA.b #$02                              ;$0088AE | Run DMA on channel 1
-    STA.w $420B                             ;$0088B0 |
+    STA.w DMAEnable_420B                    ;$0088B0 |
     STY.w $2115                             ;$0088B3 | Rewrite VRAM increment and remap setting
     LDA.w Layer1VramAddr_1BE4+1             ;$0088B6 | Write the next VRAM address
     CLC                                     ;$0088B9 |  Which is #$0420 bytes higher
@@ -1066,7 +1066,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     LDA.b #$40                              ;$0088D3 | Change the Transfer size to #$0040
     STA.w $4315                             ;$0088D5 | For writing the full vertical data
     LDA.b #$02                              ;$0088D8 | Run DMA on channel 1
-    STA.w $420B                             ;$0088DA |
+    STA.w DMAEnable_420B                    ;$0088DA |
 .layer_2_upload_check                       ;        |
     LDA.b #$00                              ;$0088DD | Reset the VRAM upload address
     STA.w Layer1VramAddr_1BE4               ;$0088DF |
@@ -1093,7 +1093,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$00890C ||  source: $001CE8, size: #$0040
     BPL -                                   ;$00890D |/
     LDA.b #$02                              ;$00890F | Run DMA on channel 1
-    STA.w $420B                             ;$008911 |
+    STA.w DMAEnable_420B                    ;$008911 |
     STY.w $2115                             ;$008914 | Rewrite VRAM increment and remap setting
     LDA.w Layer2VramAddr_1CE6+1             ;$008917 | Write the next VRAM address
     STA.w $2116                             ;$00891A |  Which is #$0800 bytes higher
@@ -1107,7 +1107,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$00892E ||  source: $001D28, size: #$002C
     BPL -                                   ;$00892F |/
     LDA.b #$02                              ;$008931 | Run DMA on channel 1
-    STA.w $420B                             ;$008933 |
+    STA.w DMAEnable_420B                    ;$008933 |
     STY.w $2115                             ;$008936 | Rewrite VRAM increment and remap setting
     LDA.w Layer2VramAddr_1CE6+1             ;$008939 | Write the next VRAM address
     INC A                                   ;$00893C |  Which is a single byte higher
@@ -1120,7 +1120,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$00894E ||  source: $001D68, size: #$0040
     BPL -                                   ;$00894F |/
     LDA.b #$02                              ;$008951 | Run DMA on channel 1
-    STA.w $420B                             ;$008953 |
+    STA.w DMAEnable_420B                    ;$008953 |
     STY.w $2115                             ;$008956 | Rewrite VRAM increment and remap setting
     LDA.w Layer2VramAddr_1CE6+1             ;$008959 | Write the next VRAM address
     INC A                                   ;$00895C |  Which is #$0801 bytes higher
@@ -1135,7 +1135,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$008971 ||  source: $001DA8, size: #$002C
     BPL -                                   ;$008972 |/
     LDA.b #$02                              ;$008974 | Run DMA on channel 1
-    STA.w $420B                             ;$008976 |
+    STA.w DMAEnable_420B                    ;$008976 |
     JMP .return_008A10                      ;$008979 /
 
 .vertical_layer_2                           ;        \ 
@@ -1151,7 +1151,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$008995 ||  source: $001CE8, size: #$0040
     BPL -                                   ;$008996 |/
     LDA.b #$02                              ;$008998 | Run DMA on channel 1
-    STA.w $420B                             ;$00899A |
+    STA.w DMAEnable_420B                    ;$00899A |
     STY.w $2115                             ;$00899D | Rewrite VRAM increment and remap setting
     LDA.w Layer2VramAddr_1CE6+1             ;$0089A0 | Write the next VRAM address
     STA.w $2116                             ;$0089A3 |  Which is #$0400 bytes higher
@@ -1167,7 +1167,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     LDA.b #$40                              ;$0089BA | Change the Transfer size to #$0040
     STA.w $4315                             ;$0089BC | For writing the full vertical data
     LDA.b #$02                              ;$0089BF | Run DMA on channel 1
-    STA.w $420B                             ;$0089C1 |
+    STA.w DMAEnable_420B                    ;$0089C1 |
     STY.w $2115                             ;$0089C4 | Rewrite VRAM increment and remap setting
     LDA.w Layer2VramAddr_1CE6+1             ;$0089C7 | Write the next VRAM address
     CLC                                     ;$0089CA |  Which is #$0020 bytes higher
@@ -1181,7 +1181,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     DEX                                     ;$0089DE ||  source: $001D68, size: #$0040
     BPL -                                   ;$0089DF |/
     LDA.b #$02                              ;$0089E1 | Run DMA on channel 1
-    STA.w $420B                             ;$0089E3 |
+    STA.w DMAEnable_420B                    ;$0089E3 |
     STY.w $2115                             ;$0089E6 | Rewrite VRAM increment and remap setting
     LDA.w Layer2VramAddr_1CE6+1             ;$0089E9 | Write the next VRAM address
     CLC                                     ;$0089EC |  Which is #$0420 bytes higher
@@ -1199,7 +1199,7 @@ upload_map16_strip_VRAM_0087AD:             ;        \
     LDA.b #$40                              ;$008A06 | Change the Transfer size to #$0040
     STA.w $4315                             ;$008A08 | For writing the full vertical data
     LDA.b #$02                              ;$008A0B | Run DMA on channel 1
-    STA.w $420B                             ;$008A0D |
+    STA.w DMAEnable_420B                    ;$008A0D |
 .return_008A10                              ;        |
     LDA.b #$00                              ;$008A10 | Reset the VRAM upload address
     STA.w Layer2VramAddr_1CE6               ;$008A12 |
@@ -1443,7 +1443,7 @@ CODE_008D10:
     DEX                                     ;$008D16 |
     BPL CODE_008D10                         ;$008D17 |
     LDA.b #$02                              ;$008D19 |
-    STA.w $420B                             ;$008D1B |
+    STA.w DMAEnable_420B                    ;$008D1B |
     LDA.b #$80                              ;$008D1E |
     STA.w $2115                             ;$008D20 |
     LDA.b #$42                              ;$008D23 |
@@ -1457,7 +1457,7 @@ CODE_008D2F:
     DEX                                     ;$008D35 |
     BPL CODE_008D2F                         ;$008D36 |
     LDA.b #$02                              ;$008D38 |
-    STA.w $420B                             ;$008D3A |
+    STA.w DMAEnable_420B                    ;$008D3A |
     LDA.b #$80                              ;$008D3D |
     STA.w $2115                             ;$008D3F |
     LDA.b #$63                              ;$008D42 |
@@ -1471,7 +1471,7 @@ CODE_008D4E:
     DEX                                     ;$008D54 |
     BPL CODE_008D4E                         ;$008D55 |
     LDA.b #$02                              ;$008D57 |
-    STA.w $420B                             ;$008D59 |
+    STA.w DMAEnable_420B                    ;$008D59 |
     LDA.b #$80                              ;$008D5C |
     STA.w $2115                             ;$008D5E |
     LDA.b #$8E                              ;$008D61 |
@@ -1485,7 +1485,7 @@ CODE_008D6D:
     DEX                                     ;$008D73 |
     BPL CODE_008D6D                         ;$008D74 |
     LDA.b #$02                              ;$008D76 |
-    STA.w $420B                             ;$008D78 |
+    STA.w DMAEnable_420B                    ;$008D78 |
     LDX.b #$36                              ;$008D7B |
     LDY.b #$6C                              ;$008D7D |
 CODE_008D7F:
@@ -1523,7 +1523,7 @@ draw_status_bar_008DAC:
     DEX                                     ;$008DC1 ||
     BPL -                                   ;$008DC2 |/
     LDA.b #$02                              ;$008DC4 |
-    STA.w $420B                             ;$008DC6 |
+    STA.w DMAEnable_420B                    ;$008DC6 |
     STZ.w $2115                             ;$008DC9 |
     LDA.b #$63                              ;$008DCC |
     STA.w $2116                             ;$008DCE |
@@ -1535,7 +1535,7 @@ draw_status_bar_008DAC:
     DEX                                     ;$008DDE ||
     BPL -                                   ;$008DDF |/
     LDA.b #$02                              ;$008DE1 |
-    STA.w $420B                             ;$008DE3 |
+    STA.w DMAEnable_420B                    ;$008DE3 |
     RTS                                     ;$008DE6 |
 
 .DMA_settings_1:
@@ -2047,7 +2047,7 @@ CODE_00923A:
     DEX                                     ;$009240 |
     BPL CODE_00923A                         ;$009241 |
     LDA.b #$04                              ;$009243 |
-    STA.w $420B                             ;$009245 |
+    STA.w DMAEnable_420B                    ;$009245 |
     RTS                                     ;$009248 |
 
 DATA_009249:
@@ -2829,29 +2829,29 @@ mode_7_VRAM_addresses:
     dw $141E,$139E,$131E,$169E 
 
 DMA_mode_7_animations:                      ;        \ 
-    LDA.w IRQNMICommand_0D9B                ;$0098A9 |\ If we are at bowser skip uploading lava tiles
-    LSR                                     ;$0098AC | |
-    BCS .bowser                             ;$0098AD |/
-    LDA.b Frame_14                          ;$0098AF |\ Get the animation index relative
-    LSR                                     ;$0098B1 | | To the frame counter
-    LSR                                     ;$0098B2 | | ($14 >> 2) & #$06
-    AND.b #$06                              ;$0098B3 | |
-    TAX                                     ;$0098B5 |/
+    LDA.w IRQNMICommand_0D9B                ;$0098A9 | If we are at bowser skip uploading lava tiles
+    LSR                                     ;$0098AC |
+    BCS .bowser                             ;$0098AD |
+    LDA.b Frame_14                          ;$0098AF | Get the animation index relative
+    LSR                                     ;$0098B1 |  To the frame counter
+    LSR                                     ;$0098B2 |  ($14 >> 2) & #$06
+    AND.b #$06                              ;$0098B3 |
+    TAX                                     ;$0098B5 |
     REP #$20                                ;$0098B6 | A->16
-    LDY.b #$80                              ;$0098B8 |\ Set VRAM increment after writes to $2119
-    STY.w $2115                             ;$0098BA |/
-    LDA.w #$1801                            ;$0098BD |\ Set DMA transfer mode 1, DMA destination $2118
-    STA.w $4320                             ;$0098C0 |/
-    LDA.w #$7800                            ;$0098C3 |\ Set VRAM destination address $7800
-    STA.w $2116                             ;$0098C6 |/
-    LDA.l mode_7_lava_tile_pointers,X       ;$0098C9 |\ Load the lava animation pointer and 
-    STA.w $4322                             ;$0098CD |/ Store it to the DMA source
-    LDY.b #$7E                              ;$0098D0 |\ Set the DMA source bank to $7E
-    STY.w $4324                             ;$0098D2 |/
-    LDA.w #$0080                            ;$0098D5 |\ Set the transfer to by #$80 bytes
-    STA.w $4325                             ;$0098D8 |/
-    LDY.b #$04                              ;$0098DB |\ Run DMA on channel 2
-    STY.w $420B                             ;$0098DD |/
+    LDY.b #$80                              ;$0098B8 | Set VRAM increment after writes to $2119
+    STY.w $2115                             ;$0098BA |
+    LDA.w #$1801                            ;$0098BD | Set DMA transfer mode 1, DMA destination $2118
+    STA.w $4320                             ;$0098C0 |
+    LDA.w #$7800                            ;$0098C3 | Set VRAM destination address $7800
+    STA.w $2116                             ;$0098C6 |
+    LDA.l mode_7_lava_tile_pointers,X       ;$0098C9 | Load the lava animation pointer and 
+    STA.w $4322                             ;$0098CD | Store it to the DMA source
+    LDY.b #$7E                              ;$0098D0 | Set the DMA source bank to $7E
+    STY.w $4324                             ;$0098D2 |
+    LDA.w #$0080                            ;$0098D5 | Set the transfer to by #$80 bytes
+    STA.w $4325                             ;$0098D8 |
+    LDY.b #$04                              ;$0098DB | Run DMA on channel 2
+    STY.w DMAEnable_420B                    ;$0098DD |
     CLC                                     ;$0098E0 | Clear the carry to distinguish bowser from others
 .bowser                                     ;        |
     REP #$20                                ;$0098E1 | A->16
@@ -2862,30 +2862,30 @@ DMA_mode_7_animations:                      ;        \
     LDY.b #$16                              ;$0098ED | Number of DMA transfers
 .not_bowser                                 ;        |
     STA $00                                 ;$0098EF |
-    LDA.w #$C680                            ;$0098F1 |\ Store the initial mode 7 tilemap address
-    STA $02                                 ;$0098F4 |/
+    LDA.w #$C680                            ;$0098F1 | Store the initial mode 7 tilemap address
+    STA $02                                 ;$0098F4 |
     STZ.w $2115                             ;$0098F6 | Set increment after $2118 writes
-    LDA.w #$1800                            ;$0098F9 |\ Set DMA transfer mode 0, DMA destination $2118
-    STA.w $4320                             ;$0098FC |/
-    LDX.b #$7E                              ;$0098FF |\ Set DMA source bank $7E
-    STX.w $4324                             ;$009901 |/
+    LDA.w #$1800                            ;$0098F9 | Set DMA transfer mode 0, DMA destination $2118
+    STA.w $4320                             ;$0098FC |
+    LDX.b #$7E                              ;$0098FF | Set DMA source bank $7E
+    STX.w $4324                             ;$009901 |
     LDX.b #$04                              ;$009904 | Load DMA channel 2 for all transfers
 .upload_loop                                ;        |
-    LDA.w mode_7_VRAM_addresses,Y           ;$009906 |\ Load and store the target DMA address
-    STA.w $2116                             ;$009909 |/
-    LDA $02                                 ;$00990C |\ Load and store the DMA source offset
-    STA.w $4322                             ;$00990E |/
-    CLC                                     ;$009911 |\ Add the DMA size to the source offset
-    ADC $00                                 ;$009912 | |
-    STA $02                                 ;$009914 |/
-    LDA $00                                 ;$009916 |\ Load the number of bytes to transfer
-    STA.w $4325                             ;$009918 |/ #$04 bytes for non-bowser, #$08 bytes for bowser
-    STX.w $420B                             ;$00991B | Run DMA on channel 2
-    DEY                                     ;$00991E |\ Decrement pointer index and loop until 
-    DEY                                     ;$00991F | | The pointer index is less than zero
-    BPL .upload_loop                        ;$009920 |/
+    LDA.w mode_7_VRAM_addresses,Y           ;$009906 | Load and store the target DMA address
+    STA.w $2116                             ;$009909 |
+    LDA $02                                 ;$00990C | Load and store the DMA source offset
+    STA.w $4322                             ;$00990E |
+    CLC                                     ;$009911 | Add the DMA size to the source offset
+    ADC $00                                 ;$009912 |
+    STA $02                                 ;$009914 |
+    LDA $00                                 ;$009916 | Load the number of bytes to transfer
+    STA.w $4325                             ;$009918 | #$04 bytes for non-bowser, #$08 bytes for bowser
+    STX.w DMAEnable_420B                    ;$00991B | Run DMA on channel 2
+    DEY                                     ;$00991E | Decrement pointer index and loop until 
+    DEY                                     ;$00991F |  The pointer index is less than zero
+    BPL .upload_loop                        ;$009920 |
     SEP #$20                                ;$009922 | A->8
-    RTS                                     ;$009924  / Finsihed with mode 7 animated tile DMA
+    RTS                                     ;$009924   Finsihed with mode 7 animated tile DMA
 
 CODE_009925:
     STZ.b PlayerYPos_96+1
@@ -4177,7 +4177,7 @@ dynamic_sprite_DMA_00A300:                  ;        \
     STY.w $4324                             ;$00A31C |
     LDA.w #$0014                            ;$00A31F | Transfer #$14 bytes
     STA.w $4325                             ;$00A322 |
-    STX.w $420B                             ;$00A325 | Run DMA channel 2
+    STX.w DMAEnable_420B                    ;$00A325 | Run DMA channel 2
 .skip_palette_DMA                           ;        |
     LDY.b #$80                              ;$00A328 | Set increment VRAM after writing $2119 
     STY.w $2115                             ;$00A32A |
@@ -4187,11 +4187,11 @@ dynamic_sprite_DMA_00A300:                  ;        \
     STA.w $2116                             ;$00A336 |
     LDA.w DynGfxTile7FPtr_0D99              ;$00A339 | Set tile #$7F decompressed pointer
     STA.w $4322                             ;$00A33C |
-    LDY.b #$7E                              ;$00A33F | Set DMA source bank to $7E
+    LDY.b #!Bank_7E                         ;$00A33F | Set DMA source bank to $7E
     STY.w $4324                             ;$00A341 |
     LDA.w #$0020                            ;$00A344 | Transfer #$20 bytes
     STA.w $4325                             ;$00A347 |
-    STX.w $420B                             ;$00A34A | Start transfer on DMA channel 2
+    STX.w DMAEnable_420B                    ;$00A34A | Start transfer on DMA channel 2
     LDA.w #$6000                            ;$00A34D | Set VRAM address to $6000
     STA.w $2116                             ;$00A350 |
     LDX.b #$00                              ;$00A353 | Start the DMA counter
@@ -4201,7 +4201,7 @@ dynamic_sprite_DMA_00A300:                  ;        \
     LDA.w #$0040                            ;$00A35B | Transfer #$40 bytes
     STA.w $4325                             ;$00A35E |
     LDY.b #$04                              ;$00A361 | Run DMA on channel 2
-    STY.w $420B                             ;$00A363 |
+    STY.w DMAEnable_420B                    ;$00A363 |
     INX                                     ;$00A366 | Check if all tiles have been uploaded
     INX                                     ;$00A367 |
     CPX.w PlayerGfxTileCount_0D84           ;$00A368 |
@@ -4215,7 +4215,7 @@ dynamic_sprite_DMA_00A300:                  ;        \
     LDA.w #$0040                            ;$00A37B | Transfer #$40 bytes
     STA.w $4325                             ;$00A37E |
     LDY.b #$04                              ;$00A381 | Run DMA on channel 2
-    STY.w $420B                             ;$00A383 |
+    STY.w DMAEnable_420B                    ;$00A383 |
     INX                                     ;$00A386 | Check if all tiles have been uploaded
     INX                                     ;$00A387 |
     CPX.w PlayerGfxTileCount_0D84           ;$00A388 |
@@ -4239,7 +4239,7 @@ DMA_animated_level_tiles_00A390:            ;        \
     STA.w $4322                             ;$00A3AF |
     LDA.w #$0080                            ;$00A3B2 | Transfer #$80 bytes
     STA.w $4325                             ;$00A3B5 |
-    STX.w $420B                             ;$00A3B8 | Run channel 2 DMA
+    STX.w DMAEnable_420B                    ;$00A3B8 | Run channel 2 DMA
 .skip_slot_0                                ;        |
     LDA.w Gfx33DestAddrB_0D7E               ;$00A3BB | Check for if tiles are ready for DMA in slot 1
     BEQ .skip_slot_1                        ;$00A3BE |
@@ -4248,7 +4248,7 @@ DMA_animated_level_tiles_00A390:            ;        \
     STA.w $4322                             ;$00A3C6 |
     LDA.w #$0080                            ;$00A3C9 | Transfer #$80 bytes
     STA.w $4325                             ;$00A3CC |
-    STX.w $420B                             ;$00A3CF | Run channel 2 DMA
+    STX.w DMAEnable_420B                    ;$00A3CF | Run channel 2 DMA
 .skip_slot_1                                ;        |
     LDA.w Gfx33DestAddrA_0D7C               ;$00A3D2 | Check for if tiles are ready for DMA in slot 1
     BEQ .skip_slot_2                        ;$00A3D5 |
@@ -4259,7 +4259,7 @@ DMA_animated_level_tiles_00A390:            ;        \
     STA.w $4322                             ;$00A3E2 |
     LDA.w #$0080                            ;$00A3E5 | Transfer #$80 bytes
     STA.w $4325                             ;$00A3E8 |
-    STX.w $420B                             ;$00A3EB | Run channel 2 DMA
+    STX.w DMAEnable_420B                    ;$00A3EB | Run channel 2 DMA
     BRA .skip_slot_2                        ;$00A3EE | Skip over the berry DMA
                                             ;        |
 .berry_upload                               ;        |
@@ -4267,7 +4267,7 @@ DMA_animated_level_tiles_00A390:            ;        \
     STA.w $4322                             ;$00A3F3 |
     LDA.w #$0040                            ;$00A3F6 | Transfer #$40 bytes
     STA.w $4325                             ;$00A3F9 |
-    STX.w $420B                             ;$00A3FC | Run channel 2 DMA
+    STX.w DMAEnable_420B                    ;$00A3FC | Run channel 2 DMA
     LDA.w #$0900                            ;$00A3FF | Move VRAM destination to the next row
     STA.w $2116                             ;$00A402 |
     LDA.w Gfx33SrcAddrA_0D76                ;$00A405 | Set the DMA source address from $0D78
@@ -4276,7 +4276,7 @@ DMA_animated_level_tiles_00A390:            ;        \
     STA.w $4322                             ;$00A40C |
     LDA.w #$0040                            ;$00A40F | Transfer #$40 bytes
     STA.w $4325                             ;$00A412 |
-    STX.w $420B                             ;$00A415 | Run channel 2 DMA
+    STX.w DMAEnable_420B                    ;$00A415 | Run channel 2 DMA
 .skip_slot_2                                ;$00A418 |
     SEP #$20                                ;        | 8 bit AXY
     LDA.b #$64                              ;$00A41A | Use color address #$64 (yoshi coin color)
@@ -4313,14 +4313,14 @@ restore_SP1_tiles_00A436:                   ;        \ (This routine is pretty m
     LDA.w #$00C0                            ;$00A45C | Set the transfer to #$C0 bytes
     STA.w $4325                             ;$00A45F |
     LDX.b #$04                              ;$00A462 | Run DMA on channel 2
-    STX.w $420B                             ;$00A464 |
+    STX.w DMAEnable_420B                    ;$00A464 |
     LDA.w #$65A0                            ;$00A467 | Set VRAM destination to $65A0
     STA.w $2116                             ;$00A46A |
     LDA.w #$0CB6                            ;$00A46D | Set DMA source to $000CB6
     STA.w $4322                             ;$00A470 |
     LDA.w #$00C0                            ;$00A473 | Set the transfer to #$C0 bytes
     STA.w $4325                             ;$00A476 |
-    STX.w $420B                             ;$00A479 | Run DMA on channel 2
+    STX.w DMAEnable_420B                    ;$00A479 | Run DMA on channel 2
     SEP #$20                                ;$00A47C | A->8
 .return                                     ;        |
     RTS                                     ;$00A47E /
@@ -4360,7 +4360,7 @@ upload_palette_CGRAM_00A488:
     TAY                                     ;$00A4C5 || Return pointer to Y
     SEP #$20                                ;$00A4C6 || A->8
     LDA.b #$04                              ;$00A4C8 || Run DMA on channel 2
-    STA.w $420B                             ;$00A4CA ||
+    STA.w DMAEnable_420B                    ;$00A4CA ||
     BRA -                                   ;$00A4CD |/ continue the transfer until there is no more data
 
 .finished_upload:                           ;        |
@@ -4388,7 +4388,7 @@ DMA_animated_OW_tiles:                      ;        \
     LDY.w #$0160                            ;$00A4FF | Transfer #$160 bytes
     STY.w $4325                             ;$00A502 |
     LDA.b #$04                              ;$00A505 | Run DMA channel 2
-    STA.w $420B                             ;$00A507 |
+    STA.w DMAEnable_420B                    ;$00A507 |
     SEP #$10                                ;$00A50A | XY->8
     LDA.w OWProcess_13D9                    ;$00A50C | If the submap is switching don't bother
     CMP.b #!OwSubmap_0A                     ;$00A50F |  updating the level tile palette animation
@@ -4434,7 +4434,7 @@ DMA_OW_tilemap:                             ;        \
     ADC.w OW_layer_2_DMA_offsets,Y          ;$00A559 |
     STA.w $4313                             ;$00A55C |
     LDA.b #$02                              ;$00A55F | Run DMA on channel 1
-    STA.w $420B                             ;$00A561 |
+    STA.w DMAEnable_420B                    ;$00A561 |
     LDA.b #$80                              ;$00A564 | Set VRAM mode increment after $2119 writes
     STA.w $2115                             ;$00A566 |
     STZ.w $2116                             ;$00A569 | Set the VRAM address to $2000 plus the block
@@ -4449,7 +4449,7 @@ DMA_OW_tilemap:                             ;        \
     DEX                                     ;$00A57D ||
     BPL .layer_1_DMA_copy_loop              ;$00A57E |/
     LDA.b #$02                              ;$00A580 | Run DMA on channel 1
-    STA.w $420B                             ;$00A582 |
+    STA.w DMAEnable_420B                    ;$00A582 |
     RTS                                     ;$00A585 /
 
 .OW_layer_2_DMA_settings
@@ -4744,41 +4744,41 @@ CODE_00A7B9:
 
 DMA_transition_screen:                      ;        \ 
     REP #$20                                ;$00A7C2 | A->16, 8 bit XY
-    LDX.b #$80                              ;$00A7C4 |\ Set VRAM to increment after writing $2119
-    STX.w $2115                             ;$00A7C6 |/
-    LDA.w #$6000                            ;$00A7C9 |\ Set VRAM address to $6000 (layer three)
-    STA.w $2116                             ;$00A7CC |/
-    LDA.w #$1801                            ;$00A7CF |\ DMA mode 01(p, p+1), increment DMA address
-    STA.w $4320                             ;$00A7D2 |/ With $2118 as the destination.
-    LDA.w #$977B                            ;$00A7D5 |\ Set DMA source to $7F977B
-    STA.w $4322                             ;$00A7D8 |/
-    LDX.b #$7F                              ;$00A7DB |\ Set DMA source bank to #$7F
-    STX.w $4324                             ;$00A7DD |/
-    LDA.w #$00C0                            ;$00A7E0 |\ Set DMA size to #$C0 bytes
-    STA.w $4325                             ;$00A7E3 |/
-    LDX.b #$04                              ;$00A7E6 |\ Start DMA channel 3
-    STX.w $420B                             ;$00A7E8 |/
-    LDA.w #$6100                            ;$00A7EB |\ Set VRAM address to $6100 (layer three)
-    STA.w $2116                             ;$00A7EE |/
-    LDA.w #$983B                            ;$00A7F1 |\ Set DMA source to $7F983B
-    STA.w $4322                             ;$00A7F4 |/
-    LDA.w #$00C0                            ;$00A7F7 |\ Set DMA size to #$C0 bytes
-    STA.w $4325                             ;$00A7FA |/
-    STX.w $420B                             ;$00A7FD | Start DMA channel 3
-    LDA.w #$64A0                            ;$00A800 |\ Set VRAM address to $64A0 (layer three)
-    STA.w $2116                             ;$00A803 |/
-    LDA.w #$98FB                            ;$00A806 |\ Set DMA source to $7F98FB
-    STA.w $4322                             ;$00A809 |/
-    LDA.w #$00C0                            ;$00A80C |\ Set DMA size to #$C0 bytes
-    STA.w $4325                             ;$00A80F |/
-    STX.w $420B                             ;$00A812 | Start DMA channel 3
-    LDA.w #$65A0                            ;$00A815 |\ Set VRAM address to $65A0 (layer three)
-    STA.w $2116                             ;$00A818 |/
-    LDA.w #$99BB                            ;$00A81B |\ Set DMA source to $7F99BB
-    STA.w $4322                             ;$00A81E |/
-    LDA.w #$00C0                            ;$00A821 |\ Set DMA size to #$C0 bytes
-    STA.w $4325                             ;$00A824 |/
-    STX.w $420B                             ;$00A827 | Start DMA channel 3
+    LDX.b #$80                              ;$00A7C4 | Set VRAM to increment after writing $2119
+    STX.w $2115                             ;$00A7C6 |
+    LDA.w #$6000                            ;$00A7C9 | Set VRAM address to $6000 (layer three)
+    STA.w $2116                             ;$00A7CC |
+    LDA.w #$1801                            ;$00A7CF | DMA mode 01(p, p+1), increment DMA address
+    STA.w $4320                             ;$00A7D2 | With $2118 as the destination.
+    LDA.w #$977B                            ;$00A7D5 | Set DMA source to $7F977B
+    STA.w $4322                             ;$00A7D8 |
+    LDX.b #!Bank_007F                       ;$00A7DB | Set DMA source bank to #$7F
+    STX.w $4324                             ;$00A7DD |
+    LDA.w #$00C0                            ;$00A7E0 | Set DMA size to #$C0 bytes
+    STA.w $4325                             ;$00A7E3 |
+    LDX.b #$04                              ;$00A7E6 | Start DMA channel 3
+    STX.w DMAEnable_420B                    ;$00A7E8 |
+    LDA.w #$6100                            ;$00A7EB | Set VRAM address to $6100 (layer three)
+    STA.w $2116                             ;$00A7EE |
+    LDA.w #$983B                            ;$00A7F1 | Set DMA source to $7F983B
+    STA.w $4322                             ;$00A7F4 |
+    LDA.w #$00C0                            ;$00A7F7 | Set DMA size to #$C0 bytes
+    STA.w $4325                             ;$00A7FA |
+    STX.w DMAEnable_420B                    ;$00A7FD | Start DMA channel 3
+    LDA.w #$64A0                            ;$00A800 | Set VRAM address to $64A0 (layer three)
+    STA.w $2116                             ;$00A803 |
+    LDA.w #$98FB                            ;$00A806 | Set DMA source to $7F98FB
+    STA.w $4322                             ;$00A809 |
+    LDA.w #$00C0                            ;$00A80C | Set DMA size to #$C0 bytes
+    STA.w $4325                             ;$00A80F |
+    STX.w DMAEnable_420B                    ;$00A812 | Start DMA channel 3
+    LDA.w #$65A0                            ;$00A815 | Set VRAM address to $65A0 (layer three)
+    STA.w $2116                             ;$00A818 |
+    LDA.w #$99BB                            ;$00A81B | Set DMA source to $7F99BB
+    STA.w $4322                             ;$00A81E |
+    LDA.w #$00C0                            ;$00A821 | Set DMA size to #$C0 bytes
+    STA.w $4325                             ;$00A824 |
+    STX.w DMAEnable_420B                    ;$00A827 | Start DMA channel 3
     SEP #$20                                ;$00A82A | A->8
     RTS                                     ;$00A82C / Done with transition screen DMA
 
@@ -5015,122 +5015,113 @@ Store80:
 UploadGFXFile:
     JSL CODE_00BA28
     CPY.b #$01                              ;$00AA6F |
-    BNE SkipSpecial                         ;$00AA71 |
-    LDA.w OWLevelSettings_1EA2+$49          ;$00AA73 |
-    BPL SkipSpecial                         ;$00AA76 |
-    LDY.b #$31                              ;$00AA78 |
-    JSL CODE_00BA28                         ;$00AA7A |
-    LDY.b #$01                              ;$00AA7E |
-SkipSpecial:
+    BNE .skip_special                       ;$00AA71 |\
+    LDA.w OWLevelSettings_1EA2+$49          ;$00AA73 ||
+    BPL .skip_special                       ;$00AA76 ||
+    LDY.b #$31                              ;$00AA78 ||
+    JSL CODE_00BA28                         ;$00AA7A ||
+    LDY.b #$01                              ;$00AA7E |/
+.skip_special:
     REP #$20                                ;$pecial | A->16
     LDA.w #$0000                            ;$00AA82 |
     LDX.w ObjectTileset_1931                ;$00AA85 |
     CPX.b #$11                              ;$00AA88 |
-    BCC CODE_00AA90                         ;$00AA8A |
-    CPY.b #$08                              ;$00AA8C |
-    BEQ JumpTo_____                         ;$00AA8E |
-CODE_00AA90:
-    CPY.b #$1E
-    BEQ JumpTo_____                         ;$00AA92 |
-    BNE CODE_00AA99                         ;$00AA94 |
-JumpTo_____:
-    JMP FilterSomeRAM
+    BCC +                                   ;$00AA8A |\
+    CPY.b #$08                              ;$00AA8C ||
+    BEQ .filter_some_RAM_00AA96             ;$00AA8E |/
++   CPY.b #$1E                              ;$00AA90 |
+    BEQ .filter_some_RAM_00AA96             ;$00AA92 |
+    BNE .CODE_00AA99                        ;$00AA94 |
+.filter_some_RAM_00AA96:
+    JMP .filter_some_RAM_00AB02
 
-CODE_00AA99:
+.CODE_00AA99:
     STA $0A
     LDA.w #$FFFF                            ;$00AA9B |
     CPY.b #$01                              ;$00AA9E |
-    BEQ CODE_00AAA9                         ;$00AAA0 |
-    CPY.b #$17                              ;$00AAA2 |
-    BEQ CODE_00AAA9                         ;$00AAA4 |
-    LDA.w #$0000                            ;$00AAA6 |
-CODE_00AAA9:
-    STA.w GfxBppConvertFlag_1BBC
+    BEQ +                                   ;$00AAA0 |\
+    CPY.b #$17                              ;$00AAA2 ||
+    BEQ +                                   ;$00AAA4 ||
+    LDA.w #$0000                            ;$00AAA6 |/
++   STA.w GfxBppConvertFlag_1BBC            ;$00AAA9 |
     LDY.b #$7F                              ;$00AAAC |
-CODE_00AAAE:
+.loop_00AAAE:
     LDA.w GfxBppConvertFlag_1BBC
-    BEQ CODE_00AACD                         ;$00AAB1 |
+    BEQ .CODE_00AACD                        ;$00AAB1 |
     CPY.b #$7E                              ;$00AAB3 |
-    BCC CODE_00AABE                         ;$00AAB5 |
-CODE_00AAB7:
-    LDA.w #$FF00
-    STA $0A                                 ;$00AABA |
-    BNE CODE_00AACD                         ;$00AABC |
-CODE_00AABE:
-    CPY.b #$6E
-    BCC CODE_00AAC8                         ;$00AAC0 |
-    CPY.b #$70                              ;$00AAC2 |
-    BCS CODE_00AAC8                         ;$00AAC4 |
-    BCC CODE_00AAB7                         ;$00AAC6 |
-CODE_00AAC8:
-    LDA.w #$0000
+    BCC .CODE_00AABE                        ;$00AAB5 |
+-   LDA.w #$FF00                            ;$00AAB7 |\
+    STA $0A                                 ;$00AABA ||
+    BNE .CODE_00AACD                        ;$00AABC ||
+.CODE_00AABE:                               ;        ||
+    CPY.b #$6E                              ;$00AABE ||
+    BCC +                                   ;$00AAC0 ||
+    CPY.b #$70                              ;$00AAC2 ||
+    BCS +                                   ;$00AAC4 ||
+    BCC -                                   ;$00AAC6 |/
++   LDA.w #$0000                            ;$00AAC8 |
     STA $0A                                 ;$00AACB |
-CODE_00AACD:
-    LDX.b #$07
-CODE_00AACF:
-    LDA [$00]
-    STA.w $2118                             ;$00AAD1 |
-    XBA                                     ;$00AAD4 |
-    ORA [$00]                               ;$00AAD5 |
-    STA.w GfxBppConvertBuffer_1BB2,X        ;$00AAD7 |
-    INC $00                                 ;$00AADA |
-    INC $00                                 ;$00AADC |
-    DEX                                     ;$00AADE |
-    BPL CODE_00AACF                         ;$00AADF |
-    LDX.b #$07                              ;$00AAE1 |
-CODE_00AAE3:
-    LDA [$00]
-    AND.w #$00FF                            ;$00AAE5 |
-    STA $0C                                 ;$00AAE8 |
-    LDA [$00]                               ;$00AAEA |
-    XBA                                     ;$00AAEC |
-    ORA.w GfxBppConvertBuffer_1BB2,X        ;$00AAED |
-    AND $0A                                 ;$00AAF0 |
-    ORA $0C                                 ;$00AAF2 |
-    STA.w $2118                             ;$00AAF4 |
-    INC $00                                 ;$00AAF7 |
-    DEX                                     ;$00AAF9 |
-    BPL CODE_00AAE3                         ;$00AAFA |
+.CODE_00AACD:
+    LDX.b #$07                              ;$00AACD | X: loop counter
+-   LDA [$00]                               ;$00AACF |\
+    STA.w $2118                             ;$00AAD1 ||
+    XBA                                     ;$00AAD4 ||
+    ORA [$00]                               ;$00AAD5 ||
+    STA.w GfxBppConvertBuffer_1BB2,X        ;$00AAD7 ||
+    INC $00                                 ;$00AADA ||
+    INC $00                                 ;$00AADC ||
+    DEX                                     ;$00AADE ||
+    BPL -                                   ;$00AADF |/
+    LDX.b #$07                              ;$00AAE1 | X: loop counter
+-   LDA [$00]                               ;$00AAE3 |\
+    AND.w #$00FF                            ;$00AAE5 ||
+    STA $0C                                 ;$00AAE8 ||
+    LDA [$00]                               ;$00AAEA ||
+    XBA                                     ;$00AAEC ||
+    ORA.w GfxBppConvertBuffer_1BB2,X        ;$00AAED ||
+    AND $0A                                 ;$00AAF0 ||
+    ORA $0C                                 ;$00AAF2 ||
+    STA.w $2118                             ;$00AAF4 ||
+    INC $00                                 ;$00AAF7 ||
+    DEX                                     ;$00AAF9 ||
+    BPL -                                   ;$00AAFA |/
     DEY                                     ;$00AAFC |
-    BPL CODE_00AAAE                         ;$00AAFD |
+    BPL .loop_00AAAE                        ;$00AAFD |
     SEP #$20                                ;$00AAFF | A->8
     RTS                                     ;$00AB01 |
 
-FilterSomeRAM:
+.filter_some_RAM_00AB02:
     LDA.w #$FF00
     STA $0A                                 ;$00AB05 |
     LDY.b #$7F                              ;$00AB07 |
-UploadSomethingToVRAM:
+..UploadSomethingToVRAM:
     CPY.b #$08
-    BCS CODE_00AB0D                         ;$00AB0B |
-CODE_00AB0D:
-    LDX.b #$07
-AddressWrite1:
-    LDA [$00]
-    STA.w $2118                             ;$00AB11 |
-    XBA                                     ;$00AB14 |
-    ORA [$00]                               ;$00AB15 |
-    STA.w GfxBppConvertBuffer_1BB2,X        ;$00AB17 |
-    INC $00                                 ;$00AB1A |
-    INC $00                                 ;$00AB1C |
-    DEX                                     ;$00AB1E |
-    BPL AddressWrite1                       ;$00AB1F |
+    BCS +                                   ;$00AB0B | go to next line regardless
++   LDX.b #$07                              ;$00AB0D |
+-   LDA [$00]                               ;$00AB0F |\
+    STA.w $2118                             ;$00AB11 ||
+    XBA                                     ;$00AB14 ||
+    ORA [$00]                               ;$00AB15 ||
+    STA.w GfxBppConvertBuffer_1BB2,X        ;$00AB17 ||
+    INC $00                                 ;$00AB1A ||
+    INC $00                                 ;$00AB1C ||
+    DEX                                     ;$00AB1E ||
+    BPL -                                   ;$00AB1F |/
     LDX.b #$07                              ;$00AB21 |
-AddressWrite2:
-    LDA [$00]
-    AND.w #$00FF                            ;$00AB25 |
-    STA $0C                                 ;$00AB28 |
-    LDA [$00]                               ;$00AB2A |
-    XBA                                     ;$00AB2C |
-    ORA.w GfxBppConvertBuffer_1BB2,X        ;$00AB2D |
-    AND $0A                                 ;$00AB30 |
-    ORA $0C                                 ;$00AB32 |
-    STA.w $2118                             ;$00AB34 |
-    INC $00                                 ;$00AB37 |
-    DEX                                     ;$00AB39 |
-    BPL AddressWrite2                       ;$00AB3A |
+-   LDA [$00]                               ;$00AB23 |\
+    AND.w #$00FF                            ;$00AB25 ||
+    STA $0C                                 ;$00AB28 ||
+    LDA [$00]                               ;$00AB2A ||
+    XBA                                     ;$00AB2C ||
+    ORA.w GfxBppConvertBuffer_1BB2,X        ;$00AB2D ||
+    AND $0A                                 ;$00AB30 ||
+    ORA $0C                                 ;$00AB32 ||
+    STA.w $2118                             ;$00AB34 ||
+    INC $00                                 ;$00AB37 ||
+    DEX                                     ;$00AB39 ||
+    BPL -                                   ;$00AB3A |/
     DEY                                     ;$00AB3C |
-    BPL UploadSomethingToVRAM               ;$00AB3D |
+    BPL ..UploadSomethingToVRAM             ;$00AB3D |
     SEP #$20                                ;$00AB3F | A->8
     RTS                                     ;$00AB41 |
 
