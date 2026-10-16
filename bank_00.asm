@@ -291,7 +291,7 @@ NMI_start_00816A:                           ;        \
     JSR load_stripe_image_0085D2            ;$00823D | Upload Stripe image data
     JSR DMA_spr_tiles_to_OAM_008449         ;$008240 | DMA Sprite tiles to the screen
 .regular_OW_bypass                          ;        |
-    JSR update_controllers                  ;$008243 | Run the controller update routine
+    JSR update_controllers_008650           ;$008243 | Run the controller update routine
 .lagging_level_NMI                          ;        |
     LDA.b Layer1XPos_1A                     ;$008246 | Set layer 1 X position from mirrors
     STA.w $210D                             ;$008248 | $210D is a write twice register 
@@ -353,28 +353,28 @@ NMI_start_00816A:                           ;        \
 
 .mode_7_NMI_0082C4                          ;        \ 
     LDA.b LagFlag_10                        ;$0082C4 |
-    BNE ..lagging_mode_7_NMI                ;$0082C6 | branch if mode 7 is lagging
+    BNE ..mode_7_lagging_NMI                ;$0082C6 | branch if mode 7 is lagging
     INC.b LagFlag_10                        ;$0082C8 | Otherwise increment the lag counter
     LDA.w UploadMarioStart_143A             ;$0082CA | Check if the transition screens need DMAed
     BEQ +                                   ;$0082CD |\
     JSR DMA_transition_screen               ;$0082CF || DMA start/bonus/game over/time up transition screens
-    BRA ..draw_status_bar                   ;$0082D2 |/ Skip dynamic graphics DMA
+    BRA ..mode_7_draw_status_bar            ;$0082D2 |/ Skip dynamic graphics DMA
 
 +   JSR restore_SP1_tiles_00A436            ;$0082D4 | DMA $0BF6 to VRAM, redundant due to graphics upload
     JSR dynamic_sprite_DMA_00A300           ;$0082D7 | DMA Mario/Yoshi/Vertical fireball graphics
     BIT.w IRQNMICommand_0D9B                ;$0082DA |
-    BVC ..draw_status_bar                   ;$0082DD | branch if we are in a platform boss fight
+    BVC ..mode_7_draw_status_bar            ;$0082DD | branch if we are in a platform boss fight
     JSR DMA_mode_7_animations               ;$0082DF | TODO: some animation stuff, investigate more
     LDA.w IRQNMICommand_0D9B                ;$0082E2 |
     LSR                                     ;$0082E5 | branch if we are fighting bowser, don't draw the status bar
     BCS +                                   ;$0082E6 |\
-..draw_status_bar                           ;        ||
+..mode_7_draw_status_bar                    ;        ||
     JSR draw_status_bar_008DAC              ;$0082E8 |/
 +   JSR upload_palette_CGRAM_00A488         ;$0082ED | Upload any pending palette changes
     JSR load_stripe_image_0085D2            ;$0082EE | Load stripe images from $12
     JSR DMA_spr_tiles_to_OAM_008449         ;$0082F1 | DMA sprite tiles to OAM
-    JSR update_controllers                  ;$0082F4 | Update the controller input
-..lagging_mode_7_NMI                        ;        |
+    JSR update_controllers_008650           ;$0082F4 | Update the controller input
+..mode_7_lagging_NMI                        ;        |
     LDA.b #$09                              ;$0082F7 |
     STA.w $2105                             ;$0082F9 |
     LDA.b Mode7CenterX_2A                   ;$0082FC | Set the mode 7 center X position
@@ -448,7 +448,7 @@ IRQ_start_008374:                           ;        \
     BMI mode_7_IRQ_0083DA                   ;$00838A | branch if we are in a mode 7 level
 IRQ_NMI_finish_00838C:                      ;        |
     STA.w $4200                             ;$00838C | Store interrupt enabled flags
-    LDY.b #$1F                              ;$00838F | wait for H-Blank to occur 
+    LDY.b #$1F                              ;$00838F | parameter for wait for H-Blank to occur 
     JSR wait_for_hblank_00843B              ;$008391 |
     LDA.b Layer3XPos_22                     ;$008394 | Set layer 3 X position
     STA.w $2111                             ;$008396 |
@@ -538,14 +538,14 @@ mode_7_static_BG_scroll_008416:             ;        \
 full_wait_for_hblank_00843E:                ;        \ 
     LDY.b #$20                              ;$008439 | Use 166 cycle delay
 wait_for_hblank_00843B:                     ;        |
-    BIT.w $4212                             ;$00843B |\ Wait for HBlank to occur
-    BVS full_wait_for_hblank_00843E         ;$00843E |/ Only use the full delay if HBlank already passed
+    BIT.w $4212                             ;$00843B | Wait for HBlank to occur
+    BVS full_wait_for_hblank_00843E         ;$00843E | Only use the full delay if HBlank already passed
 .wait_for_hblank_end                        ;        |
-    BIT.w $4212                             ;$008440 |\ Wait for HBlank to end so we can wait for the next
-    BVC .wait_for_hblank_end                ;$008443 |/
-.waste_scanline                             ;        |
-    DEY                                     ;$008445 |\ Wait for the next HBlank (minus 6 cycles)
-    BNE .waste_scanline                     ;$008446 |/ Remember taken branches cost 3 cycles.
+    BIT.w $4212                             ;$008440 | Wait for HBlank to end so we can wait for the next
+    BVC .wait_for_hblank_end                ;$008443 | PERF: it is possible to have one less loop iteration by entering IRQ "too late"
+.waste_scanline                             ;        |  so that less cycles are wasted waiting for hblank
+    DEY                                     ;$008445 | Wait for the next HBlank (minus 6 cycles)
+    BNE .waste_scanline                     ;$008446 | Remember taken branches cost 3 cycles
     RTS                                     ;$008448 /
 
 DMA_spr_tiles_to_OAM_008449:                ;        \ 
@@ -755,7 +755,7 @@ clear_out_layer3_0085FA:
 .DATA_008649:
     db $08,$18,$00,$00,$00,$00,$10
 
-update_controllers:                         ;        \ 
+update_controllers_008650:                         ;        \ 
     LDA.w $4218                             ;$008650 |\ Load controller 1 low byte data
     AND.b #$F0                              ;$008653 | | Filter out potentially invalid bits
     STA.w axlr0000P1Hold_0DA4               ;$008655 | | Store the filtered value in $0DA4 and Y
@@ -2037,20 +2037,19 @@ Return00922E:
     RTS
 
 CODE_00922F:
-    STZ.w $0703
-    STZ.w $0704                             ;$009232 |
+    STZ.w MainPalette_0703
+    STZ.w MainPalette_0703+1                ;$009232 |
     STZ.w $2121                             ;$009235 |
     LDX.b #$06                              ;$009238 |
-CODE_00923A:
-    LDA.w DATA_009249,X
-    STA.w $4320,X                           ;$00923D |
-    DEX                                     ;$009240 |
-    BPL CODE_00923A                         ;$009241 |
+-   LDA.w .DATA_009249,X                    ;$00923A |\
+    STA.w $4320,X                           ;$00923D ||
+    DEX                                     ;$009240 ||
+    BPL -                                   ;$009241 |/
     LDA.b #$04                              ;$009243 |
     STA.w DMAEnable_420B                    ;$009245 |
     RTS                                     ;$009248 |
 
-DATA_009249:
+.DATA_009249:
     db $00,$22,$03,$07,$00,$00,$02
 
 setup_window_HDMA_009250:
@@ -2061,7 +2060,7 @@ setup_window_HDMA_009250:
     BPL -                                   ;$009259 |/
     LDA.b #$00                              ;$00925B |\ HDMA Data bank $00
     STA.w $4377                             ;$00925D |/
-DisableHDMA:                                ;        |
+disable_HDMA_009260:                        ;        |
     STZ.w HDMAEnable_0D9F                   ;$009260 | Disable HDMA
 clear_window_HDMA:                          ;        |
     REP #$10                                ;$009263 | XY->16
@@ -2261,7 +2260,7 @@ CODE_0093CA:
     LDA.b #$01                              ;$0093CF |
     STA.w MosaicDirection_0DAF              ;$0093D1 |
     STZ.w SpritePalette_192E                ;$0093D4 |
-    JSR LoadPalette                         ;$0093D7 |
+    JSR load_palette_00ABED                 ;$0093D7 |
     STZ.w $0701                             ;$0093DA |
     STZ.w $0702                             ;$0093DD |
     JSR CODE_00922F                         ;$0093E0 |
@@ -2358,7 +2357,7 @@ GM19_credits_castle_load_009468:
     JSR load_stripe_image_0085D2            ;$00949D |
     JSR upload_music_bank_3                 ;$0094A0 |
     JSL CODE_0C93DD                         ;$0094A3 |
-    JSR DisableHDMA                         ;$0094A7 |
+    JSR disable_HDMA_009260                 ;$0094A7 |
     INC.w ObjectTileset_1931                ;$0094AA |
     INC.w SpriteTileset_192B                ;$0094AD |
     BRA .CODE_0094D7                        ;$0094B0 |
@@ -2380,8 +2379,8 @@ GM19_credits_castle_load_009468:
     SEP #$20                                ;$0094D2 | A->8
     INC.w CarryingFlagMirror_148F           ;$0094D4 |
 .CODE_0094D7:
-    JSR UploadSpriteGFX
-    JSR LoadPalette                         ;$0094DA |
+    JSR upload_sprite_gfx_00A9DA
+    JSR load_palette_00ABED                 ;$0094DA |
     JSR CODE_00922F                         ;$0094DD |
     LDX.b #$0B                              ;$0094E0 |
 -   STZ.b Layer1XPos_1A,X                   ;$0094E2 |\
@@ -2512,8 +2511,8 @@ GM23_ending_enemy_scene_0095C1:
     LDA.b #$17                              ;$0095E4 |
     STA.w SpriteTileset_192B                ;$0095E6 |
 .CODE_0095E9:
-    JSR UploadSpriteGFX
-    JSR LoadPalette                         ;$0095EC |
+    JSR upload_sprite_gfx_00A9DA
+    JSR load_palette_00ABED                 ;$0095EC |
     JSL load_level_layers_05809E            ;$0095EF |
     JSR set_animated_tiles_00A5F9           ;$0095F3 |
     JSL CODE_0CADF6                         ;$0095F6 |
@@ -2535,7 +2534,7 @@ CODE_00961E:
     LDX.b #$15
     LDY.b #$02                              ;$009620 |
 CODE_009622:
-    JSR KeepModeActive
+    JSR delay_game_mode_1_frame_009F29
     LDA.b #$09                              ;$009625 |
     STA.b MainBGMode_3E                     ;$009627 |
     JMP CODE_0093EA                         ;$009629 |
@@ -2558,8 +2557,8 @@ GM27_the_end_load_00963D:
     STA.w BackAreaColor_192F                ;$009650 |
     LDA.b #$03                              ;$009653 |
     STA.w BackgroundPalette_1930            ;$009655 |
-    JSR UploadSpriteGFX                     ;$009658 |
-    JSR LoadPalette                         ;$00965B |
+    JSR upload_sprite_gfx_00A9DA            ;$009658 |
+    JSR load_palette_00ABED                 ;$00965B |
     LDX.b #$0B                              ;$00965E |
 -   LDA.w TheEndPalettes,X                  ;$009660 |\
     STA.w $08A7,X                           ;$009663 ||
@@ -2787,7 +2786,7 @@ load_boss_room_0097BC:
 .Reznor_00983B:
     LDA.b #$13
 +   STA.w SpriteTileset_192B                ;$00983D |
-    JSR UploadSpriteGFX                     ;$009840 |
+    JSR upload_sprite_gfx_00A9DA            ;$009840 |
     LDA.b #$11                              ;$009843 |
     STA.w $212E                             ;$009845 |
     STZ.w $212D                             ;$009848 |
@@ -3591,7 +3590,7 @@ CODE_009E17:
     STZ.w LevelExitMode_0DD5                ;$009E5C |
     STZ.w CurrentPlayer_0DB3                ;$009E5F |
 CODE_009E62:
-    JSR KeepModeActive
+    JSR delay_game_mode_1_frame_009F29
     LDY.b #!FadeToOverworld_0B              ;$009E65 |
     JMP set_game_mode_009C8B                ;$009E67 |
 
@@ -3690,9 +3689,9 @@ CODE_009F1F:
     BPL CODE_009F1F                         ;$009F26 |
     RTS                                     ;$009F28 |
 
-KeepModeActive:
+delay_game_mode_1_frame_009F29:
     LDA.b #$01
-CODE_009F2B:
+set_mode_active_timer_009F2B:
     STA.w KeepModeActive_0DB1
     RTS                                     ;$009F2E |
 
@@ -3707,8 +3706,8 @@ DATA_009F33:
 
 GMs_transition_mosaic_009F37:
     DEC.w KeepModeActive_0DB1
-    BPL Return009F6E                        ;$009F3A |
-    JSR KeepModeActive                      ;$009F3C |
+    BPL return_009F6E                       ;$009F3A |
+    JSR delay_game_mode_1_frame_009F29      ;$009F3C |
     LDY.w MosaicDirection_0DAF              ;$009F3F |
     LDA.w MosaicSize_0DB0                   ;$009F42 |
     CLC                                     ;$009F45 |
@@ -3720,32 +3719,31 @@ CODE_009F4C:
     ADC.w DATA_009F2F,Y                     ;$009F50 |
     STA.w Brightness_0DAE                   ;$009F53 |
     CMP.w DATA_009F33,Y                     ;$009F56 |
-    BNE CODE_009F66                         ;$009F59 |
-GMPPMosaic:
-    INC.w GameMode_0100
-    LDA.w MosaicDirection_0DAF              ;$009F5E |
-    EOR.b #$01                              ;$009F61 |
-    STA.w MosaicDirection_0DAF              ;$009F63 |
-CODE_009F66:
-    LDA.b #$03
+    BNE +                                   ;$009F59 |\
+GMPPMosaic:                                 ;        ||
+    INC.w GameMode_0100                     ;$009F5B ||
+    LDA.w MosaicDirection_0DAF              ;$009F5E ||
+    EOR.b #$01                              ;$009F61 ||
+    STA.w MosaicDirection_0DAF              ;$009F63 |/
++   LDA.b #$03                              ;$009F66 |
     ORA.w MosaicSize_0DB0                   ;$009F68 |
     STA.w $2106                             ;$009F6B |
-Return009F6E:
+return_009F6E:
     RTS
 
 GMs_transition_fade_009F6F:
     DEC.w KeepModeActive_0DB1
-    BPL Return009F6E                        ;$009F72 |
-    JSR KeepModeActive                      ;$009F74 |
+    BPL return_009F6E                       ;$009F72 |
+    JSR delay_game_mode_1_frame_009F29      ;$009F74 |
 CODE_009F77:
     LDY.w MosaicDirection_0DAF
     BRA CODE_009F4C                         ;$009F7A |
 
 GM28_the_end_fade_009F7C:
     DEC.w KeepModeActive_0DB1
-    BPL Return009F6E                        ;$009F7F |
+    BPL return_009F6E                       ;$009F7F |
     LDA.b #$08                              ;$009F81 |
-    JSR CODE_009F2B                         ;$009F83 |
+    JSR set_mode_active_timer_009F2B        ;$009F83 |
     BRA CODE_009F77                         ;$009F86 |
 
 DATA_009F88:
@@ -3945,7 +3943,7 @@ GM0C_overworld_load_00A087:
     STA.b Layer1YPos_1C                     ;$00A13E |
     STA.b Layer2YPos_20                     ;$00A140 |
     SEP #$20                                ;$00A142 | A->8
-    JSR UploadSpriteGFX                     ;$00A144 |
+    JSR upload_sprite_gfx_00A9DA            ;$00A144 |
     LDY.b #$14                              ;$00A147 |
     JSL CODE_00BA28                         ;$00A149 |
     JSR CODE_00AD25                         ;$00A14D |
@@ -3962,7 +3960,7 @@ GM0C_overworld_load_00A087:
     JSR consolidate_OAM_008494              ;$00A16D |
     JSR load_stripe_image_0085D2            ;$00A170 |
     STZ.w OWProcess_13D9                    ;$00A173 |
-    JSR KeepModeActive                      ;$00A176 |
+    JSR delay_game_mode_1_frame_009F29      ;$00A176 |
     LDA.b #!IRQNMIOverworld_02              ;$00A179 |
     STA.w IRQNMICommand_0D9B                ;$00A17B |
     REP #$10                                ;$00A17E | XY->16
@@ -4479,26 +4477,26 @@ GM12_level_load_2_00A59C:
     BRA .common_level_00A5CF                ;$00A5B7 |
 
 .load_regular_level_00A5B9:
-    JSR UploadSpriteGFX
-    JSR LoadPalette                         ;$00A5BC |
+    JSR upload_sprite_gfx_00A9DA
+    JSR load_palette_00ABED                 ;$00A5BC |
     JSL reset_layer3_05BE8A                 ;$00A5BF |
     JSR load_layer3_009FB8                  ;$00A5C3 |
     JSR set_animated_tiles_00A5F9           ;$00A5C6 |
-    JSR DisableHDMA                         ;$00A5C9 |
+    JSR disable_HDMA_009260                 ;$00A5C9 |
     JSR run_level_physics_009860            ;$00A5CC |
 .common_level_00A5CF:
     JSR CODE_00922F
-    JSR KeepModeActive                      ;$00A5D2 |
+    JSR delay_game_mode_1_frame_009F29      ;$00A5D2 |
     JSR update_status_tileset_008E1A        ;$00A5D5 |
     REP #$30                                ;$00A5D8 | AXY->16
     PHB                                     ;$00A5DA |
-    LDX.w #$0703                            ;$00A5DB |
-    LDY.w #$0905                            ;$00A5DE |
+    LDX.w #!AddrMainPalette_0703            ;$00A5DB | mirror palette and background
+    LDY.w #!AddrCopyPalette_0905            ;$00A5DE |
     LDA.w #$01EF                            ;$00A5E1 |
-    MVN $00,$00                             ;$00A5E4 |
+    MVN !Bank_00,!Bank_00                   ;$00A5E4 |
     PLB                                     ;$00A5E7 |
-    LDX.w $0701                             ;$00A5E8 |
-    STX.w $0903                             ;$00A5EB |
+    LDX.w BackgroundColor_0701              ;$00A5E8 |
+    STX.w CopyBGColor_0903                  ;$00A5EB |
     SEP #$30                                ;$00A5EE | AXY->8
     JSR try_castle_entrance_00919B          ;$00A5F0 |
     JSR consolidate_OAM_008494              ;$00A5F3 |
@@ -4515,7 +4513,7 @@ set_animated_tiles_00A5F9:
     BNE -                                   ;$00A60A |/
     RTS                                     ;$00A60C |
 
-DATA_00A60D:
+.unused_00A60D:
     db $00,$01,$01,$01
 
 DATA_00A611:
@@ -4928,7 +4926,7 @@ DATA_00A9D2:
 DATA_00A9D6:
     db $18,$10,$08,$00
 
-UploadSpriteGFX:
+upload_sprite_gfx_00A9DA:
     LDA.b #$80
     STA.w $2115                             ;$00A9DC |
     LDX.b #$03                              ;$00A9DF |
@@ -5205,8 +5203,8 @@ DATA_00ABDF:
     db $00,$00,$38,$00,$70,$00,$A8,$00
     db $E0,$00,$18,$01,$50,$01
 
-LoadPalette:
-    REP #$30                                ;$alette | AXY->16
+load_palette_00ABED:
+    REP #$30                                ;$00ABED | AXY->16
     LDA.w #$7FDD                            ;$00ABEF |
     STA $04                                 ;$00ABF2 |
     LDX.w #$0002                            ;$00ABF4 |
@@ -5428,7 +5426,7 @@ CODE_00ADA6:
     RTS                                     ;$00ADD8 |
 
 CODE_00ADD9:
-    JSR LoadPalette
+    JSR load_palette_00ABED
     REP #$30                                ;$00ADDC | AXY->16
     LDA.w #$0017                            ;$00ADDE |
     STA.w $0701                             ;$00ADE1 |
@@ -5458,7 +5456,7 @@ CODE_00AE15:
     STA.w SpritePalette_192E                ;$00AE17 |
     LDA.b #$07                              ;$00AE1A |
     STA.w ForegroundPalette_192D            ;$00AE1C |
-    JSR LoadPalette                         ;$00AE1F |
+    JSR load_palette_00ABED                 ;$00AE1F |
     REP #$30                                ;$00AE22 | AXY->16
     LDA.w #$0017                            ;$00AE24 |
     STA.w $0701                             ;$00AE27 |

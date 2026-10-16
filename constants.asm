@@ -1,4 +1,5 @@
 ; Bank references
+!Bank_00 = $00
 !Bank_07 = $07
 !Bank_0C = $0C
 !Bank_0D = $0D
@@ -8,6 +9,8 @@
 !Bank_007F = $007F
 
 ; Address references
+!AddrMainPalette_0703 = $0703
+!AddrCopyPalette_0905 = $0905
 !Addr_8000 = $8000
 !Addr_9100 = $9100
 !Addr_9A7B = $9A7B
