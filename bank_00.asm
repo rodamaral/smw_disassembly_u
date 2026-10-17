@@ -755,7 +755,7 @@ clear_out_layer3_0085FA:
 .DATA_008649:
     db $08,$18,$00,$00,$00,$00,$10
 
-update_controllers_008650:                         ;        \ 
+update_controllers_008650:                  ;        \ 
     LDA.w $4218                             ;$008650 |\ Load controller 1 low byte data
     AND.b #$F0                              ;$008653 | | Filter out potentially invalid bits
     STA.w axlr0000P1Hold_0DA4               ;$008655 | | Store the filtered value in $0DA4 and Y
@@ -7450,7 +7450,7 @@ DATA_00C6DF:
 castle_destroy_animation:
     JSR disable_controls
     STZ.w PlayerOverworldPose_13DE          ;$00C6EA |
-    JSR apply_player_speeds                 ;$00C6ED |
+    JSR calculate_player_positions_00DC2D   ;$00C6ED |
     LDA.b PlayerYSpeed_7D                   ;$00C6F0 |
     BMI CODE_00C73F                         ;$00C6F2 |
     LDA.b PlayerYPos_96                     ;$00C6F4 |
@@ -7635,7 +7635,7 @@ yoshi_wings_animation:
     STA.b PlayerXSpeed_7B                   ;$00C821 ||
     BVC ++                                  ;$00C823 ||
     STZ.b PlayerXSpeed_7B                   ;$00C825 |/
-++  JSR apply_player_speeds                 ;$00C827 |
+++  JSR calculate_player_positions_00DC2D   ;$00C827 |
     REP #$20                                ;$00C82A | A->16
     LDY.w YoshiHeavenFlag_1B95              ;$00C82C |
     LDA.b PlayerYPosScrRel_80               ;$00C82F |
@@ -7709,7 +7709,7 @@ CODE_00C8BC:
 CODE_00C8CE:
     STY.w NoYoshiIntroTimer_18D9
 CODE_00C8D1:
-    JSR apply_player_speeds
+    JSR calculate_player_positions_00DC2D
     LDA.b #$24                              ;$00C8D4 |
     STA.b PlayerInAir_72                    ;$00C8D6 |
     LDA.b #$6F                              ;$00C8D8 |
@@ -7759,7 +7759,7 @@ ending_level:
     BEQ ending_normal_level_00C96B          ;$00C92C ||
     LDA.b PlayerInAir_72                    ;$00C92E ||
     BEQ +                                   ;$00C930 ||
-    JSR not_frozen_physics                  ;$00C932 ||
+    JSR not_frozen_physics_00CCD3           ;$00C932 ||
 +   LDA.w SwitchPalaceColor_13D2            ;$00C935 ||
     BNE .CODE_00C948                        ;$00C938 ||
     JSR CODE_00B03E                         ;$00C93A ||
@@ -8106,52 +8106,52 @@ free_roaming_speeds:
     dw $FFFE,$FFFA
 
 no_animation:                               ;        \
-    LDA.b axlr0000Hold_17                   ;$00CC68 |\ If L isn't held, don't cycle the debug action.
-    AND.b #$20                              ;$00CC6A | |
-    BEQ .no_cycle                           ;$00CC6C |/
-    LDA.b axlr0000Press_18                  ;$00CC6E |\ If A isn't pressed, don't cycle the debug action.
-    CMP.b #$80                              ;$00CC70 | |
-    BNE .no_cycle                           ;$00CC72 |/
-    INC.w DebugFreeRoam_1E01                ;$00CC74 | Increase the debug action.
-    LDA.w DebugFreeRoam_1E01                ;$00CC77 |\ If the debug action is $03,
-    CMP.b #$03                              ;$00CC7A | |
-    BCC .no_cycle                           ;$00CC7C | | reset it to $00.
+    LDA.b axlr0000Hold_17                   ;$00CC68 | If L isn't held, don't cycle the debug action.
+    AND.b #$20                              ;$00CC6A |
+    BEQ .no_cycle                           ;$00CC6C |\
+    LDA.b axlr0000Press_18                  ;$00CC6E || If A isn't pressed, don't cycle the debug action.
+    CMP.b #$80                              ;$00CC70 ||
+    BNE .no_cycle                           ;$00CC72 ||
+    INC.w DebugFreeRoam_1E01                ;$00CC74 || Increase the debug action.
+    LDA.w DebugFreeRoam_1E01                ;$00CC77 || If the debug action is $03,
+    CMP.b #$03                              ;$00CC7A ||
+    BCC .no_cycle                           ;$00CC7C || reset it to $00.
     STZ.w DebugFreeRoam_1E01                ;$00CC7E |/
 .no_cycle                                   ;        |
     LDA.w DebugFreeRoam_1E01                ;$00CC81 |
     BRA .skip_debug                         ;$00CC84 / Skip the debugging code.
                                             ;        \
-    LSR                                     ;$00CC86 |\ If the debug action is $01,
-    BEQ .instant_run                        ;$00CC87 |/ do instant running.
-    LDA.b #$FF                              ;$00CC89 |\ Make the player invincible.
-    STA.w FlashingTimer_1497                ;$00CC8B |/
-    LDA.b byetudlrHold_15                   ;$00CC8E |\
-    AND.b #$03                              ;$00CC90 | | Isolate the left and right controller flags,
-    ASL                                     ;$00CC92 | |
-    ASL                                     ;$00CC93 | | multiply by two,
-    LDX.b #$00                              ;$00CC94 | | and run free roaming with the X position.
-    JSR .free_roam                          ;$00CC96 |/
-    LDA.b byetudlrHold_15                   ;$00CC99 |\ Isolate the up and down controller flags,
-    AND.b #$0C                              ;$00CC9B | |
-    LDX.b #$02                              ;$00CC9D |/ and run free roaming with the Y position.
+    LSR                                     ;$00CC86 | If the debug action is $01,
+    BEQ .instant_run                        ;$00CC87 | do instant running.
+    LDA.b #$FF                              ;$00CC89 | Make the player invincible.
+    STA.w FlashingTimer_1497                ;$00CC8B |
+    LDA.b byetudlrHold_15                   ;$00CC8E |
+    AND.b #$03                              ;$00CC90 |  Isolate the left and right controller flags,
+    ASL                                     ;$00CC92 |
+    ASL                                     ;$00CC93 |  multiply by two,
+    LDX.b #$00                              ;$00CC94 |  and run free roaming with the X position.
+    JSR .free_roam                          ;$00CC96 |
+    LDA.b byetudlrHold_15                   ;$00CC99 | Isolate the up and down controller flags,
+    AND.b #$0C                              ;$00CC9B |
+    LDX.b #$02                              ;$00CC9D | and run free roaming with the Y position.
 .free_roam                                  ;        |
-    BIT.b byetudlrHold_15                   ;$00CC9F |\ If X or Y is pressed,
-    BVC .not_fast                           ;$00CCA1 | | increase the speed.
-    ORA.b #$02                              ;$00CCA3 | |
-.not_fast                                   ;        | |
-    TAY                                     ;$00CCA5 |/
-    REP #$20                                ;$00CCA6 |\
-    LDA.b PlayerXPos_94,X                   ;$00CCA8 | | Move the player's X or Y position by
-    CLC                                     ;$00CCAA | |
-    ADC.w free_roaming_speeds,Y             ;$00CCAB | | the free roaming speed.
-    STA.b PlayerXPos_94,X                   ;$00CCAE | |
-    SEP #$20                                ;$00CCB0 |/ A->8
+    BIT.b byetudlrHold_15                   ;$00CC9F | If X or Y is pressed,
+    BVC .not_fast                           ;$00CCA1 |\ increase the speed.
+    ORA.b #$02                              ;$00CCA3 |/
+.not_fast                                   ;        |
+    TAY                                     ;$00CCA5 |
+    REP #$20                                ;$00CCA6 | A->16
+    LDA.b PlayerXPos_94,X                   ;$00CCA8 | Move the player's X or Y position by
+    CLC                                     ;$00CCAA |
+    ADC.w free_roaming_speeds,Y             ;$00CCAB |  the free roaming speed.
+    STA.b PlayerXPos_94,X                   ;$00CCAE |
+    SEP #$20                                ;$00CCB0 | A->8
     RTS                                     ;$00CCB2 /
 
 .instant_run                                ;        \
-    LDA.b #$70                              ;$00CCB3 |\
-    STA.w PlayerPMeter_13E4                 ;$00CCB5 | | Set the maximum dash time
-    STA.w TakeoffTimer_149F                 ;$00CCB8 |/ and flying time.
+    LDA.b #$70                              ;$00CCB3 |
+    STA.w PlayerPMeter_13E4                 ;$00CCB5 | Set the maximum dash time
+    STA.w TakeoffTimer_149F                 ;$00CCB8 | and flying time.
 .skip_debug                                 ;        |
     LDA.w EndLevelTimer_1493                ;$00CCBB | If $1493 is non-zero,
     BEQ .not_ending_level                   ;$00CCBE |
@@ -8159,35 +8159,35 @@ no_animation:                               ;        \
 
 .not_ending_level
     JSR screen_scrolling                    ;$00CCC3 \ Process screen scrolling.
-    LDA.b SpriteLock_9D                     ;$00CCC6 |\ If sprites are locked, return.
-    BNE .return                             ;$00CCC8 |/
-    STZ.w CapeInteracts_13E8                ;$00CCCA | Clear the cape spin interaction flag.
-    STZ.w PlayerOverworldPose_13DE          ;$00CCCD | Clear the looking up flag.
-    LDA.w PlayerStunnedTimer_18BD           ;$00CCD0 |\ If the player is not frozen,
-    BEQ not_frozen_physics                  ;$00CCD3 |/ run regular physics.
-    DEC.w PlayerStunnedTimer_18BD           ;$00CCD5 | Decrease the freeze timer.
-    STZ.b PlayerXSpeed_7B                   ;$00CCD8 | Freeze the player's X position.
-    LDA.b #$0F                              ;$00CCDA |\ Make the player face the screen.
+    LDA.b SpriteLock_9D                     ;$00CCC6 | If sprites are locked, return
+    BNE .return                             ;$00CCC8 |\
+    STZ.w CapeInteracts_13E8                ;$00CCCA || Clear the cape spin interaction flag
+    STZ.w PlayerOverworldPose_13DE          ;$00CCCD || Clear the looking up flag
+    LDA.w PlayerStunnedTimer_18BD           ;$00CCD0 || If the player is not frozen,
+    BEQ not_frozen_physics_00CCD3           ;$00CCD3 ||\  run regular physics.
+    DEC.w PlayerStunnedTimer_18BD           ;$00CCD5 ||| Decrease the freeze timer
+    STZ.b PlayerXSpeed_7B                   ;$00CCD8 ||| Freeze the player's X position.
+    LDA.b #$0F                              ;$00CCDA ||/ Make the player face the screen
     STA.w PlayerPose_13E0                   ;$00CCDC |/
 .return                                     ;        |
     RTS                                     ;$00CCDF /
 
-not_frozen_physics:                         ;        \
+not_frozen_physics_00CCD3:                  ;        \
     LDA.w IRQNMICommand_0D9B                ;$00CCE0 |\ If fighting the mode 7 koopalings,
-    BPL no_special_collision                ;$00CCE3 | | use special collision.
-    LSR                                     ;$00CCE5 | |
+    BPL no_special_collision                ;$00CCE3 || use special collision.
+    LSR                                     ;$00CCE5 ||
     BCS no_special_collision                ;$00CCE6 |/
     BIT.w IRQNMICommand_0D9B                ;$00CCE8 |\ If fighting Morton, Roy, or Ludwig,
-    BVS .not_platform                       ;$00CCEB |/ don't use the platform collision.
+    BVS .not_platform                       ;$00CCEB |/ don't use the platform collision
     LDA.b PlayerInAir_72                    ;$00CCED |\ If in the air,
     BNE .not_platform                       ;$00CCEF |/ use a solid boss room.
-    REP #$20                                ;$00CCF1 |\
-    LDA.w KeyholeXPos_1436                  ;$00CCF3 | | Set the player's platform X position.
-    STA.b PlayerXPos_94                     ;$00CCF6 | |
-    LDA.w KeyholeYPos_1438                  ;$00CCF8 | | Set the player's platform Y position.
-    STA.b PlayerYPos_96                     ;$00CCFB | |
-    SEP #$20                                ;$00CCFD |/ A->8
-    JSR apply_player_speeds                 ;$00CCFF | Apply the player's speeds.
+    REP #$20                                ;$00CCF1 | A->16
+    LDA.w KeyholeXPos_1436                  ;$00CCF3 | Set the player's platform X position.
+    STA.b PlayerXPos_94                     ;$00CCF6 |
+    LDA.w KeyholeYPos_1438                  ;$00CCF8 |  Set the player's platform Y position.
+    STA.b PlayerYPos_96                     ;$00CCFB |
+    SEP #$20                                ;$00CCFD | A->8
+    JSR calculate_player_positions_00DC2D   ;$00CCFF | Apply the player's speeds.
     REP #$20                                ;$00CD02 |\
     LDA.b PlayerXPos_94                     ;$00CD04 | |
     STA.w KeyholeXPos_1436                  ;$00CD06 | | Update the platform X position,
@@ -8200,21 +8200,21 @@ not_frozen_physics:                         ;        \
     BRA .apply_boss_room_collision          ;$00CD1A /
 
 .not_platform                               ;        \
-    JSR apply_player_speeds                 ;$00CD1C | Apply the player's speeds.
+    JSR calculate_player_positions_00DC2D   ;$00CD1C | Apply the player's speeds.
 .apply_boss_room_collision                  ;        |
     JSR boss_room_collision                 ;$00CD1F | Apply boss room collision.
     BRA skip_standard_collision             ;$00CD22 / 
 
 no_special_collision:                       ;        \
-    LDA.b PlayerYSpeed_7D                   ;$00CD24 |\ If the player is rising
-    BPL .no_hit_ceiling                     ;$00CD26 | |
-    LDA.b PlayerBlocked_77                  ;$00CD28 | |
-    AND.b #!Block_Top_08                    ;$00CD2A | | and hit the ceiling,
-    BEQ .no_hit_ceiling                     ;$00CD2C | |
+    LDA.b PlayerYSpeed_7D                   ;$00CD24 | If the player is rising
+    BPL .no_hit_ceiling                     ;$00CD26 |\
+    LDA.b PlayerBlocked_77                  ;$00CD28 ||
+    AND.b #!Block_Top_08                    ;$00CD2A || and hit the ceiling,
+    BEQ .no_hit_ceiling                     ;$00CD2C ||
     STZ.b PlayerYSpeed_7D                   ;$00CD2E |/ clear his Y speed.
 .no_hit_ceiling                             ;        |
-    JSR apply_player_speeds                 ;$00CD30 | Apply the player's speeds.
-    JSR level_collision                     ;$00CD33 | Apply standard level collision.
+    JSR calculate_player_positions_00DC2D   ;$00CD30 | Apply the player's speeds.
+    JSR player_level_collision_00E92B       ;$00CD33 | Apply standard level collision.
 skip_standard_collision:                    ;        |
     JSR check_y_position                    ;$00CD36 | Check the player's Y position.
 CODE_00CD39:                                ;        |
@@ -8759,7 +8759,7 @@ death_animation:
     CMP.b #$26                              ;$00D108 \ Keep the player still for a bit.
     BCS .return                             ;$00D10A |
     STZ.b PlayerXSpeed_7B                   ;$00D10C | Clear the player's X speed,
-    JSR apply_player_speeds                 ;$00D10E | apply the player's X and Y speeds,
+    JSR calculate_player_positions_00DC2D   ;$00D10E | apply the player's X and Y speeds,
     JSR update_player_gravity_00D92E        ;$00D111 | update the player's gravity,
     LDA.b Frame_13                          ;$00D114 |\
     LSR                                     ;$00D116 | |
@@ -8962,7 +8962,7 @@ CODE_00D259:
     LDA.w pipe_y_speeds,Y                   ;$00D25E |
     STA.b PlayerYSpeed_7D                   ;$00D261 |
     STZ.b PlayerInAir_72                    ;$00D263 |
-    JMP apply_player_speeds                 ;$00D265 |
+    JMP calculate_player_positions_00DC2D   ;$00D265 |
 
 CODE_00D268:
     BCC go_to_sublevel
@@ -9012,7 +9012,7 @@ CODE_00D2B2:
     STA.b PlayerXSpeed_7B                   ;$00D2B4 |
     LDA.b #$C0                              ;$00D2B6 |
     STA.b PlayerYSpeed_7D                   ;$00D2B8 |
-    JMP apply_player_speeds                 ;$00D2BA |
+    JMP calculate_player_positions_00DC2D   ;$00D2BA |
 
 DATA_00D2BD:
     db $B0,$B6,$AE,$B4,$AB,$B2,$A9,$B0
@@ -10042,25 +10042,24 @@ CODE_00DB17:
     STA.b PlayerDir_76                      ;$00DC2A |/
 +   RTS                                     ;$00DC2C |
 
-apply_player_speeds:                        ;        \
-    LDA.b PlayerYSpeed_7D                   ;$00DC2D |\ Backup the Y speed.
-    STA $8A                                 ;$00DC2F |/
-    LDA.w WallRunFlag_13E3                  ;$00DC31 |\ If the player is wall running,
-    BEQ .not_wall_running                   ;$00DC34 |/
-    LSR                                     ;$00DC36 |
-    LDA.b PlayerXSpeed_7B                   ;$00DC37 | Load the player's X speed,
-    BCC .no_flip_speed                      ;$00DC39 |
-    EOR.b #$FF                              ;$00DC3B |\ flip it depending on the wall running direction,
-    INC A                                   ;$00DC3D |/
-.no_flip_speed                              ;        |
-    STA.b PlayerYSpeed_7D                   ;$00DC3E | and set the player's Y speed.
-.not_wall_running                           ;        |
-    LDX.b #$00                              ;$00DC40 |\ Apply the player's X speed.
-    JSR .apply_speed                        ;$00DC42 |/
-    LDX.b #$02                              ;$00DC45 |\ Apply the player's Y speed.
-    JSR .apply_speed                        ;$00DC47 |/
-    LDA $8A                                 ;$00DC4A |\ Restore the Y speed.
-    STA.b PlayerYSpeed_7D                   ;$00DC4C |/
+calculate_player_positions_00DC2D:          ;        \
+    LDA.b PlayerYSpeed_7D                   ;$00DC2D | Backup the Y speed.
+    STA.b TempPlayerYSpeed_8A               ;$00DC2F |
+    LDA.w WallRunFlag_13E3                  ;$00DC31 |
+    BEQ .not_wall_running                   ;$00DC34 |\ branch if the player is not wall running
+    LSR                                     ;$00DC36 ||
+    LDA.b PlayerXSpeed_7B                   ;$00DC37 || Load the player's X speed,
+    BCC +                                   ;$00DC39 ||\
+    EOR.b #$FF                              ;$00DC3B ||| flip it depending on the wall running direction,
+    INC A                                   ;$00DC3D ||/
++   STA.b PlayerYSpeed_7D                   ;$00DC3E || and set the player's Y speed
+.not_wall_running                           ;        |/
+    LDX.b #$00                              ;$00DC40 | Apply the player's X speed
+    JSR .apply_speed                        ;$00DC42 |
+    LDX.b #$02                              ;$00DC45 | Apply the player's Y speed
+    JSR .apply_speed                        ;$00DC47 |
+    LDA.b TempPlayerYSpeed_8A               ;$00DC4A | Restore the Y speed
+    STA.b PlayerYSpeed_7D                   ;$00DC4C |
     RTS                                     ;$00DC4E /
 
 .apply_speed
@@ -10081,10 +10080,9 @@ apply_player_speeds:                        ;        \
     LSR                                     ;$00DC64 |/
     AND.w #$000F                            ;$00DC65 | remove garbage bits,
     CMP.w #$0008                            ;$00DC68 |\ flip the speed if it's negative,
-    BCC .nonnegative                        ;$00DC6B | |
+    BCC +                                   ;$00DC6B | |
     ORA.w #$FFF0                            ;$00DC6D |/
-.nonnegative                                ;        |
-    PLP                                     ;$00DC70 | restore the carry bit,
++   PLP                                     ;$00DC70 | restore the carry bit,
     ADC.b PlayerXPos_94,X                   ;$00DC71 |\ and add the fractional bit and speed
     STA.b PlayerXPos_94,X                   ;$00DC73 |/ to the player's position.
     SEP #$20                                ;$00DC75 | A->8
@@ -10741,26 +10739,26 @@ DATA_00E632:
     db $00,$02,$04,$06,$08,$0A,$0C,$0E
 
 collision_x_offsets:
-    dw $0008,$000E,$000E,$0008,$0005,$000B  ;               | Small, right side
-    dw $0008,$0002,$0002,$0008,$000B,$0005  ;               | Small, left side
-    dw $0008,$000E,$000E,$0008,$0005,$000B  ;               | Big, left side
-    dw $0008,$0002,$0002,$0008,$000B,$0005  ;               | Big, right side
-    dw $0008,$000E,$000E,$0008,$0005,$000B  ;               | Small, on yoshi, left side
-    dw $0008,$0002,$0002,$0008,$000B,$0005  ;               | Small, on yoshi, right side
-    dw $0008,$000E,$000E,$0008,$0005,$000B  ;               | Big, on yoshi, left side
-    dw $0008,$0002,$0002,$0008,$000B,$0005  ;               | Big, on yoshi, right side
-    dw $0010,$0020,$0007,$0000,$FFF0,$0008  ;               | Wall-running
+    dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Small, right side
+    dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Small, left side
+    dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Big, left side
+    dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Big, right side
+    dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Small, on yoshi, left side
+    dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Small, on yoshi, right side
+    dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Big, on yoshi, left side
+    dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Big, on yoshi, right side
+    dw $0010,$0020,$0007,$0000,$FFF0,$0008  ;        | Wall-running
     
 collision_y_offsets:
-    dw $0018,$001A,$0016,$0010,$0020,$0020  ;               | Small
-    dw $0018,$001A,$0016,$0010,$0020,$0020  ;               | Small
-    dw $0012,$001A,$000F,$0008,$0020,$0020  ;               | Big
-    dw $0012,$001A,$000F,$0008,$0020,$0020  ;               | Big
-    dw $001D,$0028,$0019,$0013,$0030,$0030  ;               | Small, on yoshi
-    dw $001D,$0028,$0019,$0013,$0030,$0030  ;               | Small, on yoshi
-    dw $001A,$0028,$0016,$0010,$0030,$0030  ;               | Big, on yoshi
-    dw $001A,$0028,$0016,$0010,$0030,$0030  ;               | Big, on yoshi
-    dw $0018,$0018,$0018,$0018,$0018,$0018  ;               | Wall-running
+    dw $0018,$001A,$0016,$0010,$0020,$0020  ;        | Small
+    dw $0018,$001A,$0016,$0010,$0020,$0020  ;        | Small
+    dw $0012,$001A,$000F,$0008,$0020,$0020  ;        | Big
+    dw $0012,$001A,$000F,$0008,$0020,$0020  ;        | Big
+    dw $001D,$0028,$0019,$0013,$0030,$0030  ;        | Small, on yoshi
+    dw $001D,$0028,$0019,$0013,$0030,$0030  ;        | Small, on yoshi
+    dw $001A,$0028,$0016,$0010,$0030,$0030  ;        | Big, on yoshi
+    dw $001A,$0028,$0016,$0010,$0030,$0030  ;        | Big, on yoshi
+    dw $0018,$0018,$0018,$0018,$0018,$0018  ;        | Wall-running
     
 DATA_00E90A:
     db $01,$02,$11
@@ -10782,65 +10780,65 @@ DATA_00E91F:
     dw $0000,$0000,$FFFF,$0001
     dw $FFFF,$0001
 
-level_collision:
-    JSR reset_collision_flags               ;$00E92B \ Reset the collision flags.
-    LDA.w PlayerDisableObjInt_185C          ;$00E92E |\ If the fall through layers flag isn't set,
-    BEQ .collision_00E938                   ;$00E931 |/ process collision.
-    JSR routine_00EE1D                      ;$00E933 |
-    BRA no_layer_collision                  ;$00E936 /
+player_level_collision_00E92B:
+    JSR reset_collision_flags_00EAA6        ;$00E92B \ Reset the collision flags
+    LDA.w PlayerDisableObjInt_185C          ;$00E92E |
+    BEQ .collision_enabled_00E938           ;$00E931 |\ branch if the fall through layers flag isn't set,
+    JSR check_on_solid_sprite_flag_00EE1D   ;$00E933 ||
+    BRA no_layer_collision_00E98C           ;$00E936 |/
 
-.collision_00E938                           ;        \
-    LDA.w PlayerGroundType_13EF             ;$00E938 |\
-    STA $8D                                 ;$00E93B | | Backup the on ground flag,
-    STZ.w PlayerGroundType_13EF             ;$00E93D | |
-    LDA.b PlayerInAir_72                    ;$00E940 | | and the in air flag.
-    STA $8F                                 ;$00E942 |/
-    LDA.b ScreenMode_5B                     ;$00E944 |\ If layer 2 isn't interactive,
-    BPL .no_layer2_collision                ;$00E946 |/ skip to processing layer 1 collision.
-    AND.b #$82                              ;$00E948 |\ Isolate the layer 2 collision flags.
-    STA $8E                                 ;$00E94A |/
-    LDA.b #$01                              ;$00E94C |\ Set the layer being processed to layer 2.
-    STA.w LayerProcessing_1933              ;$00E94E |/
-    REP #$20                                ;$00E951 |\
-    LDA.b PlayerXPos_94                     ;$00E953 | | Offset the player's X position by
-    CLC                                     ;$00E955 | |
-    ADC.b LayerXDiff_26                     ;$00E956 | | layer 2's relative X position to layer 1.
-    STA.b PlayerXPos_94                     ;$00E958 | |
-    LDA.b PlayerYPos_96                     ;$00E95A | | Offset the player's Y position by
-    CLC                                     ;$00E95C | |
-    ADC.b LayerYDiff_28                     ;$00E95D | | layer 2's relative Y position to layer 1.
-    STA.b PlayerYPos_96                     ;$00E95F | |
-    SEP #$20                                ;$00E961 |/ A->8
-    JSR layer_collision                     ;$00E963 | Process layer 2 collision.
-    REP #$20                                ;$00E966 |\
-    LDA.b PlayerXPos_94                     ;$00E968 | | Restore the player's previous X position.
-    SEC                                     ;$00E96A | |
-    SBC.b LayerXDiff_26                     ;$00E96B | |
-    STA.b PlayerXPos_94                     ;$00E96D | |
-    LDA.b PlayerYPos_96                     ;$00E96F | | Restore the player's previous Y position.
-    SEC                                     ;$00E971 | |
-    SBC.b LayerYDiff_28                     ;$00E972 | |
-    STA.b PlayerYPos_96                     ;$00E974 | |
+.collision_enabled_00E938                   ;        \
+    LDA.w PlayerGroundType_13EF             ;$00E938 |
+    STA.b TempPlayerGround_8D               ;$00E93B | Backup the on ground flag,
+    STZ.w PlayerGroundType_13EF             ;$00E93D |
+    LDA.b PlayerInAir_72                    ;$00E940 | and the in air flag
+    STA.b TempPlayerAir_8F                  ;$00E942 |
+    LDA.b ScreenMode_5B                     ;$00E944 | If layer 2 isn't interactive,
+    BPL .no_layer2_collision                ;$00E946 |\ skip to processing layer 1 collision
+    AND.b #$82                              ;$00E948 || Isolate the layer 2 collision flags
+    STA.b TempScreenMode_8E                 ;$00E94A ||
+    LDA.b #$01                              ;$00E94C || Set the layer being processed to layer 2
+    STA.w LayerProcessing_1933              ;$00E94E ||
+    REP #$20                                ;$00E951 ||
+    LDA.b PlayerXPos_94                     ;$00E953 || Offset the player's X position by
+    CLC                                     ;$00E955 ||
+    ADC.b LayerXDiff_26                     ;$00E956 || layer 2's relative X position to layer 1
+    STA.b PlayerXPos_94                     ;$00E958 ||
+    LDA.b PlayerYPos_96                     ;$00E95A || Offset the player's Y position by
+    CLC                                     ;$00E95C ||
+    ADC.b LayerYDiff_28                     ;$00E95D || layer 2's relative Y position to layer 1
+    STA.b PlayerYPos_96                     ;$00E95F ||
+    SEP #$20                                ;$00E961 || A->8
+    JSR player_layer_collision_00EADB       ;$00E963 || Process layer 2 collision
+    REP #$20                                ;$00E966 ||
+    LDA.b PlayerXPos_94                     ;$00E968 || Restore the player's previous X position
+    SEC                                     ;$00E96A ||
+    SBC.b LayerXDiff_26                     ;$00E96B ||
+    STA.b PlayerXPos_94                     ;$00E96D ||
+    LDA.b PlayerYPos_96                     ;$00E96F || Restore the player's previous Y position
+    SEC                                     ;$00E971 ||
+    SBC.b LayerYDiff_28                     ;$00E972 ||
+    STA.b PlayerYPos_96                     ;$00E974 ||
     SEP #$20                                ;$00E976 |/ A->8
 .no_layer2_collision                        ;        |
     ASL.w PlayerGroundType_13EF             ;$00E978 |
-    LDA.b ScreenMode_5B                     ;$00E97B |\ Isolate the layer 1 collision flags.
-    AND.b #$41                              ;$00E97D | |
-    STA $8E                                 ;$00E97F | |
-    ASL                                     ;$00E981 | |
-    BMI no_layer_collision                  ;$00E982 |/ If the sixth bit is set, don't process layer 1 collision.
-    STZ.w LayerProcessing_1933              ;$00E984 | Set the layer being processed to layer 1.
-    ASL $8D                                 ;$00E987 |
-    JSR layer_collision                     ;$00E989 | Process layer 1 collision.
-no_layer_collision:                         ;        |
-    LDA.w SideExitEnabled_1B96              ;$00E98C |\ If side exits are enabled,
-    BEQ .no_side_exits                      ;$00E98F | |
-    REP #$20                                ;$00E991 | |
-    LDA.b PlayerXPosScrRel_7E               ;$00E993 | |
-    CMP.w #$00FA                            ;$00E995 | | and the player is touching the side of the screen,
-    SEP #$20                                ;$00E998 | | A->8
-    BCC CODE_00E9FB                         ;$00E99A | |
-    JSL side_exit_level                     ;$00E99C |/ exit the level.
+    LDA.b ScreenMode_5B                     ;$00E97B | Isolate the layer 1 collision flags
+    AND.b #$41                              ;$00E97D |
+    STA.b TempScreenMode_8E                 ;$00E97F |
+    ASL                                     ;$00E981 |
+    BMI no_layer_collision_00E98C           ;$00E982 |\ If the sixth bit is set, don't process layer 1 collision
+    STZ.w LayerProcessing_1933              ;$00E984 || Set the layer being processed to layer 1
+    ASL.b TempPlayerGround_8D               ;$00E987 ||
+    JSR player_layer_collision_00EADB       ;$00E989 |/ Process layer 1 collision
+no_layer_collision_00E98C:                  ;        |
+    LDA.w SideExitEnabled_1B96              ;$00E98C | If side exits are enabled,
+    BEQ .no_side_exits                      ;$00E98F |\
+    REP #$20                                ;$00E991 ||
+    LDA.b PlayerXPosScrRel_7E               ;$00E993 ||
+    CMP.w #$00FA                            ;$00E995 || and the player is touching the side of the screen,
+    SEP #$20                                ;$00E998 || A->8
+    BCC CODE_00E9FB                         ;$00E99A ||
+    JSL side_exit_level                     ;$00E99C |/ exit the level
     RTS                                     ;$00E9A0 /
 
 .no_side_exits
@@ -10982,12 +10980,12 @@ CODE_00EA34:
 Return00EAA5:
     RTS
 
-reset_collision_flags:
+reset_collision_flags_00EAA6:
     STZ.w PlayerPoseLenTimer_13E5           ;$00EAA6 \ Clear the player animation timer index,
     STZ.b PlayerBlocked_77                  ;$00EAA9 | the directional blocked status,
-    STZ.w SlopeType_13E1                    ;$00EAAB |\ the type of slope that the player is on,
-    STZ.w CurrentSlope_13EE                 ;$00EAAE |/
-    STZ $8A                                 ;$00EAB1 | the collision points' swimming flags,
+    STZ.w SlopeType_13E1                    ;$00EAAB | the type of slope that the player is on,
+    STZ.w CurrentSlope_13EE                 ;$00EAAE |
+    STZ.b InteractionPtsInWater_8A          ;$00EAB1 | the collision points' swimming flags,
     STZ.b InteractionPtsClimbable_8B        ;$00EAB3 | the collision points' climbing flags,
     STZ.w Layer2Touched_140E                ;$00EAB5 | and the layer 2 touched flag.
     RTS                                     ;$00EAB8 /
@@ -11007,13 +11005,13 @@ page_1_water_tiles:
     db $9E,$9F,$A3,$A4,$A8,$A9,$AD,$AE
     db $B2,$B3
 
-layer_collision:
+player_layer_collision_00EADB:
     LDA.b PlayerYPos_96                     ;$00EADB |
     AND.b #$0F                              ;$00EADD |
     STA.b PlayerYPosBlock_90                ;$00EADF |
     LDA.w WallRunFlag_13E3                  ;$00EAE1 |
     BNE .wall_running                       ;$00EAE4 |
-    JMP normal_collision                    ;$00EAE6 |
+    JMP normal_collision_00EB77             ;$00EAE6 |
 
 .wall_running
     AND.b #$01                              ;$00EAE9 |
@@ -11038,7 +11036,7 @@ layer_collision:
     BCS stop_wall_running                   ;$00EB12 |
     ORA.b #$04                              ;$00EB14 |
     STA.w WallRunFlag_13E3                  ;$00EB16 |
-.solid_collision                            ;               |
+.solid_collision                            ;        |
     LDA.b PlayerXPos_94                     ;$00EB19 |
     AND.b #$F0                              ;$00EB1B |
     ORA.b #$08                              ;$00EB1D |
@@ -11050,7 +11048,7 @@ layer_collision:
     TYA                                     ;$00EB24 |
     BEQ .on_left_wall                       ;$00EB25 |
     LDX.b #$66                              ;$00EB27 |
-.on_left_wall                               ;               |
+.on_left_wall                               ;        |
     JSR CODE_00EFE8                         ;$00EB29 |
     LDA.b Powerup_19                        ;$00EB2C |
     BNE .process_big                        ;$00EB2E |
@@ -11058,9 +11056,9 @@ layer_collision:
     INX                                     ;$00EB31 |
     BRA .skip                               ;$00EB32 |
 
-.process_big                                ;               |
+.process_big                                ;        |
     JSR CODE_00EFE8                         ;$00EB34 |
-.skip                                       ;               |
+.skip                                       ;        |
     JSR process_collision_point_00F44D      ;$00EB37 |
     BNE .solid_collision                    ;$00EB3A |
     LDA.b #$02                              ;$00EB3C |
@@ -11071,7 +11069,7 @@ fall_off_wall:
     LDA.w WallRunFlag_13E3                  ;$00EB42 |
     AND.b #$01                              ;$00EB45 |
     TAY                                     ;$00EB47 |
-walk_off_wall:                              ;               |
+walk_off_wall:                              ;        |
     LDA.w DATA_00EABB,Y                     ;$00EB48 |
     STA.b PlayerXSpeed_7B                   ;$00EB4B |
     TYA                                     ;$00EB4D |
@@ -11086,7 +11084,7 @@ walk_off_wall:                              ;               |
     LDY.b Powerup_19                        ;$00EB5D |
     BEQ .not_big                            ;$00EB5F |
     LDA.w #$0010                            ;$00EB61 |
-.not_big                                    ;               |
+.not_big                                    ;        |
     CLC                                     ;$00EB64 |
     ADC.b PlayerYPos_96                     ;$00EB65 |
     STA.b PlayerYPos_96                     ;$00EB67 |
@@ -11100,51 +11098,51 @@ stop_wall_running:
 .return
     RTS                                     ;$00EB76 |
 
-normal_collision:
-    LDX.b #$00                              ;$00EB77 \ Initialize collision point index
-    LDA.b Powerup_19                        ;$00EB79 |\
-    BEQ .not_big                            ;$00EB7B | | If the player is big
-    LDA.b PlayerIsDucking_73                ;$00EB7D | |
-    BNE .not_big                            ;$00EB7F | | and not ducking,
-    LDX.b #$18                              ;$00EB81 | | use the big Mario collision point indices.
+normal_collision_00EB77:
+    LDX.b #$00                              ;$00EB77 \ X: current collision point index: 
+    LDA.b Powerup_19                        ;$00EB79 |  0: center, 2: waist, 4: shoulder, 6: head, 8: under center, A: foot (opposite side of waist/shoulder)
+    BEQ .not_big                            ;$00EB7B |\ If the player is big
+    LDA.b PlayerIsDucking_73                ;$00EB7D ||
+    BNE .not_big                            ;$00EB7F || and not ducking,
+    LDX.b #$18                              ;$00EB81 |/ use the big Mario collision point indices
 .not_big                                    ;        |/
-    LDA.w RidingYoshi_187A                  ;$00EB83 |\
-    BEQ .not_on_yoshi                       ;$00EB86 | | If the player is on yoshi,
-    TXA                                     ;$00EB88 | |
-    CLC                                     ;$00EB89 | |
-    ADC.b #$30                              ;$00EB8A | | use the Yoshi collision point indices.
-    TAX                                     ;$00EB8C | |
-.not_on_yoshi                               ;        |/
-    LDA.b PlayerXPos_94                     ;$00EB8D |\ Get the player X,
-    AND.b #$0F                              ;$00EB8F | | take the lower nybble,
-    TAY                                     ;$00EB91 | |
-    CLC                                     ;$00EB92 | |
-    ADC.b #$08                              ;$00EB93 | |
-    AND.b #$0F                              ;$00EB95 | |
-    STA.b PlayerXPosBlock_92                ;$00EB97 | | and set the position within a block.
-    STZ.b PlayerBlockXSide_93               ;$00EB99 |/
-    CPY.b #$08                              ;$00EB9B |\ If the player is on the left side of a block,
-    BCC .right_side                         ;$00EB9D | |
-    TXA                                     ;$00EB9F | |
-    ADC.b #$0B                              ;$00EBA0 | | use the left side collision point indices.
-    TAX                                     ;$00EBA2 | |
-    INC.b PlayerBlockXSide_93               ;$00EBA3 | | Set the side of the block that the player is in.
-.right_side                                 ;        |/
-    LDA.b PlayerYPosBlock_90                ;$00EBA5 |\ Get the player Y,
-    CLC                                     ;$00EBA7 | |
-    ADC.w collision_y_offsets+6,X           ;$00EBA8 | | add the head offset,
-    AND.b #$0F                              ;$00EBAB | |
-    STA.b PlayerBlockMoveY_91               ;$00EBAD |/ and set the amount to move the player out of a block.
+    LDA.w RidingYoshi_187A                  ;$00EB83 |
+    BEQ .not_on_yoshi                       ;$00EB86 |\ If the player is on yoshi,
+    TXA                                     ;$00EB88 ||
+    CLC                                     ;$00EB89 ||
+    ADC.b #$30                              ;$00EB8A || use the Yoshi collision point indices.
+    TAX                                     ;$00EB8C |/
+.not_on_yoshi                               ;        |
+    LDA.b PlayerXPos_94                     ;$00EB8D | Get the player X,
+    AND.b #$0F                              ;$00EB8F |  take the lower nybble,
+    TAY                                     ;$00EB91 |
+    CLC                                     ;$00EB92 |
+    ADC.b #$08                              ;$00EB93 |
+    AND.b #$0F                              ;$00EB95 |
+    STA.b PlayerXPosBlock_92                ;$00EB97 |  and set the position within a block.
+    STZ.b PlayerBlockXSide_93               ;$00EB99 |
+    CPY.b #$08                              ;$00EB9B | If the player is on the left side of a block,
+    BCC .right_side                         ;$00EB9D |\
+    TXA                                     ;$00EB9F ||
+    ADC.b #$0B                              ;$00EBA0 || use the left side collision point indices.
+    TAX                                     ;$00EBA2 ||
+    INC.b PlayerBlockXSide_93               ;$00EBA3 |/ Set the side of the block that the player is in.
+.right_side                                 ;        |
+    LDA.b PlayerYPosBlock_90                ;$00EBA5 | Get the player Y,
+    CLC                                     ;$00EBA7 | 
+    ADC.w collision_y_offsets+6,X           ;$00EBA8 |  add the head offset,
+    AND.b #$0F                              ;$00EBAB |
+    STA.b PlayerBlockMoveY_91               ;$00EBAD | and set the amount to move the player out of a block.
     JSR process_collision_point_00F44D      ;$00EBAF | Process the center body collision point.
     BEQ .center_page_0                      ;$00EBB2 |\ Process page 0 tiles, if applicable.
-    CPY.b #$11                              ;$00EBB4 | | If it's tiles 100 - 110,
-    BCC .skip_center                        ;$00EBB6 | | ignore it.
-    CPY.b #$6E                              ;$00EBB8 | | If it's tiles 111 - 16D,
-    BCC .center_solid                       ;$00EBBA | | process being inside a solid block.
-    TYA                                     ;$00EBBC | |
-    JSL is_page_1_water                     ;$00EBBD | | If the tile isn't a water tile,
-    BCC .skip_center                        ;$00EBC1 | |
-    LDA.b #$01                              ;$00EBC3 | |
+    CPY.b #$11                              ;$00EBB4 || If it's tiles 100 - 110,
+    BCC .skip_center                        ;$00EBB6 || ignore it.
+    CPY.b #$6E                              ;$00EBB8 || If it's tiles 111 - 16D,
+    BCC .center_solid                       ;$00EBBA || process being inside a solid block.
+    TYA                                     ;$00EBBC ||
+    JSL is_page_1_water                     ;$00EBBD || If the tile isn't a water tile,
+    BCC .skip_center                        ;$00EBC1 ||
+    LDA.b #$01                              ;$00EBC3 ||
     TSB $8A                                 ;$00EBC5 |/ disable the center swimming flag.
     BRA .skip_center                        ;$00EBC7 /
 
@@ -11292,7 +11290,7 @@ normal_collision:
     CLC                                     ;$00ECC1 |
     ADC.w #$0010                            ;$00ECC2 |
     STA.b InteractionPtYPos_98              ;$00ECC5 |
-    JSR process_collision_00F461            ;$00ECC7 |
+    JSR process_prev_collision_point_00F461 ;$00ECC7 |
     BEQ .CODE_00ECF8                        ;$00ECCA |
     CPY.b #$6E                              ;$00ECCC |
     BCC .CODE_00ED4A                        ;$00ECCE |
@@ -11394,7 +11392,7 @@ normal_collision:
     SEC                                     ;$00ED6D |
     SBC.w #$0010                            ;$00ED6E |
     STA.b InteractionPtYPos_98              ;$00ED71 |
-    JSR process_collision_00F461            ;$00ED73 |
+    JSR process_prev_collision_point_00F461 ;$00ED73 |
     BEQ .CODE_00EDE9                        ;$00ED76 |
     CPY.b #$6E                              ;$00ED78 |
     BCC .CODE_00EDE9                        ;$00ED7A |
@@ -11467,14 +11465,14 @@ normal_collision:
     JSR process_collision_point_00F44D
     BNE .CODE_00EDF3                        ;$00EDEC |
     JSR process_page_0_tiles_no_climb       ;$00EDEE |
-    BRA routine_00EE1D                      ;$00EDF1 |
+    BRA check_on_solid_sprite_flag_00EE1D   ;$00EDF1 |
 
 .CODE_00EDF3:
     CPY.b #$6E
-    BCS routine_00EE1D                      ;$00EDF5 |
+    BCS check_on_solid_sprite_flag_00EE1D   ;$00EDF5 |
 .CODE_00EDF7:
     LDA.b PlayerYSpeed_7D
-    BMI Return00EE39                        ;$00EDF9 |
+    BMI return_00EE39                       ;$00EDF9 |
     LDA.w ObjectTileset_1931                ;$00EDFB |
     CMP.b #$03                              ;$00EDFE |
     BEQ .CODE_00EE06                        ;$00EE00 |
@@ -11485,7 +11483,7 @@ normal_collision:
     CPY.b #$59                              ;$00EE09 |
     BCC .CODE_00EE11                        ;$00EE0B |
     CPY.b #$5C                              ;$00EE0D |
-    BCC routine_00EE1D                      ;$00EE0F |
+    BCC check_on_solid_sprite_flag_00EE1D   ;$00EE0F |
 .CODE_00EE11:
     LDA.b PlayerYPosBlock_90
     AND.b #$0F                              ;$00EE13 |
@@ -11493,24 +11491,24 @@ normal_collision:
     CMP.b #$08                              ;$00EE17 |
     STA.b PlayerBlockMoveY_91               ;$00EE19 |
     BCC CODE_00EE3A                         ;$00EE1B |
-routine_00EE1D:
+check_on_solid_sprite_flag_00EE1D:
     LDA.w OnSolidSprite_1471
-    BEQ .CODE_00EE2D                        ;$00EE20 |
+    BEQ .not_on_solid_sprite_00EE2D         ;$00EE20 |
     LDA.b PlayerYSpeed_7D                   ;$00EE22 |
-    BMI .CODE_00EE2D                        ;$00EE24 |
+    BMI .not_on_solid_sprite_00EE2D         ;$00EE24 |
     STZ $8E                                 ;$00EE26 |
     LDY.b #$20                              ;$00EE28 |
     JMP CODE_00EEE1                         ;$00EE2A |
 
-.CODE_00EE2D:
+.not_on_solid_sprite_00EE2D:
     LDA.b PlayerBlocked_77
     AND.b #!Block_Bottom_04                 ;$00EE2F |
     ORA.b PlayerInAir_72                    ;$00EE31 |
-    BNE Return00EE39                        ;$00EE33 |
-CODE_00EE35:
-    LDA.b #$24
+    BNE return_00EE39                       ;$00EE33 |
+set_player_air_falling_00EE35:
+    LDA.b #!InAirFalling_24
     STA.b PlayerInAir_72                    ;$00EE37 |
-Return00EE39:
+return_00EE39:
     RTS
 
 CODE_00EE3A:
@@ -11545,7 +11543,7 @@ CODE_00EE3A:
     BEQ .CODE_00EE83                        ;$00EE6E |
     LDA.b #$21                              ;$00EE70 |
     JSL CODE_00F17F                         ;$00EE72 |
-    BRA routine_00EE1D                      ;$00EE76 |
+    BRA check_on_solid_sprite_flag_00EE1D   ;$00EE76 |
 
 .CODE_00EE78:
     CMP.b #$32
@@ -11560,7 +11558,7 @@ CODE_00EE85:
     BPL .CODE_00EE8F                        ;$00EE87 |
     LDA $8D                                 ;$00EE89 |
     CMP.b #$02                              ;$00EE8B |
-    BCC Return00EE39                        ;$00EE8D |
+    BCC return_00EE39                       ;$00EE8D |
 .CODE_00EE8F:
     LDX.w SwitchPalacePressed_1423
     BEQ CODE_00EED1                         ;$00EE92 |
@@ -11796,7 +11794,7 @@ CODE_00F005:
     STA.w BouncingFlag_1406                 ;$00F02D |
     PLA                                     ;$00F030 |
     PLA                                     ;$00F031 |
-    JMP CODE_00EE35                         ;$00F032 |
+    JMP set_player_air_falling_00EE35       ;$00F032 |
 
 .CODE_00F035:
     LDA.b PlayerXSpeed_7B
@@ -12365,26 +12363,26 @@ can_use_door:
     RTS                                     ;$00F44C |
 
 process_collision_point_00F44D:
-    INX                                     ;$00F44D \ Prepare to process the next player collision point.
+    INX                                     ;$00F44D \ Prepare to process the next player collision point
     INX                                     ;$00F44E |
-    REP #$20                                ;$00F44F |\ Enable 16 bit A.
-    LDA.b PlayerXPos_94                     ;$00F451 | | Get the player's X position,
-    CLC                                     ;$00F453 | |
-    ADC.w collision_x_offsets-2,X           ;$00F454 | | add the collision X offset,
-    STA.b InteractionPtXPos_9A              ;$00F457 |/ and set that as the collision X to process.
-    LDA.b PlayerYPos_96                     ;$00F459 |\ Get the player's Y position,
-    CLC                                     ;$00F45B | |
-    ADC.w collision_y_offsets-2,X           ;$00F45C | | add the collision Y offset,
-    STA.b InteractionPtYPos_98              ;$00F45F |/ and set that as the collision Y to process.
-process_collision_00F461:                   ;        /
-    JSR collision_00F465                    ;$00F461 | Process collision.
+    REP #$20                                ;$00F44F | Enable 16 bit A.
+    LDA.b PlayerXPos_94                     ;$00F451 |  Get the player's X position,
+    CLC                                     ;$00F453 |
+    ADC.w collision_x_offsets-2,X           ;$00F454 |  add the collision X offset,
+    STA.b InteractionPtXPos_9A              ;$00F457 | and set that as the collision X to process
+    LDA.b PlayerYPos_96                     ;$00F459 | Get the player's Y position,
+    CLC                                     ;$00F45B | 
+    ADC.w collision_y_offsets-2,X           ;$00F45C |  add the collision Y offset,
+    STA.b InteractionPtYPos_98              ;$00F45F | and set that as the collision Y to process
+process_prev_collision_point_00F461:        ;        /
+    JSR collision_point_vs_layer_00F465     ;$00F461 | Process collision.
     RTS                                     ;$00F464 |
 
-collision_00F465:
+collision_point_vs_layer_00F465:
     SEP #$20                                ;$00F465 \ Enable 8 bit A.
     STZ.w SwitchPalacePressed_1423          ;$00F467 | Clear switch palace switch flag.
     PHX                                     ;$00F46A | Preserve collision point index.
-    LDA $8E                                 ;$00F46B |
+    LDA.b TempScreenMode_8E                 ;$00F46B |
     BPL .not_layer_2                        ;$00F46D |
     JMP .layer_2                            ;$00F46F / Process layer 2 collision, if applicable.
 
@@ -12394,39 +12392,39 @@ collision_00F465:
     LDA.b InteractionPtYPos_98              ;$00F476 |
     CMP.w #$01B0                            ;$00F478 | If collision Y > $01B0,
     SEP #$20                                ;$00F47B | A->8
-    BCS .air_tile                           ;$00F47D | act like air.
-    AND.b #$F0                              ;$00F47F |\
-    STA $00                                 ;$00F481 | | Set the upper nybble of map16 table index.
-    LDX.b InteractionPtXPos_9A+1            ;$00F483 | |
-    CPX.b LevelScreens_5D                   ;$00F485 | | If collision X > end of level,
-    BCS .air_tile                           ;$00F487 | | act like air.
-    LDA.b InteractionPtXPos_9A              ;$00F489 | | Get collision X,
-    LSR                                     ;$00F48B | |
-    LSR                                     ;$00F48C | |
-    LSR                                     ;$00F48D | |
-    LSR                                     ;$00F48E | | divide by 16,
-    ORA $00                                 ;$00F48F | | and set the lower nybble of map16 table index.
-    CLC                                     ;$00F491 | |
-    ADC.l DATA_00BA60,X                     ;$00F492 | |
-    STA $00                                 ;$00F496 | |
-    LDA.b InteractionPtYPos_98+1            ;$00F498 | |
+    BCS ..out_side_level_air_tile           ;$00F47D | act like air
+    AND.b #$F0                              ;$00F47F |
+    STA $00                                 ;$00F481 |  Set the upper nybble of map16 table index.
+    LDX.b InteractionPtXPos_9A+1            ;$00F483 | 
+    CPX.b LevelScreens_5D                   ;$00F485 |  If collision X > end of level,
+    BCS ..out_side_level_air_tile           ;$00F487 |\ act like air.
+    LDA.b InteractionPtXPos_9A              ;$00F489 || Get collision X,
+    LSR                                     ;$00F48B ||
+    LSR                                     ;$00F48C ||
+    LSR                                     ;$00F48D ||
+    LSR                                     ;$00F48E || divide by 16,
+    ORA $00                                 ;$00F48F || and set the lower nybble of map16 table index.
+    CLC                                     ;$00F491 ||
+    ADC.l DATA_00BA60,X                     ;$00F492 ||
+    STA $00                                 ;$00F496 ||
+    LDA.b InteractionPtYPos_98+1            ;$00F498 ||
     ADC.l DATA_00BA9C,X                     ;$00F49A |/ Add by $C800 + $01B0 * screen number for map16 pointer.
     BRA .process_map16                      ;$00F49E / Process map16.
 
-.air_tile
+..out_side_level_air_tile
     PLX                                     ;$00F4A0 \ Restore collision point index.
-    LDY.b #$25                              ;$00F4A1 | Set the low byte to $25,
+    LDY.b #!Map16LowAir_25                  ;$00F4A1 | Set the low byte to $25,
 .high_byte_00                               ;        |
-    LDA.b #$00                              ;$00F4A3 | and set the high byte to $00.
+    LDA.b #!Map16HighAir_00                 ;$00F4A3 | and set the high byte to $00.
     RTS                                     ;$00F4A5 /
 
 .vertical_level
     LDA.b InteractionPtXPos_9A+1            ;$00F4A6 \
     CMP.b #$02                              ;$00F4A8 | If collision X > $0200,
-    BCS .air_tile_2                         ;$00F4AA | act like air.
+    BCS .outside_level_air_tile_2           ;$00F4AA | act like air.
     LDX.b InteractionPtYPos_98+1            ;$00F4AC |
     CPX.b LevelScreens_5D                   ;$00F4AE | If collision Y > end of level,
-    BCS .air_tile_2                         ;$00F4B0 | act like air.
+    BCS .outside_level_air_tile_2           ;$00F4B0 | act like air.
     LDA.b InteractionPtYPos_98              ;$00F4B2 |\
     AND.b #$F0                              ;$00F4B4 | |
     STA $00                                 ;$00F4B6 | | Set the upper nybble of map16 table index.
@@ -12442,22 +12440,22 @@ collision_00F465:
     LDA.b InteractionPtXPos_9A+1            ;$00F4C7 | |
     ADC.l DATA_00BABC,X                     ;$00F4C9 |/ Add by $C800 + $0200 * screen number for map16 pointer.
 .process_map16                              ;        |
-    STA $01                                 ;$00F4CD |\ Set pointer to map16 low byte table,
-    LDA.b #$7E                              ;$00F4CF | |
-    STA $02                                 ;$00F4D1 |/
-    LDA [$00]                               ;$00F4D3 |\ set $1693 to low byte of map16 tile,
-    STA.w Map16_1693                        ;$00F4D5 |/ NOTE: X,Y no level, para Mario (pontos de interacao)
+    STA $01                                 ;$00F4CD | Set pointer to map16 low byte table,
+    LDA.b #!Bank_7E                         ;$00F4CF |
+    STA $02                                 ;$00F4D1 |
+    LDA [$00]                               ;$00F4D3 | set $1693 to low byte of map16 tile,
+    STA.w Map16_1693                        ;$00F4D5 | NOTE: X,Y inside level, for Mario interaction points
     INC $02                                 ;$00F4D8 | and set pointer to map16 high byte table.
     PLX                                     ;$00F4DA | Restore collision point index.
     LDA [$00]                               ;$00F4DB |
-    JSL conditional_map16                   ;$00F4DD | Process "conditional" map16.
+    JSL conditional_map16_00F545            ;$00F4DD | Process "conditional" map16.
     LDY.w Map16_1693                        ;$00F4E1 | Set Y to low byte of map16 tile,
     CMP.b #$00                              ;$00F4E4 | and check if high byte is $00.
     RTS                                     ;$00F4E6 /
 
-.air_tile_2
+.outside_level_air_tile_2
     PLX                                     ;$00F4E7 \ Restore collision point index.
-    LDY.b #$25                              ;$00F4E8 | Set the low byte to $25,
+    LDY.b #!Map16LowAir_25                  ;$00F4E8 | Set the low byte to $25,
     BRA .high_byte_00                       ;$00F4EA / and set the high byte to $00.
 
 .layer_2
@@ -12467,12 +12465,12 @@ collision_00F465:
     LDA.b InteractionPtYPos_98              ;$00F4F1 |
     CMP.w #$01B0                            ;$00F4F3 | If collision Y > $01B0,
     SEP #$20                                ;$00F4F6 | A->8
-    BCS .air_tile_2                         ;$00F4F8 | act like air.
+    BCS .outside_level_air_tile_2           ;$00F4F8 | act like air.
     AND.b #$F0                              ;$00F4FA |\
     STA $00                                 ;$00F4FC | | Set the upper nybble of map16 table index.
     LDX.b InteractionPtXPos_9A+1            ;$00F4FE | |
     CPX.b #$10                              ;$00F500 | | If collision X > end of level,
-    BCS .air_tile_2                         ;$00F502 | | act like air.
+    BCS .outside_level_air_tile_2           ;$00F502 | | act like air.
     LDA.b InteractionPtXPos_9A              ;$00F504 | | Get collision X,
     LSR                                     ;$00F506 | |
     LSR                                     ;$00F507 | |
@@ -12489,10 +12487,10 @@ collision_00F465:
 .vertical_layer_2
     LDA.b InteractionPtXPos_9A+1            ;$00F51B \
     CMP.b #$02                              ;$00F51D | If collision X > $0200,
-    BCS .air_tile_2                         ;$00F51F | act like air.
+    BCS .outside_level_air_tile_2           ;$00F51F | act like air.
     LDX.b InteractionPtYPos_98+1            ;$00F521 |
     CPX.b #$0E                              ;$00F523 | If collision Y > $0E00,
-    BCS .air_tile_2                         ;$00F525 | act like air.
+    BCS .outside_level_air_tile_2           ;$00F525 | act like air.
     LDA.b InteractionPtYPos_98              ;$00F527 |\
     AND.b #$F0                              ;$00F529 | |
     STA $00                                 ;$00F52B | | Set the upper nybble of map16 table index.
@@ -12509,7 +12507,7 @@ collision_00F465:
     ADC.l DATA_00BACA,X                     ;$00F53E |/ Add by $C800 + $200 * (screen number + $10) for map16 pointer.
     JMP .process_map16                      ;$00F542 / Process map16.
 
-conditional_map16:
+conditional_map16_00F545:
     TAY                                     ;$00F545 \ If map16 page != 0,
     BNE .map16_page_01                      ;$00F546 | process map16 page 1 code.
     LDY.w Map16_1693                        ;$00F548 |
@@ -13012,10 +13010,10 @@ boss_ceiling_height:
     db $ED,$FF
 
 boss_room_collision:
-    JSR reset_collision_flags               ;$00F8F2 |
+    JSR reset_collision_flags_00EAA6        ;$00F8F2 |
     BIT.w IRQNMICommand_0D9B                ;$00F8F5 |
     BVC .CODE_00F94E                        ;$00F8F8 |
-    JSR level_collision                     ;$00F8FA |
+    JSR player_level_collision_00E92B       ;$00F8FA |
     LDA.w ActiveBoss_13FC                   ;$00F8FD |
     ASL                                     ;$00F900 |
     TAX                                     ;$00F901 |
@@ -13069,7 +13067,7 @@ boss_room_collision:
 .CODE_00F957:
     JSR CODE_00F9A8
     BCS .CODE_00F962                        ;$00F95A |
-    JSR routine_00EE1D                      ;$00F95C |
+    JSR check_on_solid_sprite_flag_00EE1D   ;$00F95C |
     JMP .CODE_00F997                        ;$00F95F |
 
 .CODE_00F962:
@@ -13105,7 +13103,7 @@ boss_room_collision:
     BMI .CODE_00F9A5                        ;$00F9A0 |
     JSR kill_player_disable_controls_00F629 ;$00F9A2 |
 .CODE_00F9A5:
-    JMP no_layer_collision
+    JMP no_layer_collision_00E98C
 
 CODE_00F9A8:
     REP #$20                                ;$00F9A8 | A->16

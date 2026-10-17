@@ -2972,7 +2972,7 @@ CODE_019523:
     STA.w Map16_1693                        ;$01952C | For sprites, X/Y outside the level, vertical or horizontal
     INC $07                                 ;$01952F |
     LDA [$05]                               ;$019531 |
-    JSL conditional_map16                   ;$019533 |
+    JSL conditional_map16_00F545            ;$019533 |
     LDY $0F                                 ;$019537 | Scratch address is uninitialized sometimes
     CMP.b #$00                              ;$019539 |
     RTS                                     ;$01953B |

@@ -2956,7 +2956,7 @@ Map16Cape02960D:
     STA.w Map16_1693                        ;$029613 | Cape spin, X: 0, fim do level, Y: 0, 1FF. Pega finalzinho da parte debaixo de horizontal
     INC $07                                 ;$029616 |
     LDA [$05]                               ;$029618 |
-    JSL conditional_map16                   ;$02961A |
+    JSL conditional_map16_00F545            ;$02961A |
     CMP.b #$00                              ;$02961E |
     BEQ Return029630                        ;$029620 |
     LDA $0F                                 ;$029622 |
@@ -5235,7 +5235,7 @@ CODE_02A6DB:
     STA.w Map16_1693                        ;$02A6E4 | Extended Sprites (CloudCoin, WaterBubble, MarioFireball), vertical: dentro do level | horizontal: X: 0 até final, y_low - cameraY < 0xF0, mas MarioFireball morre antes de ter a chance
     INC $07                                 ;$02A6E7 |
     LDA [$05]                               ;$02A6E9 |
-    JSL conditional_map16                   ;$02A6EB |
+    JSL conditional_map16_00F545            ;$02A6EB |
     CMP.b #$00                              ;$02A6EF |
     BEQ CODE_02A729                         ;$02A6F1 |
     LDA.w Map16_1693                        ;$02A6F3 |

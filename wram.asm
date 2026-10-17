@@ -569,9 +569,9 @@ PlayerAnimation_71: skip 1
 ; set if player is not on the ground
 PlayerInAir_72: skip 1
 ; Valid values
-!PlayerAir_Jump = 11 ; normal jump or swimming in water level
-!PlayerAir_Takeoff = 12 ; pspeed jump
-!PlayerAir_Falling = 36 ; descending or swimming in non-water level
+!InAirJump_0B = $0B ; normal jump or swimming in water level
+!InAirTakeoff_0C = $0C ; pspeed jump
+!InAirFalling_24 = $24 ; descending or swimming in non-water level
 
 ; === $7E0073 ===
 ; 1 byte
@@ -1804,8 +1804,11 @@ DirectCoinInit_1432: skip 1 ;done
 SpotlightSize_1433: skip 1 ;done
 KeyholeTimer_1434: skip 1 ;done
 KeyholeDirection_1435: skip 1 ;done
+
+; TODO: misc address
 KeyholeXPos_1436: skip 2 ;done
 KeyholeYPos_1438: skip 2 ;done
+
 UploadMarioStart_143A: skip 1 ;done
 DeathMessage_143B: skip 1 ;done
 GameOverAnimation_143C: skip 1 ;done
