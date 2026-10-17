@@ -2680,10 +2680,10 @@ CODE_0192D0:
     CMP.b #$5C                              ;$019314 |
     BCS CODE_01933B                         ;$019316 |
     LDY.w ObjectTileset_1931                ;$019318 |
-    CPY.b #$0E                              ;$01931B |
-    BEQ +                                   ;$01931D |
-    CPY.b #$03                              ;$01931F |
-    BNE CODE_01933B                         ;$019321 |
+    CPY.b #!TilesetUnderground2_0E          ;$01931B |
+    BEQ +                                   ;$01931D |\
+    CPY.b #!TilesetUnderground1_03          ;$01931F ||
+    BNE CODE_01933B                         ;$019321 |/
 +   LDA.b SpriteNumber_9E,X                 ;$019323 |
     CMP.b #!Yoshi_35                        ;$019325 |
     BEQ CODE_019330                         ;$019327 |
@@ -2768,7 +2768,7 @@ CODE_0193B0:
 CODE_0193B8:
     LDA.w dnctswye_1686,X
     AND.b #$04                              ;$0193BB |
-    BNE CODE_019414                         ;$0193BD |
+    BNE .CODE_019414                        ;$0193BD |
     LDA.w SpriteStatus_14C8,X               ;$0193BF |
     CMP.b #!StatusFall_02                   ;$0193C2 |
     BEQ Return019424                        ;$0193C4 |
@@ -2778,22 +2778,20 @@ CODE_0193B8:
     BEQ Return019424                        ;$0193CC |
     LDY.w Map16_1693                        ;$0193CE |
     CPY.b #$0C                              ;$0193D1 |
-    BEQ CODE_0193D9                         ;$0193D3 |
-    CPY.b #$0D                              ;$0193D5 |
-    BNE CODE_019405                         ;$0193D7 |
-CODE_0193D9:
-    LDA.b Frame_13
+    BEQ +                                   ;$0193D3 |\
+    CPY.b #$0D                              ;$0193D5 ||
+    BNE .CODE_019405                        ;$0193D7 |/
++   LDA.b Frame_13                          ;$0193D9 |
     AND.b #$03                              ;$0193DB |
-    BNE CODE_019405                         ;$0193DD |
+    BNE .CODE_019405                        ;$0193DD |
     JSR is_touching_obj_side_018008         ;$0193DF |
-    BNE CODE_019405                         ;$0193E2 |
+    BNE .CODE_019405                        ;$0193E2 |
     LDA.w ObjectTileset_1931                ;$0193E4 |
-    CMP.b #$02                              ;$0193E7 |
-    BEQ ADDR_0193EF                         ;$0193E9 |
-    CMP.b #$08                              ;$0193EB |
-    BNE CODE_019405                         ;$0193ED |
-ADDR_0193EF:
-    TYA
+    CMP.b #!TilesetRope1_02                 ;$0193E7 |
+    BEQ +                                   ;$0193E9 |\
+    CMP.b #!TilesetRope3_08                 ;$0193EB ||
+    BNE .CODE_019405                        ;$0193ED |/
++   TYA                                     ;$0193EF |
     SEC                                     ;$0193F0 |
     SBC.b #$0C                              ;$0193F1 |
     TAY                                     ;$0193F3 |
@@ -2804,15 +2802,15 @@ ADDR_0193EF:
     LDA.w SpriteXPosHigh_14E0,X             ;$0193FC |
     ADC.w DATA_0192C7,Y                     ;$0193FF |
     STA.w SpriteXPosHigh_14E0,X             ;$019402 |
-CODE_019405:
+.CODE_019405
     LDA.w SpriteOnTongue_15D0,X
-    BNE CODE_019414                         ;$019408 |
+    BNE .CODE_019414                        ;$019408 |
     LDA.b SpriteYPosLow_D8,X                ;$01940A |
     AND.b #$F0                              ;$01940C |
     CLC                                     ;$01940E |
     ADC.w SpriteBlockOffset_1694            ;$01940F |
     STA.b SpriteYPosLow_D8,X                ;$019412 |
-CODE_019414:
+.CODE_019414
     JSR CODE_019435
     LDA.w SpriteLayer_185E                  ;$019417 |
     BEQ Return019424                        ;$01941A |
@@ -3059,7 +3057,7 @@ most_carryable_sprites_01956A:
     STA.w LayerProcessing_1933              ;$0195CA || set layer 2 if hitting the side of a layer 2 block
     LDY.b #$00                              ;$0195CD ||
     LDA.w Map16MirrorHittable_1868          ;$0195CF ||
-    JSL CODE_00F160                         ;$0195D2 ||
+    JSL handle_non_spike_tile_00F160        ;$0195D2 ||
     LDA.b #$08                              ;$0195D6 ||
     STA.w SpriteDisableTimer_1FE2,X         ;$0195D8 |/
 +   JSR is_touching_obj_side_018008         ;$0195DB |
@@ -3567,7 +3565,7 @@ CODE_01999E:
     STA.w LayerProcessing_1933              ;$0199C1 | set layer 2 if hitting the bottom of a layer 2 block
     LDY.b #$00                              ;$0199C4 |
     LDA.w Map16TileDestroy_18A7             ;$0199C6 |
-    JSL CODE_00F160                         ;$0199C9 |
+    JSL handle_non_spike_tile_00F160        ;$0199C9 |
     LDA.b #$05                              ;$0199CD |
     STA.w SpriteDisableTimer_1FE2,X         ;$0199CF |
 +   LDA.b SpriteNumber_9E,X                 ;$0199D4 |

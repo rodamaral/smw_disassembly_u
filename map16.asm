@@ -1,0 +1,26 @@
+!Map16Page_00 = $00
+!Map16InvisCoinBlock_0021 = $0021
+!Map16InvisCoinBlockLow_21 = !Map16InvisCoinBlock_0021&$FF
+
+!Map16NoteBlkPower_0011 = $0011
+!Map16NoteBlkPowerLow_11 = !Map16NoteBlkPower_0011&$FF
+
+!Map16PSwitch_001D = $001D
+!Map16PSwitchLow_1D = !Map16PSwitch_001D&$FF
+
+!Map16InvisCoin_0021 = $0021
+!Map16InvisCoinLow_21 = !Map16InvisCoin_0021&$FF
+
+!Map16Air_0025 = $0025
+!Map16HighAir_00 = !Map16Air_0025>>8 ; TODO: rename high/low at the end
+!Map16LowAir_25 = !Map16Air_0025&$FF
+
+!Map16Muncher_002F = $002F
+!Map16MuncherLow_2F = !Map16Muncher_002F&$FF
+
+!Map16SolidInvisTile_0052 = $0052
+!Map16SolidInvisTileLow_52 = !Map16SolidInvisTile_0052&$FF
+
+!Map16TurnBlock_011E = $011E
+!Map16TurnBlockLow_1E = !Map16TurnBlock_011E&$FF
+!Map16TurnBlockHigh_1E = !Map16TurnBlock_011E&$FF

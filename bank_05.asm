@@ -287,11 +287,10 @@ CODE_058262:
     CPY.w #$0040                            ;$058273 |
     BNE CODE_058237                         ;$058276 |
     LDA.w ObjectTileset_1931                ;$058278 |
-    BEQ CODE_058281                         ;$05827B |
-    CMP.b #$07                              ;$05827D |
-    BNE CODE_0582C5                         ;$05827F |
-CODE_058281:
-    LDA.b #$FF
+    BEQ +                                   ;$05827B |\
+    CMP.b #!TilesetNormal2_07               ;$05827D ||
+    BNE CODE_0582C5                         ;$05827F |/
++   LDA.b #$FF                              ;$058281 |
     STA.w SolidTileStart_1430               ;$058283 |
     STA.w SolidTileEnd_1431                 ;$058286 |
     REP #$30                                ;$058289 | AXY->16
@@ -1178,11 +1177,10 @@ CODE_058A10:
     SEP #$10                                ;$058A3A | XY->8
     LDY.b #$0D                              ;$058A3C |
     LDA.w ObjectTileset_1931                ;$058A3E |
-    CMP.b #$10                              ;$058A41 |
-    BMI CODE_058A47                         ;$058A43 |
-    LDY.b #$05                              ;$058A45 |
-CODE_058A47:
-    STY $0C
+    CMP.b #!TilesetUnused_10                ;$058A41 |
+    BMI +                                   ;$058A43 |\
+    LDY.b #$05                              ;$058A45 |/
++   STY $0C                                 ;$058A47 |
     REP #$30                                ;$058A49 | AXY->16
     LDA.b Layer1TileUp_45,X                 ;$058A4B |
     AND.w #$000F                            ;$058A4D |
@@ -1299,11 +1297,10 @@ CODE_058AD5:
     SEP #$10                                ;$058B16 | XY->8
     LDY.b #$0D                              ;$058B18 |
     LDA.w ObjectTileset_1931                ;$058B1A |
-    CMP.b #$10                              ;$058B1D |
-    BMI CODE_058B23                         ;$058B1F |
-    LDY.b #$05                              ;$058B21 |
-CODE_058B23:
-    STY $0C
+    CMP.b #!TilesetUnused_10                ;$058B1D |
+    BMI +                                   ;$058B1F |\
+    LDY.b #$05                              ;$058B21 |/
++   STY $0C                                 ;$058B23 |
     REP #$30                                ;$058B25 | AXY->16
     LDA.b Layer1TileUp_45,X                 ;$058B27 |
     AND.w #$000F                            ;$058B29 |
@@ -1373,7 +1370,7 @@ horizontal_layer2_058B8D: ; TODO name
     SEP #$20                                ;$058B98 | A->8
     LDY.w #$0000                            ;$058B9A |
     LDA.w ObjectTileset_1931                ;$058B9D |
-    CMP.b #$03                              ;$058BA0 |
+    CMP.b #!TilesetUnderground1_03          ;$058BA0 |
     BNE +                                   ;$058BA2 |\
     LDY.w #$1000                            ;$058BA4 |/
 +   STY $03                                 ;$058BA7 |
@@ -1427,7 +1424,7 @@ horizontal_layer2_058B8D: ; TODO name
     SEP #$10                                ;$058C08 | XY->8
     LDY.b #$0D                              ;$058C0A |
     LDA.w ObjectTileset_1931                ;$058C0C |
-    CMP.b #$10                              ;$058C0F |
+    CMP.b #!TilesetUnused_10                ;$058C0F |
     BMI +                                   ;$058C11 |\
     LDY.b #$05                              ;$058C13 |/
 +   STY $0C                                 ;$058C15 |
@@ -1490,7 +1487,7 @@ vertical_layer2_058C71: ; TODO name
     SEP #$20                                ;$058C7C | A->8
     LDY.w #$0000                            ;$058C7E |
     LDA.w ObjectTileset_1931                ;$058C81 |
-    CMP.b #$03                              ;$058C84 |
+    CMP.b #!TilesetUnderground1_03          ;$058C84 |
     BNE +                                   ;$058C86 |\
     LDY.w #$1000                            ;$058C88 |/
 +   STY $03                                 ;$058C8B |
@@ -1555,7 +1552,7 @@ vertical_layer2_058C71: ; TODO name
     SEP #$10                                ;$058CFB | XY->8
     LDY.b #$0D                              ;$058CFD |
     LDA.w ObjectTileset_1931                ;$058CFF |
-    CMP.b #$10                              ;$058D02 |
+    CMP.b #!TilesetUnused_10                ;$058D02 |
     BMI +                                   ;$058D04 |\
     LDY.b #$05                              ;$058D06 |/
 +   STY $0C                                 ;$058D08 |
@@ -4676,10 +4673,10 @@ process_layer_3_05C40C:
     JMP .not_a_tide_05C494                  ;$05C411 |
 +   REP #$20                                ;$05C414 | A->16
     LDY.w ObjectTileset_1931                ;$05C416 |
-    CPY.b #$01                              ;$05C419 |
-    BEQ +                                   ;$05C41B |
-    CPY.b #$03                              ;$05C41D |
-    BNE ++                                  ;$05C41F |
+    CPY.b #!TilesetCastle1_01               ;$05C419 |
+    BEQ +                                   ;$05C41B |\
+    CPY.b #!TilesetUnderground1_03          ;$05C41D ||
+    BNE ++                                  ;$05C41F |/
 +   LDA.b Layer1XPos_1A                     ;$05C421 |
     LSR                                     ;$05C423 |
     STA.b Layer3XPos_22                     ;$05C424 |
@@ -6251,8 +6248,13 @@ DATA_05D750:
     db $10,$80,$00,$E0,$10,$70,$00,$E0
 DATA_05D758:
     db $00,$00,$00,$00,$01,$01,$01,$01
-DATA_05D760:
-    db $05,$01,$02,$06,$08,$01
+tilesets_05D760:
+    db !TilesetGhost1_05
+    db !TilesetCastle1_01
+    db !TilesetRope1_02
+    db !TilesetRope2_06
+    db !TilesetRope3_08
+    db !TilesetCastle1_01
 
 PtrsLong05D766:
     dl LevelData078000
@@ -6619,11 +6621,10 @@ CODE_05DA24:
     LDY.b #$04                              ;$05DA26 |
     LDA.b [Layer1DataPtr_65],Y              ;$05DA28 |
     AND.b #$0F                              ;$05DA2A |
-CODE_05DA2C:
-    CMP.l DATA_05D760,X
-    BEQ CODE_05DA38                         ;$05DA30 |
-    DEX                                     ;$05DA32 |
-    BPL CODE_05DA2C                         ;$05DA33 |
+-   CMP.l tilesets_05D760,X                 ;$05DA2C |\
+    BEQ CODE_05DA38                         ;$05DA30 ||
+    DEX                                     ;$05DA32 ||
+    BPL -                                   ;$05DA33 |/
 CODE_05DA35:
     JMP CODE_05DAD7
 
@@ -6636,20 +6637,18 @@ CODE_05DA38:
     BNE CODE_05DA35                         ;$05DA45 |
     LDA.w Translevel_13BF                   ;$05DA47 |
     CMP.b #$31                              ;$05DA4A |
-    BEQ CODE_05DA5E                         ;$05DA4C |
-    CMP.b #$32                              ;$05DA4E |
-    BEQ CODE_05DA5E                         ;$05DA50 |
-    CMP.b #$34                              ;$05DA52 |
-    BEQ CODE_05DA5E                         ;$05DA54 |
-    CMP.b #$35                              ;$05DA56 |
-    BEQ CODE_05DA5E                         ;$05DA58 |
-    CMP.b #$40                              ;$05DA5A |
-    BNE CODE_05DA60                         ;$05DA5C |
-CODE_05DA5E:
-    LDX.b #$05
-CODE_05DA60:
-    LDA.w SkipMidwayCastleIntro_13CF
-    BNE CODE_05DAD0                         ;$05DA63 |
+    BEQ +                                   ;$05DA4C |\
+    CMP.b #$32                              ;$05DA4E ||
+    BEQ +                                   ;$05DA50 ||
+    CMP.b #$34                              ;$05DA52 ||
+    BEQ +                                   ;$05DA54 ||
+    CMP.b #$35                              ;$05DA56 ||
+    BEQ +                                   ;$05DA58 ||
+    CMP.b #$40                              ;$05DA5A ||
+    BNE ++                                  ;$05DA5C |/
++   LDX.b #$05                              ;$05DA5E |
+++  LDA.w SkipMidwayCastleIntro_13CF        ;$05DA60 |
+    BNE .CODE_05DAD0                        ;$05DA63 |
     LDA.l DATA_05D790,X                     ;$05DA65 |
     STA.b PlayerYPos_96                     ;$05DA69 |
     LDA.b #$01                              ;$05DA6B |
@@ -6697,20 +6696,19 @@ CODE_05DA60:
     STA.b Layer2DataPtr_68+1                ;$05DAC9 |
     LDA.w PtrsLong05D778+2,Y                ;$05DACB |
     STA.b Layer2DataPtr_68+2                ;$05DACE |
-CODE_05DAD0:
-    LDA.l DATA_05D760,X
+.CODE_05DAD0
+    LDA.l tilesets_05D760,X
     STA.w ObjectTileset_1931                ;$05DAD4 |
 CODE_05DAD7:
     LDA.w SublevelCount_141A
-    BEQ CODE_05DAEB                         ;$05DADA |
-    LDA.w BonusGameFlag_1425                ;$05DADC |
-    BNE CODE_05DAEB                         ;$05DADF |
-    LDA.w Translevel_13BF                   ;$05DAE1 |
-    CMP.b #$24                              ;$05DAE4 |
-    BNE CODE_05DAEB                         ;$05DAE6 |
-    JSR CODE_05DAEF                         ;$05DAE8 |
-CODE_05DAEB:
-    PLB
+    BEQ +                                   ;$05DADA |\
+    LDA.w BonusGameFlag_1425                ;$05DADC ||
+    BNE +                                   ;$05DADF ||
+    LDA.w Translevel_13BF                   ;$05DAE1 ||
+    CMP.b #$24                              ;$05DAE4 ||
+    BNE +                                   ;$05DAE6 ||
+    JSR CODE_05DAEF                         ;$05DAE8 |/
++   PLB                                     ;$05DAEB |
     SEP #$30                                ;$05DAEC | AXY->8
     RTL                                     ;$05DAEE |
 

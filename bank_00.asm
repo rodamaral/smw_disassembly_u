@@ -2338,7 +2338,7 @@ GM19_credits_castle_load_009468:
     JSR Clear_1A_13D3                       ;$00946B |
     JSR SetUpScreen                         ;$00946E |
     LDX.w CutsceneID_13C6                   ;$009471 |
-    LDA.b #$18                              ;$009474 |
+    LDA.b #!TilesetCastleDestruction_18     ;$009474 |
     STA.w ObjectTileset_1931                ;$009476 |
     LDA.b #$14                              ;$009479 |
     STA.w SpriteTileset_192B                ;$00947B |
@@ -2737,7 +2737,7 @@ load_boss_room_0097BC:
     STA.b Mode7YScale_39                    ;$0097CB |
     STZ.w ScreenShakeYOffset_1888           ;$0097CD |
     JSR clear_out_layer3_0085FA             ;$0097D0 |
-    LDA.b #$FF                              ;$0097D3 |
+    LDA.b #!TilesetMode7Up_FF               ;$0097D3 |
     STA.w ObjectTileset_1931                ;$0097D5 |
     JSL CODE_03D958                         ;$0097D8 |
     BIT.w IRQNMICommand_0D9B                ;$0097DC |
@@ -3786,9 +3786,9 @@ load_layer3_009FB8:
     BMI .CODE_00A012                        ;$009FEB |
     BEQ .CODE_00A007                        ;$009FED |
     LDA.w ObjectTileset_1931                ;$009FEF |
-    CMP.b #$01                              ;$009FF2 |
+    CMP.b #!TilesetCastle1_01               ;$009FF2 |
     BEQ +                                   ;$009FF4 |\
-    CMP.b #$03                              ;$009FF6 ||
+    CMP.b #!TilesetUnderground1_03          ;$009FF6 ||
     BNE .CODE_00A01F                        ;$009FF8 |/
 +   REP #$20                                ;$009FFA | A->16
     LDA.b Layer1XPos_1A                     ;$009FFC |
@@ -4570,7 +4570,7 @@ CODE_00A676:
     STZ.w SpriteInPipeMode_1419             ;$00A68F |
     LDY.b #$01                              ;$00A692 |
     LDX.w ObjectTileset_1931                ;$00A694 |
-    CPX.b #$10                              ;$00A697 |
+    CPX.b #!TilesetUnused_10                ;$00A697 |
     BCS CODE_00A6CC                         ;$00A699 |
     LDA.w DATA_00A625,X                     ;$00A69B |
     LSR                                     ;$00A69E |
@@ -4962,7 +4962,7 @@ UpdtCrrntSpritGFX:
     DEX                                     ;$00AA16 |
     BPL UpdtCrrntSpritGFX                   ;$00AA17 |
     LDA.w ObjectTileset_1931                ;$00AA19 |
-    CMP.b #$FE                              ;$00AA1C |
+    CMP.b #!TilesetMode7_FE                 ;$00AA1C |
     BCS SetallFGBG80                        ;$00AA1E |
     LDX.b #$03                              ;$00AA20 |
     LDA.w ObjectTileset_1931                ;$00AA22 |
@@ -5023,7 +5023,7 @@ UploadGFXFile:
     REP #$20                                ;$pecial | A->16
     LDA.w #$0000                            ;$00AA82 |
     LDX.w ObjectTileset_1931                ;$00AA85 |
-    CPX.b #$11                              ;$00AA88 |
+    CPX.b #!TilesetOWMain_11                ;$00AA88 |
     BCC +                                   ;$00AA8A |\
     CPY.b #$08                              ;$00AA8C ||
     BEQ .filter_some_RAM_00AA96             ;$00AA8E |/
@@ -11028,7 +11028,7 @@ player_layer_collision_00EADB:
     BNE walk_off_wall                       ;$00EB01 |
     LDA.w WallRunFlag_13E3                  ;$00EB03 |
     CMP.b #$06                              ;$00EB06 |
-    BCS .on_wall                            ;$00EB08 |
+    BCS ..on_wall                           ;$00EB08 |
     LDX.b PlayerYPosBlock_90                ;$00EB0A |
     CPX.b #$08                              ;$00EB0C |
     BCC stop_wall_running_return            ;$00EB0E |
@@ -11036,31 +11036,31 @@ player_layer_collision_00EADB:
     BCS stop_wall_running                   ;$00EB12 |
     ORA.b #$04                              ;$00EB14 |
     STA.w WallRunFlag_13E3                  ;$00EB16 |
-.solid_collision                            ;        |
+..solid_collision                           ;        |
     LDA.b PlayerXPos_94                     ;$00EB19 |
     AND.b #$F0                              ;$00EB1B |
     ORA.b #$08                              ;$00EB1D |
     STA.b PlayerXPos_94                     ;$00EB1F |
     RTS                                     ;$00EB21 |
 
-.on_wall
+..on_wall
     LDX.b #$60                              ;$00EB22 |
     TYA                                     ;$00EB24 |
-    BEQ .on_left_wall                       ;$00EB25 |
+    BEQ ..on_left_wall                      ;$00EB25 |
     LDX.b #$66                              ;$00EB27 |
-.on_left_wall                               ;        |
+..on_left_wall                              ;        |
     JSR CODE_00EFE8                         ;$00EB29 |
     LDA.b Powerup_19                        ;$00EB2C |
-    BNE .process_big                        ;$00EB2E |
+    BNE ..process_big                       ;$00EB2E |
     INX                                     ;$00EB30 |
     INX                                     ;$00EB31 |
-    BRA .skip                               ;$00EB32 |
+    BRA ..skip                              ;$00EB32 |
 
-.process_big                                ;        |
+..process_big                               ;        |
     JSR CODE_00EFE8                         ;$00EB34 |
-.skip                                       ;        |
+..skip                                      ;        |
     JSR process_collision_point_00F44D      ;$00EB37 |
-    BNE .solid_collision                    ;$00EB3A |
+    BNE ..solid_collision                   ;$00EB3A |
     LDA.b #$02                              ;$00EB3C |
     TRB.w WallRunFlag_13E3                  ;$00EB3E |
     RTS                                     ;$00EB41 |
@@ -11099,6 +11099,7 @@ stop_wall_running:
     RTS                                     ;$00EB76 |
 
 normal_collision_00EB77:
+; START_CENTER_POINT
     LDX.b #$00                              ;$00EB77 \ X: current collision point index: 
     LDA.b Powerup_19                        ;$00EB79 |  0: center, 2: waist, 4: shoulder, 6: head, 8: under center, A: foot (opposite side of waist/shoulder)
     BEQ .not_big                            ;$00EB7B |\ If the player is big
@@ -11134,11 +11135,12 @@ normal_collision_00EB77:
     AND.b #$0F                              ;$00EBAB |
     STA.b PlayerBlockMoveY_91               ;$00EBAD | and set the amount to move the player out of a block.
     JSR process_collision_point_00F44D      ;$00EBAF | Process the center body collision point.
-    BEQ .center_page_0                      ;$00EBB2 |\ Process page 0 tiles, if applicable.
+; START_WAIST_POINT
+    BEQ ..center_page_0                     ;$00EBB2 |\ Process page 0 tiles, if applicable.
     CPY.b #$11                              ;$00EBB4 || If it's tiles 100 - 110,
     BCC .skip_center                        ;$00EBB6 || ignore it.
     CPY.b #$6E                              ;$00EBB8 || If it's tiles 111 - 16D,
-    BCC .center_solid                       ;$00EBBA || process being inside a solid block.
+    BCC ..center_solid                      ;$00EBBA || process being inside a solid block.
     TYA                                     ;$00EBBC ||
     JSL is_page_1_water                     ;$00EBBD || If the tile isn't a water tile,
     BCC .skip_center                        ;$00EBC1 ||
@@ -11146,97 +11148,97 @@ normal_collision_00EB77:
     TSB $8A                                 ;$00EBC5 |/ disable the center swimming flag.
     BRA .skip_center                        ;$00EBC7 /
 
-.center_solid
-    INX                                     ;$00EBC9 \
+..center_solid
+; START_HEAD_POINT
+    INX                                     ;$00EBC9 \ Skip waist and shoulder points
     INX                                     ;$00EBCA |
     INX                                     ;$00EBCB |
     INX                                     ;$00EBCC | Skip to the head collision point.
     TYA                                     ;$00EBCD |
     LDY.b #$00                              ;$00EBCE |
     CMP.b #$1E                              ;$00EBD0 |\ If the tile is a turn block
-    BEQ .not_inside_block                   ;$00EBD2 | |
-    CMP.b #$52                              ;$00EBD4 | | or a temporary invisible block,
-    BEQ .not_inside_block                   ;$00EBD6 | |
-    LDY.b #$02                              ;$00EBD8 | | don't mark the player as being inside of a block.
-.not_inside_block                           ;        |/
+    BEQ ..not_inside_block                  ;$00EBD2 |\
+    CMP.b #!Map16SolidInvisTileLow_52       ;$00EBD4 || or a temporary invisible block,
+    BEQ ..not_inside_block                  ;$00EBD6 ||
+    LDY.b #$02                              ;$00EBD8 |/ don't mark the player as being inside of a block.
+..not_inside_block                          ;        |
     JMP .center_in_block                    ;$00EBDA / Run center body in block code.
 
-.center_page_0
+..center_page_0
     CPY.b #$9C                              ;$00EBDD \
-    BNE .not_castle_door                    ;$00EBDF |\ If the tile is part of the castle door
-    LDA.w ObjectTileset_1931                ;$00EBE1 | |
-    CMP.b #$01                              ;$00EBE4 | | and the tileset is the castle tileset,
-    BEQ .castle_door                        ;$00EBE6 |/ process castle door.
-.not_castle_door                            ;        |
-    CPY.b #$20                              ;$00EBE8 |\ If applicable, process lower half of a door.
-    BEQ .lower_door                         ;$00EBEA |/
-    CPY.b #$1F                              ;$00EBEC |\ If applicable, process upper half of a door.
-    BEQ .upper_door                         ;$00EBEE |/
+    BNE ..not_castle_door                   ;$00EBDF |\ If the tile is part of the castle door
+    LDA.w ObjectTileset_1931                ;$00EBE1 ||
+    CMP.b #!TilesetCastle1_01               ;$00EBE4 || and the tileset is the castle tileset,
+    BEQ ..castle_door                       ;$00EBE6 |/ process castle door.
+..not_castle_door                           ;        |
+    CPY.b #$20                              ;$00EBE8 | If applicable, process lower half of a door.
+    BEQ ..lower_door                        ;$00EBEA |
+    CPY.b #$1F                              ;$00EBEC | If applicable, process upper half of a door.
+    BEQ ..upper_door                        ;$00EBEE |
     LDA.w BlueSwitchTimer_14AD              ;$00EBF0 |\ If the blue P-switch is active,
-    BEQ .process_center                     ;$00EBF3 | |
-    CPY.b #$28                              ;$00EBF5 | | if applicable, process lower half of a P-switch door.
-    BEQ .lower_door                         ;$00EBF7 | |
-    CPY.b #$27                              ;$00EBF9 | | if applicable, process upper half of P-switch door.
-    BNE .process_center                     ;$00EBFB |/
-.upper_door                                 ;        |
+    BEQ ..process_center                    ;$00EBF3 ||
+    CPY.b #$28                              ;$00EBF5 || if applicable, process lower half of a P-switch door.
+    BEQ ..lower_door                        ;$00EBF7 ||
+    CPY.b #$27                              ;$00EBF9 || if applicable, process upper half of P-switch door.
+    BNE ..process_center                    ;$00EBFB |/
+..upper_door                                ;        |
     LDA.b Powerup_19                        ;$00EBFD |\ If the player is big,
     BNE .skip_center                        ;$00EBFF |/ don't let him use the upper half of the door.
-.lower_door                                 ;        |
+..lower_door                                ;        |
     JSR can_use_door                        ;$00EC01 |\ If the player isn't positioned correctly,
-    BCS .skip_center                        ;$00EC04 | |
-.castle_door                                ;        | |
-    LDA $8F                                 ;$00EC06 | | or if the player isn't on the ground,
-    BNE .skip_center                        ;$00EC08 | |
-    LDA.b byetudlrPress_16                  ;$00EC0A | | or if the player isn't pressing up,
-    AND.b #$08                              ;$00EC0C | |
+    BCS .skip_center                        ;$00EC04 ||
+..castle_door                               ;        ||
+    LDA $8F                                 ;$00EC06 || or if the player isn't on the ground,
+    BNE .skip_center                        ;$00EC08 ||
+    LDA.b byetudlrPress_16                  ;$00EC0A || or if the player isn't pressing up,
+    AND.b #$08                              ;$00EC0C ||
     BEQ .skip_center                        ;$00EC0E |/ don't let him use the door.
     LDA.b #$0F                              ;$00EC10 |\ Play the door sound,
-    STA.w SPCIO3_1DFC                       ;$00EC12 | |
-    JSR go_to_sublevel                      ;$00EC15 | | go to the sublevel,
-    LDA.b #!AniDoor_0D                      ;$00EC18 | |
-    STA.b PlayerAnimation_71                ;$00EC1A | | set the door animation,
+    STA.w SPCIO3_1DFC                       ;$00EC12 ||
+    JSR go_to_sublevel                      ;$00EC15 || go to the sublevel,
+    LDA.b #!AniDoor_0D                      ;$00EC18 ||
+    STA.b PlayerAnimation_71                ;$00EC1A || set the door animation,
     JSR disable_controls                    ;$00EC1C |/ and disable controls.
     BRA .skip_center                        ;$00EC1F /
 
-.process_center
+..process_center
     JSR process_center_page_0_tiles         ;$00EC21 \ Process center body page 0 tile collision.
 .skip_center                                ;        |
     JSR process_collision_point_00F44D      ;$00EC24 | Process the side body collision point.
-    BEQ .side_body_page_0                   ;$00EC27 | If applicable, process page 0 tiles.
+    BEQ ..side_body_page_0                  ;$00EC27 | If applicable, process page 0 tiles.
     CPY.b #$11                              ;$00EC29 |\ If the tile is 100 - 111
-    BCC .skip_side_body                     ;$00EC2B | |
+    BCC ..skip_side_body                    ;$00EC2B | |
     CPY.b #$6E                              ;$00EC2D | | or 16E - 1FF,
-    BCS .skip_side_body                     ;$00EC2F |/ ignore it.
+    BCS ..skip_side_body                    ;$00EC2F |/ ignore it.
     INX                                     ;$00EC31 |
     INX                                     ;$00EC32 | Skip to the head collision point.
-    BRA .side_body_in_block                 ;$00EC33 /
+    BRA ..side_body_in_block                ;$00EC33 /
 
-.side_body_page_0
+..side_body_page_0
     LDA.b #$10                              ;$00EC35 \ Load the climbing flag to set.
     JSR process_page_0_tiles_no_swim        ;$00EC37 | Process side body page 0 tile collision without water.
-.skip_side_body                             ;        |
+..skip_side_body                            ;        |
     JSR process_collision_point_00F44D      ;$00EC3A | Process the side head collision point.
-    BNE .side_head_page_1                   ;$00EC3D | If applicable, process page 1 tiles.
+    BNE ..side_head_page_1                  ;$00EC3D | If applicable, process page 1 tiles.
     LDA.b #$08                              ;$00EC3F | Load the climbing flag to set.
     JSR process_page_0_tiles_no_swim        ;$00EC41 | Process side head page 0 tile collision without water.
     BRA .skip_side_head                     ;$00EC44 /
 
-.side_head_page_1                           ;        \
-    CPY.b #$11                              ;$00EC46 |\ If the tile is 100 - 111
-    BCC .skip_side_head                     ;$00EC48 | |
-    CPY.b #$6E                              ;$00EC4A | | or 16E - 1FF,
+..side_head_page_1                          ;        \
+    CPY.b #$11                              ;$00EC46 | If the tile is 100 - 111
+    BCC .skip_side_head                     ;$00EC48 |\
+    CPY.b #$6E                              ;$00EC4A || or 16E - 1FF,
     BCS .skip_side_head                     ;$00EC4C |/ ignore it.
-.side_body_in_block                         ;        |
+..side_body_in_block                        ;        |
     LDA.b PlayerDir_76                      ;$00EC4E |
     CMP.b PlayerBlockXSide_93               ;$00EC50 |
-    BEQ .CODE_00EC5F                        ;$00EC52 |
-    JSR process_horizontal_pipe             ;$00EC54 |
-    PHX                                     ;$00EC57 |
-    JSR process_throw_block                 ;$00EC58 |
-    LDY.w Map16_1693                        ;$00EC5B |
-    PLX                                     ;$00EC5E |
-.CODE_00EC5F                                ;        |
-    LDA.b #$03                              ;$00EC5F |
+    BEQ +                                   ;$00EC52 |\
+    JSR process_horizontal_pipe             ;$00EC54 ||
+    PHX                                     ;$00EC57 ||
+    JSR process_throw_block                 ;$00EC58 ||
+    LDY.w Map16_1693                        ;$00EC5B ||
+    PLX                                     ;$00EC5E |/
++   LDA.b #$03                              ;$00EC5F |
     STA.w PlayerPoseLenTimer_13E5           ;$00EC61 |
     LDY.b PlayerBlockXSide_93               ;$00EC64 |
     LDA.b PlayerXPos_94                     ;$00EC66 |
@@ -11245,37 +11247,37 @@ normal_collision_00EB77:
     BEQ .skip_side_head                     ;$00EC6D |
 .center_in_block                            ;        |
     LDA.w NoteBlockActive_1402              ;$00EC6F |
-    BEQ .on_note_block                      ;$00EC72 |
+    BEQ ..on_note_block                     ;$00EC72 |
     LDA.w Map16_1693                        ;$00EC74 |
-    CMP.b #$52                              ;$00EC77 |
+    CMP.b #!Map16SolidInvisTileLow_52       ;$00EC77 |
     BEQ .skip_side_head                     ;$00EC79 |
-.on_note_block                              ;        |
+..on_note_block                             ;        |
     LDA.w DATA_00E90A,Y                     ;$00EC7B |
     TSB.b PlayerBlocked_77                  ;$00EC7E |
     AND.b #!Block_Sides_03                  ;$00EC80 |
     TAY                                     ;$00EC82 |
     LDA.w Map16_1693                        ;$00EC83 |
-    JSL CODE_00F127                         ;$00EC86 |
+    JSL handle_side_point_page1_00F127      ;$00EC86 |
 .skip_side_head                             ;        |
     JSR process_collision_point_00F44D      ;$00EC8A | Process the head collision point.
     BNE .CODE_00ECB1                        ;$00EC8D |
     LDA.b #$02                              ;$00EC8F |
-    JSR process_page_0_tiles                ;$00EC91 |
+    JSR process_page_0_tiles_00F2C2         ;$00EC91 |
     LDY.b PlayerYSpeed_7D                   ;$00EC94 |
-    BPL .CODE_00ECA3                        ;$00EC96 |
-    LDA.w Map16_1693                        ;$00EC98 |
-    CMP.b #$21                              ;$00EC9B |
-    BCC .CODE_00ECA3                        ;$00EC9D |
-    CMP.b #$25                              ;$00EC9F |
-    BCC .CODE_00ECA6                        ;$00ECA1 |
-.CODE_00ECA3:
+    BPL .CODE_00ECA3                        ;$00EC96 |\
+    LDA.w Map16_1693                        ;$00EC98 ||
+    CMP.b #!Map16InvisCoinBlockLow_21       ;$00EC9B ||
+    BCC .CODE_00ECA3                        ;$00EC9D ||
+    CMP.b #!Map16LowAir_25                  ;$00EC9F ||
+    BCC .CODE_00ECA6                        ;$00ECA1 |/
+.CODE_00ECA3
     JMP .CODE_00ED4A
 
-.CODE_00ECA6:
+.CODE_00ECA6
     SEC
     SBC.b #$04                              ;$00ECA7 |
-    LDY.b #$00                              ;$00ECA9 |
-    JSL CODE_00F17F                         ;$00ECAB |
+    LDY.b #!Map16Page_00                    ;$00ECA9 |
+    JSL functional_block_by_id_00F17F       ;$00ECAB |
     BRA .CODE_00ED0D                        ;$00ECAF |
 
 .CODE_00ECB1:
@@ -11326,7 +11328,7 @@ normal_collision_00EB77:
     JSR CODE_00F3E9                         ;$00ECFC |
     TYA                                     ;$00ECFF |
     LDY.b #$00                              ;$00ED00 |
-    JSL CODE_00F127                         ;$00ED02 |
+    JSL handle_side_point_page1_00F127      ;$00ED02 | TODO: test whether we are at page 1 and side interaction point
     LDA.w Map16_1693                        ;$00ED06 |
     CMP.b #$1E                              ;$00ED09 |
     BEQ .CODE_00ED3B                        ;$00ED0B |
@@ -11403,9 +11405,9 @@ normal_collision_00EB77:
     STA.b PlayerYPosBlock_90                ;$00ED84 |
 .CODE_00ED86:
     LDA.w ObjectTileset_1931
-    CMP.b #$03                              ;$00ED89 |
+    CMP.b #!TilesetUnderground1_03          ;$00ED89 |
     BEQ .CODE_00ED91                        ;$00ED8B |
-    CMP.b #$0E                              ;$00ED8D |
+    CMP.b #!TilesetUnderground2_0E          ;$00ED8D |
     BNE .CODE_00ED95                        ;$00ED8F |
 .CODE_00ED91:
     CPY.b #$D2
@@ -11460,7 +11462,7 @@ normal_collision_00EB77:
 
 .CODE_00EDE4:
     LDA.b #$04
-    JSR process_page_0_tiles                ;$00EDE6 |
+    JSR process_page_0_tiles_00F2C2         ;$00EDE6 |
 .CODE_00EDE9:
     JSR process_collision_point_00F44D
     BNE .CODE_00EDF3                        ;$00EDEC |
@@ -11474,9 +11476,9 @@ normal_collision_00EB77:
     LDA.b PlayerYSpeed_7D
     BMI return_00EE39                       ;$00EDF9 |
     LDA.w ObjectTileset_1931                ;$00EDFB |
-    CMP.b #$03                              ;$00EDFE |
+    CMP.b #!TilesetUnderground1_03          ;$00EDFE |
     BEQ .CODE_00EE06                        ;$00EE00 |
-    CMP.b #$0E                              ;$00EE02 |
+    CMP.b #!TilesetUnderground2_0E          ;$00EE02 |
     BNE .CODE_00EE11                        ;$00EE04 |
 .CODE_00EE06:
     LDY.w Map16_1693
@@ -11514,12 +11516,11 @@ return_00EE39:
 CODE_00EE3A:
     LDY.w Map16_1693
     LDA.w ObjectTileset_1931                ;$00EE3D |
-    CMP.b #$02                              ;$00EE40 |
-    BEQ .CODE_00EE48                        ;$00EE42 |
-    CMP.b #$08                              ;$00EE44 |
-    BNE .CODE_00EE57                        ;$00EE46 |
-.CODE_00EE48:
-    TYA
+    CMP.b #!TilesetRope1_02                 ;$00EE40 |
+    BEQ +                                   ;$00EE42 |\
+    CMP.b #!TilesetRope3_08                 ;$00EE44 ||
+    BNE .CODE_00EE57                        ;$00EE46 |/
++   TYA                                     ;$00EE48 |
     SEC                                     ;$00EE49 |
     SBC.b #$0C                              ;$00EE4A |
     CMP.b #$02                              ;$00EE4C |
@@ -11535,22 +11536,22 @@ CODE_00EE3A:
     LDA.w Map16_1693                        ;$00EE5C |
     CMP.b #$1E                              ;$00EE5F |
     BNE .CODE_00EE78                        ;$00EE61 |
-    LDX $8F                                 ;$00EE63 |
-    BEQ .CODE_00EE83                        ;$00EE65 |
-    LDX.b Powerup_19                        ;$00EE67 |
-    BEQ .CODE_00EE83                        ;$00EE69 |
-    LDX.w SpinJumpFlag_140D                 ;$00EE6B |
-    BEQ .CODE_00EE83                        ;$00EE6E |
-    LDA.b #$21                              ;$00EE70 |
-    JSL CODE_00F17F                         ;$00EE72 |
-    BRA check_on_solid_sprite_flag_00EE1D   ;$00EE76 |
+    LDX.b TempPlayerAir_8F                  ;$00EE63 |
+    BEQ .CODE_00EE83                        ;$00EE65 |\
+    LDX.b Powerup_19                        ;$00EE67 ||
+    BEQ .CODE_00EE83                        ;$00EE69 ||
+    LDX.w SpinJumpFlag_140D                 ;$00EE6B ||
+    BEQ .CODE_00EE83                        ;$00EE6E ||
+    LDA.b #!Map16InvisCoinLow_21            ;$00EE70 ||
+    JSL functional_block_by_id_00F17F       ;$00EE72 ||
+    BRA check_on_solid_sprite_flag_00EE1D   ;$00EE76 |/
 
 .CODE_00EE78:
     CMP.b #$32
     BNE .CODE_00EE7F                        ;$00EE7A |
     STZ.w BlockSnakeActive_1909             ;$00EE7C |
 .CODE_00EE7F:
-    JSL CODE_00F120
+    JSL handle_hurting_blocks_00F120
 .CODE_00EE83:
     LDY.b #$20
 CODE_00EE85:
@@ -11760,7 +11761,7 @@ CODE_00EFE8:
     BCS .Return00F004                       ;$00EFF6 |
     TYA                                     ;$00EFF8 |
     LDY.b #$00                              ;$00EFF9 |
-    JSL CODE_00F160                         ;$00EFFB |
+    JSL handle_non_spike_tile_00F160        ;$00EFFB |
     PLA                                     ;$00EFFF |
     PLA                                     ;$00F000 |
     JMP fall_off_wall                       ;$00F001 |
@@ -11852,7 +11853,7 @@ DATA_00F0C8:
     db $0D,$11,$11,$12,$0D,$0D,$0D,$0E
     db $0F,$0C,$0D,$0D
 
-DATA_00F0EC:
+interaction_side_mask_00F0EC:
     db $08,$01,$02,$04,$ED,$F6,$00,$7D
     db $BE,$00,$6F,$B7
 
@@ -11864,54 +11865,54 @@ DATA_00F100:
     db $07,$0A,$10,$07,$0A,$10,$07,$0A
     db $10,$07,$0A,$10,$07,$0A,$10,$07
 
-CODE_00F120:
-    XBA
+handle_hurting_blocks_00F120:               ;        | Handle hurting blocks - muncher, spike, etc
+    XBA                                     ;$00F120 |
     LDA.w RidingYoshi_187A                  ;$00F121 |
-    BNE CODE_00F15F                         ;$00F124 |
+    BNE handle_non_spike_tile_00F15F        ;$00F124 | branch if riding Yoshi
     XBA                                     ;$00F126 |
-CODE_00F127:
-    CMP.b #$2F
-    BEQ .CODE_00F154                        ;$00F129 |
+handle_side_point_page1_00F127:             ;        |
+    CMP.b #!Map16MuncherLow_2F              ;$00F127 |
+    BEQ .hurt_00F154                        ;$00F129 | branch if muncher
     CMP.b #$59                              ;$00F12B |
-    BCC .CODE_00F144                        ;$00F12D |
+    BCC .check_spike_pillar_00F144          ;$00F12D | branch if less than 59
     CMP.b #$5C                              ;$00F12F |
-    BCS .CODE_00F140                        ;$00F131 |
-    XBA                                     ;$00F133 |
-    LDA.w ObjectTileset_1931                ;$00F134 |
-    CMP.b #$05                              ;$00F137 |
-    BEQ .CODE_00F154                        ;$00F139 |
-    CMP.b #$0D                              ;$00F13B |
-    BEQ .CODE_00F154                        ;$00F13D |
-    XBA                                     ;$00F13F |
-.CODE_00F140:
-    CMP.b #$5D
-    BCC .CODE_00F14C                        ;$00F142 |
-.CODE_00F144:
-    CMP.b #$66
-    BCC CODE_00F160                         ;$00F146 |
-    CMP.b #$6A                              ;$00F148 |
-    BCS CODE_00F160                         ;$00F14A |
-.CODE_00F14C:
-    XBA
+    BCS .59_or_more_00F140                  ;$00F131 |\ branch if more than or equal to 5C
+    XBA                                     ;$00F133 ||
+    LDA.w ObjectTileset_1931                ;$00F134 ||
+    CMP.b #!TilesetGhost1_05                ;$00F137 ||
+    BEQ .hurt_00F154                        ;$00F139 || hurt player if Ghost House spikes
+    CMP.b #!TilesetGhost2_0D                ;$00F13B ||
+    BEQ .hurt_00F154                        ;$00F13D ||
+    XBA                                     ;$00F13F |/
+.59_or_more_00F140                          ;        |
+    CMP.b #$5D                              ;$00F140 |
+    BCC .check_castle_spikes_00F14C         ;$00F142 |
+.check_spike_pillar_00F144:                 ;        | <59 or >5D
+    CMP.b #$66                              ;$00F144 |
+    BCC handle_non_spike_tile_00F160        ;$00F146 |\
+    CMP.b #$6A                              ;$00F148 || branch if not Spike Pillar
+    BCS handle_non_spike_tile_00F160        ;$00F14A |/
+.check_castle_spikes_00F14C                 ;        | 5A-5D or 66-6A
+    XBA                                     ;$00F14C |
     LDA.w ObjectTileset_1931                ;$00F14D |
-    CMP.b #$01                              ;$00F150 |
-    BNE CODE_00F15F                         ;$00F152 |
-.CODE_00F154:
-    PHB
-    LDA.b #$01                              ;$00F155 |
-    PHA                                     ;$00F157 |
-    PLB                                     ;$00F158 |
+    CMP.b #!TilesetCastle1_01               ;$00F150 |
+    BNE handle_non_spike_tile_00F15F        ;$00F152 | branch if not Castle 1 tileset
+.hurt_00F154                                ;        | hurt player if:
+    PHB                                     ;$00F154 |  - muncher
+    LDA.b #$01                              ;$00F155 |  - ghost house spikes
+    PHA                                     ;$00F157 |  - castle spikes
+    PLB                                     ;$00F158 |  - castle Pillar Spikes
     JSL hurt_mario_00F5B7                   ;$00F159 |
     PLB                                     ;$00F15D |
     RTL                                     ;$00F15E |
 
-CODE_00F15F:
-    XBA
-CODE_00F160:
-    SEC
-    SBC.b #$11                              ;$00F161 |
-    CMP.b #$1D                              ;$00F163 |
-    BCC CODE_00F17F                         ;$00F165 |
+handle_non_spike_tile_00F15F:               ;        \
+    XBA                                     ;$00F15F |
+handle_non_spike_tile_00F160:               ;        | TODO: test whether callers are really following this semantic
+    SEC                                     ;$00F160 |
+    SBC.b #!Map16NoteBlkPowerLow_11         ;$00F161 |
+    CMP.b #!Map16PSwitchLow_1D              ;$00F163 |
+    BCC functional_block_by_id_00F17F       ;$00F165 |
     XBA                                     ;$00F167 |
     PHX                                     ;$00F168 |
     LDX.w ObjectTileset_1931                ;$00F169 |
@@ -11921,17 +11922,17 @@ CODE_00F160:
     BEQ .CODE_00F176                        ;$00F173 |
     RTL                                     ;$00F175 |
 
-.CODE_00F176:
+.CODE_00F176
     XBA
     SBC.b #$59                              ;$00F177 |
     CMP.b #$02                              ;$00F179 |
     BCS Return00F1F8                        ;$00F17B |
     ADC.b #$22                              ;$00F17D |
-CODE_00F17F:
-    PHX
-    PHA                                     ;$00F180 |
-    TYX                                     ;$00F181 |
-    LDA.l DATA_00F0EC,X                     ;$00F182 |
+functional_block_by_id_00F17F:              ;        | Handle functional blocks (111..12D, 21-24)
+    PHX                                     ;$00F17F | backup the interaction side
+    PHA                                     ;$00F180 | backup the block offset
+    TYX                                     ;$00F181 | X: current page
+    LDA.l interaction_side_mask_00F0EC,X    ;$00F182 |
     PLX                                     ;$00F186 |
     AND.l DATA_00F0A4,X                     ;$00F187 |
     BEQ CODE_00F1F6                         ;$00F18B |
@@ -11949,7 +11950,7 @@ CODE_00F17F:
     BEQ .CODE_00F1D0                        ;$00F1AA |
     BRA .CODE_00F1CE                        ;$00F1AC |
 
-.CODE_00F1AE:
+.CODE_00F1AE
     LSR
     LDA.b InteractionPtXPos_9A              ;$00F1AF |
     ROR                                     ;$00F1B1 |
@@ -11958,7 +11959,7 @@ CODE_00F17F:
     LSR                                     ;$00F1B4 |
     TAX                                     ;$00F1B5 |
     LDA.l DATA_00F100,X                     ;$00F1B6 |
-.CODE_00F1BA:
+.CODE_00F1BA
     LSR
     BCC .CODE_00F1D0                        ;$00F1BB |
     CMP.b #$03                              ;$00F1BD |
@@ -11968,18 +11969,18 @@ CODE_00F17F:
     LDA.b #$01                              ;$00F1C5 |
     BRA .CODE_00F1D0                        ;$00F1C7 |
 
-.CODE_00F1C9:
+.CODE_00F1C9
     LDY.w StarTimer_1490
     BNE .CODE_00F1D0                        ;$00F1CC |
-.CODE_00F1CE:
+.CODE_00F1CE
     LDA.b #$06
-.CODE_00F1D0:
+.CODE_00F1D0
     STA $05
     CMP.b #$05                              ;$00F1D2 |
     BNE .CODE_00F1DA                        ;$00F1D4 |
     LDA.b #$16                              ;$00F1D6 |
     STA $07                                 ;$00F1D8 |
-.CODE_00F1DA:
+.CODE_00F1DA
     TAY
     LDA.b #$0F                              ;$00F1DB |
     TRB.b InteractionPtXPos_9A              ;$00F1DD |
@@ -11987,7 +11988,7 @@ CODE_00F17F:
     CPY.b #$06                              ;$00F1E1 |
     BNE CODE_00F1EC                         ;$00F1E3 |
     LDY.w ObjectTileset_1931                ;$00F1E5 |
-    CPY.b #$04                              ;$00F1E8 |
+    CPY.b #!TilesetSwitch1_04               ;$00F1E8 |
     BEQ CODE_00F1F9                         ;$00F1EA |
 CODE_00F1EC:
     PHB
@@ -12018,29 +12019,29 @@ CODE_00F1F9:
     LSR                                     ;$00F209 |
     TAX                                     ;$00F20A |
     LDA.w BonusRoomBlocks_13F4-1,Y          ;$00F20B |
-    ORA.l DATA_00F0EC,X                     ;$00F20E |
+    ORA.l interaction_side_mask_00F0EC,X    ;$00F20E |
     LDX.w BonusRoomBlocks_13F4-1,Y          ;$00F212 |
     STA.w BonusRoomBlocks_13F4-1,Y          ;$00F215 |
     CMP.b #$FF                              ;$00F218 |
     BNE .CODE_00F226                        ;$00F21A |
     LDA.b #$05                              ;$00F21C |
     STA $05                                 ;$00F21E |
-.CODE_00F220:
+.CODE_00F220
     LDA.b #$17
     STA $07                                 ;$00F222 |
     BRA CODE_00F1EC                         ;$00F224 |
 
-.CODE_00F226:
+.CODE_00F226
     LDA.w DidPlayBonusGame_141B
     BNE .CODE_00F236                        ;$00F229 |
     TXA                                     ;$00F22B |
     BEQ .CODE_00F230                        ;$00F22C |
     LDA.b #$02                              ;$00F22E |
-.CODE_00F230:
+.CODE_00F230
     EOR.b #$03
     AND.b Frame_13                          ;$00F232 |
     BNE .CODE_00F220                        ;$00F234 |
-.CODE_00F236:
+.CODE_00F236
     LDA.b #$2A
     STA.w SPCIO3_1DFC                       ;$00F238 |
     PHY                                     ;$00F23B |
@@ -12054,7 +12055,7 @@ CODE_00F1F9:
     PLY                                     ;$00F248 |
     LDX.b #$07                              ;$00F249 |
     LDA.w BonusRoomBlocks_13F4-1,Y          ;$00F24B |
-.CODE_00F24E:
+.CODE_00F24E
     LSR
     BCS .CODE_00F261                        ;$00F24F |
     PHA                                     ;$00F251 |
@@ -12064,7 +12065,7 @@ CODE_00F1F9:
     STA.b InteractionPtXPos_9A              ;$00F25A |
     JSL generate_tile_00BEB0                ;$00F25C |
     PLA                                     ;$00F260 |
-.CODE_00F261:
+.CODE_00F261
     DEX
     BPL .CODE_00F24E                        ;$00F262 |
     JMP CODE_00F1F6                         ;$00F264 |
@@ -12122,10 +12123,10 @@ process_center_page_0_tiles:
 
 .not_invisible_1up
     LDA.b #$01                              ;$00F2C0 \
-process_page_0_tiles:                       ;        |
+process_page_0_tiles_00F2C2:                ;        |
     CPY.b #$06                              ;$00F2C2 | If it's tiles 000 - 005,
     BCS process_page_0_tiles_no_swim        ;$00F2C4 |
-    TSB $8A                                 ;$00F2C6 | set the water flag corresponding to the interaction point.
+    TSB.b InteractionPtsInWater_8A          ;$00F2C6 | set the water flag corresponding to the interaction point.
     RTS                                     ;$00F2C8 /
 
 process_page_0_tiles_no_swim:
@@ -12362,6 +12363,7 @@ can_use_door:
     CMP.b #$08                              ;$00F44A |
     RTS                                     ;$00F44C |
 
+; TODO: these 2 routines should have a clearer name
 process_collision_point_00F44D:
     INX                                     ;$00F44D \ Prepare to process the next player collision point
     INX                                     ;$00F44E |

@@ -5406,7 +5406,7 @@ submap_swap_palette_loading_04DB9D:
     TAX                                     ;$04DBA2 |
     LDA.w OWPlayerSubmap_1F11,X             ;$04DBA3 |
     TAX                                     ;$04DBA6 |
-    LDA.l DATA_04DC02,X                     ;$04DBA7 |
+    LDA.l OW_tilesets_04DC02,X              ;$04DBA7 |
     STA.w ObjectTileset_1931                ;$04DBAB |
     JSL CODE_00A594                         ;$04DBAE |
     LDA.b #$FE                              ;$04DBB2 |
@@ -5449,8 +5449,14 @@ CODE_04DBF3:
 Return04DC01:
     RTS
 
-DATA_04DC02:
-    db $11,$12,$13,$14,$15,$16,$17
+OW_tilesets_04DC02:
+    db !TilesetOWMain_11
+    db !TilesetOWYoshi_12
+    db !TilesetOWVanilla_13
+    db !TilesetOWForest_14
+    db !TilesetOWValley_15
+    db !TilesetOWSpecial_16
+    db !TilesetOWStar_17
 
 load_OW_layer1_tilemap_04DC09:
     SEP #$30                                ;$04DC09 | AXY->8
@@ -5460,7 +5466,7 @@ load_OW_layer1_tilemap_04DC09:
     TAX                                     ;$04DC10 |
     LDA.w OWPlayerSubmap_1F11,X             ;$04DC11 |
     TAX                                     ;$04DC14 |
-    LDA.l DATA_04DC02,X                     ;$04DC15 |
+    LDA.l OW_tilesets_04DC02,X              ;$04DC15 |
     STA.w ObjectTileset_1931                ;$04DC19 |
     LDA.b #$11                              ;$04DC1C |
     STA.w SpriteTileset_192B                ;$04DC1E |

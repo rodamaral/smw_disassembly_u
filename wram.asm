@@ -2338,7 +2338,38 @@ ForegroundPalette_192D: skip 1 ;done
 SpritePalette_192E: skip 1 ;done
 BackAreaColor_192F: skip 1 ;done
 BackgroundPalette_1930: skip 1 ;done
+
 ObjectTileset_1931: skip 1 ;done
+; Valid values
+!TilesetNormal1_00 = $00
+!TilesetCastle1_01 = $01
+!TilesetRope1_02 = $02
+!TilesetUnderground1_03 = $03
+!TilesetSwitch1_04 = $04
+!TilesetGhost1_05 = $05
+!TilesetRope2_06 = $06
+!TilesetNormal2_07 = $07
+!TilesetRope3_08 = $08
+!TilesetUnderground2_09 = $0
+!TilesetSwitch2_0A = $0A
+!TilesetCastle2_0B = $0B
+!TilesetForest_0C = $0C
+!TilesetGhost2_0D = $0D
+!TilesetUnderground2_0E = $0E
+!TilesetUnused_0F = $0F
+!TilesetUnused_10 = $10
+!TilesetOWMain_11 = $11
+!TilesetOWYoshi_12 = $12
+!TilesetOWVanilla_13 = $13
+!TilesetOWForest_14 = $14
+!TilesetOWValley_15 = $15
+!TilesetOWSpecial_16 = $16
+!TilesetOWStar_17 = $17
+!TilesetCastleDestruction_18 = $18
+!TilesetCredits_19 = $19
+!TilesetMode7_FE = $FE
+!TilesetMode7Up_FF = $FF
+
 Empty_1932: skip 1 ;done
 LayerProcessing_1933: skip 2 ;done
 MarioStartFlag_1935: skip 1 ;done
@@ -2518,8 +2549,7 @@ skip 288
 
 Map16TilesLow_C800: skip 2048 ;done
 ; Valid values:
-!Map16HighAir_00 = $00
-!Map16LowAir_25 = $25
+incsrc map16.asm
 
 OWLayer1Translevel_D000: skip 2048 ;done
 OWLayer2Directions_D800: skip 3072 ;done

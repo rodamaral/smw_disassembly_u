@@ -2963,7 +2963,7 @@ Map16Cape02960D:
     STA.w LayerProcessing_1933              ;$029624 |
     LDA.w Map16_1693                        ;$029627 |
     LDY.b #$00                              ;$02962A |
-    JSL CODE_00F160                         ;$02962C |
+    JSL handle_non_spike_tile_00F160        ;$02962C |
 Return029630:
     RTS
 
