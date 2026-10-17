@@ -6834,7 +6834,7 @@ generate_tile_152_to_pipe_00C0C4:
     TAY                                     ;$00C0D8 |
     LDA.b TileGenerate_9C                   ;$00C0D9 |
     SEC                                     ;$00C0DB |
-    SBC.w #$0009                            ;$00C0DC |
+    SBC.w #!GenSolidEmpty_09                ;$00C0DC |
     AND.w #$00FF                            ;$00C0DF |
     TAX                                     ;$00C0E2 |
     SEP #$20                                ;$00C0E3 | A->8
@@ -7077,7 +7077,7 @@ generate_tile_net_00C334:
     STA $06                                 ;$00C341 |
     LDA.b TileGenerate_9C                   ;$00C343 |
     SEC                                     ;$00C345 |
-    SBC.b #$19                              ;$00C346 |
+    SBC.b #!GenNetDoorEmpty_19              ;$00C346 |
     STA $00                                 ;$00C348 |
     ASL                                     ;$00C34A |
     CLC                                     ;$00C34B |
@@ -11912,22 +11912,22 @@ handle_non_spike_tile_00F160:               ;        | TODO: test whether caller
     SEC                                     ;$00F160 |
     SBC.b #!Map16NoteBlkPowerLow_11         ;$00F161 |
     CMP.b #!Map16PSwitchLow_1D              ;$00F163 |
-    BCC functional_block_by_id_00F17F       ;$00F165 |
-    XBA                                     ;$00F167 |
-    PHX                                     ;$00F168 |
-    LDX.w ObjectTileset_1931                ;$00F169 |
-    LDA.l DATA_00A625,X                     ;$00F16C |
-    PLX                                     ;$00F170 |
-    AND.b #$03                              ;$00F171 |
-    BEQ .CODE_00F176                        ;$00F173 |
-    RTL                                     ;$00F175 |
+    BCC functional_block_by_id_00F17F       ;$00F165 |\ branch if 111..12D
+    XBA                                     ;$00F167 ||
+    PHX                                     ;$00F168 ||
+    LDX.w ObjectTileset_1931                ;$00F169 ||
+    LDA.l DATA_00A625,X                     ;$00F16C ||
+    PLX                                     ;$00F170 ||
+    AND.b #$03                              ;$00F171 || return for TilesetSwitch1_04, TilesetGhost1_05, TilesetOWVanilla_13
+    BEQ .check_exclamation_blocks_00F176    ;$00F173 || branch otherwise
+    RTL                                     ;$00F175 |/
 
-.CODE_00F176
-    XBA
+.check_exclamation_blocks_00F176
+    XBA                                     ;$00F176 | Process switch !blocks (16A, 16B)
     SBC.b #$59                              ;$00F177 |
     CMP.b #$02                              ;$00F179 |
-    BCS Return00F1F8                        ;$00F17B |
-    ADC.b #$22                              ;$00F17D |
+    BCS return_00F1F8                       ;$00F17B | return if not 16A..16B
+    ADC.b #!Map16Star2Low_22                ;$00F17D |
 functional_block_by_id_00F17F:              ;        | Handle functional blocks (111..12D, 21-24)
     PHX                                     ;$00F17F | backup the interaction side
     PHA                                     ;$00F180 | backup the block offset
@@ -11995,12 +11995,12 @@ CODE_00F1EC:
     LDA.b #$02                              ;$00F1ED |
     PHA                                     ;$00F1EF |
     PLB                                     ;$00F1F0 |
-    JSL CODE_028752                         ;$00F1F1 |
+    JSL handle_interactive_blocks_028752    ;$00F1F1 |
     PLB                                     ;$00F1F5 |
 CODE_00F1F6:
     PLX
     CLC                                     ;$00F1F7 |
-Return00F1F8:
+return_00F1F8:
     RTL
 
 CODE_00F1F9:
@@ -12035,10 +12035,9 @@ CODE_00F1F9:
     LDA.w DidPlayBonusGame_141B
     BNE .CODE_00F236                        ;$00F229 |
     TXA                                     ;$00F22B |
-    BEQ .CODE_00F230                        ;$00F22C |
-    LDA.b #$02                              ;$00F22E |
-.CODE_00F230
-    EOR.b #$03
+    BEQ +                                   ;$00F22C |\
+    LDA.b #$02                              ;$00F22E |/
++   EOR.b #$03                              ;$00F230 |
     AND.b Frame_13                          ;$00F232 |
     BNE .CODE_00F220                        ;$00F234 |
 .CODE_00F236
@@ -12050,24 +12049,22 @@ CODE_00F1F9:
     LDA.b #$02                              ;$00F23F |
     PHA                                     ;$00F241 |
     PLB                                     ;$00F242 |
-    JSL CODE_028752                         ;$00F243 |
+    JSL handle_interactive_blocks_028752    ;$00F243 |
     PLB                                     ;$00F247 |
     PLY                                     ;$00F248 |
-    LDX.b #$07                              ;$00F249 |
+    LDX.b #$07                              ;$00F249 | X: loop counter
     LDA.w BonusRoomBlocks_13F4-1,Y          ;$00F24B |
-.CODE_00F24E
-    LSR
-    BCS .CODE_00F261                        ;$00F24F |
-    PHA                                     ;$00F251 |
-    LDA.b #$0D                              ;$00F252 |
-    STA.b TileGenerate_9C                   ;$00F254 |
-    LDA.l DATA_00F0F8,X                     ;$00F256 |
-    STA.b InteractionPtXPos_9A              ;$00F25A |
-    JSL generate_tile_00BEB0                ;$00F25C |
-    PLA                                     ;$00F260 |
-.CODE_00F261
-    DEX
-    BPL .CODE_00F24E                        ;$00F262 |
+-   LSR                                     ;$00F24E |\
+    BCS +                                   ;$00F24F ||
+    PHA                                     ;$00F251 ||
+    LDA.b #!GenUsedBlock_0D                 ;$00F252 ||
+    STA.b TileGenerate_9C                   ;$00F254 ||
+    LDA.l DATA_00F0F8,X                     ;$00F256 ||
+    STA.b InteractionPtXPos_9A              ;$00F25A ||
+    JSL generate_tile_00BEB0                ;$00F25C ||
+    PLA                                     ;$00F260 ||
++   DEX                                     ;$00F261 ||
+    BPL -                                   ;$00F262 |/
     JMP CODE_00F1F6                         ;$00F264 |
 
 process_throw_block:
@@ -12078,13 +12075,13 @@ process_throw_block:
     LDA.w CarryingFlagMirror_148F           ;$00F26F |\ If the player is already carrying something
     ORA.w RidingYoshi_187A                  ;$00F272 | | or on Yoshi,
     BNE .return                             ;$00F275 |/ return.
-    LDA.b #$02                              ;$00F277 |\
-    PHA                                     ;$00F279 | | Set the data bank to $02.
-    PLB                                     ;$00F27A | |
-    JSL spawn_throw_block                   ;$00F27B | | Try to spawn a throw block.
-    BMI .no_sprite_slots                    ;$00F27F |/ If there were no sprite slots, return.
-    LDA.b #$02                              ;$00F281 |\
-    STA.b TileGenerate_9C                   ;$00F283 | | Clear the tile.
+    LDA.b #$02                              ;$00F277 |
+    PHA                                     ;$00F279 | Set the data bank to $02.
+    PLB                                     ;$00F27A |
+    JSL spawn_throw_block                   ;$00F27B | Try to spawn a throw block.
+    BMI .no_sprite_slots                    ;$00F27F |\ If there were no sprite slots, return.
+    LDA.b #!GenEmpty_02                     ;$00F281 ||
+    STA.b TileGenerate_9C                   ;$00F283 || Clear the tile.
     JSL generate_tile_00BEB0                ;$00F285 |/
 .no_sprite_slots                            ;        |
     PHK                                     ;$00F289 |
@@ -12132,7 +12129,7 @@ process_page_0_tiles_00F2C2:                ;        |
 process_page_0_tiles_no_swim:
     CPY.b #$38                              ;$00F2C9 \ If it's the midway point,
     BNE .not_midway_point                   ;$00F2CB |
-    LDA.b #$02                              ;$00F2CD |
+    LDA.b #!GenEmpty_02                     ;$00F2CD |
     STA.b TileGenerate_9C                   ;$00F2CF |
     JSL generate_tile_00BEB0                ;$00F2D1 | remove the midway point,
     JSR smoke_sparkle                       ;$00F2D5 | create the sparkle effect,
@@ -12213,13 +12210,13 @@ process_page_0_tiles_no_climb:
     STA.w SPCIO0_1DF9                       ;$00F35A |/
     LDA.b #$01                              ;$00F35D |
     JSL CODE_05B330                         ;$00F35F | give the player a coin,
-    LDY.b #$18                              ;$00F363 |
+    LDY.b #!GenCollectDragon_18             ;$00F363 |
     BRA .remove_yoshi_coin                  ;$00F365 / and remove both yoshi coin tiles.
 
 .is_regular_coin
     JSL CODE_05B34A                         ;$00F367 \ Give the player a coin.
 .clear_tile                                 ;        |
-    LDY.b #$01                              ;$00F36B |
+    LDY.b #!GenCollectEmpty_01              ;$00F36B |
 .remove_yoshi_coin                          ;        |
     STY.b TileGenerate_9C                   ;$00F36D |
     JSL generate_tile_00BEB0                ;$00F36F | Remove the tile with item memory,

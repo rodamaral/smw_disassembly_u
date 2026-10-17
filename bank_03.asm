@@ -2528,8 +2528,8 @@ CODE_03930E:
     AND.b #$03                              ;$03931A |
     STA.w SpriteDir_157C,X                  ;$03931C |
 CODE_03931F:
-    LDA.b #$0D
-    JSR GenTileFromSpr1                     ;$039321 |
+    LDA.b #!GenUsedBlock_0D
+    JSR gen_tile_from_spr1_03938B           ;$039321 |
     LDA.w SpriteAnimation_1602,X            ;$039324 |
     CMP.b #$FF                              ;$039327 |
     BEQ CODE_039387                         ;$039329 |
@@ -2537,8 +2537,8 @@ Return03932B:
     RTS
 
 CODE_03932C:
-    LDA.b #$02
-    JSR GenTileFromSpr1                     ;$03932E |
+    LDA.b #!GenEmpty_02
+    JSR gen_tile_from_spr1_03938B           ;$03932E |
     LDA.b #$01                              ;$039331 |
     STA.b SpriteXSpeed_B6,X                 ;$039333 |
     STA.b SpriteYSpeed_AA,X                 ;$039335 |
@@ -2587,8 +2587,8 @@ CODE_039387:
     STZ.w SpriteStatus_14C8,X
     RTS                                     ;$03938A |
 
-GenTileFromSpr1:
-    STA.b TileGenerate_9C
+gen_tile_from_spr1_03938B:
+    STA.b TileGenerate_9C                   ;$03938B |
     LDA.b SpriteXPosLow_E4,X                ;$03938D |
     STA.b InteractionPtXPos_9A              ;$03938F |
     LDA.w SpriteXPosHigh_14E0,X             ;$039391 |
@@ -7745,8 +7745,8 @@ DATA_03BA02:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF,$FF,$FF,$FF
 
-GenTileFromSpr2:
-    STA.b TileGenerate_9C
+gen_tile_from_spr2_03C000:
+    STA.b TileGenerate_9C                   ;$03C000 |
     LDA.b SpriteXPosLow_E4,X                ;$03C002 |
     SEC                                     ;$03C004 |
     SBC.b #$08                              ;$03C005 |

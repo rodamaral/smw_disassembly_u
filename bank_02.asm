@@ -914,55 +914,50 @@ DATA_02874A:
 DATA_02874E:
     db $FF,$01,$FF,$01
 
-CODE_028752:
+handle_interactive_blocks_028752:
     LDA $04
     CMP.b #$07                              ;$028754 |
-    BNE NotBreakable                        ;$028756 |
-BreakTurnBlock:
-    LDA.w CurrentPlayer_0DB3
-    ASL                                     ;$02875B |
-    ADC.w CurrentPlayer_0DB3                ;$02875C |
-    TAX                                     ;$02875F |
-    LDA.w PlayerScore_0F34,X                ;$028760 |
-    CLC                                     ;$028763 |
-    ADC.b #$05                              ;$028764 |
-    STA.w PlayerScore_0F34,X                ;$028766 |
-    BCC CODE_028773                         ;$028769 |
-    INC.w PlayerScore_0F34+1,X              ;$02876B |
-    BNE CODE_028773                         ;$02876E |
-    INC.w PlayerScore_0F34+2,X              ;$028770 |
-CODE_028773:
-    LDA.b #$D0
-    STA.b PlayerYSpeed_7D                   ;$028775 |
-    LDA.b #$00                              ;$028777 |
-    JSL ShatterBlock                        ;$028779 |
-    JSR SprBlkInteract                      ;$02877D |
-CODE_028780:
-    LDA.b #$02
-    STA.b TileGenerate_9C                   ;$028782 |
-    JSL generate_tile_00BEB0                ;$028784 |
-    RTL                                     ;$028788 |
+    BNE .not_breakable_028792               ;$028756 |\ branch if not a breakable block
+    LDA.w CurrentPlayer_0DB3                ;$028758 || Spinjump a block
+    ASL                                     ;$02875B ||
+    ADC.w CurrentPlayer_0DB3                ;$02875C ||
+    TAX                                     ;$02875F ||
+    LDA.w PlayerScore_0F34,X                ;$028760 || Increase points:
+    CLC                                     ;$028763 ||
+    ADC.b #$05                              ;$028764 ||
+    STA.w PlayerScore_0F34,X                ;$028766 ||
+    BCC +                                   ;$028769 ||\
+    INC.w PlayerScore_0F34+1,X              ;$02876B |||
+    BNE +                                   ;$02876E |||
+    INC.w PlayerScore_0F34+2,X              ;$028770 ||/
++   LDA.b #$D0                              ;$028773 ||
+    STA.b PlayerYSpeed_7D                   ;$028775 || give player Y speed -48
+    LDA.b #$00                              ;$028777 ||
+    JSL ShatterBlock                        ;$028779 ||
+    JSR SprBlkInteract                      ;$02877D ||
+    LDA.b #!GenEmpty_02                     ;$028780 ||
+    STA.b TileGenerate_9C                   ;$028782 ||
+    JSL generate_tile_00BEB0                ;$028784 ||
+    RTL                                     ;$028788 |/
 
-BlockBounce:
+.block_bounce_028789:
     db $00,$03,$00,$00,$01,$07,$00,$04
     db $0A
 
-NotBreakable:
+.not_breakable_028792:
     LDY.b #$03
-FindTurningBlkSlot:
-    LDA.w BounceSprNumber_1699,Y
-    BEQ CODE_028807                         ;$028797 |
-    DEY                                     ;$028799 |
-    BPL FindTurningBlkSlot                  ;$02879A |
-    DEC.w BounceSpriteSlotIdx_18CD          ;$02879C |
-    BPL CODE_0287A6                         ;$02879F |
-    LDA.b #$03                              ;$0287A1 |
-    STA.w BounceSpriteSlotIdx_18CD          ;$0287A3 |
-CODE_0287A6:
-    LDY.w BounceSpriteSlotIdx_18CD
+-   LDA.w BounceSprNumber_1699,Y            ;$028794 |\
+    BEQ .found_empty_bounce_slot_028807     ;$028797 ||
+    DEY                                     ;$028799 ||
+    BPL -                                   ;$02879A |/
+    DEC.w BounceSpriteSlotIdx_18CD          ;$02879C | did not find an empty bounce slot, overwrite:
+    BPL +                                   ;$02879F |\
+    LDA.b #$03                              ;$0287A1 ||
+    STA.w BounceSpriteSlotIdx_18CD          ;$0287A3 |/
++   LDY.w BounceSpriteSlotIdx_18CD          ;$0287A6 |
     LDA.w BounceSprNumber_1699,Y            ;$0287A9 |
     CMP.b #$07                              ;$0287AC |
-    BNE NoResetTurningBlk                   ;$0287AE |
+    BNE .no_reset_turning_blk_028804        ;$0287AE |
     LDA.b InteractionPtXPos_9A              ;$0287B0 |
     PHA                                     ;$0287B2 |
     LDA.b InteractionPtXPos_9A+1            ;$0287B3 |
@@ -1010,29 +1005,28 @@ CODE_0287A6:
     STA.b InteractionPtXPos_9A+1            ;$0287FF |
     PLA                                     ;$028801 |
     STA.b InteractionPtXPos_9A              ;$028802 |
-NoResetTurningBlk:
-    LDY.w BounceSpriteSlotIdx_18CD
-CODE_028807:
-    LDA $04
+.no_reset_turning_blk_028804                ;        |
+    LDY.w BounceSpriteSlotIdx_18CD          ;$028804 |
+.found_empty_bounce_slot_028807             ;        |
+    LDA $04                                 ;$028807 |
     CMP.b #$10                              ;$028809 |
-    BCC CODE_028818                         ;$02880B |
+    BCC .CODE_028818                        ;$02880B |
     STZ $04                                 ;$02880D |
     TAX                                     ;$02880F |
-    LDA.w CODE_028780,X                     ;$028810 |
+    LDA.w .block_bounce_028789-9,X          ;$028810 |
     STA.w BounceSprYXPPCCCT_1901,Y          ;$028813 |
-    BRA CODE_02882A                         ;$028816 |
+    BRA .CODE_02882A                        ;$028816 |
 
-CODE_028818:
+.CODE_028818
     LDA $04
     CMP.b #$05                              ;$02881A |
-    BNE CODE_028823                         ;$02881C |
-    LDX.b #$0B                              ;$02881E |
-    STX.w SPCIO0_1DF9                       ;$028820 |
-CODE_028823:
-    TAX
-    LDA.w BlockBounce,X                     ;$028824 |
+    BNE +                                   ;$02881C |\
+    LDX.b #$0B                              ;$02881E ||
+    STX.w SPCIO0_1DF9                       ;$028820 |/
++   TAX                                     ;$028823 |
+    LDA.w .block_bounce_028789,X            ;$028824 |
     STA.w BounceSprYXPPCCCT_1901,Y          ;$028827 |
-CODE_02882A:
+.CODE_02882A:
     LDA $04
     INC A                                   ;$02882C |
     STA.w BounceSprNumber_1699,Y            ;$02882D |
@@ -1064,32 +1058,30 @@ CODE_02882A:
     STA.w BounceSprTimer_16C5,Y             ;$02886B |
     LDA.w BounceSprNumber_1699,Y            ;$02886E |
     CMP.b #$07                              ;$028871 |
-    BNE CODE_02887A                         ;$028873 |
-    LDA.b #$FF                              ;$028875 |
-    STA.w TurnBlockSpinTimer_18CE,Y         ;$028877 |
-CODE_02887A:
-    JSR SprBlkInteract
-CODE_02887D:
-    LDA $05
+    BNE +                                   ;$028873 |\
+    LDA.b #$FF                              ;$028875 ||
+    STA.w TurnBlockSpinTimer_18CE,Y         ;$028877 |/
++   JSR SprBlkInteract                      ;$02887A |
+CODE_02887D:                                ;        |
+    LDA $05                                 ;$02887D |
     BEQ Return0288A0                        ;$02887F |
     CMP.b #$0A                              ;$028881 |
-    BNE CODE_028885                         ;$028883 |
-CODE_028885:
-    LDA $05
+    BNE +                                   ;$028883 | fallthrough
++   LDA $05                                 ;$028885 |
     CMP.b #$08                              ;$028887 |
     BCS CODE_0288DC                         ;$028889 |
     CMP.b #$06                              ;$02888B | 06: generate a single coin
     BCC CODE_0288DC                         ;$02888D |
     CMP.b #$07                              ;$02888F | 07: generate a multi-coin
-    BNE CODE_02889D                         ;$028891 |
-    LDA.w MulticoinTimer_186B               ;$028893 |
-    BNE CODE_02889D                         ;$028896 |
-    LDA.b #$FF                              ;$028898 |
-    STA.w MulticoinTimer_186B               ;$02889A |
-CODE_02889D:
-    JSR CODE_028A66
-Return0288A0:
-    RTL
+    BNE CODE_02889D                         ;$028891 |\
+    LDA.w MulticoinTimer_186B               ;$028893 ||
+    BNE CODE_02889D                         ;$028896 ||
+    LDA.b #$FF                              ;$028898 ||
+    STA.w MulticoinTimer_186B               ;$02889A |/
+CODE_02889D:                                ;        |
+    JSR CODE_028A66                         ;$02889D |
+Return0288A0:                               ;        |
+    RTL                                     ;$0288A0 |
 
 DATA_0288A1:
     db $35,$78
@@ -2370,21 +2362,20 @@ DATA_02919D:
 
 TileFromBounceSpr0:
     LDA.w BounceSprTile_16C1,X
-    CMP.b #$0A                              ;$0291A2 |
-    BEQ CODE_0291AA                         ;$0291A4 |
-    CMP.b #$0B                              ;$0291A6 |
-    BNE CODE_0291B6                         ;$0291A8 |
-CODE_0291AA:
-    LDY.w MulticoinTimer_186B
+    CMP.b #!GenTurnMulticoin_0A             ;$0291A2 |
+    BEQ +                                   ;$0291A4 |\
+    CMP.b #!GenQMulticoin_0B                ;$0291A6 ||
+    BNE .tile_from_bounce_0291B6            ;$0291A8 |/
++   LDY.w MulticoinTimer_186B               ;$0291AA |
     CPY.b #$01                              ;$0291AD |
-    BNE CODE_0291B6                         ;$0291AF |
+    BNE .tile_from_bounce_0291B6            ;$0291AF |
     STZ.w MulticoinTimer_186B               ;$0291B1 |
-    LDA.b #$0D                              ;$0291B4 |
-CODE_0291B6:
+    LDA.b #!GenUsedBlock_0D                 ;$0291B4 |
+.tile_from_bounce_0291B6
     BRA TileFromBounceSpr1
 
 InvisSldFromBncSpr:
-    LDA.b #$09
+    LDA.b #!GenSolidEmpty_09
 TileFromBounceSpr1:
     STA.b TileGenerate_9C
     LDA.w BounceSprXPosLow_16A5,X           ;$0291BC |
@@ -7826,7 +7817,7 @@ CODE_02B969:
 Return02B9A3:
     RTS
 
-GenTileFromSpr0:
+.unused_gen_tile_from_spr0_02B9A4:
     STA.b TileGenerate_9C
     LDA.b SpriteXPosLow_E4,X                ;$02B9A6 |
     STA.b InteractionPtXPos_9A              ;$02B9A8 |
@@ -8009,7 +8000,7 @@ CODE_02BAC0:
     AND.b #$BF                              ;$02BAFC |
     STA.w dpmksPiS_167A,X                   ;$02BAFE |
     PLX                                     ;$02BB01 |
-    LDA.b #$04                              ;$02BB02 |
+    LDA.b #!GenBush_04                      ;$02BB02 |
     STA.b TileGenerate_9C                   ;$02BB04 |
     JSL generate_tile_00BEB0                ;$02BB06 |
     RTL                                     ;$02BB0A |
@@ -9081,7 +9072,7 @@ chucks_02C22C:
     LDA.b InteractionPtYPos_98              ;$02C2B6 |
     PHA                                     ;$02C2B8 |
     JSL ShatterBlock                        ;$02C2B9 |
-    LDA.b #$02                              ;$02C2BD |
+    LDA.b #!GenEmpty_02                     ;$02C2BD |
     STA.b TileGenerate_9C                   ;$02C2BF |
     JSL generate_tile_00BEB0                ;$02C2C1 |
     PLA                                     ;$02C2C5 |
@@ -9096,7 +9087,7 @@ chucks_02C22C:
     PLA                                     ;$02C2D3 |
     STA.b InteractionPtXPos_9A+1            ;$02C2D4 |
     JSL ShatterBlock                        ;$02C2D6 |
-    LDA.b #$02                              ;$02C2DA |
+    LDA.b #!GenEmpty_02                     ;$02C2DA |
     STA.b TileGenerate_9C                   ;$02C2DC |
     JSL generate_tile_00BEB0                ;$02C2DE |
     BRA .CODE_02C2F4                        ;$02C2E2 |
@@ -10458,7 +10449,7 @@ CODE_02CD59:
     LDA.w SpriteStun_1540,X
     CMP.b #$5E                              ;$02CD5C |
     BNE CODE_02CD7F                         ;$02CD5E |
-    LDA.b #$1B                              ;$02CD60 |
+    LDA.b #!GenFlatSwitch_1B                ;$02CD60 |
     STA.b TileGenerate_9C                   ;$02CD62 |
     LDA.b SpriteXPosLow_E4,X                ;$02CD64 |
     STA.b InteractionPtXPos_9A              ;$02CD66 |
@@ -11088,7 +11079,7 @@ generate_tree_tile_02D1F3:
     STA.b InteractionPtYPos_98              ;$02D200 |
     LDA.w YoshiYPos_18B2+1                  ;$02D202 |
     STA.b InteractionPtYPos_98+1            ;$02D205 |
-    LDA.b #$04                              ;$02D207 |
+    LDA.b #!GenBush_04                      ;$02D207 |
     STA.b TileGenerate_9C                   ;$02D209 |
     JSL generate_tile_00BEB0                ;$02D20B |
 Return02D20F:
@@ -13397,7 +13388,7 @@ CODE_02E2B0:
     STA.b InteractionPtYPos_98              ;$02E2CE |
     LDA.w SpriteYPosHigh_14D4,X             ;$02E2D0 |
     STA.b InteractionPtYPos_98+1            ;$02E2D3 |
-    LDA.b #$06                              ;$02E2D5 |
+    LDA.b #!GenCoin_06                      ;$02E2D5 |
     STA.b TileGenerate_9C                   ;$02E2D7 |
     JSL generate_tile_00BEB0                ;$02E2D9 |
     RTS                                     ;$02E2DD |
@@ -13699,7 +13690,10 @@ ScalePlatformMain:
 ++  RTS                                     ;$02E51F |
 
 .MushrmScaleTiles:
-    db $02,$07,$07,$02
+    db !GenEmpty_02
+    db !GenMushStalk_07
+    db !GenMushStalk_07
+    db !GenEmpty_02
 
 .CODE_02E524:
     LDA.b SpriteYPosLow_D8,X

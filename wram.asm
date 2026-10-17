@@ -891,33 +891,33 @@ InteractionPtXPos_9A: skip 2
 ; a Map16 tile to draw to the screen
 TileGenerate_9C: skip 1
 ; Valid values
-!GenCollectEmpty = 1 ; sets item memory
-!GenEmpty = 2
-!GenVine = 3
-!GenBush = 4
-!GenTurningBlock = 5
-!GenCoin = 6
-!GenMushStalk = 7
-!GenMoleHole = 8
-!GenSolidEmpty = 9
-!GenTurnMulticoin = 10
-!GenQMulticoin = 11
-!GenTurnBlock = 12
-!GenUsedBlock = 13
-!GenNoteBlock = 14
-!GenNoteUnused = 15
-!GenNoteAllSides = 16
-!GenTurnBounce = 17
-!GenRoulette = 18
-!GenOnOff = 19
-!GenPipeLeft = 20
-!GenPipeRight = 21
-!GenCollectUsed = 22 ; sets item memory
-!GenCollectCorrect = 23 ; sets item memory
-!GenCollectDragon = 24 ; sets item memory
-!GenNetDoorEmpty = 25
-!GenNetDoorClosed = 26
-!GenFlatSwitch = 27
+!GenCollectEmpty_01 = $01 ; sets item memory
+!GenEmpty_02 = $02
+!GenVine_03 = $03
+!GenBush_04 = $04
+!GenTurningBlock_05 = $05
+!GenCoin_06 = $06
+!GenMushStalk_07 = $07
+!GenMoleHole_08 = $08
+!GenSolidEmpty_09 = $09
+!GenTurnMulticoin_0A = $0A
+!GenQMulticoin_0B = $0B
+!GenTurnBlock_0C = $0C
+!GenUsedBlock_0D = $0D
+!GenNoteBlock_0E = $0E
+!GenNoteUnused_0F = $0F
+!GenNoteAllSides_10 = $10
+!GenTurnBounce_11 = $11
+!GenRoulette_12 = $12
+!GenOnOff_13 = $13
+!GenPipeLeft_14 = $14
+!GenPipeRight_15 = $15
+!GenCollectUsed_16 = $16 ; sets item memory
+!GenCollectCorrect_17 = $17 ; sets item memory
+!GenCollectDragon_18 = $18 ; sets item memory
+!GenNetDoorEmpty_19 = $19
+!GenNetDoorClosed_1A = $1A
+!GenFlatSwitch_1B = $1B
 
 ; === $7E009D ===
 ; 1 byte

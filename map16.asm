@@ -11,6 +11,9 @@
 !Map16InvisCoin_0021 = $0021
 !Map16InvisCoinLow_21 = !Map16InvisCoin_0021&$FF
 
+!Map16Invis1Up_0022 = $0022
+!Map16Invis1UpLow_22 = !Map16Invis1Up_0022&$FF
+
 !Map16Air_0025 = $0025
 !Map16HighAir_00 = !Map16Air_0025>>8 ; TODO: rename high/low at the end
 !Map16LowAir_25 = !Map16Air_0025&$FF
@@ -24,3 +27,9 @@
 !Map16TurnBlock_011E = $011E
 !Map16TurnBlockLow_1E = !Map16TurnBlock_011E&$FF
 !Map16TurnBlockHigh_1E = !Map16TurnBlock_011E&$FF
+
+!Map16Star_0121 = $0121
+!Map16Star2Low_21 = !Map16Star2_0121&$FF
+
+!Map16Star2_0122 = $0122
+!Map16Star2Low_22 = !Map16Star2_0122&$FF
