@@ -6223,127 +6223,122 @@ DATA_01AD6C:
     db $F0,$10
 
 FlyingQBlock:
-    LDA.w Sprite_163E,X
-    BEQ CODE_01AD80                         ;$01AD71 |
-    STZ.w SpriteOAMIndex_15EA,X             ;$01AD73 |
-    LDA.w RidingYoshi_187A                  ;$01AD76 |
-    BNE CODE_01AD80                         ;$01AD79 |
-    LDA.b #$04                              ;$01AD7B |
-    STA.w SpriteOAMIndex_15EA,X             ;$01AD7D |
-CODE_01AD80:
-    JSR SubSprGfx2Entry1
+    LDA.w Sprite_163E,X                     ;$01AD6E |
+    BEQ +                                   ;$01AD71 |\
+    STZ.w SpriteOAMIndex_15EA,X             ;$01AD73 ||
+    LDA.w RidingYoshi_187A                  ;$01AD76 ||
+    BNE +                                   ;$01AD79 ||
+    LDA.b #$04                              ;$01AD7B ||
+    STA.w SpriteOAMIndex_15EA,X             ;$01AD7D |/
++   JSR SubSprGfx2Entry1                    ;$01AD80 |
     LDY.w SpriteOAMIndex_15EA,X             ;$01AD83 |
     LDA.w $0301,Y                           ;$01AD86 |
     DEC A                                   ;$01AD89 |
     STA.w $0301,Y                           ;$01AD8A |
     STZ.w Sprite_1528,X                     ;$01AD8D |
     LDA.b SpritePhase_C2,X                  ;$01AD90 |
-    BNE CODE_01ADF8                         ;$01AD92 |
+    BNE .CODE_01ADF8                        ;$01AD92 |
     JSR CODE_019E95                         ;$01AD94 |
     LDA.b SpriteLock_9D                     ;$01AD97 |
-    BNE CODE_01ADF8                         ;$01AD99 |
+    BNE .CODE_01ADF8                        ;$01AD99 |
     LDA.b Frame_13                          ;$01AD9B |
     AND.b #$01                              ;$01AD9D |
-    BNE CODE_01ADB7                         ;$01AD9F |
-    LDA.w Sprite_1594,X                     ;$01ADA1 |
-    AND.b #$01                              ;$01ADA4 |
-    TAY                                     ;$01ADA6 |
-    LDA.b SpriteYSpeed_AA,X                 ;$01ADA7 |
-    CLC                                     ;$01ADA9 |
-    ADC.w DATA_01AD68,Y                     ;$01ADAA |
-    STA.b SpriteYSpeed_AA,X                 ;$01ADAD |
-    CMP.w DATA_01AD6A,Y                     ;$01ADAF |
-    BNE CODE_01ADB7                         ;$01ADB2 |
-    INC.w Sprite_1594,X                     ;$01ADB4 |
-CODE_01ADB7:
-    JSR SubSprYPosNoGrvty
+    BNE +                                   ;$01AD9F |\
+    LDA.w Sprite_1594,X                     ;$01ADA1 ||
+    AND.b #$01                              ;$01ADA4 ||
+    TAY                                     ;$01ADA6 ||
+    LDA.b SpriteYSpeed_AA,X                 ;$01ADA7 ||
+    CLC                                     ;$01ADA9 ||
+    ADC.w DATA_01AD68,Y                     ;$01ADAA ||
+    STA.b SpriteYSpeed_AA,X                 ;$01ADAD ||
+    CMP.w DATA_01AD6A,Y                     ;$01ADAF ||
+    BNE +                                   ;$01ADB2 ||
+    INC.w Sprite_1594,X                     ;$01ADB4 |/
++   JSR SubSprYPosNoGrvty                   ;$01ADB7 |
     LDA.b SpriteNumber_9E,X                 ;$01ADBA |
-    CMP.b #!FlyingBlockL_83                 ;$01ADBC |
-    BEQ CODE_01ADE8                         ;$01ADBE |
-    LDA.w SpriteStun_1540,X                 ;$01ADC0 |
-    BNE CODE_01ADE6                         ;$01ADC3 |
-    LDA.b Frame_13                          ;$01ADC5 |
-    AND.b #$03                              ;$01ADC7 |
-    BNE CODE_01ADE6                         ;$01ADC9 |
-    LDA.w Sprite_1534,X                     ;$01ADCB |
-    AND.b #$01                              ;$01ADCE |
-    TAY                                     ;$01ADD0 |
-    LDA.b SpriteXSpeed_B6,X                 ;$01ADD1 |
-    CLC                                     ;$01ADD3 |
-    ADC.w DATA_01AD68,Y                     ;$01ADD4 |
-    STA.b SpriteXSpeed_B6,X                 ;$01ADD7 |
-    CMP.w DATA_01AD6C,Y                     ;$01ADD9 |
-    BNE CODE_01ADE6                         ;$01ADDC |
-    INC.w Sprite_1534,X                     ;$01ADDE |
-    LDA.b #$20                              ;$01ADE1 |
-    STA.w SpriteStun_1540,X                 ;$01ADE3 |
-CODE_01ADE6:
-    BRA CODE_01ADEC
+    CMP.b #!FlyingBlockL_83                 ;$01ADBC |\ branch if only flies left
+    BEQ .fly_left_01ADE8                    ;$01ADBE |/
+    LDA.w SpriteStun_1540,X                 ;$01ADC0 | timer for waiting between horizontal accelerations
+    BNE +                                   ;$01ADC3 |\
+    LDA.b Frame_13                          ;$01ADC5 ||
+    AND.b #$03                              ;$01ADC7 ||
+    BNE +                                   ;$01ADC9 ||
+    LDA.w Sprite_1534,X                     ;$01ADCB ||
+    AND.b #$01                              ;$01ADCE ||
+    TAY                                     ;$01ADD0 ||
+    LDA.b SpriteXSpeed_B6,X                 ;$01ADD1 ||
+    CLC                                     ;$01ADD3 ||
+    ADC.w DATA_01AD68,Y                     ;$01ADD4 ||
+    STA.b SpriteXSpeed_B6,X                 ;$01ADD7 ||
+    CMP.w DATA_01AD6C,Y                     ;$01ADD9 ||
+    BNE +                                   ;$01ADDC ||\
+    INC.w Sprite_1534,X                     ;$01ADDE |||
+    LDA.b #$20                              ;$01ADE1 |||
+    STA.w SpriteStun_1540,X                 ;$01ADE3 |/
++   BRA .skip_forcing_fly_left_01ADEC       ;$01ADE6 |
 
-CODE_01ADE8:
+.fly_left_01ADE8:
     LDA.b #$F4
     STA.b SpriteXSpeed_B6,X                 ;$01ADEA |
-CODE_01ADEC:
+.skip_forcing_fly_left_01ADEC:
     JSR SubSprXPosNoGrvty
     LDA.w SpriteXMovement_1491              ;$01ADEF |
     STA.w Sprite_1528,X                     ;$01ADF2 |
     INC.w SpriteAnimationTimer_1570,X       ;$01ADF5 |
-CODE_01ADF8:
+.CODE_01ADF8:
     JSR subsprite_sprite_interact_01A40D
     JSR CODE_01B457                         ;$01ADFB |
     JSR SubOffscreen0Bnk1                   ;$01ADFE |
     LDA.w SpriteLava_1558,X                 ;$01AE01 |
     CMP.b #$08                              ;$01AE04 |
-    BNE CODE_01AE5E                         ;$01AE06 |
-    LDY.b SpritePhase_C2,X                  ;$01AE08 |
-    CPY.b #$02                              ;$01AE0A |
-    BEQ CODE_01AE5E                         ;$01AE0C |
-    PHA                                     ;$01AE0E |
-    INC.b SpritePhase_C2,X                  ;$01AE0F |
-    LDA.b #$50                              ;$01AE11 |
-    STA.w Sprite_163E,X                     ;$01AE13 |
-    LDA.b SpriteXPosLow_E4,X                ;$01AE16 |
-    STA.b InteractionPtXPos_9A              ;$01AE18 |
-    LDA.w SpriteXPosHigh_14E0,X             ;$01AE1A |
-    STA.b InteractionPtXPos_9A+1            ;$01AE1D |
-    LDA.b SpriteYPosLow_D8,X                ;$01AE1F |
-    STA.b InteractionPtYPos_98              ;$01AE21 |
-    LDA.w SpriteYPosHigh_14D4,X             ;$01AE23 |
-    STA.b InteractionPtYPos_98+1            ;$01AE26 |
-    LDA.b #!NoRespawn_FF                    ;$01AE28 |
-    STA.w SpriteLoadIndex_161A,X            ;$01AE2A |
-    LDY.w Sprite_151C,X                     ;$01AE2D |
-    LDA.b Powerup_19                        ;$01AE30 |
-    BNE CODE_01AE38                         ;$01AE32 |
-    INY                                     ;$01AE34 |
-    INY                                     ;$01AE35 |
-    INY                                     ;$01AE36 |
-    INY                                     ;$01AE37 |
-CODE_01AE38:
-    LDA.w DATA_01AE88,Y
-    STA $05                                 ;$01AE3B | $05: type of block to trigger
-    PHB                                     ;$01AE3D |
-    LDA.b #$02                              ;$01AE3E |
-    PHA                                     ;$01AE40 |
-    PLB                                     ;$01AE41 |
-    PHX                                     ;$01AE42 |
-    JSL create_sprite_or_coin_block_02887D  ;$01AE43 |
-    PLX                                     ;$01AE47 |
-    LDY.w FlyingBlock_185E                  ;$01AE48 | seems to track a sprite slot
-    LDA.b #$01                              ;$01AE4B |
-    STA.w Sprite_1528,Y                     ;$01AE4D |
-    LDA.w SpriteNumber_9E,Y                 ;$01AE50 |
-    CMP.b #!Flower_75                       ;$01AE53 |
-    BNE CODE_01AE5C                         ;$01AE55 |
-    LDA.b #$FF                              ;$01AE57 |
-    STA.w SpritePhase_C2,Y                  ;$01AE59 |
-CODE_01AE5C:
-    PLB
-    PLA                                     ;$01AE5D |
-CODE_01AE5E:
+    BNE .skip_spawning_item_01AE5E          ;$01AE06 |\ branch if timer set when hit from below is not 8
+    LDY.b SpritePhase_C2,X                  ;$01AE08 || Set to 1 when first hit, and to 2 when the sprite is spawned
+    CPY.b #$02                              ;$01AE0A ||
+    BEQ .skip_spawning_item_01AE5E          ;$01AE0C || skip if sprite already spawned
+    PHA                                     ;$01AE0E ||
+    INC.b SpritePhase_C2,X                  ;$01AE0F || set sprite as spawned
+    LDA.b #$50                              ;$01AE11 ||
+    STA.w Sprite_163E,X                     ;$01AE13 ||
+    LDA.b SpriteXPosLow_E4,X                ;$01AE16 ||
+    STA.b InteractionPtXPos_9A              ;$01AE18 ||
+    LDA.w SpriteXPosHigh_14E0,X             ;$01AE1A ||
+    STA.b InteractionPtXPos_9A+1            ;$01AE1D ||
+    LDA.b SpriteYPosLow_D8,X                ;$01AE1F ||
+    STA.b InteractionPtYPos_98              ;$01AE21 ||
+    LDA.w SpriteYPosHigh_14D4,X             ;$01AE23 ||
+    STA.b InteractionPtYPos_98+1            ;$01AE26 ||
+    LDA.b #!NoRespawn_FF                    ;$01AE28 ||
+    STA.w SpriteLoadIndex_161A,X            ;$01AE2A || "kill" Flying Block
+    LDY.w Sprite_151C,X                     ;$01AE2D || load index to which sprite to spawn
+    LDA.b Powerup_19                        ;$01AE30 ||
+    BNE +                                   ;$01AE32 ||\ and sum 4 if Mario is small
+    INY                                     ;$01AE34 |||  to prevent spawning Feather/Flower
+    INY                                     ;$01AE35 |||
+    INY                                     ;$01AE36 |||
+    INY                                     ;$01AE37 ||/
++   LDA.w .object_in_flying_block_01AE88,Y  ;$01AE38 ||
+    STA $05                                 ;$01AE3B || $05: type of block to trigger
+    PHB                                     ;$01AE3D ||
+    LDA.b #$02                              ;$01AE3E ||
+    PHA                                     ;$01AE40 ||
+    PLB                                     ;$01AE41 ||
+    PHX                                     ;$01AE42 ||
+    JSL create_sprite_or_coin_block_02887D  ;$01AE43 ||
+    PLX                                     ;$01AE47 ||
+    LDY.w FlyingBlock_185E                  ;$01AE48 || GLITCH: $2887D does not always set $185E
+    LDA.b #$01                              ;$01AE4B ||  this leads the following to use the last $185E as the slot
+    STA.w Sprite_1528,Y                     ;$01AE4D || Used as a flag to prevent appearing behind tiles while rising out of a ? block
+    LDA.w SpriteNumber_9E,Y                 ;$01AE50 ||
+    CMP.b #!Flower_75                       ;$01AE53 ||
+    BNE +                                   ;$01AE55 ||\ if a Fireflower:
+    LDA.b #$FF                              ;$01AE57 |||  set flag to remain locked in place permanently
+    STA.w SpritePhase_C2,Y                  ;$01AE59 ||/
++   PLB                                     ;$01AE5C ||
+    PLA                                     ;$01AE5D |/
+.skip_spawning_item_01AE5E:
     LSR
     TAY                                     ;$01AE5F |
-    LDA.w DATA_01AE7F,Y                     ;$01AE60 |
+    LDA.w ..DATA_01AE7F,Y                   ;$01AE60 |
     STA $00                                 ;$01AE63 |
     LDY.w SpriteOAMIndex_15EA,X             ;$01AE65 |
     LDA.w $0301,Y                           ;$01AE68 |
@@ -6353,19 +6348,24 @@ CODE_01AE5E:
     LDA.b SpritePhase_C2,X                  ;$01AE71 |
     CMP.b #$01                              ;$01AE73 |
     LDA.b #$2A                              ;$01AE75 |
-    BCC CODE_01AE7B                         ;$01AE77 |
-    LDA.b #$2E                              ;$01AE79 |
-CODE_01AE7B:
-    STA.w $0302,Y
+    BCC +                                   ;$01AE77 |\
+    LDA.b #$2E                              ;$01AE79 |/
++   STA.w $0302,Y                           ;$01AE7B |
     RTS                                     ;$01AE7E |
 
-DATA_01AE7F:
+..DATA_01AE7F:
     db $00,$03,$05,$07,$08,$08,$07,$05
     db $03
 
-; TODO: enum sprites
-DATA_01AE88:
-    db $06,$02,$04,$05,$06,$01,$01,$05
+.object_in_flying_block_01AE88:
+    db !BlockObjSingleCoin_06               ;$01AE88 | 0
+    db !BlockObjFlower_02                   ;$01AE89 | 1
+    db !BlockObjFeather_04                  ;$01AE8A | 2
+    db !BlockObj1Up_05                      ;$01AE8B | 3
+    db !BlockObjSingleCoin_06               ;$01AE8C | 4
+    db !BlockObjMushroom_01                 ;$01AE8D | 5
+    db !BlockObjMushroom_01                 ;$01AE8E | 6
+    db !BlockObj1Up_05                      ;$01AE8F | 7
 
 Return01AE90:
     RTS

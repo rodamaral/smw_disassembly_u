@@ -1064,7 +1064,7 @@ handle_interactive_blocks_028752:
 +   JSR SprBlkInteract                      ;$02887A |
 create_sprite_or_coin_block_02887D:         ;        |
     LDA $05                                 ;$02887D |
-    BEQ return_0288A0                       ;$02887F |
+    BEQ return_0288A0                       ;$02887F | return if block has nothing
     CMP.b #!BlockObjPSwitch_0A              ;$028881 |
     BNE +                                   ;$028883 | redundant branch
 +   LDA $05                                 ;$028885 | $05: type of block to trigger
@@ -1157,15 +1157,15 @@ create_sprite_from_block_0288DC:
     AND.b #$30                              ;$0288E4 || if low X position is 20, 60, A0, E0 ()
     CMP.b #$20                              ;$0288E6 ||
     BEQ .force_free_slot_028905             ;$0288E8 |/
-+   CPY.b #!BlockObjStunnedKey_10           ;$0288EA |
-    BEQ .generate_if_free_slot_0288FD       ;$0288EC | branch to generate stunned Key
++   CPY.b #!BlockObjStunnedKey_10           ;$0288EA |\
+    BEQ .generate_if_free_slot_0288FD       ;$0288EC |/ branch to generate stunned Key
     CPY.b #!BlockObjVine_08                 ;$0288EE |
     BNE +                                   ;$0288F0 |\ generate Growing vine:
     LDA.w SpriteMemorySetting_1692          ;$0288F2 || 
     BEQ .force_free_slot_028905             ;$0288F5 || based on Sprite memory setting from header
     BNE .generate_if_free_slot_0288FD       ;$0288F7 |/
-+   CPY.b #!BlockObjYoshiEgg_0C             ;$0288F9 |
-    BNE .force_free_slot_028905             ;$0288FB | branch if not Yoshi egg
++   CPY.b #!BlockObjYoshiEgg_0C             ;$0288F9 |\
+    BNE .force_free_slot_028905             ;$0288FB |/ branch if not Yoshi egg
 .generate_if_free_slot_0288FD:              ;        |
     JSL FindFreeSprSlot                     ;$0288FD | Find a free sprite slot for Yoshi Egg OR stunned Key OR Vine with non-zero sprite header
     TYX                                     ;$028901 |
@@ -1188,7 +1188,7 @@ create_sprite_from_block_0288DC:
     ADC.b #$0A                              ;$02891F |
     TAX                                     ;$028921 |
 .free_slot_028922:
-    STX.w FlyingBlock_185E                  ;$028922 |
+    STX.w FlyingBlock_185E                  ;$028922 | save slot to generate for the Flying block
     LDY $05                                 ;$028925 | Y: index of sprite to generate
     LDA.w status_spr_in_block_0288C5,Y      ;$028927 |
     STA.w SpriteStatus_14C8,X               ;$02892A |
@@ -1224,8 +1224,8 @@ create_sprite_from_block_0288DC:
     STA.w SPCIO2_1DFB                       ;$028969 | SFX for P-Switch / Directional coin
     INC.w DirectCoinInit_1432               ;$02896C | NOTE: prevents spawning more directional coins from blocks in the level
     STZ.w DirectCoinTimer_190C              ;$02896F |
-.init_sprite_028972
-    LDA.b InteractionPtXPos_9A
+.init_sprite_028972                         ;        |
+    LDA.b InteractionPtXPos_9A              ;$028972 |
     STA.b SpriteXPosLow_E4,X                ;$028974 |
     LDA.b InteractionPtXPos_9A+1            ;$028976 |
     STA.w SpriteXPosHigh_14E0,X             ;$028978 |
@@ -1341,12 +1341,12 @@ create_sprite_from_block_0288DC:
     AND.b #$01                              ;$028A30 |
     STA.w Sprite_151C,X                     ;$028A32 |
     TAY                                     ;$028A35 |
-    LDA.w .DATA_028A42,Y                    ;$028A36 |
+    LDA.w ..DATA_028A42,Y                   ;$028A36 |
     STA.w SpriteYXPPCCCT_15F6,X             ;$028A39 |
     JSL create_puff_of_smoke_028A44         ;$028A3C |
     BRA .key_egg_shell_pow_028A0D           ;$028A40 |
 
-.DATA_028A42
+..DATA_028A42
     db $06,$02
 
 create_puff_of_smoke_028A44:
