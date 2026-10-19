@@ -11826,80 +11826,80 @@ is_page_1_water:
     RTL                                     ;$00F05B /
 
 bounce_event_00F05C:
-    db !BlockEvtHitNote_01
-    db !BlockEvtOnOffBlock_05
-    db !BlockEvtHitNote_01
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitNote_01
-    db !BlockEvtHitNote_01
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtItemFromTurn_00
-    db !BlockEvtSpinTurn_06
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtBounceSideways_03
-    db !BlockEvtBounceSideways_03
-    db !BlockEvtTranslucentBlock_04
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitQuestion_02
-    db !BlockEvtHitNote_01
-    db !BlockEvtHitNote_01
-    db !BlockEvtBreakTurn_07
-    db !BlockEvtGreenSwitch_11
-    db !BlockEvtYellowSwitch_10
+    db !BlockEvtHitNote_01                  ;$00F05C | 00
+    db !BlockEvtOnOffBlock_05               ;$00F05D | 01
+    db !BlockEvtHitNote_01                  ;$00F05E | 02
+    db !BlockEvtHitQuestion_02              ;$00F05F | 03
+    db !BlockEvtHitNote_01                  ;$00F060 | 04
+    db !BlockEvtHitNote_01                  ;$00F061 | 05
+    db !BlockEvtItemFromTurn_00             ;$00F062 | 06
+    db !BlockEvtItemFromTurn_00             ;$00F063 | 07
+    db !BlockEvtItemFromTurn_00             ;$00F064 | 08
+    db !BlockEvtItemFromTurn_00             ;$00F065 | 09
+    db !BlockEvtItemFromTurn_00             ;$00F066 | 0A
+    db !BlockEvtItemFromTurn_00             ;$00F067 | 0B
+    db !BlockEvtItemFromTurn_00             ;$00F068 | 0C
+    db !BlockEvtSpinTurn_06                 ;$00F069 | 0D
+    db !BlockEvtHitQuestion_02              ;$00F06A | 0E
+    db !BlockEvtHitQuestion_02              ;$00F06B | 0F
+    db !BlockEvtHitQuestion_02              ;$00F06C | 10
+    db !BlockEvtHitQuestion_02              ;$00F06D | 11
+    db !BlockEvtHitQuestion_02              ;$00F06E | 12
+    db !BlockEvtHitQuestion_02              ;$00F06F | 13
+    db !BlockEvtHitQuestion_02              ;$00F070 | 14
+    db !BlockEvtHitQuestion_02              ;$00F071 | 15
+    db !BlockEvtHitQuestion_02              ;$00F072 | 16
+    db !BlockEvtHitQuestion_02              ;$00F073 | 17
+    db !BlockEvtHitQuestion_02              ;$00F074 | 18
+    db !BlockEvtBounceSideways_03           ;$00F075 | 19
+    db !BlockEvtBounceSideways_03           ;$00F076 | 1A
+    db !BlockEvtTranslucentBlock_04         ;$00F077 | 1B
+    db !BlockEvtHitQuestion_02              ;$00F078 | 1C
+    db !BlockEvtHitQuestion_02              ;$00F079 | 1D
+    db !BlockEvtHitQuestion_02              ;$00F07A | 1E
+    db !BlockEvtHitNote_01                  ;$00F07B | 1F
+    db !BlockEvtHitNote_01                  ;$00F07C | 20
+    db !BlockEvtBreakTurn_07                ;$00F07D | 21
+    db !BlockEvtGreenSwitch_11              ;$00F07E | 22
+    db !BlockEvtYellowSwitch_10             ;$00F07F | 23
 
 object_behaviour_00F080:
-    db !BlkBehaviourFlowerFeatherStar_80
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourDirCoins_1E
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourFlowerIfBig_05
-    db !BlkBehaviourFeatherIfBig_09
-    db !BlkBehaviourStar_06
-    db !BlkBehaviourStar1UpVine_81
-    db !BlkBehaviourMultiCoin_0E
-    db !BlkBehaviourSingleCoin_0C
-    db !BlkBehaviourPSwitch_14
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourFlowerIfBig_05
-    db !BlkBehaviourFeatherIfBig_09
-    db !BlkBehaviourStar_06
-    db !BlkBehaviourStar2_07
-    db !BlkBehaviourMultiCoin_0E
-    db !BlkBehaviourSingleCoin_0C
-    db !BlkBehaviourKeyWingsBalloon_16
-    db !BlkBehaviourYoshiEgg_18
-    db !BlkBehaviourGreenShell_1A
-    db !BlkBehaviourGreenShell_1A
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourFeatherIfBig_09
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourGreenStarBlock_FF
-    db !BlkBehaviourSingleCoin_0C
-    db !BlkBehaviour1Up_0A
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourNothing_00
-    db !BlkBehaviourFeather_08
-    db !BlkBehaviourMushroom_02
+    db !BlkBehaviourFlowerFeatherStar_80    ;$00F080 | 00
+    db !BlkBehaviourNothing_00              ;$00F081 | 01
+    db !BlkBehaviourNothing_00              ;$00F082 | 02
+    db !BlkBehaviourDirCoins_1E             ;$00F083 | 03
+    db !BlkBehaviourNothing_00              ;$00F084 | 04
+    db !BlkBehaviourNothing_00              ;$00F085 | 05
+    db !BlkBehaviourFlowerIfBig_05          ;$00F086 | 06
+    db !BlkBehaviourFeatherIfBig_09         ;$00F087 | 07
+    db !BlkBehaviourStar_06                 ;$00F088 | 08
+    db !BlkBehaviourStar1UpVine_81          ;$00F089 | 09
+    db !BlkBehaviourMultiCoin_0E            ;$00F08A | 0A
+    db !BlkBehaviourSingleCoin_0C           ;$00F08B | 0B
+    db !BlkBehaviourPSwitch_14              ;$00F08C | 0C
+    db !BlkBehaviourNothing_00              ;$00F08D | 0D
+    db !BlkBehaviourFlowerIfBig_05          ;$00F08E | 0E
+    db !BlkBehaviourFeatherIfBig_09         ;$00F08F | 0F
+    db !BlkBehaviourStar_06                 ;$00F090 | 10
+    db !BlkBehaviourStar2_07                ;$00F091 | 11
+    db !BlkBehaviourMultiCoin_0E            ;$00F092 | 12
+    db !BlkBehaviourSingleCoin_0C           ;$00F093 | 13
+    db !BlkBehaviourKeyWingsBalloon_16      ;$00F094 | 14
+    db !BlkBehaviourYoshiEgg_18             ;$00F095 | 15
+    db !BlkBehaviourGreenShell_1A           ;$00F096 | 16
+    db !BlkBehaviourGreenShell_1A           ;$00F097 | 17
+    db !BlkBehaviourNothing_00              ;$00F098 | 18
+    db !BlkBehaviourFeatherIfBig_09         ;$00F099 | 19
+    db !BlkBehaviourNothing_00              ;$00F09A | 1A
+    db !BlkBehaviourNothing_00              ;$00F09B | 1B
+    db !BlkBehaviourGreenStarBlock_FF       ;$00F09C | 1C
+    db !BlkBehaviourSingleCoin_0C           ;$00F09D | 1D
+    db !BlkBehaviour1Up_0A                  ;$00F09E | 1E
+    db !BlkBehaviourNothing_00              ;$00F09F | 1F
+    db !BlkBehaviourNothing_00              ;$00F0A0 | 20
+    db !BlkBehaviourNothing_00              ;$00F0A1 | 21
+    db !BlkBehaviourFeather_08              ;$00F0A2 | 22
+    db !BlkBehaviourMushroom_02             ;$00F0A3 | 23
 
 activation_sides_00F0A4:
     db $0C,$08,$0C,$08,$0C,$0F,$08,$08
@@ -11909,42 +11909,42 @@ activation_sides_00F0A4:
     db $08,$04,$08,$08
 
 tile_to_generate_00F0C8:
-    db !GenNoteBlock_0E
-    db !GenOnOff_13
-    db !GenNoteBlock_0E
-    db !GenUsedBlock_0D
-    db !GenNoteBlock_0E
-    db !GenNoteAllSides_10
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenTurnMulticoin_0A
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenTurnBlock_0C
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenQMulticoin_0B
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenCollectUsed_16
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenTurnBounce_11
-    db !GenTurnBounce_11
-    db !GenRoulette_12
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
-    db !GenNoteBlock_0E
-    db !GenNoteUnused_0F
-    db !GenTurnBlock_0C
-    db !GenUsedBlock_0D
-    db !GenUsedBlock_0D
+    db !GenNoteBlock_0E                     ;$00F0C8 | 00
+    db !GenOnOff_13                         ;$00F0C9 | 01
+    db !GenNoteBlock_0E                     ;$00F0CA | 02
+    db !GenUsedBlock_0D                     ;$00F0CB | 03
+    db !GenNoteBlock_0E                     ;$00F0CC | 04
+    db !GenNoteAllSides_10                  ;$00F0CD | 05
+    db !GenUsedBlock_0D                     ;$00F0CE | 06
+    db !GenUsedBlock_0D                     ;$00F0CF | 07
+    db !GenUsedBlock_0D                     ;$00F0D0 | 08
+    db !GenUsedBlock_0D                     ;$00F0D1 | 09
+    db !GenTurnMulticoin_0A                 ;$00F0D2 | 0A
+    db !GenUsedBlock_0D                     ;$00F0D3 | 0B
+    db !GenUsedBlock_0D                     ;$00F0D4 | 0C
+    db !GenTurnBlock_0C                     ;$00F0D5 | 0D
+    db !GenUsedBlock_0D                     ;$00F0D6 | 0E
+    db !GenUsedBlock_0D                     ;$00F0D7 | 0F
+    db !GenUsedBlock_0D                     ;$00F0D8 | 10
+    db !GenUsedBlock_0D                     ;$00F0D9 | 11
+    db !GenQMulticoin_0B                    ;$00F0DA | 12
+    db !GenUsedBlock_0D                     ;$00F0DB | 13
+    db !GenUsedBlock_0D                     ;$00F0DC | 14
+    db !GenCollectUsed_16                   ;$00F0DD | 15
+    db !GenUsedBlock_0D                     ;$00F0DE | 16
+    db !GenUsedBlock_0D                     ;$00F0DF | 17
+    db !GenUsedBlock_0D                     ;$00F0E0 | 18
+    db !GenTurnBounce_11                    ;$00F0E1 | 19
+    db !GenTurnBounce_11                    ;$00F0E2 | 1A
+    db !GenRoulette_12                      ;$00F0E3 | 1B
+    db !GenUsedBlock_0D                     ;$00F0E4 | 1C
+    db !GenUsedBlock_0D                     ;$00F0E5 | 1D
+    db !GenUsedBlock_0D                     ;$00F0E6 | 1E
+    db !GenNoteBlock_0E                     ;$00F0E7 | 1F
+    db !GenNoteUnused_0F                    ;$00F0E8 | 20
+    db !GenTurnBlock_0C                     ;$00F0E9 | 21
+    db !GenUsedBlock_0D                     ;$00F0EA | 22
+    db !GenUsedBlock_0D                     ;$00F0EB | 23
 
 interaction_side_mask_00F0EC:
     db $08,$01,$02,$04
@@ -11957,38 +11957,38 @@ bonus_room_block_pos_00F0F8:
     db $40,$50,$00,$70,$80,$00,$A0,$B0
 
 positional_blk_behaviour_00F100:
-    db !BlkBehaviourFlowerIfBig_05            ;$00F100 | 00
-    db !BlkBehaviourFeatherIfBig_09           ;$00F101 | 01
-    db !BlkBehaviourStar_06                   ;$00F102 | 02
-    db !BlkBehaviourFlowerIfBig_05            ;$00F103 | 03
-    db !BlkBehaviourFeatherIfBig_09           ;$00F104 | 04
-    db !BlkBehaviourStar_06                   ;$00F105 | 05
-    db !BlkBehaviourFlowerIfBig_05            ;$00F106 | 06
-    db !BlkBehaviourFeatherIfBig_09           ;$00F107 | 07
-    db !BlkBehaviourStar_06                   ;$00F108 | 08
-    db !BlkBehaviourFlowerIfBig_05            ;$00F109 | 09
-    db !BlkBehaviourFeatherIfBig_09           ;$00F10A | 0A
-    db !BlkBehaviourStar_06                   ;$00F10B | 0B
-    db !BlkBehaviourFlowerIfBig_05            ;$00F10C | 0C
-    db !BlkBehaviourFeatherIfBig_09           ;$00F10D | 0D
-    db !BlkBehaviourStar_06                   ;$00F10E | 0E
-    db !BlkBehaviourFlowerIfBig_05            ;$00F10F | 0F
-    db !BlkBehaviourStar2_07                  ;$00F110 | 10
-    db !BlkBehaviour1Up_0A                    ;$00F111 | 11
-    db !BlkBehaviourVine_10                   ;$00F112 | 12
-    db !BlkBehaviourStar2_07                  ;$00F113 | 13
-    db !BlkBehaviour1Up_0A                    ;$00F114 | 14
-    db !BlkBehaviourVine_10                   ;$00F115 | 15
-    db !BlkBehaviourStar2_07                  ;$00F116 | 16
-    db !BlkBehaviour1Up_0A                    ;$00F117 | 17
-    db !BlkBehaviourVine_10                   ;$00F118 | 18
-    db !BlkBehaviourStar2_07                  ;$00F119 | 19
-    db !BlkBehaviour1Up_0A                    ;$00F11A | 1A
-    db !BlkBehaviourVine_10                   ;$00F11B | 1B
-    db !BlkBehaviourStar2_07                  ;$00F11C | 1C
-    db !BlkBehaviour1Up_0A                    ;$00F11D | 1D
-    db !BlkBehaviourVine_10                   ;$00F11E | 1E
-    db !BlkBehaviourStar2_07                  ;$00F11F | 1F
+    db !BlkBehaviourFlowerIfBig_05          ;$00F100 | 00
+    db !BlkBehaviourFeatherIfBig_09         ;$00F101 | 01
+    db !BlkBehaviourStar_06                 ;$00F102 | 02
+    db !BlkBehaviourFlowerIfBig_05          ;$00F103 | 03
+    db !BlkBehaviourFeatherIfBig_09         ;$00F104 | 04
+    db !BlkBehaviourStar_06                 ;$00F105 | 05
+    db !BlkBehaviourFlowerIfBig_05          ;$00F106 | 06
+    db !BlkBehaviourFeatherIfBig_09         ;$00F107 | 07
+    db !BlkBehaviourStar_06                 ;$00F108 | 08
+    db !BlkBehaviourFlowerIfBig_05          ;$00F109 | 09
+    db !BlkBehaviourFeatherIfBig_09         ;$00F10A | 0A
+    db !BlkBehaviourStar_06                 ;$00F10B | 0B
+    db !BlkBehaviourFlowerIfBig_05          ;$00F10C | 0C
+    db !BlkBehaviourFeatherIfBig_09         ;$00F10D | 0D
+    db !BlkBehaviourStar_06                 ;$00F10E | 0E
+    db !BlkBehaviourFlowerIfBig_05          ;$00F10F | 0F
+    db !BlkBehaviourStar2_07                ;$00F110 | 10
+    db !BlkBehaviour1Up_0A                  ;$00F111 | 11
+    db !BlkBehaviourVine_10                 ;$00F112 | 12
+    db !BlkBehaviourStar2_07                ;$00F113 | 13
+    db !BlkBehaviour1Up_0A                  ;$00F114 | 14
+    db !BlkBehaviourVine_10                 ;$00F115 | 15
+    db !BlkBehaviourStar2_07                ;$00F116 | 16
+    db !BlkBehaviour1Up_0A                  ;$00F117 | 17
+    db !BlkBehaviourVine_10                 ;$00F118 | 18
+    db !BlkBehaviourStar2_07                ;$00F119 | 19
+    db !BlkBehaviour1Up_0A                  ;$00F11A | 1A
+    db !BlkBehaviourVine_10                 ;$00F11B | 1B
+    db !BlkBehaviourStar2_07                ;$00F11C | 1C
+    db !BlkBehaviour1Up_0A                  ;$00F11D | 1D
+    db !BlkBehaviourVine_10                 ;$00F11E | 1E
+    db !BlkBehaviourStar2_07                ;$00F11F | 1F
 
 handle_hurting_blocks_00F120:               ;        | Handle hurting blocks - muncher, spike, etc
     XBA                                     ;$00F120 |
