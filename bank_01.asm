@@ -6321,13 +6321,13 @@ CODE_01ADF8:
     INY                                     ;$01AE37 |
 CODE_01AE38:
     LDA.w DATA_01AE88,Y
-    STA $05                                 ;$01AE3B |
+    STA $05                                 ;$01AE3B | $05: type of block to trigger
     PHB                                     ;$01AE3D |
     LDA.b #$02                              ;$01AE3E |
     PHA                                     ;$01AE40 |
     PLB                                     ;$01AE41 |
     PHX                                     ;$01AE42 |
-    JSL CODE_02887D                         ;$01AE43 |
+    JSL create_sprite_or_coin_block_02887D  ;$01AE43 |
     PLX                                     ;$01AE47 |
     LDY.w FlyingBlock_185E                  ;$01AE48 | seems to track a sprite slot
     LDA.b #$01                              ;$01AE4B |
@@ -6363,6 +6363,7 @@ DATA_01AE7F:
     db $00,$03,$05,$07,$08,$08,$07,$05
     db $03
 
+; TODO: enum sprites
 DATA_01AE88:
     db $06,$02,$04,$05,$06,$01,$01,$05
 

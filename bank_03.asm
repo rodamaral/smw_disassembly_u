@@ -10040,7 +10040,7 @@ CODE_03D76C:
     CMP.w #$0100                            ;$03D773 |
     SEP #$20                                ;$03D776 | A->8
     BCS Return03D77E                        ;$03D778 |
-    JSL CODE_028A44                         ;$03D77A |
+    JSL create_puff_of_smoke_028A44         ;$03D77A |
 Return03D77E:
     RTS
 

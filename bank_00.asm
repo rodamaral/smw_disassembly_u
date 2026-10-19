@@ -11825,45 +11825,170 @@ is_page_1_water:
     PLX                                     ;$00F05A |
     RTL                                     ;$00F05B /
 
-DATA_00F05C:
-    db $01,$05,$01,$02,$01,$01,$00,$00
-    db $00,$00,$00,$00,$00,$06,$02,$02
-    db $02,$02,$02,$02,$02,$02,$02,$02
-    db $02,$03,$03,$04,$02,$02,$02,$01
-    db $01,$07,$11,$10
+bounce_event_00F05C:
+    db !BlockEvtHitNote_01
+    db !BlockEvtOnOffBlock_05
+    db !BlockEvtHitNote_01
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitNote_01
+    db !BlockEvtHitNote_01
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtItemFromTurn_00
+    db !BlockEvtSpinTurn_06
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtBounceSideways_03
+    db !BlockEvtBounceSideways_03
+    db !BlockEvtTranslucentBlock_04
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitQuestion_02
+    db !BlockEvtHitNote_01
+    db !BlockEvtHitNote_01
+    db !BlockEvtBreakTurn_07
+    db !BlockEvtGreenSwitch_11
+    db !BlockEvtYellowSwitch_10
 
-DATA_00F080:
-    db $80,$00,$00,$1E,$00,$00,$05,$09
-    db $06,$81,$0E,$0C,$14,$00,$05,$09
-    db $06,$07,$0E,$0C,$16,$18,$1A,$1A
-    db $00,$09,$00,$00,$FF,$0C,$0A,$00
-    db $00,$00,$08,$02
+object_behaviour_00F080:
+    db !BlkBehaviourFlowerFeatherStar_80
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourDirCoins_1E
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourFlowerIfBig_05
+    db !BlkBehaviourFeatherIfBig_09
+    db !BlkBehaviourStar_06
+    db !BlkBehaviourStar1UpVine_81
+    db !BlkBehaviourMultiCoin_0E
+    db !BlkBehaviourSingleCoin_0C
+    db !BlkBehaviourPSwitch_14
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourFlowerIfBig_05
+    db !BlkBehaviourFeatherIfBig_09
+    db !BlkBehaviourStar_06
+    db !BlkBehaviourStar2_07
+    db !BlkBehaviourMultiCoin_0E
+    db !BlkBehaviourSingleCoin_0C
+    db !BlkBehaviourKeyWingsBalloon_16
+    db !BlkBehaviourYoshiEgg_18
+    db !BlkBehaviourGreenShell_1A
+    db !BlkBehaviourGreenShell_1A
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourFeatherIfBig_09
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourGreenStarBlock_FF
+    db !BlkBehaviourSingleCoin_0C
+    db !BlkBehaviour1Up_0A
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourNothing_00
+    db !BlkBehaviourFeather_08
+    db !BlkBehaviourMushroom_02
 
-DATA_00F0A4:
+activation_sides_00F0A4:
     db $0C,$08,$0C,$08,$0C,$0F,$08,$08
     db $08,$08,$08,$08,$08,$08,$08,$08
     db $08,$08,$08,$08,$08,$08,$08,$08
     db $08,$03,$03,$08,$08,$08,$08,$08
     db $08,$04,$08,$08
 
-DATA_00F0C8:
-    db $0E,$13,$0E,$0D,$0E,$10,$0D,$0D
-    db $0D,$0D,$0A,$0D,$0D,$0C,$0D,$0D
-    db $0D,$0D,$0B,$0D,$0D,$16,$0D,$0D
-    db $0D,$11,$11,$12,$0D,$0D,$0D,$0E
-    db $0F,$0C,$0D,$0D
+tile_to_generate_00F0C8:
+    db !GenNoteBlock_0E
+    db !GenOnOff_13
+    db !GenNoteBlock_0E
+    db !GenUsedBlock_0D
+    db !GenNoteBlock_0E
+    db !GenNoteAllSides_10
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenTurnMulticoin_0A
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenTurnBlock_0C
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenQMulticoin_0B
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenCollectUsed_16
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenTurnBounce_11
+    db !GenTurnBounce_11
+    db !GenRoulette_12
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
+    db !GenNoteBlock_0E
+    db !GenNoteUnused_0F
+    db !GenTurnBlock_0C
+    db !GenUsedBlock_0D
+    db !GenUsedBlock_0D
 
 interaction_side_mask_00F0EC:
-    db $08,$01,$02,$04,$ED,$F6,$00,$7D
-    db $BE,$00,$6F,$B7
+    db $08,$01,$02,$04
 
-DATA_00F0F8:
+; TODO
+bonus_room_data:
+    db $ED,$F6,$00,$7D,$BE,$00,$6F,$B7
+
+bonus_room_block_pos_00F0F8:
     db $40,$50,$00,$70,$80,$00,$A0,$B0
-DATA_00F100:
-    db $05,$09,$06,$05,$09,$06,$05,$09
-    db $06,$05,$09,$06,$05,$09,$06,$05
-    db $07,$0A,$10,$07,$0A,$10,$07,$0A
-    db $10,$07,$0A,$10,$07,$0A,$10,$07
+
+positional_blk_behaviour_00F100:
+    db !BlkBehaviourFlowerIfBig_05            ;$00F100 | 00
+    db !BlkBehaviourFeatherIfBig_09           ;$00F101 | 01
+    db !BlkBehaviourStar_06                   ;$00F102 | 02
+    db !BlkBehaviourFlowerIfBig_05            ;$00F103 | 03
+    db !BlkBehaviourFeatherIfBig_09           ;$00F104 | 04
+    db !BlkBehaviourStar_06                   ;$00F105 | 05
+    db !BlkBehaviourFlowerIfBig_05            ;$00F106 | 06
+    db !BlkBehaviourFeatherIfBig_09           ;$00F107 | 07
+    db !BlkBehaviourStar_06                   ;$00F108 | 08
+    db !BlkBehaviourFlowerIfBig_05            ;$00F109 | 09
+    db !BlkBehaviourFeatherIfBig_09           ;$00F10A | 0A
+    db !BlkBehaviourStar_06                   ;$00F10B | 0B
+    db !BlkBehaviourFlowerIfBig_05            ;$00F10C | 0C
+    db !BlkBehaviourFeatherIfBig_09           ;$00F10D | 0D
+    db !BlkBehaviourStar_06                   ;$00F10E | 0E
+    db !BlkBehaviourFlowerIfBig_05            ;$00F10F | 0F
+    db !BlkBehaviourStar2_07                  ;$00F110 | 10
+    db !BlkBehaviour1Up_0A                    ;$00F111 | 11
+    db !BlkBehaviourVine_10                   ;$00F112 | 12
+    db !BlkBehaviourStar2_07                  ;$00F113 | 13
+    db !BlkBehaviour1Up_0A                    ;$00F114 | 14
+    db !BlkBehaviourVine_10                   ;$00F115 | 15
+    db !BlkBehaviourStar2_07                  ;$00F116 | 16
+    db !BlkBehaviour1Up_0A                    ;$00F117 | 17
+    db !BlkBehaviourVine_10                   ;$00F118 | 18
+    db !BlkBehaviourStar2_07                  ;$00F119 | 19
+    db !BlkBehaviour1Up_0A                    ;$00F11A | 1A
+    db !BlkBehaviourVine_10                   ;$00F11B | 1B
+    db !BlkBehaviourStar2_07                  ;$00F11C | 1C
+    db !BlkBehaviour1Up_0A                    ;$00F11D | 1D
+    db !BlkBehaviourVine_10                   ;$00F11E | 1E
+    db !BlkBehaviourStar2_07                  ;$00F11F | 1F
 
 handle_hurting_blocks_00F120:               ;        | Handle hurting blocks - muncher, spike, etc
     XBA                                     ;$00F120 |
@@ -11933,55 +12058,54 @@ functional_block_by_id_00F17F:              ;        | Handle functional blocks 
     PHA                                     ;$00F180 | backup the block offset
     TYX                                     ;$00F181 | X: current page
     LDA.l interaction_side_mask_00F0EC,X    ;$00F182 |
-    PLX                                     ;$00F186 |
-    AND.l DATA_00F0A4,X                     ;$00F187 |
-    BEQ CODE_00F1F6                         ;$00F18B |
-    STY $06                                 ;$00F18D |
-    LDA.l DATA_00F0C8,X                     ;$00F18F |
-    STA $07                                 ;$00F193 |
-    LDA.l DATA_00F05C,X                     ;$00F195 |
-    STA $04                                 ;$00F199 |
-    LDA.l DATA_00F080,X                     ;$00F19B |
-    BPL .CODE_00F1BA                        ;$00F19F |
-    CMP.b #$FF                              ;$00F1A1 |
-    BNE .CODE_00F1AE                        ;$00F1A3 |
-    LDA.b #$05                              ;$00F1A5 |
-    LDY.w GreenStarBlockCoins_0DC0          ;$00F1A7 |
-    BEQ .CODE_00F1D0                        ;$00F1AA |
-    BRA .CODE_00F1CE                        ;$00F1AC |
+    PLX                                     ;$00F186 | X: current side
+    AND.l activation_sides_00F0A4,X         ;$00F187 |
+    BEQ return_00F1F6                       ;$00F18B | return if cannot activate from this side
+    STY $06                                 ;$00F18D | $06: interaction side
+    LDA.l tile_to_generate_00F0C8,X         ;$00F18F |
+    STA $07                                 ;$00F193 | $07: tile to generate
+    LDA.l bounce_event_00F05C,X             ;$00F195 |
+    STA $04                                 ;$00F199 | $04: bounce sprite to generate
+    LDA.l object_behaviour_00F080,X         ;$00F19B |
+    BPL .behaviour_to_block_object_00F1BA   ;$00F19F |\ negative bit implies special checks:
+    CMP.b #!BlkBehaviourGreenStarBlock_FF   ;$00F1A1 ||
+    BNE .get_behaviour_from_x_pos_00F1AE    ;$00F1A3 ||
+    LDA.b #!BlockObj1Up_05                  ;$00F1A5 ||
+    LDY.w GreenStarBlockCoins_0DC0          ;$00F1A7 ||
+    BEQ .set_object_inside_block_00F1D0     ;$00F1AA || branch if player has collected at least 30 coins in the level
+    BRA .single_coin_inside_00F1CE          ;$00F1AC |/
 
-.CODE_00F1AE
-    LSR
+.get_behaviour_from_x_pos_00F1AE
+    LSR                                     ;$00F1AE |
     LDA.b InteractionPtXPos_9A              ;$00F1AF |
     ROR                                     ;$00F1B1 |
     LSR                                     ;$00F1B2 |
     LSR                                     ;$00F1B3 |
     LSR                                     ;$00F1B4 |
     TAX                                     ;$00F1B5 |
-    LDA.l DATA_00F100,X                     ;$00F1B6 |
-.CODE_00F1BA
+    LDA.l positional_blk_behaviour_00F100,X ;$00F1B6 |
+.behaviour_to_block_object_00F1BA
     LSR
-    BCC .CODE_00F1D0                        ;$00F1BB |
-    CMP.b #$03                              ;$00F1BD |
-    BEQ .CODE_00F1C9                        ;$00F1BF |
-    LDY.b Powerup_19                        ;$00F1C1 |
-    BNE .CODE_00F1D0                        ;$00F1C3 |
-    LDA.b #$01                              ;$00F1C5 |
-    BRA .CODE_00F1D0                        ;$00F1C7 |
+    BCC .set_object_inside_block_00F1D0     ;$00F1BB |\ branch if even, passing A for $05
+    CMP.b #!BlockObjStar_03                 ;$00F1BD ||
+    BEQ .star2_block_00F1C9                 ;$00F1BF || branch if was #$07
+    LDY.b Powerup_19                        ;$00F1C1 ||
+    BNE .set_object_inside_block_00F1D0     ;$00F1C3 || if Big, use A as sprite to spawn
+    LDA.b #!BlockObjMushroom_01             ;$00F1C5 || otherwise, default to Mushroom
+    BRA .set_object_inside_block_00F1D0     ;$00F1C7 |/
 
-.CODE_00F1C9
+.star2_block_00F1C9
     LDY.w StarTimer_1490
-    BNE .CODE_00F1D0                        ;$00F1CC |
-.CODE_00F1CE
-    LDA.b #$06
-.CODE_00F1D0
-    STA $05
-    CMP.b #$05                              ;$00F1D2 |
-    BNE .CODE_00F1DA                        ;$00F1D4 |
-    LDA.b #$16                              ;$00F1D6 |
-    STA $07                                 ;$00F1D8 |
-.CODE_00F1DA
-    TAY
+    BNE .set_object_inside_block_00F1D0     ;$00F1CC | set to spawn Star or Single Coin, depending on star timer
+.single_coin_inside_00F1CE
+    LDA.b #!BlockObjSingleCoin_06
+.set_object_inside_block_00F1D0
+    STA $05                                 ;$00F1D0 | $05: type of block to trigger
+    CMP.b #!BlockObj1Up_05                  ;$00F1D2 |
+    BNE +                                   ;$00F1D4 |\
+    LDA.b #!GenCollectUsed_16               ;$00F1D6 ||
+    STA $07                                 ;$00F1D8 |/ set tile to generate
++   TAY                                     ;$00F1DA |
     LDA.b #$0F                              ;$00F1DB |
     TRB.b InteractionPtXPos_9A              ;$00F1DD |
     TRB.b InteractionPtYPos_98              ;$00F1DF |
@@ -11997,7 +12121,7 @@ CODE_00F1EC:
     PLB                                     ;$00F1F0 |
     JSL handle_interactive_blocks_028752    ;$00F1F1 |
     PLB                                     ;$00F1F5 |
-CODE_00F1F6:
+return_00F1F6:
     PLX
     CLC                                     ;$00F1F7 |
 return_00F1F8:
@@ -12024,10 +12148,10 @@ CODE_00F1F9:
     STA.w BonusRoomBlocks_13F4-1,Y          ;$00F215 |
     CMP.b #$FF                              ;$00F218 |
     BNE .CODE_00F226                        ;$00F21A |
-    LDA.b #$05                              ;$00F21C |
-    STA $05                                 ;$00F21E |
-.CODE_00F220
-    LDA.b #$17
+    LDA.b #!BlockObj1Up_05                  ;$00F21C |
+    STA $05                                 ;$00F21E | $05: type of block to trigger
+.CODE_00F220                                ;        |
+    LDA.b #!GenCollectCorrect_17            ;$00F220 |
     STA $07                                 ;$00F222 |
     BRA CODE_00F1EC                         ;$00F224 |
 
@@ -12044,7 +12168,7 @@ CODE_00F1F9:
     LDA.b #$2A
     STA.w SPCIO3_1DFC                       ;$00F238 |
     PHY                                     ;$00F23B |
-    STZ $05                                 ;$00F23C |
+    STZ $05                                 ;$00F23C | $05: type of block to trigger
     PHB                                     ;$00F23E |
     LDA.b #$02                              ;$00F23F |
     PHA                                     ;$00F241 |
@@ -12059,13 +12183,13 @@ CODE_00F1F9:
     PHA                                     ;$00F251 ||
     LDA.b #!GenUsedBlock_0D                 ;$00F252 ||
     STA.b TileGenerate_9C                   ;$00F254 ||
-    LDA.l DATA_00F0F8,X                     ;$00F256 ||
+    LDA.l bonus_room_block_pos_00F0F8,X     ;$00F256 ||
     STA.b InteractionPtXPos_9A              ;$00F25A ||
     JSL generate_tile_00BEB0                ;$00F25C ||
     PLA                                     ;$00F260 ||
 +   DEX                                     ;$00F261 ||
     BPL -                                   ;$00F262 |/
-    JMP CODE_00F1F6                         ;$00F264 |
+    JMP return_00F1F6                       ;$00F264 |
 
 process_throw_block:
     CPY.b #$2E                              ;$00F267 \ If the tile's not a throw block,

@@ -896,10 +896,10 @@ CODE_02872F:
     STA.w BounceSprIntTimer_18F8,Y          ;$028736 |
     RTS                                     ;$028739 |
 
-BlockBounceSpeedY:
+block_bounce_speed_y_02873A:
     db $C0,$00,$00,$40
 
-BlockBounceSpeedX:
+block_bounce_speed_x_02873E:
     db $00,$40,$C0,$00
 
 DATA_028742:
@@ -915,8 +915,8 @@ DATA_02874E:
     db $FF,$01,$FF,$01
 
 handle_interactive_blocks_028752:
-    LDA $04
-    CMP.b #$07                              ;$028754 |
+    LDA $04                                 ;$028752 | $04: type of bounce sprite to generate
+    CMP.b #!BlockEvtBreakTurn_07            ;$028754 |
     BNE .not_breakable_028792               ;$028756 |\ branch if not a breakable block
     LDA.w CurrentPlayer_0DB3                ;$028758 || Spinjump a block
     ASL                                     ;$02875B ||
@@ -956,78 +956,78 @@ handle_interactive_blocks_028752:
     STA.w BounceSpriteSlotIdx_18CD          ;$0287A3 |/
 +   LDY.w BounceSpriteSlotIdx_18CD          ;$0287A6 |
     LDA.w BounceSprNumber_1699,Y            ;$0287A9 |
-    CMP.b #$07                              ;$0287AC |
-    BNE .no_reset_turning_blk_028804        ;$0287AE |
-    LDA.b InteractionPtXPos_9A              ;$0287B0 |
-    PHA                                     ;$0287B2 |
-    LDA.b InteractionPtXPos_9A+1            ;$0287B3 |
-    PHA                                     ;$0287B5 |
-    LDA.b InteractionPtYPos_98              ;$0287B6 |
-    PHA                                     ;$0287B8 |
-    LDA.b InteractionPtYPos_98+1            ;$0287B9 |
-    PHA                                     ;$0287BB |
-    LDA.w BounceSprXPosLow_16A5,Y           ;$0287BC |
-    STA.b InteractionPtXPos_9A              ;$0287BF |
-    LDA.w BounceSprXPosHigh_16AD,Y          ;$0287C1 |
-    STA.b InteractionPtXPos_9A+1            ;$0287C4 |
-    LDA.w BounceSprYPosLow_16A1,Y           ;$0287C6 |
-    CLC                                     ;$0287C9 |
-    ADC.b #$0C                              ;$0287CA |
-    AND.b #$F0                              ;$0287CC |
-    STA.b InteractionPtYPos_98              ;$0287CE |
-    LDA.w BounceSprYPosHigh_16A9,Y          ;$0287D0 |
-    ADC.b #$00                              ;$0287D3 |
-    STA.b InteractionPtYPos_98+1            ;$0287D5 |
-    LDA.w BounceSprTile_16C1,Y              ;$0287D7 |
-    STA.b TileGenerate_9C                   ;$0287DA |
-    LDA $04                                 ;$0287DC |
-    PHA                                     ;$0287DE |
-    LDA $05                                 ;$0287DF |
-    PHA                                     ;$0287E1 |
-    LDA $06                                 ;$0287E2 |
-    PHA                                     ;$0287E4 |
-    LDA $07                                 ;$0287E5 |
-    PHA                                     ;$0287E7 |
-    JSL generate_tile_00BEB0                ;$0287E8 |
-    PLA                                     ;$0287EC |
-    STA $07                                 ;$0287ED |
-    PLA                                     ;$0287EF |
-    STA $06                                 ;$0287F0 |
-    PLA                                     ;$0287F2 |
-    STA $05                                 ;$0287F3 |
-    PLA                                     ;$0287F5 |
-    STA $04                                 ;$0287F6 |
-    PLA                                     ;$0287F8 |
-    STA.b InteractionPtYPos_98+1            ;$0287F9 |
-    PLA                                     ;$0287FB |
-    STA.b InteractionPtYPos_98              ;$0287FC |
-    PLA                                     ;$0287FE |
-    STA.b InteractionPtXPos_9A+1            ;$0287FF |
-    PLA                                     ;$028801 |
-    STA.b InteractionPtXPos_9A              ;$028802 |
+    CMP.b #!TurnBlockTurning_07             ;$0287AC |
+    BNE .no_reset_turning_blk_028804        ;$0287AE |\
+    LDA.b InteractionPtXPos_9A              ;$0287B0 ||
+    PHA                                     ;$0287B2 ||
+    LDA.b InteractionPtXPos_9A+1            ;$0287B3 ||
+    PHA                                     ;$0287B5 ||
+    LDA.b InteractionPtYPos_98              ;$0287B6 ||
+    PHA                                     ;$0287B8 ||
+    LDA.b InteractionPtYPos_98+1            ;$0287B9 ||
+    PHA                                     ;$0287BB ||
+    LDA.w BounceSprXPosLow_16A5,Y           ;$0287BC ||
+    STA.b InteractionPtXPos_9A              ;$0287BF ||
+    LDA.w BounceSprXPosHigh_16AD,Y          ;$0287C1 ||
+    STA.b InteractionPtXPos_9A+1            ;$0287C4 ||
+    LDA.w BounceSprYPosLow_16A1,Y           ;$0287C6 ||
+    CLC                                     ;$0287C9 ||
+    ADC.b #$0C                              ;$0287CA ||
+    AND.b #$F0                              ;$0287CC ||
+    STA.b InteractionPtYPos_98              ;$0287CE ||
+    LDA.w BounceSprYPosHigh_16A9,Y          ;$0287D0 ||
+    ADC.b #$00                              ;$0287D3 ||
+    STA.b InteractionPtYPos_98+1            ;$0287D5 ||
+    LDA.w BounceSprTile_16C1,Y              ;$0287D7 ||
+    STA.b TileGenerate_9C                   ;$0287DA ||
+    LDA $04                                 ;$0287DC ||
+    PHA                                     ;$0287DE ||
+    LDA $05                                 ;$0287DF ||
+    PHA                                     ;$0287E1 ||
+    LDA $06                                 ;$0287E2 ||
+    PHA                                     ;$0287E4 ||
+    LDA $07                                 ;$0287E5 ||
+    PHA                                     ;$0287E7 ||
+    JSL generate_tile_00BEB0                ;$0287E8 ||
+    PLA                                     ;$0287EC ||
+    STA $07                                 ;$0287ED ||
+    PLA                                     ;$0287EF ||
+    STA $06                                 ;$0287F0 ||
+    PLA                                     ;$0287F2 ||
+    STA $05                                 ;$0287F3 ||
+    PLA                                     ;$0287F5 ||
+    STA $04                                 ;$0287F6 ||
+    PLA                                     ;$0287F8 ||
+    STA.b InteractionPtYPos_98+1            ;$0287F9 ||
+    PLA                                     ;$0287FB ||
+    STA.b InteractionPtYPos_98              ;$0287FC ||
+    PLA                                     ;$0287FE ||
+    STA.b InteractionPtXPos_9A+1            ;$0287FF ||
+    PLA                                     ;$028801 ||
+    STA.b InteractionPtXPos_9A              ;$028802 |/
 .no_reset_turning_blk_028804                ;        |
     LDY.w BounceSpriteSlotIdx_18CD          ;$028804 |
 .found_empty_bounce_slot_028807             ;        |
     LDA $04                                 ;$028807 |
-    CMP.b #$10                              ;$028809 |
-    BCC .CODE_028818                        ;$02880B |
-    STZ $04                                 ;$02880D |
-    TAX                                     ;$02880F |
-    LDA.w .block_bounce_028789-9,X          ;$028810 |
-    STA.w BounceSprYXPPCCCT_1901,Y          ;$028813 |
-    BRA .CODE_02882A                        ;$028816 |
+    CMP.b #!BlockEvtYellowSwitch_10         ;$028809 |
+    BCC .not_exclamation_block_028818       ;$02880B |\
+    STZ $04                                 ;$02880D || $04 = !BlockEvtItemFromTurn_00
+    TAX                                     ;$02880F ||
+    LDA.w .block_bounce_028789-9,X          ;$028810 || takes advantage of X being more than 9
+    STA.w BounceSprYXPPCCCT_1901,Y          ;$028813 ||
+    BRA .create_bounce_spr_02882A           ;$028816 |/
 
-.CODE_028818
-    LDA $04
-    CMP.b #$05                              ;$02881A |
+.not_exclamation_block_028818
+    LDA $04                                 ;$028818 | $04: block event type
+    CMP.b #!BlockEvtOnOffBlock_05           ;$02881A | 05 = On/Off block
     BNE +                                   ;$02881C |\
-    LDX.b #$0B                              ;$02881E ||
+    LDX.b #$0B                              ;$02881E || SFX ON/OFF switch
     STX.w SPCIO0_1DF9                       ;$028820 |/
 +   TAX                                     ;$028823 |
     LDA.w .block_bounce_028789,X            ;$028824 |
     STA.w BounceSprYXPPCCCT_1901,Y          ;$028827 |
-.CODE_02882A:
-    LDA $04
+.create_bounce_spr_02882A:                  ;        |
+    LDA $04                                 ;$02882A | $04: bounce sprite number to create - 1
     INC A                                   ;$02882C |
     STA.w BounceSprNumber_1699,Y            ;$02882D |
     LDA.b #$00                              ;$028830 |
@@ -1044,15 +1044,15 @@ handle_interactive_blocks_028752:
     LSR                                     ;$02884C |
     ROR                                     ;$02884D |
     STA $08                                 ;$02884E |
-    LDX $06                                 ;$028850 |
-    LDA.w BlockBounceSpeedY,X               ;$028852 |
+    LDX $06                                 ;$028850 | $06: interaction side
+    LDA.w block_bounce_speed_y_02873A,X     ;$028852 |
     STA.w BounceSprYSpeed_16B1,Y            ;$028855 |
-    LDA.w BlockBounceSpeedX,X               ;$028858 |
+    LDA.w block_bounce_speed_x_02873E,X     ;$028858 |
     STA.w BounceSprXSpeed_16B5,Y            ;$02885B |
     TXA                                     ;$02885E |
     ORA $08                                 ;$02885F |
     STA.w BounceSprFlags_16C9,Y             ;$028861 |
-    LDA $07                                 ;$028864 |
+    LDA $07                                 ;$028864 | $07: tile to generate
     STA.w BounceSprTile_16C1,Y              ;$028866 |
     LDA.b #$08                              ;$028869 |
     STA.w BounceSprTimer_16C5,Y             ;$02886B |
@@ -1062,179 +1062,169 @@ handle_interactive_blocks_028752:
     LDA.b #$FF                              ;$028875 ||
     STA.w TurnBlockSpinTimer_18CE,Y         ;$028877 |/
 +   JSR SprBlkInteract                      ;$02887A |
-CODE_02887D:                                ;        |
+create_sprite_or_coin_block_02887D:         ;        |
     LDA $05                                 ;$02887D |
-    BEQ Return0288A0                        ;$02887F |
-    CMP.b #$0A                              ;$028881 |
-    BNE +                                   ;$028883 | fallthrough
-+   LDA $05                                 ;$028885 |
-    CMP.b #$08                              ;$028887 |
-    BCS CODE_0288DC                         ;$028889 |
-    CMP.b #$06                              ;$02888B | 06: generate a single coin
-    BCC CODE_0288DC                         ;$02888D |
-    CMP.b #$07                              ;$02888F | 07: generate a multi-coin
-    BNE CODE_02889D                         ;$028891 |\
+    BEQ return_0288A0                       ;$02887F |
+    CMP.b #!BlockObjPSwitch_0A              ;$028881 |
+    BNE +                                   ;$028883 | redundant branch
++   LDA $05                                 ;$028885 | $05: type of block to trigger
+    CMP.b #!BlockObjVine_08                 ;$028887 |
+    BCS create_sprite_from_block_0288DC     ;$028889 | branch if >= 8
+    CMP.b #!BlockObjSingleCoin_06           ;$02888B |
+    BCC create_sprite_from_block_0288DC     ;$02888D | branch if < 6
+    CMP.b #!BlockObjMultiCoin_07            ;$02888F |
+    BNE create_coin_spr_return_02889D       ;$028891 |\ branch if not 7
     LDA.w MulticoinTimer_186B               ;$028893 ||
-    BNE CODE_02889D                         ;$028896 ||
+    BNE create_coin_spr_return_02889D       ;$028896 ||
     LDA.b #$FF                              ;$028898 ||
     STA.w MulticoinTimer_186B               ;$02889A |/
-CODE_02889D:                                ;        |
-    JSR CODE_028A66                         ;$02889D |
-Return0288A0:                               ;        |
+create_coin_spr_return_02889D:              ;        |
+    JSR create_coin_sprite_028A66           ;$02889D |
+return_0288A0:                              ;        |
     RTL                                     ;$0288A0 |
 
-DATA_0288A1:
-    db $35,$78
+yoshi_egg_sprite_0288A1:
+    db !Yoshi_35,!1Up_78
 
-; SpriteInBlock:
-;     db $00,$74,$75,$76,$77,$78,$00,$00
-;     db $79,$00,$3E,$7D,$2C,$04,$81,$45
-;     db $80
+sprite_in_block_0288A3:
+    db !GreenKoopa_00                       ;$0288A3 | 00 unreachable due to early return
+    db !Mushroom_74                         ;$0288A4 | 01
+    db !Flower_75                           ;$0288A5 | 02
+    db !Star_76                             ;$0288A6 | 03
+    db !Feather_77                          ;$0288A7 | 04
+    db !1Up_78                              ;$0288A8 | 05
+    db !GreenKoopa_00                       ;$0288A9 | 06 unreachable; handled as single coin
+    db !GreenKoopa_00                       ;$0288AA | 07 unreachable; handled as multi coins
+    db !Vine_79                             ;$0288AB | 08
+    db !GreenKoopa_00                       ;$0288AC | 09
+    db !PSwitch_3E                          ;$0288AD | 0A
+    db !PBalloon_7D                         ;$0288AE | 0B
+    db !YoshiEgg_2C                         ;$0288AF | 0C
+    db !GreenShell_04                       ;$0288B0 | 0D
+    db !ChangingItem_81                     ;$0288B1 | 0E
+    db !DirCoins_45                         ;$0288B2 | 0F
+    db !Key_80                              ;$0288B3 | 10
 
-SpriteInBlock:
-    db !GreenKoopa_00
-    db !Mushroom_74
-    db !Flower_75
-    db !Star_76
-    db !Feather_77
-    db !1Up_78
-    db !GreenKoopa_00
-    db !GreenKoopa_00
-    db !Vine_79
-    db !GreenKoopa_00
-    db !PSwitch_3E
-    db !PBalloon_7D
-    db !YoshiEgg_2C
-    db !GreenShell_04
-    db !ChangingItem_81
-    db !DirCoins_45
-    db !Key_80
+.sprite_in_block_with_yoshi_0288B4:
+    db !GreenKoopa_00                       ;$0288B4 | 00 unreachable due to early return
+    db !Mushroom_74                         ;$0288B5 | 01
+    db !Flower_75                           ;$0288B6 | 02
+    db !Star_76                             ;$0288B7 | 03
+    db !Feather_77                          ;$0288B8 | 04
+    db !1Up_78                              ;$0288B9 | 05
+    db !GreenKoopa_00                       ;$0288BA | 06 unreachable; handled as single coin
+    db !GreenKoopa_00                       ;$0288BB | 07 unreachable; handled as multi coins
+    db !Vine_79                             ;$0288BC | 08
+    db !GreenKoopa_00                       ;$0288BD | 09
+    db !PSwitch_3E                          ;$0288BE | 0A
+    db !PBalloon_7D                         ;$0288BF | 0B
+    db !YoshiEgg_2C                         ;$0288C0 | 0C
+    db !GreenShell_04                       ;$0288C1 | 0D
+    db !ChangingItem_81                     ;$0288C2 | 0E
+    db !DirCoins_45                         ;$0288C3 | 0F
+    db !Key_80                              ;$0288C4 | 10
 
-SpriteInBlockPow:
-    db !GreenKoopa_00,!Mushroom_74
-    db !Flower_75
-    db !Star_76
-    db !Feather_77
-    db !1Up_78
-    db !GreenKoopa_00
-    db !GreenKoopa_00
-    db !Vine_79
-    db !GreenKoopa_00
-    db !PSwitch_3E
-    db !PBalloon_7D
-    db !YoshiEgg_2C
-    db !GreenShell_04
-    db !ChangingItem_81
-    db !DirCoins_45
-    db !Key_80
+status_spr_in_block_0288C5:
+    db !StatusEmpty_00                      ;$0288C5 | 00 unreachable due to early return
+    db !StatusNormal_08                     ;$0288C6 | 01
+    db !StatusNormal_08                     ;$0288C7 | 02
+    db !StatusNormal_08                     ;$0288C8 | 03
+    db !StatusNormal_08                     ;$0288C9 | 04
+    db !StatusNormal_08                     ;$0288CA | 05
+    db !StatusEmpty_00                      ;$0288CB | 06 unreachable; handled as single coin
+    db !StatusEmpty_00                      ;$0288CC | 07 unreachable; handled as multi coins
+    db !StatusNormal_08                     ;$0288CD | 08
+    db !StatusEmpty_00                      ;$0288CE | 09
+    db !StatusCarryable_09                  ;$0288CF | 0A
+    db !StatusNormal_08                     ;$0288C0 | 0B
+    db !StatusCarryable_09                  ;$0288D1 | 0C
+    db !StatusCarryable_09                  ;$0288D2 | 0D
+    db !StatusNormal_08                     ;$0288D3 | 0E
+    db !StatusNormal_08                     ;$0288D4 | 0F
+    db !StatusCarryable_09                  ;$0288D6 | 10
 
-StatusOfSprInBlk:
-    db !StatusEmpty_00
-    db !StatusNormal_08
-    db !StatusNormal_08
-    db !StatusNormal_08
-    db !StatusNormal_08
-    db !StatusNormal_08
-    db !StatusEmpty_00
-    db !StatusEmpty_00
-    db !StatusNormal_08
-    db !StatusEmpty_00
-    db !StatusCarryable_09
-    db !StatusNormal_08
-    db !StatusCarryable_09
-    db !StatusCarryable_09
-    db !StatusNormal_08
-    db !StatusNormal_08
-    db !StatusCarryable_09
-
-DATA_0288D6:
+key_wings_balloon_spr_0288D6:
     db !Key_80, !YoshiWings_7E, !PBalloon_7D
 
-DATA_0288D9:
+key_wings_balloon_status_0288D9:
     db !StatusCarryable_09, !StatusNormal_08, !StatusNormal_08
 
-CODE_0288DC:
+create_sprite_from_block_0288DC:
     LDY $05
-    CPY.b #$0B                              ;$0288DE |
-    BNE CODE_0288EA                         ;$0288E0 |
-    LDA.b InteractionPtXPos_9A              ;$0288E2 | 0B: generate Key/P-Balloon/Wings/Green Shell
-    AND.b #$30                              ;$0288E4 | if low X position is 20, 60, A0, E0 ()
-    CMP.b #$20                              ;$0288E6 |
-    BEQ GenSpriteFromBlk                    ;$0288E8 |
-CODE_0288EA:
-    CPY.b #$10
-    BEQ CODE_0288FD                         ;$0288EC | 10: generate stunned Key !!! unused?
-    CPY.b #$08                              ;$0288EE |
-    BNE CODE_0288F9                         ;$0288F0 |
-    LDA.w SpriteMemorySetting_1692          ;$0288F2 | 08: generate Growing vine
-    BEQ GenSpriteFromBlk                    ;$0288F5 | based on Sprite memory setting from header
-    BNE CODE_0288FD                         ;$0288F7 |
-CODE_0288F9:
-    CPY.b #$0C
-    BNE GenSpriteFromBlk                    ;$0288FB | 0C: if not Yoshi egg
-CODE_0288FD:
+    CPY.b #!BlockObjKeyWingsBalloon_0B      ;$0288DE |
+    BNE +                                   ;$0288E0 |\ generate Key/P-Balloon/Wings/Green Shell:
+    LDA.b InteractionPtXPos_9A              ;$0288E2 ||
+    AND.b #$30                              ;$0288E4 || if low X position is 20, 60, A0, E0 ()
+    CMP.b #$20                              ;$0288E6 ||
+    BEQ .force_free_slot_028905             ;$0288E8 |/
++   CPY.b #!BlockObjStunnedKey_10           ;$0288EA |
+    BEQ .generate_if_free_slot_0288FD       ;$0288EC | branch to generate stunned Key
+    CPY.b #!BlockObjVine_08                 ;$0288EE |
+    BNE +                                   ;$0288F0 |\ generate Growing vine:
+    LDA.w SpriteMemorySetting_1692          ;$0288F2 || 
+    BEQ .force_free_slot_028905             ;$0288F5 || based on Sprite memory setting from header
+    BNE .generate_if_free_slot_0288FD       ;$0288F7 |/
++   CPY.b #!BlockObjYoshiEgg_0C             ;$0288F9 |
+    BNE .force_free_slot_028905             ;$0288FB | branch if not Yoshi egg
+.generate_if_free_slot_0288FD:              ;        |
     JSL FindFreeSprSlot                     ;$0288FD | Find a free sprite slot for Yoshi Egg OR stunned Key OR Vine with non-zero sprite header
     TYX                                     ;$028901 |
-    BPL CODE_028922                         ;$028902 |
-    RTL                                     ;$028904 |
+    BPL .free_slot_028922                   ;$028902 | generate if there is some free slot
+    RTL                                     ;$028904 | or return otherwise
 
-GenSpriteFromBlk:
-    LDX.b #$0B
-CODE_028907:
-    LDA.w SpriteStatus_14C8,X
-    BEQ CODE_028922                         ;$02890A |
-    DEX                                     ;$02890C |
-    CPX.b #$FF                              ;$02890D |
-    BNE CODE_028907                         ;$02890F |
+.force_free_slot_028905
+    LDX.b #$0B                              ;$028905 |
+-   LDA.w SpriteStatus_14C8,X               ;$028907 |\
+    BEQ .free_slot_028922                   ;$02890A ||
+    DEX                                     ;$02890C ||
+    CPX.b #$FF                              ;$02890D ||
+    BNE -                                   ;$02890F |/
     DEC.w SpriteOverwrite_1861              ;$028911 |
-    BPL CODE_02891B                         ;$028914 |
-    LDA.b #$01                              ;$028916 |
-    STA.w SpriteOverwrite_1861              ;$028918 |
-CODE_02891B:
-    LDA.w SpriteOverwrite_1861
+    BPL +                                   ;$028914 |\
+    LDA.b #$01                              ;$028916 ||
+    STA.w SpriteOverwrite_1861              ;$028918 |/
++   LDA.w SpriteOverwrite_1861              ;$02891B |
     CLC                                     ;$02891E |
     ADC.b #$0A                              ;$02891F |
     TAX                                     ;$028921 |
-CODE_028922:
-    STX.w FlyingBlock_185E                  ;$028922 | TODO: not only from a Flying Block sprite, but Map16 blocks
-    LDY $05                                 ;$028925 |
-    LDA.w StatusOfSprInBlk,Y                ;$028927 |
+.free_slot_028922:
+    STX.w FlyingBlock_185E                  ;$028922 |
+    LDY $05                                 ;$028925 | Y: index of sprite to generate
+    LDA.w status_spr_in_block_0288C5,Y      ;$028927 |
     STA.w SpriteStatus_14C8,X               ;$02892A |
     LDA.w YoshiSlotMirror_18E2              ;$02892D |
-    BEQ CODE_028937                         ;$028930 |
-    TYA                                     ;$028932 |
-    CLC                                     ;$028933 |
-    ADC.b #$11                              ;$028934 |
-    TAY                                     ;$028936 |
-CODE_028937:
-    STY.w SpriteInterIndex_1695
-    LDA.w SpriteInBlock,Y                   ;$02893A |
+    BEQ +                                   ;$028930 |\
+    TYA                                     ;$028932 || add #$11 if Yoshi exists
+    CLC                                     ;$028933 || NOTE: intended values are the same
+    ADC.b #$11                              ;$028934 ||
+    TAY                                     ;$028936 |/
++   STY.w SpriteInterIndex_1695             ;$028937 |
+    LDA.w sprite_in_block_0288A3,Y          ;$02893A |
     STA.b SpriteNumber_9E,X                 ;$02893D |
-    STA $0E                                 ;$02893F |
-    LDY.b #$02                              ;$028941 |
+    STA $0E                                 ;$02893F | $0E: generated sprite number
+    LDY.b #$02                              ;$028941 | Y: SFX for Hit a ? block
     CMP.b #!ChangingItem_81                 ;$028943 |
-    BCS CODE_02894C                         ;$028945 |
-    CMP.b #!Vine_79                         ;$028947 |
-    BCC CODE_02894C                         ;$028949 |
-    INY                                     ;$02894B |
-CODE_02894C:
-    STY.w SPCIO3_1DFC
+    BCS +                                   ;$028945 |\
+    CMP.b #!Vine_79                         ;$028947 || increment SFX for 79..80
+    BCC +                                   ;$028949 ||   Hit a ? block with a vine inside
+    INY                                     ;$02894B |/
++   STY.w SPCIO3_1DFC                       ;$02894C |
     JSL InitSpriteTables                    ;$02894F |
     INC.w SpriteOffscreenX_15A0,X           ;$028953 |
     LDA.b SpriteNumber_9E,X                 ;$028956 |
     CMP.b #!DirCoins_45                     ;$028958 |
-    BNE CODE_028972                         ;$02895A |
-    LDA.w DirectCoinInit_1432               ;$02895C |
-    BEQ CODE_028967                         ;$02895F |
-    STZ.w SpriteStatus_14C8,X               ;$028961 |
-    JMP CODE_02889D                         ;$028964 |
+    BNE .init_sprite_028972                 ;$02895A |\ branch if not Directional Coins
+    LDA.w DirectCoinInit_1432               ;$02895C ||
+    BEQ .start_directional_coins_028967     ;$02895F ||
+    STZ.w SpriteStatus_14C8,X               ;$028961 || erase directional coins if some has been used
+    JMP create_coin_spr_return_02889D       ;$028964 |/  and spawn a coin sprite instead
 
-CODE_028967:
+.start_directional_coins_028967
     LDA.b #$0E
-    STA.w SPCIO2_1DFB                       ;$028969 |
-    INC.w DirectCoinInit_1432               ;$02896C |
+    STA.w SPCIO2_1DFB                       ;$028969 | SFX for P-Switch / Directional coin
+    INC.w DirectCoinInit_1432               ;$02896C | NOTE: prevents spawning more directional coins from blocks in the level
     STZ.w DirectCoinTimer_190C              ;$02896F |
-CODE_028972:
+.init_sprite_028972
     LDA.b InteractionPtXPos_9A
     STA.b SpriteXPosLow_E4,X                ;$028974 |
     LDA.b InteractionPtXPos_9A+1            ;$028976 |
@@ -1244,107 +1234,105 @@ CODE_028972:
     LDA.b InteractionPtYPos_98+1            ;$02897F |
     STA.w SpriteYPosHigh_14D4,X             ;$028981 |
     LDA.w LayerProcessing_1933              ;$028984 | unint $1933 for Angel Blocks, possibly shifting the item according to layer 2 positions
-    BEQ CODE_0289A5                         ;$028987 |
-    LDA.b InteractionPtXPos_9A              ;$028989 |
-    SEC                                     ;$02898B |
-    SBC.b LayerXDiff_26                     ;$02898C |
-    STA.b SpriteXPosLow_E4,X                ;$02898E |
-    LDA.b InteractionPtXPos_9A+1            ;$028990 |
-    SBC.b LayerXDiff_26+1                   ;$028992 |
-    STA.w SpriteXPosHigh_14E0,X             ;$028994 |
-    LDA.b InteractionPtYPos_98              ;$028997 |
-    SEC                                     ;$028999 |
-    SBC.b LayerYDiff_28                     ;$02899A |
-    STA.b SpriteYPosLow_D8,X                ;$02899C |
-    LDA.b InteractionPtYPos_98+1            ;$02899E |
-    SBC.b LayerYDiff_28+1                   ;$0289A0 |
-    STA.w SpriteYPosHigh_14D4,X             ;$0289A2 |
-CODE_0289A5:
-    LDA.b SpriteNumber_9E,X
+    BEQ +                                   ;$028987 |\ shift sprite according to layer 2:
+    LDA.b InteractionPtXPos_9A              ;$028989 ||
+    SEC                                     ;$02898B ||
+    SBC.b LayerXDiff_26                     ;$02898C ||
+    STA.b SpriteXPosLow_E4,X                ;$02898E ||
+    LDA.b InteractionPtXPos_9A+1            ;$028990 ||
+    SBC.b LayerXDiff_26+1                   ;$028992 ||
+    STA.w SpriteXPosHigh_14E0,X             ;$028994 ||
+    LDA.b InteractionPtYPos_98              ;$028997 ||
+    SEC                                     ;$028999 ||
+    SBC.b LayerYDiff_28                     ;$02899A ||
+    STA.b SpriteYPosLow_D8,X                ;$02899C ||
+    LDA.b InteractionPtYPos_98+1            ;$02899E ||
+    SBC.b LayerYDiff_28+1                   ;$0289A0 ||
+    STA.w SpriteYPosHigh_14D4,X             ;$0289A2 |/
++   LDA.b SpriteNumber_9E,X                 ;$0289A5 |
     CMP.b #!PBalloon_7D                     ;$0289A7 |
-    BNE CODE_0289D3                         ;$0289A9 |
-    LDA.b SpriteXPosLow_E4,X                ;$0289AB |
-    AND.b #$30                              ;$0289AD |
-    LSR                                     ;$0289AF |
-    LSR                                     ;$0289B0 |
-    LSR                                     ;$0289B1 |
-    LSR                                     ;$0289B2 |
-    TAY                                     ;$0289B3 |
-    LDA.w DATA_0288D9,Y                     ;$0289B4 |
-    STA.w SpriteStatus_14C8,X               ;$0289B7 |
-    LDA.w DATA_0288D6,Y                     ;$0289BA |
-    STA.b SpriteNumber_9E,X                 ;$0289BD |
-    PHA                                     ;$0289BF |
-    JSL InitSpriteTables                    ;$0289C0 |
-    PLA                                     ;$0289C4 |
-    CMP.b #!PBalloon_7D                     ;$0289C5 |
-    BNE CODE_0289CD                         ;$0289C7 |
-    INC.w SpriteDir_157C,X                  ;$0289C9 |
-    RTL                                     ;$0289CC |
+    BNE .not_wings_block_0289D3             ;$0289A9 |\ branch if not a block with Keys, Wings, P-Balloon or Green Shell inside
+    LDA.b SpriteXPosLow_E4,X                ;$0289AB || handle Keys, Wings, P-Balloon or Green Shell block:
+    AND.b #$30                              ;$0289AD ||
+    LSR                                     ;$0289AF ||
+    LSR                                     ;$0289B0 ||
+    LSR                                     ;$0289B1 ||
+    LSR                                     ;$0289B2 ||
+    TAY                                     ;$0289B3 ||
+    LDA.w key_wings_balloon_status_0288D9,Y ;$0289B4 ||
+    STA.w SpriteStatus_14C8,X               ;$0289B7 ||
+    LDA.w key_wings_balloon_spr_0288D6,Y    ;$0289BA ||
+    STA.b SpriteNumber_9E,X                 ;$0289BD ||
+    PHA                                     ;$0289BF ||
+    JSL InitSpriteTables                    ;$0289C0 ||
+    PLA                                     ;$0289C4 ||
+    CMP.b #!PBalloon_7D                     ;$0289C5 ||
+    BNE .not_pballoon_0289CD                ;$0289C7 ||\
+    INC.w SpriteDir_157C,X                  ;$0289C9 ||/ P Balloon: face left
+    RTL                                     ;$0289CC |/
 
-CODE_0289CD:
-    CMP.b #$7E
-    BEQ CODE_028A03                         ;$0289CF |
-    BRA CODE_028A01                         ;$0289D1 |
+.not_pballoon_0289CD
+    CMP.b #!YoshiWings_7E
+    BEQ .yoshi_wings_028A03                 ;$0289CF |
+    BRA .key_or_green_shell_028A01          ;$0289D1 |
 
-CODE_0289D3:
-    CMP.b #$04
-    BEQ ADDR_028A08                         ;$0289D5 |
-    CMP.b #$3E                              ;$0289D7 |
-    BEQ CODE_028A2A                         ;$0289D9 |
-    CMP.b #$2C                              ;$0289DB |
-    BNE CODE_028A11                         ;$0289DD |
-    LDY.b #$0B                              ;$0289DF |
-CODE_0289E1:
-    LDA.w SpriteStatus_14C8,Y
-    CMP.b #!StatusNormal_08                 ;$0289E4 |
-    BCC CODE_0289F3                         ;$0289E6 |
-    LDA.w SpriteNumber_9E,Y                 ;$0289E8 |
-    CMP.b #!BabyYoshi_2D                    ;$0289EB |
-    BNE CODE_0289F3                         ;$0289ED |
-CODE_0289EF:
-    LDY.b #$01
-    BRA CODE_0289FB                         ;$0289F1 |
+.not_wings_block_0289D3
+    CMP.b #!GreenShell_04
+    BEQ .green_shell_block_028A08           ;$0289D5 | NOTE: tiles 127..128, not the glitched Green Shell from the Key/P-Balloon block
+    CMP.b #!PSwitch_3E                      ;$0289D7 |
+    BEQ .init_pswitch_028A2A                ;$0289D9 |
+    CMP.b #!YoshiEgg_2C                     ;$0289DB |
+    BNE .powerups_and_vine_028A11           ;$0289DD |
+    LDY.b #$0B                              ;$0289DF | Handle Yoshi Egg initialization. Y: slot to check
+.loop_0289E1                                ;        |\ loop through sprites to see if any Yoshi or Baby Yoshi exists
+    LDA.w SpriteStatus_14C8,Y               ;$0289E1 ||
+    CMP.b #!StatusNormal_08                 ;$0289E4 ||
+    BCC ..continue_0289F3                   ;$0289E6 ||
+    LDA.w SpriteNumber_9E,Y                 ;$0289E8 ||
+    CMP.b #!BabyYoshi_2D                    ;$0289EB ||
+    BNE ..continue_0289F3                   ;$0289ED ||
+..found_yoshi_0289EF                        ;        ||
+    LDY.b #$01                              ;$0289EF || egg to become a 1-up later
+    BRA .set_sprite_inside_egg_0289FB       ;$0289F1 ||
 
-CODE_0289F3:
-    DEY
-    BPL CODE_0289E1                         ;$0289F4 |
+..continue_0289F3                           ;        ||
+    DEY                                     ;$0289F3 ||
+    BPL .loop_0289E1                        ;$0289F4 |/
     LDY.w YoshiSlotMirror_18E2              ;$0289F6 |
-    BNE CODE_0289EF                         ;$0289F9 |
-CODE_0289FB:
-    LDA.w DATA_0288A1,Y
+    BNE ..found_yoshi_0289EF                ;$0289F9 | if $18E2 == 0, egg to become a Yoshi later
+.set_sprite_inside_egg_0289FB
+    LDA.w yoshi_egg_sprite_0288A1,Y
     STA.w Sprite_151C,X                     ;$0289FE |
-CODE_028A01:
-    BRA CODE_028A0D
+.key_or_green_shell_028A01
+    BRA .key_egg_shell_pow_028A0D
 
-CODE_028A03:
+.yoshi_wings_028A03
     INC.b SpritePhase_C2,X
-    INC.b SpritePhase_C2,X                  ;$028A05 |
+    INC.b SpritePhase_C2,X                  ;$028A05 | set Wings + Sparkle
     RTL                                     ;$028A07 |
 
-ADDR_028A08:
+.green_shell_block_028A08
     LDA.b #$FF
     STA.w SpriteStun_1540,X                 ;$028A0A |
-CODE_028A0D:
+.key_egg_shell_pow_028A0D
     LDA.b #$D0
-    BRA CODE_028A18                         ;$028A0F |
+    BRA .prepare_to_escape_block_028A18     ;$028A0F |
 
-CODE_028A11:
+.powerups_and_vine_028A11
     LDA.b #$3E
     STA.w SpriteStun_1540,X                 ;$028A13 |
     LDA.b #$D0                              ;$028A16 |
-CODE_028A18:
+.prepare_to_escape_block_028A18
     STA.b SpriteYSpeed_AA,X
     LDA.b #$2C                              ;$028A1A |
     STA.w SpritePlayerContact_154C,X        ;$028A1C |
-    LDA.w wcdj5sDp_190F,X                   ;$028A1F |
-    BPL Return028A29                        ;$028A22 |
-    LDA.b #$10                              ;$028A24 |
-    STA.w SpriteTurnTimer_15AC,X            ;$028A26 |
-Return028A29:
-    RTL
+    LDA.w wcdj5sDp_190F,X                   ;$028A1F | return if Don't get stuck in walls
+    BPL +                                   ;$028A22 |\
+    LDA.b #$10                              ;$028A24 || Timer to briefly disable block interaction
+    STA.w SpriteTurnTimer_15AC,X            ;$028A26 ||   when spawned from a block
++   RTL                                     ;$028A29 |/
 
-CODE_028A2A:
+.init_pswitch_028A2A
     LDA.b SpriteXPosLow_E4,X
     LSR                                     ;$028A2C |
     LSR                                     ;$028A2D |
@@ -1353,25 +1341,23 @@ CODE_028A2A:
     AND.b #$01                              ;$028A30 |
     STA.w Sprite_151C,X                     ;$028A32 |
     TAY                                     ;$028A35 |
-    LDA.w DATA_028A42,Y                     ;$028A36 |
+    LDA.w .DATA_028A42,Y                    ;$028A36 |
     STA.w SpriteYXPPCCCT_15F6,X             ;$028A39 |
-    JSL CODE_028A44                         ;$028A3C |
-    BRA CODE_028A0D                         ;$028A40 |
+    JSL create_puff_of_smoke_028A44         ;$028A3C |
+    BRA .key_egg_shell_pow_028A0D           ;$028A40 |
 
-DATA_028A42:
+.DATA_028A42
     db $06,$02
 
-CODE_028A44:
+create_puff_of_smoke_028A44:
     PHX
-    LDX.b #$03                              ;$028A45 |
-CODE_028A47:
-    LDA.w SmokeSprNumber_17C0,X
-    BEQ CODE_028A50                         ;$028A4A |
-    DEX                                     ;$028A4C |
-    BPL CODE_028A47                         ;$028A4D |
-    INX                                     ;$028A4F |
-CODE_028A50:
-    LDA.b #$01
+    LDX.b #$03                              ;$028A45 | X: smoke slot
+-   LDA.w SmokeSprNumber_17C0,X             ;$028A47 |\
+    BEQ +                                   ;$028A4A || find a free slot
+    DEX                                     ;$028A4C ||
+    BPL -                                   ;$028A4D |/
+    INX                                     ;$028A4F | or overwrite slot 0 if all are taken
++   LDA.b #!PuffSmoke_01                    ;$028A50 |
     STA.w SmokeSprNumber_17C0,X             ;$028A52 |
     LDA.b InteractionPtYPos_98              ;$028A55 |
     STA.w SmokeSprYPos_17C4,X               ;$028A57 |
@@ -1382,20 +1368,18 @@ CODE_028A50:
     PLX                                     ;$028A64 |
     RTL                                     ;$028A65 |
 
-CODE_028A66:
-    LDX.b #$03
-CODE_028A68:
-    LDA.w CoinSpriteExists_17D0,X
-    BEQ CODE_028A7D                         ;$028A6B |
-    DEX                                     ;$028A6D |
-    BPL CODE_028A68                         ;$028A6E |
+create_coin_sprite_028A66:
+    LDX.b #$03                              ;$028A66 | X: current coin slot
+-   LDA.w CoinSpriteExists_17D0,X           ;$028A68 |\ find an empty slot
+    BEQ .empty_slot_028A7D                  ;$028A6B ||
+    DEX                                     ;$028A6D ||
+    BPL -                                   ;$028A6E |/
     DEC.w CoinSprSlotIdx_1865               ;$028A70 |
-    BPL ADDR_028A7A                         ;$028A73 |
-    LDA.b #$03                              ;$028A75 |
-    STA.w CoinSprSlotIdx_1865               ;$028A77 |
-ADDR_028A7A:
-    LDX.w CoinSprSlotIdx_1865
-CODE_028A7D:
+    BPL +                                   ;$028A73 |\
+    LDA.b #$03                              ;$028A75 || or overwrite slot 3 if all are taken
+    STA.w CoinSprSlotIdx_1865               ;$028A77 |/
++   LDX.w CoinSprSlotIdx_1865               ;$028A7A |
+.empty_slot_028A7D
     JSL CODE_05B34A
     INC.w CoinSpriteExists_17D0,X           ;$028A81 |
     LDA.b InteractionPtXPos_9A              ;$028A84 |
@@ -12852,7 +12836,7 @@ CODE_02DEB0:
     STA.b InteractionPtXPos_9A              ;$02DEE0 |
     LDA.b SpriteYPosLow_D8,X                ;$02DEE2 |
     STA.b InteractionPtYPos_98              ;$02DEE4 |
-    JSL CODE_028A44                         ;$02DEE6 |
+    JSL create_puff_of_smoke_028A44         ;$02DEE6 |
 CODE_02DEEA:
     LDA.b #$00
     JSL GenericSprGfxRt0                    ;$02DEEC |
