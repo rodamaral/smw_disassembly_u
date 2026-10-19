@@ -1857,6 +1857,16 @@ CurrentMinorSprite_1698: skip 1 ;done
 
 
 BounceSprNumber_1699: skip 4 ;done
+; Valid values
+!FreeBounce_00 = 0
+!TurnBlockStatic_01 = 1
+!NoteBlock_02 = 2
+!QuestionBlock_03 = 3
+!SidewaysBlock_04 = 4
+!TranslucentBlock_05 = 5
+!OnBlock_06 = 6
+!TurnBlockTurning_07 = 7
+
 BounceSprInit_169D: skip 4 ;done
 BounceSprYPosLow_16A1: skip 4 ;done
 BounceSprXPosLow_16A5: skip 4 ;done
