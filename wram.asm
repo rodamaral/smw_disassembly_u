@@ -56,7 +56,7 @@ Frame_14: skip 1
 ; +------- set if the A or B button were pressed this frame
 byetudlrHold_15: skip 1
 ; Valid values
-!ButY = %01000000
+!ButY = %01000000 ; TODO: append hex value to define
 !ButSelect = %00100000
 !ButStart = %00010000
 !DpadUp = %00001000
@@ -624,11 +624,12 @@ PlayerDir_76: skip 1
 ; +------- collision with edge of screen
 PlayerBlocked_77: skip 1
 ; Valid values
-!Block_Right_01 = %00001
+!Block_Right_01 = %00001 ; TODO: rename define without snake case
 !Block_Left_02 = %00010
 !Block_Sides_03 = %00011
 !Block_Bottom_04 = %00100
 !Block_Top_08 = %01000
+!BlockTopRight_09 = %01001
 !Block_Inside_10 = %10000
 !Block_Y_1C = %11100
 !Block_Screen_80 = %10000000

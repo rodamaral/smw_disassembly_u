@@ -10672,7 +10672,7 @@ DATA_00E53D:
     db $1D,$1E,$1F,$18,$19,$1A,$1B,$08
     db $09,$0A,$0B,$0C,$0D
 
-DATA_00E632:
+slope_ceiling_points_00E632:
     db $0F,$0F,$0F,$0F,$0E,$0E,$0E,$0E
     db $0D,$0D,$0D,$0D,$0C,$0C,$0C,$0C
     db $0B,$0B,$0B,$0B,$0A,$0A,$0A,$0A
@@ -11101,7 +11101,7 @@ stop_wall_running:
 normal_collision_00EB77:
 ; START_CENTER_POINT
     LDX.b #$00                              ;$00EB77 \ X: current collision point index: 
-    LDA.b Powerup_19                        ;$00EB79 |  0: center, 2: waist, 4: shoulder, 6: head, 8: under center, A: foot (opposite side of waist/shoulder)
+    LDA.b Powerup_19                        ;$00EB79 |  0: center, 2: waist, 4: shoulder, 6: head, 8: mid point between feet, A: foot (opposite side of waist/shoulder)
     BEQ .not_big                            ;$00EB7B |\ If the player is big
     LDA.b PlayerIsDucking_73                ;$00EB7D ||
     BNE .not_big                            ;$00EB7F || and not ducking,
@@ -11137,9 +11137,9 @@ normal_collision_00EB77:
     JSR process_collision_point_00F44D      ;$00EBAF | Process the center body collision point.
 ; START_WAIST_POINT
     BEQ ..center_page_0                     ;$00EBB2 |\ Process page 0 tiles, if applicable.
-    CPY.b #$11                              ;$00EBB4 || If it's tiles 100 - 110,
+    CPY.b #!Map16NoteItemLow_11             ;$00EBB4 || If it's tiles 100 - 110,
     BCC .skip_center                        ;$00EBB6 || ignore it.
-    CPY.b #$6E                              ;$00EBB8 || If it's tiles 111 - 16D,
+    CPY.b #!Map16SlopeLow_6E                ;$00EBB8 || If it's tiles 111 - 16D,
     BCC ..center_solid                      ;$00EBBA || process being inside a solid block.
     TYA                                     ;$00EBBC ||
     JSL is_page_1_water                     ;$00EBBD || If the tile isn't a water tile,
@@ -11156,7 +11156,7 @@ normal_collision_00EB77:
     INX                                     ;$00EBCC | Skip to the head collision point.
     TYA                                     ;$00EBCD |
     LDY.b #$00                              ;$00EBCE |
-    CMP.b #$1E                              ;$00EBD0 |\ If the tile is a turn block
+    CMP.b #!Map16TurnBlockLow_1E            ;$00EBD0 |\ If the tile is a turn block
     BEQ ..not_inside_block                  ;$00EBD2 |\
     CMP.b #!Map16SolidInvisTileLow_52       ;$00EBD4 || or a temporary invisible block,
     BEQ ..not_inside_block                  ;$00EBD6 ||
@@ -11206,9 +11206,9 @@ normal_collision_00EB77:
 .skip_center                                ;        |
     JSR process_collision_point_00F44D      ;$00EC24 | Process the side body collision point.
     BEQ ..side_body_page_0                  ;$00EC27 | If applicable, process page 0 tiles.
-    CPY.b #$11                              ;$00EC29 |\ If the tile is 100 - 111
+    CPY.b #!Map16NoteItemLow_11             ;$00EC29 |\ If the tile is 100 - 111
     BCC ..skip_side_body                    ;$00EC2B | |
-    CPY.b #$6E                              ;$00EC2D | | or 16E - 1FF,
+    CPY.b #!Map16SlopeLow_6E                ;$00EC2D | | or 16E - 1FF,
     BCS ..skip_side_body                    ;$00EC2F |/ ignore it.
     INX                                     ;$00EC31 |
     INX                                     ;$00EC32 | Skip to the head collision point.
@@ -11219,16 +11219,16 @@ normal_collision_00EB77:
     JSR process_page_0_tiles_no_swim        ;$00EC37 | Process side body page 0 tile collision without water.
 ..skip_side_body                            ;        |
     JSR process_collision_point_00F44D      ;$00EC3A | Process the side head collision point.
-    BNE ..side_head_page_1                  ;$00EC3D | If applicable, process page 1 tiles.
+    BNE ..shoulder_page_1_00EC46            ;$00EC3D | If applicable, process page 1 tiles.
     LDA.b #$08                              ;$00EC3F | Load the climbing flag to set.
     JSR process_page_0_tiles_no_swim        ;$00EC41 | Process side head page 0 tile collision without water.
-    BRA .skip_side_head                     ;$00EC44 /
+    BRA .skip_shoulder_00EC8A               ;$00EC44 /
 
-..side_head_page_1                          ;        \
-    CPY.b #$11                              ;$00EC46 | If the tile is 100 - 111
-    BCC .skip_side_head                     ;$00EC48 |\
-    CPY.b #$6E                              ;$00EC4A || or 16E - 1FF,
-    BCS .skip_side_head                     ;$00EC4C |/ ignore it.
+..shoulder_page_1_00EC46                    ;        \
+    CPY.b #!Map16NoteItemLow_11             ;$00EC46 | If the tile is 100 - 111
+    BCC .skip_shoulder_00EC8A               ;$00EC48 |\
+    CPY.b #!Map16SlopeLow_6E                ;$00EC4A || or 16E - 1FF,
+    BCS .skip_shoulder_00EC8A               ;$00EC4C |/ ignore it.
 ..side_body_in_block                        ;        |
     LDA.b PlayerDir_76                      ;$00EC4E |
     CMP.b PlayerBlockXSide_93               ;$00EC50 |
@@ -11244,70 +11244,69 @@ normal_collision_00EB77:
     LDA.b PlayerXPos_94                     ;$00EC66 |
     AND.b #$0F                              ;$00EC68 |
     CMP.w DATA_00E911,Y                     ;$00EC6A |
-    BEQ .skip_side_head                     ;$00EC6D |
+    BEQ .skip_shoulder_00EC8A               ;$00EC6D |
 .center_in_block                            ;        |
     LDA.w NoteBlockActive_1402              ;$00EC6F |
     BEQ ..on_note_block                     ;$00EC72 |
     LDA.w Map16_1693                        ;$00EC74 |
     CMP.b #!Map16SolidInvisTileLow_52       ;$00EC77 |
-    BEQ .skip_side_head                     ;$00EC79 |
+    BEQ .skip_shoulder_00EC8A               ;$00EC79 |
 ..on_note_block                             ;        |
     LDA.w DATA_00E90A,Y                     ;$00EC7B |
     TSB.b PlayerBlocked_77                  ;$00EC7E |
     AND.b #!Block_Sides_03                  ;$00EC80 |
     TAY                                     ;$00EC82 |
     LDA.w Map16_1693                        ;$00EC83 |
-    JSL handle_side_point_page1_00F127      ;$00EC86 |
-.skip_side_head                             ;        |
+    JSL handle_interact_point_page1_00F127  ;$00EC86 |
+.skip_shoulder_00EC8A                       ;        |
     JSR process_collision_point_00F44D      ;$00EC8A | Process the head collision point.
-    BNE .CODE_00ECB1                        ;$00EC8D |
+    BNE .head_page1_00ECB1                  ;$00EC8D |
     LDA.b #$02                              ;$00EC8F |
     JSR process_page_0_tiles_00F2C2         ;$00EC91 |
     LDY.b PlayerYSpeed_7D                   ;$00EC94 |
-    BPL .CODE_00ECA3                        ;$00EC96 |\
-    LDA.w Map16_1693                        ;$00EC98 ||
-    CMP.b #!Map16InvisCoinBlockLow_21       ;$00EC9B ||
-    BCC .CODE_00ECA3                        ;$00EC9D ||
+    BPL .goto_feet_middle_00ECA3            ;$00EC96 |\ try to hit invisible blocks 21..24 when going up
+    LDA.w Map16_1693                        ;$00EC98 || GLITCH: $1693 might be uninitializated at this point, if the previous
+    CMP.b #!Map16InvisCoinBlockLow_21       ;$00EC9B ||   interaction points are outside the screen. This branch will run
+    BCC .goto_feet_middle_00ECA3            ;$00EC9D ||   if $1693 was last set to 21..24 in a previous frame
     CMP.b #!Map16LowAir_25                  ;$00EC9F ||
-    BCC .CODE_00ECA6                        ;$00ECA1 |/
-.CODE_00ECA3
-    JMP .CODE_00ED4A
+    BCC .hit_kaizo_block_00ECA6             ;$00ECA1 |/
+.goto_feet_middle_00ECA3
+    JMP .goto_feet_middle_00ED4A
 
-.CODE_00ECA6
+.hit_kaizo_block_00ECA6
     SEC
     SBC.b #$04                              ;$00ECA7 |
     LDY.b #!Map16Page_00                    ;$00ECA9 |
-    JSL functional_block_by_id_00F17F       ;$00ECAB |
-    BRA .CODE_00ED0D                        ;$00ECAF |
+    JSL functional_block_by_id_00F17F       ;$00ECAB | create bounce effect and spawn item from block
+    BRA .establish_ceiling_contact_00ED0D   ;$00ECAF |
 
-.CODE_00ECB1:
-    CPY.b #$11
-    BCC .CODE_00ECA3                        ;$00ECB3 |
-    CPY.b #$6E                              ;$00ECB5 |
-    BCC .CODE_00ECFA                        ;$00ECB7 |
-    CPY.b #$D8                              ;$00ECB9 |
-    BCC .CODE_00ECDA                        ;$00ECBB |
-    REP #$20                                ;$00ECBD | A->16
-    LDA.b InteractionPtYPos_98              ;$00ECBF |
-    CLC                                     ;$00ECC1 |
-    ADC.w #$0010                            ;$00ECC2 |
-    STA.b InteractionPtYPos_98              ;$00ECC5 |
-    JSR process_prev_collision_point_00F461 ;$00ECC7 |
-    BEQ .CODE_00ECF8                        ;$00ECCA |
-    CPY.b #$6E                              ;$00ECCC |
-    BCC .CODE_00ED4A                        ;$00ECCE |
-    CPY.b #$D8                              ;$00ECD0 |
-    BCS .CODE_00ED4A                        ;$00ECD2 |
-    LDA.b PlayerBlockMoveY_91               ;$00ECD4 |
-    SBC.b #$0F                              ;$00ECD6 |
-    STA.b PlayerBlockMoveY_91               ;$00ECD8 |
-.CODE_00ECDA:
-    TYA
+.head_page1_00ECB1:
+    CPY.b #!Map16NoteItemLow_11             ;$00ECB3 |
+    BCC .goto_feet_middle_00ECA3            ;$00ECB3 | branch if 100..110
+    CPY.b #!Map16SlopeLow_6E                ;$00ECB5 |
+    BCC .page1_head_solid_blocks_00ECFA     ;$00ECB7 | branch if 111..16D
+    CPY.b #!Map16SlopeAssistLow_D8          ;$00ECB9 | Handle Slopes (16E-1FF):
+    BCC +                                   ;$00ECBB |\ branch if 16E..1D7
+    REP #$20                                ;$00ECBD || A->16
+    LDA.b InteractionPtYPos_98              ;$00ECBF || handle 1D8..1FF:
+    CLC                                     ;$00ECC1 ||
+    ADC.w #$0010                            ;$00ECC2 ||
+    STA.b InteractionPtYPos_98              ;$00ECC5 ||
+    JSR process_prev_collision_point_00F461 ;$00ECC7 ||
+    BEQ .goto_feet_middle_00ECF8            ;$00ECCA ||
+    CPY.b #!Map16SlopeLow_6E                ;$00ECCC ||
+    BCC .goto_feet_middle_00ED4A            ;$00ECCE || branch if 100..16E
+    CPY.b #!Map16SlopeAssistLow_D8          ;$00ECD0 ||
+    BCS .goto_feet_middle_00ED4A            ;$00ECD2 ||
+    LDA.b PlayerBlockMoveY_91               ;$00ECD4 ||
+    SBC.b #$0F                              ;$00ECD6 ||
+    STA.b PlayerBlockMoveY_91               ;$00ECD8 |/
++   TYA                                     ;$00ECDA |
     SEC                                     ;$00ECDB |
-    SBC.b #$6E                              ;$00ECDC |
+    SBC.b #!Map16SlopeLow_6E                ;$00ECDC |
     TAY                                     ;$00ECDE |
     REP #$20                                ;$00ECDF | A->16
-    LDA [$82],Y                             ;$00ECE1 |
+    LDA.b [SlopesPtr_82],Y                  ;$00ECE1 |
     AND.w #$00FF                            ;$00ECE3 |
     ASL                                     ;$00ECE6 |
     ASL                                     ;$00ECE7 |
@@ -11317,60 +11316,60 @@ normal_collision_00EB77:
     ORA.b PlayerXPosBlock_92                ;$00ECEC |
     REP #$10                                ;$00ECEE | XY->16
     TAY                                     ;$00ECF0 |
-    LDA.w DATA_00E632,Y                     ;$00ECF1 |
+    LDA.w slope_ceiling_points_00E632,Y     ;$00ECF1 |
     SEP #$10                                ;$00ECF4 | XY->8
-    BMI .CODE_00ED0F                        ;$00ECF6 |
-.CODE_00ECF8:
-    BRA .CODE_00ED4A
+    BMI .test_slope_ceiling_contact_00ED0F  ;$00ECF6 |
+.goto_feet_middle_00ECF8
+    BRA .goto_feet_middle_00ED4A
 
-.CODE_00ECFA:
+.page1_head_solid_blocks_00ECFA
     LDA.b #$02
-    JSR CODE_00F3E9                         ;$00ECFC |
+    JSR process_vertical_exit_pipe_00F3E9   ;$00ECFC |
     TYA                                     ;$00ECFF |
     LDY.b #$00                              ;$00ED00 |
-    JSL handle_side_point_page1_00F127      ;$00ED02 | TODO: test whether we are at page 1 and side interaction point
+    JSL handle_interact_point_page1_00F127  ;$00ED02 |
     LDA.w Map16_1693                        ;$00ED06 |
-    CMP.b #$1E                              ;$00ED09 |
-    BEQ .CODE_00ED3B                        ;$00ED0B |
-.CODE_00ED0D:
-    LDA.b #$F0
-.CODE_00ED0F:
-    CLC
+    CMP.b #!Map16TurnBlockLow_1E            ;$00ED09 |
+    BEQ .stop_upward_speed_00ED3B           ;$00ED0B | branch for Turning Block
+.establish_ceiling_contact_00ED0D           ;        |
+    LDA.b #$F0                              ;$00ED0D | as $91 is always 0..F, this subtrahend always causes contact
+.test_slope_ceiling_contact_00ED0F          ;        |
+    CLC                                     ;$00ED0F |
     ADC.b PlayerBlockMoveY_91               ;$00ED10 |
-    BPL .CODE_00ED4A                        ;$00ED12 |
+    BPL .goto_feet_middle_00ED4A            ;$00ED12 | branch if no contact occurred
     CMP.b #$F9                              ;$00ED14 |
-    BCS .CODE_00ED28                        ;$00ED16 |
-    LDY.b PlayerInAir_72                    ;$00ED18 |
-    BNE .CODE_00ED28                        ;$00ED1A |
-    LDA.b PlayerBlocked_77                  ;$00ED1C |
-    AND.b #$FC                              ;$00ED1E |
-    ORA.b #$09                              ;$00ED20 |
-    STA.b PlayerBlocked_77                  ;$00ED22 |
-    STZ.b PlayerXSpeed_7B                   ;$00ED24 |
-    BRA .CODE_00ED3B                        ;$00ED26 |
+    BCS .zip_downward_00ED28                ;$00ED16 |\ branch if in the last 8 Y pixels
+    LDY.b PlayerInAir_72                    ;$00ED18 || or in the air
+    BNE .zip_downward_00ED28                ;$00ED1A ||
+    LDA.b PlayerBlocked_77                  ;$00ED1C ||
+    AND.b #$FC                              ;$00ED1E || clear bottom bit
+    ORA.b #!BlockTopRight_09                ;$00ED20 || set top and right bits
+    STA.b PlayerBlocked_77                  ;$00ED22 ||
+    STZ.b PlayerXSpeed_7B                   ;$00ED24 || stop X speed
+    BRA .stop_upward_speed_00ED3B           ;$00ED26 |/
 
-.CODE_00ED28:
-    LDY.b PlayerInAir_72
-    BEQ .CODE_00ED37                        ;$00ED2A |
-    EOR.b #$FF                              ;$00ED2C |
-    CLC                                     ;$00ED2E |
-    ADC.b PlayerYPos_96                     ;$00ED2F |
-    STA.b PlayerYPos_96                     ;$00ED31 |
-    BCC .CODE_00ED37                        ;$00ED33 |
-    INC.b PlayerYPos_96+1                   ;$00ED35 |
-.CODE_00ED37:
-    LDA.b #!Block_Top_08
-    TSB.b PlayerBlocked_77                  ;$00ED39 |
-.CODE_00ED3B:
+.zip_downward_00ED28
+    LDY.b PlayerInAir_72                    ;$00ED28 |
+    BEQ +                                   ;$00ED2A |\ branch if on ground
+    EOR.b #$FF                              ;$00ED2C || add remaining pixels so that the head is just below the ceiling
+    CLC                                     ;$00ED2E ||
+    ADC.b PlayerYPos_96                     ;$00ED2F ||
+    STA.b PlayerYPos_96                     ;$00ED31 ||
+    BCC +                                   ;$00ED33 ||
+    INC.b PlayerYPos_96+1                   ;$00ED35 |/
++   LDA.b #!Block_Top_08                    ;$00ED37 |
+    TSB.b PlayerBlocked_77                  ;$00ED39 | set top blocked
+.stop_upward_speed_00ED3B:
     LDA.b PlayerYSpeed_7D
-    BPL .CODE_00ED4A                        ;$00ED3D |
-    STZ.b PlayerYSpeed_7D                   ;$00ED3F |
-    LDA.w SPCIO0_1DF9                       ;$00ED41 |
-    BNE .CODE_00ED4A                        ;$00ED44 |
-    INC A                                   ;$00ED46 |
-    STA.w SPCIO0_1DF9                       ;$00ED47 |
-.CODE_00ED4A:
-    JSR process_collision_point_00F44D
+    BPL .goto_feet_middle_00ED4A            ;$00ED3D |\ if going upward, zero Y speed
+    STZ.b PlayerYSpeed_7D                   ;$00ED3F ||  and play Hit head sfx
+    LDA.w SPCIO0_1DF9                       ;$00ED41 ||
+    BNE .goto_feet_middle_00ED4A            ;$00ED44 ||
+    INC A                                   ;$00ED46 ||
+    STA.w SPCIO0_1DF9                       ;$00ED47 |/
+.goto_feet_middle_00ED4A:
+; START_MID_FEET_POINT
+    JSR process_collision_point_00F44D      ;$00ED4A | Process middle between feet
     BNE .CODE_00ED52                        ;$00ED4D |
     JMP .CODE_00EDDB                        ;$00ED4F |
 
@@ -11378,7 +11377,7 @@ normal_collision_00EB77:
     CPY.b #$6E
     BCS .CODE_00ED5E                        ;$00ED54 |
     LDA.b #$03                              ;$00ED56 |
-    JSR CODE_00F3E9                         ;$00ED58 |
+    JSR process_vertical_exit_pipe_00F3E9   ;$00ED58 |
     JMP .CODE_00EDF7                        ;$00ED5B |
 
 .CODE_00ED5E:
@@ -11417,7 +11416,7 @@ normal_collision_00EB77:
     SEC                                     ;$00ED96 |
     SBC.b #$6E                              ;$00ED97 |
     TAY                                     ;$00ED99 |
-    LDA [$82],Y                             ;$00ED9A |
+    LDA.b [SlopesPtr_82],Y                  ;$00ED9A |
     PHA                                     ;$00ED9C |
     REP #$20                                ;$00ED9D | A->16
     AND.w #$00FF                            ;$00ED9F |
@@ -11432,7 +11431,7 @@ normal_collision_00EB77:
     TAX                                     ;$00EDAD |
     LDA.b PlayerYPosBlock_90                ;$00EDAE |
     SEC                                     ;$00EDB0 |
-    SBC.w DATA_00E632,X                     ;$00EDB1 |
+    SBC.w slope_ceiling_points_00E632,X     ;$00EDB1 |
     BPL .CODE_00EDB9                        ;$00EDB4 |
     INC.w PlayerGroundType_13EF             ;$00EDB6 |
 .CODE_00EDB9:
@@ -11548,10 +11547,9 @@ CODE_00EE3A:
 
 .CODE_00EE78:
     CMP.b #$32
-    BNE .CODE_00EE7F                        ;$00EE7A |
-    STZ.w BlockSnakeActive_1909             ;$00EE7C |
-.CODE_00EE7F:
-    JSL handle_hurting_blocks_00F120
+    BNE +                                   ;$00EE7A |\
+    STZ.w BlockSnakeActive_1909             ;$00EE7C ||
++   JSL handle_hurting_blocks_00F120        ;$00EE7F |/
 .CODE_00EE83:
     LDY.b #$20
 CODE_00EE85:
@@ -11995,7 +11993,7 @@ handle_hurting_blocks_00F120:               ;        | Handle hurting blocks - m
     LDA.w RidingYoshi_187A                  ;$00F121 |
     BNE handle_non_spike_tile_00F15F        ;$00F124 | branch if riding Yoshi
     XBA                                     ;$00F126 |
-handle_side_point_page1_00F127:             ;        |
+handle_interact_point_page1_00F127:         ;        |
     CMP.b #!Map16MuncherLow_2F              ;$00F127 |
     BEQ .hurt_00F154                        ;$00F129 | branch if muncher
     CMP.b #$59                              ;$00F12B |
@@ -12397,7 +12395,7 @@ process_horizontal_pipe:
     BNE return_00F376                       ;$00F3C6 | If it's not a exit-enabled horizontal pipe, return.
     LDY $8F                                 ;$00F3C8 |
     BEQ .CODE_00F3CF                        ;$00F3CA |
-    JMP CODE_00F43F                         ;$00F3CC /
+    JMP load_map16_return_00F43F            ;$00F3CC /
 
 .CODE_00F3CF:
     PHX
@@ -12413,40 +12411,39 @@ process_horizontal_pipe:
     CLC                                     ;$00F3DC |
     ADC.b #$20                              ;$00F3DD |
     LDY.b #!AniEnterHPipe_05                ;$00F3DF |
-    BRA CODE_00F40A                         ;$00F3E1 |
+    BRA try_enter_pipe_00F40A               ;$00F3E1 |
 
 DATA_00F3E3:
     db $0A,$FF
 
-DATA_00F3E5:
-    db $02,$01,$08,$04
+button_to_enter_00F3E5:
+    db !DpadLeft,!DpadRight,!DpadUp,!DpadDown
 
-CODE_00F3E9:
-    XBA
+process_vertical_exit_pipe_00F3E9:
+    XBA                                     ;$00F3E9 |
     TYA                                     ;$00F3EA |
     SEC                                     ;$00F3EB |
-    SBC.b #$37                              ;$00F3EC |
+    SBC.b #!Map16ExitVPipeLeftLow_37        ;$00F3EC |
     CMP.b #$02                              ;$00F3EE |
-    BCS Return00F442                        ;$00F3F0 |
+    BCS Return00F442                        ;$00F3F0 | return if not tile 137 or 138
     TAY                                     ;$00F3F2 |
     LDA.b PlayerXPosBlock_92                ;$00F3F3 |
-    SBC.w DATA_00F3E3,Y                     ;$00F3F5 |
+    SBC.w DATA_00F3E3,Y                     ;$00F3F5 | verify relative position of the player
     CMP.b #$05                              ;$00F3F8 |
-    BCS CODE_00F43F                         ;$00F3FA |
+    BCS load_map16_return_00F43F            ;$00F3FA | return if not stepping near the center of the pipe
     PHX                                     ;$00F3FC |
     XBA                                     ;$00F3FD |
     TAX                                     ;$00F3FE |
     LDA.b #$20                              ;$00F3FF |
     LDY.w RidingYoshi_187A                  ;$00F401 |
-    BEQ .CODE_00F408                        ;$00F404 |
-    LDA.b #$30                              ;$00F406 |
-.CODE_00F408:
-    LDY.b #!AniEnterVPipe_06
-CODE_00F40A:
+    BEQ +                                   ;$00F404 |\
+    LDA.b #$30                              ;$00F406 |/ set more time when riding Yoshi
++   LDY.b #!AniEnterVPipe_06                ;$00F408 |
+try_enter_pipe_00F40A:
     STA.b PipeTimer_88
     LDA.b byetudlrHold_15                   ;$00F40C |
-    AND.w DATA_00F3E5,X                     ;$00F40E |
-    BEQ .CODE_00F43E                        ;$00F411 |
+    AND.w button_to_enter_00F3E5,X          ;$00F40E |
+    BEQ .dont_enter_pipe_00F43E             ;$00F411 | branch if did not hold up or down
     STA.b SpriteLock_9D                     ;$00F413 |
     AND.b #$01                              ;$00F415 |
     STA.b PlayerDir_76                      ;$00F417 |
@@ -12454,24 +12451,23 @@ CODE_00F40A:
     TXA                                     ;$00F41B |
     LSR                                     ;$00F41C |
     TAX                                     ;$00F41D |
-    BNE .CODE_00F430                        ;$00F41E |
-    LDA.w CarryingFlagMirror_148F           ;$00F420 |
-    BEQ .CODE_00F430                        ;$00F423 |
-    LDA.b PlayerDir_76                      ;$00F425 |
-    EOR.b #$01                              ;$00F427 |
-    STA.b PlayerDir_76                      ;$00F429 |
-    LDA.b #$08                              ;$00F42B |
-    STA.w FaceScreenTimer_1499              ;$00F42D |
-.CODE_00F430:
-    INX
+    BNE +                                   ;$00F41E |\
+    LDA.w CarryingFlagMirror_148F           ;$00F420 ||
+    BEQ +                                   ;$00F423 ||
+    LDA.b PlayerDir_76                      ;$00F425 ||
+    EOR.b #$01                              ;$00F427 ||
+    STA.b PlayerDir_76                      ;$00F429 ||
+    LDA.b #$08                              ;$00F42B ||
+    STA.w FaceScreenTimer_1499              ;$00F42D |/
++   INX                                     ;$00F430 |
     STX.w SpriteInPipeMode_1419             ;$00F431 |
     STY.b PlayerAnimation_71                ;$00F434 |
     JSR disable_controls                    ;$00F436 |
     LDA.b #$04                              ;$00F439 |
     STA.w SPCIO0_1DF9                       ;$00F43B |
-.CODE_00F43E:
+.dont_enter_pipe_00F43E:
     PLX
-CODE_00F43F:
+load_map16_return_00F43F:
     LDY.w Map16_1693
 Return00F442:
     RTS
@@ -12590,20 +12586,20 @@ collision_point_vs_layer_00F465:
     SEP #$20                                ;$00F4F6 | A->8
     BCS .outside_level_air_tile_2           ;$00F4F8 | act like air.
     AND.b #$F0                              ;$00F4FA |\
-    STA $00                                 ;$00F4FC | | Set the upper nybble of map16 table index.
-    LDX.b InteractionPtXPos_9A+1            ;$00F4FE | |
-    CPX.b #$10                              ;$00F500 | | If collision X > end of level,
-    BCS .outside_level_air_tile_2           ;$00F502 | | act like air.
-    LDA.b InteractionPtXPos_9A              ;$00F504 | | Get collision X,
-    LSR                                     ;$00F506 | |
-    LSR                                     ;$00F507 | |
-    LSR                                     ;$00F508 | |
-    LSR                                     ;$00F509 | | divide by 16,
-    ORA $00                                 ;$00F50A | | and set the lower nybble of map16 table index
-    CLC                                     ;$00F50C | |
-    ADC.l DATA_00BA70,X                     ;$00F50D | |
-    STA $00                                 ;$00F511 | |
-    LDA.b InteractionPtYPos_98+1            ;$00F513 | |
+    STA $00                                 ;$00F4FC || Set the upper nybble of map16 table index.
+    LDX.b InteractionPtXPos_9A+1            ;$00F4FE ||
+    CPX.b #$10                              ;$00F500 || If collision X > end of level,
+    BCS .outside_level_air_tile_2           ;$00F502 || act like air.
+    LDA.b InteractionPtXPos_9A              ;$00F504 || Get collision X,
+    LSR                                     ;$00F506 ||
+    LSR                                     ;$00F507 ||
+    LSR                                     ;$00F508 ||
+    LSR                                     ;$00F509 || divide by 16,
+    ORA $00                                 ;$00F50A || and set the lower nybble of map16 table index
+    CLC                                     ;$00F50C ||
+    ADC.l DATA_00BA70,X                     ;$00F50D ||
+    STA $00                                 ;$00F511 ||
+    LDA.b InteractionPtYPos_98+1            ;$00F513 ||
     ADC.l DATA_00BAAC,X                     ;$00F515 |/ Add by $C800 + $1B0 * (screen number + $10) for map16 pointer.
     BRA .process_map16                      ;$00F519 / Process map16.
 
@@ -12615,18 +12611,18 @@ collision_point_vs_layer_00F465:
     CPX.b #$0E                              ;$00F523 | If collision Y > $0E00,
     BCS .outside_level_air_tile_2           ;$00F525 | act like air.
     LDA.b InteractionPtYPos_98              ;$00F527 |\
-    AND.b #$F0                              ;$00F529 | |
-    STA $00                                 ;$00F52B | | Set the upper nybble of map16 table index.
-    LDA.b InteractionPtXPos_9A              ;$00F52D | | Get collision X,
-    LSR                                     ;$00F52F | |
-    LSR                                     ;$00F530 | |
-    LSR                                     ;$00F531 | |
-    LSR                                     ;$00F532 | | divide by 16,
-    ORA $00                                 ;$00F533 | | and set the lower nybble of map16 table index.
-    CLC                                     ;$00F535 | |
-    ADC.l DATA_00BA8E,X                     ;$00F536 | |
-    STA $00                                 ;$00F53A | |
-    LDA.b InteractionPtXPos_9A+1            ;$00F53C | |
+    AND.b #$F0                              ;$00F529 ||
+    STA $00                                 ;$00F52B || Set the upper nybble of map16 table index.
+    LDA.b InteractionPtXPos_9A              ;$00F52D || Get collision X,
+    LSR                                     ;$00F52F ||
+    LSR                                     ;$00F530 ||
+    LSR                                     ;$00F531 ||
+    LSR                                     ;$00F532 || divide by 16,
+    ORA $00                                 ;$00F533 || and set the lower nybble of map16 table index.
+    CLC                                     ;$00F535 ||
+    ADC.l DATA_00BA8E,X                     ;$00F536 ||
+    STA $00                                 ;$00F53A ||
+    LDA.b InteractionPtXPos_9A+1            ;$00F53C ||
     ADC.l DATA_00BACA,X                     ;$00F53E |/ Add by $C800 + $200 * (screen number + $10) for map16 pointer.
     JMP .process_map16                      ;$00F542 / Process map16.
 
@@ -13294,7 +13290,7 @@ CODE_00FA19:
     SEC                                     ;$00FA25 |
     SBC.b #$6E                              ;$00FA26 |
     TAY                                     ;$00FA28 |
-    LDA [$82],Y                             ;$00FA29 |
+    LDA.b [SlopesPtr_82],Y                  ;$00FA29 |
     STA $08                                 ;$00FA2B |
     ASL                                     ;$00FA2D |
     ASL                                     ;$00FA2E |

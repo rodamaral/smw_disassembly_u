@@ -24,6 +24,9 @@
 !Map16SolidInvisTile_0052 = $0052
 !Map16SolidInvisTileLow_52 = !Map16SolidInvisTile_0052&$FF
 
+!Map16NoteItem_0111 = $0111
+!Map16NoteItemLow_11 = !Map16NoteItem_0111&$FF
+
 !Map16TurnBlock_011E = $011E
 !Map16TurnBlockLow_1E = !Map16TurnBlock_011E&$FF
 !Map16TurnBlockHigh_1E = !Map16TurnBlock_011E&$FF
@@ -33,3 +36,12 @@
 
 !Map16Star2_0122 = $0122
 !Map16Star2Low_22 = !Map16Star2_0122&$FF
+
+!Map16ExitVPipeLeft_0137 = $0137
+!Map16ExitVPipeLeftLow_37 = !Map16ExitVPipeLeft_0137&$FF
+
+!Map16Slope_016E = $016E
+!Map16SlopeLow_6E = !Map16Slope_016E&$FF
+
+!Map16SlopeAssist_01D8 = $01D8
+!Map16SlopeAssistLow_D8 = !Map16SlopeAssist_01D8&$FF
