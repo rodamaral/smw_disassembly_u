@@ -12480,8 +12480,13 @@ can_use_door:
     CMP.b #$08                              ;$00F44A |
     RTS                                     ;$00F44C |
 
-; TODO: these 2 routines should have a clearer name
-process_collision_point_00F44D:
+; $F44D: Advances X by 2 and computes the next interaction point coordinates.
+; $F461: Uses interaction coordinates previously set by the caller.
+; Returns:
+;   A (low byte): Map16 page
+;   Z: Set if Map16 page is 0
+;   Y: Map16 tile ID (low byte)
+advance_and_lookup_map16_00F44D:
     INX                                     ;$00F44D \ Prepare to process the next player collision point
     INX                                     ;$00F44E |
     REP #$20                                ;$00F44F | Enable 16 bit A.
@@ -12493,11 +12498,18 @@ process_collision_point_00F44D:
     CLC                                     ;$00F45B | 
     ADC.w collision_y_offsets-2,X           ;$00F45C |  add the collision Y offset,
     STA.b InteractionPtYPos_98              ;$00F45F | and set that as the collision Y to process
-process_prev_collision_point_00F461:        ;        /
-    JSR collision_point_vs_layer_00F465     ;$00F461 | Process collision.
+lookup_map16_at_coordinate_00F461:          ;        /
+    JSR lookup_map16_at_position_00F465     ;$00F461 | Process collision.
     RTS                                     ;$00F464 |
 
-collision_point_vs_layer_00F465:
+; Resolves the effective Map16 tile at the interaction coordinates.
+; Returns the air tile ($025) if the position is outside the valid area.
+;
+; Returns:
+;   A (low byte): Map16 page
+;   Z: Set if Map16 page is 0
+;   Y: Map16 tile ID (low byte)
+lookup_map16_at_position_00F465:
     SEP #$20                                ;$00F465 \ Enable 8 bit A.
     STZ.w SwitchPalacePressed_1423          ;$00F467 | Clear switch palace switch flag.
     PHX                                     ;$00F46A | Preserve collision point index.
