@@ -1532,7 +1532,17 @@ PlayerCapePose_13DF: skip 1 ;done
 PlayerPose_13E0: skip 1 ;done
 SlopeType_13E1: skip 1 ;done
 SpinjumpFireball_13E2: skip 1 ;done
+
 WallRunFlag_13E3: skip 1 ;done
+; Valid values
+!WallRunNo_00 = 0
+!WallRunBottomLeft_02 = 2
+!WallRunBottomRight_03 = 3
+!WallRunTopLeft_04 = 4
+!WallRunTopRight_05 = 5
+!WallRunLeft_06 = 6
+!WallRunRight_07 = 7
+
 PlayerPMeter_13E4: skip 1 ;done
 PlayerPoseLenTimer_13E5: skip 1 ;done
 ; 7E13E6 - 7E13E7 unused
@@ -1541,7 +1551,19 @@ CapeInteracts_13E8: skip 1 ;done
 CapeInteractionXPos_13E9: skip 2 ;done
 CapeInteractionYPos_13EB: skip 2 ;done
 PlayerSlopePose_13ED: skip 1 ;done
+
 CurrentSlope_13EE: skip 1 ;done
+; Valid values
+!SlopeVerySteepLeft_FC = $FC
+!SlopeSteepLeft_FD = $FD
+!SlopeNormalLeft_FE = $FE
+!SlopeGradualLeft_FF = $FF
+!SlopeNone_00 = $00
+!SlopeGradualRight_01 = $01
+!SlopeNormalRight_02 = $02
+!SlopeSteepRight_03 = $03
+!SlopeVerySteepRight_04 = $04
+
 PlayerGroundType_13EF: skip 1 ;done
 NetDoorDirIndex_13F0: skip 1 ;done
 VerticalScrollEnabled_13F1: skip 1 ;done

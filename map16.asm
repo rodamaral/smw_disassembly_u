@@ -1,3 +1,7 @@
+; =============================================================================
+; Page 0
+; =============================================================================
+
 !Map16Page_00 = $00
 
 !Map16MudLava_0005 = $0005
@@ -28,8 +32,15 @@
 !Map16SolidInvisTile_0052 = $0052
 !Map16SolidInvisTileLow_52 = !Map16SolidInvisTile_0052&$FF
 
+; =============================================================================
+; Page 1
+; =============================================================================
+
 !Map16NoteItem_0111 = $0111
 !Map16NoteItemLow_11 = !Map16NoteItem_0111&$FF
+
+!Map16RopeMovingSpecific_010C = $010C
+!Map16RopeMovingSpecificLow_0C = !Map16RopeMovingSpecific_010C&$FF
 
 !Map16TurnBlock_011E = $011E
 !Map16TurnBlockLow_1E = !Map16TurnBlock_011E&$FF
@@ -40,6 +51,12 @@
 
 !Map16Star2_0122 = $0122
 !Map16Star2Low_22 = !Map16Star2_0122&$FF
+
+!Map16ThrowBlock_012E = $012E
+!Map16ThrowBlockLow_2E = !Map16ThrowBlock_012E&$FF
+
+!Map16BrownBlock_0132 = $0132
+!Map16BrownBlockLow_32 = !Map16BrownBlock_0132&$FF
 
 !Map16ExitVPipeLeft_0137 = $0137
 !Map16ExitVPipeLeftLow_37 = !Map16ExitVPipeLeft_0137&$FF

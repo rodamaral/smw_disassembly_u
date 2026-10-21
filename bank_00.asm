@@ -10405,7 +10405,7 @@ draw_mario_and_yoshi_00E2BD:
     STA.w PlayerPalPtr_0D82                 ;$00E321 |
     SEP #$20                                ;$00E324 | A->8
     LDX.w PlayerPose_13E0                   ;$00E326 |
-    LDA.b #$05                              ;$00E329 |
+    LDA.b #!WallRunTopRight_05              ;$00E329 |
     CMP.w WallRunFlag_13E3                  ;$00E32B |
     BCS .CODE_00E33E                        ;$00E32E |
     LDA.w WallRunFlag_13E3                  ;$00E330 |
@@ -10739,6 +10739,7 @@ slope_ceiling_points_00E632:
     db $00,$02,$04,$06,$08,$0A,$0C,$0E
 
 collision_x_offsets:
+;     center,waist,should,head,foot,foot side
     dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Small, right side
     dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Small, left side
     dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Big, left side
@@ -10747,19 +10748,24 @@ collision_x_offsets:
     dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Small, on yoshi, right side
     dw $0008,$000E,$000E,$0008,$0005,$000B  ;        | Big, on yoshi, left side
     dw $0008,$0002,$0002,$0008,$000B,$0005  ;        | Big, on yoshi, right side
-    dw $0010,$0020,$0007,$0000,$FFF0,$0008  ;        | Wall-running
-    
+;     body,head(big),foot
+    dw $0010,$0020,$0007                    ;        | Wall-running, right wall
+    dw $0000,$FFF0,$0008                    ;        | Wall-running, left wall
+
 collision_y_offsets:
-    dw $0018,$001A,$0016,$0010,$0020,$0020  ;        | Small
-    dw $0018,$001A,$0016,$0010,$0020,$0020  ;        | Small
-    dw $0012,$001A,$000F,$0008,$0020,$0020  ;        | Big
-    dw $0012,$001A,$000F,$0008,$0020,$0020  ;        | Big
-    dw $001D,$0028,$0019,$0013,$0030,$0030  ;        | Small, on yoshi
-    dw $001D,$0028,$0019,$0013,$0030,$0030  ;        | Small, on yoshi
-    dw $001A,$0028,$0016,$0010,$0030,$0030  ;        | Big, on yoshi
-    dw $001A,$0028,$0016,$0010,$0030,$0030  ;        | Big, on yoshi
-    dw $0018,$0018,$0018,$0018,$0018,$0018  ;        | Wall-running
-    
+;     center,waist,should,head,foot,foot side
+    dw $0018,$001A,$0016,$0010,$0020,$0020  ;        | Small, right side
+    dw $0018,$001A,$0016,$0010,$0020,$0020  ;        | Small, left side
+    dw $0012,$001A,$000F,$0008,$0020,$0020  ;        | Big, left side
+    dw $0012,$001A,$000F,$0008,$0020,$0020  ;        | Big, right side
+    dw $001D,$0028,$0019,$0013,$0030,$0030  ;        | Small, on yoshi, left side
+    dw $001D,$0028,$0019,$0013,$0030,$0030  ;        | Small, on yoshi, right side
+    dw $001A,$0028,$0016,$0010,$0030,$0030  ;        | Big, on yoshi, left side
+    dw $001A,$0028,$0016,$0010,$0030,$0030  ;        | Big, on yoshi, right side
+;     body,head(big),foot
+    dw $0018,$0018,$0018                    ;        | Wall-running, right wall
+    dw $0018,$0018,$0018                    ;        | Wall-running, left wall
+
 DATA_00E90A:
     db $01,$02,$11
 
@@ -10990,10 +10996,10 @@ reset_collision_flags_00EAA6:
     STZ.w Layer2Touched_140E                ;$00EAB5 | and the layer 2 touched flag.
     RTS                                     ;$00EAB8 /
 
-DATA_00EAB9:
+wall_run_min_x_speeds_00EAB9:
     db $DE,$23
 
-DATA_00EABB:
+walk_off_wall_x_speeds_00EABB:
     db $20,$E0
 
 DATA_00EABD:
@@ -11015,62 +11021,61 @@ player_layer_collision_00EADB:
 
 .wall_running
     AND.b #$01                              ;$00EAE9 |
-    TAY                                     ;$00EAEB |
+    TAY                                     ;$00EAEB | 0: left wall, 1: right wall
     LDA.b PlayerXSpeed_7B                   ;$00EAEC |
     SEC                                     ;$00EAEE |
-    SBC.w DATA_00EAB9,Y                     ;$00EAEF |
-    EOR.w DATA_00EAB9,Y                     ;$00EAF2 |
-    BMI walk_off_wall                       ;$00EAF5 |
-    LDA.b PlayerInAir_72                    ;$00EAF7 |
-    ORA.w CarryingFlagMirror_148F           ;$00EAF9 |
-    ORA.b PlayerIsDucking_73                ;$00EAFC |
-    ORA.w RidingYoshi_187A                  ;$00EAFE |
-    BNE walk_off_wall                       ;$00EB01 |
+    SBC.w wall_run_min_x_speeds_00EAB9,Y    ;$00EAEF |
+    EOR.w wall_run_min_x_speeds_00EAB9,Y    ;$00EAF2 | branch if:
+    BMI walk_off_wall                       ;$00EAF5 |\ - not moving fast enough
+    LDA.b PlayerInAir_72                    ;$00EAF7 || - in air
+    ORA.w CarryingFlagMirror_148F           ;$00EAF9 || - carrying something
+    ORA.b PlayerIsDucking_73                ;$00EAFC || - ducking
+    ORA.w RidingYoshi_187A                  ;$00EAFE || - riding Yoshi
+    BNE walk_off_wall                       ;$00EB01 |/
     LDA.w WallRunFlag_13E3                  ;$00EB03 |
-    CMP.b #$06                              ;$00EB06 |
-    BCS ..on_wall                           ;$00EB08 |
+    CMP.b #!WallRunLeft_06                  ;$00EB06 |
+    BCS ..fully_on_wall                     ;$00EB08 | branch if fully on the wall
     LDX.b PlayerYPosBlock_90                ;$00EB0A |
     CPX.b #$08                              ;$00EB0C |
-    BCC stop_wall_running_return            ;$00EB0E |
-    CMP.b #$04                              ;$00EB10 |
-    BCS stop_wall_running                   ;$00EB12 |
-    ORA.b #$04                              ;$00EB14 |
-    STA.w WallRunFlag_13E3                  ;$00EB16 |
-..solid_collision                           ;        |
-    LDA.b PlayerXPos_94                     ;$00EB19 |
-    AND.b #$F0                              ;$00EB1B |
-    ORA.b #$08                              ;$00EB1D |
-    STA.b PlayerXPos_94                     ;$00EB1F |
-    RTS                                     ;$00EB21 |
+    BCC return_00EB76                       ;$00EB0E | return if not "inside the" wall enough, without checking layer contact
+    CMP.b #!WallRunTopLeft_04               ;$00EB10 |
+    BCS stop_wall_running                   ;$00EB12 |\ branch if on the top (45° angle)
+    ORA.b #!WallRunTopLeft_04               ;$00EB14 || if on the bottom  (45° angle)
+    STA.w WallRunFlag_13E3                  ;$00EB16 ||  change to fully running the wall vertically and do not check layer contact
+..adjust_x_pos_00EB19                       ;        ||
+    LDA.b PlayerXPos_94                     ;$00EB19 ||
+    AND.b #$F0                              ;$00EB1B ||
+    ORA.b #$08                              ;$00EB1D ||
+    STA.b PlayerXPos_94                     ;$00EB1F ||
+    RTS                                     ;$00EB21 |/
 
-..on_wall
+..fully_on_wall
     LDX.b #$60                              ;$00EB22 |
-    TYA                                     ;$00EB24 |
-    BEQ ..on_left_wall                      ;$00EB25 |
-    LDX.b #$66                              ;$00EB27 |
-..on_left_wall                              ;        |
-    JSR CODE_00EFE8                         ;$00EB29 |
+    TYA                                     ;$00EB24 | 0: left wall, 1: right wall
+    BEQ +                                   ;$00EB25 |\ calculate interaction point offset based on wall
+    LDX.b #$66                              ;$00EB27 |/
++   JSR process_wall_run_point_00EFE8       ;$00EB29 | 1. process interaction point for Body
     LDA.b Powerup_19                        ;$00EB2C |
-    BNE ..process_big                       ;$00EB2E |
-    INX                                     ;$00EB30 |
-    INX                                     ;$00EB31 |
-    BRA ..skip                              ;$00EB32 |
+    BNE ...process_big                      ;$00EB2E |\
+    INX                                     ;$00EB30 || skip first interaction point if small
+    INX                                     ;$00EB31 ||
+    BRA ...skip_big                         ;$00EB32 |/
 
-..process_big                               ;        |
-    JSR CODE_00EFE8                         ;$00EB34 |
-..skip                                      ;        |
-    JSR advance_and_lookup_map16_00F44D     ;$00EB37 |
-    BNE ..solid_collision                   ;$00EB3A |
-    LDA.b #$02                              ;$00EB3C |
-    TRB.w WallRunFlag_13E3                  ;$00EB3E |
-    RTS                                     ;$00EB41 |
+...process_big                              ;        |
+    JSR process_wall_run_point_00EFE8       ;$00EB34 | 2. process interaction point for Big player head
+...skip_big                                 ;        |
+    JSR advance_and_lookup_map16_00F44D     ;$00EB37 | 3. process interaction point for foot
+    BNE ..adjust_x_pos_00EB19               ;$00EB3A |\ branch if on a page 1 tile
+    LDA.b #$02                              ;$00EB3C ||  if in a page 0 tile, clear bit 2
+    TRB.w WallRunFlag_13E3                  ;$00EB3E ||  set flag to Top (45° angle), preparing to leave the wall
+    RTS                                     ;$00EB41 |/
 
-fall_off_wall:
+fall_off_wall_00EB42:
     LDA.w WallRunFlag_13E3                  ;$00EB42 |
-    AND.b #$01                              ;$00EB45 |
+    AND.b #$01                              ;$00EB45 | 0: left wall, 1: right wall
     TAY                                     ;$00EB47 |
 walk_off_wall:                              ;        |
-    LDA.w DATA_00EABB,Y                     ;$00EB48 |
+    LDA.w walk_off_wall_x_speeds_00EABB,Y   ;$00EB48 | give (-+)32 X speed when leaving wall
     STA.b PlayerXSpeed_7B                   ;$00EB4B |
     TYA                                     ;$00EB4D |
     ASL                                     ;$00EB4E |
@@ -11095,7 +11100,7 @@ walk_off_wall:                              ;        |
     STA.b PlayerYSpeed_7D                   ;$00EB71 |
 stop_wall_running:
     STZ.w WallRunFlag_13E3                  ;$00EB73 |
-.return
+return_00EB76:
     RTS                                     ;$00EB76 |
 
 normal_collision_00EB77:
@@ -11729,24 +11734,24 @@ CODE_00EFCD:
 Return00EFE7:
     RTS
 
-CODE_00EFE8:
-    JSR advance_and_lookup_map16_00F44D
-    BNE .ADDR_00EFF0                        ;$00EFEB |
+process_wall_run_point_00EFE8:
+    JSR advance_and_lookup_map16_00F44D     ;$00EFE8 | Process given interaction point for wall running player
+    BNE .page1_wall_00EFF0                  ;$00EFEB |
     JMP process_page_0_tiles_no_climb       ;$00EFED |
 
-.ADDR_00EFF0:
-    CPY.b #$11
-    BCC .Return00F004                       ;$00EFF2 |
-    CPY.b #$6E                              ;$00EFF4 |
-    BCS .Return00F004                       ;$00EFF6 |
+.page1_wall_00EFF0
+    CPY.b #!Map16NoteItemLow_11
+    BCC ..return_00F004                     ;$00EFF2 |
+    CPY.b #!Map16SlopeLow_6E                ;$00EFF4 |
+    BCS ..return_00F004                     ;$00EFF6 |
     TYA                                     ;$00EFF8 |
     LDY.b #$00                              ;$00EFF9 |
     JSL handle_non_spike_tile_00F160        ;$00EFFB |
     PLA                                     ;$00EFFF |
     PLA                                     ;$00F000 |
-    JMP fall_off_wall                       ;$00F001 |
+    JMP fall_off_wall_00EB42                ;$00F001 |
 
-.Return00F004:
+..return_00F004:
     RTS
 
 try_step_on_purple_triangle_00F005:
@@ -11779,8 +11784,8 @@ try_step_on_purple_triangle_00F005:
 .CODE_00F035:
     LDA.b PlayerXSpeed_7B
     SEC                                     ;$00F037 |
-    SBC.w DATA_00EAB9,X                     ;$00F038 |
-    EOR.w DATA_00EAB9,X                     ;$00F03B |
+    SBC.w wall_run_min_x_speeds_00EAB9,X    ;$00F038 |
+    EOR.w wall_run_min_x_speeds_00EAB9,X    ;$00F03B |
     BMI .Return00F04C                       ;$00F03E |
     LDA.w CarryingFlagMirror_148F           ;$00F040 |
     ORA.b PlayerIsDucking_73                ;$00F043 |
@@ -12704,11 +12709,11 @@ hurt_mario_00F5B7:
     BNE return_00F628                       ;$00F5C4 |
     STZ.w GameCloudCoinCount_18E3           ;$00F5C6 |
     LDA.w WallRunFlag_13E3                  ;$00F5C9 |
-    BEQ +                                   ;$00F5CC |\
+    BEQ +                                   ;$00F5CC |\ skip if not wall running
     PHB                                     ;$00F5CE ||
     PHK                                     ;$00F5CF ||
     PLB                                     ;$00F5D0 ||
-    JSR fall_off_wall                       ;$00F5D1 ||
+    JSR fall_off_wall_00EB42                ;$00F5D1 ||
     PLB                                     ;$00F5D4 |/
 +   LDA.b Powerup_19                        ;$00F5D5 |
     BEQ kill_player_00F606                  ;$00F5D7 |
@@ -13022,7 +13027,7 @@ ProcessVerticalScroll00F7F4:
 .CODE_00F82A:
     SEP #$20                                ;$00F82A | A->8
     LDA.w WallRunFlag_13E3                  ;$00F82C |
-    CMP.b #$06                              ;$00F82F |
+    CMP.b #!WallRunLeft_06                  ;$00F82F |
     BCS .CODE_00F845                        ;$00F831 |
     LDA.w YoshiHasWingsGfx_1410             ;$00F833 |
     LSR                                     ;$00F836 |
