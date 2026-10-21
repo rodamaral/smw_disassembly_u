@@ -10639,7 +10639,7 @@ DATA_00E51C:
     db $0B,$0B,$0B,$0B,$14,$14,$14,$14
     db $06
 
-DATA_00E53D:
+slope_type_00E53D:
     db $FF,$FF,$FF,$FF,$01,$01,$01,$01
     db $FE,$FE,$02,$02,$FD,$03,$FD,$03
     db $FD,$03,$FD,$00,$00,$00,$00,$00
@@ -11235,7 +11235,7 @@ normal_collision_00EB77:
     BEQ +                                   ;$00EC52 |\
     JSR process_horizontal_pipe             ;$00EC54 ||
     PHX                                     ;$00EC57 ||
-    JSR process_throw_block                 ;$00EC58 ||
+    JSR try_grab_throw_block_tile_00F267    ;$00EC58 ||
     LDY.w Map16_1693                        ;$00EC5B ||
     PLX                                     ;$00EC5E |/
 +   LDA.b #$03                              ;$00EC5F |
@@ -11513,48 +11513,48 @@ page1_opposite_foot_upper_00EE3A:
     CMP.b #!TilesetRope1_02                 ;$00EE40 |
     BEQ +                                   ;$00EE42 |\
     CMP.b #!TilesetRope3_08                 ;$00EE44 ||
-    BNE .CODE_00EE57                        ;$00EE46 |/
+    BNE .page1_continue_00EE57              ;$00EE46 |/ branch if not a Rope tileset
 +   TYA                                     ;$00EE48 |
     SEC                                     ;$00EE49 |
-    SBC.b #$0C                              ;$00EE4A |
+    SBC.b #!Map16RopeMovingSpecificLow_0C   ;$00EE4A |
     CMP.b #$02                              ;$00EE4C |
-    BCS .CODE_00EE57                        ;$00EE4E |
-    ASL                                     ;$00EE50 |
-    TAX                                     ;$00EE51 |
-    JSR CODE_00EFCD                         ;$00EE52 |
-    BRA .CODE_00EE83                        ;$00EE55 |
+    BCS .page1_continue_00EE57              ;$00EE4E |\ branch if a not a rope conveyor tile
+    ASL                                     ;$00EE50 ||
+    TAX                                     ;$00EE51 ||
+    JSR step_on_rope_conveyor_00EFCD        ;$00EE52 ||
+    BRA .page1_opposite_foot_flat_ground    ;$00EE55 |/
 
-.CODE_00EE57:
-    JSR process_throw_block
+.page1_continue_00EE57:
+    JSR try_grab_throw_block_tile_00F267    ;$00EE57 |
     LDY.b #$03                              ;$00EE5A |
     LDA.w Map16_1693                        ;$00EE5C |
-    CMP.b #$1E                              ;$00EE5F |
-    BNE .CODE_00EE78                        ;$00EE61 |
+    CMP.b #!Map16TurnBlockLow_1E            ;$00EE5F |
+    BNE ..check_brown_block_00EE78          ;$00EE61 | branch if not a Turn Block
     LDX.b TempPlayerAir_8F                  ;$00EE63 |
-    BEQ .CODE_00EE83                        ;$00EE65 |\
+    BEQ .page1_opposite_foot_flat_ground    ;$00EE65 |\
     LDX.b Powerup_19                        ;$00EE67 ||
-    BEQ .CODE_00EE83                        ;$00EE69 ||
+    BEQ .page1_opposite_foot_flat_ground    ;$00EE69 ||
     LDX.w SpinJumpFlag_140D                 ;$00EE6B ||
-    BEQ .CODE_00EE83                        ;$00EE6E ||
-    LDA.b #!Map16InvisCoinLow_21            ;$00EE70 ||
-    JSL functional_block_by_id_00F17F       ;$00EE72 ||
+    BEQ .page1_opposite_foot_flat_ground    ;$00EE6E ||\
+    LDA.b #!Map16InvisCoinLow_21            ;$00EE70 ||| break turn block if big and spinjumping on it
+    JSL functional_block_by_id_00F17F       ;$00EE72 ||/  and treat the rest of the routine as if the foot in on a kaizo block
     BRA check_on_solid_sprite_flag_00EE1D   ;$00EE76 |/
 
-.CODE_00EE78:
-    CMP.b #$32
+..check_brown_block_00EE78
+    CMP.b #!Map16BrownBlockLow_32           ;$00EE78 |
     BNE +                                   ;$00EE7A |\
     STZ.w BlockSnakeActive_1909             ;$00EE7C ||
 +   JSL handle_hurting_blocks_00F120        ;$00EE7F |/
-.CODE_00EE83:
-    LDY.b #$20
+.page1_opposite_foot_flat_ground            ;        |
+    LDY.b #$20                              ;$00EE83 | Y entry for flat ground in the slope type table
 try_step_on_switch_palace_00EE85:
-    LDA.b PlayerYSpeed_7D
-    BPL +                                   ;$00EE87 |\ skip if going upward
-    LDA.b TempPlayerGround_8D               ;$00EE89 ||
-    CMP.b #$02                              ;$00EE8B ||
-    BCC return_00EE39                       ;$00EE8D |/
+    LDA.b PlayerYSpeed_7D                   ;$00EE85 |
+    BPL +                                   ;$00EE87 |\ skip if Y speed is non-negative
+    LDA.b TempPlayerGround_8D               ;$00EE89 || return if:
+    CMP.b #$02                              ;$00EE8B ||  - moving upwards
+    BCC return_00EE39                       ;$00EE8D |/  - and not stepping on layer 2 ground
 +   LDX.w SwitchPalacePressed_1423          ;$00EE8F | 01/02 = green, 05/06 = yellow, 09/0A = blue, 0D/0E = red
-    BEQ snap_player_to_block_top_00EED1     ;$00EE92 | branch if not pressing a Swiitch Palace
+    BEQ snap_player_to_block_top_00EED1     ;$00EE92 | branch if not pressing a Switch Palace
     DEX                                     ;$00EE94 |
     TXA                                     ;$00EE95 |
     AND.b #$03                              ;$00EE96 |
@@ -11596,7 +11596,7 @@ snap_player_to_block_top_00EED1:
     SBC.b PlayerYPosBlock_90                ;$00EEDD |
     STA.b PlayerYPos_96+1                   ;$00EEDF |
 foot_on_solid_tile_or_sprite_00EEE1:
-    LDA.w DATA_00E53D,Y
+    LDA.w slope_type_00E53D,Y               ;$00EEE1 |
     BNE +                                   ;$00EEE4 |\ branch if
     LDX.w PlayerSlopePose_13ED              ;$00EEE6 ||
     BEQ .CODE_00EF05                        ;$00EEE9 || branch if
@@ -11616,13 +11616,13 @@ foot_on_solid_tile_or_sprite_00EEE1:
     LDX.w DATA_00E4B9,Y                     ;$00EF05 |
     STX.w SlopeType_13E1                    ;$00EF08 |
     CPY.b #$1C                              ;$00EF0B |
-    BCS .CODE_00EF38                        ;$00EF0D |
+    BCS .CODE_00EF38                        ;$00EF0D | branch if 
     LDA.b PlayerXSpeed_7B                   ;$00EF0F |
-    BEQ .CODE_00EF31                        ;$00EF11 |
-    LDA.w DATA_00E53D,Y                     ;$00EF13 |
-    BEQ .CODE_00EF31                        ;$00EF16 |
+    BEQ .CODE_00EF31                        ;$00EF11 | branch if 
+    LDA.w slope_type_00E53D,Y               ;$00EF13 |
+    BEQ .CODE_00EF31                        ;$00EF16 | branch if 
     EOR.b PlayerXSpeed_7B                   ;$00EF18 |
-    BPL .CODE_00EF31                        ;$00EF1A |
+    BPL .CODE_00EF31                        ;$00EF1A | branch if 
     STX.w PlayerPoseLenTimer_13E5           ;$00EF1C |
     LDA.b PlayerXSpeed_7B                   ;$00EF1F |
     BPL +                                   ;$00EF21 |\
@@ -11717,7 +11717,7 @@ try_step_on_conveyor_00EFBC:
     SBC.b #$CC                              ;$00EFC9 |
     ASL                                     ;$00EFCB |
     TAX                                     ;$00EFCC |
-CODE_00EFCD:
+step_on_rope_conveyor_00EFCD:
     LDA.b Frame_13
     AND.b #$03                              ;$00EFCF |
     BNE Return00EFE7                        ;$00EFD1 |
@@ -12176,26 +12176,25 @@ CODE_00F1F9:
     BPL -                                   ;$00F262 |/
     JMP return_00F1F6                       ;$00F264 |
 
-process_throw_block:
-    CPY.b #$2E                              ;$00F267 \ If the tile's not a throw block,
-    BNE .return                             ;$00F269 | return.
+try_grab_throw_block_tile_00F267:
+    CPY.b #!Map16ThrowBlockLow_2E           ;$00F267 \ If the tile's not a throw block,
+    BNE .return_00F28B                      ;$00F269 | return
     BIT.b byetudlrPress_16                  ;$00F26B |\ If the player didn't press X or Y,
-    BVC .return                             ;$00F26D |/ return.
+    BVC .return_00F28B                      ;$00F26D |/ return
     LDA.w CarryingFlagMirror_148F           ;$00F26F |\ If the player is already carrying something
-    ORA.w RidingYoshi_187A                  ;$00F272 | | or on Yoshi,
-    BNE .return                             ;$00F275 |/ return.
+    ORA.w RidingYoshi_187A                  ;$00F272 || or on Yoshi,
+    BNE .return_00F28B                      ;$00F275 |/ return
     LDA.b #$02                              ;$00F277 |
-    PHA                                     ;$00F279 | Set the data bank to $02.
+    PHA                                     ;$00F279 | Set the data bank to $02
     PLB                                     ;$00F27A |
-    JSL spawn_throw_block                   ;$00F27B | Try to spawn a throw block.
-    BMI .no_sprite_slots                    ;$00F27F |\ If there were no sprite slots, return.
+    JSL spawn_throw_block_if_free_02862F    ;$00F27B | Try to spawn a throw block
+    BMI +                                   ;$00F27F |\ If there were no sprite slots, return
     LDA.b #!GenEmpty_02                     ;$00F281 ||
-    STA.b TileGenerate_9C                   ;$00F283 || Clear the tile.
+    STA.b TileGenerate_9C                   ;$00F283 || Clear the tile
     JSL generate_tile_00BEB0                ;$00F285 |/
-.no_sprite_slots                            ;        |
-    PHK                                     ;$00F289 |
++   PHK                                     ;$00F289 |
     PLB                                     ;$00F28A |
-.return                                     ;        |
+.return_00F28B                              ;        |
     RTS                                     ;$00F28B /
 
 process_center_page_0_tiles:

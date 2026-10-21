@@ -759,7 +759,7 @@ CODE_0285EF:
     STA.w MinorSprTimer_1850,Y              ;$02862B |
     RTL                                     ;$02862E |
 
-spawn_throw_block:
+spawn_throw_block_if_free_02862F:
     JSL FindFreeSprSlot                     ;$02862F \ Find a free sprite slot.
     BMI .return                             ;$028633 | If unsuccessful, return.
     TYX                                     ;$028635 | Set X to the sprite slot.
@@ -5235,7 +5235,7 @@ CODE_02A718:
     STA.w SpriteBlockOffset_1694            ;$02A71A |
     PHX                                     ;$02A71D |
     LDX $08                                 ;$02A71E |
-    LDA.l DATA_00E53D,X                     ;$02A720 |
+    LDA.l slope_type_00E53D,X               ;$02A720 |
     PLX                                     ;$02A724 |
     STA $0B                                 ;$02A725 |
 CODE_02A727:

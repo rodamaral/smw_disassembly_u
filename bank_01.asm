@@ -2719,7 +2719,7 @@ CODE_01935D:
     STA.w SpriteBlockOffset_1694            ;$01935F |
     PHX                                     ;$019362 |
     LDX $08                                 ;$019363 |
-    LDA.l DATA_00E53D,X                     ;$019365 |
+    LDA.l slope_type_00E53D,X               ;$019365 |
     PLX                                     ;$019369 |
     STA.w SpriteSlope_15B8,X                ;$01936A |
     CMP.b #$04                              ;$01936D |
