@@ -1,4 +1,8 @@
 !Map16Page_00 = $00
+
+!Map16MudLava_0005 = $0005
+!Map16MudLavaLow_05 = !Map16MudLava_0005&$FF
+
 !Map16InvisCoinBlock_0021 = $0021
 !Map16InvisCoinBlockLow_21 = !Map16InvisCoinBlock_0021&$FF
 
@@ -40,8 +44,20 @@
 !Map16ExitVPipeLeft_0137 = $0137
 !Map16ExitVPipeLeftLow_37 = !Map16ExitVPipeLeft_0137&$FF
 
+!Map16LavaSpecific_0159 = $0159
+!Map16LavaSpecificLow_59 = !Map16LavaSpecific_0159&$FF
+
 !Map16Slope_016E = $016E
 !Map16SlopeLow_6E = !Map16Slope_016E&$FF
 
+!Map16ConveyorsLeftUp_01CE = $01CE
+!Map16ConveyorsLeftUpLow_CE = !Map16ConveyorsLeftUp_01CE&$FF
+
+!Map16LavaSlopeSpecific_01D2 = $01D2
+!Map16LavaSlopeSpecificLow_D2 = !Map16LavaSlopeSpecific_01D2&$FF
+
 !Map16SlopeAssist_01D8 = $01D8
 !Map16SlopeAssistLow_D8 = !Map16SlopeAssist_01D8&$FF
+
+!Map16LavaSlope_01FB = $01FB
+!Map16LavaSlopeLow_FB = !Map16LavaSlope_01FB&$FF
