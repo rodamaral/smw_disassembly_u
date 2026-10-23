@@ -10640,7 +10640,7 @@ DATA_00E51C:
     db $06
 
 slope_type_00E53D:
-    db $FF,$FF,$FF,$FF,$01,$01,$01,$01
+    db $FF,$FF,$FF,$FF,$01,$01,$01,$01      ;$00E53D |
     db $FE,$FE,$02,$02,$FD,$03,$FD,$03
     db $FD,$03,$FD,$00,$00,$00,$00,$00
     db $08,$08,$F8,$F8,$FC,$FC,$04,$04
@@ -10766,7 +10766,7 @@ collision_y_offsets:
     dw $0018,$0018,$0018                    ;        | Wall-running, right wall
     dw $0018,$0018,$0018                    ;        | Wall-running, left wall
 
-DATA_00E90A:
+tile_block_status_00E90A:
     db $01,$02,$11
 
 DATA_00E90D:
@@ -10891,7 +10891,7 @@ CODE_00E9C8:
     STA.b PlayerXSpeed_7B                   ;$00E9EE ||
     LDA.w Layer1ScrollXPosUpd_144E          ;$00E9F0 ||
     STA.w PlayerXPosSpx_13DA                ;$00E9F3 |/
-+   LDA.w DATA_00E90A,Y                     ;$00E9F6 |
++   LDA.w tile_block_status_00E90A,Y        ;$00E9F6 |
     TSB.b PlayerBlocked_77                  ;$00E9F9 |
 CODE_00E9FB:
     LDA.b PlayerBlocked_77
@@ -11103,9 +11103,23 @@ stop_wall_running:
 return_00EB76:
     RTS                                     ;$00EB76 |
 
+; The points are horizontally symmetrical around Mario's center:
+;
+;           +        ; Head
+;
+;     +           +  ; Shoulders
+;
+;           +        ; Center
+;
+;     +           +  ; Waist
+;
+;        +  +  +     ; Left foot, middle foot, right foot
+;
+; Lateral points in the same tile column as Mario's center are ignored
+; Some points may also be skipped depending on some conditions
 normal_collision_00EB77:
     LDX.b #$00                              ;$00EB77 \ X: current collision point index: 
-    LDA.b Powerup_19                        ;$00EB79 |  0: center, 2: waist, 4: shoulder, 6: head, 8: mid point between feet, A: foot (opposite side of waist/shoulder)
+    LDA.b Powerup_19                        ;$00EB79 |  0: center, 2: waist, 4: shoulder, 6: head, 8: middle foot, A: foot
     BEQ +                                   ;$00EB7B |\ If the player is big
     LDA.b PlayerIsDucking_73                ;$00EB7D ||
     BNE +                                   ;$00EB7F || and not ducking,
@@ -11125,111 +11139,109 @@ normal_collision_00EB77:
     STA.b PlayerXPosBlock_92                ;$00EB97 |  and set the position within a block.
     STZ.b PlayerBlockXSide_93               ;$00EB99 |
     CPY.b #$08                              ;$00EB9B | If the player is on the left side of a block,
-    BCC .right_side_00EBA5                  ;$00EB9D |\
+    BCC +                                   ;$00EB9D |\
     TXA                                     ;$00EB9F ||
     ADC.b #$0B                              ;$00EBA0 || use the left side collision point indices.
     TAX                                     ;$00EBA2 ||
     INC.b PlayerBlockXSide_93               ;$00EBA3 |/ Set the side of the block that the player is in.
-.right_side_00EBA5                          ;        |
-    LDA.b PlayerYPosBlock_90                ;$00EBA5 | Get the player Y,
++   LDA.b PlayerYPosBlock_90                ;$00EBA5 | Get the player Y,
     CLC                                     ;$00EBA7 | 
     ADC.w collision_y_offsets+6,X           ;$00EBA8 |  add the head offset,
     AND.b #$0F                              ;$00EBAB |
     STA.b PlayerBlockMoveY_91               ;$00EBAD | and set the amount to move the player out of a block.
     JSR advance_and_lookup_map16_00F44D     ;$00EBAF | Process the center body collision point.
-    BEQ ..center_page_0                     ;$00EBB2 |\ Process page 0 tiles, if applicable.
+    BEQ .page0_center_00EBDD                ;$00EBB2 |\ Process page 0 tiles, if applicable.
     CPY.b #!Map16NoteItemLow_11             ;$00EBB4 || If it's tiles 100 - 110,
-    BCC .skip_center_00EC24                 ;$00EBB6 || ignore it.
+    BCC .goto_waist_00EC24                  ;$00EBB6 || ignore it.
     CPY.b #!Map16SlopeLow_6E                ;$00EBB8 || If it's tiles 111 - 16D,
-    BCC ..center_solid_00EBC9               ;$00EBBA || process being inside a solid block.
+    BCC .page1_center_solid_00EBC9          ;$00EBBA || process being inside a solid block.
     TYA                                     ;$00EBBC ||
-    JSL is_page_1_water                     ;$00EBBD || If the tile isn't a water tile,
-    BCC .skip_center_00EC24                 ;$00EBC1 ||
+    JSL is_page_1_water_00F04D              ;$00EBBD || If the tile isn't a water tile,
+    BCC .goto_waist_00EC24                  ;$00EBC1 ||
     LDA.b #$01                              ;$00EBC3 ||
     TSB.b InteractionPtsInWater_8A          ;$00EBC5 |/ disable the center swimming flag.
-    BRA .skip_center_00EC24                 ;$00EBC7 /
+    BRA .goto_waist_00EC24                  ;$00EBC7 /
 
-..center_solid_00EBC9
-    INX                                     ;$00EBC9 \ Skip waist and shoulder points
+.page1_center_solid_00EBC9
+    INX                                     ;$00EBC9 \ Skip waist and shoulder points WARN: SKIP!
     INX                                     ;$00EBCA |
     INX                                     ;$00EBCB |
     INX                                     ;$00EBCC | Skip to the head collision point.
     TYA                                     ;$00EBCD |
     LDY.b #$00                              ;$00EBCE |
     CMP.b #!Map16TurnBlockLow_1E            ;$00EBD0 |\ If the tile is a turn block
-    BEQ ..not_inside_block_00EBDA           ;$00EBD2 |\
+    BEQ +                                   ;$00EBD2 |\
     CMP.b #!Map16SolidInvisTileLow_52       ;$00EBD4 || or a temporary invisible block,
-    BEQ ..not_inside_block_00EBDA           ;$00EBD6 ||
+    BEQ +                                   ;$00EBD6 ||
     LDY.b #$02                              ;$00EBD8 |/ don't mark the player as being inside of a block.
-..not_inside_block_00EBDA                   ;        |
-    JMP .center_in_block                    ;$00EBDA / Run center body in block code.
++   JMP .center_in_block_00EC6F             ;$00EBDA / Run center body in block code.
 
-..center_page_0
-    CPY.b #$9C                              ;$00EBDD \
+.page0_center_00EBDD
+    CPY.b #!Map16BossDoorBaseLow_9C         ;$00EBDD \
     BNE ..not_castle_door                   ;$00EBDF |\ If the tile is part of the castle door
     LDA.w ObjectTileset_1931                ;$00EBE1 ||
     CMP.b #!TilesetCastle1_01               ;$00EBE4 || and the tileset is the castle tileset,
-    BEQ ..castle_door                       ;$00EBE6 |/ process castle door.
+    BEQ ..castle_door_00EC06                ;$00EBE6 |/ process castle door.
 ..not_castle_door                           ;        |
-    CPY.b #$20                              ;$00EBE8 | If applicable, process lower half of a door.
+    CPY.b #!Map16CastleDoorBaseLow_20       ;$00EBE8 | If applicable, process lower half of a door.
     BEQ ..lower_door                        ;$00EBEA |
-    CPY.b #$1F                              ;$00EBEC | If applicable, process upper half of a door.
+    CPY.b #!Map16CastleDoorTopLow_1F        ;$00EBEC | If applicable, process upper half of a door.
     BEQ ..upper_door                        ;$00EBEE |
     LDA.w BlueSwitchTimer_14AD              ;$00EBF0 |\ If the blue P-switch is active,
-    BEQ ..process_center                    ;$00EBF3 ||
-    CPY.b #$28                              ;$00EBF5 || if applicable, process lower half of a P-switch door.
+    BEQ ..process_center_00EC21             ;$00EBF3 ||
+    CPY.b #!Map16PowDoorBaseLow_28          ;$00EBF5 || if applicable, process lower half of a P-switch door.
     BEQ ..lower_door                        ;$00EBF7 ||
-    CPY.b #$27                              ;$00EBF9 || if applicable, process upper half of P-switch door.
-    BNE ..process_center                    ;$00EBFB |/
+    CPY.b #!Map16PowDoorTopLow_27           ;$00EBF9 || if applicable, process upper half of P-switch door.
+    BNE ..process_center_00EC21             ;$00EBFB |/
 ..upper_door                                ;        |
     LDA.b Powerup_19                        ;$00EBFD |\ If the player is big,
-    BNE .skip_center_00EC24                 ;$00EBFF |/ don't let him use the upper half of the door.
+    BNE .goto_waist_00EC24                  ;$00EBFF |/ don't let him use the upper half of the door.
 ..lower_door                                ;        |
     JSR can_use_door                        ;$00EC01 |\ If the player isn't positioned correctly,
-    BCS .skip_center_00EC24                 ;$00EC04 ||
-..castle_door                               ;        ||
-    LDA $8F                                 ;$00EC06 || or if the player isn't on the ground,
-    BNE .skip_center_00EC24                 ;$00EC08 ||
+    BCS .goto_waist_00EC24                  ;$00EC04 ||
+..castle_door_00EC06                        ;        ||
+    LDA.b TempPlayerAir_8F                  ;$00EC06 || or if the player isn't on the ground,
+    BNE .goto_waist_00EC24                  ;$00EC08 ||
     LDA.b byetudlrPress_16                  ;$00EC0A || or if the player isn't pressing up,
     AND.b #$08                              ;$00EC0C ||
-    BEQ .skip_center_00EC24                 ;$00EC0E |/ don't let him use the door.
+    BEQ .goto_waist_00EC24                  ;$00EC0E |/ don't let him use the door.
     LDA.b #$0F                              ;$00EC10 |\ Play the door sound,
     STA.w SPCIO3_1DFC                       ;$00EC12 ||
     JSR go_to_sublevel                      ;$00EC15 || go to the sublevel,
     LDA.b #!AniDoor_0D                      ;$00EC18 ||
     STA.b PlayerAnimation_71                ;$00EC1A || set the door animation,
     JSR disable_controls                    ;$00EC1C |/ and disable controls.
-    BRA .skip_center_00EC24                 ;$00EC1F /
+    BRA .goto_waist_00EC24                  ;$00EC1F /
 
-..process_center
-    JSR process_center_page_0_tiles         ;$00EC21 \ Process center body page 0 tile collision.
-.skip_center_00EC24                         ;        |
+..process_center_00EC21
+    JSR process_page0_center_00F28C         ;$00EC21 \ Process center body page 0 tile collision.
+.goto_waist_00EC24                          ;        |
     JSR advance_and_lookup_map16_00F44D     ;$00EC24 | Process the waist collision point.
-    BEQ ..side_body_page_0                  ;$00EC27 | If applicable, process page 0 tiles.
-    CPY.b #!Map16NoteItemLow_11             ;$00EC29 |\ If the tile is 100 - 111
-    BCC ..skip_side_body                    ;$00EC2B | |
-    CPY.b #!Map16SlopeLow_6E                ;$00EC2D | | or 16E - 1FF,
-    BCS ..skip_side_body                    ;$00EC2F |/ ignore it.
-    INX                                     ;$00EC31 |
-    INX                                     ;$00EC32 | Skip to the head collision point.
-    BRA ..side_body_in_block                ;$00EC33 /
+    BEQ ..page0_waist_body_00EC35           ;$00EC27 | If applicable, process page 0 tiles.
+    CPY.b #!Map16NoteItemLow_11             ;$00EC29 |\ branch if the tile is 100 - 110
+    BCC ..skip_waist_body_00EC3A            ;$00EC2B ||
+    CPY.b #!Map16SlopeLow_6E                ;$00EC2D || or 16E - 1FF,
+    BCS ..skip_waist_body_00EC3A            ;$00EC2F |/
+    INX                                     ;$00EC31 | for 111..16D (solid blocks)
+    INX                                     ;$00EC32 | Skip to the head collision point. WARN: SKIP!
+    BRA ..side_body_in_block_00EC4E         ;$00EC33 /
 
-..side_body_page_0
+..page0_waist_body_00EC35
     LDA.b #$10                              ;$00EC35 \ Load the climbing flag to set.
     JSR process_page_0_tiles_no_swim        ;$00EC37 | Process side body page 0 tile collision without water.
-..skip_side_body                            ;        |
+..skip_waist_body_00EC3A                    ;        |
     JSR advance_and_lookup_map16_00F44D     ;$00EC3A | Process the shoulder collision point.
-    BNE ..shoulder_page_1_00EC46            ;$00EC3D | If applicable, process page 1 tiles.
+    BNE ..page1_shoulder_00EC46             ;$00EC3D | If applicable, process page 1 tiles.
     LDA.b #$08                              ;$00EC3F | Load the climbing flag to set.
     JSR process_page_0_tiles_no_swim        ;$00EC41 | Process side head page 0 tile collision without water.
     BRA .skip_shoulder_00EC8A               ;$00EC44 /
 
-..shoulder_page_1_00EC46                    ;        \
+..page1_shoulder_00EC46                     ;        \
     CPY.b #!Map16NoteItemLow_11             ;$00EC46 | If the tile is 100 - 111
     BCC .skip_shoulder_00EC8A               ;$00EC48 |\
     CPY.b #!Map16SlopeLow_6E                ;$00EC4A || or 16E - 1FF,
     BCS .skip_shoulder_00EC8A               ;$00EC4C |/ ignore it.
-..side_body_in_block                        ;        |
+..side_body_in_block_00EC4E                 ;        |
     LDA.b PlayerDir_76                      ;$00EC4E |
     CMP.b PlayerBlockXSide_93               ;$00EC50 |
     BEQ +                                   ;$00EC52 |\
@@ -11245,14 +11257,13 @@ normal_collision_00EB77:
     AND.b #$0F                              ;$00EC68 |
     CMP.w DATA_00E911,Y                     ;$00EC6A |
     BEQ .skip_shoulder_00EC8A               ;$00EC6D |
-.center_in_block                            ;        |
+.center_in_block_00EC6F                     ;        |
     LDA.w NoteBlockActive_1402              ;$00EC6F |
-    BEQ ..on_note_block                     ;$00EC72 |
-    LDA.w Map16_1693                        ;$00EC74 |
-    CMP.b #!Map16SolidInvisTileLow_52       ;$00EC77 |
-    BEQ .skip_shoulder_00EC8A               ;$00EC79 |
-..on_note_block                             ;        |
-    LDA.w DATA_00E90A,Y                     ;$00EC7B |
+    BEQ +                                   ;$00EC72 |\ branch if not on active noteblock
+    LDA.w Map16_1693                        ;$00EC74 ||
+    CMP.b #!Map16SolidInvisTileLow_52       ;$00EC77 ||
+    BEQ .skip_shoulder_00EC8A               ;$00EC79 |/
++   LDA.w tile_block_status_00E90A,Y        ;$00EC7B |
     TSB.b PlayerBlocked_77                  ;$00EC7E |
     AND.b #!Block_Sides_03                  ;$00EC80 |
     TAY                                     ;$00EC82 |
@@ -11262,7 +11273,7 @@ normal_collision_00EB77:
     JSR advance_and_lookup_map16_00F44D     ;$00EC8A | Process the head collision point.
     BNE .head_page1_00ECB1                  ;$00EC8D |
     LDA.b #$02                              ;$00EC8F |
-    JSR process_page_0_tiles_00F2C2         ;$00EC91 |
+    JSR process_page0_tiles_00F2C2          ;$00EC91 |
     LDY.b PlayerYSpeed_7D                   ;$00EC94 |
     BPL .goto_feet_middle_00ECA3            ;$00EC96 |\ try to hit invisible blocks 21..24 when going up
     LDA.w Map16_1693                        ;$00EC98 || GLITCH: $1693 might be uninitializated at this point, if the previous
@@ -11457,11 +11468,11 @@ normal_collision_00EB77:
 
 ..lot_lava_mud_00EDE4:
     LDA.b #$04                              ;$00EDE4 |
-    JSR process_page_0_tiles_00F2C2         ;$00EDE6 |
+    JSR process_page0_tiles_00F2C2          ;$00EDE6 |
 .goto_opposite_foot_00EDE9                  ;        |
     JSR advance_and_lookup_map16_00F44D     ;$00EDE9 | Process opposite foot
     BNE .page1_opposite_foot_00EDF3         ;$00EDEC |
-    JSR process_page_0_tiles_no_climb       ;$00EDEE |
+    JSR try_get_coin_or_moon_00F309         ;$00EDEE |
     BRA check_on_solid_sprite_flag_00EE1D   ;$00EDF1 |
 
 .page1_opposite_foot_00EDF3:
@@ -11737,7 +11748,7 @@ Return00EFE7:
 process_wall_run_point_00EFE8:
     JSR advance_and_lookup_map16_00F44D     ;$00EFE8 | Process given interaction point for wall running player
     BNE .page1_wall_00EFF0                  ;$00EFEB |
-    JMP process_page_0_tiles_no_climb       ;$00EFED |
+    JMP try_get_coin_or_moon_00F309         ;$00EFED |
 
 .page1_wall_00EFF0
     CPY.b #!Map16NoteItemLow_11
@@ -11796,7 +11807,7 @@ try_step_on_purple_triangle_00F005:
 .Return00F04C:
     RTS
 
-is_page_1_water:
+is_page_1_water_00F04D:
     PHX                                     ;$00F04D \
     LDX.b #$19                              ;$00F04E | Initialize the loop counter.
 .loop                                       ;        |\
@@ -12197,45 +12208,44 @@ try_grab_throw_block_tile_00F267:
 .return_00F28B                              ;        |
     RTS                                     ;$00F28B /
 
-process_center_page_0_tiles:
+process_page0_center_00F28C:
     TYA                                     ;$00F28C \
-    SEC                                     ;$00F28D |\
-    SBC.b #$6F                              ;$00F28E | |
-    CMP.b #$04                              ;$00F290 | | If it's an invisible 1up point, process it.
-    BCS .not_invisible_1up                  ;$00F292 |/
-    CMP.w OneUpCheckpoints_1421             ;$00F294 |\ If it is the next 1up point,
-    BEQ .next_1up_point                     ;$00F297 |/ increase the number of 1up points reached.
-    INC A                                   ;$00F299 |\ If it is the current 1up point,
-    CMP.w OneUpCheckpoints_1421             ;$00F29A | | don't reset the sequence.
-    BEQ .return                             ;$00F29D |/
-    LDA.w OneUpCheckpoints_1421             ;$00F29F |\ If the invisible 1up was already triggered,
-    CMP.b #$04                              ;$00F2A2 | | don't try to trigger it again.
-    BCS .return                             ;$00F2A4 |/
-    LDA.b #$FF                              ;$00F2A6 | Reset the 1up point sequence.
-.next_1up_point                             ;        |
-    INC A                                   ;$00F2A8 |\ Increase the number of 1up points reached.
-    STA.w OneUpCheckpoints_1421             ;$00F2A9 |/
-    CMP.b #$04                              ;$00F2AC |\ If four points have been reached,
-    BNE .return                             ;$00F2AE | |
-    PHX                                     ;$00F2B0 | |
-    JSL TriggerInivis1Up                    ;$00F2B1 | | trigger an invisible 1up,
-    JSR get_level_bit_flag                  ;$00F2B5 | |
-    ORA.w Checkpoint1upCollected_1F3C,Y     ;$00F2B8 | |
-    STA.w Checkpoint1upCollected_1F3C,Y     ;$00F2BB | | and set the "triggered invisible 1up" flag.
-    PLX                                     ;$00F2BE | |
-.return                                     ;        |/
+    SEC                                     ;$00F28D |
+    SBC.b #!Map16Invis1UpLow_6F             ;$00F28E |
+    CMP.b #$04                              ;$00F290 | If it's an invisible 1up point, process it.
+    BCS .not_invisible_1up                  ;$00F292 |
+    CMP.w OneUpCheckpoints_1421             ;$00F294 | If it is the next 1up point,
+    BEQ +                                   ;$00F297 |\ increase the number of 1up points reached.
+    INC A                                   ;$00F299 || If it is the current 1up point,
+    CMP.w OneUpCheckpoints_1421             ;$00F29A ||  don't reset the sequence.
+    BEQ .return_00F2BF                      ;$00F29D ||
+    LDA.w OneUpCheckpoints_1421             ;$00F29F || If the invisible 1up was already triggered,
+    CMP.b #$04                              ;$00F2A2 ||  don't try to trigger it again.
+    BCS .return_00F2BF                      ;$00F2A4 ||
+    LDA.b #$FF                              ;$00F2A6 |/ Reset the 1up point sequence.
++   INC A                                   ;$00F2A8 | Increase the number of 1up points reached.
+    STA.w OneUpCheckpoints_1421             ;$00F2A9 |
+    CMP.b #$04                              ;$00F2AC | If four points have been reached,
+    BNE .return_00F2BF                      ;$00F2AE |\
+    PHX                                     ;$00F2B0 ||
+    JSL TriggerInivis1Up                    ;$00F2B1 || trigger an invisible 1up,
+    JSR get_level_bit_flag                  ;$00F2B5 ||
+    ORA.w Checkpoint1upCollected_1F3C,Y     ;$00F2B8 ||
+    STA.w Checkpoint1upCollected_1F3C,Y     ;$00F2BB || and set the "triggered invisible 1up" flag.
+    PLX                                     ;$00F2BE ||
+.return_00F2BF                              ;        |/
     RTS                                     ;$00F2BF /
 
 .not_invisible_1up
     LDA.b #$01                              ;$00F2C0 \
-process_page_0_tiles_00F2C2:                ;        |
-    CPY.b #$06                              ;$00F2C2 | If it's tiles 000 - 005,
+process_page0_tiles_00F2C2:                 ;        |
+    CPY.b #!Map16VineLow_06                 ;$00F2C2 | If it's tiles 000 - 005,
     BCS process_page_0_tiles_no_swim        ;$00F2C4 |
     TSB.b InteractionPtsInWater_8A          ;$00F2C6 | set the water flag corresponding to the interaction point.
     RTS                                     ;$00F2C8 /
 
 process_page_0_tiles_no_swim:
-    CPY.b #$38                              ;$00F2C9 \ If it's the midway point,
+    CPY.b #!Map16MidwayTapeLow_38           ;$00F2C9 \ If it's the midway point,
     BNE .not_midway_point                   ;$00F2CB |
     LDA.b #!GenEmpty_02                     ;$00F2CD |
     STA.b TileGenerate_9C                   ;$00F2CF |
@@ -12255,65 +12265,65 @@ process_page_0_tiles_no_swim:
     RTS                                     ;$00F2ED /
 
 .not_midway_point
-    CPY.b #$06                              ;$00F2EF \ If the tile is a vine,
+    CPY.b #!Map16VineLow_06                 ;$00F2EF \ If the tile is a vine,
     BEQ .is_vine                            ;$00F2F0 |\
-    CPY.b #$07                              ;$00F2F2 | |
-    BCC process_page_0_tiles_no_climb       ;$00F2F4 | | or it is a climbing net tile,
-    CPY.b #$1D                              ;$00F2F6 | |
-    BCS process_page_0_tiles_no_climb       ;$00F2F8 |/
+    CPY.b #!Map16ClimbingNetLow_07          ;$00F2F2 ||
+    BCC try_get_coin_or_moon_00F309         ;$00F2F4 || or it is a climbing net tile,
+    CPY.b #!Map16PSwitchLow_1D              ;$00F2F6 || branch out if: 00..05, 1D..37, 39..FF
+    BCS try_get_coin_or_moon_00F309         ;$00F2F8 |/
     ORA.b #$80                              ;$00F2FA | set the climbing flag.
 .is_vine                                    ;        |
     CMP.b #$01                              ;$00F2FC |\
-    BNE .not_center                         ;$00F2FE | | If interacting via the center body collision point,
-    ORA.b #$18                              ;$00F300 | | set a different climbing flag.
+    BNE .not_center                         ;$00F2FE || If interacting via the center body collision point,
+    ORA.b #$18                              ;$00F300 || set a different climbing flag.
 .not_center                                 ;        |/
     TSB.b InteractionPtsClimbable_8B        ;$00F302 | Set the climbing flag corresponding to the interaction point.
     LDA.b PlayerBlockXSide_93               ;$00F304 |
     STA.b PlayerBlockXSide_8C               ;$00F306 |
     RTS                                     ;$00F308 /
 
-process_page_0_tiles_no_climb:
-    CPY.b #$2F                              ;$00F309 \
-    BCS .not_coin                           ;$00F30B |
-    CPY.b #$2A                              ;$00F30D |
-    BCS .is_coin                            ;$00F30F | Process coin code, if applicable.
+try_get_coin_or_moon_00F309:
+    CPY.b #!Map16MidwayLow_2F               ;$00F309 \
+    BCS .not_coin                           ;$00F30B | branch if 2F..FF
+    CPY.b #!Map16PowCoinLow_2A              ;$00F30D |
+    BCS .is_coin                            ;$00F30F | branch if 2A..2E
 .not_coin                                   ;        |
-    CPY.b #$6E                              ;$00F311 |\ If the tile is a 3up moon,
-    BNE return_00F376                       ;$00F313 | |
-    LDA.b #$0F                              ;$00F315 | |
-    JSL CODE_00F38A                         ;$00F317 | | give the player three lives,
-    INC.w MoonCounter_13C5                  ;$00F31B | | increase an unused 3up moon flag,
-    PHX                                     ;$00F31E | |
-    JSR get_level_bit_flag                  ;$00F31F | |
-    ORA.w MoonCollected_1FEE,Y              ;$00F322 | |
-    STA.w MoonCollected_1FEE,Y              ;$00F325 | | set the "collected 3up moon" flag,
+    CPY.b #!Map16MoonLow_6E                 ;$00F311 |\ If the tile is a 3up moon,
+    BNE return_00F376                       ;$00F313 ||
+    LDA.b #$0F                              ;$00F315 ||
+    JSL CODE_00F38A                         ;$00F317 || give the player three lives,
+    INC.w MoonCounter_13C5                  ;$00F31B || increase an unused 3up moon flag,
+    PHX                                     ;$00F31E ||
+    JSR get_level_bit_flag                  ;$00F31F ||
+    ORA.w MoonCollected_1FEE,Y              ;$00F322 ||
+    STA.w MoonCollected_1FEE,Y              ;$00F325 || set the "collected 3up moon" flag,
     PLX                                     ;$00F328 |/
     BRA .clear_tile                         ;$00F329 / and clear the tile with item memory.
 
 .is_coin
-    BNE .is_visible_coin                    ;$00F32B \ If the coin is invisible
+    BNE ..is_visible_coin                   ;$00F32B \ If the coin is invisible
     LDA.w BlueSwitchTimer_14AD              ;$00F32D | and the blue P-switch is inactive, stop.
     BEQ return_00F376                       ;$00F330 |
-.is_visible_coin                            ;        |
-    CPY.b #$2D                              ;$00F332 |
-    BEQ .is_upper_yoshi_coin                ;$00F334 |
-    BCC .is_regular_coin                    ;$00F336 | Process regular coin code if it's not a yoshi coin.
+..is_visible_coin                           ;        |
+    CPY.b #!Map16YoshiTopLow_2D             ;$00F332 |
+    BEQ ..is_upper_yoshi_coin               ;$00F334 |
+    BCC ..is_regular_coin                   ;$00F336 | Process regular coin code if it's not a yoshi coin.
     LDA.b InteractionPtYPos_98              ;$00F338 |\
-    SEC                                     ;$00F33A | |
-    SBC.b #$10                              ;$00F33B | | Offset the tile Y position to erase the top half first.
+    SEC                                     ;$00F33A ||
+    SBC.b #$10                              ;$00F33B || Offset the tile Y position to erase the top half first.
     STA.b InteractionPtYPos_98              ;$00F33D |/
-.is_upper_yoshi_coin                        ;        |
+..is_upper_yoshi_coin                       ;        |
     JSL give_yoshi_coin_points              ;$00F33F | Give yoshi coin points.
     INC.w DragonCoinsShown_1422             ;$00F343 |\ Increase the number of yoshi coins collected.
-    LDA.w DragonCoinsShown_1422             ;$00F346 | |
-    CMP.b #$05                              ;$00F349 | |
-    BCC .not_all_collected                  ;$00F34B | | If five have been collected,
-    PHX                                     ;$00F34D | |
-    JSR get_level_bit_flag                  ;$00F34E | |
-    ORA.w AllDragonCoinsCollected_1F2F,Y    ;$00F351 | |
-    STA.w AllDragonCoinsCollected_1F2F,Y    ;$00F354 | | set the "collected five yoshi coins" flag.
+    LDA.w DragonCoinsShown_1422             ;$00F346 ||
+    CMP.b #$05                              ;$00F349 ||
+    BCC ..not_all_collected                 ;$00F34B || If five have been collected,
+    PHX                                     ;$00F34D ||
+    JSR get_level_bit_flag                  ;$00F34E ||
+    ORA.w AllDragonCoinsCollected_1F2F,Y    ;$00F351 ||
+    STA.w AllDragonCoinsCollected_1F2F,Y    ;$00F354 || set the "collected five yoshi coins" flag.
     PLX                                     ;$00F357 |/
-.not_all_collected                          ;        |
+..not_all_collected                         ;        |
     LDA.b #$1C                              ;$00F358 |\ Play the yoshi coin sound,
     STA.w SPCIO0_1DF9                       ;$00F35A |/
     LDA.b #$01                              ;$00F35D |
@@ -12321,7 +12331,7 @@ process_page_0_tiles_no_climb:
     LDY.b #!GenCollectDragon_18             ;$00F363 |
     BRA .remove_yoshi_coin                  ;$00F365 / and remove both yoshi coin tiles.
 
-.is_regular_coin
+..is_regular_coin
     JSL CODE_05B34A                         ;$00F367 \ Give the player a coin.
 .clear_tile                                 ;        |
     LDY.b #!GenCollectEmpty_01              ;$00F36B |
@@ -12567,7 +12577,7 @@ lookup_map16_at_position_00F465:
     LDA [$00]                               ;$00F4DB |
     JSL conditional_map16_00F545            ;$00F4DD | Process "conditional" map16.
     LDY.w Map16_1693                        ;$00F4E1 | Set Y to low byte of map16 tile,
-    CMP.b #$00                              ;$00F4E4 | and check if high byte is $00.
+    CMP.b #$00                              ;$00F4E4 | and check if low byte is $00, which makes it act like page 0
     RTS                                     ;$00F4E6 /
 
 .outside_level_air_tile_2
@@ -12624,57 +12634,61 @@ lookup_map16_at_position_00F465:
     ADC.l DATA_00BACA,X                     ;$00F53E |/ Add by $C800 + $200 * (screen number + $10) for map16 pointer.
     JMP .process_map16                      ;$00F542 / Process map16.
 
+; Checks whether the Map16 tile is configured to act like another Map16 tile,
+; updating $1693 accordingly if a different tile is specified
+; Returns $00 in the accumulator's low byte if the tile should act like page 0
+; or a nonzero value if it should act like page 1
 conditional_map16_00F545:
     TAY                                     ;$00F545 \ If map16 page != 0,
-    BNE .map16_page_01                      ;$00F546 | process map16 page 1 code.
-    LDY.w Map16_1693                        ;$00F548 |
-    CPY.b #$29                              ;$00F54B | If it's an invisible ? block
-    BNE .not_029                            ;$00F54D | 
-    LDY.w BlueSwitchTimer_14AD              ;$00F54F | and the blue P-switch is active,
-    BEQ .return                             ;$00F552 |
-    LDA.b #$24                              ;$00F554 |
-    STA.w Map16_1693                        ;$00F556 | act like a real ? block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = 129 e p-switch ativo, para Mario (pontos de interacao)
+    BNE .map16_page_01                      ;$00F546 |\ process map16 page 1 code.
+    LDY.w Map16_1693                        ;$00F548 ||
+    CPY.b #!Map16InvisQuestionCoinLow_29    ;$00F54B || If it's an invisible ? block
+    BNE .not_pow_block_with_coin            ;$00F54D ||\
+    LDY.w BlueSwitchTimer_14AD              ;$00F54F ||| and the blue P-switch is active,
+    BEQ .return_00F594                      ;$00F552 |||
+    LDA.b #!Map16QuestionCoinLow_24         ;$00F554 ||/
+    STA.w Map16_1693                        ;$00F556 |/ act like a real ? block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = 029 e p-switch ativo, para Mario (pontos de interacao)
     RTL                                     ;$00F559 /
 
-.not_029
-    CPY.b #$2B                              ;$00F55A \
-    BEQ .is_02B                             ;$00F55C |
-    TYA                                     ;$00F55E |
-    SEC                                     ;$00F55F |
-    SBC.b #$EC                              ;$00F560 |
-    CMP.b #$10                              ;$00F562 | If it's a switch palace switch,
-    BCS .not_switch                         ;$00F564 |
-    INC A                                   ;$00F566 |
-    STA.w SwitchPalacePressed_1423          ;$00F567 | set the switch palace flag,
-    BRA .act_like_used_block                ;$00F56A / and act like a used block.
+.not_pow_block_with_coin
+    CPY.b #!Map16CoinLow_2B                 ;$00F55A \
+    BEQ .is_coin_00F56C                     ;$00F55C |\
+    TYA                                     ;$00F55E ||
+    SEC                                     ;$00F55F ||
+    SBC.b #!Map16GreenSwitchTopLeftLow_EC   ;$00F560 ||
+    CMP.b #$10                              ;$00F562 || If it's a switch palace switch,
+    BCS .as_page0_00F592                    ;$00F564 ||\
+    INC A                                   ;$00F566 ||/ 01/02 = green, 05/06 = yellow, 09/0A = blue, 0D/0E = red
+    STA.w SwitchPalacePressed_1423          ;$00F567 |/ set the switch palace flag,
+    BRA .act_like_brown_block               ;$00F56A / and act like a brown block.
 
-.is_02B
+.is_coin_00F56C
     LDY.w BlueSwitchTimer_14AD              ;$00F56C \ If it's a coin and the blue P-switch is active,
-    BEQ .return                             ;$00F56F |
-.act_like_used_block                        ;        |
-    LDA.b #$32                              ;$00F571 |
-    STA.w Map16_1693                        ;$00F573 | act like a used block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = Switch Palace, para Mario (pontos de interacao)
+    BEQ .return_00F594                      ;$00F56F |
+.act_like_brown_block                       ;        |
+    LDA.b #!Map16BrownBlockLow_32           ;$00F571 |
+    STA.w Map16_1693                        ;$00F573 | act like a brown block. X: 0 a fim do level | Y: 0 a 1FF, se map16 = Switch Palace, para Mario (pontos de interacao)
     RTL                                     ;$00F576 /
 
 .map16_page_01
-    LDY.w Map16_1693                        ;$00F577 \  ! $1693 does not get uninitialized value :(
-    CPY.b #$32                              ;$00F57A | If it's a used block
-    BNE .not_132                            ;$00F57C |
-    LDY.w BlueSwitchTimer_14AD              ;$00F57E | and the blue P-switch is active,
-    BNE .act_like_coin                      ;$00F581 | act like a coin.
+    LDY.w Map16_1693                        ;$00F577 \ $1693 does not get uninitialized value :(
+    CPY.b #!Map16BrownBlockLow_32           ;$00F57A | If it's a brown block
+    BNE .not_brown_block_00F584             ;$00F57C |\
+    LDY.w BlueSwitchTimer_14AD              ;$00F57E || and the blue P-switch is active,
+    BNE .act_like_coin                      ;$00F581 |/ act like a coin.
     RTL                                     ;$00F583 /
 
-.not_132
-    CPY.b #$2F                              ;$00F584 \ If it's a muncher
-    BNE .return                             ;$00F586 |
+.not_brown_block_00F584
+    CPY.b #!Map16MuncherLow_2F              ;$00F584 \ If it's a muncher
+    BNE .return_00F594                      ;$00F586 |
     LDY.w SilverSwitchTimer_14AE            ;$00F588 | and the silver P-switch is active,
-    BEQ .return                             ;$00F58B |
+    BEQ .return_00F594                      ;$00F58B |
 .act_like_coin                              ;        |
-    LDY.b #$2B                              ;$00F58D |
+    LDY.b #!Map16CoinLow_2B                 ;$00F58D |
     STY.w Map16_1693                        ;$00F58F | act like a coin. X: 0 a fim do level | Y: 0 a 1FF, se map16 = used block ou muncher com P-Switch, para Mario (pontos de interacao)
-.not_switch                                 ;        |
+.as_page0_00F592                            ;        |
     LDA.b #$00                              ;$00F592 | Set map16 page 0.
-.return                                     ;        |
+.return_00F594                              ;        |
     RTL                                     ;$00F594 /
 
 check_y_position:

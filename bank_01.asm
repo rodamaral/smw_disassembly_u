@@ -2548,13 +2548,13 @@ sprite_interaction_layer_019211:
     LDA.w Map16_1693                        ;$019221 |
     CMP.b #$6E                              ;$019224 |
     BCC .no_buoyancy_01925B                 ;$019226 |
-    JSL is_page_1_water                     ;$019228 |
+    JSL is_page_1_water_00F04D              ;$019228 |
     LDA.w Map16_1693                        ;$01922C |
     BCC .no_buoyancy_01925B                 ;$01922F |
     BCS +                                   ;$019231 |
 .CODE_019233:                               ;        |
     LDA.w Map16_1693                        ;$019233 |
-    CMP.b #$06                              ;$019236 |
+    CMP.b #!Map16VineLow_06                 ;$019236 |
     BCS .no_buoyancy_01925B                 ;$019238 | if this is a water/lava tile:
 +   TAY                                     ;$01923A |
     LDA.w SpriteInLiquid_164A,X             ;$01923B |
