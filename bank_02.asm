@@ -1380,8 +1380,8 @@ create_coin_sprite_028A66:
     STA.w CoinSprSlotIdx_1865               ;$028A77 |/
 +   LDX.w CoinSprSlotIdx_1865               ;$028A7A |
 .empty_slot_028A7D
-    JSL CODE_05B34A
-    INC.w CoinSpriteExists_17D0,X           ;$028A81 |
+    JSL collect_1_coin_05B34A
+    INC.w CoinSpriteExists_17D0,X           ;$028A81 | create spinning coin
     LDA.b InteractionPtXPos_9A              ;$028A84 |
     STA.w CoinSpriteXPosLow_17E0,X          ;$028A86 |
     LDA.b InteractionPtXPos_9A+1            ;$028A89 |
@@ -2198,7 +2198,7 @@ TurnBlockSpr:
     LDA.w BounceSprInit_169D,X              ;$02907A |
     BNE CODE_029085                         ;$02907D |
     INC.w BounceSprInit_169D,X              ;$02907F |
-    JSR InvisSldFromBncSpr                  ;$029082 |
+    JSR gen_invis_solid_block_0291B8        ;$029082 |
 CODE_029085:
     LDA.w BounceSprTimer_16C5,X
     BEQ CODE_0290BB                         ;$029088 |
@@ -2212,8 +2212,8 @@ CODE_029085:
     LDA.w BounceSprYPosHigh_16A9,X          ;$029099 |
     ADC.b #$00                              ;$02909C |
     STA.w BounceSprYPosHigh_16A9,X          ;$02909E |
-    LDA.b #$05                              ;$0290A1 |
-    JSR TileFromBounceSpr1                  ;$0290A3 |
+    LDA.b #!GenTurningBlock_05              ;$0290A1 |
+    JSR  gen_tile_from_bounce_spr_0291BA    ;$0290A3 |
     BRA CODE_0290BB                         ;$0290A6 |
 
 CODE_0290A8:
@@ -2232,7 +2232,7 @@ CODE_0290BB:
 
 CODE_0290C4:
     LDA.w BounceSprTile_16C1,X
-    JSR TileFromBounceSpr1                  ;$0290C7 |
+    JSR gen_tile_from_bounce_spr_0291BA     ;$0290C7 |
     STZ.w BounceSprNumber_1699,X            ;$0290CA |
 Return0290CD:
     RTS
@@ -2257,7 +2257,7 @@ BounceBlockSpr:
     BNE CODE_02910B                         ;$0290E8 |
     INC.w BounceSprInit_169D,X              ;$0290EA |
     JSR CODE_029265                         ;$0290ED |
-    JSR InvisSldFromBncSpr                  ;$0290F0 |
+    JSR gen_invis_solid_block_0291B8        ;$0290F0 |
     LDA.w BounceSprFlags_16C9,X             ;$0290F3 |
     AND.b #$03                              ;$0290F6 |
     TAY                                     ;$0290F8 |
@@ -2356,12 +2356,12 @@ TileFromBounceSpr0:
     STZ.w MulticoinTimer_186B               ;$0291B1 |
     LDA.b #!GenUsedBlock_0D                 ;$0291B4 |
 .tile_from_bounce_0291B6
-    BRA TileFromBounceSpr1
+    BRA gen_tile_from_bounce_spr_0291BA
 
-InvisSldFromBncSpr:
-    LDA.b #!GenSolidEmpty_09
-TileFromBounceSpr1:
-    STA.b TileGenerate_9C
+gen_invis_solid_block_0291B8:
+    LDA.b #!GenSolidEmpty_09                ;$0291B8 |
+gen_tile_from_bounce_spr_0291BA:            ;        |
+    STA.b TileGenerate_9C                   ;$0291BA |
     LDA.w BounceSprXPosLow_16A5,X           ;$0291BC |
     CLC                                     ;$0291BF |
     ADC.b #$08                              ;$0291C0 |
@@ -2448,11 +2448,10 @@ CODE_029265:
     LDA.b #$01
     LDY.w BounceSprFlags_16C9,X             ;$029267 |
     STY $0F                                 ;$02926A |
-    BPL CODE_02926F                         ;$02926C |
-    ASL                                     ;$02926E |
-CODE_02926F:
-    AND.b ScreenMode_5B
-    BEQ CODE_0292CA                         ;$029271 |
+    BPL +                                   ;$02926C |\
+    ASL                                     ;$02926E |/
++   AND.b ScreenMode_5B                     ;$02926F |
+    BEQ .horizontal_level_0292CA            ;$029271 |
     LDA.w BounceSprYPosLow_16A1,X           ;$029273 |
     SEC                                     ;$029276 |
     SBC.b #$03                              ;$029277 |
@@ -2461,7 +2460,7 @@ CODE_02926F:
     LDA.w BounceSprYPosHigh_16A9,X          ;$02927D |
     SBC.b #$00                              ;$029280 |
     CMP.b LevelScreens_5D                   ;$029282 |
-    BCS Return0292C9                        ;$029284 |
+    BCS .return_0292C9                      ;$029284 |
     STA $03                                 ;$029286 |
     AND.b #$10                              ;$029288 |
     STA $08                                 ;$02928A |
@@ -2469,7 +2468,7 @@ CODE_02926F:
     STA $01                                 ;$02928F |
     LDA.w BounceSprXPosHigh_16AD,X          ;$029291 |
     CMP.b #$02                              ;$029294 |
-    BCS Return0292C9                        ;$029296 |
+    BCS .return_0292C9                      ;$029296 |
     STA $02                                 ;$029298 |
     LDA $01                                 ;$02929A |
     LSR                                     ;$02929C |
@@ -2481,25 +2480,23 @@ CODE_02926F:
     LDX $03                                 ;$0292A4 |
     LDA.l DATA_00BA80,X                     ;$0292A6 |
     LDY $0F                                 ;$0292AA |
-    BEQ CODE_0292B2                         ;$0292AC |
-    LDA.l DATA_00BA8E,X                     ;$0292AE |
-CODE_0292B2:
-    CLC
+    BEQ +                                   ;$0292AC |\
+    LDA.l DATA_00BA8E,X                     ;$0292AE |/
++   CLC                                     ;$0292B2 |
     ADC $00                                 ;$0292B3 |
     STA $05                                 ;$0292B5 |
     LDA.l DATA_00BABC,X                     ;$0292B7 |
     LDY $0F                                 ;$0292BB |
-    BEQ CODE_0292C3                         ;$0292BD |
-    LDA.l DATA_00BACA,X                     ;$0292BF |
-CODE_0292C3:
-    ADC $02
+    BEQ +                                   ;$0292BD |\
+    LDA.l DATA_00BACA,X                     ;$0292BF |/
++   ADC $02                                 ;$0292C3 |
     STA $06                                 ;$0292C5 |
-    BRA CODE_02931A                         ;$0292C7 |
+    BRA .process_bounce_map16_02931A        ;$0292C7 |
 
-Return0292C9:
+.return_0292C9
     RTS
 
-CODE_0292CA:
+.horizontal_level_0292CA
     LDA.w BounceSprYPosLow_16A1,X
     SEC                                     ;$0292CD |
     SBC.b #$03                              ;$0292CE |
@@ -2508,13 +2505,13 @@ CODE_0292CA:
     LDA.w BounceSprYPosHigh_16A9,X          ;$0292D4 |
     SBC.b #$00                              ;$0292D7 |
     CMP.b #$02                              ;$0292D9 |
-    BCS Return0292C9                        ;$0292DB |
+    BCS .return_0292C9                      ;$0292DB |
     STA $02                                 ;$0292DD |
     LDA.w BounceSprXPosLow_16A5,X           ;$0292DF |
     STA $01                                 ;$0292E2 |
     LDA.w BounceSprXPosHigh_16AD,X          ;$0292E4 |
     CMP.b LevelScreens_5D                   ;$0292E7 |
-    BCS Return0292C9                        ;$0292E9 |
+    BCS .return_0292C9                      ;$0292E9 |
     STA $03                                 ;$0292EB |
     LDA $01                                 ;$0292ED |
     LSR                                     ;$0292EF |
@@ -2526,32 +2523,30 @@ CODE_0292CA:
     LDX $03                                 ;$0292F7 |
     LDA.l DATA_00BA60,X                     ;$0292F9 |
     LDY $0F                                 ;$0292FD |
-    BEQ CODE_029305                         ;$0292FF |
-    LDA.l DATA_00BA70,X                     ;$029301 |
-CODE_029305:
-    CLC
+    BEQ +                                   ;$0292FF |\
+    LDA.l DATA_00BA70,X                     ;$029301 |/
++   CLC                                     ;$029305 |
     ADC $00                                 ;$029306 |
     STA $05                                 ;$029308 |
     LDA.l DATA_00BA9C,X                     ;$02930A |
     LDY $0F                                 ;$02930E |
-    BEQ CODE_029316                         ;$029310 |
-    LDA.l DATA_00BAAC,X                     ;$029312 |
-CODE_029316:
-    ADC $02
+    BEQ +                                   ;$029310 |\
+    LDA.l DATA_00BAAC,X                     ;$029312 |/
++   ADC $02                                 ;$029316 |
     STA $06                                 ;$029318 |
-CODE_02931A:
-    LDA.b #$7E
+.process_bounce_map16_02931A
+    LDA.b #!Bank_7E
     STA $07                                 ;$02931C |
     LDX.w CurrentMinorSprite_1698           ;$02931E |
     LDA [$05]                               ;$029321 |
     STA.w Map16_1693                        ;$029323 | Bounce Sprites, exceto turn block, X: 0, fim do level, Y: 0, 1FF. Pega finalzinho da parte debaixo de horizontal
-    INC $07                                 ;$029326 |
-    LDA [$05]                               ;$029328 |
-    BNE Return029355                        ;$02932A |
-    LDA.w Map16_1693                        ;$02932C |
-    CMP.b #$2B                              ;$02932F |
-    BNE Return029355                        ;$029331 |
-    LDA.w BounceSprYPosLow_16A1,X           ;$029333 |
+    INC $07                                 ;$029326 | Bank $7F
+    LDA [$05]                               ;$029328 | read high byte of current tile
+    BNE +                                   ;$02932A |\ return if page 1
+    LDA.w Map16_1693                        ;$02932C ||
+    CMP.b #!Map16CoinLow_2B                 ;$02932F ||
+    BNE +                                   ;$029331 |/ return if not a coin tile
+    LDA.w BounceSprYPosLow_16A1,X           ;$029333 | Coint Tile above:
     PHA                                     ;$029336 |
     SBC.b #$03                              ;$029337 |
     AND.b #$F0                              ;$029339 |
@@ -2560,27 +2555,24 @@ CODE_02931A:
     PHA                                     ;$029341 |
     SBC.b #$00                              ;$029342 |
     STA.w BounceSprYPosHigh_16A9,X          ;$029344 |
-    JSR InvisSldFromBncSpr                  ;$029347 |
-    JSR ADDR_029356                         ;$02934A |
+    JSR gen_invis_solid_block_0291B8        ;$029347 |
+    JSR .create_spinning_coin_029356        ;$02934A |
     PLA                                     ;$02934D |
     STA.w BounceSprYPosHigh_16A9,X          ;$02934E |
     PLA                                     ;$029351 |
     STA.w BounceSprYPosLow_16A1,X           ;$029352 |
-Return029355:
-    RTS
++   RTS                                     ;$029355 |
 
-ADDR_029356:
-    LDY.b #$03
-ADDR_029358:
-    LDA.w CoinSpriteExists_17D0,Y
-    BEQ ADDR_029361                         ;$02935B |
-    DEY                                     ;$02935D |
-    BPL ADDR_029358                         ;$02935E |
-    INY                                     ;$029360 |
-ADDR_029361:
-    LDA.b #$01
-    STA.w CoinSpriteExists_17D0,Y           ;$029363 |
-    JSL CODE_05B34A                         ;$029366 |
+.create_spinning_coin_029356:
+    LDY.b #$03                              ;$029356 | Y: coin sprite slot
+-   LDA.w CoinSpriteExists_17D0,Y           ;$029358 |\ find an empty slot
+    BEQ +                                   ;$02935B ||
+    DEY                                     ;$02935D ||
+    BPL -                                   ;$02935E |/
+    INY                                     ;$029360 | or overwrite slot 0 if all are taken
++   LDA.b #$01                              ;$029361 |
+    STA.w CoinSpriteExists_17D0,Y           ;$029363 | create spinning coin
+    JSL collect_1_coin_05B34A               ;$029366 |
     LDA.w BounceSprXPosLow_16A5,X           ;$02936A |
     STA.w CoinSpriteXPosLow_17E0,Y          ;$02936D |
     LDA.w BounceSprXPosHigh_16AD,X          ;$029370 |
@@ -2794,7 +2786,7 @@ cape_spin_interactions_0294F5:
 
 cape_layers_interact_02950B:
     STZ $0F
-    JSR CapeLayerInteraction029540          ;$02950D |
+    JSR cape_layer_interaction_029540       ;$02950D |
     LDA.b ScreenMode_5B                     ;$029510 |
     BPL Return02953B                        ;$029512 | if there is collision with either Layer 2 or 3
     INC $0F                                 ;$029514 | calculate shifted cape position
@@ -2812,7 +2804,7 @@ cape_layers_interact_02950B:
     LDA.w CapeInteractionYPos_13EB+1        ;$029530 |
     ADC.b LayerYDiff_28+1                   ;$029533 |
     STA.w CapeInteractionYPos_13EB+1        ;$029535 |
-    JSR CapeLayerInteraction029540          ;$029538 |
+    JSR cape_layer_interaction_029540       ;$029538 |
 Return02953B:
     RTS
 
@@ -2822,14 +2814,14 @@ DATA_02953C:
 DATA_02953E:
     db $02,$0E
 
-CapeLayerInteraction029540:
+cape_layer_interaction_029540:
     LDA.b Frame_13
     AND.b #$01                              ;$029542 |
     TAY                                     ;$029544 |
     LDA $0F                                 ;$029545 |
     INC A                                   ;$029547 |
     AND.b ScreenMode_5B                     ;$029548 |
-    BEQ CapeHorizontalLayer0295AE           ;$02954A |
+    BEQ .cape_horizontal_layer_0295AE       ;$02954A |
     LDA.w CapeInteractionYPos_13EB          ;$02954C | if vertical layer
     CLC                                     ;$02954F |
     ADC.w DATA_02953C,Y                     ;$029550 |
@@ -2839,7 +2831,7 @@ CapeLayerInteraction029540:
     LDA.w CapeInteractionYPos_13EB+1        ;$029559 |
     ADC.b #$00                              ;$02955C |
     CMP.b LevelScreens_5D                   ;$02955E |
-    BCS Return0295AD                        ;$029560 |
+    BCS .return_0295AD                      ;$029560 |
     STA $03                                 ;$029562 |
     STA.b InteractionPtYPos_98+1            ;$029564 |
     LDA.w CapeInteractionXPos_13E9          ;$029566 |
@@ -2850,7 +2842,7 @@ CapeLayerInteraction029540:
     LDA.w CapeInteractionXPos_13E9+1        ;$029571 |
     ADC.b #$00                              ;$029574 |
     CMP.b #$02                              ;$029576 |
-    BCS Return0295AD                        ;$029578 |
+    BCS .return_0295AD                      ;$029578 |
     STA $02                                 ;$02957A |
     STA.b InteractionPtXPos_9A+1            ;$02957C |
     LDA $01                                 ;$02957E |
@@ -2874,12 +2866,12 @@ CapeLayerInteraction029540:
     LDA.l DATA_00BACA,X                     ;$0295A3 |
 +   ADC $02                                 ;$0295A7 |
     STA $06                                 ;$0295A9 |
-    BRA Map16Cape02960D                     ;$0295AB |
+    BRA .lookup_cape_map16_02960D           ;$0295AB |
 
-Return0295AD:
+.return_0295AD:
     RTS
 
-CapeHorizontalLayer0295AE:
+.cape_horizontal_layer_0295AE:
     LDA.w CapeInteractionYPos_13EB
     CLC                                     ;$0295B1 |
     ADC.w DATA_02953C,Y                     ;$0295B2 |
@@ -2889,7 +2881,7 @@ CapeHorizontalLayer0295AE:
     LDA.w CapeInteractionYPos_13EB+1        ;$0295BB |
     ADC.b #$00                              ;$0295BE |
     CMP.b #$02                              ;$0295C0 |
-    BCS Return0295AD                        ;$0295C2 |
+    BCS .return_0295AD                      ;$0295C2 |
     STA $02                                 ;$0295C4 |
     STA.b InteractionPtYPos_98+1            ;$0295C6 |
     LDA.w CapeInteractionXPos_13E9          ;$0295C8 |
@@ -2900,7 +2892,7 @@ CapeHorizontalLayer0295AE:
     LDA.w CapeInteractionXPos_13E9+1        ;$0295D3 |
     ADC.b #$00                              ;$0295D6 |
     CMP.b LevelScreens_5D                   ;$0295D8 |
-    BCS Return0295AD                        ;$0295DA |
+    BCS .return_0295AD                      ;$0295DA |
     STA $03                                 ;$0295DC |
     STA.b InteractionPtXPos_9A+1            ;$0295DE |
     LDA $01                                 ;$0295E0 |
@@ -2924,23 +2916,22 @@ CapeHorizontalLayer0295AE:
     LDA.l DATA_00BAAC,X                     ;$029605 |
 +   ADC $02                                 ;$029609 |
     STA $06                                 ;$02960B |
-Map16Cape02960D:
-    LDA.b #$7E
+.lookup_cape_map16_02960D
+    LDA.b #!Bank_7E
     STA $07                                 ;$02960F |
     LDA [$05]                               ;$029611 |
     STA.w Map16_1693                        ;$029613 | Cape spin, X: 0, fim do level, Y: 0, 1FF. Pega finalzinho da parte debaixo de horizontal
-    INC $07                                 ;$029616 |
+    INC $07                                 ;$029616 | Bank $7F
     LDA [$05]                               ;$029618 |
     JSL conditional_map16_00F545            ;$02961A |
     CMP.b #$00                              ;$02961E |
-    BEQ Return029630                        ;$029620 |
-    LDA $0F                                 ;$029622 |
-    STA.w LayerProcessing_1933              ;$029624 |
-    LDA.w Map16_1693                        ;$029627 |
-    LDY.b #$00                              ;$02962A |
-    JSL handle_non_spike_tile_00F160        ;$02962C |
-Return029630:
-    RTS
+    BEQ +                                   ;$029620 |\ branch if page 0
+    LDA $0F                                 ;$029622 ||
+    STA.w LayerProcessing_1933              ;$029624 ||
+    LDA.w Map16_1693                        ;$029627 ||
+    LDY.b #$00                              ;$02962A ||
+    JSL handle_non_spike_tile_00F160        ;$02962C |/
++   RTS                                     ;$029630 |
 
 cape_extspr_interact_029631:
     LDX.b #$07
@@ -2958,7 +2949,6 @@ cape_extspr_interact_029631:
     JSR kill_extended_sprite_02A4DE         ;$029650 ||||
 +   DEX                                     ;$029653 |
     BPL -                                   ;$029654 |
-Return029656:
     RTS
 
 DATA_029657:
@@ -2985,7 +2975,7 @@ get_quake_clipping_029663:
     TAX                                     ;$029667 |
     LDA.w QuakeSprXPosLow_16D1,Y            ;$029668 |
     CLC                                     ;$02966B |
-    ADC.w Return029656,X                    ;$02966C |
+    ADC.w DATA_029657-1,X                   ;$02966C |
     STA $00                                 ;$02966F |
     LDA.w QuakeSprXPosHigh_16D5,Y           ;$029671 |
     ADC.w DATA_029658,X                     ;$029674 |
@@ -4854,7 +4844,7 @@ player_extspr_interaction_02A3F6:
     LDA.w ExtSprNumber_170B,X               ;$02A40B |||
     CMP.b #!CoinCloudGame_0A                ;$02A40E |||
     BNE touch_harmful_ext_sprite_02A469     ;$02A410 |||\ if touching a Coin from Cloud Game:
-    JSL CODE_05B34A                         ;$02A412 ||||
+    JSL collect_1_coin_05B34A               ;$02A412 ||||
     INC.w GameCloudCoinCount_18E3           ;$02A416 ||||
     STZ.w ExtSprNumber_170B,X               ;$02A419 ||||
     LDY.b #$03                              ;$02A41C |||| Y: smoke sprite slot
@@ -5058,49 +5048,49 @@ CODE_02A56E:
     LDA.w Map16_1693                        ;$02A5C1 | possibly reads uninit $1693
     STA $0C                                 ;$02A5C4 |
     LDA.b ScreenMode_5B                     ;$02A5C6 |
-    BPL CODE_02A60C                         ;$02A5C8 |
-    INC $0F                                 ;$02A5CA |
-    LDA.w ExtSprXPosLow_171F,X              ;$02A5CC |
-    PHA                                     ;$02A5CF |
-    CLC                                     ;$02A5D0 |
-    ADC.b LayerXDiff_26                     ;$02A5D1 |
-    STA.w ExtSprXPosLow_171F,X              ;$02A5D3 |
-    LDA.w ExtSprXPosHigh_1733,X             ;$02A5D6 |
-    PHA                                     ;$02A5D9 |
-    ADC.b LayerXDiff_26+1                   ;$02A5DA |
-    STA.w ExtSprXPosHigh_1733,X             ;$02A5DC |
-    LDA.w ExtSprYPosLow_1715,X              ;$02A5DF |
-    PHA                                     ;$02A5E2 |
-    CLC                                     ;$02A5E3 |
-    ADC.b LayerYDiff_28                     ;$02A5E4 |
-    STA.w ExtSprYPosLow_1715,X              ;$02A5E6 |
-    LDA.w ExtSprYPosHigh_1729,X             ;$02A5E9 |
-    PHA                                     ;$02A5EC |
-    ADC.b LayerYDiff_28+1                   ;$02A5ED |
-    STA.w ExtSprYPosHigh_1729,X             ;$02A5EF |
-    JSR CODE_02A611                         ;$02A5F2 |
-    ROL $0E                                 ;$02A5F5 |
-    LDA.w Map16_1693                        ;$02A5F7 |
-    STA $0D                                 ;$02A5FA |
-    PLA                                     ;$02A5FC |
-    STA.w ExtSprYPosHigh_1729,X             ;$02A5FD |
-    PLA                                     ;$02A600 |
-    STA.w ExtSprYPosLow_1715,X              ;$02A601 |
-    PLA                                     ;$02A604 |
-    STA.w ExtSprXPosHigh_1733,X             ;$02A605 |
-    PLA                                     ;$02A608 |
-    STA.w ExtSprXPosLow_171F,X              ;$02A609 |
-CODE_02A60C:
+    BPL ..has_layer2_collision_02A60C       ;$02A5C8 |\ branch if there is layer2/3 collision
+    INC $0F                                 ;$02A5CA ||
+    LDA.w ExtSprXPosLow_171F,X              ;$02A5CC ||
+    PHA                                     ;$02A5CF ||
+    CLC                                     ;$02A5D0 ||
+    ADC.b LayerXDiff_26                     ;$02A5D1 ||
+    STA.w ExtSprXPosLow_171F,X              ;$02A5D3 ||
+    LDA.w ExtSprXPosHigh_1733,X             ;$02A5D6 ||
+    PHA                                     ;$02A5D9 ||
+    ADC.b LayerXDiff_26+1                   ;$02A5DA ||
+    STA.w ExtSprXPosHigh_1733,X             ;$02A5DC ||
+    LDA.w ExtSprYPosLow_1715,X              ;$02A5DF ||
+    PHA                                     ;$02A5E2 ||
+    CLC                                     ;$02A5E3 ||
+    ADC.b LayerYDiff_28                     ;$02A5E4 ||
+    STA.w ExtSprYPosLow_1715,X              ;$02A5E6 ||
+    LDA.w ExtSprYPosHigh_1729,X             ;$02A5E9 ||
+    PHA                                     ;$02A5EC ||
+    ADC.b LayerYDiff_28+1                   ;$02A5ED ||
+    STA.w ExtSprYPosHigh_1729,X             ;$02A5EF ||
+    JSR CODE_02A611                         ;$02A5F2 ||
+    ROL $0E                                 ;$02A5F5 ||
+    LDA.w Map16_1693                        ;$02A5F7 ||
+    STA $0D                                 ;$02A5FA ||
+    PLA                                     ;$02A5FC ||
+    STA.w ExtSprYPosHigh_1729,X             ;$02A5FD ||
+    PLA                                     ;$02A600 ||
+    STA.w ExtSprYPosLow_1715,X              ;$02A601 ||
+    PLA                                     ;$02A604 ||
+    STA.w ExtSprXPosHigh_1733,X             ;$02A605 ||
+    PLA                                     ;$02A608 ||
+    STA.w ExtSprXPosLow_171F,X              ;$02A609 |/
+..has_layer2_collision_02A60C
     LDA $0E
     CMP.b #$01                              ;$02A60E |
     RTS                                     ;$02A610 |
 
 CODE_02A611:
-    LDA $0F
+    LDA $0F                                 ;$02A611 | $0F: current layer
     INC A                                   ;$02A613 |
     AND.b ScreenMode_5B                     ;$02A614 |
-    BEQ CODE_02A679                         ;$02A616 | actually process point collision
-    LDA.w ExtSprYPosLow_1715,X              ;$02A618 |
+    BEQ .horizontal_level_02A679            ;$02A616 | branch if horizontal layer
+    LDA.w ExtSprYPosLow_1715,X              ;$02A618 | vertical layer:
     CLC                                     ;$02A61B |
     ADC.b #$08                              ;$02A61C |
     STA.b InteractionPtYPos_98              ;$02A61E |
@@ -5109,7 +5099,7 @@ CODE_02A611:
     LDA.w ExtSprYPosHigh_1729,X             ;$02A624 |
     ADC.b #$00                              ;$02A627 |
     CMP.b LevelScreens_5D                   ;$02A629 |
-    BCS CODE_02A677                         ;$02A62B |
+    BCS .return_02A677                      ;$02A62B |
     STA $03                                 ;$02A62D |
     STA.b InteractionPtYPos_98+1            ;$02A62F |
     LDA.w ExtSprXPosLow_171F,X              ;$02A631 |
@@ -5120,7 +5110,7 @@ CODE_02A611:
     LDA.w ExtSprXPosHigh_1733,X             ;$02A63B |
     ADC.b #$00                              ;$02A63E |
     CMP.b #$02                              ;$02A640 |
-    BCS CODE_02A677                         ;$02A642 |
+    BCS .return_02A677                      ;$02A642 |
     STA $02                                 ;$02A644 |
     STA.b InteractionPtXPos_9A+1            ;$02A646 |
     LDA $01                                 ;$02A648 |
@@ -5133,26 +5123,24 @@ CODE_02A611:
     LDX $03                                 ;$02A652 |
     LDA.l DATA_00BA80,X                     ;$02A654 |
     LDY $0F                                 ;$02A658 |
-    BEQ CODE_02A660                         ;$02A65A |
-    LDA.l DATA_00BA8E,X                     ;$02A65C |
-CODE_02A660:
-    CLC
+    BEQ +                                   ;$02A65A |\
+    LDA.l DATA_00BA8E,X                     ;$02A65C |/
++   CLC                                     ;$02A660 |
     ADC $00                                 ;$02A661 |
     STA $05                                 ;$02A663 |
     LDA.l DATA_00BABC,X                     ;$02A665 |
     LDY $0F                                 ;$02A669 |
-    BEQ CODE_02A671                         ;$02A66B |
-    LDA.l DATA_00BACA,X                     ;$02A66D |
-CODE_02A671:
-    ADC $02
+    BEQ +                                   ;$02A66B |\
+    LDA.l DATA_00BACA,X                     ;$02A66D |/
++   ADC $02                                 ;$02A671 |
     STA $06                                 ;$02A673 |
-    BRA CODE_02A6DB                         ;$02A675 |
+    BRA .process_ext_spr_map16_02A6DB       ;$02A675 |
 
-CODE_02A677:
+.return_02A677
     CLC
     RTS                                     ;$02A678 |
 
-CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision 
+.horizontal_level_02A679
     LDA.w ExtSprYPosLow_1715,X
     CLC                                     ;$02A67C |
     ADC.b #$08                              ;$02A67D |
@@ -5167,7 +5155,7 @@ CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision
     SEC                                     ;$02A690 |
     SBC.b Layer1YPos_1C                     ;$02A691 |
     CMP.b #$F0                              ;$02A693 |
-    BCS CODE_02A677                         ;$02A695 |
+    BCS .return_02A677                      ;$02A695 |
     LDA.w ExtSprXPosLow_171F,X              ;$02A697 |
     CLC                                     ;$02A69A |
     ADC.b #$04                              ;$02A69B |
@@ -5176,7 +5164,7 @@ CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision
     LDA.w ExtSprXPosHigh_1733,X             ;$02A6A1 |
     ADC.b #$00                              ;$02A6A4 |
     CMP.b LevelScreens_5D                   ;$02A6A6 |
-    BCS CODE_02A677                         ;$02A6A8 |
+    BCS .return_02A677                      ;$02A6A8 |
     STA $03                                 ;$02A6AA |
     STA.b InteractionPtXPos_9A+1            ;$02A6AC |
     LDA $01                                 ;$02A6AE |
@@ -5189,76 +5177,73 @@ CODE_02A679:  ;;;;;;;;;;;;;;;;| TODO: process point collision
     LDX $03                                 ;$02A6B8 |
     LDA.l DATA_00BA60,X                     ;$02A6BA |
     LDY $0F                                 ;$02A6BE |
-    BEQ CODE_02A6C6                         ;$02A6C0 |
-    LDA.l DATA_00BA70,X                     ;$02A6C2 |
-CODE_02A6C6:
-    CLC
+    BEQ +                                   ;$02A6C0 |\
+    LDA.l DATA_00BA70,X                     ;$02A6C2 |/
++   CLC                                     ;$02A6C6 |
     ADC $00                                 ;$02A6C7 |
     STA $05                                 ;$02A6C9 |
     LDA.l DATA_00BA9C,X                     ;$02A6CB |
     LDY $0F                                 ;$02A6CF |
-    BEQ CODE_02A6D7                         ;$02A6D1 |
-    LDA.l DATA_00BAAC,X                     ;$02A6D3 |
-CODE_02A6D7:
-    ADC $02
+    BEQ +                                   ;$02A6D1 |\
+    LDA.l DATA_00BAAC,X                     ;$02A6D3 |/
++   ADC $02                                 ;$02A6D7 |
     STA $06                                 ;$02A6D9 |
-CODE_02A6DB:
-    LDA.b #$7E
+.process_ext_spr_map16_02A6DB
+    LDA.b #!Bank_7E
     STA $07                                 ;$02A6DD |
     LDX.w CurrentSprite_15E9                ;$02A6DF |
-    LDA [$05]                               ;$02A6E2 |
+    LDA [$05]                               ;$02A6E2 | TODO: remove comment in portuguese
     STA.w Map16_1693                        ;$02A6E4 | Extended Sprites (CloudCoin, WaterBubble, MarioFireball), vertical: dentro do level | horizontal: X: 0 até final, y_low - cameraY < 0xF0, mas MarioFireball morre antes de ter a chance
-    INC $07                                 ;$02A6E7 |
+    INC $07                                 ;$02A6E7 | bank $7F
     LDA [$05]                               ;$02A6E9 |
     JSL conditional_map16_00F545            ;$02A6EB |
     CMP.b #$00                              ;$02A6EF |
-    BEQ CODE_02A729                         ;$02A6F1 |
+    BEQ ..return_CLC_02A729                 ;$02A6F1 | branch if page 0
     LDA.w Map16_1693                        ;$02A6F3 |
-    CMP.b #$11                              ;$02A6F6 |
-    BCC CODE_02A72B                         ;$02A6F8 |
-    CMP.b #$6E                              ;$02A6FA |
-    BCC CODE_02A727                         ;$02A6FC |
-    CMP.b #$D8                              ;$02A6FE |
-    BCS CODE_02A735                         ;$02A700 |
-    LDY.b InteractionPtXPos_9A              ;$02A702 |
+    CMP.b #!Map16NoteItemLow_11             ;$02A6F6 |
+    BCC ..CODE_02A72B                       ;$02A6F8 | branch if 100..110
+    CMP.b #!Map16SlopeLow_6E                ;$02A6FA |
+    BCC ..return_SEC_02A727                 ;$02A6FC | return SEC if 111..16D (solid block)
+    CMP.b #!Map16SlopeAssistLow_D8          ;$02A6FE |
+    BCS ..CODE_02A735                       ;$02A700 | branch if 1D8..1FF
+    LDY.b InteractionPtXPos_9A              ;$02A702 | case 16E..1D7 (slopes):
     STY $0A                                 ;$02A704 |
     LDY.b InteractionPtYPos_98              ;$02A706 |
     STY $0C                                 ;$02A708 |
     JSL CODE_00FA19                         ;$02A70A |
     LDA $00                                 ;$02A70E |
     CMP.b #$0C                              ;$02A710 |
-    BCS CODE_02A718                         ;$02A712 |
-    CMP [$05],Y                             ;$02A714 |
-    BCC CODE_02A729                         ;$02A716 |
-CODE_02A718:
-    LDA [$05],Y
+    BCS +                                   ;$02A712 |\
+    CMP [$05],Y                             ;$02A714 ||
+    BCC ..return_CLC_02A729                 ;$02A716 |/
++   LDA [$05],Y                             ;$02A718 |
     STA.w SpriteBlockOffset_1694            ;$02A71A |
     PHX                                     ;$02A71D |
     LDX $08                                 ;$02A71E |
     LDA.l slope_type_00E53D,X               ;$02A720 |
     PLX                                     ;$02A724 |
     STA $0B                                 ;$02A725 |
-CODE_02A727:
+..return_SEC_02A727
     SEC
     RTS                                     ;$02A728 |
 
-CODE_02A729:
+..return_CLC_02A729
     CLC
     RTS                                     ;$02A72A |
 
-CODE_02A72B:
+..CODE_02A72B
     LDA.b InteractionPtYPos_98
     AND.b #$0F                              ;$02A72D |
     CMP.b #$06                              ;$02A72F |
-    BCS CODE_02A729                         ;$02A731 |
+    BCS ..return_CLC_02A729                  ;$02A731 |
     SEC                                     ;$02A733 |
     RTS                                     ;$02A734 |
 
-CODE_02A735:
+..CODE_02A735
     LDA.b InteractionPtYPos_98
     AND.b #$0F                              ;$02A737 |
     CMP.b #$06                              ;$02A739 |
-    BCS CODE_02A729                         ;$02A73B |
+    BCS ..return_CLC_02A729                     ;$02A73B |
     LDA.w ExtSprYPosLow_1715,X              ;$02A73D |
     SEC                                     ;$02A740 |
     SBC.b #$02                              ;$02A741 |
@@ -5275,13 +5260,13 @@ CODE_02A751:
     JSR handle_old_sprites_sprites_02ABF2   ;$02A754 |
     JSR load_nearby_sprites_02AC5C          ;$02A757 |
     LDA.w IRQNMICommand_0D9B                ;$02A75A |
-    BMI +                                   ;$02A75D |
-    JSL standard_and_cluster_sprites_01808C ;$02A75F |
+    BMI +                                   ;$02A75D |\
+    JSL standard_and_cluster_sprites_01808C ;$02A75F |/
 +   LDA.w CarryYoshiLevels_0DC1             ;$02A763 |
     BEQ +                                   ;$02A766 |
     LDA.w RemoveYoshiFlag_1B9B              ;$02A768 |
-    BNE +                                   ;$02A76B |
-    JSL CODE_00FC7A                         ;$02A76D |
+    BNE +                                   ;$02A76B |\
+    JSL CODE_00FC7A                         ;$02A76D |/
 +   PLB                                     ;$02A771 |
     RTL                                     ;$02A772 |
 
@@ -7846,22 +7831,23 @@ sprite_into_coin_02B9D9:
     PLX                                     ;$02B9F8 |
     RTS                                     ;$02B9F9 |
 
-CODE_02B9FA:
+try_lick_berry_02B9FA:
     STZ $0F
-    BRA CODE_02BA48                         ;$02B9FC |
+    BRA .horizontal_level_02BA48            ;$02B9FC |
 
+.unreachabled_vertical_level
     LDA $01                                 ;$02B9FE |
     AND.b #$F0                              ;$02BA00 |
     STA $04                                 ;$02BA02 |
     LDA $09                                 ;$02BA04 |
     CMP.b LevelScreens_5D                   ;$02BA06 |
-    BCS Return02BA47                        ;$02BA08 |
+    BCS .return_02BA47                      ;$02BA08 |
     STA $05                                 ;$02BA0A |
     LDA $00                                 ;$02BA0C |
     STA $07                                 ;$02BA0E |
     LDA $08                                 ;$02BA10 |
     CMP.b #$02                              ;$02BA12 |
-    BCS Return02BA47                        ;$02BA14 |
+    BCS .return_02BA47                      ;$02BA14 |
     STA $0A                                 ;$02BA16 |
     LDA $07                                 ;$02BA18 |
     LSR                                     ;$02BA1A |
@@ -7873,38 +7859,36 @@ CODE_02B9FA:
     LDX $05                                 ;$02BA22 |
     LDA.l DATA_00BA80,X                     ;$02BA24 |
     LDY $0F                                 ;$02BA28 |
-    BEQ ADDR_02BA30                         ;$02BA2A |
-    LDA.l DATA_00BA8E,X                     ;$02BA2C |
-ADDR_02BA30:
-    CLC
+    BEQ +                                   ;$02BA2A |\
+    LDA.l DATA_00BA8E,X                     ;$02BA2C |/
++   CLC                                     ;$02BA30 |
     ADC $04                                 ;$02BA31 |
     STA $05                                 ;$02BA33 |
     LDA.l DATA_00BABC,X                     ;$02BA35 |
     LDY $0F                                 ;$02BA39 |
-    BEQ ADDR_02BA41                         ;$02BA3B |
-    LDA.l DATA_00BACA,X                     ;$02BA3D |
-ADDR_02BA41:
-    ADC $0A
+    BEQ +                                   ;$02BA3B |\
+    LDA.l DATA_00BACA,X                     ;$02BA3D |/
++   ADC $0A                                 ;$02BA41 |
     STA $06                                 ;$02BA43 |
-    BRA CODE_02BA92                         ;$02BA45 |
+    BRA .process_berry_map16_02BA92         ;$02BA45 |
 
-Return02BA47:
+.return_02BA47
     RTL
 
-CODE_02BA48:
+.horizontal_level_02BA48
     LDA $01
     AND.b #$F0                              ;$02BA4A |
     STA $04                                 ;$02BA4C |
     LDA $09                                 ;$02BA4E |
     CMP.b #$02                              ;$02BA50 |
-    BCS Return02BA47                        ;$02BA52 |
+    BCS .return_02BA47                      ;$02BA52 |
     STA $0D                                 ;$02BA54 |
     STA.w YoshiYPos_18B2+1                  ;$02BA56 |
     LDA $00                                 ;$02BA59 |
     STA $06                                 ;$02BA5B |
     LDA $08                                 ;$02BA5D |
     CMP.b LevelScreens_5D                   ;$02BA5F |
-    BCS Return02BA47                        ;$02BA61 |
+    BCS .return_02BA47                      ;$02BA61 |
     STA $07                                 ;$02BA63 |
     LDA $06                                 ;$02BA65 |
     LSR                                     ;$02BA67 |
@@ -7916,46 +7900,42 @@ CODE_02BA48:
     LDX $07                                 ;$02BA6F |
     LDA.l DATA_00BA60,X                     ;$02BA71 |
     LDY $0F                                 ;$02BA75 |
-    BEQ CODE_02BA7D                         ;$02BA77 |
-    LDA.l DATA_00BA70,X                     ;$02BA79 |
-CODE_02BA7D:
-    CLC
+    BEQ +                                   ;$02BA77 |\
+    LDA.l DATA_00BA70,X                     ;$02BA79 |/
++   CLC                                     ;$02BA7D |
     ADC $04                                 ;$02BA7E |
     STA $05                                 ;$02BA80 |
     LDA.l DATA_00BA9C,X                     ;$02BA82 |
     LDY $0F                                 ;$02BA86 |
-    BEQ CODE_02BA8E                         ;$02BA88 |
-    LDA.l DATA_00BAAC,X                     ;$02BA8A |
-CODE_02BA8E:
-    ADC $0D
+    BEQ +                                   ;$02BA88 |\
+    LDA.l DATA_00BAAC,X                     ;$02BA8A |/
++   ADC $0D                                 ;$02BA8E |
     STA $06                                 ;$02BA90 |
-CODE_02BA92:
+.process_berry_map16_02BA92
     LDX.w CurrentSprite_15E9
-    LDA.b #$7E                              ;$02BA95 |
+    LDA.b #!Bank_7E                         ;$02BA95 |
     STA $07                                 ;$02BA97 |
     LDA [$05]                               ;$02BA99 |
     STA.w Map16_1693                        ;$02BA9B | Baby Yoshi and Yoshi released tongue trying to eat a berry: treats as horizontal level, regardless, respecting level size and  2 Y screens
-    INC $07                                 ;$02BA9E |
+    INC $07                                 ;$02BA9E | Bank $7F
     LDA [$05]                               ;$02BAA0 |
-    BNE Return02BABF                        ;$02BAA2 |
-    LDA.w Map16_1693                        ;$02BAA4 |
-    CMP.b #$45                              ;$02BAA7 |
-    BCC Return02BABF                        ;$02BAA9 |
-    CMP.b #$48                              ;$02BAAB |
-    BCS Return02BABF                        ;$02BAAD |
-    SEC                                     ;$02BAAF |
-    SBC.b #$44                              ;$02BAB0 |
-    STA.w EatenBerryType_18D6               ;$02BAB2 |
-    LDY.b #$0B                              ;$02BAB5 |
-CODE_02BAB7:
-    LDA.w SpriteStatus_14C8,Y
-    BEQ CODE_02BAC0                         ;$02BABA |
-    DEY                                     ;$02BABC |
-    BPL CODE_02BAB7                         ;$02BABD |
-Return02BABF:
-    RTL
+    BNE +                                   ;$02BAA2 |\ return if page 1
+    LDA.w Map16_1693                        ;$02BAA4 ||
+    CMP.b #!Map16RedBerryLow_45             ;$02BAA7 ||
+    BCC +                                   ;$02BAA9 || return if not a Berry (45..47)
+    CMP.b #!Map16BushLow_48                 ;$02BAAB ||
+    BCS +                                   ;$02BAAD ||
+    SEC                                     ;$02BAAF ||
+    SBC.b #$44                              ;$02BAB0 || get berry type
+    STA.w EatenBerryType_18D6               ;$02BAB2 ||
+    LDY.b #$0B                              ;$02BAB5 ||
+-   LDA.w SpriteStatus_14C8,Y               ;$02BAB7 ||\ if there is an empty sprite slot
+    BEQ .berry_spr_from_tile_02BAC0         ;$02BABA |||  create a Berry sprite from it
+    DEY                                     ;$02BABC |||
+    BPL -                                   ;$02BABD ||/
++   RTL                                     ;$02BABF |/
 
-CODE_02BAC0:
+.berry_spr_from_tile_02BAC0
     LDA.b #!StatusNormal_08
     STA.w SpriteStatus_14C8,Y               ;$02BAC2 |
     LDA.b #!Mushroom_74                     ;$02BAC5 |
@@ -11007,48 +10987,48 @@ try_eat_berry_tile_02D0E6:
     LDX $03                                 ;$02D18A |
     LDA.l DATA_00BA60,X                     ;$02D18C |
     LDY $0F                                 ;$02D190 |
-    BEQ +                                   ;$02D192 |
-    LDA.l DATA_00BA70,X                     ;$02D194 |
+    BEQ +                                   ;$02D192 |\
+    LDA.l DATA_00BA70,X                     ;$02D194 |/
 +   CLC                                     ;$02D198 |
     ADC $00                                 ;$02D199 |
     STA $05                                 ;$02D19B |
     LDA.l DATA_00BA9C,X                     ;$02D19D |
     LDY $0F                                 ;$02D1A1 |
-    BEQ +                                   ;$02D1A3 |
-    LDA.l DATA_00BAAC,X                     ;$02D1A5 |
+    BEQ +                                   ;$02D1A3 |\
+    LDA.l DATA_00BAAC,X                     ;$02D1A5 |/
 +   ADC $02                                 ;$02D1A9 |
     STA $06                                 ;$02D1AB |
 .try_eat_berry_tile_02D1AD:
-    LDA.b #$7E
+    LDA.b #!Bank_7E
     STA $07                                 ;$02D1AF |
     LDX.w CurrentSprite_15E9                ;$02D1B1 |
     LDA [$05]                               ;$02D1B4 |
-    STA.w Map16_1693                        ;$02D1B6 | $1693: Yoshi Head trying to swallow a berry when mounted
-    INC $07                                 ;$02D1B9 | always treats as horizontal level, X: 0 - level, Y < 2
+    STA.w Map16_1693                        ;$02D1B6 | $1693: Yoshi Head trying to swallow a berry when mounted. always treats as horizontal level, X: 0 - level, Y < 2
+    INC $07                                 ;$02D1B9 | Bank $7F
     LDA [$05]                               ;$02D1BB |
-    BNE +                                   ;$02D1BD |
-    LDA.w Map16_1693                        ;$02D1BF |
-    CMP.b #$45                              ;$02D1C2 |
-    BCC +                                   ;$02D1C4 |
-    CMP.b #$48                              ;$02D1C6 |
-    BCS +                                   ;$02D1C8 | if not a Berry tile, return
-    SEC                                     ;$02D1CA |
-    SBC.b #$44                              ;$02D1CB |
-    STA.w EatenBerryType_18D6               ;$02D1CD | set berry type
-    STZ.w YoshiTongueTimer_14A3             ;$02D1D0 | reset tongue stretching out
-    LDY.w DuckingYoshi_18DC                 ;$02D1D3 |
-    LDA.w DATA_02D1F1,Y                     ;$02D1D6 |
-    STA.w SpriteAnimation_1602,X            ;$02D1D9 |
-    LDA.b #$22                              ;$02D1DC |
-    STA.w SpriteSprContact_1564,X           ;$02D1DE | set animation timer
-    LDA.b PlayerYPos_96                     ;$02D1E1 | slightly adjust player's Y position
-    CLC                                     ;$02D1E3 |
-    ADC.b #$08                              ;$02D1E4 |
-    AND.b #$F0                              ;$02D1E6 |
-    STA.b PlayerYPos_96                     ;$02D1E8 |
-    LDA.b PlayerYPos_96+1                   ;$02D1EA |
-    ADC.b #$00                              ;$02D1EC |
-    STA.b PlayerYPos_96+1                   ;$02D1EE |
+    BNE +                                   ;$02D1BD |\ return if page 1
+    LDA.w Map16_1693                        ;$02D1BF ||
+    CMP.b #!Map16RedBerryLow_45             ;$02D1C2 ||
+    BCC +                                   ;$02D1C4 ||
+    CMP.b #!Map16BushLow_48                 ;$02D1C6 ||  return if not a Berry (45..47)
+    BCS +                                   ;$02D1C8 ||
+    SEC                                     ;$02D1CA ||
+    SBC.b #$44                              ;$02D1CB || get berry type
+    STA.w EatenBerryType_18D6               ;$02D1CD ||
+    STZ.w YoshiTongueTimer_14A3             ;$02D1D0 || reset tongue stretching out
+    LDY.w DuckingYoshi_18DC                 ;$02D1D3 ||
+    LDA.w DATA_02D1F1,Y                     ;$02D1D6 ||
+    STA.w SpriteAnimation_1602,X            ;$02D1D9 ||
+    LDA.b #$22                              ;$02D1DC ||
+    STA.w SpriteSprContact_1564,X           ;$02D1DE || set animation timer
+    LDA.b PlayerYPos_96                     ;$02D1E1 || slightly adjust player's Y position
+    CLC                                     ;$02D1E3 ||
+    ADC.b #$08                              ;$02D1E4 ||
+    AND.b #$F0                              ;$02D1E6 ||
+    STA.b PlayerYPos_96                     ;$02D1E8 ||
+    LDA.b PlayerYPos_96+1                   ;$02D1EA ||
+    ADC.b #$00                              ;$02D1EC ||
+    STA.b PlayerYPos_96+1                   ;$02D1EE |/
 +   RTS                                     ;$02D1F0 |
 
 DATA_02D1F1:

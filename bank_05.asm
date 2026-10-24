@@ -3160,7 +3160,7 @@ CODE_05B31B:
 ADDR_05B329:
     PHA
     LDA.b #$01                              ;$05B32A |
-    STA.w SPCIO3_1DFC                       ;$05B32C |
+    STA.w SPCIO3_1DFC                       ;$05B32C | Coin sfx
     PLA                                     ;$05B32F |
 CODE_05B330:
     STA $00
@@ -3168,23 +3168,22 @@ CODE_05B330:
     ADC.w CoinAdder_13CC                    ;$05B333 |
     STA.w CoinAdder_13CC                    ;$05B336 |
     LDA.w GreenStarBlockCoins_0DC0          ;$05B339 |
-    BEQ Return05B35A                        ;$05B33C |
+    BEQ return_05B35A                       ;$05B33C |
     SEC                                     ;$05B33E |
     SBC $00                                 ;$05B33F |
-    BPL CODE_05B345                         ;$05B341 |
-    LDA.b #$00                              ;$05B343 |
-CODE_05B345:
-    STA.w GreenStarBlockCoins_0DC0
-    BRA Return05B35A                        ;$05B348 |
+    BPL +                                   ;$05B341 |\
+    LDA.b #$00                              ;$05B343 |/
++   STA.w GreenStarBlockCoins_0DC0          ;$05B345 |
+    BRA return_05B35A                       ;$05B348 |
 
-CODE_05B34A:
+collect_1_coin_05B34A:
     INC.w CoinAdder_13CC
     LDA.b #$01                              ;$05B34D |
-    STA.w SPCIO3_1DFC                       ;$05B34F |
+    STA.w SPCIO3_1DFC                       ;$05B34F | Coin sfx
     LDA.w GreenStarBlockCoins_0DC0          ;$05B352 |
-    BEQ Return05B35A                        ;$05B355 |
-    DEC.w GreenStarBlockCoins_0DC0          ;$05B357 |
-Return05B35A:
+    BEQ return_05B35A                       ;$05B355 |\
+    DEC.w GreenStarBlockCoins_0DC0          ;$05B357 |/
+return_05B35A:
     RTL
 
 level_bit_masks:

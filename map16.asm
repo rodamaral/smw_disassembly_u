@@ -4,6 +4,9 @@
 
 !Map16Page_00 = $00
 
+!Map16WaterSurface_0000 = $0000
+!Map16WaterSurfaceLow_00 = !Map16WaterSurface_0000&$FF
+
 !Map16MudLava_0005 = $0005
 !Map16MudLavaLow_05 = !Map16MudLava_0005&$FF
 
@@ -63,11 +66,29 @@
 !Map16MidwayTape_0038 = $0038
 !Map16MidwayTapeLow_38 = !Map16MidwayTape_0038&$FF
 
+!Map16RedBerry_0045 = $0045
+!Map16RedBerryLow_45 = !Map16RedBerry_0045&$FF
+
+!Map16Bush_0048 = $0048
+!Map16BushLow_48 = !Map16Bush_0048&$FF
+
 !Map16SolidInvisTile_0052 = $0052
 !Map16SolidInvisTileLow_52 = !Map16SolidInvisTile_0052&$FF
 
 !Map16Moon_006E = $006E
 !Map16MoonLow_6E = !Map16Moon_006E&$FF
+
+!Map16LineGuideSpecific_0076 = $0076
+!Map16LineGuideSpecificLow_76 = !Map16LineGuideSpecific_0076&$FF
+
+!Map16LineGuideSpecific_0094 = $0094
+!Map16LineGuideSpecificLow_94 = !Map16LineGuideSpecific_0094&$FF
+
+!Map16LineGuideSpecific_0095 = $0095
+!Map16LineGuideSpecificLow_95 = !Map16LineGuideSpecific_0095&$FF
+
+!Map16LineEndSpecific_0096 = $0096
+!Map16LineEndSpecificLow_96 = !Map16LineEndSpecific_0096&$FF
 
 !Map16Invis1Up_006F = $006F
 !Map16Invis1UpLow_6F = !Map16Invis1Up_006F&$FF
@@ -100,6 +121,9 @@
 
 !Map16QuestionCoin_0124 = $0124
 !Map16QuestionCoinLow_24 = !Map16QuestionCoin_0124&$FF
+
+!Map16TurnBounceBlk_012B = $012B
+!Map16TurnBounceBlkLow_2B = !Map16TurnBounceBlk_012B&$FF
 
 !Map16ThrowBlock_012E = $012E
 !Map16ThrowBlockLow_2E = !Map16ThrowBlock_012E&$FF

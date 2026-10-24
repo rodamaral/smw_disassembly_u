@@ -12332,7 +12332,7 @@ try_get_coin_or_moon_00F309:
     BRA .remove_yoshi_coin                  ;$00F365 / and remove both yoshi coin tiles.
 
 ..is_regular_coin
-    JSL CODE_05B34A                         ;$00F367 \ Give the player a coin.
+    JSL collect_1_coin_05B34A               ;$00F367 \ Give the player a coin.
 .clear_tile                                 ;        |
     LDY.b #!GenCollectEmpty_01              ;$00F36B |
 .remove_yoshi_coin                          ;        |
@@ -12572,7 +12572,7 @@ lookup_map16_at_position_00F465:
     STA $02                                 ;$00F4D1 |
     LDA [$00]                               ;$00F4D3 | set $1693 to low byte of map16 tile,
     STA.w Map16_1693                        ;$00F4D5 | NOTE: X,Y inside level, for Mario interaction points
-    INC $02                                 ;$00F4D8 | and set pointer to map16 high byte table.
+    INC $02                                 ;$00F4D8 | and set pointer to map16 high byte table, bank $7F
     PLX                                     ;$00F4DA | Restore collision point index.
     LDA [$00]                               ;$00F4DB |
     JSL conditional_map16_00F545            ;$00F4DD | Process "conditional" map16.
@@ -13546,7 +13546,7 @@ LvlEndSprCoinsRt:
     LDA.b SpriteYSpeed_AA,X                 ;$00FBFB |
     CMP.b #$20                              ;$00FBFD |
     BMI .CODE_00FC1E                        ;$00FBFF |
-    JSL CODE_05B34A                         ;$00FC01 |
+    JSL collect_1_coin_05B34A                         ;$00FC01 |
     LDA.w SilverCoinsCollected_18DD         ;$00FC05 |
     CMP.b #$0D                              ;$00FC08 |
     BCC .CODE_00FC0E                        ;$00FC0A |

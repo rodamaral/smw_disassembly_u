@@ -7835,7 +7835,7 @@ CODE_03C09B:
     BRA ADDR_03C05C                         ;$03C0A5 |
 
 CODE_03C0A7:
-    JSL CODE_05B34A
+    JSL collect_1_coin_05B34A
     LDA.b #$01                              ;$03C0AB |
     JSL GivePoints                          ;$03C0AD |
     RTS                                     ;$03C0B1 |
