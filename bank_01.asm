@@ -2544,19 +2544,19 @@ sprite_interaction_layer_019211:
     BNE .CODE_019258                        ;$019218 |
     LDY.b #$3C                              ;$01921A |
     JSR get_map16_without_clipping_019441   ;$01921C |
-    BEQ .CODE_019233                        ;$01921F |
-    LDA.w Map16_1693                        ;$019221 |
-    CMP.b #$6E                              ;$019224 |
-    BCC .no_buoyancy_01925B                 ;$019226 |
-    JSL is_page_1_water_00F04D              ;$019228 |
-    LDA.w Map16_1693                        ;$01922C |
-    BCC .no_buoyancy_01925B                 ;$01922F |
-    BCS +                                   ;$019231 |
-.CODE_019233:                               ;        |
+    BEQ .skip_page0_019233                  ;$01921F |\ skip if page 0
+    LDA.w Map16_1693                        ;$019221 ||
+    CMP.b #!Map16SlopeLow_6E                ;$019224 ||
+    BCC .no_buoyancy_01925B                 ;$019226 || branch if 100..16D
+    JSL is_page_1_water_00F04D              ;$019228 ||
+    LDA.w Map16_1693                        ;$01922C ||
+    BCC .no_buoyancy_01925B                 ;$01922F || branch if not a water tile
+    BCS +                                   ;$019231 |/ branch otherwise
+.skip_page0_019233                          ;        |
     LDA.w Map16_1693                        ;$019233 |
     CMP.b #!Map16VineLow_06                 ;$019236 |
     BCS .no_buoyancy_01925B                 ;$019238 | if this is a water/lava tile:
-+   TAY                                     ;$01923A |
++   TAY                                     ;$01923A | This is a water tile:
     LDA.w SpriteInLiquid_164A,X             ;$01923B |
     ORA.b #$01                              ;$01923E |
     CPY.b #$04                              ;$019240 |
@@ -2569,7 +2569,7 @@ sprite_interaction_layer_019211:
     AND.b #$02                              ;$01924E || Invincible to star/cape/fire/bouncing bricks
     BNE +                                   ;$019250 ||\
 .CODE_019252:                               ;        |||
-    JSR CODE_019330                         ;$019252 ||/
+    JSR kill_sprite_in_lava_019330          ;$019252 ||/
 +   PLA                                     ;$019255 ||
     ORA.b #$80                              ;$019256 |/
 .CODE_019258:                               ;        |
@@ -2639,12 +2639,12 @@ DATA_0192C7:
     db $00,$FF
 
 sprite_vertical_block_0192C9:
-    LDY.b #$02                              ;$0192C9 |
+    LDY.b #$02                              ;$0192C9 | Y: 2 = down, 3 = up (or stationary)
     LDA.b SpriteYSpeed_AA,X                 ;$0192CB |
-    BPL +                                   ;$0192CD |\
+    BPL +                                   ;$0192CD |\ increment parameter if not moving down
     INY                                     ;$0192CF |/
 +   JSR get_map16_sprite_019441             ;$0192D0 |
-    STA.w SprMap16TouchVertHigh_18D7        ;$0192D3 |
+    STA.w SprMap16TouchVertHigh_18D7        ;$0192D3 | preserve the high byte of the tile the sprite is touching vertically
     PHP                                     ;$0192D6 |
     LDA.w Map16_1693                        ;$0192D7 |
     STA.w SprMap16TouchVertLow_185F         ;$0192DA |
@@ -2669,50 +2669,50 @@ sprite_vertical_block_0192C9:
     LDA.w SpriteBlocked_1588,X              ;$019307 |||
     ORA.b #$20                              ;$01930A ||| set blocked status
     STA.w SpriteBlocked_1588,X              ;$01930C |/
-.return_01930F:
+.return_01930F
     RTS
 
 .CODE_019310:
-    CMP.b #$59
-    BCC CODE_01933B                         ;$019312 |
-    CMP.b #$5C                              ;$019314 |
-    BCS CODE_01933B                         ;$019316 |
+    CMP.b #!Map16LavaSpecificLow_59
+    BCC check_non_lava_tile_01933B          ;$019312 |\
+    CMP.b #$5C                              ;$019314 || branch if not 159..15B (lava tiles)
+    BCS check_non_lava_tile_01933B          ;$019316 |/
     LDY.w ObjectTileset_1931                ;$019318 |
     CPY.b #!TilesetUnderground2_0E          ;$01931B |
     BEQ +                                   ;$01931D |\
-    CPY.b #!TilesetUnderground1_03          ;$01931F ||
-    BNE CODE_01933B                         ;$019321 |/
+    CPY.b #!TilesetUnderground1_03          ;$01931F || branch if not the tileset-specific lava
+    BNE check_non_lava_tile_01933B          ;$019321 |/
 +   LDA.b SpriteNumber_9E,X                 ;$019323 |
     CMP.b #!Yoshi_35                        ;$019325 |
-    BEQ CODE_019330                         ;$019327 |
-    LDA.w dpmksPiS_167A,X                   ;$019329 |
-    AND.b #$02                              ;$01932C |
-    BNE CODE_01933B                         ;$01932E |
-CODE_019330:
+    BEQ kill_sprite_in_lava_019330          ;$019327 |\ skip if Yoshi
+    LDA.w dpmksPiS_167A,X                   ;$019329 ||
+    AND.b #$02                              ;$01932C ||
+    BNE check_non_lava_tile_01933B          ;$01932E |/ branch if Invincible to star/cape/fire/bouncing bricks
+kill_sprite_in_lava_019330:
     LDA.b #!StatusLava_05
     STA.w SpriteStatus_14C8,X               ;$019332 |
     LDA.b #$40                              ;$019335 |
-    STA.w SpriteLava_1558,X                 ;$019337 |
+    STA.w SpriteLava_1558,X                 ;$019337 | set the sinking timer
     RTS                                     ;$01933A |
 
-CODE_01933B:
-    CMP.b #$11
-    BCC CODE_0193B0                         ;$01933D |
-    CMP.b #$6E                              ;$01933F |
-    BCC CODE_0193B8                         ;$019341 |
-    CMP.b #$D8                              ;$019343 |
-    BCS CODE_019386                         ;$019345 |
-    JSL CODE_00FA19                         ;$019347 |
+check_non_lava_tile_01933B:                 ;        | Touching a non-lava tile
+    CMP.b #!Map16NoteItemLow_11             ;$01933B |\
+    BCC .CODE_0193B0                        ;$01933D || branch if 100..110 (touching a ledge)
+    CMP.b #!Map16SlopeLow_6E                ;$01933F ||
+    BCC .CODE_0193B8                        ;$019341 || branch if 111..16D (solid blocks)
+    CMP.b #!Map16SlopeAssistLow_D8          ;$019343 ||
+    BCS .CODE_019386                        ;$019345 |/ branch if 1D8..1FF (non-slope tile)
+    JSL CODE_00FA19                         ;$019347 | handle 16E..1D7 (slopes):
     LDA [$05],Y                             ;$01934B |
     CMP.b #$10                              ;$01934D |
-    BEQ Return0193AF                        ;$01934F |
-    BCS CODE_019386                         ;$019351 |
+    BEQ .return_0193AF                      ;$01934F |
+    BCS .CODE_019386                        ;$019351 |
     LDA $00                                 ;$019353 |
     CMP.b #$0C                              ;$019355 |
-    BCS CODE_01935D                         ;$019357 |
+    BCS .CODE_01935D                        ;$019357 |
     CMP [$05],Y                             ;$019359 |
-    BCC Return0193AF                        ;$01935B |
-CODE_01935D:
+    BCC .return_0193AF                      ;$01935B |
+.CODE_01935D
     LDA [$05],Y
     STA.w SpriteBlockOffset_1694            ;$01935F |
     PHX                                     ;$019362 |
@@ -2721,32 +2721,32 @@ CODE_01935D:
     PLX                                     ;$019369 |
     STA.w SpriteSlope_15B8,X                ;$01936A |
     CMP.b #$04                              ;$01936D |
-    BEQ CODE_019375                         ;$01936F |
+    BEQ .CODE_019375                        ;$01936F |
     CMP.b #$FC                              ;$019371 |
-    BNE CODE_019384                         ;$019373 |
-CODE_019375:
+    BNE .CODE_019384                        ;$019373 |
+.CODE_019375
     EOR.b SpriteXSpeed_B6,X
-    BPL CODE_019380                         ;$019377 |
+    BPL .CODE_019380                        ;$019377 |
     LDA.b SpriteXSpeed_B6,X                 ;$019379 |
-    BEQ CODE_019380                         ;$01937B |
+    BEQ .CODE_019380                        ;$01937B |
     JSR FlipSpriteDir                       ;$01937D |
-CODE_019380:
+.CODE_019380
     JSL CODE_03C1CA
-CODE_019384:
-    BRA CODE_0193B8
+.CODE_019384
+    BRA .CODE_0193B8
 
-CODE_019386:
+.CODE_019386
     LDA $0C
     AND.b #$0F                              ;$019388 |
     CMP.b #$05                              ;$01938A |
-    BCS Return0193AF                        ;$01938C |
+    BCS .return_0193AF                      ;$01938C |
     LDA.w SpriteStatus_14C8,X               ;$01938E |
     CMP.b #!StatusFall_02                   ;$019391 |
-    BEQ Return0193AF                        ;$019393 |
+    BEQ .return_0193AF                      ;$019393 |
     CMP.b #$05                              ;$019395 |
-    BEQ Return0193AF                        ;$019397 |
+    BEQ .return_0193AF                      ;$019397 |
     CMP.b #$0B                              ;$019399 |
-    BEQ Return0193AF                        ;$01939B |
+    BEQ .return_0193AF                      ;$01939B |
     LDA.b SpriteYPosLow_D8,X                ;$01939D |
     SEC                                     ;$01939F |
     SBC.b #$01                              ;$0193A0 |
@@ -2755,25 +2755,25 @@ CODE_019386:
     SBC.b #$00                              ;$0193A7 |
     STA.w SpriteYPosHigh_14D4,X             ;$0193A9 |
     JSR sprite_vertical_block_0192C9        ;$0193AC |
-Return0193AF:
+.return_0193AF:
     RTS
 
-CODE_0193B0:
-    LDA $0C
+.CODE_0193B0                                ;        |
+    LDA $0C                                 ;$0193B0 |
     AND.b #$0F                              ;$0193B2 |
     CMP.b #$05                              ;$0193B4 |
-    BCS Return019424                        ;$0193B6 |
-CODE_0193B8:
-    LDA.w dnctswye_1686,X
+    BCS .return_019424                      ;$0193B6 |
+.CODE_0193B8                                ;        |
+    LDA.w dnctswye_1686,X                   ;$0193B8 |
     AND.b #$04                              ;$0193BB |
     BNE .CODE_019414                        ;$0193BD |
     LDA.w SpriteStatus_14C8,X               ;$0193BF |
     CMP.b #!StatusFall_02                   ;$0193C2 |
-    BEQ Return019424                        ;$0193C4 |
+    BEQ .return_019424                      ;$0193C4 |
     CMP.b #$05                              ;$0193C6 |
-    BEQ Return019424                        ;$0193C8 |
+    BEQ .return_019424                      ;$0193C8 |
     CMP.b #$0B                              ;$0193CA |
-    BEQ Return019424                        ;$0193CC |
+    BEQ .return_019424                      ;$0193CC |
     LDY.w Map16_1693                        ;$0193CE |
     CPY.b #$0C                              ;$0193D1 |
     BEQ +                                   ;$0193D3 |\
@@ -2800,22 +2800,22 @@ CODE_0193B8:
     LDA.w SpriteXPosHigh_14E0,X             ;$0193FC |
     ADC.w DATA_0192C7,Y                     ;$0193FF |
     STA.w SpriteXPosHigh_14E0,X             ;$019402 |
-.CODE_019405
-    LDA.w SpriteOnTongue_15D0,X
+.CODE_019405                                ;        |
+    LDA.w SpriteOnTongue_15D0,X             ;$019405 |
     BNE .CODE_019414                        ;$019408 |
     LDA.b SpriteYPosLow_D8,X                ;$01940A |
     AND.b #$F0                              ;$01940C |
     CLC                                     ;$01940E |
     ADC.w SpriteBlockOffset_1694            ;$01940F |
     STA.b SpriteYPosLow_D8,X                ;$019412 |
-.CODE_019414
-    JSR set_spr_blocked_side_019435
+.CODE_019414                                ;        |
+    JSR set_spr_blocked_side_019435         ;        |
     LDA.w SpriteLayer_185E                  ;$019417 |
-    BEQ Return019424                        ;$01941A |
+    BEQ .return_019424                      ;$01941A |
     LDA.w SpriteBlocked_1588,X              ;$01941C |
     ORA.b #$80                              ;$01941F |
     STA.w SpriteBlocked_1588,X              ;$019421 |
-Return019424:
+.return_019424
     RTS
 
 set_point_and_blocked_status_019425:
@@ -2834,16 +2834,17 @@ set_spr_blocked_side_019435:
     STA.w SpriteBlocked_1588,X              ;$01943D |
     RTS                                     ;$019440 |
 
-
 ; Subroutine to find the Map16 number a sprite is touching. Returns the high byte in A, and the low in $1693
+; Input:
+; Y - Interaction point being tested (0 = right, 1 = left, 2 = down, 3 = up)
 ; Scratch RAM returns:
-; $00 - Block position for clipping, in the format #$YX.
-; $01 - Temporary duplicate of $0A.
-; $0A - Clipping X position, low.
-; $0B - Clipping X position, high.
-; $0C - Clipping Y position, low.
-; $0D - Clipping Y position, high.
-; $0F - Side being touched. 0 = right, 1 = left, 2 = down, 3 = up
+;  $00 - Block position for clipping, in the format #$YX
+;  $01 - Temporary duplicate of $0A
+;  $0A - Clipping X position, low
+;  $0B - Clipping X position, high
+;  $0C - Clipping Y position, low
+;  $0D - Clipping Y position, high
+;  $0F - Side being touched. 0 = right, 1 = left, 2 = down, 3 = up
 get_map16_sprite_019441:
     STY $0F
     LDA.w sSjJcccc_1656,X                   ;$019443 |

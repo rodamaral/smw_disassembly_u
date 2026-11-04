@@ -11248,7 +11248,7 @@ normal_collision_00EB77:
     JSR process_horizontal_pipe             ;$00EC54 ||
     PHX                                     ;$00EC57 ||
     JSR try_grab_throw_block_tile_00F267    ;$00EC58 ||
-    LDY.w Map16_1693                        ;$00EC5B ||
+    LDY.w Map16_1693                        ;$00EC5B || Redundant: Y is overwritten at $00EC64 before being used
     PLX                                     ;$00EC5E |/
 +   LDA.b #$03                              ;$00EC5F |
     STA.w PlayerPoseLenTimer_13E5           ;$00EC61 |
@@ -11807,17 +11807,23 @@ try_step_on_purple_triangle_00F005:
 .Return00F04C:
     RTS
 
+; Checks whether the Map16 page 1 tile in A is a water tile
+;
+; Input:
+;   A = Map16 tile number (low byte)
+;
+; Returns:
+;   Carry set   = Tile is a water tile
+;   Carry clear = Tile is not a water tile
 is_page_1_water_00F04D:
     PHX                                     ;$00F04D \
-    LDX.b #$19                              ;$00F04E | Initialize the loop counter.
-.loop                                       ;        |\
-    CMP.l page_1_water_tiles,X              ;$00F050 | | If the tile is one of these water tiles,
-    BEQ .return                             ;$00F054 | | set carry to indicate "true" and return.
-    DEX                                     ;$00F056 | | Otherwise, continue checking.
-    BPL .loop                               ;$00F057 |/
+    LDX.b #$19                              ;$00F04E | Initialize the loop counter
+-   CMP.l page_1_water_tiles,X              ;$00F050 |\ If the tile is one of these water tiles,
+    BEQ +                                   ;$00F054 || set carry to indicate "true" and return.
+    DEX                                     ;$00F056 || Otherwise, continue checking.
+    BPL -                                   ;$00F057 |/
     CLC                                     ;$00F059 | Clear carry to indicate "false."
-.return                                     ;        |
-    PLX                                     ;$00F05A |
++   PLX                                     ;$00F05A |
     RTL                                     ;$00F05B /
 
 bounce_event_00F05C:
