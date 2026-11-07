@@ -10767,7 +10767,9 @@ collision_y_offsets:
     dw $0018,$0018,$0018                    ;        | Wall-running, left wall
 
 tile_block_status_00E90A:
-    db $01,$02,$11
+    db !Block_Right_01
+    db !Block_Left_02
+    db !Block_InsideRight_11
 
 DATA_00E90D:
     db $FF
@@ -10843,90 +10845,90 @@ no_layer_collision_00E98C:                  ;        |
     LDA.b PlayerXPosScrRel_7E               ;$00E993 ||
     CMP.w #$00FA                            ;$00E995 || and the player is touching the side of the screen,
     SEP #$20                                ;$00E998 || A->8
-    BCC CODE_00E9FB                         ;$00E99A ||
+    BCC set_edge_blocked_side_00E9FB        ;$00E99A ||
     JSL side_exit_level                     ;$00E99C |/ exit the level
     RTS                                     ;$00E9A0 /
 
 .no_side_exits
-    LDA.b PlayerXPosScrRel_7E
+    LDA.b PlayerXPosScrRel_7E               ;$00E9A1 |
     CMP.b #$F0                              ;$00E9A3 |
-    BCS CODE_00EA08                         ;$00E9A5 |
+    BCS kill_player_blocked_00EA08          ;$00E9A5 | branch if player is at or beyond screen-relative X position $F0 (left or right)
     LDA.b PlayerBlocked_77                  ;$00E9A7 |
     AND.b #!Block_Sides_03                  ;$00E9A9 |
-    BNE CODE_00E9FB                         ;$00E9AB |
+    BNE set_edge_blocked_side_00E9FB        ;$00E9AB | branch if player is not blocked horizontally
     REP #$20                                ;$00E9AD | A->16
-    LDY.b #$00                              ;$00E9AF |
+    LDY.b #$00                              ;$00E9AF | Y: screen boundary side (0 = right, 1 = left)
     LDA.w NextLayer1XPos_1462               ;$00E9B1 |
     CLC                                     ;$00E9B4 |
     ADC.w #$00E8                            ;$00E9B5 |
     CMP.b PlayerXPos_94                     ;$00E9B8 |
-    BEQ CODE_00E9C8                         ;$00E9BA |
-    BMI CODE_00E9C8                         ;$00E9BC |
-    INY                                     ;$00E9BE |
-    LDA.b PlayerXPos_94                     ;$00E9BF |
-    SEC                                     ;$00E9C1 |
-    SBC.w #$0008                            ;$00E9C2 |
-    CMP.w NextLayer1XPos_1462               ;$00E9C5 |
-CODE_00E9C8:
+    BEQ check_screen_edge_collision_00E9C8  ;$00E9BA |\ branch if player X position <= Layer 1 X position + $E8
+    BMI check_screen_edge_collision_00E9C8  ;$00E9BC ||
+    INY                                     ;$00E9BE ||
+    LDA.b PlayerXPos_94                     ;$00E9BF ||
+    SEC                                     ;$00E9C1 ||
+    SBC.w #$0008                            ;$00E9C2 ||
+    CMP.w NextLayer1XPos_1462               ;$00E9C5 |/
+check_screen_edge_collision_00E9C8:         ;        |
     SEP #$20                                ;$00E9C8 | A->8
-    BEQ CODE_00E9FB                         ;$00E9CA |
-    BPL CODE_00E9FB                         ;$00E9CC |
-    LDA.w HorizLayer1Setting_1411           ;$00E9CE |
-    BNE +                                   ;$00E9D1 |\
-    LDA.b #!Block_Screen_80                 ;$00E9D3 ||
-    TSB.b PlayerBlocked_77                  ;$00E9D5 ||
-    REP #$20                                ;$00E9D7 ||
-    LDA.w Layer1ScrollXSpeed_1446           ;$00E9D9 ||
-    LSR                                     ;$00E9DC ||
-    LSR                                     ;$00E9DD ||
-    LSR                                     ;$00E9DE ||
-    LSR                                     ;$00E9DF ||
-    SEP #$20                                ;$00E9E0 || A->8
-    STA $00                                 ;$00E9E2 ||
-    SEC                                     ;$00E9E4 ||
-    SBC.b PlayerXSpeed_7B                   ;$00E9E5 ||
-    EOR.w DATA_00E90E,Y                     ;$00E9E7 ||
-    BMI +                                   ;$00E9EA ||
-    LDA $00                                 ;$00E9EC ||
-    STA.b PlayerXSpeed_7B                   ;$00E9EE ||
-    LDA.w Layer1ScrollXPosUpd_144E          ;$00E9F0 ||
-    STA.w PlayerXPosSpx_13DA                ;$00E9F3 |/
-+   LDA.w tile_block_status_00E90A,Y        ;$00E9F6 |
-    TSB.b PlayerBlocked_77                  ;$00E9F9 |
-CODE_00E9FB:
-    LDA.b PlayerBlocked_77
+    BEQ set_edge_blocked_side_00E9FB        ;$00E9CA |\
+    BPL set_edge_blocked_side_00E9FB        ;$00E9CC ||
+    LDA.w HorizLayer1Setting_1411           ;$00E9CE ||
+    BNE +                                   ;$00E9D1 ||\ skip if horizontal scroll is enabled
+    LDA.b #!Block_Screen_80                 ;$00E9D3 ||| Mario is touching the side of the screen in a level that has horizontal scrolling disabled
+    TSB.b PlayerBlocked_77                  ;$00E9D5 |||  Intended for autoscrollers
+    REP #$20                                ;$00E9D7 ||| A->16
+    LDA.w Layer1ScrollXSpeed_1446           ;$00E9D9 |||
+    LSR                                     ;$00E9DC |||
+    LSR                                     ;$00E9DD |||
+    LSR                                     ;$00E9DE |||
+    LSR                                     ;$00E9DF |||
+    SEP #$20                                ;$00E9E0 ||| A->8
+    STA $00                                 ;$00E9E2 |||
+    SEC                                     ;$00E9E4 |||
+    SBC.b PlayerXSpeed_7B                   ;$00E9E5 |||
+    EOR.w DATA_00E90E,Y                     ;$00E9E7 |||
+    BMI +                                   ;$00E9EA |||
+    LDA $00                                 ;$00E9EC |||
+    STA.b PlayerXSpeed_7B                   ;$00E9EE |||
+    LDA.w Layer1ScrollXPosUpd_144E          ;$00E9F0 |||
+    STA.w PlayerXPosSpx_13DA                ;$00E9F3 ||/
++   LDA.w tile_block_status_00E90A,Y        ;$00E9F6 ||
+    TSB.b PlayerBlocked_77                  ;$00E9F9 |/
+set_edge_blocked_side_00E9FB:               ;        |
+    LDA.b PlayerBlocked_77                  ;$00E9FB |
     AND.b #!Block_Y_1C                      ;$00E9FD |
     CMP.b #!Block_Y_1C                      ;$00E9FF |
-    BNE CODE_00EA0D                         ;$00EA01 |
+    BNE dont_smash_player_CODE_00EA0D       ;$00EA01 | branch if player is not blocked in center, up and down
     LDA.w OnSolidSprite_1471                ;$00EA03 |
-    BNE CODE_00EA0D                         ;$00EA06 |
-CODE_00EA08:
-    JSR kill_player_disable_controls_00F629
-    BRA CODE_00EA32                         ;$00EA0B |
+    BNE dont_smash_player_CODE_00EA0D       ;$00EA06 | branch if player is not on top of a solid sprite
+kill_player_blocked_00EA08:                 ;        |
+    JSR kill_player_disable_controls_00F629 ;$00EA08 |
+    BRA block_x_speed_00EA32                ;$00EA0B |
 
-CODE_00EA0D:
-    LDA.b PlayerBlocked_77
+dont_smash_player_CODE_00EA0D:
+    LDA.b PlayerBlocked_77                  ;$00EA0D |
     AND.b #!Block_Sides_03                  ;$00EA0F |
-    BEQ CODE_00EA34                         ;$00EA11 |
-    AND.b #$02                              ;$00EA13 |
-    TAY                                     ;$00EA15 |
-    REP #$20                                ;$00EA16 | A->16
-    LDA.b PlayerXPos_94                     ;$00EA18 |
-    CLC                                     ;$00EA1A |
-    ADC.w DATA_00E90D,Y                     ;$00EA1B |
-    STA.b PlayerXPos_94                     ;$00EA1E |
-    SEP #$20                                ;$00EA20 | A->8
-    LDA.b PlayerBlocked_77                  ;$00EA22 |
-    BMI CODE_00EA34                         ;$00EA24 |
-    LDA.b #$03                              ;$00EA26 |
-    STA.w PlayerPoseLenTimer_13E5           ;$00EA28 |
-    LDA.b PlayerXSpeed_7B                   ;$00EA2B |
-    EOR.w DATA_00E90D,Y                     ;$00EA2D |
-    BPL CODE_00EA34                         ;$00EA30 |
-CODE_00EA32:
-    STZ.b PlayerXSpeed_7B
-CODE_00EA34:
-    LDA.w PlayerBehindNet_13F9
+    BEQ handle_water_state_00EA34           ;$00EA11 |\ branch if player is not blocked horizontally
+    AND.b #$02                              ;$00EA13 ||
+    TAY                                     ;$00EA15 ||
+    REP #$20                                ;$00EA16 || A->16
+    LDA.b PlayerXPos_94                     ;$00EA18 ||
+    CLC                                     ;$00EA1A ||
+    ADC.w DATA_00E90D,Y                     ;$00EA1B ||
+    STA.b PlayerXPos_94                     ;$00EA1E ||
+    SEP #$20                                ;$00EA20 || A->8
+    LDA.b PlayerBlocked_77                  ;$00EA22 ||
+    BMI handle_water_state_00EA34           ;$00EA24 ||\ branch if player is blocked from autoscroll
+    LDA.b #$03                              ;$00EA26 |||
+    STA.w PlayerPoseLenTimer_13E5           ;$00EA28 |||
+    LDA.b PlayerXSpeed_7B                   ;$00EA2B |||
+    EOR.w DATA_00E90D,Y                     ;$00EA2D |||
+    BPL handle_water_state_00EA34           ;$00EA30 ||/
+block_x_speed_00EA32:                       ;        ||
+    STZ.b PlayerXSpeed_7B                   ;$00EA32 |/
+handle_water_state_00EA34:                  ;        |
+    LDA.w PlayerBehindNet_13F9              ;$00EA34 |
     CMP.b #$01                              ;$00EA37 |
     BNE +                                   ;$00EA39 |\
     LDA.b InteractionPtsClimbable_8B        ;$00EA3B ||
@@ -10934,56 +10936,56 @@ CODE_00EA34:
     STZ.w PlayerBehindNet_13F9              ;$00EA3F |/
 +   STZ.w PlayerCanJumpWater_13FA           ;$00EA42 |
     LDA.b LevelIsWater_85                   ;$00EA45 |
-    BNE .CODE_00EA5E                        ;$00EA47 |
-    LSR $8A                                 ;$00EA49 |
-    BCC .CODE_00EAA3                        ;$00EA4B |
-    LDA.b PlayerInWater_75                  ;$00EA4D |
-    BNE .CODE_00EA65                        ;$00EA4F |
-    LDA.b PlayerYSpeed_7D                   ;$00EA51 |
-    BMI .CODE_00EA65                        ;$00EA53 |
-    LSR $8A                                 ;$00EA55 |
-    BCC Return00EAA5                        ;$00EA57 |
-    JSR CODE_00FDA5                         ;$00EA59 |
-    STZ.b PlayerYSpeed_7D                   ;$00EA5C |
-.CODE_00EA5E:
-    LDA.b #$01
+    BNE .player_in_water_00EA5E             ;$00EA47 |\
+    LSR.b InteractionPtsInWater_8A          ;$00EA49 ||
+    BCC .return_not_in_water_00EAA3         ;$00EA4B || return if interaction pointer (TODO: which one?) is not in water
+    LDA.b PlayerInWater_75                  ;$00EA4D ||
+    BNE .try_jump_out_water_00EA65          ;$00EA4F ||
+    LDA.b PlayerYSpeed_7D                   ;$00EA51 ||
+    BMI .try_jump_out_water_00EA65          ;$00EA53 ||
+    LSR.b InteractionPtsInWater_8A          ;$00EA55 ||
+    BCC .return_00EAA5                      ;$00EA57 || return if interaction pointer (TODO: which one?) is not in water
+    JSR create_water_splash_bubbles_00FDA5  ;$00EA59 || falling into water, create splash
+    STZ.b PlayerYSpeed_7D                   ;$00EA5C |/  and zero Y speed
+.player_in_water_00EA5E                     ;        |
+    LDA.b #$01                              ;$00EA5E |
     STA.b PlayerInWater_75                  ;$00EA60 |
-.CODE_00EA62:
-    JMP CODE_00FD08
+.try_release_bubble_00EA62                  ;        |
+    JMP try_release_bubble_00FD08           ;$00EA62 |
 
-.CODE_00EA65:
-    LSR $8A
-    BCS .CODE_00EA5E                        ;$00EA67 |
+.try_jump_out_water_00EA65
+    LSR.b InteractionPtsInWater_8A          ;$00EA65 |
+    BCS .player_in_water_00EA5E             ;$00EA67 | branch if player still overlaps water
     LDA.b PlayerInWater_75                  ;$00EA69 |
-    BEQ Return00EAA5                        ;$00EA6B |
+    BEQ .return_00EAA5                      ;$00EA6B | return if in water
     LDA.b #$FC                              ;$00EA6D |
     CMP.b PlayerYSpeed_7D                   ;$00EA6F |
     BMI +                                   ;$00EA71 |\
     STA.b PlayerYSpeed_7D                   ;$00EA73 |/
 +   INC.w PlayerCanJumpWater_13FA           ;$00EA75 |
     LDA.b byetudlrHold_15                   ;$00EA78 |
-    AND.b #$88                              ;$00EA7A |
+    AND.b #$88                              ;$00EA7A | if holding B/A and Up
     CMP.b #$88                              ;$00EA7C |
-    BNE .CODE_00EA62                        ;$00EA7E |
+    BNE .try_release_bubble_00EA62          ;$00EA7E |
     LDA.b axlr0000Hold_17                   ;$00EA80 |
-    BPL +                                   ;$00EA82 |\
+    BPL +                                   ;$00EA82 |\ skip if not holding A
     LDA.w CarryingFlagMirror_148F           ;$00EA84 ||
     BNE +                                   ;$00EA87 ||
     INC A                                   ;$00EA89 ||
-    STA.w SpinJumpFlag_140D                 ;$00EA8A ||
-    LDA.b #$04                              ;$00EA8D ||
+    STA.w SpinJumpFlag_140D                 ;$00EA8A || set spin jump and play
+    LDA.b #$04                              ;$00EA8D || Spin jump SFX
     STA.w SPCIO3_1DFC                       ;$00EA8F |/
 +   LDA.b PlayerBlocked_77                  ;$00EA92 |
     AND.b #!Block_Top_08                    ;$00EA94 |
-    BNE .CODE_00EA62                        ;$00EA96 |
-    JSR CODE_00FDA5                         ;$00EA98 |
-    LDA.b #$0B                              ;$00EA9B |
+    BNE .try_release_bubble_00EA62          ;$00EA96 | branch if player's head is blocked
+    JSR create_water_splash_bubbles_00FDA5  ;$00EA98 | exit water, set player in air:
+    LDA.b #!InAirJump_0B                    ;$00EA9B |
     STA.b PlayerInAir_72                    ;$00EA9D |
     LDA.b #$AA                              ;$00EA9F |
     STA.b PlayerYSpeed_7D                   ;$00EAA1 |
-.CODE_00EAA3:
+.return_not_in_water_00EAA3
     STZ.b PlayerInWater_75
-Return00EAA5:
+.return_00EAA5
     RTS
 
 reset_collision_flags_00EAA6:
@@ -13190,7 +13192,7 @@ boss_room_collision:
     ADC.w #$000F                            ;$00F945 |
     CMP $00                                 ;$00F948 |
 .CODE_00F94A:
-    JMP CODE_00E9C8
+    JMP check_screen_edge_collision_00E9C8
 
 .return_00F94D:
     RTS
@@ -13683,7 +13685,7 @@ CODE_00FCF5:
     STA.w SpriteYPosHigh_14D4,X             ;$00FD04 |
     RTL                                     ;$00FD07 |
 
-CODE_00FD08:
+try_release_bubble_00FD08:
     LDY.b #$3F
     LDA.b byetudlrHold_15                   ;$00FD0A |
     AND.b #$83                              ;$00FD0C | release Water Bubble twice as often when holding B, A, left or right
@@ -13773,38 +13775,34 @@ smoke_sparkle:
     STA.w SmokeSprTimer_17CC,Y              ;$00FD99 |
     RTS                                     ;$00FD9C |
 
-DATA_00FD9D:
+splash_y_offset_00FD9D:
     db $08,$FC,$10,$04
 
-DATA_00FDA1:
+spash_x_offset_00FDA1:
     db $00,$FF,$00,$00
 
-CODE_00FDA5:
-    LDA.b PlayerInAir_72
-    BEQ .CODE_00FDB3                        ;$00FDA7 |
-    LDY.b #$0B                              ;$00FDA9 |
-.CODE_00FDAB:
-    LDA.w MinorSprNumber_17F0,Y
-    BEQ .CODE_00FDB4                        ;$00FDAE |
-    DEY                                     ;$00FDB0 |
-    BPL .CODE_00FDAB                        ;$00FDB1 |
-.CODE_00FDB3:
-    INY
-.CODE_00FDB4:
-    PHX
-    LDX.b #$00                              ;$00FDB5 |
+create_water_splash_bubbles_00FDA5:
+    LDA.b PlayerInAir_72                    ;$00FDA5 |
+    BEQ +                                   ;$00FDA7 |\
+    LDY.b #$0B                              ;$00FDA9 || Y: minor extended sprite slot
+-   LDA.w MinorSprNumber_17F0,Y             ;$00FDAB ||\
+    BEQ .found_empty_slot_00FDB4            ;$00FDAE |||
+    DEY                                     ;$00FDB0 ||/
+    BPL -                                   ;$00FDB1 |/
++   INY                                     ;$00FDB3 |
+.found_empty_slot_00FDB4                    ;        |
+    PHX                                     ;$00FDB4 |
+    LDX.b #$00                              ;$00FDB5 | X: 
     LDA.b Powerup_19                        ;$00FDB7 |
-    BEQ .CODE_00FDBC                        ;$00FDB9 |
-    INX                                     ;$00FDBB |
-.CODE_00FDBC:
-    LDA.w RidingYoshi_187A
-    BEQ .CODE_00FDC3                        ;$00FDBF |
-    INX                                     ;$00FDC1 |
-    INX                                     ;$00FDC2 |
-.CODE_00FDC3:
-    LDA.b PlayerYPos_96
+    BEQ +                                   ;$00FDB9 |\
+    INX                                     ;$00FDBB |/
++   LDA.w RidingYoshi_187A                  ;$00FDBC |
+    BEQ +                                   ;$00FDBF |\
+    INX                                     ;$00FDC1 ||
+    INX                                     ;$00FDC2 |/
++   LDA.b PlayerYPos_96                     ;$00FDC3 | set splash positions:
     CLC                                     ;$00FDC5 |
-    ADC.w DATA_00FD9D,X                     ;$00FDC6 |
+    ADC.w splash_y_offset_00FD9D,X          ;$00FDC6 |
     PHP                                     ;$00FDC9 |
     AND.b #$F0                              ;$00FDCA |
     CLC                                     ;$00FDCC |
@@ -13813,45 +13811,44 @@ CODE_00FDA5:
     LDA.b PlayerYPos_96+1                   ;$00FDD2 |
     ADC.b #$00                              ;$00FDD4 |
     PLP                                     ;$00FDD6 |
-    ADC.w DATA_00FDA1,X                     ;$00FDD7 |
+    ADC.w spash_x_offset_00FDA1,X           ;$00FDD7 |
     STA.w MinorSprYPosHigh_1814,Y           ;$00FDDA |
     PLX                                     ;$00FDDD |
     LDA.b PlayerXPos_94                     ;$00FDDE |
     STA.w MinorSprXPosLow_1808,Y            ;$00FDE0 |
     LDA.b PlayerXPos_94+1                   ;$00FDE3 |
     STA.w MinExtSpriteXPosHigh_18EA,Y       ;$00FDE5 |
-    LDA.b #$07                              ;$00FDE8 |
+    LDA.b #!MinorWaterSplash_07             ;$00FDE8 |
     STA.w MinorSprNumber_17F0,Y             ;$00FDEA |
     LDA.b #$00                              ;$00FDED |
     STA.w MinorSprTimer_1850,Y              ;$00FDEF |
     LDA.b PlayerYSpeed_7D                   ;$00FDF2 |
-    BMI .Return00FE0D                       ;$00FDF4 |
-    STZ.b PlayerYSpeed_7D                   ;$00FDF6 |
+    BMI .return_00FE0D                      ;$00FDF4 | return if not falling
+    STZ.b PlayerYSpeed_7D                   ;$00FDF6 | otherwise, zero Y speed and create bubbles
     LDY.b PlayerInAir_72                    ;$00FDF8 |
-    BEQ .CODE_00FDFE                        ;$00FDFA |
-    STZ.b PlayerXSpeed_7B                   ;$00FDFC |
-.CODE_00FDFE:
-    LDY.b #$03
-    LDA.b Powerup_19                        ;$00FE00 |
-    BNE .CODE_00FE05                        ;$00FE02 |
-    DEY                                     ;$00FE04 |
-.CODE_00FE05:
-    LDA.w ExtSprNumber_170B,Y
-    BEQ .CODE_00FE16                        ;$00FE08 |
-.CODE_00FE0A:
-    DEY
-    BPL .CODE_00FE05                        ;$00FE0B |
-.Return00FE0D:
+    BEQ +                                   ;$00FDFA |\ zero X speed in not in air
+    STZ.b PlayerXSpeed_7B                   ;$00FDFC |/
++   LDY.b #$03                              ;$00FDFE | Y: extended sprite slot
+    LDA.b Powerup_19                        ;$00FE00 | create one less bubble if small
+    BNE .loop_00FE05                        ;$00FE02 |\
+    DEY                                     ;$00FE04 ||
+.loop_00FE05                                ;        ||
+    LDA.w ExtSprNumber_170B,Y               ;$00FE05 ||
+    BEQ .create_water_bubble_00FE16         ;$00FE08 || only create bubbles for empty slots
+.continue_00FE0A                            ;        ||
+    DEY                                     ;$00FE0A ||
+    BPL .loop_00FE05                        ;$00FE0B |/
+.return_00FE0D
     RTS
 
-.DATA_00FE0E:
+.bubble_y_offset_00FE0E
     db $10,$16,$13,$1C
 
-.DATA_00FE12:
+.bubble_x_offset_00FE12
     db $00,$04,$0A,$07
 
-.CODE_00FE16:
-    LDA.b #$12
+.create_water_bubble_00FE16
+    LDA.b #!WaterBubble_12
     STA.w ExtSprNumber_170B,Y               ;$00FE18 |
     TYA                                     ;$00FE1B |
     ASL                                     ;$00FE1C |
@@ -13860,20 +13857,20 @@ CODE_00FDA5:
     ADC.b #$F7                              ;$00FE1F |
     STA.w ExtSprMisc_1765,Y                 ;$00FE21 |
     LDA.b PlayerYPos_96                     ;$00FE24 |
-    ADC.w .DATA_00FE0E,Y                    ;$00FE26 |
+    ADC.w .bubble_y_offset_00FE0E,Y         ;$00FE26 |
     STA.w ExtSprYPosLow_1715,Y              ;$00FE29 |
     LDA.b PlayerYPos_96+1                   ;$00FE2C |
     ADC.b #$00                              ;$00FE2E |
     STA.w ExtSprYPosHigh_1729,Y             ;$00FE30 |
     LDA.b PlayerXPos_94                     ;$00FE33 |
-    ADC.w .DATA_00FE12,Y                    ;$00FE35 |
+    ADC.w .bubble_x_offset_00FE12,Y         ;$00FE35 |
     STA.w ExtSprXPosLow_171F,Y              ;$00FE38 |
     LDA.b PlayerXPos_94+1                   ;$00FE3B |
     ADC.b #$00                              ;$00FE3D |
     STA.w ExtSprXPosHigh_1733,Y             ;$00FE3F |
     LDA.b #$00                              ;$00FE42 |
     STA.w ExtSprTimer_176F,Y                ;$00FE44 |
-    JMP .CODE_00FE0A                        ;$00FE47 |
+    JMP .continue_00FE0A                    ;$00FE47 |
 
 CODE_00FE4A:
     LDA.b Frame_13

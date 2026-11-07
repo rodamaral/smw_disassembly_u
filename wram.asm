@@ -631,6 +631,7 @@ PlayerBlocked_77: skip 1
 !Block_Top_08 = %01000
 !BlockTopRight_09 = %01001
 !Block_Inside_10 = %10000
+!Block_InsideRight_11 = %10001
 !Block_Y_1C = %11100
 !Block_Screen_80 = %10000000
 
