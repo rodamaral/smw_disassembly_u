@@ -2391,7 +2391,7 @@ GM19_credits_castle_load_009468:
     JSR CODE_00A635                         ;$0094EB |
     STZ.b PlayerDir_76                      ;$0094EE |
     STZ.b PlayerInAir_72                    ;$0094F0 |
-    JSL set_player_pose                     ;$0094F2 |
+    JSL set_player_pose_00CEB1              ;$0094F2 |
     LDX.b #$17                              ;$0094F6 |
     LDY.b #$00                              ;$0094F8 |
     JSR CODE_009622                         ;$0094FA |
@@ -7599,10 +7599,10 @@ CODE_00C73F:
 
 .CODE_00C7E9
     TAY
-    LDA.w $C5DA,Y                           ;$00C7EA |
+    LDA.w DATA_00C5E1-7,Y                   ;$00C7EA |
     STA.w PlayerPose_13E0                   ;$00C7ED |
     STZ.w CarryingFlagMirror_148F           ;$00C7F0 |
-    JSR aerial_physics                      ;$00C7F3 |
+    JSR aerial_physics_00D7E4               ;$00C7F3 |
 .CODE_00C7F6
     DEC.b CutsceneInputTimer_88
 .return_00C7F8
@@ -7615,7 +7615,7 @@ yoshi_wings_animation:
     JSR disable_controls
     LDA.b #$0B                              ;$00C800 |
     STA.b PlayerInAir_72                    ;$00C802 |
-    JSR aerial_physics                      ;$00C804 |
+    JSR aerial_physics_00D7E4               ;$00C804 |
     LDA.b PlayerYSpeed_7D                   ;$00C807 |
     BPL +                                   ;$00C809 |\
     CMP.b #$90                              ;$00C80B || decrement Y speed by 14
@@ -8249,15 +8249,15 @@ apply_player_physics_00CD39:                ;        |
 .use_land_or_water_physics_00CD79:
     LDA.b PlayerInWater_75
     BEQ use_land_physics_00CD82             ;$00CD7B |
-    JSR water_physics                       ;$00CD7D |
+    JSR water_physics_00D988                ;$00CD7D |
     BRA set_yoshi_pose_if_mounted_00CD8F    ;$00CD80 |
 
 use_land_physics_00CD82:
-    JSR land_physics                        ;$00CD82 |
-    JSR powerup_physics                     ;$00CD85 |
-    JSR aerial_physics                      ;$00CD88 |
+    JSR land_physics_00D5F2                 ;$00CD82 |
+    JSR powerup_physics_00D062              ;$00CD85 |
+    JSR aerial_physics_00D7E4               ;$00CD88 |
 set_player_yoshi_poses_00CD8B:
-    JSL set_player_pose
+    JSL set_player_pose_00CEB1
 set_yoshi_pose_if_mounted_00CD8F:
     LDY.w RidingYoshi_187A                  ;$00CD8F |
     BNE set_yoshi_pose_00CDAD               ;$00CD92 |\ branch if mounted
@@ -8405,7 +8405,7 @@ DATA_00CEA1:
 DATA_00CEA9:
     db $02,$07,$06,$09,$02,$07,$06,$09
 
-set_player_pose:
+set_player_pose_00CEB1:
     LDA.w CapeAniTimer_14A2                 ;$00CEB1 |
     BNE lbl14A2Not0                         ;$00CEB4 |
     LDX.w PlayerCapePose_13DF               ;$00CEB6 |
@@ -8662,27 +8662,27 @@ CODE_00D044:
     SEP #$20                                ;$00D05F | A->8
     RTS                                     ;$00D061 |
 
-powerup_physics:                            ;        \
+powerup_physics_00D062:                     ;        \
     LDA.b Powerup_19                        ;$00D062 |\ If the player is caped,
     CMP.b #$02                              ;$00D064 |/
     BNE .not_caped                          ;$00D066 |
     BIT.b byetudlrPress_16                  ;$00D068 |\ and X or Y are tapped,
     BVC .return                             ;$00D06A |/
     LDA.b PlayerIsDucking_73                ;$00D06C |\ and the player is neither ducking,
-    ORA.w RidingYoshi_187A                  ;$00D06E | | nor on Yoshi,
-    ORA.w SpinJumpFlag_140D                 ;$00D071 | | nor spin jumping,
+    ORA.w RidingYoshi_187A                  ;$00D06E || nor on Yoshi,
+    ORA.w SpinJumpFlag_140D                 ;$00D071 || nor spin jumping,
     BNE .return                             ;$00D074 |/
-    LDA.b #$12                              ;$00D076 |\ then set the cape spin timer
-    STA.w CapeSpinTimer_14A6                ;$00D078 |/
-    LDA.b #$04                              ;$00D07B |\ and play the cape spin sound.
-    STA.w SPCIO3_1DFC                       ;$00D07D |/
+    LDA.b #$12                              ;$00D076 | then set the cape spin timer
+    STA.w CapeSpinTimer_14A6                ;$00D078 |
+    LDA.b #$04                              ;$00D07B | and play the cape spin sound.
+    STA.w SPCIO3_1DFC                       ;$00D07D |
     RTS                                     ;$00D080 /
 
 .not_caped                                  ;        \
     CMP.b #$03                              ;$00D081 |\ If the player is fiery,
     BNE .return                             ;$00D083 |/ 
     LDA.b PlayerIsDucking_73                ;$00D085 |\ and not on Yoshi,
-    ORA.w RidingYoshi_187A                  ;$00D087 | |
+    ORA.w RidingYoshi_187A                  ;$00D087 ||
     BNE .return                             ;$00D08A |/
     BIT.b byetudlrPress_16                  ;$00D08C |\ and X or Y are tapped,
     BVS .shoot_fireball                     ;$00D08E |/ shoot a fireball.
@@ -8690,14 +8690,14 @@ powerup_physics:                            ;        \
     BEQ .return                             ;$00D093 |/
     INC.w SpinjumpFireball_13E2             ;$00D095 | increment the spinjump fireball timer.
     LDA.w SpinjumpFireball_13E2             ;$00D098 |\ Every 16 frames,
-    AND.b #$0F                              ;$00D09B | | shoot a fireball,
+    AND.b #$0F                              ;$00D09B || shoot a fireball,
     BNE .return                             ;$00D09D |/
     TAY                                     ;$00D09F |
     LDA.w SpinjumpFireball_13E2             ;$00D0A0 |\
-    AND.b #$10                              ;$00D0A3 | |
-    BEQ .face_left                          ;$00D0A5 | | and also flip the player's direction.
-    INY                                     ;$00D0A7 | |
-.face_left                                  ;        | |
+    AND.b #$10                              ;$00D0A3 ||
+    BEQ .face_left                          ;$00D0A5 || and also flip the player's direction.
+    INY                                     ;$00D0A7 ||
+.face_left                                  ;        ||
     STY.b PlayerDir_76                      ;$00D0A8 |/
 .shoot_fireball                             ;        |
     JSR shoot_fireball                      ;$00D0AA | Shoot a fireball.
@@ -8848,7 +8848,7 @@ DATA_00D193:
 horizontal_pipe_animation:
     JSR disable_controls
     STZ.w PlayerOverworldPose_13DE          ;$00D19A |
-    JSL set_player_pose                     ;$00D19D |
+    JSL set_player_pose_00CEB1              ;$00D19D |
     JSL CODE_00CFBC                         ;$00D1A1 |
     JSR CODE_00D1F4                         ;$00D1A5 |
     LDA.w RidingYoshi_187A                  ;$00D1A8 |
@@ -9139,7 +9139,7 @@ DATA_00D5EE:
 DATA_00D5F0:
     db $1C,$0C
 
-land_physics:
+land_physics_00D5F2:
     LDA.b PlayerInAir_72                    ;$00D5F2 |
     BEQ .on_ground_physics_00D5F9           ;$00D5F4 |
     JMP .in_air_physics_00D682              ;$00D5F6 |
@@ -9147,32 +9147,29 @@ land_physics:
 .on_ground_physics_00D5F9:
     STZ.b PlayerIsDucking_73
     LDA.w PlayerSlopePose_13ED              ;$00D5FB |
-    BNE .CODE_00D60B                        ;$00D5FE |
-    LDA.b byetudlrHold_15                   ;$00D600 |
-    AND.b #$04                              ;$00D602 |
-    BEQ .CODE_00D60B                        ;$00D604 |
-    STA.b PlayerIsDucking_73                ;$00D606 |
-    STZ.w CapeInteracts_13E8                ;$00D608 |
-.CODE_00D60B:
-    LDA.w OnSolidSprite_1471
+    BNE +                                   ;$00D5FE |\ skip if ;;;
+    LDA.b byetudlrHold_15                   ;$00D600 ||
+    AND.b #$04                              ;$00D602 ||
+    BEQ +                                   ;$00D604 ||
+    STA.b PlayerIsDucking_73                ;$00D606 ||
+    STZ.w CapeInteracts_13E8                ;$00D608 |/
++   LDA.w OnSolidSprite_1471                ;$00D60B |
     CMP.b #$02                              ;$00D60E |
-    BEQ .CODE_00D61E                        ;$00D610 |
-    LDA.b PlayerBlocked_77                  ;$00D612 |
-    AND.b #!Block_Top_08                    ;$00D614 |
-    BNE .CODE_00D61E                        ;$00D616 |
-    LDA.b byetudlrPress_16                  ;$00D618 |
-    ORA.b axlr0000Press_18                  ;$00D61A |
-    BMI .CODE_00D630                        ;$00D61C |
-.CODE_00D61E:
-    LDA.b PlayerIsDucking_73
+    BEQ +                                   ;$00D610 |\ skip if ;;;
+    LDA.b PlayerBlocked_77                  ;$00D612 ||
+    AND.b #!Block_Top_08                    ;$00D614 ||
+    BNE +                                   ;$00D616 ||
+    LDA.b byetudlrPress_16                  ;$00D618 ||
+    ORA.b axlr0000Press_18                  ;$00D61A ||
+    BMI .CODE_00D630                        ;$00D61C |/ branch if pressed A or B
++   LDA.b PlayerIsDucking_73                ;$00D61E |
     BEQ .in_air_physics_00D682              ;$00D620 |
     LDA.b PlayerXSpeed_7B                   ;$00D622 |
-    BEQ .CODE_00D62D                        ;$00D624 |
-    LDA.b LevelIsSlippery_86                ;$00D626 |
-    BNE .CODE_00D62D                        ;$00D628 |
-    JSR CODE_00FE4A                         ;$00D62A |
-.CODE_00D62D:
-    JMP CODE_00D764
+    BEQ +                                   ;$00D624 |\ skip if ;;;
+    LDA.b LevelIsSlippery_86                ;$00D626 ||
+    BNE +                                   ;$00D628 ||
+    JSR CODE_00FE4A                         ;$00D62A |/
++   JMP CODE_00D764                         ;$00D62D |
 
 .CODE_00D630:
     LDA.b PlayerXSpeed_7B
@@ -9420,7 +9417,7 @@ DATA_00D7D9:
     db $00,$00,$00,$F8,$F8,$F8,$F4,$F0
     db $C8,$02,$01
 
-aerial_physics:
+aerial_physics_00D7E4:
     LDY.w FlightPhase_1407                  ;$00D7E4 |
     BNE .CODE_00D824                        ;$00D7E7 |
     LDA.b PlayerInAir_72                    ;$00D7E9 |
@@ -9659,7 +9656,7 @@ DATA_00D980:
 DATA_00D984:
     db $E8,$F8,$D0,$D0
 
-water_physics:
+water_physics_00D988:
     STZ.w PlayerSlopePose_13ED              ;$00D988 |
     STZ.b PlayerIsDucking_73                ;$00D98B |
     STZ.w FlightPhase_1407                  ;$00D98D |
@@ -9814,8 +9811,8 @@ water_physics:
 .CODE_00DA79:
     JSR CODE_00D772
 .CODE_00DA7C:
-    JSR powerup_physics
-    JSL set_player_pose                     ;$00DA7F |
+    JSR powerup_physics_00D062
+    JSL set_player_pose_00CEB1              ;$00DA7F |
     LDA.w CapeSpinTimer_14A6                ;$00DA83 |
     BNE .Return00DA8C                       ;$00DA86 |
     LDA.b PlayerInAir_72                    ;$00DA88 |
