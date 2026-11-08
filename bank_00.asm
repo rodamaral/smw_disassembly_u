@@ -7649,7 +7649,7 @@ yoshi_wings_animation:
     INY                                     ;$00C83E ||
     STY.w YoshiHeavenFlag_1B95              ;$00C83F ||
     JSR go_to_sublevel                      ;$00C842 ||
-+   JMP CODE_00CD8F                         ;$00C845 |/
++   JMP set_yoshi_pose_if_mounted_00CD8F    ;$00C845 |/
 
 DATA_00C848:
     db $01,$5F,$00,$30,$08,$30,$00,$20
@@ -7730,7 +7730,7 @@ CODE_00C8EC:
     STZ.b PlayerInAir_72                    ;$00C8F3 |
     STZ.w SpinJumpFlag_140D                 ;$00C8F5 |
 CODE_00C8F8:
-    JMP use_land_physics
+    JMP use_land_physics_00CD82
 
 CODE_00C8FB:
     INC.w ShowMarioStart_141D
@@ -8216,75 +8216,71 @@ no_special_collision:                       ;        \
     JSR calculate_player_positions_00DC2D   ;$00CD30 | Apply the player's speeds.
     JSR player_level_collision_00E92B       ;$00CD33 | Apply standard level collision.
 skip_standard_collision:                    ;        |
-    JSR check_y_position                    ;$00CD36 | Check the player's Y position.
+    JSR process_player_y_position_00F595    ;$00CD36 | Process the player's Y position.
 CODE_00CD39:                                ;        |
     STZ.w PlayerTurningPose_13DD            ;$00CD39 | Clear the turning around pose.
     LDY.w PBalloonFlag_13F3                 ;$00CD3C |\ If the player is still getting a P-balloon,
-    BNE p_balloon                           ;$00CD3F |/ run the inflation code.
-    LDA.w PlayerClimbFlag_18BE              ;$00CD41 |\ If the player can climb on air,
-    BEQ .no_climb_on_air                    ;$00CD44 | |
-    LDA.b #$1F                              ;$00CD46 | | set the climbing flag.
+    BNE update_p_balloon_state_00CD95       ;$00CD3F |/ run the inflation code
+    LDA.w PlayerClimbFlag_18BE              ;$00CD41 |
+    BEQ +                                   ;$00CD44 |\ If the player can climb on air,
+    LDA.b #!ClimbableSHBTC_1F               ;$00CD46 || set the climbing flag.
     STA.b InteractionPtsClimbable_8B        ;$00CD48 |/
-.no_climb_on_air                            ;        |
-    LDA.b PlayerClimb_74                    ;$00CD4A |
-    BNE CODE_00CD72                         ;$00CD4C |
-    LDA.w CarryingFlagMirror_148F           ;$00CD4E |
-    ORA.w RidingYoshi_187A                  ;$00CD51 |
-    BNE CODE_00CD79                         ;$00CD54 |
-    LDA.b InteractionPtsClimbable_8B        ;$00CD56 |
-    AND.b #$1B                              ;$00CD58 |
-    CMP.b #$1B                              ;$00CD5A |
-    BNE CODE_00CD79                         ;$00CD5C |
-    LDA.b byetudlrHold_15                   ;$00CD5E |
-    AND.b #$0C                              ;$00CD60 |
-    BEQ CODE_00CD79                         ;$00CD62 |
-    LDY.b PlayerInAir_72                    ;$00CD64 |
-    BNE CODE_00CD72                         ;$00CD66 |
-    AND.b #$08                              ;$00CD68 |
-    BNE CODE_00CD72                         ;$00CD6A |
-    LDA.b InteractionPtsClimbable_8B        ;$00CD6C |
-    AND.b #$04                              ;$00CD6E |
-    BEQ CODE_00CD79                         ;$00CD70 |
-CODE_00CD72:
-    LDA.b InteractionPtsClimbable_8B
++   LDA.b PlayerClimb_74                    ;$00CD4A |
+    BNE +                                   ;$00CD4C |\ skip if climbing
+    LDA.w CarryingFlagMirror_148F           ;$00CD4E ||
+    ORA.w RidingYoshi_187A                  ;$00CD51 ||
+    BNE .use_land_or_water_physics_00CD79   ;$00CD54 || branch if carrying something o riding Yoshi
+    LDA.b InteractionPtsClimbable_8B        ;$00CD56 ||
+    AND.b #!ClimbableSHTC_1B                ;$00CD58 ||
+    CMP.b #!ClimbableSHTC_1B                ;$00CD5A ||
+    BNE .use_land_or_water_physics_00CD79   ;$00CD5C || branch if center, head, shoulder or waist not touching a climbable tile
+    LDA.b byetudlrHold_15                   ;$00CD5E ||
+    AND.b #!DpadUD_0C                       ;$00CD60 ||
+    BEQ .use_land_or_water_physics_00CD79   ;$00CD62 || branch if not holding Up or Down
+    LDY.b PlayerInAir_72                    ;$00CD64 ||
+    BNE +                                   ;$00CD66 || skip if in air
+    AND.b #!DpadUp                          ;$00CD68 ||
+    BNE +                                   ;$00CD6A || skip if not holding Up
+    LDA.b InteractionPtsClimbable_8B        ;$00CD6C ||
+    AND.b #!ClimbableB_04                   ;$00CD6E ||
+    BEQ .use_land_or_water_physics_00CD79   ;$00CD70 |/
++   LDA.b InteractionPtsClimbable_8B        ;$00CD72 |
     STA.b PlayerClimb_74                    ;$00CD74 |
     JMP CODE_00DB17                         ;$00CD76 |
 
-CODE_00CD79:
+.use_land_or_water_physics_00CD79:
     LDA.b PlayerInWater_75
-    BEQ use_land_physics                    ;$00CD7B |
+    BEQ use_land_physics_00CD82             ;$00CD7B |
     JSR water_physics                       ;$00CD7D |
-    BRA CODE_00CD8F                         ;$00CD80 |
+    BRA set_yoshi_pose_if_mounted_00CD8F    ;$00CD80 |
 
-use_land_physics:
+use_land_physics_00CD82:
     JSR land_physics                        ;$00CD82 |
     JSR powerup_physics                     ;$00CD85 |
     JSR aerial_physics                      ;$00CD88 |
-CODE_00CD8B:
+set_player_yoshi_poses_00CD8B:
     JSL set_player_pose
-CODE_00CD8F:
+set_yoshi_pose_if_mounted_00CD8F:
     LDY.w RidingYoshi_187A                  ;$00CD8F |
-    BNE set_yoshi_pose                      ;$00CD92 |
-    RTS                                     ;$00CD94 |
+    BNE set_yoshi_pose_00CDAD               ;$00CD92 |\ branch if mounted
+    RTS                                     ;$00CD94 |/
 
-p_balloon:
-    LDA.b #$42                              ;$00CD95 |
+update_p_balloon_state_00CD95:
+    LDA.b #$42                              ;$00CD95 | small Mario pose
     LDX.b Powerup_19                        ;$00CD97 |
-    BEQ CODE_00CD9D                         ;$00CD99 |
-    LDA.b #$43                              ;$00CD9B |
-CODE_00CD9D:
-    DEY
-    BEQ CODE_00CDA5                         ;$00CD9E |
-    STY.w PBalloonFlag_13F3                 ;$00CDA0 |
-    LDA.b #$0F                              ;$00CDA3 |
-CODE_00CDA5:
-    STA.w PlayerPose_13E0                   ;$00CDA5 |
+    BEQ +                                   ;$00CD99 |\ branch if small Mario
+    LDA.b #$43                              ;$00CD9B |/ Big Mario pose
++   DEY                                     ;$00CD9D |
+    BEQ +                                   ;$00CD9E |\ branch if timer just reached zero
+    STY.w PBalloonFlag_13F3                 ;$00CDA0 || otherwise, keep decrementing timer
+    LDA.b #$0F                              ;$00CDA3 |/ and use the inflated pose
++   STA.w PlayerPose_13E0                   ;$00CDA5 |
     RTS                                     ;$00CDA8 |
 
 yoshi_poses:
     db $20,$21,$27,$28
 
-set_yoshi_pose:                             ;        \
+set_yoshi_pose_00CDAD:                      ;        \
     LDX.w YoshiTongueTimer_14A3             ;$00CDAD |\ If Yoshi isn't sticking his tongue out,
     BEQ .load_pose                          ;$00CDB0 |/ skip to loading the pose.
     LDY.b #$03                              ;$00CDB2 | Get ready to lose pose $27.
@@ -8991,7 +8987,7 @@ slanted_pipe_animation:
     STA.w PlayerBehindNet_13F9              ;$00D28C |
     LDA.b #$0C                              ;$00D28F |
     STA.b PlayerInAir_72                    ;$00D291 |
-    JSR CODE_00CD8B                         ;$00D293 |
+    JSR set_player_yoshi_poses_00CD8B       ;$00D293 |
     DEC.b PipeTimer_88                      ;$00D296 |
     BNE CODE_00D29D                         ;$00D298 |
     JMP CODE_00D26A                         ;$00D29A |
@@ -9967,61 +9963,59 @@ CODE_00DB17:
     BRA .CODE_00DC00                        ;$00DBAA |
 
 .CODE_00DBAC:
-    BVC .CODE_00DBCA
-    LDA.b PlayerClimb_74                    ;$00DBAE |
-    BPL .CODE_00DBCA                        ;$00DBB0 |
-    LDA.b #$01                              ;$00DBB2 |
-    STA.w SPCIO0_1DF9                       ;$00DBB4 |
-    STX.w NetDoorDirIndex_13F0              ;$00DBB7 |
-    LDA.b PlayerXPos_94                     ;$00DBBA |
-    AND.b #$08                              ;$00DBBC |
-    LSR                                     ;$00DBBE |
-    LSR                                     ;$00DBBF |
-    LSR                                     ;$00DBC0 |
-    EOR.b #$01                              ;$00DBC1 |
-    STA.b PlayerDir_76                      ;$00DBC3 |
-    LDA.b #$08                              ;$00DBC5 |
-    STA.w PunchNetTimer_149E                ;$00DBC7 |
-.CODE_00DBCA:
-    LDA.w ClimbingImgs,X
+    BVC +                                   ;$00DBAC |\
+    LDA.b PlayerClimb_74                    ;$00DBAE ||
+    BPL +                                   ;$00DBB0 ||
+    LDA.b #$01                              ;$00DBB2 ||
+    STA.w SPCIO0_1DF9                       ;$00DBB4 ||
+    STX.w NetDoorDirIndex_13F0              ;$00DBB7 ||
+    LDA.b PlayerXPos_94                     ;$00DBBA ||
+    AND.b #$08                              ;$00DBBC ||
+    LSR                                     ;$00DBBE ||
+    LSR                                     ;$00DBBF ||
+    LSR                                     ;$00DBC0 ||
+    EOR.b #$01                              ;$00DBC1 ||
+    STA.b PlayerDir_76                      ;$00DBC3 ||
+    LDA.b #$08                              ;$00DBC5 ||
+    STA.w PunchNetTimer_149E                ;$00DBC7 |/
++   LDA.w ClimbingImgs,X                    ;$00DBCA |
     STA.w PlayerPose_13E0                   ;$00DBCD |
     LDA.b byetudlrHold_15                   ;$00DBD0 |
     AND.b #$03                              ;$00DBD2 |
-    BEQ .CODE_00DBF2                        ;$00DBD4 |
+    BEQ ..CODE_00DBF2                       ;$00DBD4 |
     LSR                                     ;$00DBD6 |
     TAX                                     ;$00DBD7 |
     LDA.b InteractionPtsClimbable_8B        ;$00DBD8 |
-    AND.b #$18                              ;$00DBDA |
-    CMP.b #$18                              ;$00DBDC |
-    BEQ .CODE_00DBE8                        ;$00DBDE |
-    LDA.b PlayerClimb_74                    ;$00DBE0 |
-    BPL .CODE_00DC00                        ;$00DBE2 |
-    CPX.b PlayerBlockXSide_8C               ;$00DBE4 |
-    BEQ .CODE_00DBF2                        ;$00DBE6 |
-.CODE_00DBE8:
-    TXA
+    AND.b #!ClimbableSH_18                  ;$00DBDA |
+    CMP.b #!ClimbableSH_18                  ;$00DBDC |
+    BEQ +                                   ;$00DBDE |\
+    LDA.b PlayerClimb_74                    ;$00DBE0 ||
+    BPL .CODE_00DC00                        ;$00DBE2 ||
+    CPX.b PlayerBlockXSide_8C               ;$00DBE4 ||
+    BEQ ..CODE_00DBF2                       ;$00DBE6 |/
++   TXA                                     ;$00DBE8 |
     ASL                                     ;$00DBE9 |
     ORA.b PlayerInWater_75                  ;$00DBEA |
     TAX                                     ;$00DBEC |
     LDA.w DATA_00DAB7,X                     ;$00DBED |
     STA.b PlayerXSpeed_7B                   ;$00DBF0 |
-.CODE_00DBF2:
-    LDA.b byetudlrHold_15
-    AND.b #$0C                              ;$00DBF4 |
-    BEQ .CODE_00DC16                        ;$00DBF6 |
-    AND.b #$08                              ;$00DBF8 |
-    BNE .CODE_00DC03                        ;$00DBFA |
-    LSR.b InteractionPtsClimbable_8B        ;$00DBFC |
-    BCS .CODE_00DC0B                        ;$00DBFE |
-.CODE_00DC00:
-    STZ.b PlayerClimb_74
+..CODE_00DBF2                               ;        |
+    LDA.b byetudlrHold_15                   ;$00DBF2 |
+    AND.b #!DpadUD_0C                       ;$00DBF4 |
+    BEQ .CODE_00DC16                        ;$00DBF6 |\ branch if not holding Up or Down
+    AND.b #!DpadUp                          ;$00DBF8 ||
+    BNE .CODE_00DC03                        ;$00DBFA ||\ branch if not holding Up
+    LSR.b InteractionPtsClimbable_8B        ;$00DBFC ||/
+    BCS .CODE_00DC0B                        ;$00DBFE |/
+.CODE_00DC00                                ;        |
+    STZ.b PlayerClimb_74                    ;$00DC00 |
     RTS                                     ;$00DC02 |
 
 .CODE_00DC03:
     INY
     INY                                     ;$00DC04 |
     LDA.b InteractionPtsClimbable_8B        ;$00DC05 |
-    AND.b #$02                              ;$00DC07 |
+    AND.b #!ClimbableT_02                   ;$00DC07 |
     BEQ .CODE_00DC16                        ;$00DC09 |
 .CODE_00DC0B:
     LDA.b PlayerClimb_74
@@ -11274,7 +11268,7 @@ normal_collision_00EB77:
 .skip_shoulder_00EC8A                       ;        |
     JSR advance_and_lookup_map16_00F44D     ;$00EC8A | Process the head collision point.
     BNE .head_page1_00ECB1                  ;$00EC8D |
-    LDA.b #$02                              ;$00EC8F |
+    LDA.b #!PointHead_02                    ;$00EC8F |
     JSR process_page0_tiles_00F2C2          ;$00EC91 |
     LDY.b PlayerYSpeed_7D                   ;$00EC94 |
     BPL .goto_feet_middle_00ECA3            ;$00EC96 |\ try to hit invisible blocks 21..24 when going up
@@ -11464,12 +11458,12 @@ normal_collision_00EB77:
 
 .page0_mid_feet_00EDDB:
     CPY.b #!Map16MudLavaLow_05
-    BNE ..lot_lava_mud_00EDE4               ;$00EDDD |\ branch if not Mud Lava tile
+    BNE ..not_lava_mud_00EDE4               ;$00EDDD |\ branch if not Mud Lava tile
     JSR kill_player_disable_controls_00F629 ;$00EDDF ||
     BRA .goto_opposite_foot_00EDE9          ;$00EDE2 |/
 
-..lot_lava_mud_00EDE4:
-    LDA.b #$04                              ;$00EDE4 |
+..not_lava_mud_00EDE4:
+    LDA.b #!PointFoot_04                    ;$00EDE4 |
     JSR process_page0_tiles_00F2C2          ;$00EDE6 |
 .goto_opposite_foot_00EDE9                  ;        |
     JSR advance_and_lookup_map16_00F44D     ;$00EDE9 | Process opposite foot
@@ -12245,7 +12239,7 @@ process_page0_center_00F28C:
     RTS                                     ;$00F2BF /
 
 .not_invisible_1up
-    LDA.b #$01                              ;$00F2C0 \
+    LDA.b #!PointCenter_01                  ;$00F2C0 \
 process_page0_tiles_00F2C2:                 ;        |
     CPY.b #!Map16VineLow_06                 ;$00F2C2 | If it's tiles 000 - 005,
     BCS process_page_0_tiles_no_swim        ;$00F2C4 |
@@ -12274,17 +12268,17 @@ process_page_0_tiles_no_swim:
 
 .not_midway_point
     CPY.b #!Map16VineLow_06                 ;$00F2EF \ If the tile is a vine,
-    BEQ .is_vine                            ;$00F2F0 |\
+    BEQ ..is_vine                           ;$00F2F0 |\
     CPY.b #!Map16ClimbingNetLow_07          ;$00F2F2 ||
     BCC try_get_coin_or_moon_00F309         ;$00F2F4 || or it is a climbing net tile,
     CPY.b #!Map16PSwitchLow_1D              ;$00F2F6 || branch out if: 00..05, 1D..37, 39..FF
     BCS try_get_coin_or_moon_00F309         ;$00F2F8 |/
     ORA.b #$80                              ;$00F2FA | set the climbing flag.
-.is_vine                                    ;        |
-    CMP.b #$01                              ;$00F2FC |\
-    BNE .not_center                         ;$00F2FE || If interacting via the center body collision point,
-    ORA.b #$18                              ;$00F300 || set a different climbing flag.
-.not_center                                 ;        |/
+..is_vine                                   ;        |
+    CMP.b #!PointCenter_01                  ;$00F2FC |\
+    BNE ..not_center                        ;$00F2FE || If interacting via the center body collision point,
+    ORA.b #!ClimbableSH_18                  ;$00F300 || set a different climbing flag.
+..not_center                                ;        |/
     TSB.b InteractionPtsClimbable_8B        ;$00F302 | Set the climbing flag corresponding to the interaction point.
     LDA.b PlayerBlockXSide_93               ;$00F304 |
     STA.b PlayerBlockXSide_8C               ;$00F306 |
@@ -12699,26 +12693,27 @@ conditional_map16_00F545:
 .return_00F594                              ;        |
     RTL                                     ;$00F594 /
 
-check_y_position:
-    REP #$20                                ;$00F595 \
-    LDA.w #$FF80                            ;$00F597 |\ If the player is more than 32 pixels above the
-    CLC                                     ;$00F59A | | Y position of layer 1,
-    ADC.b Layer1YPos_1C                     ;$00F59B | |
-    CMP.b PlayerYPos_96                     ;$00F59D | |
-    BMI .below_y_position_limit             ;$00F59F | |
-    STA.b PlayerYPos_96                     ;$00F5A1 | | keep the player at that level.
-.below_y_position_limit                     ;        |/
-    SEP #$20                                ;$00F5A3 | A->8
-    LDA.b PlayerYPosScrRel_80+1             ;$00F5A5 |\ If the player is below the screen,
-    DEC A                                   ;$00F5A7 | |
-    BMI .return                             ;$00F5A8 | |
-    LDA.w YoshiHeavenFlag_1B95              ;$00F5AA | | and it's a Yoshi wing level,
-    BEQ .kill                               ;$00F5AD | |
-    JMP normal_exit_level_00C95B            ;$00F5AF |/ exit and clear the level.
+; Clamp player's Y position to 128 pixels above layer 1
+; Kill the player if below the screen, or send finish a Yoshi wing level
+process_player_y_position_00F595:
+    REP #$20                                ;$00F595 \ A->16
+    LDA.w #$FF80                            ;$00F597 | If the player is more than 128 pixels above the
+    CLC                                     ;$00F59A |  Y position of layer 1,
+    ADC.b Layer1YPos_1C                     ;$00F59B |
+    CMP.b PlayerYPos_96                     ;$00F59D |
+    BMI +                                   ;$00F59F |\ clamp player's Y
+    STA.b PlayerYPos_96                     ;$00F5A1 |/
++   SEP #$20                                ;$00F5A3 | A->8
+    LDA.b PlayerYPosScrRel_80+1             ;$00F5A5 | If the player is below the screen,
+    DEC A                                   ;$00F5A7 |
+    BMI .return_00F586                      ;$00F5A8 |\ return if not below screen
+    LDA.w YoshiHeavenFlag_1B95              ;$00F5AA ||
+    BEQ .kill_00F5B2                        ;$00F5AD || branch if not a Yoshi wing level
+    JMP normal_exit_level_00C95B            ;$00F5AF |/ otherwise, exit and clear the level
 
-.kill
-    JSL kill_player_no_speed_00F60A         ;$00F5B2 | Otherwise, kill the player without throwing him upwards.
-.return
+.kill_00F5B2
+    JSL kill_player_no_speed_00F60A         ;$00F5B2 | kill the player without throwing him upwards
+.return_00F586
     RTS                                     ;        /
 
 hurt_mario_00F5B7:

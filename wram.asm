@@ -61,6 +61,7 @@ byetudlrHold_15: skip 1
 !ButStart = %00010000
 !DpadUp = %00001000
 !DpadDown = %00000100
+!DpadUD_0C = %00001100
 !DpadLeft = %00000010
 !DpadRight = %00000001
 !DpadSides = %00000011
@@ -794,6 +795,15 @@ GFXFilePtr_8A: skip 1
 ;    |+--- top horizontal collision
 ;    +---- bottom horizontal collision
 InteractionPtsClimbable_8B:
+; Valid values
+!PointCenter_01 = %00000001
+!PointHead_02 = %00000010
+!PointFoot_04 = %00000100
+!ClimbableT_02 = %00000010
+!ClimbableB_04 = %00000100
+!ClimbableSH_18 = %00011000
+!ClimbableSHTC_1B = %00011011
+!ClimbableSHBTC_1F = %00011111
 
 ; === $7E008B ===
 ; 1 byte
