@@ -7504,110 +7504,108 @@ CODE_00C73F:
     ADC.w DATA_00C6DF,X                     ;$00C745 |
     TAX                                     ;$00C748 |
     LDA.b CutsceneInputTimer_88             ;$00C749 | TODO: not sure if $88 is timer or input here
-    BNE CODE_00C764                         ;$00C74B |
-    INC $8F                                 ;$00C74D |
-    INC $8F                                 ;$00C74F |
-    INX                                     ;$00C751 |
-    INX                                     ;$00C752 |
-    LDA.w DATA_00C5E9,X                     ;$00C753 |
-    STA.b NoYoshiInputIndex_88              ;$00C756 |
-    LDA.w DATA_00C5E8,X                     ;$00C758 |
-    CMP.b #$2D                              ;$00C75B |
-    BNE CODE_00C764                         ;$00C75D |
-    LDA.b #$1E                              ;$00C75F |
-    STA.w SPCIO0_1DF9                       ;$00C761 |
-CODE_00C764:
-    LDA.w DATA_00C5E8,X
+    BNE +                                   ;$00C74B |\
+    INC $8F                                 ;$00C74D ||
+    INC $8F                                 ;$00C74F ||
+    INX                                     ;$00C751 ||
+    INX                                     ;$00C752 ||
+    LDA.w DATA_00C5E9,X                     ;$00C753 ||
+    STA.b NoYoshiInputIndex_88              ;$00C756 ||
+    LDA.w DATA_00C5E8,X                     ;$00C758 ||
+    CMP.b #$2D                              ;$00C75B ||
+    BNE +                                   ;$00C75D ||
+    LDA.b #$1E                              ;$00C75F ||
+    STA.w SPCIO0_1DF9                       ;$00C761 |/
++   LDA.w DATA_00C5E8,X                     ;$00C764 |
     CMP.b #$FF                              ;$00C767 |
-    BNE CODE_00C76E                         ;$00C769 |
-    JMP Return00C7F8                        ;$00C76B |
+    BNE .CODE_00C76E                        ;$00C769 |
+    JMP .return_00C7F8                      ;$00C76B |
 
-CODE_00C76E:
+.CODE_00C76E
     PHA
     AND.b #$10                              ;$00C76F |
-    BEQ CODE_00C777                         ;$00C771 |
-    JSL CODE_0CD4A4                         ;$00C773 |
-CODE_00C777:
-    PLA
+    BEQ +                                   ;$00C771 |\
+    JSL CODE_0CD4A4                         ;$00C773 |/
++   PLA                                     ;$00C777 |
     TAY                                     ;$00C778 |
     AND.b #$20                              ;$00C779 |
-    BNE CODE_00C789                         ;$00C77B |
+    BNE .CODE_00C789                        ;$00C77B |
     STY.b byetudlrHold_15                   ;$00C77D |
     TYA                                     ;$00C77F |
     AND.b #$BF                              ;$00C780 |
     STA.b byetudlrPress_16                  ;$00C782 |
-    JSR CODE_00CD39                         ;$00C784 |
-    BRA CODE_00C7F6                         ;$00C787 |
+    JSR apply_player_physics_00CD39         ;$00C784 |
+    BRA .CODE_00C7F6                        ;$00C787 |
 
-CODE_00C789:
+.CODE_00C789:
     TYA
     AND.b #$0F                              ;$00C78A |
     CMP.b #$07                              ;$00C78C |
-    BCS CODE_00C7E9                         ;$00C78E |
+    BCS .CODE_00C7E9                        ;$00C78E |
     DEC A                                   ;$00C790 |
-    BPL CODE_00C7A2                         ;$00C791 |
+    BPL .CODE_00C7A2                        ;$00C791 |
     LDA.w PickUpItemTimer_1498              ;$00C793 |
-    BEQ CODE_00C79D                         ;$00C796 |
+    BEQ .CODE_00C79D                        ;$00C796 |
     LDA.b #$09                              ;$00C798 |
     STA.w SPCIO0_1DF9                       ;$00C79A |
-CODE_00C79D:
-    INC.w Layer1ScrollCmd_143E
-    BRA CODE_00C7F6                         ;$00C7A0 |
+.CODE_00C79D
+    INC.w Layer1ScrollCmd_143E              ;$00C79D |
+    BRA .CODE_00C7F6                        ;$00C7A0 |
 
-CODE_00C7A2:
-    BNE CODE_00C7A9
+.CODE_00C7A2:
+    BNE .CODE_00C7A9
     INC.w Layer2ScrollTimer_1445            ;$00C7A4 |
-    BRA CODE_00C7F6                         ;$00C7A7 |
+    BRA .CODE_00C7F6                        ;$00C7A7 |
 
-CODE_00C7A9:
+.CODE_00C7A9
     DEC A
-    BNE CODE_00C7B6                         ;$00C7AA |
+    BNE .CODE_00C7B6                        ;$00C7AA |
     LDA.b #$0E                              ;$00C7AC |
     STA.w SPCIO0_1DF9                       ;$00C7AE |
     INC.w Layer1ScrollXSpeed_1446           ;$00C7B1 |
-    BRA CODE_00C7F6                         ;$00C7B4 |
+    BRA .CODE_00C7F6                        ;$00C7B4 |
 
-CODE_00C7B6:
+.CODE_00C7B6
     DEC A
-    BNE CODE_00C7C0                         ;$00C7B7 |
+    BNE .CODE_00C7C0                        ;$00C7B7 |
     LDY.b #$88                              ;$00C7B9 |
     STY.w Layer2ScrollTimer_1445            ;$00C7BB |
-    BRA CODE_00C7F6                         ;$00C7BE |
+    BRA .CODE_00C7F6                        ;$00C7BE |
 
-CODE_00C7C0:
+.CODE_00C7C0
     DEC A
-    BNE CODE_00C7CE                         ;$00C7C1 |
+    BNE .CODE_00C7CE                        ;$00C7C1 |
     LDA.b #$38                              ;$00C7C3 |
     STA.w Layer1ScrollXSpeed_1446           ;$00C7C5 |
     LDA.b #$07                              ;$00C7C8 |
     TRB.b PlayerXPos_94                     ;$00C7CA |
-    BRA CODE_00C7F6                         ;$00C7CC |
+    BRA .CODE_00C7F6                        ;$00C7CC |
 
-CODE_00C7CE:
+.CODE_00C7CE
     DEC A
-    BNE CODE_00C7DF                         ;$00C7CF |
+    BNE .CODE_00C7DF                        ;$00C7CF |
     LDA.b #$09                              ;$00C7D1 |
     STA.w SPCIO3_1DFC                       ;$00C7D3 |
     LDA.b #$D8                              ;$00C7D6 |
     STA.b PlayerXSpeed_7B                   ;$00C7D8 |
     INC.w Layer1ScrollCmd_143E              ;$00C7DA |
-    BRA CODE_00C79D                         ;$00C7DD |
+    BRA .CODE_00C79D                        ;$00C7DD |
 
-CODE_00C7DF:
+.CODE_00C7DF
     LDA.b #$20
     STA.w PickUpItemTimer_1498              ;$00C7E1 |
     INC.w CarryingFlagMirror_148F           ;$00C7E4 |
-    BRA CODE_00C7F6                         ;$00C7E7 |
+    BRA .CODE_00C7F6                        ;$00C7E7 |
 
-CODE_00C7E9:
+.CODE_00C7E9
     TAY
     LDA.w $C5DA,Y                           ;$00C7EA |
     STA.w PlayerPose_13E0                   ;$00C7ED |
     STZ.w CarryingFlagMirror_148F           ;$00C7F0 |
     JSR aerial_physics                      ;$00C7F3 |
-CODE_00C7F6:
+.CODE_00C7F6
     DEC.b CutsceneInputTimer_88
-Return00C7F8:
+.return_00C7F8
     RTS
 
 wings_transitions_pos_00C7F9:
@@ -8217,7 +8215,7 @@ no_special_collision:                       ;        \
     JSR player_level_collision_00E92B       ;$00CD33 | Apply standard level collision.
 skip_standard_collision:                    ;        |
     JSR process_player_y_position_00F595    ;$00CD36 | Process the player's Y position.
-CODE_00CD39:                                ;        |
+apply_player_physics_00CD39:                ;        |
     STZ.w PlayerTurningPose_13DD            ;$00CD39 | Clear the turning around pose.
     LDY.w PBalloonFlag_13F3                 ;$00CD3C |\ If the player is still getting a P-balloon,
     BNE update_p_balloon_state_00CD95       ;$00CD3F |/ run the inflation code
@@ -8246,7 +8244,7 @@ CODE_00CD39:                                ;        |
     BEQ .use_land_or_water_physics_00CD79   ;$00CD70 |/
 +   LDA.b InteractionPtsClimbable_8B        ;$00CD72 |
     STA.b PlayerClimb_74                    ;$00CD74 |
-    JMP CODE_00DB17                         ;$00CD76 |
+    JMP handle_climbed_player_00DB17        ;$00CD76 |
 
 .use_land_or_water_physics_00CD79:
     LDA.b PlayerInWater_75
@@ -9882,7 +9880,7 @@ DATA_00DAF1:
     db $45,$01,$45,$01,$45,$01,$45,$01
     db $45,$01,$45,$01,$08,$F8
 
-CODE_00DB17:
+handle_climbed_player_00DB17:
     STZ.b PlayerInAir_72
     STZ.b PlayerYSpeed_7D                   ;$00DB19 |
     STZ.w PlayerCapePose_13DF               ;$00DB1B |
@@ -9904,7 +9902,7 @@ CODE_00DB17:
 +   STA.b PlayerXSpeed_7B                   ;$00DB3E |
     STZ.b PlayerXSubpeed_7A                 ;$00DB40 |
     STZ.w PlayerXPosSpx_13DA                ;$00DB42 |
-.CODE_00DB45:
+.CODE_00DB45
     TXA
     ASL                                     ;$00DB46 |
     TAX                                     ;$00DB47 |
@@ -9935,7 +9933,7 @@ CODE_00DB17:
     LDA.w DATA_00DACD,Y                     ;$00DB78 |
     BRA .CODE_00DB92                        ;$00DB7B |
 
-.CODE_00DB7D:
+.CODE_00DB7D
     STZ.b PlayerXSpeed_7B
     STZ.b PlayerXSubpeed_7A                 ;$00DB7F |
     LDX.w PlayerBehindNet_13F9              ;$00DB81 |
@@ -9946,11 +9944,11 @@ CODE_00DB17:
     INC A                                   ;$00DB8B |
     JSR CODE_00D044                         ;$00DB8C |
     LDA.w ClimbPunchingImgs,X               ;$00DB8F |
-.CODE_00DB92:
+.CODE_00DB92
     STA.w PlayerPose_13E0
     RTS                                     ;$00DB95 |
 
-.CODE_00DB96:
+.CODE_00DB96
     LDY.b PlayerInWater_75
     BIT.b byetudlrPress_16                  ;$00DB98 |
     BPL .CODE_00DBAC                        ;$00DB9A |
@@ -9962,7 +9960,7 @@ CODE_00DB17:
     STA.w SPCIO1_1DFA                       ;$00DBA7 |
     BRA .CODE_00DC00                        ;$00DBAA |
 
-.CODE_00DBAC:
+.CODE_00DBAC
     BVC +                                   ;$00DBAC |\
     LDA.b PlayerClimb_74                    ;$00DBAE ||
     BPL +                                   ;$00DBB0 ||
@@ -10011,28 +10009,28 @@ CODE_00DB17:
     STZ.b PlayerClimb_74                    ;$00DC00 |
     RTS                                     ;$00DC02 |
 
-.CODE_00DC03:
+.CODE_00DC03
     INY
     INY                                     ;$00DC04 |
     LDA.b InteractionPtsClimbable_8B        ;$00DC05 |
     AND.b #!ClimbableT_02                   ;$00DC07 |
     BEQ .CODE_00DC16                        ;$00DC09 |
-.CODE_00DC0B:
+.CODE_00DC0B
     LDA.b PlayerClimb_74
     BMI +                                   ;$00DC0D |\
     STZ.b PlayerXSpeed_7B                   ;$00DC0F |/
 +   LDA.w DATA_00DAB7,Y                     ;$00DC11 |
     STA.b PlayerYSpeed_7D                   ;$00DC14 |
-.CODE_00DC16:
+.CODE_00DC16
     ORA.b PlayerXSpeed_7B
     BEQ +                                   ;$00DC18 |\
     LDA.w PlayerAniTimer_1496               ;$00DC1A ||
     ORA.b #$08                              ;$00DC1D ||
     STA.w PlayerAniTimer_1496               ;$00DC1F ||
     AND.b #$07                              ;$00DC22 ||
-    BNE +                                   ;$00DC24 ||
-    LDA.b PlayerDir_76                      ;$00DC26 ||
-    EOR.b #$01                              ;$00DC28 ||
+    BNE +                                   ;$00DC24 ||\
+    LDA.b PlayerDir_76                      ;$00DC26 |||
+    EOR.b #$01                              ;$00DC28 ||/
     STA.b PlayerDir_76                      ;$00DC2A |/
 +   RTS                                     ;$00DC2C |
 
