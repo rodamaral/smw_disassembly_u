@@ -56,72 +56,75 @@ Frame_14: skip 1
 ; +------- set if the A or B button were pressed this frame
 byetudlrHold_15: skip 1
 ; Valid values
-!ButY = %01000000 ; TODO: append hex value to define
-!ButSelect = %00100000
-!ButStart = %00010000
-!DpadUp = %00001000
-!DpadDown = %00000100
-!DpadUD_0C = %00001100
-!DpadLeft = %00000010
-!DpadRight = %00000001
-!DpadSides = %00000011
-!ButBYET_F0 = %11110000
+!HeldAorB_80 =   %10000000
+!HeldXorY_40 =   %01000000
+!HeldSelect_20 = %00100000
+!HeldStart_10 =  %00010000
+!HeldUp_08 =     %00001000
+!HeldDown_04 =   %00000100
+!HeldLeft_02 =   %00000010
+!HeldRight_01 =  %00000001
+; combinations
+!HeldSides_03 =  %00000011
+!HeldUD_0C =     %00001100
+!HeldBYET_F0 =   %11110000
 
 ; === $7E0016 ===
 ; 1 byte
 ; controller data for the currently active player
 ; byetudlr
-; |||||||+ set if right on the dpad is held this frame
-; ||||||+- set if left on the dpad is held this frame
-; |||||+-- set if down on the dpad is held this frame
-; ||||+--- set if up on the dpad is held this frame
-; |||+---- set if the start button is held this frame
-; ||+----- set if the select button is held this frame
-; |+------ set if the Y button is held this frame
-; +------- set if the B button is held this frame
+; |||||||+ set if right on the dpad was pressed this frame
+; ||||||+- set if left on the dpad was pressed this frame
+; |||||+-- set if down on the dpad was pressed this frame
+; ||||+--- set if up on the dpad was pressed this frame
+; |||+---- set if the start button was pressed this frame
+; ||+----- set if the select button was pressed this frame
+; |+------ set if the X or Y button was pressed this frame
+; +------- set if the B button was pressed this frame
 byetudlrPress_16: skip 1
 ; Valid values
-!ButB = %10000000
-!ButY = %01000000
-!ButSelect = %00100000
-!ButStart = %00010000
-!DpadUp = %00001000
-!DpadDown = %00000100
-!DpadLeft = %00000010
-!DpadRight = %00000001
+!PressB_80 =      %10000000
+!PressXorY_40 =   %01000000
+!PressSelect_20 = %00100000
+!PressStart_10 =  %00010000
+!PressUp_08 =     %00001000
+!PressDown_04 =   %00000100
+!PressLeft_02 =   %00000010
+!PressRight_01 =  %00000001
 
 ; === $7E0017 ===
 ; 1 byte
 ; controller data for the currently active player
 ; axlr0000
 ; ||||++++ always 0
-; |||+---- set if the R button was pressed this frame
-; ||+----- set if the L button was pressed this frame
-; |+------ set if the X button was pressed this frame
-; +------- set if the A button was pressed this frame
+; |||+---- set if the R button is held
+; ||+----- set if the L button is held
+; |+------ set if the X button is held
+; +------- set if the A button is held
 axlr0000Hold_17: skip 1
 ; Valid values
-!ButA = %10000000
-!ButX = %01000000
-!ButL = %00100000
-!ButR = %00010000
-!ButAX_C0 = %11000000
+!HeldA_80 = %10000000
+!HeldX_40 = %01000000
+!HeldL_20 = %00100000
+!HeldR_10 = %00010000
+; combinations
+!HeldAX_C0 = %11000000
 
 ; === $7E0018 ===
 ; 1 byte
 ; controller data for the currently active player
 ; axlr0000
 ; ||||++++ always 0
-; |||+---- set if the R button is held this frame
-; ||+----- set if the L button is held this frame
-; |+------ set if the X button is held this frame
-; +------- set if the A button is held this frame
+; |||+---- set if the R button is held
+; ||+----- set if the L button is held
+; |+------ set if the X button is held
+; +------- set if the A button is held
 axlr0000Press_18: skip 1
 ; Valid values
-!ButA = %10000000
-!ButX = %01000000
-!ButL = %00100000
-!ButR = %00010000
+!PressA_80 = %10000000
+!PressX_40 = %01000000
+!PressL_20 = %00100000
+!PressR_10 = %00010000
 
 ; === $7E0019 ===
 ; 1 byte

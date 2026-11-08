@@ -3361,10 +3361,10 @@ set_intro_level_009CB0:
 ; PERF: pressing A or X causes a minor performance improvement vs the other keys
 has_pressed_AXBYET_009CBE:
     LDA.b axlr0000Hold_17
-    AND.b #!ButAX_C0                        ;$009CC0 |
+    AND.b #!HeldAX_C0                       ;$009CC0 |
     BNE +                                   ;$009CC2 |
     LDA.b byetudlrHold_15                   ;$009CC4 |
-    AND.b #!ButBYET_F0                      ;$009CC6 |
+    AND.b #!HeldBYET_F0                     ;$009CC6 |
     BNE +                                   ;$009CC8 |
 +   RTS                                     ;$009CCA |
 
@@ -8233,11 +8233,11 @@ apply_player_physics_00CD39:                ;        |
     CMP.b #!ClimbableSHTC_1B                ;$00CD5A ||
     BNE .use_land_or_water_physics_00CD79   ;$00CD5C || branch if center, head, shoulder or waist not touching a climbable tile
     LDA.b byetudlrHold_15                   ;$00CD5E ||
-    AND.b #!DpadUD_0C                       ;$00CD60 ||
+    AND.b #!HeldUD_0C                       ;$00CD60 ||
     BEQ .use_land_or_water_physics_00CD79   ;$00CD62 || branch if not holding Up or Down
     LDY.b PlayerInAir_72                    ;$00CD64 ||
     BNE +                                   ;$00CD66 || skip if in air
-    AND.b #!DpadUp                          ;$00CD68 ||
+    AND.b #!HeldUp_08                       ;$00CD68 ||
     BNE +                                   ;$00CD6A || skip if not holding Up
     LDA.b InteractionPtsClimbable_8B        ;$00CD6C ||
     AND.b #!ClimbableB_04                   ;$00CD6E ||
@@ -9996,9 +9996,9 @@ handle_climbed_player_00DB17:
     STA.b PlayerXSpeed_7B                   ;$00DBF0 |
 ..CODE_00DBF2                               ;        |
     LDA.b byetudlrHold_15                   ;$00DBF2 |
-    AND.b #!DpadUD_0C                       ;$00DBF4 |
+    AND.b #!HeldUD_0C                       ;$00DBF4 |
     BEQ .CODE_00DC16                        ;$00DBF6 |\ branch if not holding Up or Down
-    AND.b #!DpadUp                          ;$00DBF8 ||
+    AND.b #!HeldUp_08                       ;$00DBF8 ||
     BNE .CODE_00DC03                        ;$00DBFA ||\ branch if not holding Up
     LSR.b InteractionPtsClimbable_8B        ;$00DBFC ||/
     BCS .CODE_00DC0B                        ;$00DBFE |/
@@ -11606,7 +11606,7 @@ foot_on_solid_tile_or_sprite_00EEE1:
     BEQ .set_player_sliding_00EF02          ;$00EEED |/ branch if 
 +   STA.w CurrentSlope_13EE                 ;$00EEEF |
     LDA.b byetudlrHold_15                   ;$00EEF2 |
-    AND.b #!DpadDown                        ;$00EEF4 |
+    AND.b #!HeldDown_04                     ;$00EEF4 |
     BEQ .CODE_00EF05                        ;$00EEF6 | branch if not holding Down
     LDA.w CarryingFlagMirror_148F           ;$00EEF8 |
     ORA.w PlayerSlopePose_13ED              ;$00EEFB |
@@ -12410,7 +12410,8 @@ DATA_00F3E3:
     db $0A,$FF
 
 button_to_enter_00F3E5:
-    db !DpadLeft,!DpadRight,!DpadUp,!DpadDown
+    db !HeldLeft_02,!HeldRight_01
+    db !HeldUp_08,!HeldDown_04
 
 process_vertical_exit_pipe_00F3E9:
     XBA                                     ;$00F3E9 |

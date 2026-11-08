@@ -4334,19 +4334,19 @@ handle_carryable_sprite_019F9B:
     LDA.b #!StatusCarryable_09              ;$01A028 |
     STA.w SpriteStatus_14C8,X               ;$01A02A |
     LDA.b byetudlrHold_15                   ;$01A02D |
-    AND.b #!DpadUp                          ;$01A02F | branch if holding Up
+    AND.b #!HeldUp_08                       ;$01A02F | branch if holding Up
     BNE .throw_upward_01A068                ;$01A031 |\
     LDA.b SpriteNumber_9E,X                 ;$01A033 ||
     CMP.b #!FishH_15                        ;$01A035 ||
     BCS .fish_or_higher_01A041              ;$01A037 || branch if ID >= $15
     LDA.b byetudlrHold_15                   ;$01A039 ||
-    AND.b #!DpadDown                        ;$01A03B || NOTE:
+    AND.b #!HeldDown_04                     ;$01A03B || NOTE:
     BEQ .kick_sideways_01A079               ;$01A03D ||  - for lower sprite numbers, releasing occurs iff holding Down
     BRA .release_01A047                     ;$01A03F |/  - kicking does not require holding a side direction
 
 .fish_or_higher_01A041:
     LDA.b byetudlrHold_15                   ;$01A041 | NOTE:
-    AND.b #!DpadSides                       ;$01A043 |  - for higher sprite numbers, kicking occurs iff holding a side
+    AND.b #!HeldSides_03                    ;$01A043 |  - for higher sprite numbers, kicking occurs iff holding a side
     BNE .kick_sideways_01A079               ;$01A045 |  - releasing does not require Down
 .release_01A047:
     LDY.b PlayerDir_76
@@ -5757,7 +5757,7 @@ player_vs_carryable_01AA42:
 
 .try_hold_sprite_01AA58:
     LDA.b byetudlrHold_15
-    AND.b #!ButY                            ;$01AA5A | if holding X/Y
+    AND.b #!HeldXorY_40                     ;$01AA5A | if holding X/Y
     BEQ .doesnt_hold_01AA74                 ;$01AA5C | 
     LDA.w CarryingFlag_1470                 ;$01AA5E | not holding something yet
     ORA.w RidingYoshi_187A                  ;$01AA61 | not on Yoshi
