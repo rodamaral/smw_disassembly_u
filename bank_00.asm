@@ -2402,12 +2402,12 @@ GM1B_credits_castle_main_0094FD:
     BEQ .run_credits_009557                 ;$009506 |
     LDA.b axlr0000Hold_17                   ;$009508 |\ Debug cutscene select
     AND.b #$00                              ;$00950A || this AND prevents running the debug code
-    CMP.b #$30                              ;$00950C || Pressing L + R would reload the cutscene
+    CMP.b #!HeldLR_30                       ;$00950C || Pressing L + R would reload the cutscene
     BNE .process_castle_cutscene_009529     ;$00950E |/
 
 .unreachable_debug:
     LDA.b byetudlrHold_15                   ;$009510 |\ If Up is also being held,
-    AND.b #$08                              ;$009512 |/  advance to the next boss cutscene
+    AND.b #!HeldUp_08                       ;$009512 |/  advance to the next boss cutscene
     BEQ ++                                  ;$009514 |\
     LDA.w CutsceneID_13C6                   ;$009516 ||
     INC A                                   ;$009519 ||
@@ -3094,7 +3094,7 @@ CODE_009AD0:
     JSR CODE_009E82                         ;$009AD3 |
     LDX.w BlinkCursorPos_1B92               ;$009AD6 |
     LDA.b byetudlrPress_16                  ;$009AD9 |
-    AND.b #$90                              ;$009ADB |
+    AND.b #!PressBT_90                      ;$009ADB |
     BNE CODE_009AE3                         ;$009ADD |
     LDA.b axlr0000Press_18                  ;$009ADF |
     BPL CODE_009AEA                         ;$009AE1 |
@@ -3107,12 +3107,12 @@ CODE_009AEA:
     PLA
     PLA                                     ;$009AEB |
     LDA.b byetudlrPress_16                  ;$009AEC |
-    AND.b #$20                              ;$009AEE |
+    AND.b #!PressSelect_20                  ;$009AEE |
     LSR                                     ;$009AF0 |
     LSR                                     ;$009AF1 |
     LSR                                     ;$009AF2 |
     ORA.b byetudlrPress_16                  ;$009AF3 |
-    AND.b #$0C                              ;$009AF5 |
+    AND.b #!PressUD_0C                      ;$009AF5 |
     BEQ Return009B16                        ;$009AF7 |
     LDY.b #$06                              ;$009AF9 |
     STY.w SPCIO3_1DFC                       ;$009AFB |
@@ -3145,7 +3145,7 @@ GM09_title_file_erase_009B1A:
     JSR CODE_009D30                         ;$009B21 |
     LDA.b byetudlrPress_16                  ;$009B24 |
     ORA.b axlr0000Press_18                  ;$009B26 |
-    AND.b #$40                              ;$009B28 |
+    AND.b #!PressXorY_40                    ;$009B28 |
     BEQ CODE_009B38                         ;$009B2A |
 CODE_009B2C:
     DEC.w GameMode_0100
@@ -3334,11 +3334,11 @@ set_game_mode_009C8B:
     RTS                                     ;$009C8E |
 
 CODE_009C8F:
-    AND.b #$DF
+    AND.b #!HeldPadABXYT_DF                 ;$009C8F | remove Select from held buttons
     STA.b byetudlrHold_15                   ;$009C91 |
     CMP.w AnimatedTiles_7D00+$1F1D,X        ;$009C93 |
     BNE +                                   ;$009C96 |
-    AND.b #$9F                              ;$009C98 |
+    AND.b #!PressPadBT_9F                   ;$009C98 |
 +   STA.b byetudlrPress_16                  ;$009C9A |
     JMP GM14_main_level_00A1DA              ;$009C9C |
 
@@ -3548,7 +3548,7 @@ CODE_009DF7:
 GM0A_title_player_select_009DFA:
     LDA.b byetudlrPress_16
     ORA.b axlr0000Press_18                  ;$009DFC |
-    AND.b #$40                              ;$009DFE |
+    AND.b #!PressXorY_40                    ;$009DFE |
     BEQ .CODE_009E08                        ;$009E00 |
     DEC.w GameMode_0100                     ;$009E02 |
     JMP CODE_009B2C                         ;$009E05 |
@@ -4036,9 +4036,9 @@ GM14_main_level_00A1DA:
 +   ORA.b PlayerAnimation_71                ;$00A200 |
     ORA.w EndLevelTimer_1493                ;$00A202 |
     BEQ +                                   ;$00A205 |\
-    LDA.b #$04                              ;$00A207 || if not able to move free:
+    LDA.b #!HeldDown_04                     ;$00A207 || if not able to move free:
     TRB.b byetudlrHold_15                   ;$00A209 || clear hold down
-    LDA.b #$40                              ;$00A20B ||
+    LDA.b #!PressCombXY_40                  ;$00A20B ||
     TRB.b byetudlrPress_16                  ;$00A20D || clear X/Y press
     TRB.b axlr0000Press_18                  ;$00A20F |/
 +   LDA.w PauseTimer_13D3                   ;$00A211 |
@@ -4048,7 +4048,7 @@ GM14_main_level_00A1DA:
 
 .able_to_toggle_pause_00A21B:
     LDA.b byetudlrPress_16                  ;$00A21B | able to pause
-    AND.b #$10                              ;$00A21D |
+    AND.b #!PressStart_10                   ;$00A21D |
     BEQ .handle_paused_status_00A242        ;$00A21F |
     LDA.w EndLevelTimer_1493                ;$00A221 | if pressed Start
     BNE .handle_paused_status_00A242        ;$00A224 | and not ending the level
@@ -4081,7 +4081,7 @@ GM14_main_level_00A1DA:
 
 .level_paused_00A25B:
     LDA.b byetudlrHold_15
-    AND.b #$20                              ;$00A25D |
+    AND.b #!HeldSelect_20                   ;$00A25D |
     BEQ .Return00A289                       ;$00A25F | if not holding select, return to main loop
     LDY.w Translevel_13BF                   ;$00A261 | if holding select, try to exit the level if beaten
     LDA.w OWLevelSettings_1EA2,Y            ;$00A264 |
@@ -7337,10 +7337,10 @@ timers_and_animation_00C47E:
 .skip_timers_00C569:
     JSR execute_player_animation_00C593     ;$00C569 |
     LDA.b byetudlrPress_16                  ;$00C56C |
-    AND.b #$20                              ;$00C56E |
+    AND.b #!PressSelect_20                  ;$00C56E |
     BEQ .restore_noteblock_down_00C58F      ;$00C570 |
     LDA.b byetudlrHold_15                   ;$00C572 |
-    AND.b #$08                              ;$00C574 |
+    AND.b #!HeldUp_08                       ;$00C574 |
     BRA .try_release_itembox_00C585         ;$00C576 |
 
 .unreachable:
@@ -7532,7 +7532,7 @@ CODE_00C73F:
     BNE .CODE_00C789                        ;$00C77B |
     STY.b byetudlrHold_15                   ;$00C77D |
     TYA                                     ;$00C77F |
-    AND.b #$BF                              ;$00C780 |
+    AND.b #!PressPadBET_BF                  ;$00C780 |
     STA.b byetudlrPress_16                  ;$00C782 |
     JSR apply_player_physics_00CD39         ;$00C784 |
     BRA .CODE_00C7F6                        ;$00C787 |
@@ -7689,11 +7689,11 @@ CODE_00C8A8:
     LDA.w DATA_00C848-2,X
     CMP.b #$FF                              ;$00C8AB |
     BEQ CODE_00C8FB                         ;$00C8AD |
-    AND.b #$DF                              ;$00C8AF |
+    AND.b #!HeldPadABXYT_DF                 ;$00C8AF |
     STA.b byetudlrHold_15                   ;$00C8B1 |
     CMP.w DATA_00C848-2,X                   ;$00C8B3 |
     BEQ CODE_00C8BC                         ;$00C8B6 |
-    LDY.b #$80                              ;$00C8B8 |
+    LDY.b #!PressA_80                       ;$00C8B8 |
     STY.b axlr0000Press_18                  ;$00C8BA |
 CODE_00C8BC:
     ASL
@@ -7795,7 +7795,7 @@ ending_normal_level_00C96B:
     LDA.w EndLevelTimer_1493                ;$00C973 |
     CMP.b #$28                              ;$00C976 |
     BCC +                                   ;$00C978 |
-    LDA.b #$01                              ;$00C97A |
+    LDA.b #!HeldRight_01                    ;$00C97A |
     STA.b PlayerDir_76                      ;$00C97C |
     STA.b byetudlrHold_15                   ;$00C97E |
     LDA.b #$05                              ;$00C980 |
@@ -7830,7 +7830,7 @@ CODE_00C9AF:
 
 .no_peace_sign_00C9C2:
     JSR CODE_00CA44
-    LDA.b #$01                              ;$00C9C5 |
+    LDA.b #!HeldRight_01                    ;$00C9C5 |
     STA.b byetudlrHold_15                   ;$00C9C7 | press right
     JSR no_special_collision                ;$00C9C9 |
     LDA.w SpotlightSize_1433                ;$00C9CC |
@@ -8105,10 +8105,10 @@ free_roaming_speeds:
 
 no_animation:                               ;        \
     LDA.b axlr0000Hold_17                   ;$00CC68 | If L isn't held, don't cycle the debug action.
-    AND.b #$20                              ;$00CC6A |
+    AND.b #!HeldL_20                        ;$00CC6A |
     BEQ .no_cycle                           ;$00CC6C |\
     LDA.b axlr0000Press_18                  ;$00CC6E || If A isn't pressed, don't cycle the debug action.
-    CMP.b #$80                              ;$00CC70 ||
+    CMP.b #!PressA_80                       ;$00CC70 ||
     BNE .no_cycle                           ;$00CC72 ||
     INC.w DebugFreeRoam_1E01                ;$00CC74 || Increase the debug action.
     LDA.w DebugFreeRoam_1E01                ;$00CC77 || If the debug action is $03,
@@ -8124,13 +8124,13 @@ no_animation:                               ;        \
     LDA.b #$FF                              ;$00CC89 | Make the player invincible.
     STA.w FlashingTimer_1497                ;$00CC8B |
     LDA.b byetudlrHold_15                   ;$00CC8E |
-    AND.b #$03                              ;$00CC90 |  Isolate the left and right controller flags,
+    AND.b #!HeldSides_03                    ;$00CC90 |  Isolate the left and right controller flags,
     ASL                                     ;$00CC92 |
     ASL                                     ;$00CC93 |  multiply by two,
     LDX.b #$00                              ;$00CC94 |  and run free roaming with the X position.
     JSR .free_roam                          ;$00CC96 |
     LDA.b byetudlrHold_15                   ;$00CC99 | Isolate the up and down controller flags,
-    AND.b #$0C                              ;$00CC9B |
+    AND.b #!HeldUD_0C                       ;$00CC9B |
     LDX.b #$02                              ;$00CC9D | and run free roaming with the Y position.
 .free_roam                                  ;        |
     BIT.b byetudlrHold_15                   ;$00CC9F | If X or Y is pressed,
@@ -8319,13 +8319,13 @@ screen_scrolling:
 
 CODE_00CDF6:
     LDA.b axlr0000Hold_17
-    AND.b #$CF                              ;$00CDF8 |
+    AND.b #!HeldUnusedAX_CF                 ;$00CDF8 |
     ORA.b byetudlrHold_15                   ;$00CDFA |
     BNE CODE_00CE49                         ;$00CDFC |
     LDA.b axlr0000Hold_17                   ;$00CDFE |
-    AND.b #$30                              ;$00CE00 |
+    AND.b #!HeldLR_30                       ;$00CE00 |
     BEQ CODE_00CE49                         ;$00CE02 |
-    CMP.b #$30                              ;$00CE04 |
+    CMP.b #!HeldLR_30                       ;$00CE04 |
     BEQ CODE_00CE49                         ;$00CE06 |
 ScrollScreen:
     LSR
@@ -8576,7 +8576,7 @@ MarioAnimNoAbs1:
     BNE CODE_00CFD4                         ;$00CFC4 |
     XBA                                     ;$00CFC6 |
     LDA.b byetudlrHold_15                   ;$00CFC7 |
-    AND.b #$08                              ;$00CFC9 |
+    AND.b #!HeldUp_08                       ;$00CFC9 |
     BEQ CODE_00D002                         ;$00CFCB |
     LDA.b #$03                              ;$00CFCD |
     STA.w PlayerOverworldPose_13DE          ;$00CFCF |
@@ -8586,7 +8586,7 @@ CODE_00CFD4:
     LDA.b LevelIsSlippery_86
     BEQ CODE_00CFE3                         ;$00CFD6 |
     LDA.b byetudlrHold_15                   ;$00CFD8 |
-    AND.b #$03                              ;$00CFDA |
+    AND.b #!HeldSides_03                    ;$00CFDA |
     BEQ CODE_00D003                         ;$00CFDC |
     LDA.b #$68                              ;$00CFDE |
     STA.w PlayerPoseLenTimer_13E5           ;$00CFE0 |
@@ -8928,7 +8928,7 @@ CODE_00D228:
 CODE_00D22A:
     STA.w PlayerPose_13E0
 CODE_00D22D:
-    LDA.b #$40
+    LDA.b #!HeldXorY_40                     ;$00D22D |
     STA.b byetudlrHold_15                   ;$00D22F |
     LDA.b #$02                              ;$00D231 |
     STA.w PlayerBehindNet_13F9              ;$00D233 |
@@ -9149,7 +9149,7 @@ land_physics_00D5F2:
     LDA.w PlayerSlopePose_13ED              ;$00D5FB |
     BNE +                                   ;$00D5FE |\ skip if ;;;
     LDA.b byetudlrHold_15                   ;$00D600 ||
-    AND.b #$04                              ;$00D602 ||
+    AND.b #!HeldDown_04                     ;$00D602 ||
     BEQ +                                   ;$00D604 ||
     STA.b PlayerIsDucking_73                ;$00D606 ||
     STZ.w CapeInteracts_13E8                ;$00D608 |/
@@ -9219,7 +9219,7 @@ land_physics_00D5F2:
     LDA.w PlayerSlopePose_13ED
     BMI .CODE_00D692                        ;$00D685 |
     LDA.b byetudlrHold_15                   ;$00D687 |
-    AND.b #$03                              ;$00D689 |
+    AND.b #!HeldSides_03                    ;$00D689 |
     BNE .CODE_00D6B1                        ;$00D68B |
 .CODE_00D68D:
     LDA.w PlayerSlopePose_13ED
@@ -9460,7 +9460,7 @@ aerial_physics_00D7E4:
     LDY.b PlayerYSpeed_7D                   ;$00D834 |
     BMI .CODE_00D856                        ;$00D836 |
     LDA.b byetudlrHold_15                   ;$00D838 |
-    AND.b #$03                              ;$00D83A |
+    AND.b #!HeldSides_03                    ;$00D83A |
     TAY                                     ;$00D83C |
     BNE .CODE_00D849                        ;$00D83D |
     LDA.w FlightPhase_1407                  ;$00D83F |
@@ -9677,7 +9677,7 @@ water_physics_00D988:
 
 .CODE_00D9AF:
     LDA.b byetudlrHold_15
-    AND.b #$04                              ;$00D9B1 |
+    AND.b #!HeldDown_04                     ;$00D9B1 |
     BEQ .CODE_00D9BD                        ;$00D9B3 |
 .CODE_00D9B5:
     JSR CODE_00DAA9
@@ -9711,7 +9711,7 @@ water_physics_00D988:
     STA.b PlayerYSpeed_7D
     LDY.b #$80                              ;$00D9DF |
     LDA.b byetudlrHold_15                   ;$00D9E1 |
-    AND.b #$03                              ;$00D9E3 |
+    AND.b #!HeldSides_03                    ;$00D9E3 |
     BNE .CODE_00DA48                        ;$00D9E5 |
     LDA.b PlayerDir_76                      ;$00D9E7 |
     BRA .CODE_00DA46                        ;$00D9E9 |
@@ -9742,7 +9742,7 @@ water_physics_00D988:
     INY                                     ;$00DA12 |
 .CODE_00DA13:
     LDA.b byetudlrHold_15
-    AND.b #$0C                              ;$00DA15 |
+    AND.b #!HeldUD_0C                       ;$00DA15 |
     LSR                                     ;$00DA17 |
     LSR                                     ;$00DA18 |
     TAX                                     ;$00DA19 |
@@ -9762,7 +9762,7 @@ water_physics_00D988:
     LDA.b PlayerInAir_72                    ;$00DA2F |
     BNE .CODE_00DA40                        ;$00DA31 |
     LDA.b byetudlrHold_15                   ;$00DA33 |
-    AND.b #$04                              ;$00DA35 |
+    AND.b #!HeldDown_04                     ;$00DA35 |
     BEQ .CODE_00DA40                        ;$00DA37 |
     STZ.w CapeInteracts_13E8                ;$00DA39 |
     INC.b PlayerIsDucking_73                ;$00DA3C |
@@ -9770,7 +9770,7 @@ water_physics_00D988:
 
 .CODE_00DA40:
     LDA.b byetudlrHold_15
-    AND.b #$03                              ;$00DA42 |
+    AND.b #!HeldSides_03                    ;$00DA42 |
     BEQ .CODE_00DA69                        ;$00DA44 |
 .CODE_00DA46:
     LDY.b #$78
@@ -9976,7 +9976,7 @@ handle_climbed_player_00DB17:
 +   LDA.w ClimbingImgs,X                    ;$00DBCA |
     STA.w PlayerPose_13E0                   ;$00DBCD |
     LDA.b byetudlrHold_15                   ;$00DBD0 |
-    AND.b #$03                              ;$00DBD2 |
+    AND.b #!HeldSides_03                    ;$00DBD2 |
     BEQ ..CODE_00DBF2                       ;$00DBD4 |
     LSR                                     ;$00DBD6 |
     TAX                                     ;$00DBD7 |
@@ -10953,8 +10953,8 @@ handle_water_state_00EA34:                  ;        |
     STA.b PlayerYSpeed_7D                   ;$00EA73 |/
 +   INC.w PlayerCanJumpWater_13FA           ;$00EA75 |
     LDA.b byetudlrHold_15                   ;$00EA78 |
-    AND.b #$88                              ;$00EA7A | if holding B/A and Up
-    CMP.b #$88                              ;$00EA7C |
+    AND.b #!HeldABU_88                      ;$00EA7A | if holding B/A and Up
+    CMP.b #!HeldABU_88                      ;$00EA7C |
     BNE .try_release_bubble_00EA62          ;$00EA7E |
     LDA.b axlr0000Hold_17                   ;$00EA80 |
     BPL +                                   ;$00EA82 |\ skip if not holding A
@@ -11194,7 +11194,7 @@ normal_collision_00EB77:
     LDA.b TempPlayerAir_8F                  ;$00EC06 || or if the player isn't on the ground,
     BNE .goto_waist_00EC24                  ;$00EC08 ||
     LDA.b byetudlrPress_16                  ;$00EC0A || or if the player isn't pressing up,
-    AND.b #$08                              ;$00EC0C ||
+    AND.b #!PressUp_08                      ;$00EC0C ||
     BEQ .goto_waist_00EC24                  ;$00EC0E |/ don't let him use the door.
     LDA.b #$0F                              ;$00EC10 |\ Play the door sound,
     STA.w SPCIO3_1DFC                       ;$00EC12 ||
@@ -13679,7 +13679,7 @@ CODE_00FCF5:
 try_release_bubble_00FD08:
     LDY.b #$3F
     LDA.b byetudlrHold_15                   ;$00FD0A |
-    AND.b #$83                              ;$00FD0C | release Water Bubble twice as often when holding B, A, left or right
+    AND.b #!HeldABSides_83                  ;$00FD0C | release Water Bubble twice as often when holding B, A, left or right
     BNE .CODE_00FD12                        ;$00FD0E |
     LDY.b #$7F                              ;$00FD10 |
 .CODE_00FD12:
@@ -13872,7 +13872,7 @@ CODE_00FE4A:
     ORA.b SpriteLock_9D                     ;$00FE54 |
     BNE .Return00FE71                       ;$00FE56 |
     LDA.b byetudlrHold_15                   ;$00FE58 |
-    AND.b #$04                              ;$00FE5A |
+    AND.b #!HeldDown_04                     ;$00FE5A |
     BEQ .CODE_00FE67                        ;$00FE5C |
     LDA.b PlayerXSpeed_7B                   ;$00FE5E |
     CLC                                     ;$00FE60 |

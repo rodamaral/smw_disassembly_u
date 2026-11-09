@@ -12423,7 +12423,7 @@ rope_mechanism_01D9D3:
     LDA.w PlayerClimbFlag_18BE              ;$01DA21 |
     BNE .CODE_01DA2F                        ;$01DA24 |
     LDA.b byetudlrHold_15                   ;$01DA26 |
-    AND.b #$08                              ;$01DA28 |
+    AND.b #!HeldUp_08                       ;$01DA28 |
     BEQ Return01DA8F                        ;$01DA2A |
     STA.w PlayerClimbFlag_18BE              ;$01DA2C |
 .CODE_01DA2F:
@@ -14296,7 +14296,7 @@ LakituCloud:
     INC.w OnSolidSprite_1471                ;$01E880 |
     INC.w PlayerInCloud_18C2                ;$01E883 |
     LDA.b byetudlrPress_16                  ;$01E886 |
-    AND.b #$80                              ;$01E888 |
+    AND.b #!PressB_80                       ;$01E888 |
     BEQ .Return01E897                       ;$01E88A |
     LDA.b #$C0                              ;$01E88C |
     STA.b PlayerYSpeed_7D                   ;$01E88E |
@@ -14634,7 +14634,7 @@ draw_yoshi_01EA70:
     BEQ .tongue_in_01EB0C                   ;$01EAFE |
     LDY.b #$07                              ;$01EB00 |
     LDA.b byetudlrHold_15                   ;$01EB02 |
-    AND.b #$08                              ;$01EB04 | holding up
+    AND.b #!HeldUp_08                       ;$01EB04 | holding up
     BEQ +                                   ;$01EB06 |
     LDY.b #$06                              ;$01EB08 |
 +   BRA .player_in_air_01EB21               ;$01EB0A |
@@ -14647,7 +14647,7 @@ draw_yoshi_01EA70:
 
 .not_squatting_01EB16:
     LDA.b byetudlrHold_15
-    AND.b #$04                              ;$01EB18 | holding down
+    AND.b #!HeldDown_04                     ;$01EB18 | holding down
     BEQ .player_in_air_01EB21               ;$01EB1A |
 .yoshi_squatting_01EB1C:
     LDY.b #$04
@@ -14955,7 +14955,7 @@ yoshi_01EBCA:
     BNE ..return_01EDCB                     ;$01ED74 |\ if not mounted, return
     JSR yoshi_sprites_interaction_01F622    ;$01ED76 ||
     LDA.b byetudlrHold_15                   ;$01ED79 ||
-    AND.b #$03                              ;$01ED7B ||
+    AND.b #!HeldSides_03                    ;$01ED7B ||
     BEQ +                                   ;$01ED7D ||\ if pressing left or right,
     DEC A                                   ;$01ED7F ||| try to turn around
     CMP.w SpriteDir_157C,X                  ;$01ED80 |||

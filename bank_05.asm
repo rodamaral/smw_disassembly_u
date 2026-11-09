@@ -2947,17 +2947,17 @@ exit_level_05B165:
 
 check_input_05B16E:
     LDA.b byetudlrHold_15
-    AND.b #$F0                              ;$05B170 |
-    BEQ return_05B18E                       ;$05B172 | branch if byet held
+    AND.b #!HeldBYET_F0                     ;$05B170 |
+    BEQ return_05B18E                       ;$05B172 | branch if BYET held
     EOR.b byetudlrPress_16                  ;$05B174 |
-    AND.b #$F0                              ;$05B176 | branch if no input form byet was pressed
+    AND.b #!PressBXYET_F0                   ;$05B176 | branch if no input from BXYET was pressed
     BEQ +                                   ;$05B178 |
     LDA.b axlr0000Hold_17                   ;$05B17A |
-    AND.b #$C0                              ;$05B17C |
-    BEQ return_05B18E                       ;$05B17E | branch if axlr is held
+    AND.b #!HeldAX_C0                       ;$05B17C |
+    BEQ return_05B18E                       ;$05B17E | branch if AXLR is held
     EOR.b axlr0000Press_18                  ;$05B180 |
-    AND.b #$C0                              ;$05B182 |
-    BNE return_05B18E                       ;$05B184 | branch if no input form byet was pressed
+    AND.b #!PressAX_C0                      ;$05B182 |
+    BNE return_05B18E                       ;$05B184 | branch if AX was not pressed
 +   LDA.w OverworldOverride_0109            ;$05B186 |\ if dismissing the intro level message
     BNE mario_to_yoshi_island_05B15A        ;$05B189 |/ prepare Mario to start Yoshi Island 
     INC.w MessageBoxExpand_1B88             ;$05B18B | set message to shrink

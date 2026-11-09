@@ -11057,7 +11057,7 @@ DATA_02D211:
 
 CODE_02D214:
     LDA.b byetudlrHold_15
-    AND.b #$03                              ;$02D216 |
+    AND.b #!HeldSides_03                    ;$02D216 |
     BNE CODE_02D228                         ;$02D218 |
 CODE_02D21A:
     LDA.b SpriteXSpeed_B6,X
@@ -11095,7 +11095,7 @@ CODE_02D247:
     CMP.b #!LakituCloud_87                  ;$02D24B |
     BNE CODE_02D25F                         ;$02D24D |
     LDA.b byetudlrHold_15                   ;$02D24F |
-    AND.b #$0C                              ;$02D251 |
+    AND.b #!HeldUD_0C                       ;$02D251 |
     BEQ CODE_02D26F                         ;$02D253 |
     LDY.b #$10                              ;$02D255 |
     AND.b #$08                              ;$02D257 |
@@ -11106,7 +11106,7 @@ CODE_02D247:
 CODE_02D25F:
     LDY.b #$F8
     LDA.b byetudlrHold_15                   ;$02D261 |
-    AND.b #$0C                              ;$02D263 |
+    AND.b #!HeldUD_0C                       ;$02D263 |
     BEQ CODE_02D26F                         ;$02D265 |
     LDY.b #$F0                              ;$02D267 |
     AND.b #$08                              ;$02D269 |
@@ -13324,7 +13324,7 @@ CODE_02E288:
     JSR UpdateYPosNoGrvtyB1                 ;$02E294 |
     JSR update_x_no_gravity_018021B1        ;$02E297 |
     LDA.b byetudlrHold_15                   ;$02E29A |
-    AND.b #$0F                              ;$02E29C |
+    AND.b #!HeldPad_0F                      ;$02E29C |
     BEQ CODE_02E2B0                         ;$02E29E |
     TAY                                     ;$02E2A0 |
     LDA.w DATA_02E201,Y                     ;$02E2A1 |

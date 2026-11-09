@@ -5111,7 +5111,7 @@ CODE_0CCFDE:
     BNE Return0CCFF6                        ;$0CCFE4 |
     LDA.b byetudlrPress_16                  ;$0CCFE6 |
     ORA.b axlr0000Press_18                  ;$0CCFE8 |
-    AND.b #$C0                              ;$0CCFEA |
+    AND.b #!PressCombABXY_C0                ;$0CCFEA |
     BEQ Return0CCFF6                        ;$0CCFEC |
     STZ.w Layer1ScrollType_1442             ;$0CCFEE |
     LDA.b #!FadeToOverworld_0B              ;$0CCFF1 |

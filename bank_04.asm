@@ -395,7 +395,7 @@ CODE_048261:
     LDA.w OWPlayerSubmap_1F11,X             ;$048378 |
     BNE ..CODE_04839A                       ;$04837B |
     LDA.b byetudlrPress_16                  ;$04837D |
-    AND.b #$10                              ;$04837F |
+    AND.b #!PressStart_10                   ;$04837F |
     BEQ ..CODE_04839A                       ;$048381 |
     INC.w PauseFlag_13D4                    ;$048383 |
     LDA.w PauseFlag_13D4                    ;$048386 |
@@ -412,13 +412,13 @@ CODE_048261:
     BEQ ..CODE_0483C3                       ;$04839D |
     LDX.b #$00                              ;$04839F |
     LDA.b byetudlrHold_15                   ;$0483A1 |
-    AND.b #$03                              ;$0483A3 |
+    AND.b #!HeldSides_03                    ;$0483A3 |
     ASL                                     ;$0483A5 |
     JSR .CODE_048415                        ;$0483A6 |
     LDX.b #$02                              ;$0483A9 |
     LDA.b byetudlrHold_15                   ;$0483AB |
-    AND.b #$0C                              ;$0483AD |
-    ORA.b #$10                              ;$0483AF |
+    AND.b #!HeldUD_0C                       ;$0483AD |
+    ORA.b #!HeldStart_10                    ;$0483AF |
     LSR                                     ;$0483B1 |
     JSR .CODE_048415                        ;$0483B2 |
     LDY.b #$15                              ;$0483B5 |
@@ -1653,7 +1653,7 @@ OW_stand_level_tile_049120:
     BRL CODE_0491E9                         ;$04912F |
 CODE_049132:
     LDA.b byetudlrPress_16
-    AND.b #$20                              ;$049134 |
+    AND.b #!PressSelect_20                  ;$049134 |
     BRA OW_Player_Update                    ;$049136 |
 
     LDA.w OverworldLayer1Tile_13C1          ;$049138 |
@@ -1662,8 +1662,8 @@ CODE_049132:
     BEQ CODE_049165                         ;$04913F |
 OW_Player_Update:
     LDA.b axlr0000Hold_17
-    AND.b #$30                              ;$049143 |
-    CMP.b #$30                              ;$049145 |
+    AND.b #!HeldLR_30                       ;$049143 |
+    CMP.b #!HeldLR_30                       ;$049145 |
     BNE OWPU_NoLR                           ;$049147 |
     LDA.w OverworldLayer1Tile_13C1          ;$049149 |
     CMP.b #$81                              ;$04914C |
@@ -1671,7 +1671,7 @@ OW_Player_Update:
 OWPU_NoLR:
     LDA.b byetudlrPress_16
     ORA.b axlr0000Press_18                  ;$049152 |
-    AND.b #$C0                              ;$049154 |
+    AND.b #!PressCombABXY_C0                ;$049154 |
     BNE OWPU_ABXY                           ;$049156 |
     BRL CODE_0491E9                         ;$049158 |
 OWPU_ABXY:
@@ -1809,7 +1809,7 @@ OWPU_NotAutoWalk:
     SEP #$30                                ;$toWalk | AXY->8
     STZ.w LevelExitMode_0DD5                ;$04925C |
     LDA.b byetudlrPress_16                  ;$04925F |
-    AND.b #$0F                              ;$049261 |
+    AND.b #!PressPad_0F                     ;$049261 |
     BEQ CODE_04926E                         ;$049263 |
     LDX.w OverworldLayer1Tile_13C1          ;$049265 |
     CPX.b #$82                              ;$049268 |
