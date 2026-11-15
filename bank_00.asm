@@ -8552,7 +8552,7 @@ CODE_00CF88:
     BNE MarioAnimNoAbs1                     ;$00CF9B |
     LDA.b PlayerInAir_72                    ;$00CF9D |
     BEQ CODE_00CFB7                         ;$00CF9F |
-    LDY.w RunTakeoffTimer_14A0              ;$00CFA1 |
+    LDY.w RunInAirTimer_14A0                ;$00CFA1 |
     BNE CODE_00CFBC                         ;$00CFA4 |
     LDY.w FlightPhase_1407                  ;$00CFA6 |
     BEQ CODE_00CFAE                         ;$00CFA9 |
@@ -9008,7 +9008,8 @@ CODE_00D2B2:
     STA.b PlayerYSpeed_7D                   ;$00D2B8 |
     JMP calculate_player_positions_00DC2D   ;$00D2BA |
 
-DATA_00D2BD:
+; even indices: normal jump speeds; odd indices: spin jump speeds
+player_jump_speeds_00D2BD:
     db $B0,$B6,$AE,$B4,$AB,$B2,$A9,$B0
     db $A6,$AE,$A4,$AB,$A1,$A9,$9F,$A6
 DATA_00D2CD:
@@ -9133,10 +9134,10 @@ DATA_00D5CA:
 DATA_00D5EB:
     db $FF,$FF,$02
 
-DATA_00D5EE:
+recoil_while_flying_00D5EE:
     db $68,$70
 
-DATA_00D5F0:
+spin_jump_fireball_timer_00D5F0:
     db $1C,$0C
 
 land_physics_00D5F2:
@@ -9144,7 +9145,7 @@ land_physics_00D5F2:
     BEQ .on_ground_physics_00D5F9           ;$00D5F4 |
     JMP .in_air_physics_00D682              ;$00D5F6 |
 
-.on_ground_physics_00D5F9:
+.on_ground_physics_00D5F9
     STZ.b PlayerIsDucking_73
     LDA.w PlayerSlopePose_13ED              ;$00D5FB |
     BNE +                                   ;$00D5FE |\ skip if player is on a slope
@@ -9161,7 +9162,7 @@ land_physics_00D5F2:
     BNE +                                   ;$00D616 ||
     LDA.b byetudlrPress_16                  ;$00D618 ||
     ORA.b axlr0000Press_18                  ;$00D61A ||
-    BMI .CODE_00D630                        ;$00D61C |/ branch if pressed A or B
+    BMI ..start_jump_00D630                 ;$00D61C |/ branch if pressed A or B
 +   LDA.b PlayerIsDucking_73                ;$00D61E |
     BEQ .in_air_physics_00D682              ;$00D620 |
     LDA.b PlayerXSpeed_7B                   ;$00D622 |
@@ -9169,168 +9170,162 @@ land_physics_00D5F2:
     LDA.b LevelIsSlippery_86                ;$00D626 ||
     BNE +                                   ;$00D628 ||
     JSR CODE_00FE4A                         ;$00D62A |/
-+   JMP CODE_00D764                         ;$00D62D |
++   JMP air_flat_ground_physics_00D764      ;$00D62D |
 
-.CODE_00D630:
+..start_jump_00D630
     LDA.b PlayerXSpeed_7B
     BPL +                                   ;$00D632 |
     EOR.b #$FF                              ;$00D634 |
     INC A                                   ;$00D636 |
-+   LSR                                     ;$00D637 |
++   LSR                                     ;$00D637 | determine jump speed from X speed
     LSR                                     ;$00D638 |
     AND.b #$FE                              ;$00D639 |
-    TAX                                     ;$00D63B |
+    TAX                                     ;$00D63B | X: jump speed index
     LDA.b axlr0000Press_18                  ;$00D63C |
-    BPL .CODE_00D65E                        ;$00D63E |
-    LDA.w CarryingFlagMirror_148F           ;$00D640 |
-    BNE .CODE_00D65E                        ;$00D643 |
-    INC A                                   ;$00D645 |
-    STA.w SpinJumpFlag_140D                 ;$00D646 |
+    BPL ..start_normal_jump_00D65E          ;$00D63E |\ branch if not pressed A this frame
+    LDA.w CarryingFlagMirror_148F           ;$00D640 ||
+    BNE ..start_normal_jump_00D65E          ;$00D643 |/ branch if carrying something
+    INC A                                   ;$00D645 | pressed A without carrying item:
+    STA.w SpinJumpFlag_140D                 ;$00D646 | set spinjump flag, sound and fireball timer
     LDA.b #$04                              ;$00D649 |
-    STA.w SPCIO3_1DFC                       ;$00D64B |
+    STA.w SPCIO3_1DFC                       ;$00D64B | play Spin jump SFX
     LDY.b PlayerDir_76                      ;$00D64E |
-    LDA.w DATA_00D5F0,Y                     ;$00D650 |
+    LDA.w spin_jump_fireball_timer_00D5F0,Y ;$00D650 |
     STA.w SpinjumpFireball_13E2             ;$00D653 |
     LDA.w RidingYoshi_187A                  ;$00D656 |
-    BNE .in_air_physics_00D682              ;$00D659 |
-    INX                                     ;$00D65B |
-    BRA .CODE_00D663                        ;$00D65C |
+    BNE .in_air_physics_00D682              ;$00D659 | branch if riding Yoshi
+    INX                                     ;$00D65B | increment index if spinjumping
+    BRA ..common_start_jump_00D663          ;$00D65C |
 
-.CODE_00D65E:
-    LDA.b #$01
-    STA.w SPCIO1_1DFA                       ;$00D660 |
-.CODE_00D663:
-    LDA.w DATA_00D2BD,X
+..start_normal_jump_00D65E
+    LDA.b #$01                              ;$00D65E |
+    STA.w SPCIO1_1DFA                       ;$00D660 | play jump SFX
+..common_start_jump_00D663                  ;        |
+    LDA.w player_jump_speeds_00D2BD,X       ;$00D663 |
     STA.b PlayerYSpeed_7D                   ;$00D666 |
     LDA.b #$0B                              ;$00D668 |
     LDY.w PlayerPMeter_13E4                 ;$00D66A |
     CPY.b #$70                              ;$00D66D |
-    BCC .CODE_00D67D                        ;$00D66F |
-    LDA.w TakeoffTimer_149F                 ;$00D671 |
-    BNE .CODE_00D67B                        ;$00D674 |
-    LDA.b #$50                              ;$00D676 |
-    STA.w TakeoffTimer_149F                 ;$00D678 |
-.CODE_00D67B:
-    LDA.b #$0C
-.CODE_00D67D:
-    STA.b PlayerInAir_72
+    BCC ++                                  ;$00D66F |\ skip if P-Meter is not full
+    LDA.w TakeoffTimer_149F                 ;$00D671 ||
+    BNE +                                   ;$00D674 ||\ skip if takeoff is already set
+    LDA.b #$50                              ;$00D676 ||| start takeoff timer
+    STA.w TakeoffTimer_149F                 ;$00D678 ||/
++   LDA.b #$0C                              ;$00D67B |/
+++  STA.b PlayerInAir_72                    ;$00D67D |
     STZ.w PlayerSlopePose_13ED              ;$00D67F |
-.in_air_physics_00D682:
-    LDA.w PlayerSlopePose_13ED
-    BMI .CODE_00D692                        ;$00D685 |
-    LDA.b byetudlrHold_15                   ;$00D687 |
-    AND.b #!HeldSides_03                    ;$00D689 |
-    BNE .CODE_00D6B1                        ;$00D68B |
-.CODE_00D68D:
-    LDA.w PlayerSlopePose_13ED
-    BEQ .CODE_00D6AE                        ;$00D690 |
-.CODE_00D692:
-    JSR CODE_00FE4A
+.in_air_physics_00D682                      ;        |
+    LDA.w PlayerSlopePose_13ED              ;$00D682 |
+    BMI +                                   ;$00D685 |\
+    LDA.b byetudlrHold_15                   ;$00D687 ||
+    AND.b #!HeldSides_03                    ;$00D689 ||
+    BNE ..holding_side_air_00D6B1           ;$00D68B || branch if holding Left or Right
+..CODE_00D68D                               ;        ||
+    LDA.w PlayerSlopePose_13ED              ;$00D68D ||
+    BEQ ..continue_land_physics_00D6AE      ;$00D690 |/
++   JSR CODE_00FE4A                         ;$00D692 |
     LDA.w CurrentSlope_13EE                 ;$00D695 |
-    BEQ .CODE_00D6AE                        ;$00D698 |
-    JSR CODE_00D968                         ;$00D69A |
-    LDA.w SlopeType_13E1                    ;$00D69D |
-    LSR                                     ;$00D6A0 |
-    LSR                                     ;$00D6A1 |
-    TAY                                     ;$00D6A2 |
-    ADC.b #$76                              ;$00D6A3 |
-    TAX                                     ;$00D6A5 |
-    TYA                                     ;$00D6A6 |
-    LSR                                     ;$00D6A7 |
-    ADC.b #$87                              ;$00D6A8 |
-    TAY                                     ;$00D6AA |
-    JMP CODE_00D742                         ;$00D6AB |
+    BEQ ..continue_land_physics_00D6AE      ;$00D698 |\ branch if not in a slope
+    JSR decrement_pmeter_00D968             ;$00D69A ||
+    LDA.w SlopeType_13E1                    ;$00D69D ||
+    LSR                                     ;$00D6A0 ||
+    LSR                                     ;$00D6A1 ||
+    TAY                                     ;$00D6A2 ||
+    ADC.b #$76                              ;$00D6A3 ||
+    TAX                                     ;$00D6A5 ||
+    TYA                                     ;$00D6A6 ||
+    LSR                                     ;$00D6A7 ||
+    ADC.b #$87                              ;$00D6A8 ||
+    TAY                                     ;$00D6AA ||
+    JMP player_slope_physics_00D742         ;$00D6AB |/
 
-.CODE_00D6AE:
-    JMP CODE_00D764
+..continue_land_physics_00D6AE
+    JMP air_flat_ground_physics_00D764
 
-.CODE_00D6B1:
+..holding_side_air_00D6B1
     STZ.w PlayerSlopePose_13ED
-    AND.b #$01                              ;$00D6B4 |
+    AND.b #!PlayerDirRight_01               ;$00D6B4 |
     LDY.w FlightPhase_1407                  ;$00D6B6 |
-    BEQ .CODE_00D6D5                        ;$00D6B9 |
-    CMP.b PlayerDir_76                      ;$00D6BB |
-    BEQ .CODE_00D6C3                        ;$00D6BD |
-    LDY.b byetudlrPress_16                  ;$00D6BF |
-    BPL .CODE_00D68D                        ;$00D6C1 |
-.CODE_00D6C3:
-    LDX.b PlayerDir_76
-    LDY.w DATA_00D5EE,X                     ;$00D6C5 |
-    STY.w SlopeType_13E1                    ;$00D6C8 |
+    BEQ ..not_flying_00D6D5                 ;$00D6B9 |
+    CMP.b PlayerDir_76                      ;$00D6BB | player is flying:
+    BEQ +                                   ;$00D6BD |\
+    LDY.b byetudlrPress_16                  ;$00D6BF ||
+    BPL ..CODE_00D68D                       ;$00D6C1 |/ branch if not pressed B this frame
++   LDX.b PlayerDir_76                      ;$00D6C3 | holding sides while pressing B:
+    LDY.w recoil_while_flying_00D5EE,X      ;$00D6C5 |
+    STY.w SlopeType_13E1                    ;$00D6C8 | $13E1 also holds recoil type
     STA $01                                 ;$00D6CB |
     ASL                                     ;$00D6CD |
     ASL                                     ;$00D6CE |
     ORA.w SlopeType_13E1                    ;$00D6CF |
     TAX                                     ;$00D6D2 |
-    BRA .CODE_00D713                        ;$00D6D3 |
+    BRA ..process_slope_air_00D713          ;$00D6D3 |
 
-.CODE_00D6D5:
-    LDY.b PlayerDir_76
+..not_flying_00D6D5
+    LDY.b PlayerDir_76                      ;$00D6D5 |
     CMP.b PlayerDir_76                      ;$00D6D7 |
-    BEQ .CODE_00D6EC                        ;$00D6D9 |
-    LDY.w CarryingFlagMirror_148F           ;$00D6DB |
-    BEQ .CODE_00D6EA                        ;$00D6DE |
-    LDY.w FaceScreenTimer_1499              ;$00D6E0 |
-    BNE .CODE_00D6EC                        ;$00D6E3 |
-    LDY.b #$08                              ;$00D6E5 |
-    STY.w FaceScreenTimer_1499              ;$00D6E7 |
-.CODE_00D6EA:
-    STA.b PlayerDir_76
-.CODE_00D6EC:
-    STA $01
+    BEQ ...skip_rotate_00D6EC               ;$00D6D9 |\ skip if input direction matches player's facing direction
+    LDY.w CarryingFlagMirror_148F           ;$00D6DB || inputting opposite side:
+    BEQ ...instant_rotate_00D6EA            ;$00D6DE ||\ branch if not carrying item
+    LDY.w FaceScreenTimer_1499              ;$00D6E0 |||
+    BNE ...skip_rotate_00D6EC               ;$00D6E3 ||| branch if changing direction with item
+    LDY.b #$08                              ;$00D6E5 ||| otherwise, set rotation time
+    STY.w FaceScreenTimer_1499              ;$00D6E7 ||/
+...instant_rotate_00D6EA                    ;        ||
+    STA.b PlayerDir_76                      ;$00D6EA ||
+...skip_rotate_00D6EC                       ;        |/
+    STA $01                                 ;$00D6EC |
     ASL                                     ;$00D6EE |
     ASL                                     ;$00D6EF |
     ORA.w SlopeType_13E1                    ;$00D6F0 |
     TAX                                     ;$00D6F3 |
     LDA.b PlayerXSpeed_7B                   ;$00D6F4 |
-    BEQ .CODE_00D713                        ;$00D6F6 |
+    BEQ ..process_slope_air_00D713          ;$00D6F6 |
     EOR.w MarioAccel2,X                     ;$00D6F8 |
-    BPL .CODE_00D713                        ;$00D6FB |
+    BPL ..process_slope_air_00D713          ;$00D6FB |
     LDA.w SkidTurnTimer_14A1                ;$00D6FD |
-    BNE .CODE_00D713                        ;$00D700 |
+    BNE ..process_slope_air_00D713          ;$00D700 |
     LDA.b LevelIsSlippery_86                ;$00D702 |
-    BNE .CODE_00D70E                        ;$00D704 |
-    LDA.b #$0D                              ;$00D706 |
-    STA.w PlayerTurningPose_13DD            ;$00D708 |
-    JSR CODE_00FE4A                         ;$00D70B |
-.CODE_00D70E:
-    TXA
+    BNE +                                   ;$00D704 |\ skip if non-slippery
+    LDA.b #$0D                              ;$00D706 ||
+    STA.w PlayerTurningPose_13DD            ;$00D708 ||
+    JSR CODE_00FE4A                         ;$00D70B |/
++   TXA                                     ;$00D70E |
     CLC                                     ;$00D70F |
     ADC.b #$90                              ;$00D710 |
     TAX                                     ;$00D712 |
-.CODE_00D713:
-    LDY.b #$00
+..process_slope_air_00D713                  ;        |
+    LDY.b #$00                              ;$00D713 | Y: 0/1 = decrement P-Meter; 2 = increment P-Meter
     BIT.b byetudlrHold_15                   ;$00D715 |
-    BVC .CODE_00D737                        ;$00D717 |
-    INX                                     ;$00D719 |
+    BVC ...decrement_pmeter_00D737          ;$00D717 | branch if not holding X or Y
+    INX                                     ;$00D719 | holding X or Y:
     INX                                     ;$00D71A |
     INY                                     ;$00D71B |
     LDA.b PlayerXSpeed_7B                   ;$00D71C |
-    BPL .CODE_00D723                        ;$00D71E |
-    EOR.b #$FF                              ;$00D720 |
-    INC A                                   ;$00D722 |
-.CODE_00D723:
-    CMP.b #$23
-    BMI .CODE_00D737                        ;$00D725 |
+    BPL +                                   ;$00D71E |\ get non-negative X speed value
+    EOR.b #$FF                              ;$00D720 ||
+    INC A                                   ;$00D722 |/
++   CMP.b #$23                              ;$00D723 |
+    BMI ...decrement_pmeter_00D737          ;$00D725 | branch if X speed is less than 35
     LDA.b PlayerInAir_72                    ;$00D727 |
-    BNE .CODE_00D732                        ;$00D729 |
-    LDA.b #$10                              ;$00D72B |
-    STA.w RunTakeoffTimer_14A0              ;$00D72D |
-    BRA .CODE_00D736                        ;$00D730 |
+    BNE ...update_pmeter_00D732             ;$00D729 |\ branch if in air
+    LDA.b #$10                              ;$00D72B ||
+    STA.w RunInAirTimer_14A0                ;$00D72D || constantly set $14A0 while running
+    BRA ...increment_pmeter_00D736          ;$00D730 |/
 
-.CODE_00D732:
-    CMP.b #$0C
-    BNE .CODE_00D737                        ;$00D734 |
-.CODE_00D736:
+...update_pmeter_00D732
+    CMP.b #!InAirTakeoff_0C                 ;$00D732 |
+    BNE ...decrement_pmeter_00D737          ;$00D734 | increment P-Meter only if started jump with takeoff
+...increment_pmeter_00D736
     INY
-.CODE_00D737:
-    JSR CODE_00D96A
+...decrement_pmeter_00D737
+    JSR update_pmeter_00D96A
     TYA                                     ;$00D73A |
     ASL                                     ;$00D73B |
     ORA.w SlopeType_13E1                    ;$00D73C |
     ORA $01                                 ;$00D73F |
     TAY                                     ;$00D741 |
-CODE_00D742:
+player_slope_physics_00D742:
     LDA.b PlayerXSpeed_7B
     SEC                                     ;$00D744 |
     SBC.w DATA_00D535,Y                     ;$00D745 |
@@ -9340,17 +9335,16 @@ CODE_00D742:
     REP #$20                                ;$00D74F | A->16
     LDA.w MarioAccel,X                      ;$00D751 |
     LDY.b LevelIsSlippery_86                ;$00D754 |
-    BEQ .CODE_00D75F                        ;$00D756 |
-    LDY.b PlayerInAir_72                    ;$00D758 |
-    BNE .CODE_00D75F                        ;$00D75A |
-    LDA.w DATA_00D43D,X                     ;$00D75C |
-.CODE_00D75F:
-    CLC
+    BEQ +                                   ;$00D756 |\ skip if not slippery
+    LDY.b PlayerInAir_72                    ;$00D758 ||
+    BNE +                                   ;$00D75A ||
+    LDA.w DATA_00D43D,X                     ;$00D75C |/
++   CLC                                     ;$00D75F |
     ADC.b PlayerXSubpeed_7A                 ;$00D760 |
     BRA CODE_00D7A0                         ;$00D762 |
 
-CODE_00D764:
-    JSR CODE_00D968
+air_flat_ground_physics_00D764:
+    JSR decrement_pmeter_00D968
     LDA.b PlayerInAir_72                    ;$00D767 |
     BNE Return00D7A4                        ;$00D769 |
 CODE_00D76B:
@@ -9391,6 +9385,10 @@ CODE_00D7A2:
     SEP #$20                                ;$00D7A2 | A->8
 Return00D7A4:
     RTS
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;FIXME delete me
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 player_y_speed_adder_00D7A5:
     db $06,$03,$04,$10,$F4,$01,$03,$04
@@ -9633,21 +9631,19 @@ CODE_00D94F:
 .Return00D967:
     RTS
 
-CODE_00D968:
+decrement_pmeter_00D968:
     LDY.b #$00
-CODE_00D96A:
+update_pmeter_00D96A:
     LDA.w PlayerPMeter_13E4
     CLC                                     ;$00D96D |
     ADC.w DATA_00D5EB,Y                     ;$00D96E |
-    BPL .CODE_00D975                        ;$00D971 |
-    LDA.b #$00                              ;$00D973 |
-.CODE_00D975:
-    CMP.b #$70
-    BCC .CODE_00D97C                        ;$00D977 |
-    INY                                     ;$00D979 |
-    LDA.b #$70                              ;$00D97A |
-.CODE_00D97C:
-    STA.w PlayerPMeter_13E4
+    BPL +                                   ;$00D971 |\
+    LDA.b #$00                              ;$00D973 |/
++   CMP.b #$70                              ;$00D975 |
+    BCC +                                   ;$00D977 |\
+    INY                                     ;$00D979 ||
+    LDA.b #$70                              ;$00D97A |/
++   STA.w PlayerPMeter_13E4                 ;$00D97C |
     RTS                                     ;$00D97F |
 
 DATA_00D980:
@@ -9795,7 +9791,7 @@ water_physics_00D988:
     INY                                     ;$00DA62 |
     INY                                     ;$00DA63 |
 .CODE_00DA64:
-    JSR CODE_00D742
+    JSR player_slope_physics_00D742
     BRA .CODE_00DA7C                        ;$00DA67 |
 
 .CODE_00DA69:

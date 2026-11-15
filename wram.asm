@@ -631,8 +631,8 @@ PlayerInWater_75: skip 1
 ; direction player is facing
 PlayerDir_76: skip 1
 ; Valid values
-!PlayerDir_Left = 0
-!PlayerDir_Right = 1
+!PlayerDirLeft_00 = 0
+!PlayerDirRight_01 = 1
 
 ; === $7E0077 ===
 ; 1 byte
@@ -1768,7 +1768,7 @@ ShootFireTimer_149C: skip 1 ;done
 NetDoorTimer_149D: skip 1 ;done
 PunchNetTimer_149E: skip 1 ;done
 TakeoffTimer_149F: skip 1 ;done
-RunTakeoffTimer_14A0: skip 1 ;done
+RunInAirTimer_14A0: skip 1 ;done
 SkidTurnTimer_14A1: skip 1 ;done
 CapeAniTimer_14A2: skip 1 ;done
 YoshiTongueTimer_14A3: skip 1 ;done
