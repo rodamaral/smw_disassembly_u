@@ -7794,15 +7794,15 @@ ending_normal_level_00C96B:
     BNE CODE_00C9AF                         ;$00C971 |
     LDA.w EndLevelTimer_1493                ;$00C973 |
     CMP.b #$28                              ;$00C976 |
-    BCC +                                   ;$00C978 |
-    LDA.b #!HeldRight_01                    ;$00C97A |
-    STA.b PlayerDir_76                      ;$00C97C |
-    STA.b byetudlrHold_15                   ;$00C97E |
-    LDA.b #$05                              ;$00C980 |
-    STA.b PlayerXSpeed_7B                   ;$00C982 |
+    BCC +                                   ;$00C978 |\ skip if $1493 < 40
+    LDA.b #!HeldRight_01                    ;$00C97A ||
+    STA.b PlayerDir_76                      ;$00C97C ||
+    STA.b byetudlrHold_15                   ;$00C97E || force player to walk to the right
+    LDA.b #$05                              ;$00C980 || while disabling other $15 held inputs
+    STA.b PlayerXSpeed_7B                   ;$00C982 |/
 +   LDA.b PlayerInAir_72                    ;$00C984 |
-    BEQ +                                   ;$00C986 |
-    JSR CODE_00D76B                         ;$00C988 |
+    BEQ +                                   ;$00C986 |\
+    JSR CODE_00D76B                         ;$00C988 |/
 +   LDA.b PlayerXSpeed_7B                   ;$00C98B |
     BNE +                                   ;$00C98D |
     STZ.w HorizLayer1Setting_1411           ;$00C98F |
@@ -9169,8 +9169,8 @@ land_physics_00D5F2:
     BEQ +                                   ;$00D624 |\ skip if x speed is zero
     LDA.b LevelIsSlippery_86                ;$00D626 ||
     BNE +                                   ;$00D628 ||
-    JSR CODE_00FE4A                         ;$00D62A |/
-+   JMP air_flat_ground_physics_00D764      ;$00D62D |
+    JSR try_create_feet_smoke_00FE4A        ;$00D62A |/
++   JMP air_without_takeoff_physics_00D764  ;$00D62D |
 
 ..start_jump_00D630
     LDA.b PlayerXSpeed_7B
@@ -9222,10 +9222,10 @@ land_physics_00D5F2:
     BNE ..holding_side_air_00D6B1           ;$00D68B || branch if holding Left or Right
 ..CODE_00D68D                               ;        ||
     LDA.w PlayerSlopePose_13ED              ;$00D68D ||
-    BEQ ..continue_land_physics_00D6AE      ;$00D690 |/
-+   JSR CODE_00FE4A                         ;$00D692 |
+    BEQ ..air_without_takeoff_00D6AE        ;$00D690 |/ branch if player is not sliding
++   JSR try_create_feet_smoke_00FE4A        ;$00D692 |
     LDA.w CurrentSlope_13EE                 ;$00D695 |
-    BEQ ..continue_land_physics_00D6AE      ;$00D698 |\ branch if not in a slope
+    BEQ ..air_without_takeoff_00D6AE        ;$00D698 |\ branch if not in a slope
     JSR decrement_pmeter_00D968             ;$00D69A ||
     LDA.w SlopeType_13E1                    ;$00D69D ||
     LSR                                     ;$00D6A0 ||
@@ -9239,8 +9239,8 @@ land_physics_00D5F2:
     TAY                                     ;$00D6AA ||
     JMP player_slope_physics_00D742         ;$00D6AB |/
 
-..continue_land_physics_00D6AE
-    JMP air_flat_ground_physics_00D764
+..air_without_takeoff_00D6AE
+    JMP air_without_takeoff_physics_00D764
 
 ..holding_side_air_00D6B1
     STZ.w PlayerSlopePose_13ED
@@ -9289,7 +9289,7 @@ land_physics_00D5F2:
     BNE +                                   ;$00D704 |\ skip if non-slippery
     LDA.b #$0D                              ;$00D706 ||
     STA.w PlayerTurningPose_13DD            ;$00D708 ||
-    JSR CODE_00FE4A                         ;$00D70B |/
+    JSR try_create_feet_smoke_00FE4A        ;$00D70B |/
 +   TXA                                     ;$00D70E |
     CLC                                     ;$00D70F |
     ADC.b #$90                              ;$00D710 |
@@ -9343,11 +9343,11 @@ player_slope_physics_00D742:
     ADC.b PlayerXSubpeed_7A                 ;$00D760 |
     BRA CODE_00D7A0                         ;$00D762 |
 
-air_flat_ground_physics_00D764:
+air_without_takeoff_physics_00D764:
     JSR decrement_pmeter_00D968
     LDA.b PlayerInAir_72                    ;$00D767 |
     BNE Return00D7A4                        ;$00D769 |
-CODE_00D76B:
+CODE_00D76B: ;; FIXME routine
     LDA.w SlopeType_13E1
     LSR                                     ;$00D76E |
     TAY                                     ;$00D76F |
@@ -13860,34 +13860,32 @@ create_water_splash_bubbles_00FDA5:
     STA.w ExtSprTimer_176F,Y                ;$00FE44 |
     JMP .continue_00FE0A                    ;$00FE47 |
 
-CODE_00FE4A:
+try_create_feet_smoke_00FE4A:
     LDA.b Frame_13
-    AND.b #$03                              ;$00FE4C |
-    ORA.b PlayerInAir_72                    ;$00FE4E |
-    ORA.b PlayerXPosScrRel_7E+1             ;$00FE50 |
-    ORA.b PlayerYPosScrRel_80+1             ;$00FE52 |
-    ORA.b SpriteLock_9D                     ;$00FE54 |
-    BNE .Return00FE71                       ;$00FE56 |
+    AND.b #$03                              ;$00FE4C |\ if frame is not a multiple of 4,
+    ORA.b PlayerInAir_72                    ;$00FE4E || player is airborne,
+    ORA.b PlayerXPosScrRel_7E+1             ;$00FE50 ||
+    ORA.b PlayerYPosScrRel_80+1             ;$00FE52 || off-screen,
+    ORA.b SpriteLock_9D                     ;$00FE54 || or sprites are locked
+    BNE .return_00FE71                      ;$00FE56 |/ return
     LDA.b byetudlrHold_15                   ;$00FE58 |
     AND.b #!HeldDown_04                     ;$00FE5A |
-    BEQ .CODE_00FE67                        ;$00FE5C |
-    LDA.b PlayerXSpeed_7B                   ;$00FE5E |
-    CLC                                     ;$00FE60 |
-    ADC.b #$08                              ;$00FE61 |
-    CMP.b #$10                              ;$00FE63 |
-    BCC .Return00FE71                       ;$00FE65 |
-.CODE_00FE67:
-    LDY.b #$03
-.CODE_00FE69:
-    LDA.w SmokeSprNumber_17C0,Y
-    BEQ CODE_00FE72                         ;$00FE6C |
-    DEY                                     ;$00FE6E |
-    BNE .CODE_00FE69                        ;$00FE6F |
-.Return00FE71:
+    BEQ +                                   ;$00FE5C |\ skip if holding down
+    LDA.b PlayerXSpeed_7B                   ;$00FE5E ||
+    CLC                                     ;$00FE60 ||
+    ADC.b #$08                              ;$00FE61 ||
+    CMP.b #$10                              ;$00FE63 ||
+    BCC .return_00FE71                      ;$00FE65 |/ return if horizontal speed is below the smoke threshold
++   LDY.b #$03                              ;$00FE67 | Y: smoke sprite slot
+-   LDA.w SmokeSprNumber_17C0,Y             ;$00FE69 |\
+    BEQ .create_feet_smoke_00FE72           ;$00FE6C ||
+    DEY                                     ;$00FE6E ||
+    BNE -                                   ;$00FE6F |/
+.return_00FE71
     RTS
 
-CODE_00FE72:
-    LDA.b #$03
+.create_feet_smoke_00FE72
+    LDA.b #!FeetSmoke_03
     STA.w SmokeSprNumber_17C0,Y             ;$00FE74 |
     LDA.b PlayerXPos_94                     ;$00FE77 |
     ADC.b #$04                              ;$00FE79 |
@@ -13896,10 +13894,9 @@ CODE_00FE72:
     ADC.b #$1A                              ;$00FE80 |
     PHX                                     ;$00FE82 |
     LDX.w RidingYoshi_187A                  ;$00FE83 |
-    BEQ .CODE_00FE8A                        ;$00FE86 |
-    ADC.b #$10                              ;$00FE88 |
-.CODE_00FE8A:
-    STA.w SmokeSprYPos_17C4,Y
+    BEQ +                                   ;$00FE86 |\
+    ADC.b #$10                              ;$00FE88 |/
++   STA.w SmokeSprYPos_17C4,Y               ;$00FE8A |
     PLX                                     ;$00FE8D |
     LDA.b #$13                              ;$00FE8E |
     STA.w SmokeSprTimer_17CC,Y              ;$00FE90 |
