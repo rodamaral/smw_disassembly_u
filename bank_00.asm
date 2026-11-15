@@ -9147,7 +9147,7 @@ land_physics_00D5F2:
 .on_ground_physics_00D5F9:
     STZ.b PlayerIsDucking_73
     LDA.w PlayerSlopePose_13ED              ;$00D5FB |
-    BNE +                                   ;$00D5FE |\ skip if ;;;
+    BNE +                                   ;$00D5FE |\ skip if player is on a slope
     LDA.b byetudlrHold_15                   ;$00D600 ||
     AND.b #!HeldDown_04                     ;$00D602 ||
     BEQ +                                   ;$00D604 ||
@@ -9155,7 +9155,7 @@ land_physics_00D5F2:
     STZ.w CapeInteracts_13E8                ;$00D608 |/
 +   LDA.w OnSolidSprite_1471                ;$00D60B |
     CMP.b #$02                              ;$00D60E |
-    BEQ +                                   ;$00D610 |\ skip if ;;;
+    BEQ +                                   ;$00D610 |\ skip if standing on a solid sprite
     LDA.b PlayerBlocked_77                  ;$00D612 ||
     AND.b #!Block_Top_08                    ;$00D614 ||
     BNE +                                   ;$00D616 ||
@@ -9165,7 +9165,7 @@ land_physics_00D5F2:
 +   LDA.b PlayerIsDucking_73                ;$00D61E |
     BEQ .in_air_physics_00D682              ;$00D620 |
     LDA.b PlayerXSpeed_7B                   ;$00D622 |
-    BEQ +                                   ;$00D624 |\ skip if ;;;
+    BEQ +                                   ;$00D624 |\ skip if x speed is zero
     LDA.b LevelIsSlippery_86                ;$00D626 ||
     BNE +                                   ;$00D628 ||
     JSR CODE_00FE4A                         ;$00D62A |/
@@ -9846,31 +9846,32 @@ CODE_00DAA9:
     STA.w PlayerAniTimer_1496               ;$00DAB3 |
     RTS                                     ;$00DAB6 |
 
-DATA_00DAB7:
+climbing_x_y_speeds_00DAB7:
     db $10,$08,$F0,$F8
 
-DATA_00DABB:
+climb_jump_speeds_00DABB:
     db $B0,$F0
 
-DATA_00DABD:
+net_door_directions_00DABD:
     db $00,$01,$00,$01,$01,$01,$01,$01
     db $01,$01,$01,$01,$01,$01,$01,$01
-DATA_00DACD:
+
+net_punch_poses_00DACD:
     db $22,$15,$22,$15,$21,$1F,$20,$20
     db $20,$20,$1F,$21,$1F,$21
 
-ClimbingImgs:
+climbing_images_00DADB:
     db $15,$22
 
-ClimbPunchingImgs:
+climb_punching_images_00DADD:
     db $1E,$23
 
-DATA_00DADF:
+net_door_initial_speeds_00DADF:
     db $10,$0F,$0E,$0D,$0C,$0B,$0A,$09
     db $08,$07,$06,$05,$05,$05,$05,$05
     db $05,$05
 
-DATA_00DAF1:
+net_door_x_speed_accel_00DAF1:
     db $20,$01,$40,$01,$2A,$01,$2A,$01
     db $30,$01,$33,$01,$32,$01,$34,$01
     db $36,$01,$38,$01,$3A,$01,$3B,$01
@@ -9883,34 +9884,34 @@ handle_climbed_player_00DB17:
     STZ.w PlayerCapePose_13DF               ;$00DB1B |
     STZ.w SpinJumpFlag_140D                 ;$00DB1E |
     LDY.w NetDoorTimer_149D                 ;$00DB21 |
-    BEQ .CODE_00DB7D                        ;$00DB24 |
-    LDA.w NetDoorPlayerXOffset_1878         ;$00DB26 |
+    BEQ .net_idle_state_00DB7D              ;$00DB24 | branch if not flipping on a Net Door
+    LDA.w NetDoorPlayerXOffset_1878         ;$00DB26 | flipping on a Net Door:
     BPL +                                   ;$00DB29 |\
     EOR.b #$FF                              ;$00DB2B ||
     INC A                                   ;$00DB2D |/
 +   TAX                                     ;$00DB2E |
     CPY.b #$1E                              ;$00DB2F |
-    BCC .CODE_00DB45                        ;$00DB31 |
-    LDA.w DATA_00DADF,X                     ;$00DB33 |
-    BIT.w NetDoorPlayerXOffset_1878         ;$00DB36 |
-    BPL +                                   ;$00DB39 |\
-    EOR.b #$FF                              ;$00DB3B |/
-    INC A                                   ;$00DB3D |
-+   STA.b PlayerXSpeed_7B                   ;$00DB3E |
-    STZ.b PlayerXSubpeed_7A                 ;$00DB40 |
-    STZ.w PlayerXPosSpx_13DA                ;$00DB42 |
-.CODE_00DB45
-    TXA
+    BCC .net_door_movement_00DB45           ;$00DB31 |\ skip if net door rotation is not starting (less than $1E)
+    LDA.w net_door_initial_speeds_00DADF,X  ;$00DB33 || start a rotation:
+    BIT.w NetDoorPlayerXOffset_1878         ;$00DB36 ||
+    BPL +                                   ;$00DB39 ||\ invert speed if rotating to the left
+    EOR.b #$FF                              ;$00DB3B ||/
+    INC A                                   ;$00DB3D ||
++   STA.b PlayerXSpeed_7B                   ;$00DB3E ||
+    STZ.b PlayerXSubpeed_7A                 ;$00DB40 ||
+    STZ.w PlayerXPosSpx_13DA                ;$00DB42 |/
+.net_door_movement_00DB45                   ;        |
+    TXA                                     ;$00DB45 |
     ASL                                     ;$00DB46 |
     TAX                                     ;$00DB47 |
     LDA.w NetDoorPlayerXOffset_1878         ;$00DB48 |
     CPY.b #$08                              ;$00DB4B |
-    BCS +                                   ;$00DB4D |\
+    BCS +                                   ;$00DB4D |\ skip if net door rotation is not in its initial phase
     EOR.b #$80                              ;$00DB4F |/
 +   ASL                                     ;$00DB51 |
     REP #$20                                ;$00DB52 | A->16
-    LDA.w DATA_00DAF1,X                     ;$00DB54 |
-    BCS +                                   ;$00DB57 |\
+    LDA.w net_door_x_speed_accel_00DAF1,X   ;$00DB54 |
+    BCS +                                   ;$00DB57 |\ skip if acceleration is positive
     EOR.w #$FFFF                            ;$00DB59 ||
     INC A                                   ;$00DB5C |/
 +   CLC                                     ;$00DB5D |
@@ -9922,47 +9923,47 @@ handle_climbed_player_00DB17:
     AND.b #$0E                              ;$00DB66 |
     ORA.w NetDoorDirIndex_13F0              ;$00DB68 |
     TAY                                     ;$00DB6B |
-    LDA.w DATA_00DABD,Y                     ;$00DB6C |
+    LDA.w net_door_directions_00DABD,Y      ;$00DB6C |
     BIT.w NetDoorPlayerXOffset_1878         ;$00DB6F |
-    BMI +                                   ;$00DB72 |\
+    BMI +                                   ;$00DB72 |\ invert direction if player is on the right side of the net
     EOR.b #$01                              ;$00DB74 |/
 +   STA.b PlayerDir_76                      ;$00DB76 |
-    LDA.w DATA_00DACD,Y                     ;$00DB78 |
-    BRA .CODE_00DB92                        ;$00DB7B |
+    LDA.w net_punch_poses_00DACD,Y          ;$00DB78 |
+    BRA .set_pose_return_00DB92             ;$00DB7B |
 
-.CODE_00DB7D
+.net_idle_state_00DB7D
     STZ.b PlayerXSpeed_7B
     STZ.b PlayerXSubpeed_7A                 ;$00DB7F |
     LDX.w PlayerBehindNet_13F9              ;$00DB81 |
     LDA.w PunchNetTimer_149E                ;$00DB84 |
-    BEQ .CODE_00DB96                        ;$00DB87 |
-    TXA                                     ;$00DB89 |
-    INC A                                   ;$00DB8A |
-    INC A                                   ;$00DB8B |
-    JSR CODE_00D044                         ;$00DB8C |
-    LDA.w ClimbPunchingImgs,X               ;$00DB8F |
-.CODE_00DB92
-    STA.w PlayerPose_13E0
+    BEQ .test_net_climb_jump_00DB96         ;$00DB87 |\ branch if not punching a net
+    TXA                                     ;$00DB89 || punching a net:
+    INC A                                   ;$00DB8A ||
+    INC A                                   ;$00DB8B ||
+    JSR CODE_00D044                         ;$00DB8C ||
+    LDA.w climb_punching_images_00DADD,X    ;$00DB8F |/
+.set_pose_return_00DB92                     ;        |
+    STA.w PlayerPose_13E0                   ;$00DB92 |
     RTS                                     ;$00DB95 |
 
-.CODE_00DB96
+.test_net_climb_jump_00DB96
     LDY.b PlayerInWater_75
     BIT.b byetudlrPress_16                  ;$00DB98 |
-    BPL .CODE_00DBAC                        ;$00DB9A |
-    LDA.b #$0B                              ;$00DB9C |
-    STA.b PlayerInAir_72                    ;$00DB9E |
-    LDA.w DATA_00DABB,Y                     ;$00DBA0 |
-    STA.b PlayerYSpeed_7D                   ;$00DBA3 |
-    LDA.b #$01                              ;$00DBA5 |
-    STA.w SPCIO1_1DFA                       ;$00DBA7 |
-    BRA .CODE_00DC00                        ;$00DBAA |
+    BPL ..net_punch_00DBAC                  ;$00DB9A |\ branch if B not pressed this frame
+    LDA.b #!InAirJump_0B                    ;$00DB9C || set jump:
+    STA.b PlayerInAir_72                    ;$00DB9E ||
+    LDA.w climb_jump_speeds_00DABB,Y        ;$00DBA0 || set Y speed based on whether player is in water
+    STA.b PlayerYSpeed_7D                   ;$00DBA3 ||
+    LDA.b #$01                              ;$00DBA5 || play jump SFX
+    STA.w SPCIO1_1DFA                       ;$00DBA7 ||
+    BRA ..reset_climb_flag_return_00DC00    ;$00DBAA |/
 
-.CODE_00DBAC
-    BVC +                                   ;$00DBAC |\
+..net_punch_00DBAC
+    BVC +                                   ;$00DBAC |\ skip if Y/X not pressed this frame
     LDA.b PlayerClimb_74                    ;$00DBAE ||
-    BPL +                                   ;$00DBB0 ||
-    LDA.b #$01                              ;$00DBB2 ||
-    STA.w SPCIO0_1DF9                       ;$00DBB4 ||
+    BPL +                                   ;$00DBB0 || skip if climbing a Vine
+    LDA.b #$01                              ;$00DBB2 || if climbing a net
+    STA.w SPCIO0_1DF9                       ;$00DBB4 ||  play Hit Head SFX
     STX.w NetDoorDirIndex_13F0              ;$00DBB7 ||
     LDA.b PlayerXPos_94                     ;$00DBBA ||
     AND.b #$08                              ;$00DBBC ||
@@ -9972,54 +9973,54 @@ handle_climbed_player_00DB17:
     EOR.b #$01                              ;$00DBC1 ||
     STA.b PlayerDir_76                      ;$00DBC3 ||
     LDA.b #$08                              ;$00DBC5 ||
-    STA.w PunchNetTimer_149E                ;$00DBC7 |/
-+   LDA.w ClimbingImgs,X                    ;$00DBCA |
+    STA.w PunchNetTimer_149E                ;$00DBC7 |/ start a punch on the net
++   LDA.w climbing_images_00DADB,X          ;$00DBCA |
     STA.w PlayerPose_13E0                   ;$00DBCD |
     LDA.b byetudlrHold_15                   ;$00DBD0 |
     AND.b #!HeldSides_03                    ;$00DBD2 |
-    BEQ ..CODE_00DBF2                       ;$00DBD4 |
-    LSR                                     ;$00DBD6 |
-    TAX                                     ;$00DBD7 |
-    LDA.b InteractionPtsClimbable_8B        ;$00DBD8 |
-    AND.b #!ClimbableSH_18                  ;$00DBDA |
-    CMP.b #!ClimbableSH_18                  ;$00DBDC |
-    BEQ +                                   ;$00DBDE |\
-    LDA.b PlayerClimb_74                    ;$00DBE0 ||
-    BPL .CODE_00DC00                        ;$00DBE2 ||
-    CPX.b PlayerBlockXSide_8C               ;$00DBE4 ||
-    BEQ ..CODE_00DBF2                       ;$00DBE6 |/
-+   TXA                                     ;$00DBE8 |
-    ASL                                     ;$00DBE9 |
-    ORA.b PlayerInWater_75                  ;$00DBEA |
-    TAX                                     ;$00DBEC |
-    LDA.w DATA_00DAB7,X                     ;$00DBED |
-    STA.b PlayerXSpeed_7B                   ;$00DBF0 |
-..CODE_00DBF2                               ;        |
+    BEQ ...climb_vertical_input_00DBF2      ;$00DBD4 |\ skip if holding Left or Right
+    LSR                                     ;$00DBD6 ||
+    TAX                                     ;$00DBD7 ||
+    LDA.b InteractionPtsClimbable_8B        ;$00DBD8 ||
+    AND.b #!ClimbableSH_18                  ;$00DBDA ||
+    CMP.b #!ClimbableSH_18                  ;$00DBDC ||
+    BEQ +                                   ;$00DBDE ||\ skip if waist and shoulders points are climbable
+    LDA.b PlayerClimb_74                    ;$00DBE0 ||| if waist or shoulder it outside net/vine:
+    BPL ..reset_climb_flag_return_00DC00    ;$00DBE2 ||| return if climbing a Vine
+    CPX.b PlayerBlockXSide_8C               ;$00DBE4 |||
+    BEQ ...climb_vertical_input_00DBF2      ;$00DBE6 ||/ skip if already at the adjacent block column
++   TXA                                     ;$00DBE8 ||
+    ASL                                     ;$00DBE9 ||
+    ORA.b PlayerInWater_75                  ;$00DBEA ||
+    TAX                                     ;$00DBEC ||
+    LDA.w climbing_x_y_speeds_00DAB7,X      ;$00DBED ||
+    STA.b PlayerXSpeed_7B                   ;$00DBF0 |/
+...climb_vertical_input_00DBF2              ;        |
     LDA.b byetudlrHold_15                   ;$00DBF2 |
     AND.b #!HeldUD_0C                       ;$00DBF4 |
-    BEQ .CODE_00DC16                        ;$00DBF6 |\ branch if not holding Up or Down
+    BEQ ..update_climb_animation_00DC16     ;$00DBF6 |\ branch if not holding Up or Down
     AND.b #!HeldUp_08                       ;$00DBF8 ||
-    BNE .CODE_00DC03                        ;$00DBFA ||\ branch if not holding Up
+    BNE ..climb_up_00DC03                   ;$00DBFA ||\ branch if not holding Up
     LSR.b InteractionPtsClimbable_8B        ;$00DBFC ||/
-    BCS .CODE_00DC0B                        ;$00DBFE |/
-.CODE_00DC00                                ;        |
+    BCS ..set_climb_vertical_speed_00DC0B   ;$00DBFE |/
+..reset_climb_flag_return_00DC00            ;        |
     STZ.b PlayerClimb_74                    ;$00DC00 |
     RTS                                     ;$00DC02 |
 
-.CODE_00DC03
-    INY
+..climb_up_00DC03                           ;        |
+    INY                                     ;$00DC03 |
     INY                                     ;$00DC04 |
     LDA.b InteractionPtsClimbable_8B        ;$00DC05 |
     AND.b #!ClimbableT_02                   ;$00DC07 |
-    BEQ .CODE_00DC16                        ;$00DC09 |
-.CODE_00DC0B
-    LDA.b PlayerClimb_74
+    BEQ ..update_climb_animation_00DC16     ;$00DC09 |
+..set_climb_vertical_speed_00DC0B           ;        |
+    LDA.b PlayerClimb_74                    ;$00DC0B |\
     BMI +                                   ;$00DC0D |\
     STZ.b PlayerXSpeed_7B                   ;$00DC0F |/
-+   LDA.w DATA_00DAB7,Y                     ;$00DC11 |
++   LDA.w climbing_x_y_speeds_00DAB7,Y      ;$00DC11 |
     STA.b PlayerYSpeed_7D                   ;$00DC14 |
-.CODE_00DC16
-    ORA.b PlayerXSpeed_7B
+..update_climb_animation_00DC16             ;        |
+    ORA.b PlayerXSpeed_7B                   ;$00DC16 |
     BEQ +                                   ;$00DC18 |\
     LDA.w PlayerAniTimer_1496               ;$00DC1A ||
     ORA.b #$08                              ;$00DC1D ||
