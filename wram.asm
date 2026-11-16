@@ -1625,9 +1625,33 @@ Layer3TideSetting_1403: skip 1 ;done
 ScreenScrollAtWill_1404: skip 1 ;done
 DrawYoshiInPipe_1405: skip 1 ;done
 BouncingFlag_1406: skip 1 ;done
+
 FlightPhase_1407: skip 1 ;done
-NextFlightPhase_1408: skip 1 ;done
-MaxStageOfFlight_1409: skip 1
+; Valid values
+!FlightNo_00 = $00
+!FlightGlideRise_01 = $01
+!FlightGlideLevel_02 = $02
+!FlightSink_03 = $03
+!FlightSinkMore_04 = $04
+!FlightDownInitial_05 = $05
+!FlightDownFast_06 = $06
+
+NextFlightAction_1408: skip 1 ;done
+; Valid values
+!FlyActionCatchAir_00 = $00
+!FlyActionDive_01 = $01
+!FlyActionNeutral_02 = $02
+!FlyActionRise_03 = $03
+!FlyActionCancel_04 = $04
+
+MaxStageOfFlight_1409: skip 1 ;done
+; Valid values
+!FlightMax_00 = $00
+!FlightMaxNo_F8 = $F8
+!FlightMaxPartial_F4 = $F4
+!FlightMaxNearFull_F0 = $F0
+!FlightMaxFull_C8 = $C8 ; used
+
 Unused_140A: skip 1 ;done
 ; 7E140B - 7E140C unused
 skip 2

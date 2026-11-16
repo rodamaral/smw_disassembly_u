@@ -7602,7 +7602,7 @@ CODE_00C73F:
     LDA.w DATA_00C5E1-7,Y                   ;$00C7EA |
     STA.w PlayerPose_13E0                   ;$00C7ED |
     STZ.w CarryingFlagMirror_148F           ;$00C7F0 |
-    JSR aerial_physics_00D7E4               ;$00C7F3 |
+    JSR flight_physics_00D7E4               ;$00C7F3 |
 .CODE_00C7F6
     DEC.b CutsceneInputTimer_88
 .return_00C7F8
@@ -7615,7 +7615,7 @@ yoshi_wings_animation:
     JSR disable_controls
     LDA.b #$0B                              ;$00C800 |
     STA.b PlayerInAir_72                    ;$00C802 |
-    JSR aerial_physics_00D7E4               ;$00C804 |
+    JSR flight_physics_00D7E4               ;$00C804 |
     LDA.b PlayerYSpeed_7D                   ;$00C807 |
     BPL +                                   ;$00C809 |\
     CMP.b #$90                              ;$00C80B || decrement Y speed by 14
@@ -8255,7 +8255,7 @@ apply_player_physics_00CD39:                ;        |
 use_land_physics_00CD82:
     JSR land_physics_00D5F2                 ;$00CD82 |
     JSR powerup_physics_00D062              ;$00CD85 |
-    JSR aerial_physics_00D7E4               ;$00CD88 |
+    JSR flight_physics_00D7E4               ;$00CD88 |
 set_player_yoshi_poses_00CD8B:
     JSL set_player_pose_00CEB1
 set_yoshi_pose_if_mounted_00CD8F:
@@ -8556,7 +8556,7 @@ CODE_00CF88:
     BNE CODE_00CFBC                         ;$00CFA4 |
     LDY.w FlightPhase_1407                  ;$00CFA6 |
     BEQ CODE_00CFAE                         ;$00CFA9 |
-    LDA.w CODE_00CE78,Y                     ;$00CFAB |
+    LDA.w DATA_00CE79-1,Y                   ;$00CFAB |
 CODE_00CFAE:
     LDY.w CarryingFlagMirror_148F
     BEQ CODE_00D01A                         ;$00CFB1 |
@@ -8803,7 +8803,7 @@ mushroom_animation:
     INC.b Powerup_19                        ;$00D156 \ Set the player as big.
 reset_animation:                            ;        |
     LDA.b #!AniDefault_00                   ;$00D158 |\ Reset the player animation,
-    STA.b PlayerAnimation_71                ;$00D15A | |
+    STA.b PlayerAnimation_71                ;$00D15A ||
     STZ.b SpriteLock_9D                     ;$00D15C |/ and clear the lock sprites flag.
 return_00D15E:                              ;        |
     RTS                                     ;$00D15E /
@@ -8814,22 +8814,21 @@ cape_animation:
     DEC.w PlayerAniTimer_1496               ;$00D163 |\ Decrement the animation timer.
     BNE return_00D15E                       ;$00D166 |/ If it's not zero, return.
     LDA.b Powerup_19                        ;$00D168 |\ If the player is small or big,
-    LSR                                     ;$00D16A | |
+    LSR                                     ;$00D16A ||
     BEQ set_invincibility                   ;$00D16B |/ set invincibility.
     BNE reset_animation                     ;$00D16D / Reset the animation.
 
 flower_animation:                           ;        \
     LDA.w PlayerSlopePose_13ED              ;$00D16F |\ If the player is cape-sliding on the ground
-    AND.b #$80                              ;$00D172 | |
-    ORA.w FlightPhase_1407                  ;$00D174 | | or flying in the air,
-    BEQ CODE_00D187                         ;$00D177 |/
-    STZ.w FlightPhase_1407                  ;$00D179 |\ stop flying,
-    LDA.w PlayerSlopePose_13ED              ;$00D17C | |
-    AND.b #$7F                              ;$00D17F | |
-    STA.w PlayerSlopePose_13ED              ;$00D181 | | stop cape-sliding on the ground,
+    AND.b #$80                              ;$00D172 ||
+    ORA.w FlightPhase_1407                  ;$00D174 |/ or flying in the air,
+    BEQ +                                   ;$00D177 |\
+    STZ.w FlightPhase_1407                  ;$00D179 || stop flying,
+    LDA.w PlayerSlopePose_13ED              ;$00D17C ||
+    AND.b #$7F                              ;$00D17F ||
+    STA.w PlayerSlopePose_13ED              ;$00D181 || stop cape-sliding on the ground,
     STZ.w PlayerPose_13E0                   ;$00D184 |/ and reset the player's pose.
-CODE_00D187:                                ;        |
-    DEC.w CyclePaletteTimer_149B            ;$00D187 |\ Decrease the palette cycle timer.
++   DEC.w CyclePaletteTimer_149B            ;$00D187 |\ Decrease the palette cycle timer.
     BEQ reset_animation                     ;$00D18A |/ If it's zero, reset the animation.
     RTS                                     ;$00D18C /
 
@@ -9399,133 +9398,146 @@ DATA_00D7C8:
 CapeSpeed:
     db $FF,$01,$01,$FF,$FF
 
-DATA_00D7D4:
-    db $01,$06,$03,$01,$00
+flight_phases_00D7D4:
+    db !FlightGlideRise_01                  ;$00D7D4 | 0
+    db !FlightDownFast_06                   ;$00D7D5 | 1
+    db !FlightSink_03                       ;$00D7D6 | 2
+    db !FlightGlideRise_01                  ;$00D7D7 | 3
+    db !FlightNo_00                         ;$00D7D8 | 4
 
-DATA_00D7D9:
-    db $00,$00,$00,$F8,$F8,$F8,$F4,$F0
-    db $C8,$02,$01
+max_stage_flight_00D7D9:
+    db !FlightMax_00                        ;$00D7D9 | 0: Y speed 0-7
+    db !FlightMax_00                        ;$00D7DA | 1: Y speed 8-15
+    db !FlightMax_00                        ;$00D7DB | 2: Y speed 16-23
+    db !FlightMaxNo_F8                      ;$00D7DC | 3: Y speed 24-31
+    db !FlightMaxNo_F8                      ;$00D7DD | 4: Y speed 32-39
+    db !FlightMaxNo_F8                      ;$00D7DE | 5: Y speed 40-47
+    db !FlightMaxPartial_F4                 ;$00D7DF | 6: Y speed 48-55
+    db !FlightMaxNearFull_F0                ;$00D7E0 | 7: Y speed 56-63
+    db !FlightMaxFull_C8                    ;$00D7E1 | 8: Y speed 64-71
+    db $02                                  ;$00D7E2 | 9: Y speed 72-79, unreachable
+    db $01                                  ;$00D7E3 | A: Y speed 80-87, unreachable
 
-aerial_physics_00D7E4:
-    LDY.w FlightPhase_1407                  ;$00D7E4 |
-    BNE .CODE_00D824                        ;$00D7E7 |
-    LDA.b PlayerInAir_72                    ;$00D7E9 |
-    BEQ .CODE_00D811                        ;$00D7EB |
-    LDA.w CarryingFlagMirror_148F           ;$00D7ED |
-    ORA.w RidingYoshi_187A                  ;$00D7F0 |
-    ORA.w SpinJumpFlag_140D                 ;$00D7F3 |
-    BNE .CODE_00D811                        ;$00D7F6 |
-    LDA.w PlayerSlopePose_13ED              ;$00D7F8 |
-    BMI +                                   ;$00D7FB |\
-    BNE .CODE_00D811                        ;$00D7FD |/
-+   STZ.w PlayerSlopePose_13ED              ;$00D7FF |
-    LDX.b Powerup_19                        ;$00D802 |
-    CPX.b #$02                              ;$00D804 |
-    BNE .CODE_00D811                        ;$00D806 |
-    LDA.b PlayerYSpeed_7D                   ;$00D808 |
-    BMI .CODE_00D811                        ;$00D80A |
-    LDA.w TakeoffTimer_149F                 ;$00D80C |
-    BNE .CODE_00D814                        ;$00D80F |
-.CODE_00D811:
-    JMP .CODE_00D8CD
+flight_physics_00D7E4:
+    LDY.w FlightPhase_1407                  ;$00D7E4 |\
+    BNE .flying_physics_00D824              ;$00D7E7 || branch if flying
+    LDA.b PlayerInAir_72                    ;$00D7E9 |/
+    BEQ .not_starting_flight_00D811         ;$00D7EB |\ branch if not airborne
+    LDA.w CarryingFlagMirror_148F           ;$00D7ED ||
+    ORA.w RidingYoshi_187A                  ;$00D7F0 ||
+    ORA.w SpinJumpFlag_140D                 ;$00D7F3 ||
+    BNE .not_starting_flight_00D811         ;$00D7F6 ||
+    LDA.w PlayerSlopePose_13ED              ;$00D7F8 ||
+    BMI +                                   ;$00D7FB ||\ skip if landing from flying
+    BNE .not_starting_flight_00D811         ;$00D7FD ||/ branch if sliding by other means
++   STZ.w PlayerSlopePose_13ED              ;$00D7FF ||
+    LDX.b Powerup_19                        ;$00D802 ||
+    CPX.b #!PowerupCape_02                  ;$00D804 ||
+    BNE .not_starting_flight_00D811         ;$00D806 || branch 
+    LDA.b PlayerYSpeed_7D                   ;$00D808 ||
+    BMI .not_starting_flight_00D811         ;$00D80A ||
+    LDA.w TakeoffTimer_149F                 ;$00D80C ||
+    BNE .start_flying_00D814                ;$00D80F |/
+.not_starting_flight_00D811                 ;        |
+    JMP .CODE_00D8CD                        ;$00D811 |
 
-.CODE_00D814:
-    STZ.b PlayerIsDucking_73
-    LDA.b #$0B                              ;$00D816 |
+.start_flying_00D814
+    STZ.b PlayerIsDucking_73                ;$00D814 | cancel ducking
+    LDA.b #!InAirJump_0B                    ;$00D816 |
     STA.b PlayerInAir_72                    ;$00D818 |
     STZ.w MaxStageOfFlight_1409             ;$00D81A |
-    JSR CODE_00D94F                         ;$00D81D |
-    LDX.b #$02                              ;$00D820 |
+    JSR update_max_flight_stage_00D94F      ;$00D81D |
+    LDX.b #!FlyActionNeutral_02             ;$00D820 |
     BRA .CODE_00D85B                        ;$00D822 |
 
-.CODE_00D824:
-    CPY.b #$02
+.flying_physics_00D824
+    CPY.b #!FlightGlideLevel_02
     BCC +                                   ;$00D826 |\
-    JSR CODE_00D94F                         ;$00D828 |/
-+   LDX.w NextFlightPhase_1408              ;$00D82B |
-    CPX.b #$04                              ;$00D82E |
-    BEQ .CODE_00D856                        ;$00D830 |
-    LDX.b #$03                              ;$00D832 |
+    JSR update_max_flight_stage_00D94F      ;$00D828 |/
++   LDX.w NextFlightAction_1408             ;$00D82B |
+    CPX.b #!FlyActionCancel_04              ;$00D82E |
+    BEQ ..CODE_00D856                       ;$00D830 |
+    LDX.b #!FlyActionRise_03                ;$00D832 |
     LDY.b PlayerYSpeed_7D                   ;$00D834 |
-    BMI .CODE_00D856                        ;$00D836 |
+    BMI ..CODE_00D856                       ;$00D836 |
     LDA.b byetudlrHold_15                   ;$00D838 |
-    AND.b #!HeldSides_03                    ;$00D83A |
+    AND.b #!HeldSides_03                    ;$00D83A | A: NextFlightAction_1408
     TAY                                     ;$00D83C |
-    BNE .CODE_00D849                        ;$00D83D |
+    BNE ..CODE_00D849                       ;$00D83D |
     LDA.w FlightPhase_1407                  ;$00D83F |
-    CMP.b #$04                              ;$00D842 |
-    BCS .CODE_00D856                        ;$00D844 |
+    CMP.b #!FlightSinkMore_04               ;$00D842 |
+    BCS ..CODE_00D856                       ;$00D844 |
     DEX                                     ;$00D846 |
-    BRA .CODE_00D856                        ;$00D847 |
+    BRA ..CODE_00D856                       ;$00D847 |
 
-.CODE_00D849:
+..CODE_00D849
     LSR
     LDY.b PlayerDir_76                      ;$00D84A |
     BEQ +                                   ;$00D84C |\
     EOR.b #$01                              ;$00D84E |/
 +   TAX                                     ;$00D850 |
-    CPX.w NextFlightPhase_1408              ;$00D851 |
+    CPX.w NextFlightAction_1408             ;$00D851 |
     BNE .CODE_00D85B                        ;$00D854 |
-.CODE_00D856:
-    LDA.w CapePumpTimer_14A4
+..CODE_00D856                               ;        |
+    LDA.w CapePumpTimer_14A4                ;$00D856 |
     BNE .CODE_00D87E                        ;$00D859 |
-.CODE_00D85B:
-    BIT.b byetudlrHold_15
+.CODE_00D85B:                               ;        |
+    BIT.b byetudlrHold_15                   ;$00D85B |
     BVS +                                   ;$00D85D |\
-    LDX.b #$04                              ;$00D85F |/
+    LDX.b #!FlyActionCancel_04              ;$00D85F |/
 +   LDA.w FlightPhase_1407                  ;$00D861 |
-    CMP.w DATA_00D7D4,X                     ;$00D864 |
-    BEQ .CODE_00D87E                        ;$00D867 |
-    CLC                                     ;$00D869 |
-    ADC.w CapeSpeed,X                       ;$00D86A |
-    STA.w FlightPhase_1407                  ;$00D86D |
-    LDA.b #$08                              ;$00D870 |
-    LDY.w MaxStageOfFlight_1409             ;$00D872 |
-    CPY.b #$C8                              ;$00D875 |
-    BNE +                                   ;$00D877 |\
-    LDA.b #$02                              ;$00D879 |/
-+   STA.w CapePumpTimer_14A4                ;$00D87B |
-.CODE_00D87E:
-    STX.w NextFlightPhase_1408
+    CMP.w flight_phases_00D7D4,X            ;$00D864 |
+    BEQ .CODE_00D87E                        ;$00D867 |\
+    CLC                                     ;$00D869 ||
+    ADC.w CapeSpeed,X                       ;$00D86A ||
+    STA.w FlightPhase_1407                  ;$00D86D ||
+    LDA.b #$08                              ;$00D870 ||
+    LDY.w MaxStageOfFlight_1409             ;$00D872 ||
+    CPY.b #!FlightMaxFull_C8                ;$00D875 ||
+    BNE +                                   ;$00D877 ||\
+    LDA.b #$02                              ;$00D879 ||/
++   STA.w CapePumpTimer_14A4                ;$00D87B |/
+.CODE_00D87E
+    STX.w NextFlightAction_1408
     LDY.w FlightPhase_1407                  ;$00D881 |
     BEQ .CODE_00D8CD                        ;$00D884 |
     LDA.b PlayerYSpeed_7D                   ;$00D886 |
-    BPL .CODE_00D892                        ;$00D888 |
-    CMP.b #$C8                              ;$00D88A |
-    BCS .CODE_00D89A                        ;$00D88C |
-    LDA.b #$C8                              ;$00D88E |
-    BRA .CODE_00D89A                        ;$00D890 |
+    BPL ..CODE_00D892                       ;$00D888 |
+    CMP.b #!FlightMaxFull_C8                ;$00D88A |
+    BCS ..CODE_00D89A                       ;$00D88C |
+    LDA.b #!FlightMaxFull_C8                ;$00D88E |
+    BRA ..CODE_00D89A                       ;$00D890 |
 
-.CODE_00D892:
+..CODE_00D892
     CMP.w DATA_00D7C8,Y
-    BCC .CODE_00D89A                        ;$00D895 |
+    BCC ..CODE_00D89A                       ;$00D895 |
     LDA.w DATA_00D7C8,Y                     ;$00D897 |
-.CODE_00D89A:
+..CODE_00D89A
     PHA
     CPY.b #$01                              ;$00D89B |
-    BNE .CODE_00D8C6                        ;$00D89D |
+    BNE ..CODE_00D8C6                       ;$00D89D |
     LDX.w MaxStageOfFlight_1409             ;$00D89F |
-    BEQ .CODE_00D8C4                        ;$00D8A2 |
+    BEQ ..CODE_00D8C4                       ;$00D8A2 |
     LDA.b PlayerYSpeed_7D                   ;$00D8A4 |
-    BMI .CODE_00D8AF                        ;$00D8A6 |
+    BMI ..CODE_00D8AF                       ;$00D8A6 |
     LDA.b #$09                              ;$00D8A8 |
     STA.w SPCIO0_1DF9                       ;$00D8AA |
-    BRA .CODE_00D8B9                        ;$00D8AD |
+    BRA ..CODE_00D8B9                       ;$00D8AD |
 
-.CODE_00D8AF:
+..CODE_00D8AF
     CMP.w MaxStageOfFlight_1409
-    BCS .CODE_00D8B9                        ;$00D8B2 |
+    BCS ..CODE_00D8B9                       ;$00D8B2 |
     STX.b PlayerYSpeed_7D                   ;$00D8B4 |
     STZ.w MaxStageOfFlight_1409             ;$00D8B6 |
-.CODE_00D8B9:
+..CODE_00D8B9:
     LDX.b PlayerDir_76                      ;$00D8B9 |
     LDA.b PlayerXSpeed_7B                   ;$00D8BB |
-    BEQ .CODE_00D8C4                        ;$00D8BD |
+    BEQ ..CODE_00D8C4                       ;$00D8BD |
     EOR.w DATA_00D535,X                     ;$00D8BF |
-    BPL .CODE_00D8C6                        ;$00D8C2 |
-.CODE_00D8C4:
+    BPL ..CODE_00D8C6                       ;$00D8C2 |
+..CODE_00D8C4
     LDY.b #$02
-.CODE_00D8C6:
+..CODE_00D8C6
     PLA
     INY                                     ;$00D8C7 |
     INY                                     ;$00D8C8 |
@@ -9605,22 +9617,20 @@ set_player_y_speed_CODE_00D94C:
     STA.b PlayerYSpeed_7D
     RTS                                     ;$00D94E |
 
-CODE_00D94F:
+update_max_flight_stage_00D94F:
     STZ.w Unused_140A
     LDA.b PlayerYSpeed_7D                   ;$00D952 |
-    BPL .CODE_00D958                        ;$00D954 |
-    LDA.b #$00                              ;$00D956 |
-.CODE_00D958:
-    LSR
+    BPL +                                   ;$00D954 |\
+    LDA.b #$00                              ;$00D956 |/
++   LSR                                     ;$00D958 |
     LSR                                     ;$00D959 |
     LSR                                     ;$00D95A |
     TAY                                     ;$00D95B |
-    LDA.w DATA_00D7D9,Y                     ;$00D95C |
+    LDA.w max_stage_flight_00D7D9,Y         ;$00D95C |
     CMP.w MaxStageOfFlight_1409             ;$00D95F |
-    BPL .Return00D967                       ;$00D962 |
-    STA.w MaxStageOfFlight_1409             ;$00D964 |
-.Return00D967:
-    RTS
+    BPL +                                   ;$00D962 |\ skip if new flight stage is not further
+    STA.w MaxStageOfFlight_1409             ;$00D964 |/
++   RTS                                     ;$00D967 |
 
 decrement_pmeter_00D968:
     LDY.b #$00
@@ -11678,7 +11688,7 @@ foot_on_solid_tile_or_sprite_00EEE1:
 ..check_fkight_landing_00EF99
     STZ.w SpriteStompCounter_1697
     STZ.w FlightPhase_1407                  ;$00EF9C |
-    CPY.b #$05                              ;$00EF9F |
+    CPY.b #!FlightDownInitial_05            ;$00EF9F |
     BCS ..try_call_ground_pound_00EFAE      ;$00EFA1 |
     LDA.b Powerup_19                        ;$00EFA3 |
     CMP.b #!PowerupCape_02                  ;$00EFA5 |
