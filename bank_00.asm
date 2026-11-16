@@ -7801,18 +7801,18 @@ ending_normal_level_00C96B:
     LDA.b #$05                              ;$00C980 || while disabling other $15 held inputs
     STA.b PlayerXSpeed_7B                   ;$00C982 |/
 +   LDA.b PlayerInAir_72                    ;$00C984 |
-    BEQ +                                   ;$00C986 |\
-    JSR CODE_00D76B                         ;$00C988 |/
+    BEQ +                                   ;$00C986 |\ skip if not airborne
+    JSR reduce_x_speed_00D76B               ;$00C988 |/
 +   LDA.b PlayerXSpeed_7B                   ;$00C98B |
-    BNE +                                   ;$00C98D |
-    STZ.w HorizLayer1Setting_1411           ;$00C98F |
-    JSR CODE_00CA3E                         ;$00C992 |
-    INC.w ShowPeaceSign_1B99                ;$00C995 |
-    LDA.b #$40                              ;$00C998 |
-    STA.w PlayerPeaceSign_1492              ;$00C99A |
-    ASL                                     ;$00C99D |
-    STA.w ColorFadeDir_1494                 ;$00C99E |
-    STZ.w ColorFadeTimer_1495               ;$00C9A1 |
+    BNE +                                   ;$00C98D |\ skip if player has X speed
+    STZ.w HorizLayer1Setting_1411           ;$00C98F ||
+    JSR CODE_00CA3E                         ;$00C992 ||
+    INC.w ShowPeaceSign_1B99                ;$00C995 ||
+    LDA.b #$40                              ;$00C998 ||
+    STA.w PlayerPeaceSign_1492              ;$00C99A ||
+    ASL                                     ;$00C99D ||
+    STA.w ColorFadeDir_1494                 ;$00C99E ||
+    STZ.w ColorFadeTimer_1495               ;$00C9A1 |/
 +   JMP no_special_collision                ;$00C9A4 |
 
 levels_with_cutscene_00C9A7:
@@ -9012,25 +9012,26 @@ CODE_00D2B2:
 player_jump_speeds_00D2BD:
     db $B0,$B6,$AE,$B4,$AB,$B2,$A9,$B0
     db $A6,$AE,$A4,$AB,$A1,$A9,$9F,$A6
-DATA_00D2CD:
-    db $00,$FF,$00,$01,$00,$FF,$00,$01
-    db $00,$FF,$00,$01,$80,$FE,$C0,$00
-    db $40,$FF,$80,$01,$00,$FE,$40,$00
-    db $C0,$FF,$00,$02,$00,$FE,$40,$00
-    db $00,$FE,$40,$00,$C0,$FF,$00,$02
-    db $C0,$FF,$00,$02,$00,$FC,$00,$FF
-    db $00,$01,$00,$04,$00,$FF,$00,$01
-    db $00,$FF,$00,$01
 
-DATA_00D309:
-    db $E0,$FF,$20,$00,$E0,$FF,$20,$00
-    db $E0,$FF,$20,$00,$C0,$FF,$20,$00
-    db $E0,$FF,$40,$00,$80,$FF,$20,$00
-    db $E0,$FF,$80,$00,$80,$FF,$20,$00
-    db $80,$FF,$20,$00,$E0,$FF,$80,$00
-    db $E0,$FF,$80,$00,$00,$FE,$80,$FF
-    db $80,$00,$00,$02,$00,$FF,$00,$01
-    db $00,$FF,$00,$01
+x_speed_decel_00D309:
+    dw $FF00,$0100,$FF00,$0100
+    dw $FF00,$0100,$FE80,$00C0
+    dw $FF40,$0180,$FE00,$0040
+    dw $FFC0,$0200,$FE00,$0040
+    dw $FE00,$0040,$FFC0,$0200
+    dw $FFC0,$0200,$FC00,$FF00
+    dw $0100,$0400,$FF00,$0100
+    dw $FF00,$0100
+
+swim_x_speed_decel_00D309:
+    dw $FFE0,$0020,$FFE0,$0020
+    dw $FFE0,$0020,$FFC0,$0020
+    dw $FFE0,$0040,$FF80,$0020
+    dw $FFE0,$0080,$FF80,$0020
+    dw $FF80,$0020,$FFE0,$0080
+    dw $FFE0,$0080,$FE00,$FF80
+    dw $0080,$0200,$FF00,$0100
+    dw $FF00,$0100
 
 MarioAccel:
     db $80
@@ -9121,17 +9122,15 @@ DATA_00D535:
     db $D8,$28,$D4,$2C,$D0,$30,$D0,$D0
     db $30,$30,$E0,$20
 
-DATA_00D5C9:
-    db $00
+slope_x_speed_adjust_00D5C9:
+    dw $0000,$0000,$0000,$0000
+    dw $0000,$F000,$1000,$0000
+    dw $0000,$0000,$0000,$E000
+    dw $2000,$0000,$0000,$F000
+    dw $F800
 
-DATA_00D5CA:
-    db $00,$00,$00,$00,$00,$00,$00,$00
-    db $00,$00,$F0,$00,$10,$00,$00,$00
-    db $00,$00,$00,$00,$00,$00,$E0,$00
-    db $20,$00,$00,$00,$00,$00,$F0,$00
-    db $F8
-
-DATA_00D5EB:
+print "Current PC: $", pc
+pmeter_incrementer_00D5EB:
     db $FF,$FF,$02
 
 recoil_while_flying_00D5EE:
@@ -9259,7 +9258,7 @@ land_physics_00D5F2:
     ASL                                     ;$00D6CE |
     ORA.w SlopeType_13E1                    ;$00D6CF |
     TAX                                     ;$00D6D2 |
-    BRA ..process_slope_air_00D713          ;$00D6D3 |
+    BRA ..process_slope_in_air_00D713       ;$00D6D3 | process cape recoil like a slope
 
 ..not_flying_00D6D5
     LDY.b PlayerDir_76                      ;$00D6D5 |
@@ -9274,17 +9273,17 @@ land_physics_00D5F2:
 ...instant_rotate_00D6EA                    ;        ||
     STA.b PlayerDir_76                      ;$00D6EA ||
 ...skip_rotate_00D6EC                       ;        |/
-    STA $01                                 ;$00D6EC |
+    STA $01                                 ;$00D6EC | save slope acceleration index
     ASL                                     ;$00D6EE |
-    ASL                                     ;$00D6EF |
-    ORA.w SlopeType_13E1                    ;$00D6F0 |
+    ASL                                     ;$00D6EF | multiply index by 4
+    ORA.w SlopeType_13E1                    ;$00D6F0 | add slope type to index
     TAX                                     ;$00D6F3 |
     LDA.b PlayerXSpeed_7B                   ;$00D6F4 |
-    BEQ ..process_slope_air_00D713          ;$00D6F6 |
-    EOR.w MarioAccel2,X                     ;$00D6F8 |
-    BPL ..process_slope_air_00D713          ;$00D6FB |
-    LDA.w SkidTurnTimer_14A1                ;$00D6FD |
-    BNE ..process_slope_air_00D713          ;$00D700 |
+    BEQ ..process_slope_in_air_00D713       ;$00D6F6 |\ branch if player has no X speed
+    EOR.w MarioAccel2,X                     ;$00D6F8 || branch if X speed and slope acceleration
+    BPL ..process_slope_in_air_00D713       ;$00D6FB || have the same sign
+    LDA.w SkidTurnTimer_14A1                ;$00D6FD ||
+    BNE ..process_slope_in_air_00D713       ;$00D700 |/ branch if skid-turn timer is active
     LDA.b LevelIsSlippery_86                ;$00D702 |
     BNE +                                   ;$00D704 |\ skip if non-slippery
     LDA.b #$0D                              ;$00D706 ||
@@ -9294,7 +9293,7 @@ land_physics_00D5F2:
     CLC                                     ;$00D70F |
     ADC.b #$90                              ;$00D710 |
     TAX                                     ;$00D712 |
-..process_slope_air_00D713                  ;        |
+..process_slope_in_air_00D713               ;        |
     LDY.b #$00                              ;$00D713 | Y: 0/1 = decrement P-Meter; 2 = increment P-Meter
     BIT.b byetudlrHold_15                   ;$00D715 |
     BVC ...decrement_pmeter_00D737          ;$00D717 | branch if not holding X or Y
@@ -9329,9 +9328,9 @@ player_slope_physics_00D742:
     LDA.b PlayerXSpeed_7B
     SEC                                     ;$00D744 |
     SBC.w DATA_00D535,Y                     ;$00D745 |
-    BEQ CODE_00D76B                         ;$00D748 |
+    BEQ reduce_x_speed_00D76B               ;$00D748 |
     EOR.w DATA_00D535,Y                     ;$00D74A |
-    BPL CODE_00D76B                         ;$00D74D |
+    BPL reduce_x_speed_00D76B               ;$00D74D |
     REP #$20                                ;$00D74F | A->16
     LDA.w MarioAccel,X                      ;$00D751 |
     LDY.b LevelIsSlippery_86                ;$00D754 |
@@ -9341,56 +9340,48 @@ player_slope_physics_00D742:
     LDA.w DATA_00D43D,X                     ;$00D75C |/
 +   CLC                                     ;$00D75F |
     ADC.b PlayerXSubpeed_7A                 ;$00D760 |
-    BRA CODE_00D7A0                         ;$00D762 |
+    BRA set_x_speed_return_00D7A0           ;$00D762 |
 
 air_without_takeoff_physics_00D764:
     JSR decrement_pmeter_00D968
     LDA.b PlayerInAir_72                    ;$00D767 |
-    BNE Return00D7A4                        ;$00D769 |
-CODE_00D76B: ;; FIXME routine
+    BNE return_00D7A4                       ;$00D769 | return if Mario is airborne
+reduce_x_speed_00D76B:
     LDA.w SlopeType_13E1
     LSR                                     ;$00D76E |
-    TAY                                     ;$00D76F |
+    TAY                                     ;$00D76F | Y: slope type and acceleration direction
     LSR                                     ;$00D770 |
-    TAX                                     ;$00D771 |
-CODE_00D772:
+    TAX                                     ;$00D771 | X: slope-dependent speed limit index
+reduce_x_speed_in_water_00D772:
     LDA.b PlayerXSpeed_7B
     SEC                                     ;$00D774 |
-    SBC.w DATA_00D5CA,X                     ;$00D775 |
-    BPL CODE_00D77C                         ;$00D778 |
-    INY                                     ;$00D77A |
-    INY                                     ;$00D77B |
-CODE_00D77C:
-    LDA.w EndLevelTimer_1493
+    SBC.w slope_x_speed_adjust_00D5C9+1,X   ;$00D775 | subtract slope-dependent speed adjustment
+    BPL +                                   ;$00D778 |\ skip if X speed is at least the table value
+    INY                                     ;$00D77A || adjust Y to select opposite acceleration direction
+    INY                                     ;$00D77B |/
++   LDA.w EndLevelTimer_1493                ;$00D77C |
     ORA.b PlayerInAir_72                    ;$00D77F |
     REP #$20                                ;$00D781 | A->16
-    BNE CODE_00D78C                         ;$00D783 |
-    LDA.w DATA_00D309,Y                     ;$00D785 |
-    BIT.b LevelIsWater_85                   ;$00D788 |
-    BMI CODE_00D78F                         ;$00D78A |
-CODE_00D78C:
-    LDA.w DATA_00D2CD,Y
-CODE_00D78F:
-    CLC
+    BNE +                                   ;$00D783 |\ skip if level-ending or airborne
+    LDA.w swim_x_speed_decel_00D309,Y       ;$00D785 ||\ water-specific acceleration:
+    BIT.b LevelIsWater_85                   ;$00D788 |||
+    BMI ++                                  ;$00D78A ||/ branch if level is underwater
++   LDA.w x_speed_decel_00D309,Y            ;$00D78C |/
+++  CLC                                     ;$00D78F |
     ADC.b PlayerXSpeed_7A                   ;$00D790 |
     STA.b PlayerXSpeed_7A                   ;$00D792 |
     SEC                                     ;$00D794 |
-    SBC.w DATA_00D5C9,X                     ;$00D795 |
-    EOR.w DATA_00D2CD,Y                     ;$00D798 |
-    BMI CODE_00D7A2                         ;$00D79B |
-    LDA.w DATA_00D5C9,X                     ;$00D79D |
-CODE_00D7A0:
-    STA.b PlayerXSpeed_7A
-CODE_00D7A2:
-    SEP #$20                                ;$00D7A2 | A->8
-Return00D7A4:
+    SBC.w slope_x_speed_adjust_00D5C9,X     ;$00D795 | subtract slope-dependent speed limit
+    EOR.w x_speed_decel_00D309,Y            ;$00D798 | compare result against acceleration direction
+    BMI +                                   ;$00D79B |\ skip if speed has not reached the limit
+    LDA.w slope_x_speed_adjust_00D5C9,X     ;$00D79D ||
+set_x_speed_return_00D7A0:                  ;        ||
+    STA.b PlayerXSpeed_7A                   ;$00D7A0 |/ clamp X speed to maximum
++   SEP #$20                                ;$00D7A2 | A->8
+return_00D7A4:
     RTS
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;FIXME delete me
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-player_y_speed_adder_00D7A5:
+player_y_speed_address_00D7A5:
     db $06,$03,$04,$10,$F4,$01,$03,$04
     db $05,$06
 
@@ -9609,7 +9600,7 @@ CODE_00D930:
     STX.b PlayerInAir_72                    ;$00D946 |
 add_y_speed_00D948:
     CLC
-    ADC.w player_y_speed_adder_00D7A5,Y     ;$00D949 |
+    ADC.w player_y_speed_address_00D7A5,Y   ;$00D949 |
 set_player_y_speed_CODE_00D94C:
     STA.b PlayerYSpeed_7D
     RTS                                     ;$00D94E |
@@ -9636,12 +9627,12 @@ decrement_pmeter_00D968:
 update_pmeter_00D96A:
     LDA.w PlayerPMeter_13E4
     CLC                                     ;$00D96D |
-    ADC.w DATA_00D5EB,Y                     ;$00D96E |
-    BPL +                                   ;$00D971 |\
-    LDA.b #$00                              ;$00D973 |/
+    ADC.w pmeter_incrementer_00D5EB,Y       ;$00D96E |
+    BPL +                                   ;$00D971 |\ if P-Meter becomes negative
+    LDA.b #$00                              ;$00D973 |/  make it zero
 +   CMP.b #$70                              ;$00D975 |
-    BCC +                                   ;$00D977 |\
-    INY                                     ;$00D979 ||
+    BCC +                                   ;$00D977 |\ if P-Meter exceeds maximum possible
+    INY                                     ;$00D979 ||  clamp it to the maximum
     LDA.b #$70                              ;$00D97A |/
 +   STA.w PlayerPMeter_13E4                 ;$00D97C |
     RTS                                     ;$00D97F |
@@ -9798,14 +9789,13 @@ water_physics_00D988:
     LDY.b #$00
     TYX                                     ;$00DA6B |
     LDA.w Layer3TideSetting_1403            ;$00DA6C |
-    BEQ .CODE_00DA79                        ;$00DA6F |
-    LDX.b #$1E                              ;$00DA71 |
-    LDA.b PlayerInAir_72                    ;$00DA73 |
-    BNE .CODE_00DA79                        ;$00DA75 |
-    INX                                     ;$00DA77 |
-    INX                                     ;$00DA78 |
-.CODE_00DA79:
-    JSR CODE_00D772
+    BEQ +                                   ;$00DA6F |\
+    LDX.b #$1E                              ;$00DA71 ||
+    LDA.b PlayerInAir_72                    ;$00DA73 ||
+    BNE +                                   ;$00DA75 ||
+    INX                                     ;$00DA77 ||
+    INX                                     ;$00DA78 |/
++   JSR reduce_x_speed_in_water_00D772      ;$00DA79 |
 .CODE_00DA7C:
     JSR powerup_physics_00D062
     JSL set_player_pose_00CEB1              ;$00DA7F |
