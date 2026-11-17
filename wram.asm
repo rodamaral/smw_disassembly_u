@@ -1644,7 +1644,7 @@ NextFlightAction_1408: skip 1 ;done
 !FlyActionRise_03 = $03
 !FlyActionCancel_04 = $04
 
-MaxStageOfFlight_1409: skip 1 ;done
+AccumulatedFlightYSpeed_1409: skip 1 ;done
 ; Valid values
 !FlightMax_00 = $00
 !FlightMaxNo_F8 = $F8
