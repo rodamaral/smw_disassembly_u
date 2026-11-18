@@ -7602,7 +7602,7 @@ CODE_00C73F:
     LDA.w DATA_00C5E1-7,Y                   ;$00C7EA |
     STA.w PlayerPose_13E0                   ;$00C7ED |
     STZ.w CarryingFlagMirror_148F           ;$00C7F0 |
-    JSR flight_physics_00D7E4               ;$00C7F3 |
+    JSR flight_and_air_physics_00D7E4       ;$00C7F3 |
 .CODE_00C7F6
     DEC.b CutsceneInputTimer_88
 .return_00C7F8
@@ -7615,7 +7615,7 @@ yoshi_wings_animation:
     JSR disable_controls
     LDA.b #$0B                              ;$00C800 |
     STA.b PlayerInAir_72                    ;$00C802 |
-    JSR flight_physics_00D7E4               ;$00C804 |
+    JSR flight_and_air_physics_00D7E4       ;$00C804 |
     LDA.b PlayerYSpeed_7D                   ;$00C807 |
     BPL +                                   ;$00C809 |\
     CMP.b #$90                              ;$00C80B || decrement Y speed by 14
@@ -8255,7 +8255,7 @@ apply_player_physics_00CD39:                ;        |
 use_land_physics_00CD82:
     JSR land_physics_00D5F2                 ;$00CD82 |
     JSR powerup_physics_00D062              ;$00CD85 |
-    JSR flight_physics_00D7E4               ;$00CD88 |
+    JSR flight_and_air_physics_00D7E4       ;$00CD88 |
 set_player_yoshi_poses_00CD8B:
     JSL set_player_pose_00CEB1
 set_yoshi_pose_if_mounted_00CD8F:
@@ -9382,34 +9382,46 @@ return_00D7A4:
 phase_speed_incrementer_00D7A5:
     db $06,$03                              ;$00D7A5 | 0-1: not flying
     db $04                                  ;$00D7A7 | 2: Yoshi Wings
-    db $10                                  ;$00D7A8 | 3: ???
-    db $F4                                  ;$00D7A9 | 4: flight going up
+    db $10                                  ;$00D7A8 | 3: NOTE: unreachable?
+    db $F4                                  ;$00D7A9 | 4: flight rising, acelerates upward
     db $01,$03,$04,$05,$06                  ;$00D7AA | 5-9: flight phases
 
 phase_max_y_speed_00D7AF:
-    db $40,$40                              ;$00D7A5 | 0-1: not flying
-    db $20                                  ;$00D7A7 | 2: Yoshi Wings
-    db $40                                  ;$00D7A8 | 3: ???
-    db $40                                  ;$00D7A9 | 4: flight going up
-    db $40,$40,$40,$40,$40                  ;$00D7AA | 5-9: flight phases
+    db $40,$40                              ;$00D7AF | 0-1: not flying
+    db $20                                  ;$00D7B1 | 2: Yoshi Wings
+    db $40                                  ;$00D7B2 | 3: NOTE: unreachable?
+    db $40                                  ;$00D7B3 | 4: flight rising
+    db $40,$40,$40,$40,$40                  ;$00D7B4 | 5-9: flight phases
 
-DATA_00D7B9:
+air_max_y_speed_00D7B9:
     db $10,$C8,$E0,$02,$03,$03,$04,$03
     db $02,$00,$01,$00,$00,$00,$00
 
+; Indexed by FlightPhase_1407
 flight_y_speed_limits_00D7C8:
-    db $01,$10,$30,$30,$38,$38,$40
+    db $01                                  ;$00D7C8 | 0: Not gliding
+    db $10                                  ;$00D7C9 | 1: Gliding, rising
+    db $30                                  ;$00D7CA | 2: Gliding, staying on level
+    db $30                                  ;$00D7CB | 3: Gliding, sinking a little
+    db $38                                  ;$00D7CC | 4: Gliding, sinking more
+    db $38                                  ;$00D7CD | 5: Swooping down, initial phase
+    db $40                                  ;$00D7CE | 6: Swooping down, fast
 
-; indexed by NextFlightAction_1408
+; Indexed by NextFlightAction_1408
+; Values are added to the current FlightPhase_1407 to compute the next flight phase
 flight_phase_increments_00D7CF:
-    db $FF,$01,$01,$FF,$FF
+    db $FF                                  ;$00D7CF | 0: Make player rise
+    db $01                                  ;$00D7D0 | 1: Make player sink (eventually swoop down)
+    db $01                                  ;$00D7D1 | 2: Holding off left/right button, make player sink, but not swoop down
+    db $FF                                  ;$00D7D2 | 3: Holding off left/right button, swooping down, make player sink less
+    db $FF                                  ;$00D7D3 | 4: Holding off left/right and X/Y buttons, terminate cape gliding
 
 flight_phases_00D7D4:
-    db !FlightGlideRise_01                  ;$00D7D4 | 0
-    db !FlightDownFast_06                   ;$00D7D5 | 1
-    db !FlightSink_03                       ;$00D7D6 | 2
-    db !FlightGlideRise_01                  ;$00D7D7 | 3
-    db !FlightNo_00                         ;$00D7D8 | 4
+    db !FlightGlideRise_01                  ;$00D7D4 |  0: Make player rise
+    db !FlightDownFast_06                   ;$00D7D5 |  1: Make player sink (eventually swoop down)
+    db !FlightSink_03                       ;$00D7D6 |  2: Holding off left/right button, make player sink, but not swoop down
+    db !FlightGlideRise_01                  ;$00D7D7 |  3: Holding off left/right button, swooping down, make player sink less
+    db !FlightNo_00                         ;$00D7D8 |  4: Holding off left/right and X/Y buttons, terminate cape gliding
 
 accumulated_air_speeds_00D7D9:
     db !FlightMax_00                        ;$00D7D9 | 0: Y speed 0-7
@@ -9424,8 +9436,7 @@ accumulated_air_speeds_00D7D9:
     db $02                                  ;$00D7E2 | 9: Y speed 72-79, unreachable
     db $01                                  ;$00D7E3 | A: Y speed 80-87, unreachable
 
-; TODO: make it clear to include the Y speed calculation in this label
-flight_physics_00D7E4:
+flight_and_air_physics_00D7E4:
     LDY.w FlightPhase_1407                  ;$00D7E4 |\
     BNE .flying_physics_00D824              ;$00D7E7 || branch if flying
     LDA.b PlayerInAir_72                    ;$00D7E9 |/
@@ -9481,32 +9492,32 @@ flight_physics_00D7E4:
     LSR
     LDY.b PlayerDir_76                      ;$00D84A |
     BEQ +                                   ;$00D84C |\ compare held side with direction
-    EOR.b #$01                              ;$00D84E |/
+    EOR.b #!FlyActionDive_01                ;$00D84E |/
 +   TAX                                     ;$00D850 | X: $00 = opposite direction, $01 = same direction
     CPX.w NextFlightAction_1408             ;$00D851 |
     BNE .check_holding_XY_00D85B            ;$00D854 | branch if held side does not match the selected flight action
 ..check_pump_timer_00D856                   ;        | fallthrough if held side matches the selected flight action
     LDA.w CapePumpTimer_14A4                ;$00D856 | branch if has pump timer
-    BNE .set_next_flight_action_00D87E      ;$00D859 | NOTE: during this time it is possible to release X/Y without losing flight
+    BNE .handle_flight_phase_00D87E         ;$00D859 | NOTE: during this time it is possible to release X/Y without losing flight
 .check_holding_XY_00D85B:                   ;        |
     BIT.b byetudlrHold_15                   ;$00D85B |
     BVS +                                   ;$00D85D |\ skip if holding X or Y
     LDX.b #!FlyActionCancel_04              ;$00D85F |/ otherwise, cancel flight
 +   LDA.w FlightPhase_1407                  ;$00D861 |
     CMP.w flight_phases_00D7D4,X            ;$00D864 | check whether a new phase is starting
-    BEQ .set_next_flight_action_00D87E      ;$00D867 |\ skip if flight phase remains the same
-    CLC                                     ;$00D869 ||
-    ADC.w flight_phase_increments_00D7CF,X  ;$00D86A || set new phase in accordance to the ;;;
+    BEQ .handle_flight_phase_00D87E         ;$00D867 |\ skip if flight phase remains the same
+    CLC                                     ;$00D869 || flight phase is changing:
+    ADC.w flight_phase_increments_00D7CF,X  ;$00D86A || set new phase from previous one and action
     STA.w FlightPhase_1407                  ;$00D86D ||
-    LDA.b #$08                              ;$00D870 ||
+    LDA.b #$08                              ;$00D870 || set new pump timer for this phase
     LDY.w AccumulatedFlightYSpeed_1409      ;$00D872 ||
     CPY.b #!FlightMaxFull_C8                ;$00D875 ||
     BNE +                                   ;$00D877 ||\ skip if maximum air has not been accumulated
     LDA.b #$02                              ;$00D879 ||/ shorten the slowdown phase duration when maximum air has been accumulated
 +   STA.w CapePumpTimer_14A4                ;$00D87B |/
-.set_next_flight_action_00D87E
+.handle_flight_phase_00D87E   
     STX.w NextFlightAction_1408
-    LDY.w FlightPhase_1407                  ;$00D881 | Y: index for y speed incrementer ;;;
+    LDY.w FlightPhase_1407                  ;$00D881 | Y: index for the Y speed incrementer $D7A5
     BEQ .non_flight_air_physics_00D8CD      ;$00D884 |\ branch flying is canceled
     LDA.b PlayerYSpeed_7D                   ;$00D886 ||
     BPL ..limit_downward_speed_00D892       ;$00D888 || branch if not going upward
@@ -9521,10 +9532,10 @@ flight_physics_00D7E4:
     LDA.w flight_y_speed_limits_00D7C8,Y    ;$00D897 |/ otherwise, cap downward speed at the phase limit
 ..phase_y_speed_limit_00D89A                ;        |
     PHA                                     ;$00D89A | push Y speed
-    CPY.b #$01                              ;$00D89B |
-    BNE ..fast_flight_fall_00D8C6           ;$00D89D |\ branch if not phase 1
-    LDX.w AccumulatedFlightYSpeed_1409      ;$00D89F || gliding/rising:
-    BEQ ..slow_flight_fall_00D8C4           ;$00D8A2 || branch if has not accumulated any air
+    CPY.b #!FlightGlideRise_01              ;$00D89B |
+    BNE ..fast_flight_fall_00D8C6           ;$00D89D |\ branch if phase > 1
+    LDX.w AccumulatedFlightYSpeed_1409      ;$00D89F || Phase 1 (rising):
+    BEQ ..act_like_phase_2_00D8C4           ;$00D8A2 || branch if has not accumulated any air
     LDA.b PlayerYSpeed_7D                   ;$00D8A4 ||
     BMI ..upward_flight_00D8AF              ;$00D8A6 ||\ branch if going upward
     LDA.b #$09                              ;$00D8A8 ||| going downward in phase 1:
@@ -9534,85 +9545,74 @@ flight_physics_00D7E4:
 ..upward_flight_00D8AF
     CMP.w AccumulatedFlightYSpeed_1409
     BCS ..check_horizontal_direction_00D8B9 ;$00D8B2 |\ skip if upward speed is not below the maximum flight stage
-    STX.b PlayerYSpeed_7D                   ;$00D8B4 || otherwise, apply accumulated air to Y speed
-    STZ.w AccumulatedFlightYSpeed_1409      ;$00D8B6 |/
+    STX.b PlayerYSpeed_7D                   ;$00D8B4 || NOTE: redundant; overwritten by the STA at $D94B before $7D is read
+    STZ.w AccumulatedFlightYSpeed_1409      ;$00D8B6 |/ discard accumulated air speed
 ..check_horizontal_direction_00D8B9
     LDX.b PlayerDir_76                      ;$00D8B9 |
     LDA.b PlayerXSpeed_7B                   ;$00D8BB |
-    BEQ ..slow_flight_fall_00D8C4           ;$00D8BD |\ skip if X speed is zero
-    EOR.w DATA_00D535,X                     ;$00D8BF || FIXME: db $EC;$14
+    BEQ ..act_like_phase_2_00D8C4           ;$00D8BD |\ skip if X speed is zero
+    EOR.w DATA_00D535,X                     ;$00D8BF ||
     BPL ..fast_flight_fall_00D8C6           ;$00D8C2 |/ branch if X speed is aligned with facing direction
-..slow_flight_fall_00D8C4                   ;        |
-    LDY.b #$02                              ;$00D8C4 | 02+3: Yoshi Wings fall
-..fast_flight_fall_00D8C6                   ;        | Y:00-06
+..act_like_phase_2_00D8C4                   ;        |
+    LDY.b #!FlightGlideLevel_02             ;$00D8C4 | set index of a slow flight fall
+..fast_flight_fall_00D8C6                   ;        |
     PLA                                     ;$00D8C6 | pull Y speed
     INY                                     ;$00D8C7 |
     INY                                     ;$00D8C8 |
     INY                                     ;$00D8C9 |
-    JMP increment_y_speed_by_param_00D948   ;$00D8CA | Y: 03-09
+    JMP increment_y_speed_by_param_00D948   ;$00D8CA | Y: 04-09
 
-; TODO: rename
 ; Updates the player's vertical speed during flight, cape floating, and normal
 ; airborne movement. Also handles cape takeoff timing and transitions from
 ; jumping to falling.
-;
-; X:
-;   $00 = Cape button-hold offset.
-;   $01 = Yoshi-with-wings button-hold offset.
-;   Later reused as a temporary value and for PlayerInAir state.
-;
-; Y:
-;   $00 = Normal gravity / vertical speed adjustment.
-;   $01 = Reduced gravity when holding A/B; also used during cape takeoff.
-;   $02 = Yoshi with wings; uses the wing-specific vertical speed adjustment.
-;   Also indexes the vertical speed adjustment tables at $00:D7AF and $00:D7B9.
 .non_flight_air_physics_00D8CD
     LDA.b PlayerInAir_72
     BEQ ..check_holding_AB_00D928           ;$00D8CF | branch if on ground
-    LDX.b #$00                              ;$00D8D1 | X: ;;;
+    LDX.b #$00                              ;$00D8D1 | X:00 = checking A/B held status
     LDA.w RidingYoshi_187A                  ;$00D8D3 |
-    BEQ ..no_wings_00D8E7                   ;$00D8D6 |\
+    BEQ ..not_winged_yoshi_00D8E7           ;$00D8D6 |\
     LDA.w YoshiHasWings_141E                ;$00D8D8 ||
     LSR                                     ;$00D8DB ||
-    BEQ ..no_wings_00D8E7                   ;$00D8DC ||
-    LDY.b #!PowerupCape_02                  ;$00D8DE ||
+    BEQ ..not_winged_yoshi_00D8E7           ;$00D8DC ||
+    LDY.b #!PowerupCape_02                  ;$00D8DE || Y:02 = riding Winged Yoshi
     CPY.b Powerup_19                        ;$00D8E0 ||
-    BEQ +                                   ;$00D8E2 ||\
-    INX                                     ;$00D8E4 ||/
+    BEQ +                                   ;$00D8E2 ||\ skip if has cape
+    INX                                     ;$00D8E4 ||/ X:01 = checking A/B pressed this frame status
 +   BRA ..check_cape_float_timer_00D8FF     ;$00D8E5 |/
 
-..no_wings_00D8E7
+..not_winged_yoshi_00D8E7
     LDA.b Powerup_19
     CMP.b #!PowerupCape_02                  ;$00D8E9 |
     BNE ..check_holding_AB_00D928           ;$00D8EB |
     LDA.b PlayerInAir_72                    ;$00D8ED |
     CMP.b #!InAirTakeoff_0C                 ;$00D8EF |
     BNE +                                   ;$00D8F1 |\
-    LDY.b #$01                              ;$00D8F3 ||
+    LDY.b #$01                              ;$00D8F3 || Y:01 = Taking off
     CPY.w TakeoffTimer_149F                 ;$00D8F5 ||
-    BCC ..check_cape_float_timer_00D8FF     ;$00D8F8 ||
-    INC.w TakeoffTimer_149F                 ;$00D8FA |/
-+   LDY.b #$00                              ;$00D8FD |
+    BCC ..check_cape_float_timer_00D8FF     ;$00D8F8 || branch if take off timer > 1
+    INC.w TakeoffTimer_149F                 ;$00D8FA |/ if take off timer is 0 or 1, increment it
++   LDY.b #$00                              ;$00D8FD | Y:00 = No take off jump
 ..check_cape_float_timer_00D8FF             ;        |
     LDA.w CapeFloatTimer_14A5               ;$00D8FF |
-    BNE +                                   ;$00D902 |\
-    LDA.b byetudlrHold_15,X                 ;$00D904 || X = 0 with the cape
-    BPL ..check_wings_00D924                ;$00D906 || X = 1 mounted on Yoshi with wings
+    BNE ...apply_y_speed_limit_00D90D       ;$00D902 |\
+    LDA.b byetudlrHold_15,X                 ;$00D904 || use X as a hold/press flag
+    BPL ..check_winged_yoshi_00D924         ;$00D906 || branch if not held or pressed A/B
     LDA.b #$10                              ;$00D908 ||
     STA.w CapeFloatTimer_14A5               ;$00D90A |/
-+   LDA.b PlayerYSpeed_7D                   ;$00D90D |
+...apply_y_speed_limit_00D90D               ;        |
+    LDA.b PlayerYSpeed_7D                   ;$00D90D |
     BPL +                                   ;$00D90F |\ skip if not going upward
-    LDX.w DATA_00D7B9,Y                     ;$00D911 || going upward, not flying:
-    BPL ..check_wings_00D924                ;$00D914 ||
-    CMP.w DATA_00D7B9,Y                     ;$00D916 ||
-    BCC ..check_wings_00D924                ;$00D919 |/
-+   LDA.w DATA_00D7B9,Y                     ;$00D91B |
+    LDX.w air_max_y_speed_00D7B9,Y          ;$00D911 || going upward, not flying: db $10,$C8,$E0
+    BPL ..check_winged_yoshi_00D924         ;$00D914 || branch if table speed is positive
+    CMP.w air_max_y_speed_00D7B9,Y          ;$00D916 ||
+    BCC ..check_winged_yoshi_00D924         ;$00D919 |/ branch if Y speed < table speed
++   LDA.w air_max_y_speed_00D7B9,Y          ;$00D91B |
     CMP.b PlayerYSpeed_7D                   ;$00D91E |
-    BEQ set_y_speed_return_00D94C           ;$00D920 |\ branch if table speed <= y speed
-    BMI set_y_speed_return_00D94C           ;$00D922 |/
-..check_wings_00D924                        ;        |
-    CPY.b #$02                              ;$00D924 | Yoshi Wings
-    BEQ +                                   ;$00D926 |\
+    BEQ set_y_speed_return_00D94C           ;$00D920 |\ branch if Y speed equals table value
+    BMI set_y_speed_return_00D94C           ;$00D922 |/ branch if Y speed is greater than table value
+..check_winged_yoshi_00D924                 ;        |
+    CPY.b #$02                              ;$00D924 | Y:02 = riding Winged Yoshi
+    BEQ +                                   ;$00D926 |\ branch if is riding a Winged Yoshi
 ..check_holding_AB_00D928                   ;        ||
     LDY.b #$01                              ;$00D928 || 01: A/B held
     LDA.b byetudlrHold_15                   ;$00D92A ||
