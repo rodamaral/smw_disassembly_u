@@ -9089,7 +9089,10 @@ DATA_00D43D:
     db $C0,$FF,$00,$FE,$00,$03,$00,$03
     db $00,$FD,$00,$FD,$00,$FD,$00,$FD
     db $00,$03,$00,$03,$00,$03,$00,$03
-DATA_00D535:
+
+; Maximum horizontal speed for each movement medium and input direction
+; Used during airborne movement, fight, on ground, slopes, and underwater
+max_movement_x_speed_00D535:
     db $EC,$14,$DC,$24,$DC,$24,$D0,$30
     db $EC,$14,$DC,$24,$DC,$24,$D0,$30
     db $EC,$14,$DC,$24,$DC,$24,$D0,$30
@@ -9223,7 +9226,7 @@ land_physics_00D5F2:
     LSR                                     ;$00D6A7 ||
     ADC.b #$87                              ;$00D6A8 ||
     TAY                                     ;$00D6AA ||
-    JMP player_slope_physics_00D742         ;$00D6AB |/
+    JMP apply_x_acceleration_00D742         ;$00D6AB |/
 
 ..air_without_takeoff_00D6AE
     JMP air_without_takeoff_physics_00D764
@@ -9311,12 +9314,12 @@ land_physics_00D5F2:
     ORA.w SlopeType_13E1                    ;$00D73C |
     ORA $01                                 ;$00D73F |
     TAY                                     ;$00D741 |
-player_slope_physics_00D742:
+apply_x_acceleration_00D742:
     LDA.b PlayerXSpeed_7B
     SEC                                     ;$00D744 |
-    SBC.w DATA_00D535,Y                     ;$00D745 |
+    SBC.w max_movement_x_speed_00D535,Y     ;$00D745 |
     BEQ reduce_x_speed_00D76B               ;$00D748 |
-    EOR.w DATA_00D535,Y                     ;$00D74A |
+    EOR.w max_movement_x_speed_00D535,Y     ;$00D74A |
     BPL reduce_x_speed_00D76B               ;$00D74D |
     REP #$20                                ;$00D74F | A->16
     LDA.w MarioAccel,X                      ;$00D751 |
@@ -9540,7 +9543,7 @@ flight_and_air_physics_00D7E4:
     LDX.b PlayerDir_76                      ;$00D8B9 |
     LDA.b PlayerXSpeed_7B                   ;$00D8BB |
     BEQ ..act_like_phase_2_00D8C4           ;$00D8BD |\ skip if X speed is zero
-    EOR.w DATA_00D535,X                     ;$00D8BF ||
+    EOR.w max_movement_x_speed_00D535,X     ;$00D8BF ||
     BPL ..fast_flight_fall_00D8C6           ;$00D8C2 |/ branch if X speed is aligned with facing direction
 ..act_like_phase_2_00D8C4                   ;        |
     LDY.b #!FlightGlideLevel_02             ;$00D8C4 | set index of a slow flight fall
@@ -9796,7 +9799,7 @@ water_physics_00D988:
     BEQ +                                   ;$00DA60 |\ skip if on ground
     INY                                     ;$00DA62 ||
     INY                                     ;$00DA63 |/ increment index
-+   JSR player_slope_physics_00D742         ;$00DA64 |
++   JSR apply_x_acceleration_00D742         ;$00DA64 |
     BRA .update_player_pose_00DA7C          ;$00DA67 |
 
 .apply_idle_friction_00DA69
