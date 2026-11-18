@@ -8279,29 +8279,29 @@ yoshi_poses:
     db $20,$21,$27,$28
 
 set_yoshi_pose_00CDAD:                      ;        \
-    LDX.w YoshiTongueTimer_14A3             ;$00CDAD |\ If Yoshi isn't sticking his tongue out,
-    BEQ .load_pose                          ;$00CDB0 |/ skip to loading the pose.
-    LDY.b #$03                              ;$00CDB2 | Get ready to lose pose $27.
-    CPX.b #$0C                              ;$00CDB4 |\ If he's still at the beginning of sticking his tongue out,
-    BCS .load_pose                          ;$00CDB6 |/
-    LDY.b #$04                              ;$00CDB8 | Use pose $28.
+    LDX.w YoshiTongueTimer_14A3             ;$00CDAD | If Yoshi isn't sticking his tongue out,
+    BEQ .load_pose                          ;$00CDB0 |\ skip to loading the pose.
+    LDY.b #$03                              ;$00CDB2 || Get ready to lose pose $27.
+    CPX.b #$0C                              ;$00CDB4 || If he's still at the beginning of sticking his tongue out,
+    BCS .load_pose                          ;$00CDB6 ||
+    LDY.b #$04                              ;$00CDB8 |/ Use pose $28
 .load_pose                                  ;        |
-    LDA.w yoshi_poses-1,Y                   ;$00CDBA | Load the pose.
-    DEY                                     ;$00CDBD |\ If the player isn't turning around or sticking
-    BNE .set_pose                           ;$00CDBE | | Yoshi's tongue out,
-    LDY.b PlayerIsDucking_73                ;$00CDC0 | | and the player is ducking,
-    BEQ .set_pose                           ;$00CDC2 | |
-    LDA.b #$1D                              ;$00CDC4 | | use pose $1D.
-.set_pose                                   ;        | |
-    STA.w PlayerPose_13E0                   ;$00CDC6 |/ set the player's pose.
-    LDA.w YoshiHasWings_141E                ;$00CDC9 |\ If the shoot fireballs while on Yoshi flag is set,
-    CMP.b #$01                              ;$00CDCC | |
-    BNE return_00CDDC                       ;$00CDCE |/
-    BIT.b byetudlrPress_16                  ;$00CDD0 |\ and X or Y is tapped,
-    BVC return_00CDDC                       ;$00CDD2 |/
-    LDA.b #$08                              ;$00CDD4 |\
-    STA.w Unread_18DB                       ;$00CDD6 |/
-    JSR shoot_fireball                      ;$00CDD9 | then shoot a fireball.
+    LDA.w yoshi_poses-1,Y                   ;$00CDBA | Load the pose
+    DEY                                     ;$00CDBD | If the player isn't turning around or sticking
+    BNE .set_pose                           ;$00CDBE |\ Yoshi's tongue out,
+    LDY.b PlayerIsDucking_73                ;$00CDC0 || and the player is ducking,
+    BEQ .set_pose                           ;$00CDC2 ||
+    LDA.b #$1D                              ;$00CDC4 |/ use pose $1D.
+.set_pose                                   ;        |
+    STA.w PlayerPose_13E0                   ;$00CDC6 | set the player's pose.
+    LDA.w YoshiHasWings_141E                ;$00CDC9 | If the shoot fireballs while on Yoshi flag is set,
+    CMP.b #$01                              ;$00CDCC |
+    BNE return_00CDDC                       ;$00CDCE |\
+    BIT.b byetudlrPress_16                  ;$00CDD0 || and X or Y is tapped,
+    BVC return_00CDDC                       ;$00CDD2 ||
+    LDA.b #$08                              ;$00CDD4 || NOTE: normally unreachable
+    STA.w Unread_18DB                       ;$00CDD6 ||
+    JSR shoot_fireball                      ;$00CDD9 |/ then shoot a fireball.
 return_00CDDC:                              ;        |
     RTS                                     ;$00CDDC /
 
@@ -8546,7 +8546,7 @@ set_player_pose_00CEB1:
     LDA.b PlayerInAir_72                    ;$00CF9D |
     BEQ ..CODE_00CFB7                       ;$00CF9F |
     LDY.w RunInAirTimer_14A0                ;$00CFA1 |
-    BNE CODE_00CFBC                         ;$00CFA4 |
+    BNE routine_00CFBC                      ;$00CFA4 |
     LDY.w FlightPhase_1407                  ;$00CFA6 |
     BEQ +                                   ;$00CFA9 |\
     LDA.w DATA_00CE79-1,Y                   ;$00CFAB |/
@@ -8558,7 +8558,7 @@ set_player_pose_00CEB1:
 ..CODE_00CFB7
     LDA.w PlayerTurningPose_13DD
     BNE update_wall_run_pose_and_dir_00D01A ;$00CFBA |
-CODE_00CFBC: ;; FIXME: ROUTINE
+routine_00CFBC:
     LDA.b PlayerXSpeed_7B
     BPL no_abs1_animation_00CFC3            ;$00CFBE |
     EOR.b #$FF                              ;$00CFC0 |
@@ -8837,7 +8837,7 @@ horizontal_pipe_animation:
     JSR disable_controls
     STZ.w PlayerOverworldPose_13DE          ;$00D19A |
     JSL set_player_pose_00CEB1              ;$00D19D |
-    JSL CODE_00CFBC                         ;$00D1A1 |
+    JSL routine_00CFBC                      ;$00D1A1 |
     JSR CODE_00D1F4                         ;$00D1A5 |
     LDA.w RidingYoshi_187A                  ;$00D1A8 |
     BEQ CODE_00D1B2                         ;$00D1AB |
@@ -9656,10 +9656,10 @@ update_pmeter_00D96A:
 +   STA.w PlayerPMeter_13E4                 ;$00D97C |
     RTS                                     ;$00D97F |
 
-DATA_00D980:
+water_swimming_poses_00D980:
     db $16,$1A,$1A,$18
 
-DATA_00D984:
+water_y_speed_low_limits_00D984:
     db $E8,$F8,$D0,$D0
 
 water_physics_00D988:
@@ -9667,121 +9667,118 @@ water_physics_00D988:
     STZ.b PlayerIsDucking_73                ;$00D98B |
     STZ.w FlightPhase_1407                  ;$00D98D |
     STZ.w SpinJumpFlag_140D                 ;$00D990 |
-    LDY.b PlayerYSpeed_7D                   ;$00D993 |
+    LDY.b PlayerYSpeed_7D                   ;$00D993 | Y: new Y speed
     LDA.w CarryingFlagMirror_148F           ;$00D995 |
-    BEQ .CODE_00D9EB                        ;$00D998 |
-    LDA.b PlayerInAir_72                    ;$00D99A |
-    BNE .CODE_00D9AF                        ;$00D99C |
-    LDA.b byetudlrPress_16                  ;$00D99E |
-    ORA.b axlr0000Press_18                  ;$00D9A0 |
-    BPL .CODE_00D9AF                        ;$00D9A2 |
-    LDA.b #$0B                              ;$00D9A4 |
-    STA.b PlayerInAir_72                    ;$00D9A6 |
-    STZ.w PlayerSlopePose_13ED              ;$00D9A8 |
-    LDY.b #$F0                              ;$00D9AB |
-    BRA .CODE_00D9B5                        ;$00D9AD |
+    BEQ .check_jump_input_no_item_00D9EB    ;$00D998 |\ branch if not carrying an item
+    LDA.b PlayerInAir_72                    ;$00D99A ||
+    BNE .check_carry_item_down_00D9AF       ;$00D99C || branch if not touching the ground
+    LDA.b byetudlrPress_16                  ;$00D99E ||
+    ORA.b axlr0000Press_18                  ;$00D9A0 ||
+    BPL .check_carry_item_down_00D9AF       ;$00D9A2 || branch if not pressing A/B this frame
+    LDA.b #!InAirJump_0B                    ;$00D9A4 || if carrying item, touching the ground and pressing A/B:
+    STA.b PlayerInAir_72                    ;$00D9A6 || set player not touching the ground
+    STZ.w PlayerSlopePose_13ED              ;$00D9A8 ||
+    LDY.b #$F0                              ;$00D9AB || new Y speed = -16
+    BRA .jump_off_ground_with_item_00D9B5   ;$00D9AD |/
 
-.CODE_00D9AF:
+.check_carry_item_down_00D9AF
     LDA.b byetudlrHold_15
     AND.b #!HeldDown_04                     ;$00D9B1 |
-    BEQ .CODE_00D9BD                        ;$00D9B3 |
-.CODE_00D9B5:
-    JSR CODE_00DAA9
+    BEQ .adjust_y_speed_with_item_00D9BD    ;$00D9B3 | skip if not holding Down
+.jump_off_ground_with_item_00D9B5
+    JSR swim_sfx_reset_anim_timer_00DAA9
     TYA                                     ;$00D9B8 |
     CLC                                     ;$00D9B9 |
     ADC.b #$08                              ;$00D9BA |
-    TAY                                     ;$00D9BC |
-.CODE_00D9BD:
-    INY
+    TAY                                     ;$00D9BC | new Y speed += 8
+.adjust_y_speed_with_item_00D9BD            ;        | make new Y speed in [-16, 16]
+    INY                                     ;$00D9BD |
     LDA.w PlayerCanJumpWater_13FA           ;$00D9BE |
-    BNE .CODE_00D9CC                        ;$00D9C1 |
-    DEY                                     ;$00D9C3 |
-    LDA.b Frame_14                          ;$00D9C4 |
-    AND.b #$03                              ;$00D9C6 |
-    BNE .CODE_00D9CC                        ;$00D9C8 |
-    DEY                                     ;$00D9CA |
-    DEY                                     ;$00D9CB |
-.CODE_00D9CC:
-    TYA
-    BMI .CODE_00D9D7                        ;$00D9CD |
-    CMP.b #$10                              ;$00D9CF |
-    BCC .CODE_00D9DD                        ;$00D9D1 |
-    LDA.b #$10                              ;$00D9D3 |
-    BRA .CODE_00D9DD                        ;$00D9D5 |
+    BNE +                                   ;$00D9C1 |\ skip if can jump off water
+    DEY                                     ;$00D9C3 || new Y speed -= 1
+    LDA.b Frame_14                          ;$00D9C4 ||
+    AND.b #$03                              ;$00D9C6 ||
+    BNE +                                   ;$00D9C8 || skip if frame is not multiple of 4
+    DEY                                     ;$00D9CA || new Y speed -= 2
+    DEY                                     ;$00D9CB |/
++   TYA                                     ;$00D9CC |
+    BMI ..clamp_carrying_y_speed_00D9D7     ;$00D9CD |\ branch if new Y speed < 0
+    CMP.b #$10                              ;$00D9CF ||
+    BCC ..set_carrying_y_speed_00D9DD       ;$00D9D1 || branch if new Y speed < 16
+    LDA.b #$10                              ;$00D9D3 || new Y speed = 16
+    BRA ..set_carrying_y_speed_00D9DD       ;$00D9D5 |/
 
-.CODE_00D9D7:
+..clamp_carrying_y_speed_00D9D7
     CMP.b #$F0
-    BCS .CODE_00D9DD                        ;$00D9D9 |
-    LDA.b #$F0                              ;$00D9DB |
-.CODE_00D9DD:
+    BCS ..set_carrying_y_speed_00D9DD       ;$00D9D9 |\ if Y speed < -16
+    LDA.b #$F0                              ;$00D9DB |/ make it -16
+..set_carrying_y_speed_00D9DD
     STA.b PlayerYSpeed_7D
-    LDY.b #$80                              ;$00D9DF |
+    LDY.b #$80                              ;$00D9DF | Y: index for maximum X speed table
     LDA.b byetudlrHold_15                   ;$00D9E1 |
     AND.b #!HeldSides_03                    ;$00D9E3 |
-    BNE .CODE_00DA48                        ;$00D9E5 |
-    LDA.b PlayerDir_76                      ;$00D9E7 |
-    BRA .CODE_00DA46                        ;$00D9E9 |
+    BNE .holding_side_item_00DA48           ;$00D9E5 |\ branch if held Left or Right
+    LDA.b PlayerDir_76                      ;$00D9E7 ||
+    BRA .common_adjust_x_speed_00DA46       ;$00D9E9 |/
 
-.CODE_00D9EB:
+.check_jump_input_no_item_00D9EB
     LDA.b byetudlrPress_16
     ORA.b axlr0000Press_18                  ;$00D9ED |
-    BPL .CODE_00DA0B                        ;$00D9EF |
-    LDA.w PlayerCanJumpWater_13FA           ;$00D9F1 |
-    BNE .CODE_00DA0B                        ;$00D9F4 |
-    JSR CODE_00DAA9                         ;$00D9F6 |
-    LDA.b PlayerInAir_72                    ;$00D9F9 |
-    BNE .CODE_00DA06                        ;$00D9FB |
-    LDA.b #$0B                              ;$00D9FD |
-    STA.b PlayerInAir_72                    ;$00D9FF |
-    STZ.w PlayerSlopePose_13ED              ;$00DA01 |
-    LDY.b #$F0                              ;$00DA04 |
-.CODE_00DA06:
-    TYA
-    SEC                                     ;$00DA07 |
-    SBC.b #$20                              ;$00DA08 |
-    TAY                                     ;$00DA0A |
-.CODE_00DA0B:
+    BPL ..adjust_y_speed_no_item_00DA0B     ;$00D9EF |\ skip if not pressed A/B this frame
+    LDA.w PlayerCanJumpWater_13FA           ;$00D9F1 ||
+    BNE ..adjust_y_speed_no_item_00DA0B     ;$00D9F4 || skip if not able to jump off water
+    JSR swim_sfx_reset_anim_timer_00DAA9    ;$00D9F6 ||
+    LDA.b PlayerInAir_72                    ;$00D9F9 ||
+    BNE +                                   ;$00D9FB ||\ skip if airborne
+    LDA.b #!InAirJump_0B                    ;$00D9FD ||| othewise, set player in air
+    STA.b PlayerInAir_72                    ;$00D9FF |||
+    STZ.w PlayerSlopePose_13ED              ;$00DA01 |||
+    LDY.b #$F0                              ;$00DA04 ||/
++   TYA                                     ;$00DA06 ||
+    SEC                                     ;$00DA07 ||
+    SBC.b #$20                              ;$00DA08 ||
+    TAY                                     ;$00DA0A |/
+..adjust_y_speed_no_item_00DA0B
     LDA.b Frame_14
     AND.b #$03                              ;$00DA0D |
-    BNE .CODE_00DA13                        ;$00DA0F |
-    INY                                     ;$00DA11 |
-    INY                                     ;$00DA12 |
-.CODE_00DA13:
-    LDA.b byetudlrHold_15
+    BNE +                                   ;$00DA0F |\ skip if frame is not multiple of 4
+    INY                                     ;$00DA11 ||
+    INY                                     ;$00DA12 |/
++   LDA.b byetudlrHold_15                   ;$00DA13 |
     AND.b #!HeldUD_0C                       ;$00DA15 |
     LSR                                     ;$00DA17 |
     LSR                                     ;$00DA18 |
     TAX                                     ;$00DA19 |
     TYA                                     ;$00DA1A |
-    BMI .CODE_00DA25                        ;$00DA1B |
+    BMI ..clamp_y_speed_no_item_00DA25      ;$00DA1B |
     CMP.b #$40                              ;$00DA1D |
-    BCC .CODE_00DA2D                        ;$00DA1F |
+    BCC ..check_ducking_00DA2D              ;$00DA1F |
     LDA.b #$40                              ;$00DA21 |
-    BRA .CODE_00DA2D                        ;$00DA23 |
+    BRA ..check_ducking_00DA2D              ;$00DA23 |
 
-.CODE_00DA25:
-    CMP.w DATA_00D984,X
-    BCS .CODE_00DA2D                        ;$00DA28 |
-    LDA.w DATA_00D984,X                     ;$00DA2A |
-.CODE_00DA2D:
+..clamp_y_speed_no_item_00DA25
+    CMP.w water_y_speed_low_limits_00D984,X
+    BCS ..check_ducking_00DA2D              ;$00DA28 |
+    LDA.w water_y_speed_low_limits_00D984,X ;$00DA2A |
+..check_ducking_00DA2D
     STA.b PlayerYSpeed_7D
     LDA.b PlayerInAir_72                    ;$00DA2F |
-    BNE .CODE_00DA40                        ;$00DA31 |
-    LDA.b byetudlrHold_15                   ;$00DA33 |
-    AND.b #!HeldDown_04                     ;$00DA35 |
-    BEQ .CODE_00DA40                        ;$00DA37 |
-    STZ.w CapeInteracts_13E8                ;$00DA39 |
-    INC.b PlayerIsDucking_73                ;$00DA3C |
-    BRA .CODE_00DA69                        ;$00DA3E |
+    BNE ..check_dir_input_no_item_00DA40    ;$00DA31 |\ branch if not on the ground
+    LDA.b byetudlrHold_15                   ;$00DA33 ||
+    AND.b #!HeldDown_04                     ;$00DA35 ||
+    BEQ ..check_dir_input_no_item_00DA40    ;$00DA37 ||\ branch if not holding Down
+    STZ.w CapeInteracts_13E8                ;$00DA39 ||| make player duck and drag
+    INC.b PlayerIsDucking_73                ;$00DA3C ||/
+    BRA .apply_idle_friction_00DA69         ;$00DA3E |/
 
-.CODE_00DA40:
+..check_dir_input_no_item_00DA40
     LDA.b byetudlrHold_15
     AND.b #!HeldSides_03                    ;$00DA42 |
-    BEQ .CODE_00DA69                        ;$00DA44 |
-.CODE_00DA46:
-    LDY.b #$78
-.CODE_00DA48:
-    STY $00
+    BEQ .apply_idle_friction_00DA69         ;$00DA44 | branch if not holding Left or Right
+.common_adjust_x_speed_00DA46               ;        |
+    LDY.b #$78                              ;$00DA44 | Y: index for maximum X speed table
+.holding_side_item_00DA48                   ;        |
+    STY $00                                 ;$00DA48 | $00: index for maximum X speed table
     AND.b #$01                              ;$00DA4A |
     STA.b PlayerDir_76                      ;$00DA4C |
     PHA                                     ;$00DA4E |
@@ -9791,61 +9788,56 @@ water_physics_00D988:
     PLA                                     ;$00DA52 |
     ORA $00                                 ;$00DA53 |
     LDY.w Layer3TideSetting_1403            ;$00DA55 |
-    BEQ .CODE_00DA5D                        ;$00DA58 |
-    CLC                                     ;$00DA5A |
-    ADC.b #$04                              ;$00DA5B |
-.CODE_00DA5D:
-    TAY
+    BEQ +                                   ;$00DA58 |\ skip if there is no layer 3 drag
+    CLC                                     ;$00DA5A ||
+    ADC.b #$04                              ;$00DA5B |/ increment index
++   TAY                                     ;$00DA5D |
     LDA.b PlayerInAir_72                    ;$00DA5E |
-    BEQ .CODE_00DA64                        ;$00DA60 |
-    INY                                     ;$00DA62 |
-    INY                                     ;$00DA63 |
-.CODE_00DA64:
-    JSR player_slope_physics_00D742
-    BRA .CODE_00DA7C                        ;$00DA67 |
+    BEQ +                                   ;$00DA60 |\ skip if on ground
+    INY                                     ;$00DA62 ||
+    INY                                     ;$00DA63 |/ increment index
++   JSR player_slope_physics_00D742         ;$00DA64 |
+    BRA .update_player_pose_00DA7C          ;$00DA67 |
 
-.CODE_00DA69:
-    LDY.b #$00
+.apply_idle_friction_00DA69
+    LDY.b #$00                              ;$00DA69 |
     TYX                                     ;$00DA6B |
     LDA.w Layer3TideSetting_1403            ;$00DA6C |
-    BEQ +                                   ;$00DA6F |\
+    BEQ +                                   ;$00DA6F |\ skip if there is no layer 3 drag
     LDX.b #$1E                              ;$00DA71 ||
     LDA.b PlayerInAir_72                    ;$00DA73 ||
     BNE +                                   ;$00DA75 ||
     INX                                     ;$00DA77 ||
     INX                                     ;$00DA78 |/
 +   JSR reduce_x_speed_in_water_00D772      ;$00DA79 |
-.CODE_00DA7C:
+.update_player_pose_00DA7C
     JSR powerup_physics_00D062
     JSL set_player_pose_00CEB1              ;$00DA7F |
     LDA.w CapeSpinTimer_14A6                ;$00DA83 |
-    BNE .Return00DA8C                       ;$00DA86 |
-    LDA.b PlayerInAir_72                    ;$00DA88 |
-    BNE .CODE_00DA8D                        ;$00DA8A |
-.Return00DA8C:
-    RTS
+    BNE +                                   ;$00DA86 |\ return if cape is spinning
+    LDA.b PlayerInAir_72                    ;$00DA88 ||
+    BNE ..update_swimming_pose_00DA8D       ;$00DA8A |/ branch if not on ground
++   RTS                                     ;$00DA8C |
 
-.CODE_00DA8D:
-    LDA.b #$18
+..update_swimming_pose_00DA8D
+    LDA.b #$18                              ;$00DA8D | default pose
     LDY.w ShootFireTimer_149C               ;$00DA8F |
-    BNE .CODE_00DA9F                        ;$00DA92 |
-    LDA.w PlayerAniTimer_1496               ;$00DA94 |
-    LSR                                     ;$00DA97 |
-    LSR                                     ;$00DA98 |
-    AND.b #$03                              ;$00DA99 |
-    TAY                                     ;$00DA9B |
-    LDA.w DATA_00D980,Y                     ;$00DA9C |
-.CODE_00DA9F:
-    LDY.w CarryingFlagMirror_148F
-    BEQ .CODE_00DAA5                        ;$00DAA2 |
-    INC A                                   ;$00DAA4 |
-.CODE_00DAA5:
-    STA.w PlayerPose_13E0
+    BNE +                                   ;$00DA92 |\ skip if shooting fireball
+    LDA.w PlayerAniTimer_1496               ;$00DA94 ||
+    LSR                                     ;$00DA97 ||
+    LSR                                     ;$00DA98 ||
+    AND.b #$03                              ;$00DA99 ||
+    TAY                                     ;$00DA9B ||
+    LDA.w water_swimming_poses_00D980,Y     ;$00DA9C |/ load pose from 
++   LDY.w CarryingFlagMirror_148F           ;$00DA9F |
+    BEQ +                                   ;$00DAA2 |\ skip if not carrying an item
+    INC A                                   ;$00DAA4 |/ otherwise, increase pose
++   STA.w PlayerPose_13E0                   ;$00DAA5 |
     RTS                                     ;$00DAA8 |
 
-CODE_00DAA9:
+swim_sfx_reset_anim_timer_00DAA9:
     LDA.b #$0E
-    STA.w SPCIO0_1DF9                       ;$00DAAB |
+    STA.w SPCIO0_1DF9                       ;$00DAAB | play Swim SFX
     LDA.w PlayerAniTimer_1496               ;$00DAAE |
     ORA.b #$10                              ;$00DAB1 |
     STA.w PlayerAniTimer_1496               ;$00DAB3 |
