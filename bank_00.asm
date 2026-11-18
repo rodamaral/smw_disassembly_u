@@ -8407,199 +8407,189 @@ DATA_00CEA9:
 
 set_player_pose_00CEB1:
     LDA.w CapeAniTimer_14A2                 ;$00CEB1 |
-    BNE lbl14A2Not0                         ;$00CEB4 |
+    BNE .no_cape_wave_00CF16                ;$00CEB4 |
     LDX.w PlayerCapePose_13DF               ;$00CEB6 |
     LDA.b PlayerInAir_72                    ;$00CEB9 |
-    BEQ MarioAnimAir                        ;$00CEBB |
+    BEQ .air_animation_00CEDE               ;$00CEBB |
     LDY.b #$04                              ;$00CEBD |
     BIT.b PlayerYSpeed_7D                   ;$00CEBF |
-    BPL CODE_00CECD                         ;$00CEC1 |
+    BPL .CODE_00CECD                        ;$00CEC1 |
     CMP.b #$0C                              ;$00CEC3 |
-    BEQ CODE_00CEFD                         ;$00CEC5 |
+    BEQ .CODE_00CEFD                        ;$00CEC5 |
     LDA.b PlayerInWater_75                  ;$00CEC7 |
-    BNE CODE_00CEFD                         ;$00CEC9 |
-    BRA MrioNtInWtr                         ;$00CECB |
+    BNE .CODE_00CEFD                        ;$00CEC9 |
+    BRA .not_in_water_00CEE4                ;$00CECB |
 
-CODE_00CECD:
+.CODE_00CECD
     INX
     CPX.b #$05                              ;$00CECE |
-    BCS CODE_00CED6                         ;$00CED0 |
+    BCS ..CODE_00CED6                       ;$00CED0 |
     LDX.b #$05                              ;$00CED2 |
-    BRA CODE_00CF0A                         ;$00CED4 |
+    BRA .CODE_00CF0A                        ;$00CED4 |
 
-CODE_00CED6:
+..CODE_00CED6
     CPX.b #$0B
-    BCC CODE_00CF0A                         ;$00CED8 |
+    BCC .CODE_00CF0A                        ;$00CED8 |
     LDX.b #$07                              ;$00CEDA |
-    BRA CODE_00CF0A                         ;$00CEDC |
+    BRA .CODE_00CF0A                        ;$00CEDC |
 
-MarioAnimAir:
+.air_animation_00CEDE
     LDA.b PlayerXSpeed_7B
-    BNE CODE_00CEF0                         ;$00CEE0 |
+    BNE .CODE_00CEF0                        ;$00CEE0 |
     LDY.b #$08                              ;$00CEE2 |
-MrioNtInWtr:
+.not_in_water_00CEE4
     TXA
-    BEQ CODE_00CF0A                         ;$00CEE5 |
+    BEQ .CODE_00CF0A                        ;$00CEE5 |
     DEX                                     ;$00CEE7 |
     CPX.b #$03                              ;$00CEE8 |
-    BCC CODE_00CF0A                         ;$00CEEA |
+    BCC .CODE_00CF0A                        ;$00CEEA |
     LDX.b #$02                              ;$00CEEC |
-    BRA CODE_00CF0A                         ;$00CEEE |
+    BRA .CODE_00CF0A                        ;$00CEEE |
 
-CODE_00CEF0:
-    BPL CODE_00CEF5
-    EOR.b #$FF                              ;$00CEF2 |
-    INC A                                   ;$00CEF4 |
-CODE_00CEF5:
-    LSR
+.CODE_00CEF0
+    BPL +                                   ;$00CEF0 |\
+    EOR.b #$FF                              ;$00CEF2 ||
+    INC A                                   ;$00CEF4 |/
++   LSR                                     ;$00CEF5 |
     LSR                                     ;$00CEF6 |
     LSR                                     ;$00CEF7 |
     TAY                                     ;$00CEF8 |
     LDA.w DATA_00DC7C,Y                     ;$00CEF9 |
     TAY                                     ;$00CEFC |
-CODE_00CEFD:
+.CODE_00CEFD
     INX
     CPX.b #$03                              ;$00CEFE |
-    BCS CODE_00CF04                         ;$00CF00 |
-    LDX.b #$05                              ;$00CF02 |
-CODE_00CF04:
-    CPX.b #$07
-    BCC CODE_00CF0A                         ;$00CF06 |
+    BCS +                                   ;$00CF00 |\
+    LDX.b #$05                              ;$00CF02 |/
++   CPX.b #$07                              ;$00CF04 |
+    BCC .CODE_00CF0A                        ;$00CF06 |
     LDX.b #$03                              ;$00CF08 |
-CODE_00CF0A:
+.CODE_00CF0A
     STX.w PlayerCapePose_13DF
     TYA                                     ;$00CF0D |
     LDY.b PlayerInWater_75                  ;$00CF0E |
-    BEQ CODE_00CF13                         ;$00CF10 |
-    ASL                                     ;$00CF12 |
-CODE_00CF13:
-    STA.w CapeAniTimer_14A2
-lbl14A2Not0:
+    BEQ +                                   ;$00CF10 |\
+    ASL                                     ;$00CF12 |/
++   STA.w CapeAniTimer_14A2                 ;$00CF13 |
+.no_cape_wave_00CF16
     LDA.w SpinJumpFlag_140D
     ORA.w CapeSpinTimer_14A6                ;$00CF19 |
-    BEQ CODE_00CF4E                         ;$00CF1C |
+    BEQ ..CODE_00CF4E                       ;$00CF1C |
     STZ.b PlayerIsDucking_73                ;$00CF1E |
     LDA.b Frame_14                          ;$00CF20 |
     AND.b #$06                              ;$00CF22 |
     TAX                                     ;$00CF24 |
     TAY                                     ;$00CF25 |
     LDA.b PlayerInAir_72                    ;$00CF26 |
-    BEQ CODE_00CF2F                         ;$00CF28 |
-    LDA.b PlayerYSpeed_7D                   ;$00CF2A |
-    BMI CODE_00CF2F                         ;$00CF2C |
-    INY                                     ;$00CF2E |
-CODE_00CF2F:
-    LDA.w DATA_00CEA9,Y
+    BEQ +                                   ;$00CF28 |\
+    LDA.b PlayerYSpeed_7D                   ;$00CF2A ||
+    BMI +                                   ;$00CF2C ||
+    INY                                     ;$00CF2E |/
++   LDA.w DATA_00CEA9,Y                     ;$00CF2F |
     STA.w PlayerCapePose_13DF               ;$00CF32 |
     LDA.b Powerup_19                        ;$00CF35 |
-    BEQ CODE_00CF3A                         ;$00CF37 |
-    INX                                     ;$00CF39 |
-CODE_00CF3A:
-    LDA.w DATA_00CEA1,X
+    BEQ +                                   ;$00CF37 |\
+    INX                                     ;$00CF39 |/
++   LDA.w DATA_00CEA1,X                     ;$00CF3A |
     STA.b PlayerDir_76                      ;$00CF3D |
     LDY.b Powerup_19                        ;$00CF3F |
     CPY.b #$02                              ;$00CF41 |
-    BNE CODE_00CF48                         ;$00CF43 |
-    JSR CODE_00D044                         ;$00CF45 |
-CODE_00CF48:
-    LDA.w DATA_00CE99,X
-    JMP CODE_00D01A                         ;$00CF4B |
+    BNE +                                   ;$00CF43 |\
+    JSR CODE_00D044                         ;$00CF45 |/
++   LDA.w DATA_00CE99,X                     ;$00CF48 |
+    JMP update_wall_run_pose_and_dir_00D01A ;$00CF4B |
 
-CODE_00CF4E:
+..CODE_00CF4E
     LDA.w PlayerSlopePose_13ED
-    BEQ CODE_00CF62                         ;$00CF51 |
-    BPL CODE_00CF85                         ;$00CF53 |
+    BEQ ..CODE_00CF62                       ;$00CF51 |
+    BPL ..CODE_00CF85                       ;$00CF53 |
     LDA.w SlopeType_13E1                    ;$00CF55 |
     LSR                                     ;$00CF58 |
     LSR                                     ;$00CF59 |
     ORA.b PlayerDir_76                      ;$00CF5A |
     TAY                                     ;$00CF5C |
     LDA.w DATA_00CE7F,Y                     ;$00CF5D |
-    BRA CODE_00CF85                         ;$00CF60 |
+    BRA ..CODE_00CF85                       ;$00CF60 |
 
-CODE_00CF62:
+..CODE_00CF62
     LDA.b #$3C
     LDY.w CarryingFlagMirror_148F           ;$00CF64 |
-    BEQ CODE_00CF6B                         ;$00CF67 |
-    LDA.b #$1D                              ;$00CF69 |
-CODE_00CF6B:
-    LDY.b PlayerIsDucking_73
-    BNE CODE_00CF85                         ;$00CF6D |
+    BEQ +                                   ;$00CF67 |\
+    LDA.b #$1D                              ;$00CF69 |/
++   LDY.b PlayerIsDucking_73                ;$00CF6B |
+    BNE ..CODE_00CF85                       ;$00CF6D |
     LDA.w ShootFireTimer_149C               ;$00CF6F |
-    BEQ CODE_00CF7E                         ;$00CF72 |
+    BEQ ..CODE_00CF7E                       ;$00CF72 |
     LDA.b #$3F                              ;$00CF74 |
     LDY.b PlayerInAir_72                    ;$00CF76 |
-    BEQ CODE_00CF85                         ;$00CF78 |
+    BEQ ..CODE_00CF85                       ;$00CF78 |
     LDA.b #$16                              ;$00CF7A |
-    BRA CODE_00CF85                         ;$00CF7C |
+    BRA ..CODE_00CF85                       ;$00CF7C |
 
-CODE_00CF7E:
+..CODE_00CF7E
     LDA.b #$0E
     LDY.w KickTimer_149A                    ;$00CF80 |
-    BEQ CODE_00CF88                         ;$00CF83 |
-CODE_00CF85:
-    JMP CODE_00D01A
+    BEQ ..CODE_00CF88                       ;$00CF83 |
+..CODE_00CF85
+    JMP update_wall_run_pose_and_dir_00D01A
 
-CODE_00CF88:
+..CODE_00CF88
     LDA.b #$1D
     LDY.w PickUpItemTimer_1498              ;$00CF8A |
-    BNE CODE_00CF85                         ;$00CF8D |
+    BNE ..CODE_00CF85                       ;$00CF8D |
     LDA.b #$0F                              ;$00CF8F |
     LDY.w FaceScreenTimer_1499              ;$00CF91 |
-    BNE CODE_00CF85                         ;$00CF94 |
+    BNE ..CODE_00CF85                       ;$00CF94 |
     LDA.b #$00                              ;$00CF96 |
     LDX.w PlayerInCloud_18C2                ;$00CF98 |
-    BNE MarioAnimNoAbs1                     ;$00CF9B |
+    BNE no_abs1_animation_00CFC3            ;$00CF9B |
     LDA.b PlayerInAir_72                    ;$00CF9D |
-    BEQ CODE_00CFB7                         ;$00CF9F |
+    BEQ ..CODE_00CFB7                       ;$00CF9F |
     LDY.w RunInAirTimer_14A0                ;$00CFA1 |
     BNE CODE_00CFBC                         ;$00CFA4 |
     LDY.w FlightPhase_1407                  ;$00CFA6 |
-    BEQ CODE_00CFAE                         ;$00CFA9 |
-    LDA.w DATA_00CE79-1,Y                   ;$00CFAB |
-CODE_00CFAE:
-    LDY.w CarryingFlagMirror_148F
-    BEQ CODE_00D01A                         ;$00CFB1 |
+    BEQ +                                   ;$00CFA9 |\
+    LDA.w DATA_00CE79-1,Y                   ;$00CFAB |/
++   LDY.w CarryingFlagMirror_148F           ;$00CFAE |
+    BEQ update_wall_run_pose_and_dir_00D01A ;$00CFB1 |
     LDA.b #$09                              ;$00CFB3 |
-    BRA CODE_00D01A                         ;$00CFB5 |
+    BRA update_wall_run_pose_and_dir_00D01A ;$00CFB5 |
 
-CODE_00CFB7:
+..CODE_00CFB7
     LDA.w PlayerTurningPose_13DD
-    BNE CODE_00D01A                         ;$00CFBA |
-CODE_00CFBC:
+    BNE update_wall_run_pose_and_dir_00D01A ;$00CFBA |
+CODE_00CFBC: ;; FIXME: ROUTINE
     LDA.b PlayerXSpeed_7B
-    BPL MarioAnimNoAbs1                     ;$00CFBE |
+    BPL no_abs1_animation_00CFC3            ;$00CFBE |
     EOR.b #$FF                              ;$00CFC0 |
     INC A                                   ;$00CFC2 |
-MarioAnimNoAbs1:
+no_abs1_animation_00CFC3:
     TAX
-    BNE CODE_00CFD4                         ;$00CFC4 |
+    BNE .CODE_00CFD4                        ;$00CFC4 |
     XBA                                     ;$00CFC6 |
     LDA.b byetudlrHold_15                   ;$00CFC7 |
     AND.b #!HeldUp_08                       ;$00CFC9 |
-    BEQ CODE_00D002                         ;$00CFCB |
-    LDA.b #$03                              ;$00CFCD |
-    STA.w PlayerOverworldPose_13DE          ;$00CFCF |
-    BRA CODE_00D002                         ;$00CFD2 |
+    BEQ .CODE_00D002                        ;$00CFCB |\
+    LDA.b #$03                              ;$00CFCD ||
+    STA.w PlayerOverworldPose_13DE          ;$00CFCF ||
+    BRA .CODE_00D002                        ;$00CFD2 |/
 
-CODE_00CFD4:
-    LDA.b LevelIsSlippery_86
-    BEQ CODE_00CFE3                         ;$00CFD6 |
-    LDA.b byetudlrHold_15                   ;$00CFD8 |
-    AND.b #!HeldSides_03                    ;$00CFDA |
-    BEQ CODE_00D003                         ;$00CFDC |
-    LDA.b #$68                              ;$00CFDE |
-    STA.w PlayerPoseLenTimer_13E5           ;$00CFE0 |
-CODE_00CFE3:
-    LDA.w PlayerWalkingPose_13DB
+.CODE_00CFD4
+    LDA.b LevelIsSlippery_86                ;$00CFD4 |
+    BEQ +                                   ;$00CFD6 |\
+    LDA.b byetudlrHold_15                   ;$00CFD8 ||
+    AND.b #!HeldSides_03                    ;$00CFDA ||
+    BEQ .CODE_00D003                        ;$00CFDC ||
+    LDA.b #$68                              ;$00CFDE ||
+    STA.w PlayerPoseLenTimer_13E5           ;$00CFE0 |/
++   LDA.w PlayerWalkingPose_13DB            ;$00CFE3 |
     LDY.w PlayerAniTimer_1496               ;$00CFE6 |
-    BNE CODE_00D003                         ;$00CFE9 |
+    BNE .CODE_00D003                        ;$00CFE9 |
     DEC A                                   ;$00CFEB |
-    BPL CODE_00CFF3                         ;$00CFEC |
-    LDY.b Powerup_19                        ;$00CFEE |
-    LDA.w NumWalkingFrames,Y                ;$00CFF0 |
-CODE_00CFF3:
-    XBA
+    BPL +                                   ;$00CFEC |\
+    LDY.b Powerup_19                        ;$00CFEE ||
+    LDA.w NumWalkingFrames,Y                ;$00CFF0 |/
++   XBA                                     ;$00CFF3 |
     TXA                                     ;$00CFF4 |
     LSR                                     ;$00CFF5 |
     LSR                                     ;$00CFF6 |
@@ -8608,36 +8598,35 @@ CODE_00CFF3:
     TAY                                     ;$00CFFB |
     LDA.w DATA_00DC7C,Y                     ;$00CFFC |
     STA.w PlayerAniTimer_1496               ;$00CFFF |
-CODE_00D002:
+.CODE_00D002
     XBA
-CODE_00D003:
+.CODE_00D003
     STA.w PlayerWalkingPose_13DB
     CLC                                     ;$00D006 |
     ADC.w PlayerOverworldPose_13DE          ;$00D007 |
     LDY.w CarryingFlagMirror_148F           ;$00D00A |
-    BEQ CODE_00D014                         ;$00D00D |
+    BEQ ..CODE_00D014                       ;$00D00D |
     CLC                                     ;$00D00F |
     ADC.b #$07                              ;$00D010 |
-    BRA CODE_00D01A                         ;$00D012 |
+    BRA update_wall_run_pose_and_dir_00D01A ;$00D012 |
 
-CODE_00D014:
+..CODE_00D014
     CPX.b #$2F
-    BCC CODE_00D01A                         ;$00D016 |
+    BCC update_wall_run_pose_and_dir_00D01A ;$00D016 |
     ADC.b #$03                              ;$00D018 |
-CODE_00D01A:
-    LDY.w WallRunFlag_13E3
-    BEQ MarioAnimNo45                       ;$00D01D |
-    TYA                                     ;$00D01F |
-    AND.b #$01                              ;$00D020 |
-    STA.b PlayerDir_76                      ;$00D022 |
-    LDA.b #$10                              ;$00D024 |
-    CPY.b #$06                              ;$00D026 |
-    BCC MarioAnimNo45                       ;$00D028 |
-    LDA.w PlayerWalkingPose_13DB            ;$00D02A |
-    CLC                                     ;$00D02D |
-    ADC.b #$11                              ;$00D02E |
-MarioAnimNo45:
-    STA.w PlayerPose_13E0
+update_wall_run_pose_and_dir_00D01A:
+    LDY.w WallRunFlag_13E3                  ;$00D01A |
+    BEQ +                                   ;$00D01D |\
+    TYA                                     ;$00D01F ||
+    AND.b #$01                              ;$00D020 ||
+    STA.b PlayerDir_76                      ;$00D022 ||
+    LDA.b #$10                              ;$00D024 ||
+    CPY.b #$06                              ;$00D026 ||
+    BCC +                                   ;$00D028 ||
+    LDA.w PlayerWalkingPose_13DB            ;$00D02A ||
+    CLC                                     ;$00D02D ||
+    ADC.b #$11                              ;$00D02E |/
++   STA.w PlayerPose_13E0                   ;$00D030 |
     RTL                                     ;$00D033 |
 
 DATA_00D034:
