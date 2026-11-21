@@ -1969,87 +1969,83 @@ try_castle_entrance_00919B:
     STA.w GreenStarBlockCoins_0DC0          ;$0091AD |/
 ++  RTS                                     ;$0091B0 |
 
-CODE_0091B1:
-    JSR CODE_00A82D
-    LDX.b #$00                              ;$0091B4 |
-    LDA.b #$B0                              ;$0091B6 |
+show_level_loading_text_0091B1:             ;        | Routine to display text during level load
+    JSR CODE_00A82D                         ;$0091B1 | Load "MARIO/LUIGI START !" tiles
+    LDX.b #$00                              ;$0091B4 | Load "MARIO START !"
+    LDA.b #$B0                              ;$0091B6 | X position of the rightmost tile of the "MARIO START !" message
     LDY.w BonusGameFlag_1425                ;$0091B8 |
-    BEQ CODE_0091CA                         ;$0091BB |
-    STZ.w InGameTimerHundreds_0F31          ;$0091BD |
-    STZ.w InGameTimerTens_0F32              ;$0091C0 |
-    STZ.w InGameTimerOnes_0F33              ;$0091C3 |
-    LDX.b #$26                              ;$0091C6 |
-    LDA.b #$A4                              ;$0091C8 |
-CODE_0091CA:
-    STA $00
+    BEQ +                                   ;$0091BB |\ skip if not loading a bonus game
+    STZ.w InGameTimerHundreds_0F31          ;$0091BD || change the text display to "BONUS GAME"
+    STZ.w InGameTimerTens_0F32              ;$0091C0 || clear the timer
+    STZ.w InGameTimerOnes_0F33              ;$0091C3 ||
+    LDX.b #$26                              ;$0091C6 ||
+    LDA.b #$A4                              ;$0091C8 |/ X position of the rightmost tile of the "BONUS GAME" message
++   STA $00                                 ;$0091CA |
     STZ $01                                 ;$0091CC |
-    LDY.b #$70                              ;$0091CE |
-CODE_0091D0:
-    JSR CODE_0091E9
+    LDY.b #$70                              ;$0091CE | number of tiles to draw, times 8
+.draw_letter_0091D0                         ;        |
+    JSR draw_one_title_letter_0091E9        ;$0091D0 |
     INX                                     ;$0091D3 |
     CPX.b #$08                              ;$0091D4 |
-    BNE CODE_0091DF                         ;$0091D6 |
-    LDA.w CurrentPlayer_0DB3                ;$0091D8 |
-    BEQ CODE_0091DF                         ;$0091DB |
-    LDX.b #$0E                              ;$0091DD |
-CODE_0091DF:
-    TYA
+    BNE +                                   ;$0091D6 |\
+    LDA.w CurrentPlayer_0DB3                ;$0091D8 ||
+    BEQ +                                   ;$0091DB || If playing as Luigi, load "LUIGI" instead of "MARIO"
+    LDX.b #$0E                              ;$0091DD |/
++   TYA                                     ;$0091DF |
     SEC                                     ;$0091E0 |
-    SBC.b #$08                              ;$0091E1 |
+    SBC.b #$08                              ;$0091E1 | Move to next letter
     TAY                                     ;$0091E3 |
-    BNE CODE_0091D0                         ;$0091E4 |
+    BNE .draw_letter_0091D0                 ;$0091E4 |
     JMP consolidate_OAM_008494              ;$0091E6 |
 
-CODE_0091E9:
-    LDA.w DATA_009139,X
-    STA.w $030B,Y                           ;$0091EC |
+draw_one_title_letter_0091E9:              ;        |
+    LDA.w DATA_009139,X                     ;$0091E9 |
+    STA.w $030B,Y                           ;$0091EC | Store the YXPPCCCT properties to OAM
     LDA.w DATA_00916A,X                     ;$0091EF |
     STA.w $030F,Y                           ;$0091F2 |
     LDA $00                                 ;$0091F5 |
-    STA.w $0308,Y                           ;$0091F7 |
+    STA.w $0308,Y                           ;$0091F7 | Set the X position of each letter to OAM
     STA.w $030C,Y                           ;$0091FA |
     SEC                                     ;$0091FD |
-    SBC.b #$08                              ;$0091FE |
+    SBC.b #$08                              ;$0091FE | Move next letter 8 pixels to the left
     STA $00                                 ;$009200 |
-    BCS CODE_009206                         ;$009202 |
-    DEC $01                                 ;$009204 |
-CODE_009206:
-    PHY
+    BCS +                                   ;$009202 |\
+    DEC $01                                 ;$009204 |/
++   PHY                                     ;$009206 |
     TYA                                     ;$009207 |
     LSR                                     ;$009208 |
     LSR                                     ;$009209 |
     TAY                                     ;$00920A |
-    LDA $01                                 ;$00920B |
+    LDA $01                                 ;$00920B | Set size
     AND.b #$01                              ;$00920D |
     STA.w $0462,Y                           ;$00920F |
     STA.w $0463,Y                           ;$009212 |
     PLY                                     ;$009215 |
     LDA.w DATA_0090D1,X                     ;$009216 |
-    BMI Return00922E                        ;$009219 |
-    STA.w $030A,Y                           ;$00921B |
-    LDA.w DATA_009105,X                     ;$00921E |
-    STA.w $030E,Y                           ;$009221 |
-    LDA.b #$68                              ;$009224 |
-    STA.w $0309,Y                           ;$009226 |
-    LDA.b #$70                              ;$009229 |
-    STA.w $030D,Y                           ;$00922B |
-Return00922E:
-    RTS
+    BMI +                                   ;$009219 |\
+    STA.w $030A,Y                           ;$00921B || Store the tile numbers to OAM
+    LDA.w DATA_009105,X                     ;$00921E ||
+    STA.w $030E,Y                           ;$009221 ||
+    LDA.b #$68                              ;$009224 || Y position of the top half of the loading screen messages
+    STA.w $0309,Y                           ;$009226 ||
+    LDA.b #$70                              ;$009229 || Y position of the bottom half of the loading screen messages
+    STA.w $030D,Y                           ;$00922B |/
++   RTS                                     ;$00922E |
 
-CODE_00922F:
-    STZ.w MainPalette_0703
-    STZ.w MainPalette_0703+1                ;$009232 |
+upload_palettes_to_CGRAM_00922F:
+    STZ.w MainPalette_0703                  ;$00922F | Upload palettes from $0703 to CGRAM
+    STZ.w MainPalette_0703+1                ;$009232 | Clear first color of palette data
     STZ.w $2121                             ;$009235 |
-    LDX.b #$06                              ;$009238 |
--   LDA.w .DATA_009249,X                    ;$00923A |\
-    STA.w $4320,X                           ;$00923D ||
-    DEX                                     ;$009240 ||
-    BPL -                                   ;$009241 |/
+    LDX.b #$06                              ;$009238 | Set up and enable DMA on channel 2
+-   LDA.w .main_palette_DMA_009249,X        ;$00923A |\ $4320: Increment, one register write once
+    STA.w $4320,X                           ;$00923D || $4321: Destination is $2122 (CGRAM)
+    DEX                                     ;$009240 || $4322: Source is $000703
+    BPL -                                   ;$009241 |/ $4325: Write x200 bytes
     LDA.b #$04                              ;$009243 |
     STA.w DMAEnable_420B                    ;$009245 |
     RTS                                     ;$009248 |
 
-.DATA_009249:
+.main_palette_DMA_009249:
     db $00,$22,$03,$07,$00,$00,$02
 
 setup_window_HDMA_009250:
@@ -2254,38 +2250,38 @@ GM00_nintendo_load_009391:
     STA.w SPCIO3_1DFC                       ;$0093C2 |
     LDA.b #$40                              ;$0093C5 |
     STA.w NintendoPresentsTimer_1DF5        ;$0093C7 |
-CODE_0093CA:
-    LDA.b #$0F
-    STA.w Brightness_0DAE                   ;$0093CC |
+set_screen_increment_mode_0093CA:
+    LDA.b #$0F                              ;$0093CA |\ Set brightness to max
+    STA.w Brightness_0DAE                   ;$0093CC |/
     LDA.b #$01                              ;$0093CF |
     STA.w MosaicDirection_0DAF              ;$0093D1 |
-    STZ.w SpritePalette_192E                ;$0093D4 |
-    JSR load_palette_00ABED                 ;$0093D7 |
-    STZ.w $0701                             ;$0093DA |
-    STZ.w $0702                             ;$0093DD |
-    JSR CODE_00922F                         ;$0093E0 |
-    STZ.w BlinkCursorPos_1B92               ;$0093E3 |
-    LDX.b #$10                              ;$0093E6 |
-    LDY.b #$04                              ;$0093E8 |
-CODE_0093EA:
+    STZ.w SpritePalette_192E                ;$0093D4 | Sprite palette setting = 0
+    JSR load_palette_00ABED                 ;$0093D7 | Load palettes from ROM to RAM
+    STZ.w BackgroundColor_0701              ;$0093DA |\ Black background
+    STZ.w BackgroundColor_0701+1            ;$0093DD |/
+    JSR upload_palettes_to_CGRAM_00922F     ;$0093E0 |
+    STZ.w BlinkCursorPos_1B92               ;$0093E3 | Set menu pointer position to 0
+    LDX.b #$10                              ;$0093E6 | Enable sprites, disable layers
+    LDY.b #$04                              ;$0093E8 | Set Layer 3 to subscreen
+set_title_screen_0093EA:
     LDA.b #!IRQNMICutscenes_01
     STA.w IRQNMICommand_0D9B                ;$0093EC |
     LDA.b #$20                              ;$0093EF |
-    JSR ScreenSettings                      ;$0093F1 |
+    JSR update_screen_settings_0093FD       ;$0093F1 |
 increment_game_mode_0093F4:
     INC.w GameMode_0100
-Mode04Finish:
-    LDA.b #$81
-    STA.w $4200                             ;$0093F9 |
+enable_NMI_auto_joypad_0093F7:
+    LDA.b #$81                              ;$0093F7 |\ Enable NMI and auto-joypad reading.
+    STA.w $4200                             ;$0093F9 |/
     RTS                                     ;$0093FC |
 
-ScreenSettings:
+update_screen_settings_0093FD:
     STA.w $2131
-    STA.b ColorSettings_40                  ;$009400 |
-    STX.w $212C                             ;$009402 |
-    STY.w $212D                             ;$009405 |
-    STZ.w $212E                             ;$009408 |
-    STZ.w $212F                             ;$00940B |
+    STA.b ColorSettings_40                  ;$009400 | Subroutine to upload settings to the color math registers
+    STX.w $212C                             ;$009402 |\ Set main/sub screen settings.
+    STY.w $212D                             ;$009405 |/
+    STZ.w $212E                             ;$009408 |\ Disable windowing
+    STZ.w $212F                             ;$00940B |/
     RTS                                     ;$00940E |
 
 GM01_nintendo_main_00940F:
@@ -2381,7 +2377,7 @@ GM19_credits_castle_load_009468:
 .CODE_0094D7:
     JSR upload_sprite_gfx_00A9DA
     JSR load_palette_00ABED                 ;$0094DA |
-    JSR CODE_00922F                         ;$0094DD |
+    JSR upload_palettes_to_CGRAM_00922F     ;$0094DD |
     LDX.b #$0B                              ;$0094E0 |
 -   STZ.b Layer1XPos_1A,X                   ;$0094E2 |\
     DEX                                     ;$0094E4 ||
@@ -2526,7 +2522,7 @@ GM23_ending_enemy_scene_0095C1:
     STA.w $0827,X                           ;$00960C ||
     DEX                                     ;$00960F ||
     BPL -                                   ;$009610 |/
-+   JSR CODE_00922F                         ;$009612 |
++   JSR upload_palettes_to_CGRAM_00922F     ;$009612 |
     JSR CODE_0092B2                         ;$009615 |
     JSR load_stripe_image_0085D2            ;$009618 |
     JSR GM25_ending_enemy_main_00962C       ;$00961B |
@@ -2537,7 +2533,7 @@ CODE_009622:
     JSR delay_game_mode_1_frame_009F29
     LDA.b #$09                              ;$009625 |
     STA.b MainBGMode_3E                     ;$009627 |
-    JMP CODE_0093EA                         ;$009629 |
+    JMP set_title_screen_0093EA             ;$009629 |
 
 GM25_ending_enemy_main_00962C:
     STZ.w PlayerGfxTileCount_0D84
@@ -2568,7 +2564,7 @@ GM27_the_end_load_00963D:
     STA.w $08E7,X                           ;$00966F ||
     DEX                                     ;$009672 ||
     BPL -                                   ;$009673 |/
-    JSR CODE_00922F                         ;$009675 |
+    JSR upload_palettes_to_CGRAM_00922F     ;$009675 |
     LDA.b #$D5                              ;$009678 |
     STA.b StripeImage_12                    ;$00967A |
     JSR load_stripe_image_0085D2            ;$00967C |
@@ -2579,23 +2575,22 @@ GM27_the_end_load_00963D:
     JMP CODE_009622                         ;$00968A |
 
 GM29_the_end_main_00968D:
-    RTS
+    RTS                                     ;$00968A | game is completed, do nothing else
 
 GM10_level_start_00968E:
     JSR clear_out_layer3_0085FA
     LDA.w BonusGameFlag_1425                ;$009691 |
-    BNE CODE_0096A8                         ;$009694 |
-    LDA.w SublevelCount_141A                ;$009696 |
-    ORA.w ShowMarioStart_141D               ;$009699 |
-    ORA.w OverworldOverride_0109            ;$00969C |
-    BNE CODE_0096AB                         ;$00969F |
-    LDA.w OverworldLayer1Tile_13C1          ;$0096A1 |
-    CMP.b #$56                              ;$0096A4 |
-    BEQ CODE_0096AB                         ;$0096A6 |
-CODE_0096A8:
-    JSR CODE_0091B1
-CODE_0096AB:
-    JMP CODE_0093CA
+    BNE +                                   ;$009694 |\ skip if bonus game should be loaded
+    LDA.w SublevelCount_141A                ;$009696 || Don't show "MARIO START!" if:
+    ORA.w ShowMarioStart_141D               ;$009699 ||  - entering sublevel
+    ORA.w OverworldOverride_0109            ;$00969C ||  - no yoshi intro
+    BNE .skip_level_title_0096AB            ;$00969F ||  - exiting to overworld
+    LDA.w OverworldLayer1Tile_13C1          ;$0096A1 ||  - entering yoshi's house
+    CMP.b #$56                              ;$0096A4 ||
+    BEQ .skip_level_title_0096AB            ;$0096A6 |/
++   JSR show_level_loading_text_0091B1      ;$0096A8 | show "Mario Start" or "Bonus Game"
+.skip_level_title_0096AB
+    JMP set_screen_increment_mode_0093CA    ;$0096AB |
 
 GM03_title_load_1_0096AE:
     STZ.w $4200
@@ -2662,7 +2657,7 @@ GM11_level_load_1_0096D5:
     STZ.w Brightness_0DAE
     STZ.w MosaicDirection_0DAF              ;$009743 |
     INC.w GameMode_0100                     ;$009746 |
-    JMP Mode04Finish                        ;$009749 |
+    JMP enable_NMI_auto_joypad_0093F7       ;$009749 |
 
 CODE_00974C:
     JSR hex_to_dec_009045
@@ -2671,7 +2666,7 @@ CODE_00974C:
 GM16_game_over_load_009750:
     JSR clear_out_layer3_0085FA
     JSR CODE_00A82D                         ;$009753 |
-    JMP CODE_0093CA                         ;$009756 |
+    JMP set_screen_increment_mode_0093CA    ;$009756 |
 
 GM17_game_over_main_009759:
     JSL OAM_reset_7F8000
@@ -2718,7 +2713,7 @@ CODE_00979D:
     EOR.b #$01                              ;$0097AA |
     STA $01                                 ;$0097AC |
 CODE_0097AE:
-    JSR CODE_0091E9
+    JSR draw_one_title_letter_0091E9
     INX                                     ;$0097B1 |
     TYA                                     ;$0097B2 |
     SEC                                     ;$0097B3 |
@@ -2731,7 +2726,7 @@ load_boss_room_0097BC:
     LDA.b #$0F
     STA.w Brightness_0DAE                   ;$0097BE |
     STZ.w MosaicSize_0DB0                   ;$0097C1 |
-    JSR GMPPMosaic                          ;$0097C4 |
+    JSR increment_game_mode_mosaic_009F5B   ;$0097C4 |
     LDA.b #$20                              ;$0097C7 |
     STA.b Mode7XScale_38                    ;$0097C9 |
     STA.b Mode7YScale_39                    ;$0097CB |
@@ -3065,7 +3060,7 @@ GM04_title_load_2_009A8B:
     STA.b StripeImage_12                    ;$009A99 |
     JSR load_stripe_image_0085D2            ;$009A9B |
     JSR CODE_00ADA6                         ;$009A9E |
-    JSR CODE_00922F                         ;$009AA1 |
+    JSR upload_palettes_to_CGRAM_00922F     ;$009AA1 |
     JSL CODE_04F675                         ;$009AA4 |
     LDA.b #!IRQNMICutscenes_01              ;$009AA8 |
     STA.w IRQNMICommand_0D9B                ;$009AAA |
@@ -3080,7 +3075,7 @@ GM04_title_load_2_009A8B:
     JSR CODE_009443                         ;$009ABD |
     LDA.b #$10                              ;$009AC0 |
     STA.w IntroSequenceTimer_1DF5           ;$009AC2 |
-    JMP Mode04Finish                        ;$009AC5 |
+    JMP enable_NMI_auto_joypad_0093F7       ;$009AC5 |
 
 DATA_009AC8:
     db $01,$FF,$FF
@@ -3706,7 +3701,7 @@ DATA_009F33:
 
 GMs_transition_mosaic_009F37:
     DEC.w KeepModeActive_0DB1
-    BPL return_009F6E                       ;$009F3A |
+    BPL return_009F6E                       ;$009F3A | return if keep mode timer is not negative yet
     JSR delay_game_mode_1_frame_009F29      ;$009F3C |
     LDY.w MosaicDirection_0DAF              ;$009F3F |
     LDA.w MosaicSize_0DB0                   ;$009F42 |
@@ -3720,7 +3715,7 @@ CODE_009F4C:
     STA.w Brightness_0DAE                   ;$009F53 |
     CMP.w DATA_009F33,Y                     ;$009F56 |
     BNE +                                   ;$009F59 |\
-GMPPMosaic:                                 ;        ||
+increment_game_mode_mosaic_009F5B:          ;        ||
     INC.w GameMode_0100                     ;$009F5B ||
     LDA.w MosaicDirection_0DAF              ;$009F5E ||
     EOR.b #$01                              ;$009F61 ||
@@ -3733,7 +3728,7 @@ return_009F6E:
 
 GMs_transition_fade_009F6F:
     DEC.w KeepModeActive_0DB1
-    BPL return_009F6E                       ;$009F72 |
+    BPL return_009F6E                       ;$009F72 | return if keep mode timer is not negative yet
     JSR delay_game_mode_1_frame_009F29      ;$009F74 |
 CODE_009F77:
     LDY.w MosaicDirection_0DAF
@@ -3879,7 +3874,7 @@ GM0C_overworld_load_00A087:
     STA.w MosaicSize_0DB0                   ;$00A0A5 |
     LDA.b #!FadeLevelBlack_10               ;$00A0A8 |
     STA.w GameMode_0100                     ;$00A0AA |
-    JMP Mode04Finish                        ;$00A0AD |
+    JMP enable_NMI_auto_joypad_0093F7       ;$00A0AD |
 
 .not_intro_level_00A0B0:
     JSR clear_out_layer3_0085FA
@@ -3927,7 +3922,7 @@ GM0C_overworld_load_00A087:
     LDX.b #$17                              ;$00A119 |
 .CODE_00A11B:
     LDY.b #$02
-    JSR ScreenSettings                      ;$00A11D |
+    JSR update_screen_settings_0093FD       ;$00A11D |
     STX.w $212E                             ;$00A120 |
     STY.w $212F                             ;$00A123 |
     JSL load_OW_layer1_tilemap_04DC09       ;$00A126 |
@@ -3947,7 +3942,7 @@ GM0C_overworld_load_00A087:
     LDY.b #$14                              ;$00A147 |
     JSL CODE_00BA28                         ;$00A149 |
     JSR CODE_00AD25                         ;$00A14D |
-    JSR CODE_00922F                         ;$00A150 |
+    JSR upload_palettes_to_CGRAM_00922F     ;$00A150 |
     LDA.b #$06                              ;$00A153 |
     STA.b StripeImage_12                    ;$00A155 |
     JSR load_stripe_image_0085D2            ;$00A157 |
@@ -4485,7 +4480,7 @@ GM12_level_load_2_00A59C:
     JSR disable_HDMA_009260                 ;$00A5C9 |
     JSR run_level_physics_009860            ;$00A5CC |
 .common_level_00A5CF:
-    JSR CODE_00922F
+    JSR upload_palettes_to_CGRAM_00922F
     JSR delay_game_mode_1_frame_009F29      ;$00A5D2 |
     JSR update_status_tileset_008E1A        ;$00A5D5 |
     REP #$30                                ;$00A5D8 | AXY->16
