@@ -6727,57 +6727,57 @@ load_CI2_room_sublevel_05DAEF:
     ROL                                     ;$05DAFA |
     JSL execute_pointer_long_0086FA         ;$05DAFB | use item memory setting as pointer
 
-.PtrsLong05DAFF:
-    dl CODE_05DB3E                          ;$05DAFF | 0
-    dl CODE_05DB6E                          ;$05DB02 | 1
-    dl CODE_05DB82                          ;$05DB05 | 2
+.CI2_II_pointers_05DAFF:
+    dl .check_dragon_coins_05DB3E           ;$05DAFF | 0: 3rd room
+    dl .check_collected_coins_05DB6E        ;$05DB02 | 1: 1st room
+    dl .check_clock_05DB82                  ;$05DB05 | 2: 2nd room
 
-ChocIsld2Layer1:
-    dw DATA_06EC24
-    dw DATA_06EC7E
-    dw DATA_06EC7E
-    dw DATA_06E985
-    dw DATA_06E9FB
-    dw DATA_06EAB0
-    dw DATA_06EB0B
-    dw DATA_06EB72
-    dw DATA_06EBBE
+.choco_island_2_layer1_05DB08
+    dw DATA_06EC24                          ;$05DB08 | 00
+    dw DATA_06EC7E                          ;$05DB0A | 02
+    dw DATA_06EC7E                          ;$05DB0C | 04
+    dw DATA_06E985                          ;$05DB0E | 06
+    dw DATA_06E9FB                          ;$05DB10 | 08
+    dw DATA_06EAB0                          ;$05DB12 | 0A
+    dw DATA_06EB0B                          ;$05DB14 | 0C
+    dw DATA_06EB72                          ;$05DB16 | 0E
+    dw DATA_06EBBE                          ;$05DB18 | 10
 
-ChocIsld2Sprites:
-    dw DATA_07D899
-    dw DATA_07D8A1
-    dw DATA_07D8A1
-    dw DATA_07D7E5
-    dw DATA_07D7EA
-    dw DATA_07D825
-    dw DATA_07D84B
-    dw DATA_07D86E
-    dw DATA_07D888
+.choco_island_2_sprites_05DB1A
+    dw DATA_07D899                          ;$05DB1A | 00
+    dw DATA_07D8A1                          ;$05DB1C | 02
+    dw DATA_07D8A1                          ;$05DB1E | 04
+    dw DATA_07D7E5                          ;$05DB20 | 06
+    dw DATA_07D7EA                          ;$05DB22 | 08
+    dw DATA_07D825                          ;$05DB24 | 0A
+    dw DATA_07D84B                          ;$05DB26 | 0C
+    dw DATA_07D86E                          ;$05DB28 | 0E
+    dw DATA_07D888                          ;$05DB2A | 10
 
-ChocIsld2Layer2:
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
-    dw DATA_0CDF59
+.choco_island_2_layer2_05DB2C
+    dw DATA_0CDF59                          ;$05DB2C | 00
+    dw DATA_0CDF59                          ;$05DB2E | 02
+    dw DATA_0CDF59                          ;$05DB30 | 04
+    dw DATA_0CDF59                          ;$05DB32 | 06
+    dw DATA_0CDF59                          ;$05DB34 | 08
+    dw DATA_0CDF59                          ;$05DB36 | 0A
+    dw DATA_0CDF59                          ;$05DB38 | 0C
+    dw DATA_0CDF59                          ;$05DB3A | 0E
+    dw DATA_0CDF59                          ;$05DB3C | 10
 
-CODE_05DB3E:
-    LDX.b #$00
+.check_dragon_coins_05DB3E:
+    LDX.b #$00                              ;$05DB3E | X: CI2 room index
     LDA.w DragonCoinsShown_1422             ;$05DB40 |
     CMP.b #$04                              ;$05DB43 |
-    BEQ CODE_05DB49                         ;$05DB45 |
-    LDX.b #$02                              ;$05DB47 |
-CODE_05DB49:
+    BEQ .set_CI2_pointers_05DB49            ;$05DB45 |\
+    LDX.b #$02                              ;$05DB47 |/
+.set_CI2_pointers_05DB49                    ;        | X: CI2 room index
     REP #$20                                ;$05DB49 | A->16
-    LDA.l ChocIsld2Layer1,X                 ;$05DB4B |
+    LDA.l .choco_island_2_layer1_05DB08,X   ;$05DB4B |
     STA.b Layer1DataPtr_65                  ;$05DB4F |
-    LDA.l ChocIsld2Sprites,X                ;$05DB51 |
+    LDA.l .choco_island_2_sprites_05DB1A,X  ;$05DB51 |
     STA.b SpriteDataPtr_CE                  ;$05DB55 |
-    LDA.l ChocIsld2Layer2,X                 ;$05DB57 |
+    LDA.l .choco_island_2_layer2_05DB2C,X   ;$05DB57 |
     STA.b Layer2DataPtr_68                  ;$05DB5B |
     SEP #$20                                ;$05DB5D | A->8
     LDA.b [SpriteDataPtr_CE]                ;$05DB5F |
@@ -6788,38 +6788,36 @@ CODE_05DB49:
     STA.w SpriteBuoyancy_190E               ;$05DB6A |
     RTS                                     ;$05DB6D |
 
-CODE_05DB6E:
-    LDX.b #$0A
+.check_collected_coins_05DB6E:
+    LDX.b #$0A                              ;$05DB6E | X: CI2 room index
     LDA.w GreenStarBlockCoins_0DC0          ;$05DB70 |
     CMP.b #$16                              ;$05DB73 |
-    BPL CODE_05DB7F                         ;$05DB75 |
-    LDX.b #$08                              ;$05DB77 |
-    CMP.b #$0A                              ;$05DB79 |
-    BPL CODE_05DB7F                         ;$05DB7B |
-    LDX.b #$06                              ;$05DB7D |
-CODE_05DB7F:
-    JMP CODE_05DB49
+    BPL +                                   ;$05DB75 |\ skip if collected 00-08 coins
+    LDX.b #$08                              ;$05DB77 ||
+    CMP.b #$0A                              ;$05DB79 ||
+    BPL +                                   ;$05DB7B || branch if collected 09-20 coins
+    LDX.b #$06                              ;$05DB7D || if collected 21+ coins
++   JMP .set_CI2_pointers_05DB49            ;$05DB7F |/
 
-CODE_05DB82:
-    LDX.b #$0C
+.check_clock_05DB82:
+    LDX.b #$0C                              ;$05DB82 | X: CI2 room index
     LDA.w InGameTimerHundreds_0F31          ;$05DB84 |
     CMP.b #$02                              ;$05DB87 |
-    BMI CODE_05DBA6                         ;$05DB89 |
-    LDA.w InGameTimerTens_0F32              ;$05DB8B |
-    CMP.b #$03                              ;$05DB8E |
-    BMI CODE_05DBA6                         ;$05DB90 |
-    BNE CODE_05DB9B                         ;$05DB92 |
-    LDA.w InGameTimerOnes_0F33              ;$05DB94 |
-    CMP.b #$05                              ;$05DB97 |
-    BMI CODE_05DBA6                         ;$05DB99 |
-CODE_05DB9B:
-    LDX.b #$0E
-    LDA.w InGameTimerTens_0F32              ;$05DB9D |
-    CMP.b #$05                              ;$05DBA0 |
-    BMI CODE_05DBA6                         ;$05DBA2 |
-    LDX.b #$10                              ;$05DBA4 |
-CODE_05DBA6:
-    JMP CODE_05DB49
+    BMI ..set_pointers_05DBA6               ;$05DB89 |\ select room for timer below 200
+    LDA.w InGameTimerTens_0F32              ;$05DB8B ||
+    CMP.b #$03                              ;$05DB8E ||
+    BMI ..set_pointers_05DBA6               ;$05DB90 || select room for timer below 230
+    BNE +                                   ;$05DB92 ||\ skip if timer is not 230-239
+    LDA.w InGameTimerOnes_0F33              ;$05DB94 |||
+    CMP.b #$05                              ;$05DB97 |||
+    BMI ..set_pointers_05DBA6               ;$05DB99 ||/ select room for timer below 235
++   LDX.b #$0E                              ;$05DB9B ||
+    LDA.w InGameTimerTens_0F32              ;$05DB9D ||
+    CMP.b #$05                              ;$05DBA0 ||
+    BMI ..set_pointers_05DBA6               ;$05DBA2 || select room for timer below 250
+    LDX.b #$10                              ;$05DBA4 |/ select room for timer 250 or above
+..set_pointers_05DBA6
+    JMP .set_CI2_pointers_05DB49
 
 DATA_05DBA9:
     db $00,$C8,$00
