@@ -5990,7 +5990,7 @@ CODE_05CFDC:
 Return05CFE9:
     RTS
 
-DATA_05CFEA:
+.unused_05CFEA
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF,$FF,$FF,$FF,$22,$01
@@ -6188,7 +6188,7 @@ DATA_05CFEA:
     db $09,$00,$0A,$00,$0B,$00,$00,$00
     db $00,$00,$00,$00,$00,$00
 
-DATA_05D608:
+translevel_events_05D608:
     db $FF,$1F,$20,$FF,$0B,$0D,$0E,$0F
     db $28,$09,$10,$21,$22,$23,$24,$25
     db $27,$60,$FF,$12,$02,$07,$FF,$FF
@@ -6202,7 +6202,7 @@ DATA_05D608:
     db $67,$68,$56,$53,$54,$5F,$57,$59
     db $51,$5A,$5D,$50,$5C
 
-Empty05D665:
+.empty_05D665
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
@@ -6225,28 +6225,30 @@ Empty05D665:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF,$FF
 
-DATA_05D708:
+room_init_layer1_y_05D708:
     db $00,$60,$C0,$00
 
-DATA_05D70C:
+room_init_layer2_y_05D70C:
     db $60,$90,$C0,$00
 
-DATA_05D710:
+vertical_layer2_settings_05D710:
     db $03,$01,$01,$00,$00,$02,$02,$01
     db $00,$00,$00,$00,$00,$00,$00,$00
-DATA_05D720:
+horiz_layer2_settings_05D720:
     db $02,$02,$01,$00,$01,$02,$01,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
-DATA_05D730:
+
+player_room_init_y_low_05D730:
     db $00,$30,$60,$80,$A0,$B0,$C0,$E0
     db $10,$30,$50,$60,$70,$90,$00,$00
-DATA_05D740:
+player_room_init_y_high_05D740:
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $01,$01,$01,$01,$01,$01,$01,$01
-DATA_05D750:
+player_room_init_x_low_05D750:
     db $10,$80,$00,$E0,$10,$70,$00,$E0
-DATA_05D758:
+player_room_init_x_high_05D758:
     db $00,$00,$00,$00,$01,$01,$01,$01
+
 tilesets_05D760:
     db !TilesetGhost1_05
     db !TilesetCastle1_01
@@ -6255,7 +6257,7 @@ tilesets_05D760:
     db !TilesetRope3_08
     db !TilesetCastle1_01
 
-PtrsLong05D766:
+castle_layer1_pointers_05D766:
     dl LevelData078000
     dl DATA_07801E
     dl DATA_07804E
@@ -6263,7 +6265,7 @@ PtrsLong05D766:
     dl DATA_0780B1
     dl DATA_078090
 
-PtrsLong05D778:
+castle_layer2_pointers_05D778:
     dl DATA_078018
     dl $FFD900
     dl $FFD900
@@ -6271,169 +6273,169 @@ PtrsLong05D778:
     dl $FFDF59
     dl $FFE8EE
 
-DATA_05D78A:
+castle_intro_layer3_05D78A:
     db $03,$00,$00,$00,$00,$00
 
-DATA_05D790:
+castle_intro_x_low_05D790:
     db $70,$70,$60,$70,$70,$70
 
-CODE_05D796:
+; Loads and initializes the level environment, whether entering a level
+; from the overworld, loading another room within the level, entering
+; a bonus level, or triggering a castle entrance sequence. Sets up
+; layer data pointers, sprite settings, player spawn position, screen
+; mode, layer settings, entrance type, and other level-specific settings
+setup_level_environment_05D796:
     PHB
     PHK                                     ;$05D797 |
     PLB                                     ;$05D798 |
     SEP #$30                                ;$05D799 | AXY->8
     STZ.w SkipMidwayCastleIntro_13CF        ;$05D79B |
     LDA.w YoshiHeavenFlag_1B95              ;$05D79E |
-    BNE CODE_05D7A8                         ;$05D7A1 |
-    LDY.w BonusGameFlag_1425                ;$05D7A3 |
-    BEQ CODE_05D7AB                         ;$05D7A6 |
-CODE_05D7A8:
-    JSR CODE_05DBAC
-CODE_05D7AB:
-    LDA.w SublevelCount_141A
-    BNE CODE_05D7B3                         ;$05D7AE |
-    JMP CODE_05D83E                         ;$05D7B0 |
+    BNE .bonus_or_heaven_05D7A8             ;$05D7A1 |\ branch if heading to Yoshi Heaven level
+    LDY.w BonusGameFlag_1425                ;$05D7A3 ||
+    BEQ +                                   ;$05D7A6 |/ branch if not heading to Bonus
+.bonus_or_heaven_05D7A8                     ;        |\
+    JSR heaven_bonus_exit_table_05DBAC      ;$05D7A8 |/
++   LDA.w SublevelCount_141A                ;$05D7AB |
+    BNE .setup_sublevel_05D7B3              ;$05D7AE |
+    JMP .setup_first_room_05D83E            ;$05D7B0 |
 
-CODE_05D7B3:
-    LDX.b PlayerXPos_94+1
+.setup_sublevel_05D7B3
+    LDX.b PlayerXPos_94+1                   ;$05D7B3 | X: ;;;
     LDA.b ScreenMode_5B                     ;$05D7B5 |
     AND.b #!Layer1Vert_01                   ;$05D7B7 |
-    BEQ CODE_05D7BD                         ;$05D7B9 |
-    LDX.b PlayerYPos_96+1                   ;$05D7BB |
-CODE_05D7BD:
-    LDA.w ExitTableLow_19B8,X
+    BEQ +                                   ;$05D7B9 |\
+    LDX.b PlayerYPos_96+1                   ;$05D7BB |/
++   LDA.w ExitTableLow_19B8,X               ;$05D7BD | get low byte of destination room
     STA.w LoadingLevelNumber_17BB           ;$05D7C0 |
-    STA $0E                                 ;$05D7C3 |
+    STA $0E                                 ;$05D7C3 | $0E: low byte of destination room
     LDA.w PlayerTurnOW_0DD6                 ;$05D7C5 |
     LSR                                     ;$05D7C8 |
     LSR                                     ;$05D7C9 |
-    TAY                                     ;$05D7CA |
-    LDA.w OWPlayerSubmap_1F11,Y             ;$05D7CB |
-    BEQ CODE_05D7D2                         ;$05D7CE |
-    LDA.b #$01                              ;$05D7D0 |
-CODE_05D7D2:
-    STA $0F
+    TAY                                     ;$05D7CA | Y: 00 Mario, 01 Luigi
+    LDA.w OWPlayerSubmap_1F11,Y             ;$05D7CB | get submap of current player
+    BEQ +                                   ;$05D7CE |\
+    LDA.b #$01                              ;$05D7D0 |/
++   STA $0F                                 ;$05D7D2 | $0F: 00 Main map, 01 Sub map
     LDA.w UseSecondaryExit_1B93             ;$05D7D4 |
-    BEQ CODE_05D83B                         ;$05D7D7 |
-    REP #$30                                ;$05D7D9 | AXY->16
-    LDA.w #$0000                            ;$05D7DB |
-    SEP #$20                                ;$05D7DE | A->8
-    LDY $0E                                 ;$05D7E0 |
-    LDA.w DATA_05F800,Y                     ;$05D7E2 |
-    STA $0E                                 ;$05D7E5 |
-    STA.w LoadingLevelNumber_17BB           ;$05D7E7 |
-    LDA.w DATA_05FA00,Y                     ;$05D7EA |
-    STA $00                                 ;$05D7ED |
-    AND.b #$0F                              ;$05D7EF |
-    TAX                                     ;$05D7F1 |
-    LDA.l DATA_05D730,X                     ;$05D7F2 |
-    STA.b PlayerYPos_96                     ;$05D7F6 |
-    LDA.l DATA_05D740,X                     ;$05D7F8 |
-    STA.b PlayerYPos_96+1                   ;$05D7FC |
-    LDA $00                                 ;$05D7FE |
-    AND.b #$30                              ;$05D800 |
-    LSR                                     ;$05D802 |
-    LSR                                     ;$05D803 |
-    LSR                                     ;$05D804 |
-    LSR                                     ;$05D805 |
-    TAX                                     ;$05D806 |
-    LDA.l DATA_05D708,X                     ;$05D807 |
-    STA.b Layer1YPos_1C                     ;$05D80B |
-    LDA $00                                 ;$05D80D |
-    LSR                                     ;$05D80F |
-    LSR                                     ;$05D810 |
-    LSR                                     ;$05D811 |
-    LSR                                     ;$05D812 |
-    LSR                                     ;$05D813 |
-    LSR                                     ;$05D814 |
-    TAX                                     ;$05D815 |
-    LDA.l DATA_05D70C,X                     ;$05D816 |
-    STA.b Layer2YPos_20                     ;$05D81A |
-    LDA.w DATA_05FC00,Y                     ;$05D81C |
-    STA $01                                 ;$05D81F |
-    LSR                                     ;$05D821 |
-    LSR                                     ;$05D822 |
-    LSR                                     ;$05D823 |
-    LSR                                     ;$05D824 |
-    LSR                                     ;$05D825 |
-    TAX                                     ;$05D826 |
-    LDA.l DATA_05D750,X                     ;$05D827 |
-    STA.b PlayerXPos_94                     ;$05D82B |
-    LDA.l DATA_05D758,X                     ;$05D82D |
-    STA.b PlayerXPos_94+1                   ;$05D831 |
-    LDA.w DATA_05FE00,Y                     ;$05D833 |
-    AND.b #$07                              ;$05D836 |
-    STA.w LevelEntranceType_192A            ;$05D838 |
-CODE_05D83B:
-    JMP CODE_05D8B7
+    BEQ ..skip_secondary_exit_05D83B        ;$05D7D7 |\ skip if not coming back to the main room
+                                            ;        || come back to main room from a secondary one
+    REP #$30                                ;$05D7D9 || AXY->16
+    LDA.w #$0000                            ;$05D7DB ||
+    SEP #$20                                ;$05D7DE || A->8
+    LDY $0E                                 ;$05D7E0 || get low byte of destination room
+    LDA.w sec_entrance_dddddddd_05F800,Y    ;$05D7E2 ||
+    STA $0E                                 ;$05D7E5 || $0E: 
+    STA.w LoadingLevelNumber_17BB           ;$05D7E7 ||
+    LDA.w sec_entrance_bbffyyyy_05FA00,Y    ;$05D7EA ||
+    STA $00                                 ;$05D7ED || $00: ;;;
+    AND.b #$0F                              ;$05D7EF ||
+    TAX                                     ;$05D7F1 || X: index to current spawn location;;;
+    LDA.l player_room_init_y_low_05D730,X   ;$05D7F2 ||
+    STA.b PlayerYPos_96                     ;$05D7F6 ||
+    LDA.l player_room_init_y_high_05D740,X  ;$05D7F8 ||
+    STA.b PlayerYPos_96+1                   ;$05D7FC ||
+    LDA $00                                 ;$05D7FE ||
+    AND.b #$30                              ;$05D800 ||
+    LSR                                     ;$05D802 ||
+    LSR                                     ;$05D803 ||
+    LSR                                     ;$05D804 ||
+    LSR                                     ;$05D805 ||
+    TAX                                     ;$05D806 || X: ;;;
+    LDA.l room_init_layer1_y_05D708,X       ;$05D807 ||
+    STA.b Layer1YPos_1C                     ;$05D80B ||
+    LDA $00                                 ;$05D80D ||
+    LSR                                     ;$05D80F ||
+    LSR                                     ;$05D810 ||
+    LSR                                     ;$05D811 ||
+    LSR                                     ;$05D812 ||
+    LSR                                     ;$05D813 ||
+    LSR                                     ;$05D814 ||
+    TAX                                     ;$05D815 || X: ;;;
+    LDA.l room_init_layer2_y_05D70C,X       ;$05D816 ||
+    STA.b Layer2YPos_20                     ;$05D81A ||
+    LDA.w sec_entrance_xxxSSSSS_05FC00,Y    ;$05D81C ||
+    STA $01                                 ;$05D81F || $01: ;;;
+    LSR                                     ;$05D821 ||
+    LSR                                     ;$05D822 ||
+    LSR                                     ;$05D823 ||
+    LSR                                     ;$05D824 ||
+    LSR                                     ;$05D825 ||
+    TAX                                     ;$05D826 || X: ;;;
+    LDA.l player_room_init_x_low_05D750,X   ;$05D827 ||
+    STA.b PlayerXPos_94                     ;$05D82B ||
+    LDA.l player_room_init_x_high_05D758,X  ;$05D82D ||
+    STA.b PlayerXPos_94+1                   ;$05D831 ||
+    LDA.w sec_entrance_IPYXDAAA_05FE00,Y    ;$05D833 ||
+    AND.b #$07                              ;$05D836 ||
+    STA.w LevelEntranceType_192A            ;$05D838 |/
+..skip_secondary_exit_05D83B
+    JMP .set_data_pointers_05D8B7
 
-CODE_05D83E:
-    STZ $0F
-    LDY.b #$00                              ;$05D840 |
+.setup_first_room_05D83E
+    STZ $0F                                 ;$05D83E | $0F: ;;;
+    LDY.b #$00                              ;$05D840 | Y: ;;;
     LDA.w OverworldOverride_0109            ;$05D842 |
-    BNE CODE_05D8A2                         ;$05D845 |
-    REP #$30                                ;$05D847 | AXY->16
-    STZ.b Layer1XPos_1A                     ;$05D849 |
-    STZ.b Layer2XPos_1E                     ;$05D84B |
-    LDX.w PlayerTurnOW_0DD6                 ;$05D84D |
-    LDA.w OWPlayerXPosPtr_1F1F,X            ;$05D850 |
-    AND.w #$000F                            ;$05D853 |
-    STA $00                                 ;$05D856 |
-    LDA.w OWPlayerYPosPtr_1F21,X            ;$05D858 |
-    AND.w #$000F                            ;$05D85B |
-    ASL                                     ;$05D85E |
-    ASL                                     ;$05D85F |
-    ASL                                     ;$05D860 |
-    ASL                                     ;$05D861 |
-    STA $02                                 ;$05D862 |
-    LDA.w OWPlayerXPosPtr_1F1F,X            ;$05D864 |
-    AND.w #$0010                            ;$05D867 |
-    ASL                                     ;$05D86A |
-    ASL                                     ;$05D86B |
-    ASL                                     ;$05D86C |
-    ASL                                     ;$05D86D |
-    ORA $00                                 ;$05D86E |
-    STA $00                                 ;$05D870 |
-    LDA.w OWPlayerYPosPtr_1F21,X            ;$05D872 |
-    AND.w #$0010                            ;$05D875 |
-    ASL                                     ;$05D878 |
-    ASL                                     ;$05D879 |
-    ASL                                     ;$05D87A |
-    ASL                                     ;$05D87B |
-    ASL                                     ;$05D87C |
-    ORA $02                                 ;$05D87D |
-    ORA $00                                 ;$05D87F |
-    TAX                                     ;$05D881 |
-    LDA.w PlayerTurnOW_0DD6                 ;$05D882 |
-    AND.w #$00FF                            ;$05D885 |
-    LSR                                     ;$05D888 |
-    LSR                                     ;$05D889 |
-    TAY                                     ;$05D88A |
-    LDA.w OWPlayerSubmap_1F11,Y             ;$05D88B |
-    AND.w #$000F                            ;$05D88E |
-    BEQ CODE_05D899                         ;$05D891 |
-    TXA                                     ;$05D893 |
-    CLC                                     ;$05D894 |
-    ADC.w #$0400                            ;$05D895 |
-    TAX                                     ;$05D898 |
-CODE_05D899:
-    SEP #$20                                ;$05D899 | A->8
-    LDA.l OWLayer1Translevel_D000,X         ;$05D89B |
-    STA.w Translevel_13BF                   ;$05D89F |
-CODE_05D8A2:
-    CMP.b #$25
-    BCC CODE_05D8A9                         ;$05D8A4 |
-    SEC                                     ;$05D8A6 |
-    SBC.b #$24                              ;$05D8A7 |
-CODE_05D8A9:
-    STA.w LoadingLevelNumber_17BB
+    BNE ..intro_demo_level_05D8A2           ;$05D845 |\ skip if loading the into demo level
+    REP #$30                                ;$05D847 || AXY->16
+    STZ.b Layer1XPos_1A                     ;$05D849 ||
+    STZ.b Layer2XPos_1E                     ;$05D84B ||
+    LDX.w PlayerTurnOW_0DD6                 ;$05D84D ||
+    LDA.w OWPlayerXPosPtr_1F1F,X            ;$05D850 ||
+    AND.w #$000F                            ;$05D853 ||
+    STA $00                                 ;$05D856 ||
+    LDA.w OWPlayerYPosPtr_1F21,X            ;$05D858 ||
+    AND.w #$000F                            ;$05D85B ||
+    ASL                                     ;$05D85E ||
+    ASL                                     ;$05D85F ||
+    ASL                                     ;$05D860 ||
+    ASL                                     ;$05D861 ||
+    STA $02                                 ;$05D862 ||
+    LDA.w OWPlayerXPosPtr_1F1F,X            ;$05D864 ||
+    AND.w #$0010                            ;$05D867 ||
+    ASL                                     ;$05D86A ||
+    ASL                                     ;$05D86B ||
+    ASL                                     ;$05D86C ||
+    ASL                                     ;$05D86D ||
+    ORA $00                                 ;$05D86E ||
+    STA $00                                 ;$05D870 ||
+    LDA.w OWPlayerYPosPtr_1F21,X            ;$05D872 ||
+    AND.w #$0010                            ;$05D875 ||
+    ASL                                     ;$05D878 ||
+    ASL                                     ;$05D879 ||
+    ASL                                     ;$05D87A ||
+    ASL                                     ;$05D87B ||
+    ASL                                     ;$05D87C ||
+    ORA $02                                 ;$05D87D ||
+    ORA $00                                 ;$05D87F ||
+    TAX                                     ;$05D881 || X: ;;;
+    LDA.w PlayerTurnOW_0DD6                 ;$05D882 ||
+    AND.w #$00FF                            ;$05D885 ||
+    LSR                                     ;$05D888 ||
+    LSR                                     ;$05D889 ||
+    TAY                                     ;$05D88A ||
+    LDA.w OWPlayerSubmap_1F11,Y             ;$05D88B ||
+    AND.w #$000F                            ;$05D88E ||
+    BEQ +                                   ;$05D891 ||\
+    TXA                                     ;$05D893 |||
+    CLC                                     ;$05D894 |||
+    ADC.w #$0400                            ;$05D895 |||
+    TAX                                     ;$05D898 ||/ X: ;;;
++   SEP #$20                                ;$05D899 || A->8
+    LDA.l OWLayer1Translevel_D000,X         ;$05D89B ||
+    STA.w Translevel_13BF                   ;$05D89F |/
+..intro_demo_level_05D8A2
+    CMP.b #$25                              ;$05D8A2 |
+    BCC +                                   ;$05D8A4 |\ skip if translevel number < 0x25
+    SEC                                     ;$05D8A6 || otherwise set a new translevel number
+    SBC.b #$24                              ;$05D8A7 |/
++   STA.w LoadingLevelNumber_17BB           ;$05D8A9 |
     STA $0E                                 ;$05D8AC |
     LDA.w OWPlayerSubmap_1F11,Y             ;$05D8AE |
-    BEQ CODE_05D8B5                         ;$05D8B1 |
-    LDA.b #$01                              ;$05D8B3 |
-CODE_05D8B5:
-    STA $0F
-CODE_05D8B7:
+    BEQ +                                   ;$05D8B1 |\
+    LDA.b #$01                              ;$05D8B3 |/
++   STA $0F                                 ;$05D8B5 |
+.set_data_pointers_05D8B7
     REP #$30                                ;$05D8B7 | AXY->16
     LDA $0E                                 ;$05D8B9 |
     ASL                                     ;$05D8BB |
@@ -6441,11 +6443,11 @@ CODE_05D8B7:
     ADC $0E                                 ;$05D8BD |
     TAY                                     ;$05D8BF |
     SEP #$20                                ;$05D8C0 | A->8
-    LDA.w Layer1Ptrs,Y                      ;$05D8C2 |
+    LDA.w layer1_data_pointers_05E000,Y     ;$05D8C2 |
     STA.b Layer1DataPtr_65                  ;$05D8C5 |
-    LDA.w Layer1Ptrs+1,Y                    ;$05D8C7 |
+    LDA.w layer1_data_pointers_05E000+1,Y   ;$05D8C7 |
     STA.b Layer1DataPtr_65+1                ;$05D8CA |
-    LDA.w Layer1Ptrs+2,Y                    ;$05D8CC |
+    LDA.w layer1_data_pointers_05E000+2,Y   ;$05D8CC |
     STA.b Layer1DataPtr_65+2                ;$05D8CF |
     LDA.w Layer2Ptrs,Y                      ;$05D8D1 |
     STA.b Layer2DataPtr_68                  ;$05D8D4 |
@@ -6459,11 +6461,11 @@ CODE_05D8B7:
     TAY                                     ;$05D8E5 |
     LDA.w #$0000                            ;$05D8E6 |
     SEP #$20                                ;$05D8E9 | A->8
-    LDA.w Ptrs05EC00,Y                      ;$05D8EB |
+    LDA.w sprite_data_pointers_05EC00,Y     ;$05D8EB |
     STA.b SpriteDataPtr_CE                  ;$05D8EE |
-    LDA.w $EC01,Y                           ;$05D8F0 |
+    LDA.w sprite_data_pointers_05EC00+1,Y   ;$05D8F0 |
     STA.b SpriteDataPtr_CE+1                ;$05D8F3 |
-    LDA.b #$07                              ;$05D8F5 |
+    LDA.b #!Bank_07                         ;$05D8F5 |
     STA.b SpriteDataPtr_CE+2                ;$05D8F7 |
     LDA.b [SpriteDataPtr_CE]                ;$05D8F9 |
     AND.b #$3F                              ;$05D8FB |
@@ -6474,19 +6476,19 @@ CODE_05D8B7:
     REP #$10                                ;$05D907 | XY->16
     SEP #$20                                ;$05D909 | A->8
     LDY $0E                                 ;$05D90B |
-    LDA.w DATA_05F000,Y                     ;$05D90D |
+    LDA.w secondary_level_header1_05F000,Y  ;$05D90D |
     LSR                                     ;$05D910 |
     LSR                                     ;$05D911 |
     LSR                                     ;$05D912 |
     LSR                                     ;$05D913 |
-    TAX                                     ;$05D914 |
-    LDA.l DATA_05D720,X                     ;$05D915 |
+    TAX                                     ;$05D914 | X: ;;;
+    LDA.l horiz_layer2_settings_05D720,X    ;$05D915 |
     STA.w HorizLayer2Setting_1413           ;$05D919 |
-    LDA.l DATA_05D710,X                     ;$05D91C |
+    LDA.l vertical_layer2_settings_05D710,X ;$05D91C |
     STA.w VertLayer2Setting_1414            ;$05D920 |
     LDA.b #$01                              ;$05D923 |
     STA.w HorizLayer1Setting_1411           ;$05D925 |
-    LDA.w DATA_05F200,Y                     ;$05D928 |
+    LDA.w secondary_level_header2_05F200,Y  ;$05D928 |
     AND.b #$C0                              ;$05D92B |
     CLC                                     ;$05D92D |
     ASL                                     ;$05D92E |
@@ -6495,10 +6497,10 @@ CODE_05D8B7:
     STA.w Layer3Setting_1BE3                ;$05D931 |
     STZ.b Layer1YPos_1C+1                   ;$05D934 |
     STZ.b Layer2YPos_20+1                   ;$05D936 |
-    LDA.w DATA_05F600,Y                     ;$05D938 |
+    LDA.w secondary_level_header4_05F600,Y  ;$05D938 |
     AND.b #$80                              ;$05D93B |
     STA.w DisableNoYoshiIntro_141F          ;$05D93D |
-    LDA.w DATA_05F600,Y                     ;$05D940 |
+    LDA.w secondary_level_header4_05F600,Y  ;$05D940 |
     AND.b #$60                              ;$05D943 |
     LSR                                     ;$05D945 |
     LSR                                     ;$05D946 |
@@ -6507,211 +6509,209 @@ CODE_05D8B7:
     LSR                                     ;$05D949 |
     STA.b ScreenMode_5B                     ;$05D94A |
     LDA.w UseSecondaryExit_1B93             ;$05D94C |
-    BNE CODE_05D9A1                         ;$05D94F |
-    LDA.w DATA_05F000,Y                     ;$05D951 |
-    AND.b #$0F                              ;$05D954 |
-    TAX                                     ;$05D956 |
-    LDA.l DATA_05D730,X                     ;$05D957 |
-    STA.b PlayerYPos_96                     ;$05D95B |
-    LDA.l DATA_05D740,X                     ;$05D95D |
-    STA.b PlayerYPos_96+1                   ;$05D961 |
-    LDA.w DATA_05F200,Y                     ;$05D963 |
-    STA $02                                 ;$05D966 |
-    AND.b #$07                              ;$05D968 |
-    TAX                                     ;$05D96A |
-    LDA.l DATA_05D750,X                     ;$05D96B |
-    STA.b PlayerXPos_94                     ;$05D96F |
-    LDA.l DATA_05D758,X                     ;$05D971 |
-    STA.b PlayerXPos_94+1                   ;$05D975 |
-    LDA $02                                 ;$05D977 |
-    AND.b #$38                              ;$05D979 |
-    LSR                                     ;$05D97B |
-    LSR                                     ;$05D97C |
-    LSR                                     ;$05D97D |
-    STA.w LevelEntranceType_192A            ;$05D97E |
-    LDA.w DATA_05F400,Y                     ;$05D981 |
-    STA $02                                 ;$05D984 |
-    AND.b #$03                              ;$05D986 |
-    TAX                                     ;$05D988 |
-    LDA.l DATA_05D70C,X                     ;$05D989 |
-    STA.b Layer2YPos_20                     ;$05D98D |
-    LDA $02                                 ;$05D98F |
-    AND.b #$0C                              ;$05D991 |
-    LSR                                     ;$05D993 |
-    LSR                                     ;$05D994 |
-    TAX                                     ;$05D995 |
-    LDA.l DATA_05D708,X                     ;$05D996 |
-    STA.b Layer1YPos_1C                     ;$05D99A |
-    LDA.w DATA_05F600,Y                     ;$05D99C |
-    STA $01                                 ;$05D99F |
-CODE_05D9A1:
+    BNE ..skip_secondary_room_05D9A1        ;$05D94F |\ skip if not coming back to the main room from a secondary one
+    LDA.w secondary_level_header1_05F000,Y  ;$05D951 ||
+    AND.b #$0F                              ;$05D954 ||
+    TAX                                     ;$05D956 ||
+    LDA.l player_room_init_y_low_05D730,X   ;$05D957 ||
+    STA.b PlayerYPos_96                     ;$05D95B ||
+    LDA.l player_room_init_y_high_05D740,X  ;$05D95D ||
+    STA.b PlayerYPos_96+1                   ;$05D961 ||
+    LDA.w secondary_level_header2_05F200,Y  ;$05D963 ||
+    STA $02                                 ;$05D966 ||
+    AND.b #$07                              ;$05D968 ||
+    TAX                                     ;$05D96A ||
+    LDA.l player_room_init_x_low_05D750,X   ;$05D96B ||
+    STA.b PlayerXPos_94                     ;$05D96F ||
+    LDA.l player_room_init_x_high_05D758,X  ;$05D971 ||
+    STA.b PlayerXPos_94+1                   ;$05D975 ||
+    LDA $02                                 ;$05D977 ||
+    AND.b #$38                              ;$05D979 ||
+    LSR                                     ;$05D97B ||
+    LSR                                     ;$05D97C ||
+    LSR                                     ;$05D97D ||
+    STA.w LevelEntranceType_192A            ;$05D97E ||
+    LDA.w secondary_level_header3_05F400,Y  ;$05D981 ||
+    STA $02                                 ;$05D984 ||
+    AND.b #$03                              ;$05D986 ||
+    TAX                                     ;$05D988 ||
+    LDA.l room_init_layer2_y_05D70C,X       ;$05D989 ||
+    STA.b Layer2YPos_20                     ;$05D98D ||
+    LDA $02                                 ;$05D98F ||
+    AND.b #$0C                              ;$05D991 ||
+    LSR                                     ;$05D993 ||
+    LSR                                     ;$05D994 ||
+    TAX                                     ;$05D995 ||
+    LDA.l room_init_layer1_y_05D708,X       ;$05D996 ||
+    STA.b Layer1YPos_1C                     ;$05D99A ||
+    LDA.w secondary_level_header4_05F600,Y  ;$05D99C ||
+    STA $01                                 ;$05D99F |/
+..skip_secondary_room_05D9A1
     LDA.b ScreenMode_5B
     AND.b #!Layer1Vert_01                   ;$05D9A3 |
-    BEQ CODE_05D9B8                         ;$05D9A5 |
-    LDY.w #$0000                            ;$05D9A7 |
-    LDA.b [Layer1DataPtr_65],Y              ;$05D9AA |
-    AND.b #$1F                              ;$05D9AC |
-    STA.b PlayerYPos_96+1                   ;$05D9AE |
-    INC A                                   ;$05D9B0 |
-    STA.b LastScreenVert_5F                 ;$05D9B1 |
-    LDA.b #$01                              ;$05D9B3 |
-    STA.w VertLayer1Setting_1412            ;$05D9B5 |
-CODE_05D9B8:
-    LDA.w SublevelCount_141A
-    BNE CODE_05D9EC                         ;$05D9BB |
-    LDA $02                                 ;$05D9BD |
-    LSR                                     ;$05D9BF |
-    LSR                                     ;$05D9C0 |
-    LSR                                     ;$05D9C1 |
-    LSR                                     ;$05D9C2 |
-    STA.w DisableMidway_13CD                ;$05D9C3 |
-    STZ.w MidwayFlag_13CE                   ;$05D9C6 |
-    LDY.w Translevel_13BF                   ;$05D9C9 |
-    LDA.w DATA_05D608,Y                     ;$05D9CC |
-    STA.w OverworldEvent_1DEA               ;$05D9CF |
-    SEP #$10                                ;$05D9D2 | XY->8
-    LDX.w Translevel_13BF                   ;$05D9D4 |
-    LDA.w OWLevelSettings_1EA2,X            ;$05D9D7 |
-    AND.b #$40                              ;$05D9DA |
-    BEQ CODE_05D9EC                         ;$05D9DC |
-    STA.w SkipMidwayCastleIntro_13CF        ;$05D9DE |
-    LDA $02                                 ;$05D9E1 |
-    LSR                                     ;$05D9E3 |
-    LSR                                     ;$05D9E4 |
-    LSR                                     ;$05D9E5 |
-    LSR                                     ;$05D9E6 |
-    STA.b PlayerXPos_94+1                   ;$05D9E7 |
-    JMP CODE_05DA17                         ;$05D9E9 |
+    BEQ +                                   ;$05D9A5 |\ skip if level is horizontal
+    LDY.w #$0000                            ;$05D9A7 || vertical level:
+    LDA.b [Layer1DataPtr_65],Y              ;$05D9AA ||
+    AND.b #$1F                              ;$05D9AC ||
+    STA.b PlayerYPos_96+1                   ;$05D9AE ||
+    INC A                                   ;$05D9B0 ||
+    STA.b LastScreenVert_5F                 ;$05D9B1 ||
+    LDA.b #$01                              ;$05D9B3 ||
+    STA.w VertLayer1Setting_1412            ;$05D9B5 |/
++   LDA.w SublevelCount_141A                ;$05D9B8 |
+    BNE ..sub_level_load_05D9EC             ;$05D9BB |\ branch if entering sub level
+    LDA $02                                 ;$05D9BD ||
+    LSR                                     ;$05D9BF ||
+    LSR                                     ;$05D9C0 ||
+    LSR                                     ;$05D9C1 ||
+    LSR                                     ;$05D9C2 ||
+    STA.w DisableMidway_13CD                ;$05D9C3 ||
+    STZ.w MidwayFlag_13CE                   ;$05D9C6 ||
+    LDY.w Translevel_13BF                   ;$05D9C9 ||
+    LDA.w translevel_events_05D608,Y        ;$05D9CC ||
+    STA.w OverworldEvent_1DEA               ;$05D9CF ||
+    SEP #$10                                ;$05D9D2 || XY->8
+    LDX.w Translevel_13BF                   ;$05D9D4 ||
+    LDA.w OWLevelSettings_1EA2,X            ;$05D9D7 ||
+    AND.b #$40                              ;$05D9DA ||
+    BEQ ..sub_level_load_05D9EC             ;$05D9DC ||\ branch if ;;;
+    STA.w SkipMidwayCastleIntro_13CF        ;$05D9DE |||
+    LDA $02                                 ;$05D9E1 |||
+    LSR                                     ;$05D9E3 |||
+    LSR                                     ;$05D9E4 |||
+    LSR                                     ;$05D9E5 |||
+    LSR                                     ;$05D9E6 |||
+    STA.b PlayerXPos_94+1                   ;$05D9E7 ||/
+    JMP ..common_05DA17                     ;$05D9E9 |/
 
-CODE_05D9EC:
+..sub_level_load_05D9EC
     REP #$10                                ;$05D9EC | XY->16
     LDA $01                                 ;$05D9EE |
     AND.b #$1F                              ;$05D9F0 |
     STA $01                                 ;$05D9F2 |
     LDA.b ScreenMode_5B                     ;$05D9F4 |
     AND.b #!Layer1Vert_01                   ;$05D9F6 |
-    BNE CODE_05DA01                         ;$05D9F8 |
-    LDA $01                                 ;$05D9FA |
-    STA.b PlayerXPos_94+1                   ;$05D9FC |
-    JMP CODE_05DA17                         ;$05D9FE |
+    BNE ..vertical_level_05DA01             ;$05D9F8 |\
+    LDA $01                                 ;$05D9FA ||
+    STA.b PlayerXPos_94+1                   ;$05D9FC ||
+    JMP ..common_05DA17                     ;$05D9FE |/
 
-CODE_05DA01:
+..vertical_level_05DA01
     LDA $01
     STA.b PlayerYPos_96+1                   ;$05DA03 |
     STA.b Layer1YPos_1C+1                   ;$05DA05 |
     SEP #$10                                ;$05DA07 | XY->8
     LDY.w VertLayer2Setting_1414            ;$05DA09 |
     CPY.b #$03                              ;$05DA0C |
-    BEQ CODE_05DA12                         ;$05DA0E |
-    STA.b Layer2YPos_20+1                   ;$05DA10 |
-CODE_05DA12:
-    LDA.b #$01
+    BEQ +                                   ;$05DA0E |\
+    STA.b Layer2YPos_20+1                   ;$05DA10 |/
++   LDA.b #$01                              ;$05DA12 |
     STA.w VertLayer1Setting_1412            ;$05DA14 |
-CODE_05DA17:
+..common_05DA17
     SEP #$30                                ;$05DA17 | AXY->8
     LDA.w Translevel_13BF                   ;$05DA19 |
     CMP.b #$52                              ;$05DA1C |
-    BCC CODE_05DA24                         ;$05DA1E |
-    LDX.b #$03                              ;$05DA20 |
-    BRA CODE_05DA38                         ;$05DA22 |
+    BCC ..not_star_world_05DA24             ;$05DA1E |\ branch if translevel < 0x52
+    LDX.b #$03                              ;$05DA20 || if a Star World level:
+    BRA ..star_castle_ghost_rope_05DA38     ;$05DA22 |/
 
-CODE_05DA24:
-    LDX.b #$04
+..not_star_world_05DA24
+    LDX.b #$04                              ;$05DA26 | X: loop counter, index for tileset
     LDY.b #$04                              ;$05DA26 |
-    LDA.b [Layer1DataPtr_65],Y              ;$05DA28 |
-    AND.b #$0F                              ;$05DA2A |
+    LDA.b [Layer1DataPtr_65],Y              ;$05DA28 | read IIVVZZZZ property of Primary Level Header
+    AND.b #$0F                              ;$05DA2A | isolate FG/BG GFX settings
 -   CMP.l tilesets_05D760,X                 ;$05DA2C |\
-    BEQ CODE_05DA38                         ;$05DA30 ||
+    BEQ ..star_castle_ghost_rope_05DA38     ;$05DA30 || branch if level FG/BG GFX matches those tilesets
     DEX                                     ;$05DA32 ||
     BPL -                                   ;$05DA33 |/
-CODE_05DA35:
-    JMP CODE_05DAD7
+..check_CI2_sublevel_05DA35
+    JMP ..check_CI2_sublevel_05DAD7
 
-CODE_05DA38:
-    LDA.w SublevelCount_141A
-    BNE CODE_05DA35                         ;$05DA3B |
-    LDA.w ShowMarioStart_141D               ;$05DA3D |
-    BNE CODE_05DA35                         ;$05DA40 |
-    LDA.w DisableNoYoshiIntro_141F          ;$05DA42 |
-    BNE CODE_05DA35                         ;$05DA45 |
+..star_castle_ghost_rope_05DA38
+    LDA.w SublevelCount_141A                ;$05DA38 |
+    BNE ..check_CI2_sublevel_05DA35         ;$05DA3B |\ branch to try handling Chocolate Island 2 if:
+    LDA.w ShowMarioStart_141D               ;$05DA3D ||  - entering sub level
+    BNE ..check_CI2_sublevel_05DA35         ;$05DA40 ||  - Mario Start should be shown
+    LDA.w DisableNoYoshiIntro_141F          ;$05DA42 ||  - No Yoshi Intro is disabled
+    BNE ..check_CI2_sublevel_05DA35         ;$05DA45 |/
     LDA.w Translevel_13BF                   ;$05DA47 |
     CMP.b #$31                              ;$05DA4A |
-    BEQ +                                   ;$05DA4C |\
-    CMP.b #$32                              ;$05DA4E ||
-    BEQ +                                   ;$05DA50 ||
-    CMP.b #$34                              ;$05DA52 ||
-    BEQ +                                   ;$05DA54 ||
-    CMP.b #$35                              ;$05DA56 ||
+    BEQ +                                   ;$05DA4C |\ skip if not a dark castle entrance
+    CMP.b #$32                              ;$05DA4E ||  - Front Door
+    BEQ +                                   ;$05DA50 ||  - Back Door
+    CMP.b #$34                              ;$05DA52 ||  - #7 Larry's Castle
+    BEQ +                                   ;$05DA54 ||  - Valley Fortress
+    CMP.b #$35                              ;$05DA56 ||  - #3 Lemmy´s Castle
     BEQ +                                   ;$05DA58 ||
     CMP.b #$40                              ;$05DA5A ||
     BNE ++                                  ;$05DA5C |/
-+   LDX.b #$05                              ;$05DA5E |
++   LDX.b #$05                              ;$05DA5E | --> use a higher X ;;;
 ++  LDA.w SkipMidwayCastleIntro_13CF        ;$05DA60 |
-    BNE .CODE_05DAD0                        ;$05DA63 |
-    LDA.l DATA_05D790,X                     ;$05DA65 |
-    STA.b PlayerYPos_96                     ;$05DA69 |
-    LDA.b #$01                              ;$05DA6B |
-    STA.b PlayerYPos_96+1                   ;$05DA6D |
-    LDA.b #$30                              ;$05DA6F |
-    STA.b PlayerXPos_94                     ;$05DA71 |
-    STZ.b PlayerXPos_94+1                   ;$05DA73 |
-    LDA.b #$C0                              ;$05DA75 |
-    STA.b Layer1YPos_1C                     ;$05DA77 |
-    STA.b Layer2YPos_20                     ;$05DA79 |
-    STZ.w LevelEntranceType_192A            ;$05DA7B |
-    LDA.b #$EE                              ;$05DA7E |
-    STA.b SpriteDataPtr_CE                  ;$05DA80 |
-    LDA.b #$C3                              ;$05DA82 |
-    STA.b SpriteDataPtr_CE+1                ;$05DA84 |
-    LDA.b #$07                              ;$05DA86 |
-    STA.b SpriteDataPtr_CE+2                ;$05DA88 |
-    LDA.b [SpriteDataPtr_CE]                ;$05DA8A |
-    AND.b #$3F                              ;$05DA8C |
-    STA.w SpriteMemorySetting_1692          ;$05DA8E |
-    LDA.b [SpriteDataPtr_CE]                ;$05DA91 |
-    AND.b #$C0                              ;$05DA93 |
-    STA.w SpriteBuoyancy_190E               ;$05DA95 |
-    STZ.w HorizLayer2Setting_1413           ;$05DA98 |
-    STZ.w VertLayer2Setting_1414            ;$05DA9B |
-    STZ.w HorizLayer1Setting_1411           ;$05DA9E |
-    STZ.b ScreenMode_5B                     ;$05DAA1 |
-    LDA.l DATA_05D78A,X                     ;$05DAA3 |
-    STA.w Layer3Setting_1BE3                ;$05DAA7 |
-    STX $00                                 ;$05DAAA |
-    TXA                                     ;$05DAAC |
-    ASL                                     ;$05DAAD |
-    CLC                                     ;$05DAAE |
-    ADC $00                                 ;$05DAAF |
-    TAY                                     ;$05DAB1 |
-    LDA.w PtrsLong05D766,Y                  ;$05DAB2 |
-    STA.b Layer1DataPtr_65                  ;$05DAB5 |
-    LDA.w PtrsLong05D766+1,Y                ;$05DAB7 |
-    STA.b Layer1DataPtr_65+1                ;$05DABA |
-    LDA.w PtrsLong05D766+2,Y                ;$05DABC |
-    STA.b Layer1DataPtr_65+2                ;$05DABF |
-    LDA.w PtrsLong05D778,Y                  ;$05DAC1 |
-    STA.b Layer2DataPtr_68                  ;$05DAC4 |
-    LDA.w PtrsLong05D778+1,Y                ;$05DAC6 |
-    STA.b Layer2DataPtr_68+1                ;$05DAC9 |
-    LDA.w PtrsLong05D778+2,Y                ;$05DACB |
-    STA.b Layer2DataPtr_68+2                ;$05DACE |
-.CODE_05DAD0
+    BNE ..bypass_castle_intro_05DAD0        ;$05DA63 |\ skip if entering a castle/ghost after you collecting the midway point
+    LDA.l castle_intro_x_low_05D790,X       ;$05DA65 || castle/ghost intro sequence:
+    STA.b PlayerYPos_96                     ;$05DA69 ||
+    LDA.b #$01                              ;$05DA6B ||
+    STA.b PlayerYPos_96+1                   ;$05DA6D ||
+    LDA.b #$30                              ;$05DA6F ||
+    STA.b PlayerXPos_94                     ;$05DA71 ||
+    STZ.b PlayerXPos_94+1                   ;$05DA73 ||
+    LDA.b #$C0                              ;$05DA75 ||
+    STA.b Layer1YPos_1C                     ;$05DA77 ||
+    STA.b Layer2YPos_20                     ;$05DA79 ||
+    STZ.w LevelEntranceType_192A            ;$05DA7B ||
+    LDA.b #$EE                              ;$05DA7E ||
+    STA.b SpriteDataPtr_CE                  ;$05DA80 ||
+    LDA.b #$C3                              ;$05DA82 ||
+    STA.b SpriteDataPtr_CE+1                ;$05DA84 ||
+    LDA.b #!Bank_07                         ;$05DA86 ||
+    STA.b SpriteDataPtr_CE+2                ;$05DA88 ||
+    LDA.b [SpriteDataPtr_CE]                ;$05DA8A ||
+    AND.b #$3F                              ;$05DA8C ||
+    STA.w SpriteMemorySetting_1692          ;$05DA8E ||
+    LDA.b [SpriteDataPtr_CE]                ;$05DA91 ||
+    AND.b #$C0                              ;$05DA93 ||
+    STA.w SpriteBuoyancy_190E               ;$05DA95 ||
+    STZ.w HorizLayer2Setting_1413           ;$05DA98 ||
+    STZ.w VertLayer2Setting_1414            ;$05DA9B ||
+    STZ.w HorizLayer1Setting_1411           ;$05DA9E ||
+    STZ.b ScreenMode_5B                     ;$05DAA1 ||
+    LDA.l castle_intro_layer3_05D78A,X      ;$05DAA3 ||
+    STA.w Layer3Setting_1BE3                ;$05DAA7 ||
+    STX $00                                 ;$05DAAA ||
+    TXA                                     ;$05DAAC ||
+    ASL                                     ;$05DAAD ||
+    CLC                                     ;$05DAAE ||
+    ADC $00                                 ;$05DAAF ||
+    TAY                                     ;$05DAB1 ||
+    LDA.w castle_layer1_pointers_05D766,Y   ;$05DAB2 ||
+    STA.b Layer1DataPtr_65                  ;$05DAB5 ||
+    LDA.w castle_layer1_pointers_05D766+1,Y ;$05DAB7 ||
+    STA.b Layer1DataPtr_65+1                ;$05DABA ||
+    LDA.w castle_layer1_pointers_05D766+2,Y ;$05DABC ||
+    STA.b Layer1DataPtr_65+2                ;$05DABF ||
+    LDA.w castle_layer2_pointers_05D778,Y   ;$05DAC1 ||
+    STA.b Layer2DataPtr_68                  ;$05DAC4 ||
+    LDA.w castle_layer2_pointers_05D778+1,Y ;$05DAC6 ||
+    STA.b Layer2DataPtr_68+1                ;$05DAC9 ||
+    LDA.w castle_layer2_pointers_05D778+2,Y ;$05DACB ||
+    STA.b Layer2DataPtr_68+2                ;$05DACE |/
+..bypass_castle_intro_05DAD0
     LDA.l tilesets_05D760,X
     STA.w ObjectTileset_1931                ;$05DAD4 |
-CODE_05DAD7:
+..check_CI2_sublevel_05DAD7
     LDA.w SublevelCount_141A
-    BEQ +                                   ;$05DADA |\
+    BEQ +                                   ;$05DADA |\ skip if entering from overworld
     LDA.w BonusGameFlag_1425                ;$05DADC ||
-    BNE +                                   ;$05DADF ||
+    BNE +                                   ;$05DADF || skip if a bonus
     LDA.w Translevel_13BF                   ;$05DAE1 ||
     CMP.b #$24                              ;$05DAE4 ||
-    BNE +                                   ;$05DAE6 ||
-    JSR CODE_05DAEF                         ;$05DAE8 |/
+    BNE +                                   ;$05DAE6 || skip if not Chocolate Island 2
+    JSR load_CI2_room_sublevel_05DAEF       ;$05DAE8 |/
 +   PLB                                     ;$05DAEB |
     SEP #$30                                ;$05DAEC | AXY->8
     RTL                                     ;$05DAEE |
 
-CODE_05DAEF:
+load_CI2_room_sublevel_05DAEF:
     SEP #$30                                ;$05DAEF | AXY->8
     LDY.b #$04                              ;$05DAF1 |
     LDA.b [Layer1DataPtr_65],Y              ;$05DAF3 |
@@ -6819,20 +6819,18 @@ CODE_05DBA6:
 DATA_05DBA9:
     db $00,$C8,$00
 
-CODE_05DBAC:
-    LDY.b #$00
+heaven_bonus_exit_table_05DBAC:
+    LDY.b #$00                              ;$05DBAC | Y: 
     LDA.w YoshiHeavenFlag_1B95              ;$05DBAE |
-    BEQ CODE_05DBB5                         ;$05DBB1 |
-    LDY.b #$01                              ;$05DBB3 |
-CODE_05DBB5:
-    LDX.b PlayerXPos_94+1
+    BEQ +                                   ;$05DBB1 |\ skip if not heaven
+    LDY.b #$01                              ;$05DBB3 |/
++   LDX.b PlayerXPos_94+1                   ;$05DBB5 | X: current screen number
     LDA.b ScreenMode_5B                     ;$05DBB7 |
     AND.b #!Layer1Vert_01                   ;$05DBB9 |
-    BEQ CODE_05DBBF                         ;$05DBBB |
-    LDX.b PlayerYPos_96+1                   ;$05DBBD |
-CODE_05DBBF:
-    LDA.w DATA_05DBA9,Y
-    STA.w ExitTableLow_19B8,X               ;$05DBC2 |
+    BEQ +                                   ;$05DBBB |\ skip if previous room was vertical
+    LDX.b PlayerYPos_96+1                   ;$05DBBD |/
++   LDA.w DATA_05DBA9,Y                     ;$05DBBF |
+    STA.w ExitTableLow_19B8,X               ;$05DBC2 | NOTE: why??? TODO
     INC.w SublevelCount_141A                ;$05DBC5 |
     RTS                                     ;$05DBC8 |
 
@@ -7016,7 +7014,7 @@ Empty05DC46:
     db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
     db $FF,$FF
 
-Layer1Ptrs:
+layer1_data_pointers_05E000:
     dl DATA_068654
     dl DATA_06BA69
     dl DATA_06BC33
@@ -8044,7 +8042,7 @@ Layer2Ptrs:
     dl $FFF45A
     dl $FFDF59
 
-Ptrs05EC00:
+sprite_data_pointers_05EC00:
     dw DATA_07C407
     dw DATA_07CE1C
     dw DATA_07CEBF
@@ -8558,7 +8556,10 @@ Ptrs05EC00:
     dw DATA_07DFE0
     dw DATA_07C659
 
-DATA_05F000:
+; Format: hhhhyyyy
+; hhhh  Layer 2 scroll setting, or specifically the Layer 2 horizontal scroll setting if the S bit is set
+; yyyy  Main entrance Y position2
+secondary_level_header1_05F000:
     db $07,$5B,$19,$2B,$1B,$5B,$5B,$5B
     db $27,$37,$18,$19,$59,$5B,$29,$1B
     db $5B,$58,$05,$5B,$2B,$5B,$1B,$1B
@@ -8623,7 +8624,12 @@ DATA_05F000:
     db $2B,$29,$5B,$0B,$4B,$01,$5B,$49
     db $1B,$1B,$57,$48,$1B,$19,$0B,$6C
     db $28,$2B,$1B,$5A,$1B,$19,$19,$1B
-DATA_05F200:
+
+; Format: 33AAAxxx
+; 33   Layer 3 setting
+; AAA  Main entrance Mario action
+; xxx  Main entrance X position2
+secondary_level_header2_05F200:
     db $20,$00,$80,$01,$00,$01,$00,$00
     db $00,$C0,$38,$39,$00,$00,$00,$00
     db $00,$F8,$00,$00,$00,$00,$00,$00
@@ -8688,7 +8694,12 @@ DATA_05F200:
     db $01,$01,$01,$00,$D1,$10,$10,$D0
     db $09,$11,$01,$C0,$00,$20,$00,$10
     db $20,$00,$01,$01,$80,$20,$00,$10
-DATA_05F400:
+
+; Format: MMMMffbb
+; MMMM  Midway entrance screen number
+; ff    Main entrance FG initial position, if R bit is clear
+; bb    Main entrance BG initial position, if R bit is clear
+secondary_level_header3_05F400:
     db $0A,$9A,$8A,$0A,$0A,$AA,$AA,$0A
     db $0A,$0A,$0A,$0A,$0A,$9A,$0A,$9A
     db $9A,$0A,$02,$0A,$0A,$9A,$9A,$9A
@@ -8753,7 +8764,13 @@ DATA_05F400:
     db $0A,$0A,$0A,$00,$0A,$03,$0A,$0A
     db $0A,$0A,$0A,$0A,$0A,$0A,$00,$0A
     db $0A,$0A,$0A,$0A,$0A,$0A,$0A,$0A
-DATA_05F600:
+
+; Format: NUVEEEEE
+; N      Disable No-Yoshi Intro flag
+; U      Unknown/unused vertical position flag
+; V      Vertical positioning flag
+; EEEEE  Main entrance screen number
+secondary_level_header4_05F600:
     db $00,$00,$80,$00,$00,$80,$00,$00
     db $00,$00,$00,$00,$80,$80,$00,$80
     db $00,$00,$64,$00,$00,$00,$00,$00
@@ -8818,7 +8835,9 @@ DATA_05F600:
     db $07,$06,$00,$00,$00,$60,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$05,$00,$00,$00,$00
-DATA_05F800:
+
+; Format dddddddd
+sec_entrance_dddddddd_05F800:
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
@@ -8883,7 +8902,12 @@ DATA_05F800:
     db $00,$00,$00,$00,$00,$00,$00,$1A
     db $00,$00,$00,$00,$00,$19,$00,$0A
     db $23,$00,$00,$00,$00,$03,$00,$00
-DATA_05FA00:
+
+; Format: bbffyyyy
+; bb    BG initial position, if R bit is clear
+; ff    FG initial position, if R bit is clear
+; yyyy  Entrance Y position
+sec_entrance_bbffyyyy_05FA00:
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
@@ -8948,7 +8972,11 @@ DATA_05FA00:
     db $00,$00,$00,$00,$00,$00,$00,$A7
     db $00,$00,$00,$00,$00,$AB,$00,$AB
     db $AA,$00,$00,$00,$00,$A9,$00,$00
-DATA_05FC00:
+
+; Format: xxxSSSSS
+; xxx    Entrance X position
+; SSSSS  Entrance screen number
+sec_entrance_xxxSSSSS_05FC00:
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
@@ -9013,7 +9041,14 @@ DATA_05FC00:
     db $00,$00,$00,$00,$00,$00,$00,$2E
     db $00,$00,$00,$00,$00,$2F,$00,$2F
     db $32,$00,$00,$00,$00,$28,$00,$00
-DATA_05FE00:
+
+; Format: IPYXDAAA
+; I    Slippery level flag
+; P    Uses X/Y position method
+; Y    Entrance Y position
+; X    Entrance X position
+; AAA  Mario entrance action
+sec_entrance_IPYXDAAA_05FE00:
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00
     db $00,$00,$00,$00,$00,$00,$00,$00

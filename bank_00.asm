@@ -2610,19 +2610,19 @@ GM03_title_load_1_0096AE:
 CODE_0096CF:
     STA.w OverworldOverride_0109
     STY.w OWPlayerSubmap_1F11               ;$0096D2 |
-GM11_level_load_1_0096D5:
-    STZ.w $4200
+GM11_level_load_1_0096D5:                   ;        | Game Mode 11 - Load Level (Mario Start!)
+    STZ.w $4200                             ;$0096D5 |
     JSR disable_controls                    ;$0096D8 |
     LDA.w SublevelCount_141A                ;$0096DB |
-    BNE +                                   ;$0096DE |\
+    BNE +                                   ;$0096DE |\ If entering a level that doesn't show Mario Start (e.g. castle entrance),
     LDA.w ShowMarioStart_141D               ;$0096E0 ||
-    BEQ +                                   ;$0096E3 ||
-    JSL load_OW_layer1_tilemap_04DC09       ;$0096E5 |/
+    BEQ +                                   ;$0096E3 || reload the overworld map...?
+    JSL load_OW_layer1_tilemap_04DC09       ;$0096E5 |/ FIXME: why?
 +   STZ.w Layer3ScrollType_13D5             ;$0096E9 |
     STZ.w EndMarchPhase_13D9                ;$0096EC |
     LDA.b #$50                              ;$0096EF |
     STA.w DrumrollTimer_13D6                ;$0096F1 |
-    JSL CODE_05D796                         ;$0096F4 |
+    JSL setup_level_environment_05D796      ;$0096F4 |
     LDX.b #$07                              ;$0096F8 |
 -   LDA.b Layer1XPos_1A,X                   ;$0096FA |\
     STA.w NextLayer1XPos_1462,X             ;$0096FC ||
